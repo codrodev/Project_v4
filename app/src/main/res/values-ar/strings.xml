@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">خريطتي  </string>
+    <string name="title_welcome">مرحبا بك في</string>
+    <string name="login"> الدخول </string>
+    <string name="internet_connection_problem1">لا يوجد اتصال إنترنت، الرجاء التحقق من الاتصال وحاول مرة أخرى</string>
+    <string name="lbl_warning">مسح البيانات المسجله مسبقا</string>
+    <string name="ok"> موافق </string>
+    <string name="forgot_username_password"><a href="https://myid.dubai.gov.ae/ForgotPassword.aspx">نسيت اسم المستخدم أو كلمة المرور؟</a></string>
+    <string name="rememberme">تذكرني</string>
+    <string name="open_makani_confirm">هل أنت متأكد من أنك تريد الانتقال إلى مكاني</string>
+    <string name="or">أو</string>
+    <string name="cancel">الغاء</string>
+    <string name="createAccount">انشئ حساب</string>
+    <string name="signin_as_guest">تسجيل الدخول كضيف</string>
+    <string name="login_uaepass">تسجيل الدخول مع البشري الإمارات العربية المتحدة</string>
+    <string name="username">اسم المستخدم</string>
+    <string name="password">كلمه السر</string>
+    <string name="textOn">English</string>
+    <string name="textOff">عربى</string>
+    <string name="PLEASE_ENTER_PLOTNUMBER">الرجاء إدخال رقم قطعة الأرض</string>
+    <string name="valid_plot_number">الرجاء إدخال رقم قطعة أرض صحيح</string>
+    <string name="plot_does_not_exist">الرجاء إدخال رقم قطعة أرض صحيح</string>
+    <string name="click_on_map">Please Click On The Map To Continue</string>
+    <string name="register">Do you want to create an account?</string>
+    <string name="forgot_password">Do you want rest your username or password?</string>
+    <string name="loading">جار التحميل...</string>
+    <string name="not_now">أغلق</string>
+    <string name="tap_to_choose">اضغط لاختيار المنطقة</string>
+    <string name="invalid_area">يرجى اختيار المنطقة</string>
+    <string name="no_valid_land">يرجى إدخال رقم ملكية صحيح</string>
+    <string name="community_error">حدث خطا اثناء إحضار المجتمع</string>
+    <string name="please_enter_land">يرجى إدخال رقم الملكية</string>
+
+
+</resources>

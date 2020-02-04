@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="fragmentMyMapVM"
+            type="dm.sime.com.kharetati.view.viewModels.MyMapViewModel" />
+    </data>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:elevation="5dp"
+        app:cardCornerRadius="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:text="Click on site plan details"
+                android:fontFamily="@font/dubai_font"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="5dp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:setVerticalAdapter="@{fragmentMyMapVM.getMyMapAdapter()}"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
