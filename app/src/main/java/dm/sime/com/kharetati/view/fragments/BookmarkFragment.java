@@ -16,13 +16,21 @@ import java.util.List;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.FragmentBookmarkBinding;
 import dm.sime.com.kharetati.datas.models.ZZBookmark;
+import dm.sime.com.kharetati.datas.network.ApiFactory;
+import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
+import dm.sime.com.kharetati.datas.repositories.BookMarkRepository;
+import dm.sime.com.kharetati.datas.repositories.MyMapRepository;
 import dm.sime.com.kharetati.view.viewModels.BookmarkViewModel;
+import dm.sime.com.kharetati.view.viewmodelfactories.BookMarkViewModelFactory;
+import dm.sime.com.kharetati.view.viewmodelfactories.MyMapViewModelFactory;
 
 public class BookmarkFragment extends Fragment {
 
     FragmentBookmarkBinding binding;
     BookmarkViewModel model;
     private View mRootView;
+    private BookMarkRepository repository;
+    private BookMarkViewModelFactory factory;
 
     public static BookmarkFragment newInstance(){
         BookmarkFragment fragment = new BookmarkFragment();
@@ -32,7 +40,9 @@ public class BookmarkFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        model = ViewModelProviders.of(this).get(BookmarkViewModel.class);
+        repository = new BookMarkRepository(ApiFactory.getClient(new NetworkConnectionInterceptor(getActivity())));
+        factory = new BookMarkViewModelFactory(getActivity(),repository);
+        model = ViewModelProviders.of(this,factory).get(BookmarkViewModel.class);
     }
 
     @Override
@@ -46,6 +56,8 @@ public class BookmarkFragment extends Fragment {
 
     private void initializePage(){
         model.initializeBookmarkViewModel(getActivity());
+        model.getAllBookMarks();
+
         model.getMutableBookmark().observe(getActivity(), new Observer<List<ZZBookmark>>() {
             @Override
             public void onChanged(List<ZZBookmark> lstMyMap) {

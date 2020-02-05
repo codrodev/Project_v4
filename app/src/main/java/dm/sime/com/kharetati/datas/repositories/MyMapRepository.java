@@ -1,5 +1,7 @@
 package dm.sime.com.kharetati.datas.repositories;
 
+import org.json.JSONObject;
+
 import dm.sime.com.kharetati.datas.models.HTTPRequestBody;
 import dm.sime.com.kharetati.datas.models.RetrieveMyMapResponse;
 import dm.sime.com.kharetati.datas.network.MyApiService;
@@ -13,7 +15,7 @@ public class MyMapRepository {
         this.api = apiService;
     }
 
-    public Observable<RetrieveMyMapResponse> getAllSitePlans(String url,HTTPRequestBody.SitePlanBody sitePlanBody){
+    public Observable<RetrieveMyMapResponse> getAllSitePlans(String url, JSONObject sitePlanBody){
         return api.getAllSitePlans(url ,sitePlanBody);
     }
 }

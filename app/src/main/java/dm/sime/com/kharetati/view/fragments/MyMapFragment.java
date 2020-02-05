@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import org.json.JSONException;
+
 import java.util.List;
 
 import dm.sime.com.kharetati.R;
@@ -49,11 +51,15 @@ public class MyMapFragment extends Fragment{
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_mymap, container, false);
         binding.setFragmentMyMapVM(model);
         mRootView = binding.getRoot();
-        initializePage();
+        try {
+            initializePage();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return binding.getRoot();
     }
 
-    private void initializePage(){
+    private void initializePage() throws JSONException {
         model.initializeMyMapViewModel(getActivity());
 
         model.getAllSitePlans();

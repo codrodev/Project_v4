@@ -6,6 +6,7 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -76,13 +77,17 @@ public class MyMapViewModel extends ViewModel {
     }
 
 
-
-
-
-    public void getAllSitePlans(){
+    public void getAllSitePlans() throws JSONException {
 
         String url = AppUrls.RETRIEVE_MY_MAPS;
-        HTTPRequestBody.SitePlanBody body = new HTTPRequestBody.SitePlanBody();
+        JSONObject body = new JSONObject();
+        body.put("token",Global.site_plan_token);
+        body.put("locale",Global.CURRENT_LOCALE);
+        body.put("my_id",Global.loginDetails.username);
+
+
+        //HTTPRequestBody.SitePlanBody body = new HTTPRequestBody.SitePlanBody();
+
         kharetatiApp = KharetatiApp.create(activity);
 
         Disposable disposable = repository.getAllSitePlans(url,body)

@@ -1,5 +1,7 @@
 package dm.sime.com.kharetati.datas.models;
 
+import org.json.JSONObject;
+
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.view.fragments.HomeFragment;
 
@@ -61,6 +63,6 @@ public class HTTPRequestBody {
     }
 
     public static class AreaBody {
-        String SESSION = Global.session!=null?Global.session:"guest";
+        String SESSION = Global.session!=null?Global.session :"guest";
     }
 }

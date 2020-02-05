@@ -380,7 +380,29 @@ public class MapFragment extends Fragment implements MapNavigator {
                 }
             }
         });
+        binding.imgMakani.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    if(parcelId.length() > 0) {
+                        if (!Global.isConnected(getActivity())) {
+
+                            if(Global.appMsg!=null)
+                                AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning),Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr() , getResources().getString(R.string.ok), getActivity());
+                            else
+                                AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
+
+                        }
+                        else
+                            Global.openMakani(parcelId, getActivity());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
+
 
     @Override
     public void onStarted() {

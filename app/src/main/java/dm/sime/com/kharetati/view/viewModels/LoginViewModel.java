@@ -393,12 +393,10 @@ public class LoginViewModel extends ViewModel {
 
                 if (!Boolean.valueOf(isException))
                 {
+                    Global.session = session.getSession().getToken();
+
 
                     // Navigate to Main Activity Here
-
-
-
-
                     authListener.onSuccess();
 
                 } else {

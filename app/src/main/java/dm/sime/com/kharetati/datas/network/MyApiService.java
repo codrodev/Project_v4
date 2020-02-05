@@ -3,6 +3,7 @@ package dm.sime.com.kharetati.datas.network;
 import org.json.JSONObject;
 
 import dm.sime.com.kharetati.datas.models.AccessTokenResponse;
+import dm.sime.com.kharetati.datas.models.BookmarksResponse;
 import dm.sime.com.kharetati.datas.models.GetAreaNamesResponse;
 import dm.sime.com.kharetati.datas.models.HTTPRequestBody;
 import dm.sime.com.kharetati.datas.models.KharetatiUser;
@@ -55,8 +56,8 @@ public interface MyApiService {
     Observable<MakaniToDLTMResponse> getMakaniToDLTM(@Body HTTPRequestBody.MakaniBody makaniBody);
 
     //to get all Siteplans
-    @POST
-    Observable<RetrieveMyMapResponse> getAllSitePlans(@Url String url,@Body HTTPRequestBody.SitePlanBody sitePlanBody);
+    @POST()
+    Observable<RetrieveMyMapResponse> getAllSitePlans(@Url String url,@Body JSONObject sitePlanBody);
 
     //to save Book mark
     @POST("Bookmark/addBookmark")
@@ -70,4 +71,10 @@ public interface MyApiService {
     //to get Area Names In land search
     @POST("KharetatiWebService/getAreaNames")
     Observable<GetAreaNamesResponse> getAreaNames(@Body HTTPRequestBody.AreaBody areaBody);
+
+
+    //to load Bookmarks
+    @FormUrlEncoded
+    @POST("Bookmark/getAllBookMark")
+    Observable<BookmarksResponse> getAllBookMarks(@Field("UserID") int userId);
 }
