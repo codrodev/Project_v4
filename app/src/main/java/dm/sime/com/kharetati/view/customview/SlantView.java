@@ -11,6 +11,7 @@ import android.view.View;
 
 
 public class SlantView extends View {
+    private final LinearGradient gradient;
     private Context mContext;
     Paint paint ;
     Path path;
@@ -21,6 +22,7 @@ public class SlantView extends View {
         setWillNotDraw(false);
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         path = new Path();
+        gradient = new LinearGradient(0, 0, 0, getHeight(), 0xFFb71e3e, 0xFF940e2a, Shader.TileMode.MIRROR);
     }
 
     @Override
@@ -31,12 +33,19 @@ public class SlantView extends View {
         paint.setShader(new LinearGradient(0, 0, 0, getHeight(), 0xFFb71e3e, 0xFF940e2a, Shader.TileMode.MIRROR));
 
 
+
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setAntiAlias(true);
 
         path.setFillType(Path.FillType.INVERSE_EVEN_ODD);
 //        path.moveTo(0,800);
+        path.moveTo(0,0);
+        path.lineTo(0,h-h/10);
+        //path.lineTo(w,h);
+
         path.moveTo(0,h-h/10);
+
+
         path.lineTo(0,h);
         path.lineTo(w,h);
         path.close();

@@ -17,7 +17,7 @@ public class ApiFactory {
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(networkConnectionInterceptor).connectTimeout(100, TimeUnit.SECONDS)
-                .readTimeout(100, TimeUnit.SECONDS)
+                .readTimeout(200, TimeUnit.SECONDS)
                 .build();
         return new Retrofit.Builder()
                 .client(okHttpClient)

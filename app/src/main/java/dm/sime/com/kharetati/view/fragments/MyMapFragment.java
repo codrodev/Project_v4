@@ -62,7 +62,7 @@ public class MyMapFragment extends Fragment{
     private void initializePage() throws JSONException {
         model.initializeMyMapViewModel(getActivity());
 
-        model.getAllSitePlans();
+
         model.getMutableMyMap().observe(getActivity(), new Observer<List<MyMapResults>>() {
             @Override
             public void onChanged(List<MyMapResults> lstMyMap) {

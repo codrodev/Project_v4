@@ -322,6 +322,12 @@ public class MapFragment extends Fragment implements MapNavigator {
             }
         });
          myBottomSheet = MapFunctionBottomSheetFragment.newInstance();
+        if(isMakani){
+            binding.imgBookmark.setVisibility(View.GONE);
+        }
+        else{
+            binding.imgBookmark.setVisibility(View.VISIBLE);
+        }
 
         // Button Bookmark click event
         binding.imgBookmark.setOnClickListener(new View.OnClickListener() {
@@ -417,6 +423,7 @@ public class MapFragment extends Fragment implements MapNavigator {
     @Override
     public void onFailure(String Msg) {
         AlertDialogUtil.showProgressBar(getActivity(),false);
+        AlertDialogUtil.errorAlertDialog("",Msg,getActivity().getResources().getString(R.string.ok),getActivity());
     }
 
     class MapViewTouchListener extends DefaultMapViewOnTouchListener {
@@ -489,6 +496,7 @@ public class MapFragment extends Fragment implements MapNavigator {
                         findParcel(parcelId);
                     }
                     else{
+                        onFailure(getString(R.string.valid_plot_number));
                         Toast.makeText(MapFragment.this.getActivity(), R.string.valid_plot_number,
                                 Toast.LENGTH_LONG).show();
                     }
@@ -697,8 +705,8 @@ public class MapFragment extends Fragment implements MapNavigator {
                                 //if(progressDialog != null)
                                 //    progressDialog.hide();
                                 if(!result.iterator().hasNext()){
-                                    AlertDialogUtil.errorAlertDialog("",getActivity().getResources().getString(R.string.plot_does_not_exist),
-                                            getActivity().getResources().getString(R.string.ok), getActivity());
+
+                                    onFailure(getActivity().getResources().getString(R.string.plot_does_not_exist));
                                     /*imgNext.setVisibility(View.GONE);
                                     imgNext.clearAnimation();*/
                                 }else{

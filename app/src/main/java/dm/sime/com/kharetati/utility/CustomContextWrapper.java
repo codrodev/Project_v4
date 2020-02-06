@@ -56,11 +56,11 @@ public class CustomContextWrapper extends ContextWrapper {
         //context = context.getApplicationContext().createConfigurationContext(configuration);//change made by sudeep
         context = context.createConfigurationContext(configuration);
 
-    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+    } /*else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
         configuration.setLocale(newLocale);
         context = context.createConfigurationContext(configuration);
 
-    } else {
+    }*/ else {
         configuration.locale = newLocale;
         res.updateConfiguration(configuration, res.getDisplayMetrics());
     }

@@ -103,5 +103,8 @@ public class BookmarkViewModel extends ViewModel {
     }
 
     private void getBookMarks(BookmarksResponse bookmarksResponse) {
+
+
     }
+
 }

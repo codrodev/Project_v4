@@ -10,6 +10,7 @@ import dm.sime.com.kharetati.datas.models.KharetatiUser;
 import dm.sime.com.kharetati.datas.models.MakaniToDLTMResponse;
 import dm.sime.com.kharetati.datas.models.ParcelResponse;
 import dm.sime.com.kharetati.datas.models.RetrieveMyMapResponse;
+import dm.sime.com.kharetati.datas.models.SerializeMyMapModel;
 import dm.sime.com.kharetati.datas.models.SessionResponse;
 import dm.sime.com.kharetati.datas.models.User;
 import dm.sime.com.kharetati.datas.models.UserRegistration;
@@ -56,8 +57,11 @@ public interface MyApiService {
     Observable<MakaniToDLTMResponse> getMakaniToDLTM(@Body HTTPRequestBody.MakaniBody makaniBody);
 
     //to get all Siteplans
-    @POST()
-    Observable<RetrieveMyMapResponse> getAllSitePlans(@Url String url,@Body JSONObject sitePlanBody);
+    /*@POST
+    Observable<RetrieveMyMapResponse> getAllSitePlans(@Url String url,@Body JSONObject sitePlanBody);*/
+
+    @POST
+    Observable<RetrieveMyMapResponse> getAllSitePlans(@Url String url, @Body SerializeMyMapModel model);
 
     //to save Book mark
     @POST("Bookmark/addBookmark")

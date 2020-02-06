@@ -57,11 +57,11 @@
 
             <dm.sime.com.kharetati.view.customview.SwitchCompatEx
                 android:id="@+id/switchLanguage"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
+                android:layout_width="100dp"
+                android:layout_height="35dp"
                 android:layout_marginTop="8dp"
                 android:minHeight="40dp"
-                android:layoutDirection="ltr"
+                android:layoutDirection="locale"
                 android:fontFamily="@font/dubai_font"
                 android:visibility="gone"
                 android:textOn="Arabic"
@@ -112,11 +112,15 @@
                     android:layoutDirection="locale"
                     android:orientation="horizontal">
                     <ImageView
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
+                        android:layout_width="@dimen/edit_drawable_height"
+                        android:layout_height="@dimen/edit_drawable_height"
                         android:src="@drawable/login_user"
                         android:scaleType="centerInside"
-                        android:layout_margin="8dp"/>
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="4dp"/>
                     <AutoCompleteTextView
                         android:id="@+id/editUserName"
                         android:layout_width="match_parent"
@@ -144,6 +148,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
+                    android:layout_marginTop="-8dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:background="@color/light_gray"/>
@@ -152,20 +157,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layoutDirection="locale"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
                 <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="@dimen/edit_drawable_height"
+                    android:layout_height="@dimen/edit_drawable_height"
                     android:scaleType="centerInside"
                     android:src="@drawable/login_password"
-                    android:layout_margin="8dp"/>
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="4dp"/>
 
                 <EditText
                     android:id="@+id/editPassword"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edittext_height"
                     android:textAlignment="center"
-                    android:gravity="center"
+                    android:gravity="center_vertical"
                     android:layoutDirection="locale"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
@@ -185,6 +195,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
+                    android:layout_marginTop="-8dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:background="@color/light_gray"/>
@@ -193,8 +204,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:layoutDirection="locale"
                     android:layout_gravity="center_vertical"
                     android:id="@+id/layoutRememberMe"

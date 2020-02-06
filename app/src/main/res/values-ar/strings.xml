@@ -21,9 +21,9 @@
     <string name="PLEASE_ENTER_PLOTNUMBER">الرجاء إدخال رقم قطعة الأرض</string>
     <string name="valid_plot_number">الرجاء إدخال رقم قطعة أرض صحيح</string>
     <string name="plot_does_not_exist">الرجاء إدخال رقم قطعة أرض صحيح</string>
-    <string name="click_on_map">Please Click On The Map To Continue</string>
-    <string name="register">Do you want to create an account?</string>
-    <string name="forgot_password">Do you want rest your username or password?</string>
+    <string name="click_on_map">يرجى الضغط على قطعة الأرض للمتابعة</string>
+    <string name="register">هل تريد إنشاء حساب؟</string>
+    <string name="forgot_password">هل تريد استرجاع اسم المستخدم أو كلمة المرور؟</string>
     <string name="loading">جار التحميل...</string>
     <string name="not_now">أغلق</string>
     <string name="tap_to_choose">اضغط لاختيار المنطقة</string>
@@ -31,6 +31,9 @@
     <string name="no_valid_land">يرجى إدخال رقم ملكية صحيح</string>
     <string name="community_error">حدث خطا اثناء إحضار المجتمع</string>
     <string name="please_enter_land">يرجى إدخال رقم الملكية</string>
+    <string name="enter_username_and_password">الرجاء إدخال اسم المستخدم وكلمة المرور الخاصة بك</string>
+    <string name="enter_username">الرجاء إدخال اسم المستخدم</string>
+    <string name="enter_password">من فضلك أدخل رقمك السري</string>
 
 
 </resources>

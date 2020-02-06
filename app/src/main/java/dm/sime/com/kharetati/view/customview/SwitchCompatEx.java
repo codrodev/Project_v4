@@ -45,16 +45,17 @@ public class SwitchCompatEx extends SwitchCompat {
         //this.setBackground(null);
         thumbDrawable = new ThumbDrawable();
         trackDrawable = new TrackDrawable();
-        thumbLabel = this.isChecked()?this.getTextOn():this.getTextOff();
+
         //trackLabel =this.getTextOn();
         thumbLabelPaint = new Paint();
 
         thumbLabelPaint.setColor(THUMB_LABEL_COLOR);
         thumbLabelPaint.setAntiAlias(true);
         thumbLabelPaint.setTextSize(THUMB_LABEL_SIZE);
-        //setTextOff(Global.CURRENT_LOCALE.equals("en")? "English":"العربية");
-        //setTextOn(Global.CURRENT_LOCALE.equals("en")? "English":"العربية");
-
+        setTextOff(Global.CURRENT_LOCALE.equals("en")? "English":"العربية");
+        setTextOn(Global.CURRENT_LOCALE.equals("ar")? "English":"العربية");
+        thumbLabel = this.isChecked()?this.getTextOn():this.getTextOff();
+        trackLabel = this.isChecked()?this.getTextOff():this.getTextOn();
         this.setBackground(null);
         this.setTrackDrawable(trackDrawable);
         this.setThumbDrawable(thumbDrawable);
@@ -128,7 +129,7 @@ public class SwitchCompatEx extends SwitchCompat {
             trackLabelPaint.setColor(TRACK_LABEL_COLOR);
             trackLabelPaint.setAntiAlias(true);
             trackLabelPaint.setTextSize(TRACK_LABEL_SIZE);
-            setTextOn(Global.CURRENT_LOCALE.equals("en")? "العربية":"English");
+            //setTextOn(Global.CURRENT_LOCALE.equals("en")? "العربية":"English");
 
             /*if(Global.CURRENT_LOCALE.equals("en")){
                 setTextOn("Arabic");
@@ -164,7 +165,7 @@ public class SwitchCompatEx extends SwitchCompat {
             super.draw(canvas);
             invalidate();
             requestLayout();
-            setTextOff(Global.CURRENT_LOCALE.equals("en")? "English":"العربية");
+            //setTextOff(Global.CURRENT_LOCALE.equals("en")? "English":"العربية");
 
             drawLabel(canvas, thumbLabelBounds, thumbLabelPaint, thumbLabel);
         }

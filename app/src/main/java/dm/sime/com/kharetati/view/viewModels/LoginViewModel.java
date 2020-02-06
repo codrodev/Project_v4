@@ -17,10 +17,12 @@ import com.google.gson.GsonBuilder;
 import java.util.Observable;
 
 import dm.sime.com.kharetati.KharetatiApp;
+import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.datas.models.KharetatiUser;
 import dm.sime.com.kharetati.datas.network.ApiFactory;
 import dm.sime.com.kharetati.datas.network.MyApiService;
 import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
+import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.datas.models.AccessTokenResponse;
@@ -146,9 +148,17 @@ public class LoginViewModel extends ViewModel {
     public void onLoginButtonClick() {
 
         authListener.onStarted();
-        if (getDataEmail().isEmpty() || getDataPassword().isEmpty()) {
+        if (getDataEmail().isEmpty() && getDataPassword().isEmpty()) {
 
-            authListener.onFailure("Pleas Enter UserName or Password");
+            authListener.onFailure(activity.getResources().getString(R.string.enter_username_and_password));
+        }else if(getDataEmail().isEmpty()){
+
+            authListener.onFailure(activity.getResources().getString(R.string.enter_username));
+
+        } else if(getDataPassword().isEmpty()){
+
+            authListener.onFailure(activity.getResources().getString(R.string.enter_password));
+
         } else {
             //checking email and password are not null
             apiService = ApiFactory.getClient(new NetworkConnectionInterceptor(KharetatiApp.getInstance().getApplicationContext()));

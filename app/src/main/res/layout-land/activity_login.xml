@@ -61,7 +61,7 @@
 
             <dm.sime.com.kharetati.view.customview.SwitchCompatEx
                 android:id="@+id/switchLanguage"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"
                 android:minHeight="40dp"
@@ -114,7 +114,7 @@
                 <AutoCompleteTextView
                     android:id="@+id/editUserName"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/edittext_height"
+                    android:layout_height="@dimen/edit_drawable_height"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:paddingStart="8dp"
@@ -138,7 +138,7 @@
                 <EditText
                     android:id="@+id/editPassword"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/edittext_height"
+                    android:layout_height="@dimen/edit_drawable_height"
                     android:textAlignment="center"
                     android:gravity="center"
                     android:layoutDirection="locale"

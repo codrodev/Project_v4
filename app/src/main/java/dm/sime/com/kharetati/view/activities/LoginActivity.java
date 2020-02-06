@@ -226,13 +226,13 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
                 Global.isLanguageChanged = true;
 
-                    ((SwitchCompatEx)v).setChecked(false);
+                    ((SwitchCompatEx)v).setChecked(((SwitchCompatEx)v).isChecked());
                     CURRENT_LOCALE = (CURRENT_LOCALE.equals("ar")) ? "en" : "ar";
                     Global.changeLang(CURRENT_LOCALE, LoginActivity.this);
 
 
                     binding.switchLanguage.setTextOff((CURRENT_LOCALE.equals("ar")) ? "العربية" : "English");
-                    binding.switchLanguage.setTextOn((CURRENT_LOCALE.equals("en")) ? "العربية" : "English");
+                    binding.switchLanguage.setTextOn((CURRENT_LOCALE.equals("ar")) ? "العربية" : "English");
                     //binding.switchLanguage.setTextOn((CURRENT_LOCALE.equals("en")) ? "English" : "العربية");
                     recreate();
 
@@ -372,15 +372,15 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
                 LinearLayout.LayoutParams uaePassTextParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,elementHeight);
                 uaePassTextParams.gravity = Gravity.CENTER_VERTICAL;
-                uaePassTextParams.setMargins(leftMargin,topMargin,rightMargin,bottomMargin-5);
+                uaePassTextParams.setMargins(leftMargin,topMargin,rightMargin,bottomMargin);
                 binding.txtUAEPass.setLayoutParams(uaePassTextParams);
                 binding.txtUAEPass.setGravity(Gravity.CENTER_VERTICAL);
 
                 //UAE Pass Image
 
-                LinearLayout.LayoutParams uaePassImageParams = new LinearLayout.LayoutParams(2*elementHeight,elementHeight-48);
+                LinearLayout.LayoutParams uaePassImageParams = new LinearLayout.LayoutParams(175,80);
                 uaePassImageParams.gravity = Gravity.CENTER;
-                uaePassImageParams.setMargins(leftMargin,topMargin-24,rightMargin,bottomMargin);
+                uaePassImageParams.setMargins(leftMargin,topMargin-4,rightMargin,bottomMargin);
                 binding.imgUAEPass.setLayoutParams(uaePassImageParams);
                 binding.imgUAEPass.setScaleType(ImageView.ScaleType.FIT_XY);
 
@@ -390,6 +390,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                 anim.setFillEnabled(true);
                 anim.setFillAfter(true);
                 anim.setInterpolator(new AccelerateDecelerateInterpolator());
+
 
 
                 binding.imgBackground.setPadding(0, (int) ((Global.height/100)*24),0,0);
@@ -515,7 +516,9 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         progressBar.setVisibility(View.GONE);
         //binding.txtOR.setVisibility(View.VISIBLE);
         AlertDialogUtil.showProgressBar(this,false);
-        Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
+        AlertDialogUtil.errorAlertDialog("",message,getResources().getString(R.string.ok),this);
+
     }
 
     @Override
