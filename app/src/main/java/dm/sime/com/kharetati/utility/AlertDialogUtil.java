@@ -14,14 +14,21 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
+import java.util.ArrayList;
+
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.view.activities.LoginActivity;
+import dm.sime.com.kharetati.view.activities.MainActivity;
+import dm.sime.com.kharetati.view.activities.WebViewActivity;
 
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_CONTACT_US;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_WEBVIEW;
 
 public class AlertDialogUtil {
 
+
+    private static final String MAKANI_PACKAGE = "com.dm.makani" ;
 
     public static void errorAlertDialog(String title, String message, String btnTxt, Context context) {
         AlertDialog alertDialog = new AlertDialog.Builder(context)
@@ -55,13 +62,23 @@ public class AlertDialogUtil {
                         Intent intentOpenBrowser = new Intent(Intent.ACTION_VIEW);
                         //intentOpenBrowser.addCategory(Intent.CATEGORY_BROWSABLE);
                         String makaniurl;
-                        if (Global.getCurrentLanguage(activity).compareToIgnoreCase("en") == 0) {
-                            makaniurl = String.format(AppUrls.MAKANI_URL, "E", plotnumber);
+                        if (Global.CURRENT_LOCALE.equals("en")) {
+                            Global.webViewUrl = String.format(AppUrls.MAKANI_URL, "E", plotnumber);
                         } else {
-                            makaniurl = String.format(AppUrls.MAKANI_URL, "A", plotnumber);
+                            Global.webViewUrl = String.format(AppUrls.MAKANI_URL, "A", plotnumber);
                         }
-                        intentOpenBrowser.setData(Uri.parse(makaniurl));
-                        activity.startActivity(intentOpenBrowser);
+                        intentOpenBrowser.setData(Uri.parse(Global.webViewUrl));
+                        if(Global.isAppInstalled(MAKANI_PACKAGE,activity)){
+                            intentOpenBrowser.setPackage(MAKANI_PACKAGE);
+                            activity.startActivity(intentOpenBrowser);
+
+                        }
+                        else{
+                            ArrayList al = new ArrayList();
+                            al.add(Global.webViewUrl);
+                            ((MainActivity)context).loadFragment(FR_WEBVIEW,true,al);
+                        }
+
                     }
 
                 }).setNegativeButton(btnTxt2, new DialogInterface.OnClickListener() {
@@ -1028,11 +1045,12 @@ public class AlertDialogUtil {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        String url = Global.CURRENT_LOCALE.compareToIgnoreCase("en")==0 ? AppUrls.registration_url_en: AppUrls.registration_url_ar ;
+                        Global.webViewUrl = Global.CURRENT_LOCALE.compareToIgnoreCase("en")==0 ? AppUrls.registration_url_en: AppUrls.registration_url_ar ;
 
-                        Intent i = new Intent(Intent.ACTION_VIEW);
-                        i.setData(Uri.parse(url));
-                        context.startActivity(i);
+                        Intent intent = new Intent(context, WebViewActivity.class);
+                        intent.setData(Uri.parse(Global.webViewUrl));
+                        context.startActivity(intent);
+
                     }
 
 
@@ -1070,11 +1088,12 @@ public class AlertDialogUtil {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        String url = Global.CURRENT_LOCALE.compareToIgnoreCase("en")==0 ? AppUrls.forgotpassword_url_en: AppUrls.forgotpassword_url_ar ;
+                        Global.webViewUrl = Global.CURRENT_LOCALE.compareToIgnoreCase("en")==0 ? AppUrls.forgotpassword_url_en: AppUrls.forgotpassword_url_ar ;
 
-                        Intent i = new Intent(Intent.ACTION_VIEW);
-                        i.setData(Uri.parse(url));
-                        context.startActivity(i);
+                        Intent intent = new Intent(context, WebViewActivity.class);
+                        intent.setData(Uri.parse(Global.webViewUrl));
+                        context.startActivity(intent);
+
                     }
 
 

@@ -80,8 +80,6 @@ public class HomeViewModel extends ViewModel {
         this.activity = context;
         this.repository = repository;
 
-        apiService = ApiFactory.getClient(new NetworkConnectionInterceptor(KharetatiApp.getInstance().getApplicationContext()));
-        this.repository = new HomeRepository(apiService);
         kharetatiApp = KharetatiApp.create(activity);
     }
 

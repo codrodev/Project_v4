@@ -34,6 +34,9 @@
     <string name="enter_username_and_password">الرجاء إدخال اسم المستخدم وكلمة المرور الخاصة بك</string>
     <string name="enter_username">الرجاء إدخال اسم المستخدم</string>
     <string name="enter_password">من فضلك أدخل رقمك السري</string>
+    <string name="wrong_username_password">اسم المستخدم أو كلمة المرور خاطئة</string>
+    <string name="server_connect_error">الرجاء المحاولة لاحقاً</string>
+    <string name="error_response">الرجاء التحقق من الاتصال وحاول مرة أخرى</string>
 
 
 </resources>

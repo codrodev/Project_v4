@@ -34,6 +34,10 @@
     <string name="enter_username">Please enter your username</string>
     <string name="enter_password">Please enter your password</string>
 
+    <string name="wrong_username_password">Wrong username or password</string>
+    <string name="server_connect_error">Unable to Connect to Server</string>
+    <string name="error_response">An error occured while fetching data</string>
+
     <string-array name="request_site_plan">
         <item>land owner</item>
         <item>proof attachment</item>

@@ -13,6 +13,9 @@ import androidx.lifecycle.ViewModelProviders;
 
 import org.json.JSONException;
 
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import dm.sime.com.kharetati.R;
@@ -21,10 +24,12 @@ import dm.sime.com.kharetati.datas.models.MyMapResults;
 import dm.sime.com.kharetati.datas.network.ApiFactory;
 import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
 import dm.sime.com.kharetati.datas.repositories.MyMapRepository;
+import dm.sime.com.kharetati.utility.AlertDialogUtil;
+import dm.sime.com.kharetati.view.navigators.MyMapNavigator;
 import dm.sime.com.kharetati.view.viewModels.MyMapViewModel;
 import dm.sime.com.kharetati.view.viewmodelfactories.MyMapViewModelFactory;
 
-public class MyMapFragment extends Fragment{
+public class MyMapFragment extends Fragment implements MyMapNavigator {
 
     FragmentMymapBinding binding;
     MyMapViewModel model;
@@ -35,15 +40,25 @@ public class MyMapFragment extends Fragment{
     public static MyMapFragment newInstance(){
         MyMapFragment fragment = new MyMapFragment();
         return fragment;
+
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        repository = new MyMapRepository(ApiFactory.getClient(new NetworkConnectionInterceptor(getActivity())));
+        try {
+            repository = new MyMapRepository(ApiFactory.getClient(new NetworkConnectionInterceptor(getActivity())));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
         factory = new MyMapViewModelFactory(getActivity(),repository);
 
         model = ViewModelProviders.of(getActivity(),factory).get(MyMapViewModel.class);
+        model.myMapNavigator = this;
     }
 
     @Override
@@ -72,5 +87,23 @@ public class MyMapFragment extends Fragment{
                 }
             }
         });
+    }
+
+    @Override
+    public void onStarted() {
+        AlertDialogUtil.showProgressBar(getActivity(),true);
+    }
+
+    @Override
+    public void onSuccess() {
+        AlertDialogUtil.showProgressBar(getActivity(),false);
+
+    }
+
+    @Override
+    public void onFailure(String Msg) {
+        AlertDialogUtil.showProgressBar(getActivity(),true);
+        AlertDialogUtil.errorAlertDialog("",Msg,getActivity().getResources().getString(R.string.ok),getActivity());
+
     }
 }

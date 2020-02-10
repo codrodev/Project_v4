@@ -88,6 +88,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0-rc03"
+    implementation 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
 
 //    implementation group: 'androidx.lifecycle', name: 'lifecycle-extensions', version: '2.2.0-rc03'
 

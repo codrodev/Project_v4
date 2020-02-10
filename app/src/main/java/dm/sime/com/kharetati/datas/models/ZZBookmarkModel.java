@@ -4,27 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ZZBookmarkModel {
-    private List<ZZBookmark> lstMyMap;
+    private List<ZZBookmark> lstBookmark;
 
     public ZZBookmarkModel(){
 
     }
     public List<ZZBookmark> getMyMapList(){
-        lstMyMap = new ArrayList<>();
+        lstBookmark = new ArrayList<>();
         populateMyMap();
-        return lstMyMap;
+        return lstBookmark;
     }
 
     private void populateMyMap(){
         ZZBookmark obj;
-        for (int x = 0; x < 10; x++){
+        for (int x = 0; x < lstBookmark.size(); x++){
+
             obj = new ZZBookmark();
+            obj.setPlotNo(lstBookmark.get(x).getPlotNo());
+            obj.setArea(lstBookmark.get(x).getArea());
+            obj.setDate(lstBookmark.get(x).getDate());
 
-            obj.setPlotNo(String.valueOf(11120 + x));
-            obj.setArea("area" + String.valueOf(11120 + x));
-            obj.setDate("12/05/2020");
-
-            lstMyMap.add(obj);
+            lstBookmark.add(obj);
         }
     }
 }

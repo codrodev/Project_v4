@@ -1,5 +1,7 @@
 package dm.sime.com.kharetati.datas.models;
 
+import java.util.List;
+
 public class ZZBookmark {
     private String plotNo;
     private String area;

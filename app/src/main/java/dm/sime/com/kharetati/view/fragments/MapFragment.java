@@ -9,15 +9,23 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,6 +71,9 @@ import com.esri.arcgisruntime.symbology.SimpleLineSymbol;
 import com.esri.arcgisruntime.symbology.TextSymbol;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -85,6 +96,7 @@ import dm.sime.com.kharetati.utility.ViewAnimationUtils;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.activities.MainActivity;
+import dm.sime.com.kharetati.view.adapters.DashboardPagerAdapter;
 import dm.sime.com.kharetati.view.navigators.MapNavigator;
 import dm.sime.com.kharetati.view.viewModels.MapViewModel;
 import dm.sime.com.kharetati.view.viewmodelfactories.MapViewModelFactory;
@@ -93,7 +105,7 @@ public class MapFragment extends Fragment implements MapNavigator {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private String parcelId="1120231", latLong;
+    private String parcelId, latLong;
     public static boolean isMakani,isLand;
     double latitude, longitude;
     MapViewModel model;
@@ -101,7 +113,7 @@ public class MapFragment extends Fragment implements MapNavigator {
     private View mRootView;
     private ArcGISMapImageLayer dynamicLayer = null;
     private GraphicsOverlay graphicsLayer = null;
-    private  UserCredential userCredentials = null;
+    private UserCredential userCredentials = null;
     static String token = Global.arcgis_token;
     Snackbar snack;
     private boolean hasCommunityTaskCompleted=true;
@@ -117,6 +129,8 @@ public class MapFragment extends Fragment implements MapNavigator {
     MapFunctionBottomSheetFragment myBottomSheet;
     private MapRepository repository;
     private MapViewModelFactory factory;
+    private ArrayAdapter<String> adapterHistory;
+    private ListView searchhistoryListView;
 
 
     public MapFragment() {
@@ -137,7 +151,15 @@ public class MapFragment extends Fragment implements MapNavigator {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        repository = new MapRepository(ApiFactory.getClient(new NetworkConnectionInterceptor(getActivity())));
+        try {
+            repository = new MapRepository(ApiFactory.getClient(new NetworkConnectionInterceptor(getActivity())));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
         factory = new MapViewModelFactory(getActivity(),repository);
 
         model = ViewModelProviders.of(getActivity(),factory).get(MapViewModel.class);
@@ -180,6 +202,7 @@ public class MapFragment extends Fragment implements MapNavigator {
         binding.setFragmentMapVM(model);
         mRootView = binding.getRoot();
         mapView = mRootView.findViewById(R.id.mapView);
+        binding.txtPlotNo.setText(parcelId);
         onStarted();
         initializePage();
         ArcGISRuntimeEnvironment.setLicense("runtimelite,1000,rud3984007683,none,GB2PMD17J0YJ2J7EZ071");
@@ -328,6 +351,131 @@ public class MapFragment extends Fragment implements MapNavigator {
         else{
             binding.imgBookmark.setVisibility(View.VISIBLE);
         }
+
+        adapterHistory = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, Global.getParcelNumbersFromHistory(getActivity()));
+
+
+        binding.txtPlotNo.setVisibility(View.VISIBLE);
+        binding.txtPlotNo.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_DONE && binding.txtPlotNo.getText().toString().trim().length()!=0 ) {
+                    isMakani = false;
+                    Global.landNumber = null;
+                    Global.area = null;
+                    Global.area_ar = null;
+                    parcelId = binding.txtPlotNo.getText().toString();
+                    return initiateFindParcelRequest();
+                }
+                Global.hideSoftKeyboard(getActivity());
+                return false;
+            }
+        });
+
+
+        searchhistoryListView=(ListView)binding.getRoot().findViewById(R.id.fragment_map_searchhistory);
+        searchhistoryListView.setAdapter(adapterHistory);
+        searchhistoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                skipOnTextChangeEvent=true;
+                binding.txtPlotNo.setText(searchhistoryListView.getItemAtPosition(position).toString());
+                skipOnTextChangeEvent=false;
+                searchhistoryListView.setVisibility(View.GONE);
+                if(!isMakani) {
+                    parcelId = searchhistoryListView.getItemAtPosition(position).toString();
+                    initiateFindParcelRequest();
+                }
+            }
+        });
+
+        Handler handlerHistoryVisibilityController = new Handler();
+        final Runnable runnableHistoryVisibilityController = new Runnable() {
+            public void run() {
+                if(binding.txtPlotNo.getText().toString().trim().length()>1)
+                {
+                    if(adapterHistory.getCount()>0)
+                        searchhistoryListView.setVisibility(View.VISIBLE);
+                    else
+                        searchhistoryListView.setVisibility(View.GONE);
+                }
+                else{
+                    searchhistoryListView.setVisibility(View.GONE);
+                }
+            }
+        };
+
+        binding.txtPlotNo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(!skipOnTextChangeEvent)
+                {
+                    adapterHistory.getFilter().filter(s.toString());
+                    adapterHistory.notifyDataSetChanged();
+                }
+
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!skipOnTextChangeEvent)
+                {
+                    final Timer timer=new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            handlerHistoryVisibilityController.post(runnableHistoryVisibilityController);
+                            timer.cancel();
+                        }
+                    },100);
+                }
+            }
+        });
+        binding.txtPlotNo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus) skipOnTextChangeEvent=false;
+            }
+        });
+        binding.txtPlotNo.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+
+
+        //Button search Button click event
+
+        binding.imgSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!Global.isConnected(getActivity())) {
+
+                    if(Global.appMsg!=null)
+                        AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning),Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr() , getResources().getString(R.string.ok), getActivity());
+                    else
+                        AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
+
+                }
+                else{
+                    onStarted();
+                    isMakani = false;
+                    Global.landNumber = null;
+                    Global.area = null;
+                    Global.area_ar = null;
+                    if(binding.txtPlotNo.getText()!=null){
+                        parcelId = binding.txtPlotNo.getText().toString();
+                        initiateFindParcelRequest();
+                    }
+                    else{
+                        onFailure(getString(R.string.PLEASE_ENTER_PLOTNUMBER));
+
+                    }
+
+
+                    }
+            }
+        });
+
 
         // Button Bookmark click event
         binding.imgBookmark.setOnClickListener(new View.OnClickListener() {
@@ -482,6 +630,7 @@ public class MapFragment extends Fragment implements MapNavigator {
 
     }
     private boolean initiateFindParcelRequest(){
+        onStarted();
         //searchhistoryListView.setVisibility(View.GONE);
         PlotDetails.clearCommunity();
         //parcelId = txtPlotNo.getText().toString().trim().replaceAll("\\s+","");
@@ -502,6 +651,7 @@ public class MapFragment extends Fragment implements MapNavigator {
                     }
                 }
                 else{
+                    onFailure(getString(R.string.valid_plot_number));
                     Toast.makeText(MapFragment.this.getActivity(), R.string.valid_plot_number,
                             Toast.LENGTH_LONG).show();
                 }
@@ -515,10 +665,9 @@ public class MapFragment extends Fragment implements MapNavigator {
 
                         return true;
                     } else
-                        AlertDialogUtil.errorAlertDialog("", getResources().getString(R.string.valid_plot_number), getResources().getString(R.string.ok), getActivity());
+                        onFailure(getString(R.string.valid_plot_number));
                 } else {
-                    Toast.makeText(MapFragment.this.getActivity(), R.string.valid_plot_number,
-                            Toast.LENGTH_LONG).show();
+                    onFailure(getString(R.string.valid_plot_number));
                 }
 
             }
@@ -587,10 +736,10 @@ public class MapFragment extends Fragment implements MapNavigator {
                                 break;
                             }
 
-                            AlertDialogUtil.showProgressBar(getActivity(),false);
 
                             showSnackBar();
                             onSuccess();
+                            searchhistoryListView.setVisibility(View.GONE);
                             myBottomSheet.show(getActivity().getSupportFragmentManager(), myBottomSheet.getTag());
 
                             /*imgNext.setVisibility(View.VISIBLE );
@@ -610,13 +759,14 @@ public class MapFragment extends Fragment implements MapNavigator {
                             Log.e(MainActivity.class.getSimpleName(), e.toString());
 
                             //btnFind.setEnabled(true);
+                            onFailure(e.getMessage());
                         }
                     });
                 }
             });
         }
         catch(Exception ex){
-
+            onFailure(ex.getMessage());
         }
     }
     public void findParcel(String parcelId){
@@ -717,6 +867,8 @@ public class MapFragment extends Fragment implements MapNavigator {
 
                             } catch (InterruptedException | ExecutionException e) {
                                 Log.e(MainActivity.class.getSimpleName(), e.toString());
+
+                                onFailure(e.getMessage());
 
                                 /*btnFind.setEnabled(true);
                                 imgNext.setVisibility(View.GONE);

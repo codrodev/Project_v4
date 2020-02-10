@@ -83,9 +83,6 @@ public class LoginViewModel extends ViewModel {
     public void onGuestLoginButtonClick(){
 
         authListener.onStarted();
-        apiService = ApiFactory.getClient(new NetworkConnectionInterceptor(KharetatiApp.getInstance().getApplicationContext()));
-        repository = new UserRepository(apiService);
-
         kharetatiApp = KharetatiApp.create(activity);
 
         HTTPRequestBody.GuestBody guestBody = new HTTPRequestBody.GuestBody();
@@ -161,8 +158,6 @@ public class LoginViewModel extends ViewModel {
 
         } else {
             //checking email and password are not null
-            apiService = ApiFactory.getClient(new NetworkConnectionInterceptor(KharetatiApp.getInstance().getApplicationContext()));
-            repository = new UserRepository(apiService);
 
             kharetatiApp = KharetatiApp.create(activity);
             //MyApiService apiService = kharetatiApp.getApiService();
@@ -264,10 +259,10 @@ public class LoginViewModel extends ViewModel {
 
 
             } else {
-                authListener.onFailure("Invalid email or Password");
+                authListener.onFailure(activity.getResources().getString(R.string.wrong_username_password));
             }
         } else {
-            authListener.onFailure("Unable to connect with the remote server");
+            authListener.onFailure(activity.getResources().getString(R.string.server_connect_error));
         }
     }
 

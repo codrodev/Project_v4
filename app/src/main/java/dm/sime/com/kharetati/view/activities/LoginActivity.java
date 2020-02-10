@@ -31,6 +31,10 @@ import androidx.lifecycle.ViewModelProviders;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.ActivityLoginBinding;
 import dm.sime.com.kharetati.datas.network.ApiFactory;
@@ -83,7 +87,15 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         binding = DataBindingUtil.setContentView(LoginActivity.this, R.layout.activity_login);
 
         gson = new GsonBuilder().serializeNulls().create();
-        repository = new UserRepository(ApiFactory.getClient(new NetworkConnectionInterceptor(this)));
+        try {
+            repository = new UserRepository(ApiFactory.getClient(new NetworkConnectionInterceptor(this)));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
         factory = new AuthViewModelFactory(this,repository);
         progressBar = new ProgressBar(this);
 
@@ -226,7 +238,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
                 Global.isLanguageChanged = true;
 
-                    ((SwitchCompatEx)v).setChecked(((SwitchCompatEx)v).isChecked());
+                    ((SwitchCompatEx)v).setChecked(false);
                     CURRENT_LOCALE = (CURRENT_LOCALE.equals("ar")) ? "en" : "ar";
                     Global.changeLang(CURRENT_LOCALE, LoginActivity.this);
 

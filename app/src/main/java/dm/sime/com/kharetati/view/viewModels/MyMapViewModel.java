@@ -23,6 +23,7 @@ import dm.sime.com.kharetati.datas.repositories.MyMapRepository;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.view.adapters.MyMapAdapter;
+import dm.sime.com.kharetati.view.navigators.MyMapNavigator;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -38,6 +39,7 @@ public class MyMapViewModel extends ViewModel {
     private MyMapRepository repository;
     private KharetatiApp kharetatiApp;
     private Activity activity;
+    public MyMapNavigator myMapNavigator;
 
 
 
@@ -80,6 +82,8 @@ public class MyMapViewModel extends ViewModel {
 
     public void getAllSitePlans(Context context){
 
+        myMapNavigator.onStarted();
+
         String url = AppUrls.RETRIEVE_MY_MAPS;
 
         Map<String, Object> params = new HashMap<>();
@@ -112,12 +116,13 @@ public class MyMapViewModel extends ViewModel {
                         }
                     }, new Consumer<Throwable>() {
                         @Override public void accept(Throwable throwable) throws Exception {
+                            myMapNavigator.onFailure(throwable.getMessage());
                             //homeNavigator.onFailure("Unable to connect the remote server");
                         }
                     });
             compositeDisposable.add(disposable);
         } catch (Exception ex){
-
+                myMapNavigator.onFailure(ex.getMessage());
         }
     }
 
@@ -125,5 +130,6 @@ public class MyMapViewModel extends ViewModel {
         mutableMyMap = new MutableLiveData<>();
         mutableMyMap.setValue(Arrays.asList(retrieveMyMapResponse.getMyMapResults()));
         adapter = new MyMapAdapter(R.layout.adapter_mymap, this, context);
+        myMapNavigator.onSuccess();
     }
 }

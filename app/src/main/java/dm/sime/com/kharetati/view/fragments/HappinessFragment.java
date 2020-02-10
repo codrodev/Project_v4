@@ -1,10 +1,13 @@
 package dm.sime.com.kharetati.view.fragments;
 
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import ae.dsg.happiness.*;
 
@@ -22,6 +25,7 @@ import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
+import dm.sime.com.kharetati.view.activities.WebViewActivity;
 import dm.sime.com.kharetati.view.viewModels.HappinessViewModel;
 
 public class HappinessFragment extends Fragment {
@@ -73,14 +77,52 @@ public class HappinessFragment extends Fragment {
     private void initializePage() {
         binding.webHappiness.setNestedScrollingEnabled(true);
         webView =binding.webHappiness;
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setWebViewClient(new HappinessWebViewClient());
         if(!Global.isConnected(getContext())){
             AlertDialogUtil.errorAlertDialog(getString(R.string.lbl_warning), getString(R.string.internet_connection_problem1), getString(R.string.ok), getContext());
             getActivity().getSupportFragmentManager().popBackStack();
         }
         else{
+            AlertDialogUtil.showProgressBar(getActivity(),true);
             load(currentType);
         }
     }
+    public class HappinessWebViewClient extends android.webkit.WebViewClient{
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+
+            AlertDialogUtil.showProgressBar(getActivity(),true);
+
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+            view.loadUrl(url);
+            return true;
+        }
+
+        @Override
+        public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error){
+            AlertDialogUtil.showProgressBar(getActivity(),false);
+
+
+
+
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+
+            AlertDialogUtil.showProgressBar(getActivity(),false);
+
+
+        }
+
+    }
+
     private void load(TYPE type) {
         currentType = type;
 

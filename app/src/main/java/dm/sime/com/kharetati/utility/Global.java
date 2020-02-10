@@ -50,6 +50,7 @@ import dm.sime.com.kharetati.datas.models.MyMapResults;
 import dm.sime.com.kharetati.datas.models.User;
 import dm.sime.com.kharetati.view.activities.LoginActivity;
 import dm.sime.com.kharetati.view.activities.MainActivity;
+import retrofit2.http.Url;
 
 import static dm.sime.com.kharetati.utility.constants.AppConstants.REMEMBER_USER;
 import static dm.sime.com.kharetati.utility.constants.AppConstants.USER_OBJECT;
@@ -103,6 +104,7 @@ public class Global {
     public static AlertDialog alertDialog;
     public static String subNo;
     public static String LandNo;
+    public static String webViewUrl;
     private static Context context;
     public static boolean isLanguageChanged = false;
     public static String noctemplateUrl;
@@ -377,26 +379,25 @@ public class Global {
         locale = new Locale(lang);
         CURRENT_LOCALE = lang;
         Locale.setDefault(locale);
-        Configuration config = context.getApplicationContext().getResources().getConfiguration();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
-            config.setLocale(locale);
-        else
-            config.locale=locale;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+        android.content.res.Configuration config = new android.content.res.Configuration();
+        if (Build.VERSION.SDK_INT >Build.VERSION_CODES.N){
             config.setLocale(locale);
             context.getApplicationContext().createConfigurationContext(config);
-        } else {
-            config.setLocale(locale);
-            config.locale=locale;
-            context.getApplicationContext().getResources().updateConfiguration(config, context.getApplicationContext().getResources().getDisplayMetrics());
         }
+        else{
+            config.locale = locale;
+            context.getResources().updateConfiguration(config,context.getResources().getDisplayMetrics());
+        }
+
+
 
         /*android.content.res.Configuration config = new android.content.res.Configuration();
         config.locale = locale;
         context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());*/
 
     }
+
 
     public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
@@ -471,44 +472,25 @@ public class Global {
 
     public static boolean openMakani(final String plotnumber, final Activity activity) {
         Intent intentNativeMakani = activity.getPackageManager().getLaunchIntentForPackage("com.dm.makani");
-        //if (intentNativeMakani != null) {
-        //    intentNativeMakani.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        //intentNativeMakani.putExtra("my_text", "This is my text to send.");
-        //    activity.startActivity(intentNativeMakani);
-        //} else {
+
         if (!Global.isConnected(activity)) {
             AlertDialogUtil.errorAlertDialog(activity.getString(R.string.lbl_warning), ((MainActivity) activity).getResources().getString(R.string.internet_connection_problem1), activity.getString(R.string.ok), activity);
             return false;
         }
-        // Bring user to the market or let them choose an app?
-        //intent = new Intent(Intent.ACTION_VIEW);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        //intent.setData(Uri.parse("market://details?id=" + "com.dm.makani"));
-        //startActivity(intent);
+
         AlertDialogUtil.navigateToMakaniAlert(activity.getApplicationContext().getResources().getString(R.string.open_makani_confirm),
                 activity.getApplicationContext().getResources().getString(R.string.ok), activity.getApplicationContext().getResources().getString(R.string.cancel), activity, activity, plotnumber);
-
-            /*android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
-            builder.setMessage(activity.getApplicationContext().getResources().getString(R.string.open_makani_confirm)).setPositiveButton(activity.getApplicationContext().getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Intent intentOpenBrowser = new Intent(Intent.ACTION_VIEW);
-                    //intentOpenBrowser.addCategory(Intent.CATEGORY_BROWSABLE);
-                    String makaniurl;
-                    if(Global.getCurrentLanguage(activity).compareToIgnoreCase("en")==0){
-                        makaniurl=String.format(AppConstants.MAKANI_URL,"E",plotnumber);
-                    }else{
-                        makaniurl=String.format(AppConstants.MAKANI_URL,"A",plotnumber);
-                    }
-                    intentOpenBrowser.setData(Uri.parse(makaniurl));
-                    activity.startActivity(intentOpenBrowser);
-                }
-            }).setNegativeButton(activity.getApplicationContext().getResources().getString(R.string.no), null).show();
-
-*/
-
-        //}
         return true;
+    }
+
+    public static boolean isAppInstalled(String packageName,Activity context) {
+        Intent mIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+        if (mIntent != null) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     private static final String arabic = "\u06f0\u06f1\u06f2\u06f3\u06f4\u06f5\u06f6\u06f7\u06f8\u06f9";

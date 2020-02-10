@@ -34,6 +34,9 @@ import androidx.viewpager.widget.ViewPager;
 import com.esri.arcgisruntime.mapping.view.MapView;
 import com.google.android.material.tabs.TabLayout;
 
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -116,7 +119,15 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        repository = new HomeRepository(ApiFactory.getClient(new NetworkConnectionInterceptor(getActivity())));
+        try {
+            repository = new HomeRepository(ApiFactory.getClient(new NetworkConnectionInterceptor(getActivity())));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
         factory = new HomeViewModelFactory(getActivity(),repository);
 
         model = ViewModelProviders.of(getActivity(),factory).get(HomeViewModel.class);

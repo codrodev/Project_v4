@@ -11,6 +11,8 @@ import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.datas.models.HTTPRequestBody;
 import dm.sime.com.kharetati.datas.models.MakaniToDLTMResponse;
+import dm.sime.com.kharetati.datas.models.PlotDetails;
+import dm.sime.com.kharetati.datas.models.SerializeBookMarksModel;
 import dm.sime.com.kharetati.datas.network.ApiFactory;
 import dm.sime.com.kharetati.datas.network.MyApiService;
 import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
@@ -70,52 +72,59 @@ public class MapViewModel extends ViewModel {
     public void saveAsBookMark(Boolean isSave) {
 
         mapNavigator.onStarted();
-        apiService = ApiFactory.getClient(new NetworkConnectionInterceptor(KharetatiApp.getInstance().getApplicationContext()));
-        repository = new MapRepository(apiService);
+
 
         kharetatiApp = KharetatiApp.create(activity);
 
 
-
+        SerializeBookMarksModel model = new SerializeBookMarksModel();
+        model.setUserID(Global.sime_userid);
+        model.setArea(PlotDetails.area);
+        model.setParcelNumber(PlotDetails.parcelNo);
+        model.setCommunity(PlotDetails.communityEn);
+        model.setCommunityAr(PlotDetails.communityAr);
 
         HTTPRequestBody.BookMarkBody bookMarkBody = new HTTPRequestBody.BookMarkBody();
 
 
-        Disposable disposable = repository.saveAsBookMark(bookMarkBody)
+        Disposable disposable = repository.saveAsBookMark(model)
                 .subscribeOn(kharetatiApp.subscribeScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<JSONObject>() {
                     @Override
                     public void accept(JSONObject response) throws Exception {
 
-                            try {
-                   if (response != null ) {
-                       mapNavigator.onSuccess();
-                       if (!response.getBoolean("isError")) {
-                           if(isSave){
-                               if(response.getBoolean("isExisting"))
-                                   AlertDialogUtil.errorAlertDialog(activity.getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getPlotAvailableFavEn(): Global.appMsg.getPlotAvailableFavAr(), activity.getResources().getString(R.string.ok), activity);
-                               else
-                                   AlertDialogUtil.errorAlertDialog(activity.getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getPlotAddedFavEn(): Global.appMsg.getPlotAddedFavAr(), activity.getResources().getString(R.string.ok), activity);
+                        try {
+                            if (response != null && response.toString().isEmpty()) {
+                                mapNavigator.onSuccess();
+                                if (!response.getBoolean("isError")) {
+                                    if (isSave) {
+                                        if (response.getBoolean("isExisting"))
+                                            AlertDialogUtil.errorAlertDialog(activity.getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getPlotAvailableFavEn() : Global.appMsg.getPlotAvailableFavAr(), activity.getResources().getString(R.string.ok), activity);
+                                        else
+                                            AlertDialogUtil.errorAlertDialog(activity.getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getPlotAddedFavEn() : Global.appMsg.getPlotAddedFavAr(), activity.getResources().getString(R.string.ok), activity);
 
-                           }
-                       } else {
-                           if(isSave) {
-                               AlertDialogUtil.errorAlertDialog(activity.getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getErrorFetchingDataEn(): Global.appMsg.getErrorFetchingDataAr(), activity.getResources().getString(R.string.ok), activity);
+                                    }
+                                } else {
+                                    if (isSave) {
+                                        AlertDialogUtil.errorAlertDialog(activity.getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getErrorFetchingDataEn() : Global.appMsg.getErrorFetchingDataAr(), activity.getResources().getString(R.string.ok), activity);
 
-                           }
-                       }
-                   }
-               } catch (Exception e) {
-                   mapNavigator.onFailure(e.getMessage());
-                   e.printStackTrace();
-               }
-
+                                    }
+                                }
+                            }
+                            else{
+                                mapNavigator.onFailure(activity.getResources().getString(R.string.error_response));
+                            }
+                        } catch (Exception e) {
+                            mapNavigator.onFailure(e.getMessage());
+                            e.printStackTrace();
+                        }
 
                     }
                 }, new Consumer<Throwable>() {
-                    @Override public void accept(Throwable throwable) throws Exception {
-                        mapNavigator.onFailure("Unable to connect the remote server");
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        mapNavigator.onFailure(throwable.getMessage());
                     }
                 });
 

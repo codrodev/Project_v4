@@ -4,6 +4,10 @@ import android.app.Application;
 import android.content.Context;
 import android.os.StrictMode;
 
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+
 import dm.sime.com.kharetati.datas.network.ApiFactory;
 import dm.sime.com.kharetati.datas.network.MyApiService;
 import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
@@ -42,7 +46,7 @@ public class KharetatiApp extends Application {
 
         networkConnectionInterceptor = new NetworkConnectionInterceptor(kharetatiApp);
     }
-    public MyApiService getApiService(){
+    public MyApiService getApiService() throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         if(apiService == null){
             apiService = ApiFactory.getClient(networkConnectionInterceptor);
         }

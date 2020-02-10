@@ -18,32 +18,7 @@ public class CustomContextWrapper extends ContextWrapper {
 
    @SuppressWarnings("deprecation")
     public static ContextWrapper wrap(Context context, String language) {
- /*       Configuration config = context.getResources().getConfiguration();
-        Locale sysLocale = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            sysLocale = getSystemLocale(config);
-        } else {
-            sysLocale = getSystemLocaleLegacy(config);
-        }
-        //if (!language.equals("") && !sysLocale.getLanguage().equals(language)) {
-            Locale locale = new Locale(language);
-            Locale.setDefault(locale);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                setSystemLocale(config, locale);
-            } else {
-                setSystemLocaleLegacy(config, locale);
-            }
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                config.setLocale(locale);
-                context = context.createConfigurationContext(config);
-
-            } else {
-                config.locale=locale;
-                context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
-            }
-        //}
-        return new CustomContextWrapper(context);*/
     Resources res = context.getResources();
     Configuration configuration = res.getConfiguration();
     Locale newLocale = new Locale(language);
@@ -53,7 +28,7 @@ public class CustomContextWrapper extends ContextWrapper {
         LocaleList localeList = new LocaleList(newLocale);
         LocaleList.setDefault(localeList);
         configuration.setLocales(localeList);
-        //context = context.getApplicationContext().createConfigurationContext(configuration);//change made by sudeep
+//        context = context.getApplicationContext().createConfigurationContext(configuration);
         context = context.createConfigurationContext(configuration);
 
     } /*else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {

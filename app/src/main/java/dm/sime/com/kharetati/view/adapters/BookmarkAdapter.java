@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dm.sime.com.kharetati.BR;
@@ -23,10 +24,13 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
     static Context context;
     List<ZZBookmark> lstBookmark;
 
-    public BookmarkAdapter(@LayoutRes int layoutId, BookmarkViewModel viewModel, Context context) {
+    public BookmarkAdapter(@LayoutRes int layoutId, BookmarkViewModel viewModel,Context context) {
         this.layoutId = layoutId;
         this.viewModel = viewModel;
         this.context = context;
+        lstBookmark = new ArrayList<>();
+
+
     }
 
     private int getLayoutIdForPosition(int position) {
@@ -54,7 +58,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
 
     @Override
     public int getItemCount() {
-        return  lstBookmark.size();
+        return lstBookmark.size();
     }
 
     public void setBookmark(List<ZZBookmark> lstBookmark) {

@@ -1,6 +1,8 @@
 package dm.sime.com.kharetati.datas.repositories;
 
 import dm.sime.com.kharetati.datas.models.BookmarksResponse;
+import dm.sime.com.kharetati.datas.models.SerializeBookmarkModel;
+import dm.sime.com.kharetati.datas.models.ZZBookmark;
 import dm.sime.com.kharetati.datas.network.MyApiService;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
@@ -13,7 +15,7 @@ public class BookMarkRepository {
         this.api = apiService;
     }
 
-    public Observable<BookmarksResponse> getAllBookMarks(int userId) {
-        return api.getAllBookMarks(userId);
+    public Observable<BookmarksResponse> getAllBookMarks(SerializeBookmarkModel model) {
+        return api.getAllBookMarks(model);
     }
 }

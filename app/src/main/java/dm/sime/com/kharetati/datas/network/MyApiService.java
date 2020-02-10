@@ -10,10 +10,13 @@ import dm.sime.com.kharetati.datas.models.KharetatiUser;
 import dm.sime.com.kharetati.datas.models.MakaniToDLTMResponse;
 import dm.sime.com.kharetati.datas.models.ParcelResponse;
 import dm.sime.com.kharetati.datas.models.RetrieveMyMapResponse;
+import dm.sime.com.kharetati.datas.models.SerializeBookMarksModel;
+import dm.sime.com.kharetati.datas.models.SerializeBookmarkModel;
 import dm.sime.com.kharetati.datas.models.SerializeMyMapModel;
 import dm.sime.com.kharetati.datas.models.SessionResponse;
 import dm.sime.com.kharetati.datas.models.User;
 import dm.sime.com.kharetati.datas.models.UserRegistration;
+import dm.sime.com.kharetati.datas.models.ZZBookmark;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.AppConstants;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
@@ -65,7 +68,7 @@ public interface MyApiService {
 
     //to save Book mark
     @POST("Bookmark/addBookmark")
-    Observable<JSONObject> saveAsBookMark(@Body HTTPRequestBody.BookMarkBody bookMarkBody);
+    Observable<JSONObject> saveAsBookMark(@Body SerializeBookMarksModel bookMarkBody);
 
 
     // to get parcel Id in land search
@@ -76,9 +79,8 @@ public interface MyApiService {
     @POST("KharetatiWebService/getAreaNames")
     Observable<GetAreaNamesResponse> getAreaNames(@Body HTTPRequestBody.AreaBody areaBody);
 
-
     //to load Bookmarks
-    @FormUrlEncoded
+
     @POST("Bookmark/getAllBookMark")
-    Observable<BookmarksResponse> getAllBookMarks(@Field("UserID") int userId);
+    Observable<BookmarksResponse> getAllBookMarks(@Body SerializeBookmarkModel model);
 }

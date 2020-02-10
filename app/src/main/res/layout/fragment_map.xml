@@ -11,12 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <com.esri.arcgisruntime.mapping.view.MapView
-            android:id="@+id/mapView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            mapoptions.ZoomLevel="16"
-            mapoptions.center="25.276987, 55.296249"/>
         <!--<com.esri.android.map.MapView
             android:id="@+id/mapView"
             mapoptions.ZoomLevel="16"
@@ -24,70 +18,136 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible" />-->
+
+        <com.esri.arcgisruntime.mapping.view.MapView
+            android:id="@+id/mapView"
+            mapoptions.ZoomLevel="16"
+            mapoptions.center="25.276987, 55.296249"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="-71dp"
+            tools:layout_editor_absoluteY="-74dp">
+
+
+        </com.esri.arcgisruntime.mapping.view.MapView>
+
         <FrameLayout
+            android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="50dp"
             android:elevation="20dp"
-            android:layout_marginTop="50dp">
+            android:layoutDirection="locale"
+            app:layout_constraintTop_toTopOf="parent">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginHorizontal="16dp"
                 android:background="@color/white"
-                android:weightSum="2"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="1.75">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
                     android:layout_marginVertical="10dp"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
                     <ImageView
                         android:id="@+id/imgBack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
                         android:layout_gravity="left|center_vertical"
-                        android:src="@drawable/ic_arrow_back_24dp"/>
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:src="@drawable/ic_arrow_back_24dp" />
+
+
+
+                        <EditText
+                            android:id="@+id/txtPlotNo"
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/white"
+                            android:digits="0123456789١٢٣٤٥٦٧٨٩١٠"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:hint="-  -  -  -  -  -  -"
+                            android:inputType="number"
+                            android:maxLength="20"
+                            android:textSize="16sp" />
+
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_weight="1"
                     android:layout_marginVertical="10dp"
-                    android:weightSum="4">
+                    android:layout_weight=".75"
+                    android:orientation="horizontal"
+                    android:weightSum="5">
+
+                    <ImageView
+                        android:id="@+id/imgSearch"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="left|center_vertical"
+                        android:layout_weight="1"
+                        android:src="@drawable/search_100x100" />
+
                     <ImageView
                         android:id="@+id/imgLayer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left|center_vertical"
-                        android:src="@drawable/ic_layers_24dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_layers_24dp" />
+
                     <ImageView
                         android:id="@+id/imgBookmark"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="left|center_vertical"
-                        android:src="@drawable/ic_book_black_24dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_book_black_24dp" />
+
                     <ImageView
                         android:id="@+id/imgRecenter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left|center_vertical"
-                        android:src="@drawable/ic_center_focus_strong_24dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_center_focus_strong_24dp" />
+
                     <ImageView
                         android:id="@+id/imgMakani"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="left|center_vertical"
-                        android:src="@drawable/makani"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1"
+                        android:src="@drawable/makani" />
                 </LinearLayout>
+
             </LinearLayout>
         </FrameLayout>
+
+        <ListView
+            android:id="@+id/fragment_map_searchhistory"
+            android:layout_width="120dp"
+
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="145dp"
+            android:layout_marginEnd="170dp"
+
+            android:alpha=".9"
+            android:background="@android:color/white"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/mapView" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
