@@ -24,6 +24,7 @@ import dm.sime.com.kharetati.datas.models.PlotDetails;
 import dm.sime.com.kharetati.utility.CustomContextWrapper;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.fragments.RequestDetailsFragment;
 import dm.sime.com.kharetati.view.fragments.WebViewFragment;
 import dm.sime.com.kharetati.view.fragments.BottomNavigationFragmentSheet;
 import dm.sime.com.kharetati.view.fragments.ContactusFragment;
@@ -34,6 +35,7 @@ import dm.sime.com.kharetati.view.fragments.MapFragment;
 import dm.sime.com.kharetati.view.fragments.ParentSiteplanFragment;
 import dm.sime.com.kharetati.view.navigators.FragmentNavigator;
 import dm.sime.com.kharetati.view.navigators.MainNavigator;
+import dm.sime.com.kharetati.view.viewModels.LoginViewModel;
 import dm.sime.com.kharetati.view.viewModels.MainViewModel;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
@@ -72,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         binding.customBottomBar.add(new MeowBottomNavigation.Model(5, R.drawable.ic_more_horiz_white_24dp));
 
         binding.customBottomBar.show(3, true);
+        binding.txtUsername.setText(Global.isUserLoggedIn?(Global.getUser(this).getFullname()): LoginViewModel.guestName);
 
         binding.customBottomBar.setOnClickMenuListener(new Function1<MeowBottomNavigation.Model, Unit>() {
             @Override
@@ -135,6 +138,9 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 }
                 else if(Global.isMakani)
                     fragment = MapFragment.newInstance(PlotDetails.parcelNo,Global.dltm);
+                else if(Global.isBookmarks)
+                    fragment = MapFragment.newInstance(PlotDetails.parcelNo,"");
+
 
                 break;
             case FragmentTAGS.FR_REQUEST_SITE_PLAN:
@@ -150,6 +156,15 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 if(params!=null)
                     Global.webViewUrl =params.get(0).toString();
                 fragment = WebViewFragment.newInstance(Global.webViewUrl);
+                break;
+            case FragmentTAGS.FR_REQUEST_DETAILS:
+                if(params != null && params.size() > 0) {
+                    fragment = RequestDetailsFragment.newInstance(params.get(0).toString(), params.get(1).toString(), params.get(2).toString(),
+                            params.get(3).toString(),params.get(4).toString(),params.get(5).toString(),params.get(6).toString(),params.get(7).toString(),params.get(8).toString());
+                } else {
+                    fragment = RequestDetailsFragment.newInstance("", "", "",
+                            "","","","","","");
+                }
                 break;
             default:
                 fragment = HomeFragment.newInstance();

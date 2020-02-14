@@ -2,31 +2,25 @@ package dm.sime.com.kharetati.view.viewModels;
 
 import android.app.Activity;
 import android.content.Context;
+import android.widget.Adapter;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.map.ObjectMapper;
+import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
+import dm.sime.com.kharetati.datas.models.Bookmark;
 import dm.sime.com.kharetati.datas.models.BookmarksResponse;
-import dm.sime.com.kharetati.datas.models.SerializeBookMarksModel;
 import dm.sime.com.kharetati.datas.models.SerializeBookmarkModel;
-import dm.sime.com.kharetati.datas.models.ZZBookmark;
-import dm.sime.com.kharetati.datas.network.ApiFactory;
-import dm.sime.com.kharetati.datas.network.MyApiService;
-import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
 import dm.sime.com.kharetati.datas.repositories.BookMarkRepository;
-import dm.sime.com.kharetati.datas.repositories.UserRepository;
+import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.view.adapters.BookmarkAdapter;
 import dm.sime.com.kharetati.view.navigators.BookMarksNavigator;
@@ -34,12 +28,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-import retrofit2.Call;
 
 public class BookmarkViewModel extends ViewModel {
     BookmarkAdapter adapter;
     BookmarksResponse model;
-    MutableLiveData<List<ZZBookmark>> mutableBookmark = new MutableLiveData<>();
+    MutableLiveData<List<Bookmark>> mutableBookmark = new MutableLiveData<>();
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     private BookMarkRepository repository;
@@ -48,12 +41,14 @@ public class BookmarkViewModel extends ViewModel {
     public BookMarksNavigator bookMarksNavigator;
     @SerializedName("UserID")
     private int userId;
-    private ArrayList<ZZBookmark> arrayList;
+
 
 
     public BookmarkViewModel(Activity context, BookMarkRepository repository){
         this.activity = context;
         this.repository = repository;
+        kharetatiApp = KharetatiApp.create(activity);
+
     }
 
     /*public BookmarkViewModel(){
@@ -64,11 +59,11 @@ public class BookmarkViewModel extends ViewModel {
         model = new BookmarksResponse();
         getAllBookMarks();
         /*mutableBookmark = new MutableLiveData<>();
-        mutableBookmark.setValue(model.getMyMapList());
+        mutableBookmark.setValue(Arrays.asList(model.getBookmarklist()));
         adapter = new BookmarkAdapter(R.layout.adapter_bookmark, this, context);*/
     }
 
-    public MutableLiveData<List<ZZBookmark>> getMutableBookmark(){
+    public MutableLiveData<List<Bookmark>> getMutableBookmark(){
         return mutableBookmark;
     }
 
@@ -76,14 +71,14 @@ public class BookmarkViewModel extends ViewModel {
         //return mutableInAppNotifications.getValue();
     }
 
-    public ZZBookmark getCurrentBookmark(int position){
+    public Bookmark getCurrentBookmark(int position){
         if (mutableBookmark.getValue() != null ) {
             return mutableBookmark.getValue().get(position);
         }
         return null;
     }
 
-    public void  setBookmarkAdapter(List<ZZBookmark> lstMyMap) {
+    public void  setBookmarkAdapter(List<Bookmark> lstMyMap) {
         this.adapter.setBookmark(lstMyMap);
         this.adapter.notifyDataSetChanged();
     }
@@ -96,7 +91,6 @@ public class BookmarkViewModel extends ViewModel {
 
 
         bookMarksNavigator.onStarted();
-        kharetatiApp = KharetatiApp.create(activity);
         //userId =Global.sime_userid;
         userId =1003;
 
@@ -123,17 +117,81 @@ public class BookmarkViewModel extends ViewModel {
 
 
         compositeDisposable.add(disposable);
-
     }
 
     private void getBookMarks(BookmarksResponse bookmarksResponse) {
-        mutableBookmark = new MutableLiveData<>();
 
+
+        mutableBookmark =new MutableLiveData<>();
         mutableBookmark.setValue(Arrays.asList(bookmarksResponse.getBookmarklist()));
         adapter = new BookmarkAdapter(R.layout.adapter_bookmark, this, activity);
+
+        setBookmarkAdapter(Arrays.asList(bookmarksResponse.getBookmarklist()));      //bookMarksNavigator.updateUI();
+
+
         bookMarksNavigator.onSuccess();
 
 
     }
 
+    public void deleteBookMark(Bookmark data) {
+        bookMarksNavigator.onStarted();
+        SerializeBookmarkModel model = new SerializeBookmarkModel();
+        model.setUserID(1003);
+        model.setParcelNumber(data.ParcelNumber);
+
+        Disposable disposable = repository.deleteBookMark(model)
+                .subscribeOn(kharetatiApp.subscribeScheduler())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<JSONObject>() {
+                    @Override public void accept(JSONObject deleteResponse) throws Exception {
+                        deleteBookmarks(deleteResponse,data);
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override public void accept(Throwable throwable) throws Exception {
+                        bookMarksNavigator.onFailure(throwable.getMessage());
+
+                    }
+                });
+
+
+        compositeDisposable.add(disposable);
+
+
+
+    }
+
+    private void deleteBookmarks(JSONObject deleteResponse, Bookmark data) {
+        try {
+            if(deleteResponse != null){
+
+                if(!deleteResponse.getBoolean("isError")){
+                    if(deleteResponse.getString("message").compareToIgnoreCase("success")==0){
+                        //BookmarksAdapter.this.data.remove(data);
+                        ((BookmarkAdapter)(Adapter)activity).lstBookmark.remove(data);
+                        ((BookmarkAdapter)(Adapter)activity).notifyDataSetChanged();
+                        bookMarksNavigator.onDeleteSuccess(((BookmarkAdapter)(Adapter)activity).lstBookmark);
+                        AlertDialogUtil.errorAlertDialog("", activity.getString(R.string.favourite_deleted), activity.getString(R.string.ok), activity);
+
+
+                        /*notifyDataSetChanged();
+
+
+                        if( BookmarksAdapter.this.data.size()==0) fragment.txtMsg.setVisibility(View.VISIBLE);
+                        else fragment.txtMsg.setVisibility(View.GONE);*/
+                    }
+                    else {
+                        bookMarksNavigator.onFailure(activity.getResources().getString(R.string.error_response));
+                    }
+                }
+
+            }
+        } catch (Exception e) {
+
+            bookMarksNavigator.onFailure(e.getMessage());
+            e.printStackTrace();
+        }
+
+    }
 }

@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import org.json.JSONException;
 
@@ -25,6 +26,7 @@ import dm.sime.com.kharetati.datas.network.ApiFactory;
 import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
 import dm.sime.com.kharetati.datas.repositories.MyMapRepository;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
+import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.view.navigators.MyMapNavigator;
 import dm.sime.com.kharetati.view.viewModels.MyMapViewModel;
 import dm.sime.com.kharetati.view.viewmodelfactories.MyMapViewModelFactory;
@@ -84,6 +86,9 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
                 //model.loading.set(View.GONE);
                 if (lstMyMap.size() > 0) {
                     model.setMyMapAdapter(lstMyMap);
+                    binding.recylerMyMaps.setAdapter(model.getMyMapAdapter());
+                    binding.recylerMyMaps.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    binding.recylerMyMaps.setHasFixedSize(true);
                 }
             }
         });
@@ -97,13 +102,27 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
     @Override
     public void onSuccess() {
         AlertDialogUtil.showProgressBar(getActivity(),false);
+        binding.recylerMyMaps.setAdapter(model.getMyMapAdapter());
+
 
     }
 
     @Override
     public void onFailure(String Msg) {
-        AlertDialogUtil.showProgressBar(getActivity(),true);
+        AlertDialogUtil.showProgressBar(getActivity(),false);
         AlertDialogUtil.errorAlertDialog("",Msg,getActivity().getResources().getString(R.string.ok),getActivity());
+
+    }
+
+    @Override
+    public void onViewSitePlanSuccess() {
+        AlertDialogUtil.showProgressBar(getActivity(),false);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
 
     }
 }

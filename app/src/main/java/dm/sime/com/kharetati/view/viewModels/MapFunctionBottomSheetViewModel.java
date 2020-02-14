@@ -31,6 +31,7 @@ public class MapFunctionBottomSheetViewModel extends ViewModel {
     }
 
     public MutableLiveData<List<FunctionsOnMap>> getMutableFunctionsOnMap(){
+
         return mutableFunctionOnMap;
     }
 

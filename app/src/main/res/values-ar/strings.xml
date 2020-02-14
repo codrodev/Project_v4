@@ -37,6 +37,24 @@
     <string name="wrong_username_password">اسم المستخدم أو كلمة المرور خاطئة</string>
     <string name="server_connect_error">الرجاء المحاولة لاحقاً</string>
     <string name="error_response">الرجاء التحقق من الاتصال وحاول مرة أخرى</string>
-
+    <string name="invalid_makani">الرجاء إدخال رقم مكاني صحيح</string>
+    <string name="enter_makani_number">ادخل رقم مكاني الخاص بك</string>
+    <string name="pay">دفع</string>
+    <string name="paid">مدفوعة</string>
+    <string name="LBL_REQUEST_STATUS">حالة الطلب:</string>
+    <string name="LBL_DATE_TIME">التاريخ :</string>
+    <string name="parcelid">رقم قطعة الأرض</string>
+    <string name="voucher_num">رقم أذن الدفع</string>
+    <string name="amount">المبلغ</string>
+    <string name="payment_channels">قنوات الدفع</string>
+    <string name="pay_now">الدفع الان</string>
+    <string name="payment_warning">يرجى إتمام عملية الدفع خلال 5 أيام، في حالة عدم الدفع سيتم إلغاء الطلب*</string>
+    <string name="done">تم الانتهاء</string>
+    <string name="request_num">رقم الطلب</string>
+    <string name="request_details">تفاصيل الطلب</string>
+    <string name="plot_no">عدد مؤامرة</string>
+    <string name="favourite_deleted">تم حذف المفضلة بنجاح</string>
+    <string name="NO_FAVOURITE_PLOTS_FOUND">لا تتوفر إشارات مرجعية</string>
+    <string name="confirmation_delete">هل أنت متأكد أنك تريد الحذف؟</string>
 
 </resources>

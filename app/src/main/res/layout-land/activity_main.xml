@@ -50,17 +50,19 @@
                         android:gravity="center_vertical"
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical">
+
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/dubai_font"
-                            android:text="Muhammad"
-                            android:textStyle="bold"
-                            android:textColor="@color/white"
-                            android:layout_marginHorizontal="10dp"
-                            android:gravity="center_vertical"
+                            android:layout_height="23dp"
+                            android:id="@+id/txtUsername"
                             android:layout_gravity="center_vertical"
-                            android:textSize="18dp" />
+                            android:layout_marginHorizontal="10dp"
+                            android:fontFamily="@font/dubai_font"
+                            android:gravity="center_vertical"
+                            android:text="Muhammad"
+                            android:textColor="@color/white"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -70,6 +72,7 @@
                             android:gravity="center_vertical"
                             android:layout_gravity="center_vertical"
                             android:textColor="@color/white"
+                            android:visibility="gone"
                             android:layout_marginHorizontal="10dp"
                             android:textSize="18dp" />
                     </LinearLayout>

@@ -147,8 +147,8 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         binding.editUserName.requestFocus();
         binding.cardLogin.setVisibility(View.GONE);
         binding.switchLanguage.setVisibility( View.GONE);
-        Global.enableClearTextInEditBox(binding.editUserName,getBaseContext());
-        Global.enableClearTextInEditBox(binding.editPassword,getBaseContext());
+        Global.enableClearTextInEditBox(binding.editUserName,LoginActivity.this);
+        Global.enableClearTextInEditBox(binding.editPassword,LoginActivity.this);
 
         binding.editUserName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -228,6 +228,15 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
             }
         });*/
+        if(CURRENT_LOCALE.equals("en")){
+            binding.switchLanguage.setTextOff( "English" );
+            binding.switchLanguage.setTextOn( "العربية" );
+        }
+        else{
+            binding.switchLanguage.setTextOn( "English" );
+            binding.switchLanguage.setTextOff( "العربية" );
+
+        }
 
         binding.switchLanguage.setOnClickListener(new View.OnClickListener() {
             private boolean isChecked;
@@ -243,10 +252,22 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                     Global.changeLang(CURRENT_LOCALE, LoginActivity.this);
 
 
-                    binding.switchLanguage.setTextOff((CURRENT_LOCALE.equals("ar")) ? "العربية" : "English");
-                    binding.switchLanguage.setTextOn((CURRENT_LOCALE.equals("ar")) ? "العربية" : "English");
+
+
+
+                   /* binding.switchLanguage.setTextOff((CURRENT_LOCALE.equals("ar")) ? "العربية" : "English");
+                    binding.switchLanguage.setTextOn((CURRENT_LOCALE.equals("ar")) ? "العربية" : "English");*/
                     //binding.switchLanguage.setTextOn((CURRENT_LOCALE.equals("en")) ? "English" : "العربية");
                     recreate();
+                if(CURRENT_LOCALE.equals("en")){
+                    binding.switchLanguage.setTextOff( "English" );
+                    binding.switchLanguage.setTextOn( "العربية" );
+                }
+                else{
+                    binding.switchLanguage.setTextOn( "English" );
+                    binding.switchLanguage.setTextOff( "العربية" );
+
+                }
 
 
 
@@ -312,6 +333,8 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                 binding.editUserName.setGravity(Gravity.CENTER_VERTICAL);
                 binding.editUserName.setLayoutDirection(View.LAYOUT_DIRECTION_LOCALE);
 
+
+
                 /*final Drawable x_editTextUserName = ContextCompat.getDrawable(LoginActivity.this, R.drawable.login_user);
                 x_editTextUserName.setBounds(-16, -16, x_editTextUserName.getIntrinsicWidth() - 16, x_editTextUserName.getIntrinsicHeight()-16);
                 if(CURRENT_LOCALE.equals("en"))
@@ -328,6 +351,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                 binding.editPassword.setLayoutParams(passwordParams);
                 binding.editPassword.setGravity( Gravity.CENTER_VERTICAL);
                 binding.editPassword.setLayoutDirection( View.LAYOUT_DIRECTION_LOCALE);
+
                 /*final Drawable x_editTextPass = ContextCompat.getDrawable(LoginActivity.this, R.drawable.login_password);
                 x_editTextPass.setBounds(-16, -16, x_editTextPass.getIntrinsicWidth() -16, x_editTextPass.getIntrinsicHeight()-16);
                 if(CURRENT_LOCALE.equals("en"))
@@ -497,8 +521,8 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
     @Override
     protected void onResume() {
         super.onResume();
-        Global.enableClearTextInEditBox(binding.editUserName,getBaseContext());
-        Global.enableClearTextInEditBox(binding.editPassword,getBaseContext());
+        Global.enableClearTextInEditBox(binding.editUserName,LoginActivity.this);
+        Global.enableClearTextInEditBox(binding.editPassword,LoginActivity.this);
     }
 
     @Override

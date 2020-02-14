@@ -52,8 +52,6 @@ public class WebViewActivity extends AppCompatActivity {
             AlertDialogUtil.showProgressBar(WebViewActivity.this,false);
 
 
-
-
         }
 
         @Override

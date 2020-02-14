@@ -17,6 +17,9 @@ import dm.sime.com.kharetati.view.viewModels.AttachmentViewModel;
 
 public class AttachmentFragment extends Fragment {
 
+    public static boolean isDeliveryDetails;
+    public static String paymentUrl;
+    public static String callBackURL;
     FragmentAttachmentBinding binding;
     AttachmentViewModel model;
     private View mRootView;

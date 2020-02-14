@@ -20,14 +20,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="2"
-                android:text="Click on site plan details"
+                android:text="Click on Bookmark details"
                 android:fontFamily="@font/dubai_font"
                 android:textSize="20dp"
+                android:id="@+id/textHeading"
                 android:textColor="@color/black"
                 android:layout_marginVertical="10dp"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/recyclerBookMarks"
                 app:setVerticalAdapter="@{fragmentBookmarkVM.getBookmarkAdapter()}"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

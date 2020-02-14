@@ -54,6 +54,7 @@ import io.reactivex.functions.Consumer;
 
 public class HomeViewModel extends ViewModel {
 
+    public boolean isExists =false;
     Activity activity;
 
     InAppNotificationAdapter adapterNotification;
@@ -215,7 +216,7 @@ public class HomeViewModel extends ViewModel {
                     }
                 }, new Consumer<Throwable>() {
                     @Override public void accept(Throwable throwable) throws Exception {
-                        homeNavigator.onFailure("Unable to connect the remote server");
+                        homeNavigator.onFailure(throwable.getMessage());
                     }
                 });
 
@@ -254,13 +255,16 @@ public class HomeViewModel extends ViewModel {
                         navigate(activity, FragmentTAGS.FR_MAP);
 
                     } else {
-                        AlertDialogUtil.errorAlertDialog("",
-                                Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getInvalidmakaniEn():Global.appMsg.getInvalidmakaniAr(),
-                                activity.getResources().getString(R.string.ok), activity);
+                        homeNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getInvalidmakaniEn():Global.appMsg.getInvalidmakaniAr());
+
                     }
                 }
+                else
+                    homeNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getInvalidmakaniEn():Global.appMsg.getInvalidmakaniAr());
 
             }
+            else
+                homeNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
 
         }
 
@@ -367,4 +371,5 @@ public class HomeViewModel extends ViewModel {
         }
 
     }
+
 }

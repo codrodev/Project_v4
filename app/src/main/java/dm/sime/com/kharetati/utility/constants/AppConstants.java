@@ -3,6 +3,13 @@ package dm.sime.com.kharetati.utility.constants;
 
 public final class AppConstants {
 
+    public static String[] PERMISSIONS_STORAGE = {
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            android.Manifest.permission.READ_EXTERNAL_STORAGE,
+    };
+    public static final int REQUEST_EXTERNAL_STORAGE_SITEPLAN = 104;
+
+
     public static final String TIMESTAMP_FORMAT = "yyyyMMdd_HHmmss";
     public static final int SPLASH_TIMMER = 3500;
     public static final int SPLASH_SLEEP = 100;

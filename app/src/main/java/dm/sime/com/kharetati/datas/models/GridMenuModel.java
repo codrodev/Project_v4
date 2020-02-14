@@ -3,13 +3,17 @@ package dm.sime.com.kharetati.datas.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import dm.sime.com.kharetati.utility.AlertDialogUtil;
+import dm.sime.com.kharetati.utility.Global;
+import dm.sime.com.kharetati.utility.constants.AppUrls;
+
 public class GridMenuModel {
     private Kharetati kharetati;
     List<Applications> lstApplications;
     List<SearchForm> lstSearchForm;
     List<FunctionsOnMap> lstFunctionsOnMap;
     String[] arrayApp = {"Request Site Plan", "Makani Search", "Land Registration", "Land Registration","Land Registration","Land Registration","Land Registration","Land Registration","Land Registration","Land Registration","Land Registration","Land Registration","Makani Search", "Makani Search", "Makani Search", "Makani Search", "Makani Search", "Makani Search", "Makani Search", "Makani Search", "Makani Search","Makani Search"};
-    String[] arrayFunctions = {"Request Site Plan", "Zoning Regulation", "Zoning Violation"};
+    String[] arrayFunctions = {"Request Site Plan", "Zoning Regulation", "Building Violation"};
 
     public Kharetati getKharetati ()
     {
@@ -31,7 +35,7 @@ public class GridMenuModel {
             obj.setNameEn(arrayApp[i - 1]);
             if(i == 2) {
                 obj.setIsNative("0");
-                obj.setLaunchUrl("https://www.google.com");
+                obj.setLaunchUrl("http://www.makani.ae/desktop/?lang=%E&landnumber=1120231");
             } else {
                 obj.setIsNative("1");
             }

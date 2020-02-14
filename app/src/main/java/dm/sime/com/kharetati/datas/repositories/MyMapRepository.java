@@ -3,9 +3,11 @@ package dm.sime.com.kharetati.datas.repositories;
 import org.json.JSONObject;
 
 import dm.sime.com.kharetati.datas.models.HTTPRequestBody;
+import dm.sime.com.kharetati.datas.models.RetrieveDocStreamResponse;
 import dm.sime.com.kharetati.datas.models.RetrieveMyMapResponse;
 import dm.sime.com.kharetati.datas.models.SerializeMyMapModel;
 import dm.sime.com.kharetati.datas.network.MyApiService;
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 
 public class MyMapRepository {
@@ -22,5 +24,9 @@ public class MyMapRepository {
 
     public Observable<RetrieveMyMapResponse> getAllSitePlans(String url, SerializeMyMapModel model){
         return api.getAllSitePlans(url ,model);
+    }
+
+    public Observable<RetrieveDocStreamResponse> viewSitePlan(String url, SerializeMyMapModel model) {
+        return api.viewSitePlans(url,model);
     }
 }

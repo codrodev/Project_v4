@@ -9,6 +9,7 @@ import dm.sime.com.kharetati.datas.models.HTTPRequestBody;
 import dm.sime.com.kharetati.datas.models.KharetatiUser;
 import dm.sime.com.kharetati.datas.models.MakaniToDLTMResponse;
 import dm.sime.com.kharetati.datas.models.ParcelResponse;
+import dm.sime.com.kharetati.datas.models.RetrieveDocStreamResponse;
 import dm.sime.com.kharetati.datas.models.RetrieveMyMapResponse;
 import dm.sime.com.kharetati.datas.models.SerializeBookMarksModel;
 import dm.sime.com.kharetati.datas.models.SerializeBookmarkModel;
@@ -83,4 +84,12 @@ public interface MyApiService {
 
     @POST("Bookmark/getAllBookMark")
     Observable<BookmarksResponse> getAllBookMarks(@Body SerializeBookmarkModel model);
+
+    //to view Siteplans in MyMaps
+    @POST
+    Observable<RetrieveDocStreamResponse> viewSitePlans(@Url String url, @Body SerializeMyMapModel model);
+
+    // to delete BookMark in Bookmarks
+    @POST("Bookmark/deleteBookMark")
+    Observable<JSONObject> deleteBookMark(@Body SerializeBookmarkModel model);
 }

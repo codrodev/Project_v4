@@ -52,7 +52,7 @@
                 android:layout_width="107dp"
                 android:layout_height="102dp"
                 android:layout_marginTop="16dp"
-                android:src="@drawable/logo"
+                android:src="@drawable/kharetati_white"
                 app:layout_constraintBottom_toBottomOf="@+id/imgBackground"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +62,7 @@
             <dm.sime.com.kharetati.view.customview.SwitchCompatEx
                 android:id="@+id/switchLanguage"
                 android:layout_width="100dp"
-                android:layout_height="48dp"
+                android:layout_height="35dp"
                 android:layout_marginTop="8dp"
                 android:minHeight="40dp"
                 android:layoutDirection="ltr"
@@ -110,58 +110,106 @@
 
                     android:layout_marginEnd="16dp"
                     android:src="@drawable/myid_logo" />
-
-                <AutoCompleteTextView
-                    android:id="@+id/editUserName"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/edit_drawable_height"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:drawableStart="@drawable/uae_pass"
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layoutDirection="locale"
-                    android:layout_marginBottom="4dp"
-                    android:background="@color/white"
-                    android:clickable="true"
-                    android:ems="10"
-                    android:focusable="true"
-                    android:textAlignment="center"
-                    android:gravity="center"
-                    android:hint="@string/username"
-                    android:fontFamily="@font/dubai_font"
-                    android:inputType="textEmailAddress"
-                    android:paddingLeft="8dp"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/login_font_size"/>
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="@dimen/edit_drawable_height"
+                        android:layout_height="@dimen/edit_drawable_height"
+                        android:src="@drawable/login_user"
+                        android:scaleType="centerInside"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="4dp"/>
+                    <AutoCompleteTextView
+                        android:id="@+id/editUserName"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/edittext_height"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:layoutDirection="locale"
+                        android:layout_marginBottom="4dp"
+                        android:background="@color/white"
+                        android:clickable="true"
+                        android:ems="10"
+                        android:focusable="true"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:hint="@string/username"
+                        android:fontFamily="@font/dubai_font"
+                        android:inputType="textEmailAddress"
+                        android:paddingLeft="8dp"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/login_font_size"/>
 
-                <EditText
-                    android:id="@+id/editPassword"
+                </LinearLayout>
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/edit_drawable_height"
-                    android:textAlignment="center"
-                    android:gravity="center"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="-8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@color/light_gray"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layoutDirection="locale"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:drawableStart="@drawable/login_password"
-                    android:textColor="@color/textColor"
-                    android:fontFamily="@font/dubai_font"
-                    android:layout_marginBottom="4dp"
-                    android:background="@color/white"
-                    android:ems="10"
-                    android:hint="@string/password"
-                    android:textSize="@dimen/login_font_size"
-                    android:inputType="textWebPassword"
-                    android:paddingLeft="8dp"/>
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="@dimen/edit_drawable_height"
+                        android:layout_height="@dimen/edit_drawable_height"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/login_password"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="4dp"/>
+
+                    <EditText
+                        android:id="@+id/editPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/edittext_height"
+                        android:textAlignment="center"
+                        android:gravity="center_vertical"
+                        android:layoutDirection="locale"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:textColor="@color/textColor"
+                        android:fontFamily="@font/dubai_font"
+                        android:layout_marginBottom="4dp"
+                        android:background="@color/white"
+                        android:ems="10"
+                        android:hint="@string/password"
+                        android:textSize="@dimen/login_font_size"
+                        android:inputType="textWebPassword"
+                        android:paddingLeft="8dp"/>
+
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="-8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@color/light_gray"/>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:layoutDirection="locale"
                     android:layout_gravity="center_vertical"
                     android:id="@+id/layoutRememberMe"
@@ -218,19 +266,19 @@
                     android:id="@+id/layoutOR"
                     android:orientation="horizontal">
 
-<!--
-                    <ProgressBar
-                        android:id="@+id/progressBar"
-                        style="?android:attr/progressBarStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="invisible"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.498"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
--->
+                    <!--
+                                        <ProgressBar
+                                            android:id="@+id/progressBar"
+                                            style="?android:attr/progressBarStyle"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:visibility="invisible"
+                                            app:layout_constraintBottom_toBottomOf="parent"
+                                            app:layout_constraintEnd_toEndOf="parent"
+                                            app:layout_constraintHorizontal_bias="0.498"
+                                            app:layout_constraintStart_toStartOf="parent"
+                                            app:layout_constraintTop_toTopOf="parent" />
+                    -->
 
                     <TextView
                         android:id="@+id/txtOR"
@@ -285,6 +333,7 @@
                     android:layout_width="100dp"
                     android:layout_height="50dp"
                     android:id="@+id/imgUAEPass"
+                    android:scaleType="fitXY"
                     android:layout_gravity="center"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"

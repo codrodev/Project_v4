@@ -17,10 +17,11 @@ import androidx.appcompat.app.AlertDialog;
 import java.util.ArrayList;
 
 import dm.sime.com.kharetati.R;
+import dm.sime.com.kharetati.datas.models.Bookmark;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
-import dm.sime.com.kharetati.view.activities.LoginActivity;
 import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.activities.WebViewActivity;
+import dm.sime.com.kharetati.view.fragments.BookmarkFragment;
 
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_CONTACT_US;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_WEBVIEW;
@@ -29,6 +30,7 @@ public class AlertDialogUtil {
 
 
     private static final String MAKANI_PACKAGE = "com.dm.makani" ;
+    private static ViewGroup viewGroup;
 
     public static void errorAlertDialog(String title, String message, String btnTxt, Context context) {
         AlertDialog alertDialog = new AlertDialog.Builder(context)
@@ -1163,9 +1165,49 @@ public class AlertDialogUtil {
         textView.setPadding(80, 25, 25, 10);
 
     }
+    public static void bookMarksDeleteAlert(String title, String message, String btnTxt, String btnTxt2, final Context context, Bookmark data) {
+
+
+        AlertDialog alertDialog = new AlertDialog.Builder(context)
+                .setTitle(title)
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton(btnTxt, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+                        BookmarkFragment.bmModel.deleteBookMark(data);
+
+                    }
+
+                }).setNegativeButton(btnTxt2, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).show();
+
+        TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+//        TextView textView1= (TextView) alertDialog.findViewById(android.support.v7.appcompat.R.id.alertTitle);
+
+        TextView positiveButton = (Button) alertDialog.findViewById(android.R.id.button1);
+        TextView negativeButton = (Button) alertDialog.findViewById(android.R.id.button2);
+        Typeface face= Typeface.createFromAsset(context.getAssets(),"Dubai-Regular.ttf");
+        textView.setTypeface(face);
+        positiveButton.setAllCaps(false);
+        negativeButton.setAllCaps(false);
+        positiveButton.setTypeface(face);
+        negativeButton.setTypeface(face);
+//        textView1.setTypeface(face);
+
+        textView.setPadding(80, 25, 25, 10);
+
+    }
     public static void showProgressBar(Activity context,boolean isShow) {
         //before inflating the custom alert dialog layout, we will get the current activity viewgroup
-        ViewGroup viewGroup = context.findViewById(android.R.id.content);
+        if(context!=null){
+        viewGroup = context.findViewById(android.R.id.content);
 
         //then we will inflate the custom alert dialog xml that we created
         View dialogView = LayoutInflater.from(context).inflate(R.layout.progressbar_layout, viewGroup, false);
@@ -1191,6 +1233,12 @@ public class AlertDialogUtil {
         else{
             if(Global.alertDialog!=null)
                 Global.alertDialog.cancel();
+        }
+        }
+        else{
+            if(Global.alertDialog!=null)
+                Global.alertDialog.cancel();
+
         }
 
     }

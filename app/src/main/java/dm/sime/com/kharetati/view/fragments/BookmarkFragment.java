@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
@@ -18,16 +19,14 @@ import java.util.List;
 
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.FragmentBookmarkBinding;
-import dm.sime.com.kharetati.datas.models.ZZBookmark;
+import dm.sime.com.kharetati.datas.models.Bookmark;
 import dm.sime.com.kharetati.datas.network.ApiFactory;
 import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
 import dm.sime.com.kharetati.datas.repositories.BookMarkRepository;
-import dm.sime.com.kharetati.datas.repositories.MyMapRepository;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.view.navigators.BookMarksNavigator;
 import dm.sime.com.kharetati.view.viewModels.BookmarkViewModel;
 import dm.sime.com.kharetati.view.viewmodelfactories.BookMarkViewModelFactory;
-import dm.sime.com.kharetati.view.viewmodelfactories.MyMapViewModelFactory;
 
 public class BookmarkFragment extends Fragment implements BookMarksNavigator {
 
@@ -36,6 +35,7 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
     private View mRootView;
     private BookMarkRepository repository;
     private BookMarkViewModelFactory factory;
+    public static BookmarkViewModel bmModel;
 
     public static BookmarkFragment newInstance(){
         BookmarkFragment fragment = new BookmarkFragment();
@@ -56,6 +56,7 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
         }
         factory = new BookMarkViewModelFactory(getActivity(),repository);
         model = ViewModelProviders.of(this,factory).get(BookmarkViewModel.class);
+        bmModel = model;
         model.bookMarksNavigator =this;
     }
 
@@ -72,12 +73,16 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
         model.initializeBookmarkViewModel(getActivity());
         //model.getAllBookMarks();
 
-        model.getMutableBookmark().observe(getActivity(), new Observer<List<ZZBookmark>>() {
+        model.getMutableBookmark().observe(getActivity(), new Observer<List<Bookmark>>() {
             @Override
-            public void onChanged(List<ZZBookmark> lstBookmark) {
+            public void onChanged(List<Bookmark> lstBookmark) {
                if(lstBookmark!=null){
                 if (lstBookmark.size() > 0) {
                     model.setBookmarkAdapter(lstBookmark);
+                    binding.recyclerBookMarks.setAdapter(model.getBookmarkAdapter());
+                    binding.recyclerBookMarks.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    binding.recyclerBookMarks.setHasFixedSize(true);
+
                 }
             }}
         });
@@ -91,6 +96,9 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
     @Override
     public void onSuccess() {
         AlertDialogUtil.showProgressBar(getActivity(),false);
+        binding.recyclerBookMarks.setAdapter(model.getBookmarkAdapter());
+
+
     }
 
     @Override
@@ -100,4 +108,14 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
         AlertDialogUtil.errorAlertDialog("",Msg,getActivity().getResources().getString(R.string.ok),getActivity());
 
     }
+
+    @Override
+    public void onDeleteSuccess(List<Bookmark> lstBookmark) {
+        AlertDialogUtil.showProgressBar(getActivity(),false);
+        if(lstBookmark.size()==0)
+            binding.textHeading.setText(getActivity().getResources().getString(R.string.NO_FAVOURITE_PLOTS_FOUND));
+
+    }
+
+
 }

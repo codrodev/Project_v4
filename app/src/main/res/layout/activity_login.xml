@@ -61,7 +61,7 @@
                 android:layout_height="35dp"
                 android:layout_marginTop="8dp"
                 android:minHeight="40dp"
-                android:layoutDirection="locale"
+                android:layoutDirection="ltr"
                 android:fontFamily="@font/dubai_font"
                 android:visibility="gone"
                 android:textOn="Arabic"

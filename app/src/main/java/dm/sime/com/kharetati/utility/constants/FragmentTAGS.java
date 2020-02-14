@@ -11,4 +11,6 @@ public class FragmentTAGS {
     public static final String FR_REQUEST_SITE_PLAN = "requestSitePlan";
 
     public static final String FR_WEBVIEW = "webview";
+    public static final String FR_REQUEST_DETAILS = "REQUEST DETAILS";
+    public static final String FR_ATTACHMENT ="ATTACHMENT" ;
 }

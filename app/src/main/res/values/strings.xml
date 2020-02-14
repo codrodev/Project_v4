@@ -36,7 +36,27 @@
 
     <string name="wrong_username_password">Wrong username or password</string>
     <string name="server_connect_error">Unable to Connect to Server</string>
-    <string name="error_response">An error occured while fetching data</string>
+    <string name="error_response">An error occurred while fetching data</string>
+    <string name="invalid_makani">Please enter a valid makani number</string>
+    <string name="enter_makani_number">Enter your Makani Number</string>
+    <string name="pay">Pay</string>
+    <string name="paid">Paid</string>
+    <string name="LBL_REQUEST_STATUS">Request Status:</string>
+    <string name="LBL_DATE_TIME">Date:</string>
+    <string name="parcelid">Parcel ID</string>
+    <string name="voucher_num">Voucher Number</string>
+    <string name="amount">Amount</string>
+    <string name="payment_channels">Payment Channels</string>
+    <string name="pay_now">Pay Now</string>
+    <string name="payment_warning">* The payment need to be done within 5 days, otherwise the request will be cancelled.</string>
+    <string name="done">Done</string>
+    <string name="request_num">Request Number</string>
+    <string name="request_details">Request Details</string>
+    <string name="plot_no">Plot No:</string>
+    <string name="favourite_deleted">Favorite has been successfully deleted</string>
+    <string name="NO_FAVOURITE_PLOTS_FOUND">Currently no favourites are available</string>
+    <string name="confirmation_delete">Are you sure you want to delete?</string>
+
 
     <string-array name="request_site_plan">
         <item>land owner</item>

@@ -613,6 +613,7 @@ public class MapFragment extends Fragment implements MapNavigator {
                             if(PlotDetails.plotGeometry!=null)
                             {
                                 //goToNext();
+                                if(!Global.isBookmarks)
                                 myBottomSheet.show(getActivity().getSupportFragmentManager(), myBottomSheet.getTag());
                                 // map click event perform here
 
@@ -740,6 +741,7 @@ public class MapFragment extends Fragment implements MapNavigator {
                             showSnackBar();
                             onSuccess();
                             searchhistoryListView.setVisibility(View.GONE);
+                            if(!Global.isBookmarks)
                             myBottomSheet.show(getActivity().getSupportFragmentManager(), myBottomSheet.getTag());
 
                             /*imgNext.setVisibility(View.VISIBLE );

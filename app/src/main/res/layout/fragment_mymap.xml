@@ -29,6 +29,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/recylerMyMaps"
                 app:setVerticalAdapter="@{fragmentMyMapVM.getMyMapAdapter()}"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

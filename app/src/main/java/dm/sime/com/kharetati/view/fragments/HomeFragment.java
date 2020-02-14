@@ -68,6 +68,7 @@ import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.adapters.GridMenuAdapter;
 import dm.sime.com.kharetati.view.adapters.GridMenuPagerAdapter;
 import dm.sime.com.kharetati.view.customview.CleanableEditText;
@@ -82,6 +83,7 @@ import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
 import static dm.sime.com.kharetati.utility.Global.isLand;
 import static dm.sime.com.kharetati.utility.Global.isMakani;
 import static dm.sime.com.kharetati.utility.Global.isPlotSearch;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_WEBVIEW;
 
 public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSelectedListener, EditText.OnEditorActionListener, ViewPager.OnPageChangeListener, HomeNavigator {
     FragmentHomeBinding binding;
@@ -187,9 +189,15 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         if(app.getLaunchUrl() != null && TextUtils.getTrimmedLength(app.getLaunchUrl()) > 0){
             binding.layoutRuntimeContainer.setVisibility(View.GONE);
             //toggleBottomSheet();
-            Intent intentOpenBrowser = new Intent(Intent.ACTION_VIEW);
+            /*Intent intentOpenBrowser = new Intent(Intent.ACTION_VIEW);
             intentOpenBrowser.setData(Uri.parse(app.getLaunchUrl()));
-            getActivity().startActivity(intentOpenBrowser);
+            getActivity().startActivity(intentOpenBrowser);*/
+
+            ArrayList al = new ArrayList();
+            al.add(app.getLaunchUrl());
+            ((MainActivity)getActivity()).loadFragment(FR_WEBVIEW,true,al);
+
+
         } else {
             lstSearchForm = app.getSearchForm();
             Global.setLstMapFunctions(app.getFunctionsOnMap());
@@ -205,9 +213,6 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             binding.tabRuntimeLayout.addTab(binding.tabRuntimeLayout.newTab().setText("PLOT NUMBER"));
             binding.tabRuntimeLayout.addTab(binding.tabRuntimeLayout.newTab().setText("DEED NUMBER"));
             binding.tabRuntimeLayout.addTab(binding.tabRuntimeLayout.newTab().setText("MAKANI NUMBER"));
-
-
-
 
             renderControl(0);
             binding.tabRuntimeLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -277,7 +282,8 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             break;
             case 2: {Global.isMakani =true;
                     Global.isLand =false;
-                Global.isPlotSearch =false; }
+                Global.isPlotSearch =false;
+            }
             break;
         }
         SearchForm form = lstSearchForm.get(position);
@@ -309,6 +315,8 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         x.setPadding(8,0,8,0);
         LinearLayout.LayoutParams xparams = new LinearLayout.LayoutParams( ViewGroup.LayoutParams.MATCH_PARENT, 150);
         xparams.setMargins(8,24,8,16);
+        if(isPlotSearch||isMakani)
+            x.requestFocus();
         x.setBackground(getActivity().getResources().getDrawable(R.drawable.border_background));
         binding.runtimeParent.addView(x);
         /*x.setOnClickListener(new View.OnClickListener() {
@@ -336,7 +344,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         LinearLayout spinnerLayout = new LinearLayout(getActivity());
         spinnerLayout.setOrientation(LinearLayout.HORIZONTAL);
         spinnerLayout.setBackgroundColor(getActivity().getResources().getColor(R.color.white));
-        LinearLayout.LayoutParams spinnerlayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 120);
+        LinearLayout.LayoutParams spinnerlayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 75);
         spinnerlayoutParams.setMargins(8,8,8,8);
         spinnerLayout.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);
         spinnerLayout.setBackground(getActivity().getResources().getDrawable(R.drawable.border_background));
@@ -345,13 +353,13 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         LinearLayout chevronlayout = new LinearLayout(getActivity());
         chevronlayout.setOrientation(LinearLayout.HORIZONTAL);
         chevronlayout.setBackgroundColor(getActivity().getResources().getColor(R.color.white));
-        LinearLayout.LayoutParams chevronlayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 120);
+        LinearLayout.LayoutParams chevronlayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 75);
         chevronlayoutParams.setMargins(8,8,8,8);
         chevronlayout.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);
         chevronlayout.setLayoutParams(chevronlayoutParams);
 
         ImageView chevronview = new ImageView(getActivity());
-        LinearLayout.LayoutParams chevronParams = new LinearLayout.LayoutParams(85, 85);
+        LinearLayout.LayoutParams chevronParams = new LinearLayout.LayoutParams(65, 65);
         chevronParams.setMargins(8,8,8,8);
         chevronview.setImageResource(R.drawable.chevron_black);
         chevronlayout.addView(chevronview,chevronlayoutParams);
@@ -370,30 +378,32 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         LinearLayout layout = new LinearLayout(getActivity());
         layout.setOrientation(LinearLayout.HORIZONTAL);
         layout.setGravity(Gravity.CENTER);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 120);
-        layoutParams.setMargins(8,48,8,8);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 70);
+        layoutParams.setMargins(8,16,8,8);
         layout.setLayoutParams(layoutParams);
 
         editLandP1 = new CleanableEditText(getActivity());
-        LinearLayout.LayoutParams editP1Params = new LinearLayout.LayoutParams( (int) Global.width/6,(int) Global.width/9);
-        editP1Params.setMargins(8,12,8,12);
+        LinearLayout.LayoutParams editP1Params = new LinearLayout.LayoutParams( (int) Global.width/6,70);
+        editP1Params.setMargins(8,4,8,4);
+        editLandP1.setPadding(4,4,4,4);
         editLandP1.setHint("Eg: 123");
         editLandP1.setInputType(InputType.TYPE_CLASS_NUMBER);
         editLandP1.setEms(3);
         editLandP1.setMaxEms(3);
-        editLandP1.setGravity(Gravity.CENTER_VERTICAL);
+        editLandP1.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL);
         editLandP1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         editLandP1.setMaxLines(1);
         editLandP1.setTextSize(16f);
         editLandP1.setTypeface(typeface);
         editLandP1.setBackground(getActivity().getResources().getDrawable(R.drawable.border_background));
+        editLandP1.requestFocus();
 
         //editLandP1.setLayoutParams(editP1Params);
         layout.addView(editLandP1,editP1Params);
 
         TextView slash = new TextView(getActivity());
         LinearLayout.LayoutParams slashParams = new LinearLayout.LayoutParams( (int) Global.width/15, (int) Global.width/9);
-        slashParams.setMargins(8,8,8,8);
+        slashParams.setMargins(8,4,8,4);
         //slash.setLayoutParams(slashParams);
         slash.setText("/");
         slash.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -404,8 +414,9 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         layout.addView(slash,slashParams);
 
         editLandP2 = new CleanableEditText(getActivity());
-        LinearLayout.LayoutParams editP2Params = new LinearLayout.LayoutParams((int) Global.width/7, (int) Global.width/9);
-        editP2Params.setMargins(8,12,8,12);
+        LinearLayout.LayoutParams editP2Params = new LinearLayout.LayoutParams((int) Global.width/7, 70);
+        editP2Params.setMargins(8,4,8,4);
+        editLandP2.setPadding(4,4,4,4);
         editLandP2.setHint("Eg : 12");
         editLandP2.setInputType(InputType.TYPE_CLASS_NUMBER);
         editLandP2.setGravity(Gravity.CENTER_VERTICAL);
@@ -507,8 +518,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                                 Global.area = null;
                                 Global.area_ar = null;
                                 PlotDetails.parcelNo = parcelNumber;
-                                progressBar = new ProgressBar(getActivity(), null, android.R.attr.progressBarStyleSmall);
-                                progressBar.setVisibility(View.VISIBLE);
+
                                 String targetLayer = AppUrls.GIS_LAYER_URL.concat("/" + AppUrls.plot_layerid);
                                 String[] queryArray = {targetLayer, "PARCEL_ID  = '" + parcelNumber + "'"};
 
@@ -601,7 +611,13 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                     else if (Global.isMakani) {
                         Global.hideSoftKeyboard(getActivity());
                         Global.makani = v.getText().toString();
-                        model.getMakaniToDLTM();
+                        if(Global.makani.length() == 0){
+                            onFailure(getActivity().getResources().getString(R.string.enter_makani_number));
+                        }else if(Global.makani.length()<10){
+                            onFailure(getActivity().getResources().getString(R.string.invalid_makani));
+                        }
+                        else
+                            model.getMakaniToDLTM();
                     }
                 }
 
@@ -676,6 +692,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     @Override
     public void onDestroy() {
         super.onDestroy();
+
 
     }
 

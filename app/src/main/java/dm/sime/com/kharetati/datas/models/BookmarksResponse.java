@@ -16,7 +16,7 @@ public class BookmarksResponse extends BaseObservable {
     @SerializedName("message")
     public String message;
     @SerializedName("bookmarklist")
-    public ZZBookmark[] bookmarklist;
+    public Bookmark[] bookmarklist;
 
     public boolean isError() {
         return isError;
@@ -34,11 +34,11 @@ public class BookmarksResponse extends BaseObservable {
         this.message = message;
     }
 
-    public ZZBookmark[] getBookmarklist() {
+    public Bookmark[] getBookmarklist() {
         return bookmarklist;
     }
 
-    public void setBookmarklist(ZZBookmark[] bookmarklist) {
+    public void setBookmarklist(Bookmark[] bookmarklist) {
         this.bookmarklist = bookmarklist;
     }
 

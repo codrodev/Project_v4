@@ -105,6 +105,8 @@ public class Global {
     public static String subNo;
     public static String LandNo;
     public static String webViewUrl;
+    public static boolean isBookmarks;
+    public static String bookmarkPlotNo;
     private static Context context;
     public static boolean isLanguageChanged = false;
     public static String noctemplateUrl;
@@ -423,6 +425,10 @@ public class Global {
 
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     if (editText.getCompoundDrawables()[DRAWABLE_RIGHT] != null && event.getRawX() >= (editText.getRight() - editText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        editText.setText("");
+                        return true;
+                    }
+                    if (editText.getCompoundDrawables()[DRAWABLE_LEFT] != null && event.getRawX() >= (editText.getLeft() - editText.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())) {
                         editText.setText("");
                         return true;
                     }

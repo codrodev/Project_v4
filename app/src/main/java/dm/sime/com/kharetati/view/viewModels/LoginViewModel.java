@@ -56,7 +56,7 @@ public class LoginViewModel extends ViewModel {
     private UserRepository repository;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private KharetatiApp kharetatiApp;
-    private static String guestName,guestPassword;
+    public static String guestName,guestPassword;
 
 
     /* public LoginViewModel(){
@@ -136,6 +136,7 @@ public class LoginViewModel extends ViewModel {
             Global.appMsg = kharetatiUser.getAppMsg();
 
             authListener.saveUser(user);
+            Global.isUserLoggedIn = false;
 
             authListener.onSuccess();
 
@@ -157,10 +158,9 @@ public class LoginViewModel extends ViewModel {
             authListener.onFailure(activity.getResources().getString(R.string.enter_password));
 
         } else {
-            //checking email and password are not null
+
 
             kharetatiApp = KharetatiApp.create(activity);
-            //MyApiService apiService = kharetatiApp.getApiService();
 
 
             Disposable disposable = repository.getAccessToken(getDataEmail(), getDataPassword())
@@ -173,6 +173,7 @@ public class LoginViewModel extends ViewModel {
                         }
                     }, new Consumer<Throwable>() {
                         @Override public void accept(Throwable throwable) throws Exception {
+                            authListener.onFailure(throwable.getMessage());
 
                         }
                     });
@@ -251,6 +252,7 @@ public class LoginViewModel extends ViewModel {
                             }
                         }, new Consumer<Throwable>() {
                             @Override public void accept(Throwable throwable) throws Exception {
+                                authListener.onFailure(throwable.getMessage());
 
                             }
                         });
@@ -331,7 +333,7 @@ public class LoginViewModel extends ViewModel {
                     }, new Consumer<Throwable>() {
                         @Override public void accept(Throwable throwable) throws Exception {
 
-
+                            authListener.onFailure(throwable.getMessage());
 
                         }
                     });
@@ -368,6 +370,7 @@ public class LoginViewModel extends ViewModel {
                         }
                     }, new Consumer<Throwable>() {
                         @Override public void accept(Throwable throwable) throws Exception {
+                            authListener.onFailure(throwable.getMessage());
                             Toast.makeText(activity, throwable.getMessage().toString(), Toast.LENGTH_SHORT).show();
                             Log.e("Exception",throwable.getMessage());
                         }
@@ -400,7 +403,7 @@ public class LoginViewModel extends ViewModel {
                 {
                     Global.session = session.getSession().getToken();
 
-
+                    Global.isUserLoggedIn =true;
                     // Navigate to Main Activity Here
                     authListener.onSuccess();
 

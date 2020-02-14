@@ -17,6 +17,7 @@ import java.util.List;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.FragmentBottomsheetMapFunctionBinding;
 import dm.sime.com.kharetati.datas.models.FunctionsOnMap;
+import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.adapters.FunctionOnMapAdapter;
 import dm.sime.com.kharetati.view.viewModels.MapFunctionBottomSheetViewModel;
@@ -48,6 +49,7 @@ public class MapFunctionBottomSheetFragment extends BottomSheetDialogFragment im
         model.getMutableFunctionsOnMap().observe(getActivity(), new Observer<List<FunctionsOnMap>>() {
             @Override
             public void onChanged(List<FunctionsOnMap> lstFunctionsOnMap) {
+
                 //model.loading.set(View.GONE);
                 if (lstFunctionsOnMap.size() > 0) {
                     model.setFunctionsOnMapAdapter(lstFunctionsOnMap);

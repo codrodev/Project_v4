@@ -1,5 +1,6 @@
 package dm.sime.com.kharetati.view.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,20 +10,29 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import dm.sime.com.kharetati.BR;
+import dm.sime.com.kharetati.R;
+import dm.sime.com.kharetati.datas.models.Bookmark;
+import dm.sime.com.kharetati.datas.models.PlotDetails;
 import dm.sime.com.kharetati.datas.models.ZZBookmark;
+import dm.sime.com.kharetati.utility.AlertDialogUtil;
+import dm.sime.com.kharetati.utility.Global;
+import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.viewModels.BookmarkViewModel;
 
 public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.GenericViewHolder> {
     private int layoutId;
     private BookmarkViewModel viewModel;
     static Context context;
-    List<ZZBookmark> lstBookmark;
+    public List<Bookmark> lstBookmark;
+
 
     public BookmarkAdapter(@LayoutRes int layoutId, BookmarkViewModel viewModel,Context context) {
         this.layoutId = layoutId;
@@ -49,6 +59,59 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
     @Override
     public void onBindViewHolder(@NonNull GenericViewHolder holder, int position) {
         holder.bind(viewModel, position);
+        holder.binding.getRoot().findViewById(R.id.gotomap).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!Global.isConnected(context)) {
+
+                    if(Global.appMsg!=null)
+                        AlertDialogUtil.errorAlertDialog(context.getResources().getString(R.string.lbl_warning),Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr() , context.getResources().getString(R.string.ok), context);
+                    else
+                        AlertDialogUtil.errorAlertDialog(context.getResources().getString(R.string.lbl_warning), context.getResources().getString(R.string.internet_connection_problem1), context.getResources().getString(R.string.ok), context);
+                }
+                PlotDetails.isOwner = false;
+                PlotDetails.parcelNo=lstBookmark.get(position).ParcelNumber;
+                Global.isBookmarks =true;
+
+                ArrayList al= new ArrayList();
+                al.add(PlotDetails.parcelNo);
+                al.add("");
+
+                ((MainActivity)context).loadFragment(FragmentTAGS.FR_MAP,true,al);
+
+
+
+            }
+        });
+        holder.binding.getRoot().findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Global.bookmarkPlotNo = lstBookmark.get(position).ParcelNumber;
+                Bookmark data = lstBookmark.get(position);
+                AlertDialogUtil.bookMarksDeleteAlert("",context.getResources().getString(R.string.confirmation_delete),context.getResources().getString(R.string.ok),context.getResources().getString(R.string.cancel),context,data);
+
+
+
+            }
+        });
+        holder.binding.getRoot().findViewById(R.id.gotomakani).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!Global.isConnected(context)) {
+
+                    if(Global.appMsg!=null)
+                        AlertDialogUtil.errorAlertDialog(context.getString(R.string.lbl_warning),Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr() , context.getString(R.string.ok), context);
+                    else
+                        AlertDialogUtil.errorAlertDialog(context.getString(R.string.lbl_warning), context.getString(R.string.internet_connection_problem1), context.getString(R.string.ok), context);
+                }
+                else
+                    Global.openMakani(lstBookmark.get(position).ParcelNumber,(Activity) context);
+
+            }
+        });
     }
 
     @Override
@@ -61,7 +124,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
         return lstBookmark.size();
     }
 
-    public void setBookmark(List<ZZBookmark> lstBookmark) {
+    public void setBookmark(List<Bookmark> lstBookmark) {
         this.lstBookmark = lstBookmark;
     }
 
@@ -82,6 +145,9 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
         @Override
         public void onClick(View v) {
 
+
         }
     }
 }
+
+

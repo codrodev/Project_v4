@@ -3,6 +3,7 @@ package dm.sime.com.kharetati.datas.models;
 import java.util.List;
 
 public class Applications {
+    public boolean isClick;
     private String IconUrl;
     private String IsPublic;
     private String NameEn;

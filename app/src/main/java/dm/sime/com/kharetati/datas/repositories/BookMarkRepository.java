@@ -1,5 +1,7 @@
 package dm.sime.com.kharetati.datas.repositories;
 
+import org.json.JSONObject;
+
 import dm.sime.com.kharetati.datas.models.BookmarksResponse;
 import dm.sime.com.kharetati.datas.models.SerializeBookmarkModel;
 import dm.sime.com.kharetati.datas.models.ZZBookmark;
@@ -17,5 +19,9 @@ public class BookMarkRepository {
 
     public Observable<BookmarksResponse> getAllBookMarks(SerializeBookmarkModel model) {
         return api.getAllBookMarks(model);
+    }
+
+    public Observable<JSONObject> deleteBookMark(SerializeBookmarkModel model) {
+        return api.deleteBookMark(model);
     }
 }

@@ -2,12 +2,22 @@ package dm.sime.com.kharetati.view.viewModels;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Environment;
+import android.util.Base64;
 
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -16,12 +26,16 @@ import java.util.Map;
 import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.datas.models.MyMapResults;
+import dm.sime.com.kharetati.datas.models.RetrieveDocStreamResponse;
 import dm.sime.com.kharetati.datas.models.RetrieveMyMapResponse;
 import dm.sime.com.kharetati.datas.models.SerializeMyMapModel;
 import dm.sime.com.kharetati.datas.network.MyApiService;
 import dm.sime.com.kharetati.datas.repositories.MyMapRepository;
 import dm.sime.com.kharetati.utility.Global;
+import dm.sime.com.kharetati.utility.constants.AppConstants;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
+import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.adapters.MyMapAdapter;
 import dm.sime.com.kharetati.view.navigators.MyMapNavigator;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -31,6 +45,8 @@ import io.reactivex.functions.Consumer;
 
 public class MyMapViewModel extends ViewModel {
 
+    private static final String PACKAGE_DRIVE = "com.google.android.apps.docs";
+    private static String currentRequestedSitePlanIdForViewing;
     MyMapAdapter adapter;
     RetrieveMyMapResponse model;
     MutableLiveData<List<MyMapResults>> mutableMyMap = new MutableLiveData<>();
@@ -40,12 +56,14 @@ public class MyMapViewModel extends ViewModel {
     private KharetatiApp kharetatiApp;
     private Activity activity;
     public MyMapNavigator myMapNavigator;
-
+    private String msg;
 
 
     public MyMapViewModel(Activity context, MyMapRepository repository){
         this.activity = context;
         this.repository = repository;
+        kharetatiApp = KharetatiApp.create(activity);
+
     }
 
     public void initializeMyMapViewModel(Context context){
@@ -73,6 +91,7 @@ public class MyMapViewModel extends ViewModel {
     public void  setMyMapAdapter(List<MyMapResults> lstMyMap) {
         this.adapter.setMyMap(lstMyMap);
         this.adapter.notifyDataSetChanged();
+
     }
 
     public MyMapAdapter getMyMapAdapter() {
@@ -99,7 +118,6 @@ public class MyMapViewModel extends ViewModel {
 
         //HTTPRequestBody.SitePlanBody body = new HTTPRequestBody.SitePlanBody();
 
-        kharetatiApp = KharetatiApp.create(activity);
 
         SerializeMyMapModel model = new SerializeMyMapModel();
         model.setToken(Global.site_plan_token);
@@ -130,6 +148,121 @@ public class MyMapViewModel extends ViewModel {
         mutableMyMap = new MutableLiveData<>();
         mutableMyMap.setValue(Arrays.asList(retrieveMyMapResponse.getMyMapResults()));
         adapter = new MyMapAdapter(R.layout.adapter_mymap, this, context);
+        setMyMapAdapter(Arrays.asList(retrieveMyMapResponse.getMyMapResults()));
         myMapNavigator.onSuccess();
+    }
+
+    public void viewSitePlan(String requestId) {
+
+        Global.isFindSitePlan = false;
+        MyMapViewModel.currentRequestedSitePlanIdForViewing =requestId;
+        int permission = ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(
+                    activity,
+                    AppConstants.PERMISSIONS_STORAGE,
+                    AppConstants.REQUEST_EXTERNAL_STORAGE_SITEPLAN
+            );
+            return;
+        }
+
+        myMapNavigator.onStarted();
+
+        SerializeMyMapModel model = new SerializeMyMapModel();
+        model.setToken(Global.site_plan_token);
+        model.setLocale(Global.CURRENT_LOCALE);
+        model.setRequest_id(requestId);
+        try {
+            String url =Global.base_url_site_plan + AppUrls.RETRIEVE_SITE_PLAN_DOC_STREAM;
+            Disposable disposable = repository.viewSitePlan(url,model)
+                    .subscribeOn(kharetatiApp.subscribeScheduler())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<RetrieveDocStreamResponse>() {
+                        @Override public void accept(RetrieveDocStreamResponse viewSitePlanResponse) throws Exception {
+                            viewSitePlanDoc(viewSitePlanResponse,requestId);
+
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override public void accept(Throwable throwable) throws Exception {
+                            myMapNavigator.onFailure(throwable.getMessage());
+                            //homeNavigator.onFailure("Unable to connect the remote server");
+                        }
+                    });
+            compositeDisposable.add(disposable);
+        } catch (Exception ex){
+            myMapNavigator.onFailure(ex.getMessage());
+        }
+    }
+
+    private void viewSitePlanDoc(RetrieveDocStreamResponse viewSitePlanResponse,String siteplanid) {
+
+        if( viewSitePlanResponse.getStatus().equals("403")){
+            msg =(Global.appMsg!=null)? (Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr()) :activity.getResources().getString(R.string.error_response);
+
+            myMapNavigator.onFailure(msg);
+
+        }
+        else if(viewSitePlanResponse.getStatus().equals("410")){
+
+            String msg =Global.CURRENT_LOCALE.equals("en")?viewSitePlanResponse.getMessage_en():viewSitePlanResponse.getMessage_ar();
+            myMapNavigator.onFailure(msg);
+        }
+        else{
+            if (viewSitePlanResponse.getDoc_details() != null)
+            {
+
+                byte[] bytes = Base64.decode(viewSitePlanResponse.getDoc_details().getDoc().getBytes(), Base64.DEFAULT);
+
+                String fileName = "SITEPLAN_DOWNLOADED_" + String.valueOf(siteplanid) +
+                        ".pdf";
+
+                String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+                String filePath = extStorageDirectory + "/" + fileName;
+                File folder = new File(extStorageDirectory);
+                folder.mkdir();
+
+                File pdfFile = new File(folder, fileName);
+                try {
+                    if (pdfFile.exists())
+                        pdfFile.delete();
+                    pdfFile.createNewFile();
+
+                    FileOutputStream fileOutputStream = new FileOutputStream(filePath);
+
+                    fileOutputStream.write(bytes);
+                    fileOutputStream.close();
+
+                    Uri path = Uri.fromFile(pdfFile);
+                    Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
+                    pdfIntent.setDataAndType(path, "application/pdf");
+                    pdfIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    /*ArrayList al = new ArrayList();
+                    al.add(path);*/
+                    myMapNavigator.onViewSitePlanSuccess();
+                    if (Global.isAppInstalled(PACKAGE_DRIVE, activity)) {
+                        pdfIntent.setPackage(PACKAGE_DRIVE);
+                    }
+                    activity.startActivity(pdfIntent);
+
+//                    ((MainActivity)activity).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+
+                    msg = (Global.appMsg != null) ? (Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getErrorFetchingDataEn() : Global.appMsg.getErrorFetchingDataAr()) : activity.getResources().getString(R.string.error_response);
+
+                    myMapNavigator.onFailure(msg);
+                }
+            } else {
+                msg = (Global.appMsg != null) ? (Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getErrorFetchingDataEn() : Global.appMsg.getErrorFetchingDataAr()) : activity.getResources().getString(R.string.error_response);
+
+                myMapNavigator.onFailure(msg);
+
+            }
+        }
+
     }
 }
