@@ -226,7 +226,7 @@ public class DeliveryFragment extends Fragment {
                         AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.enter_valid_email), getResources().getString(R.string.ok), getActivity());
 
                     }
-                    if(makani.length() > 0)
+                    if(!binding.etMakani.getText().toString().equals(""))
                     {
                         if(isValidEmailId() == true && isValidMobile() == true && isValidEmirate() == true) {
                             HomeFragment.homeVM.getMakaniToDLTM(makani);

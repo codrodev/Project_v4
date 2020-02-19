@@ -86,6 +86,9 @@ public class PayFragment extends Fragment implements PayNavigator {
                     paymentType = "Pay Now";
                     if(isValidEmailId() && isValidMobile()) {
 
+                        applicantMobile = binding.etMobile.getText().toString().trim();
+                        applicantEmailId = binding.etEmailaddress.getText().toString().trim();
+
                         model.createAndUpdateRequest();
                     }
 
@@ -188,16 +191,18 @@ public class PayFragment extends Fragment implements PayNavigator {
 
     @Override
     public void onStarted() {
-
+        AlertDialogUtil.showProgressBar(getActivity(),true);
     }
 
     @Override
     public void onSuccess() {
+        AlertDialogUtil.showProgressBar(getActivity(),false);
 
     }
 
     @Override
     public void onFailure(String Msg) {
-
+        AlertDialogUtil.showProgressBar(getActivity(),false);
+        AlertDialogUtil.errorAlertDialog("",Msg,getActivity().getResources().getString(R.string.ok),getActivity());
     }
 }

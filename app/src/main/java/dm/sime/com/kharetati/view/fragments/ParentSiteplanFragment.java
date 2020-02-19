@@ -37,7 +37,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
     FragmentManager fragmentManager = null;
     FragmentTransaction tx = null;
     String[] pagerArray;
-    int currentIndex = 0;
+    public static int currentIndex = 0;
     public static ParentSiteplanViewModel parentModel;
     private ParentSitePlanViewModelFactory factory;
     private ParentSitePlanRepository repository;
@@ -262,5 +262,12 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
     @Override
     public void navigateToFragment(int position) {
         loadFragment(position);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        loadFragment(currentIndex);   //971501298802
     }
 }
