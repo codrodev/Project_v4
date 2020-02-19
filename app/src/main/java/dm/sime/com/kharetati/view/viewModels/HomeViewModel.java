@@ -43,6 +43,7 @@ import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.adapters.InAppNotificationAdapter;
 import dm.sime.com.kharetati.view.customview.CleanableEditText;
+import dm.sime.com.kharetati.view.fragments.DeliveryFragment;
 import dm.sime.com.kharetati.view.fragments.HomeFragment;
 import dm.sime.com.kharetati.view.navigators.FragmentNavigator;
 import dm.sime.com.kharetati.view.navigators.HomeNavigator;
@@ -198,13 +199,14 @@ public class HomeViewModel extends ViewModel {
 
 
 
-    public void getMakaniToDLTM(){
+    public void getMakaniToDLTM(String makani){
 
         homeNavigator.onStarted();
 
         //Global.makani ="3003295320";
 
         HTTPRequestBody.MakaniBody makaniBody = new HTTPRequestBody.MakaniBody();
+        makaniBody.MAKANI =makani;
 
         Disposable disposable = repository.getMakaniToDLTM(makaniBody)
                 .subscribeOn(kharetatiApp.subscribeScheduler())
@@ -252,7 +254,10 @@ public class HomeViewModel extends ViewModel {
                         Global.area_ar = null;
                         Global.isMakani =true;
                         //homeNavigator.onSuccess();
-                        navigate(activity, FragmentTAGS.FR_MAP);
+                        if(DeliveryFragment.isDeliveryFragment)
+                            return;
+                        else
+                            navigate(activity, FragmentTAGS.FR_MAP);
 
                     } else {
                         homeNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getInvalidmakaniEn():Global.appMsg.getInvalidmakaniAr());

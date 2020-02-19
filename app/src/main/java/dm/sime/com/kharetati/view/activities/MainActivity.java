@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             case FragmentTAGS.FR_DASHBOARD:
                 fragment = DashboardFragment.newInstance();
                 break;
-            case FragmentTAGS.FR_MAP:
+            case FragmentTAGS.FR_MAP:{
                 if(Global.isPlotSearch)
                     fragment = MapFragment.newInstance(PlotDetails.parcelNo,"");
                 else if(Global.isLand){
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                     fragment = MapFragment.newInstance(PlotDetails.parcelNo,Global.dltm);
                 else if(Global.isBookmarks)
                     fragment = MapFragment.newInstance(PlotDetails.parcelNo,"");
-
+                }
 
                 break;
             case FragmentTAGS.FR_REQUEST_SITE_PLAN:

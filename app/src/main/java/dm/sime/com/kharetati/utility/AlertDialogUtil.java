@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -13,14 +14,17 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
 
 import java.util.ArrayList;
 
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.datas.models.Bookmark;
+import dm.sime.com.kharetati.utility.constants.AppConstants;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.activities.WebViewActivity;
+import dm.sime.com.kharetati.view.fragments.AttachmentFragment;
 import dm.sime.com.kharetati.view.fragments.BookmarkFragment;
 
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_CONTACT_US;
@@ -983,7 +987,7 @@ public class AlertDialogUtil {
 
         textView.setPadding(80, 25, 25, 10);
 
-    }
+    }*/
 
     public static void downloaNocAlert(String message, String btnTxt, String btnTxt2, final Activity context) {
         //final String plotnumber = (Global.current_fragment_id == FR_CONTACT_US ? "1190353" : plot);
@@ -1001,8 +1005,8 @@ public class AlertDialogUtil {
                         if (permission != PackageManager.PERMISSION_GRANTED) {
                             // We don't have permission so prompt the user
                             ActivityCompat.requestPermissions((MainActivity)context,
-                                    Constant.PERMISSIONS_STORAGE,
-                                    Constant.REQUEST_READ_EXTERNAL_STORAGE
+                                    AppConstants.PERMISSIONS_STORAGE,
+                                    AppConstants.REQUEST_READ_EXTERNAL_STORAGE
                             );
                             return;
                         }
@@ -1021,7 +1025,7 @@ public class AlertDialogUtil {
                 }).show();
 
         TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
-        TextView textView1 = (TextView) alertDialog.findViewById(android.support.v7.appcompat.R.id.alertTitle);
+        //TextView textView1 = (TextView) alertDialog.findViewById(android.support.v7.appcompat.R.id.alertTitle);
 
         TextView positiveButton = (Button) alertDialog.findViewById(android.R.id.button1);
         TextView negativeButton = (Button) alertDialog.findViewById(android.R.id.button2);
@@ -1031,11 +1035,11 @@ public class AlertDialogUtil {
         negativeButton.setAllCaps(false);
         positiveButton.setTypeface(face);
         negativeButton.setTypeface(face);
-        textView1.setTypeface(face);
+        //textView1.setTypeface(face);
 
         textView.setPadding(80, 25, 25, 10);
 
-    }*/
+    }
 
     public static void registerAlert(String message, String btnTxt, String btnTxt2, final Context context) {
 

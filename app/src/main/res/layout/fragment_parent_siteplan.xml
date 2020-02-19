@@ -218,29 +218,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:weightSum="2">
+                >
                 <Button
                     style="@style/font_medium_regular"
                     android:id="@+id/btnPrevious"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_margin="10dp"
+                    android:layout_weight="1.5"
+                    android:layout_gravity="start|center_vertical"
+                    android:gravity="center"
                     android:background="@drawable/maroon_angle_background"
                     android:text="previous"
-                    android:layout_weight="1"
                     android:textColor="@color/white"
                     android:drawableLeft="@drawable/ic_chevron_left_24dp"/>
+
                 <Button
                     style="@style/font_medium_regular"
                     android:id="@+id/btnNext"
                     android:layout_width="match_parent"
+                    android:gravity="center"
                     android:layout_height="50dp"
+                    android:layout_weight="1.5"
+                    android:layout_gravity="end|center_vertical"
                     android:layout_margin="10dp"
                     android:background="@drawable/maroon_angle_background"
                     android:text="next"
                     android:textColor="@color/white"
-                    android:layout_weight="1"
-                    android:drawableRight="@drawable/ic_chevron_right_24dp"/>
+                    android:drawableEnd="@drawable/ic_chevron_right_24dp"/>
             </LinearLayout>
         </FrameLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

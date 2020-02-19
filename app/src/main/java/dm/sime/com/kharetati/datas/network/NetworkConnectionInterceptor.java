@@ -25,7 +25,7 @@ public class NetworkConnectionInterceptor implements Interceptor {
     @NotNull
     @Override
     public Response intercept(@NotNull Chain chain) throws IOException {
-        if(!isInternetAvailable())
+        if(!Global.isConnected(applicationContext))
             throw new Exceptions.NoInternetException("Make sure you have active data connection");
         if (Global.accessToken!=null) {
 

@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 import dm.sime.com.kharetati.datas.models.AccessTokenResponse;
 import dm.sime.com.kharetati.datas.models.BookmarksResponse;
+import dm.sime.com.kharetati.datas.models.CreateUpdateRequestResponse;
 import dm.sime.com.kharetati.datas.models.GetAreaNamesResponse;
 import dm.sime.com.kharetati.datas.models.HTTPRequestBody;
 import dm.sime.com.kharetati.datas.models.KharetatiUser;
@@ -11,19 +12,16 @@ import dm.sime.com.kharetati.datas.models.MakaniToDLTMResponse;
 import dm.sime.com.kharetati.datas.models.ParcelResponse;
 import dm.sime.com.kharetati.datas.models.RetrieveDocStreamResponse;
 import dm.sime.com.kharetati.datas.models.RetrieveMyMapResponse;
+import dm.sime.com.kharetati.datas.models.RetrieveProfileDocsResponse;
 import dm.sime.com.kharetati.datas.models.SerializeBookMarksModel;
 import dm.sime.com.kharetati.datas.models.SerializeBookmarkModel;
-import dm.sime.com.kharetati.datas.models.SerializeMyMapModel;
+import dm.sime.com.kharetati.datas.models.SerializedCreateAndUpdateModel;
+import dm.sime.com.kharetati.datas.models.SerializedModel;
 import dm.sime.com.kharetati.datas.models.SessionResponse;
 import dm.sime.com.kharetati.datas.models.User;
 import dm.sime.com.kharetati.datas.models.UserRegistration;
-import dm.sime.com.kharetati.datas.models.ZZBookmark;
-import dm.sime.com.kharetati.utility.Global;
-import dm.sime.com.kharetati.utility.constants.AppConstants;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
 import io.reactivex.Observable;
-import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -65,7 +63,7 @@ public interface MyApiService {
     Observable<RetrieveMyMapResponse> getAllSitePlans(@Url String url,@Body JSONObject sitePlanBody);*/
 
     @POST
-    Observable<RetrieveMyMapResponse> getAllSitePlans(@Url String url, @Body SerializeMyMapModel model);
+    Observable<RetrieveMyMapResponse> getAllSitePlans(@Url String url, @Body SerializedModel model);
 
     //to save Book mark
     @POST("Bookmark/addBookmark")
@@ -87,9 +85,21 @@ public interface MyApiService {
 
     //to view Siteplans in MyMaps
     @POST
-    Observable<RetrieveDocStreamResponse> viewSitePlans(@Url String url, @Body SerializeMyMapModel model);
+    Observable<RetrieveDocStreamResponse> viewSitePlans(@Url String url, @Body SerializedModel model);
 
     // to delete BookMark in Bookmarks
     @POST("Bookmark/deleteBookMark")
     Observable<JSONObject> deleteBookMark(@Body SerializeBookmarkModel model);
+
+    //to get the profile documents if any
+    @POST
+    Observable<RetrieveProfileDocsResponse> retrieveProfileDocs(@Url String url, @Body SerializedModel model);
+
+    // to download the document stream
+    @POST
+    Observable<RetrieveDocStreamResponse> retrieveDoc(@Url String url, @Body SerializedModel model);
+
+    //to Create and Update request
+    @POST
+    Observable<CreateUpdateRequestResponse> createAndUpdateRequest(@Url String url, @Body SerializedCreateAndUpdateModel model);
 }

@@ -32,6 +32,9 @@ import androidx.fragment.app.Fragment;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -107,6 +110,16 @@ public class Global {
     public static String webViewUrl;
     public static boolean isBookmarks;
     public static String bookmarkPlotNo;
+    public static int spinPosition;
+    public static boolean isPerson;
+    public static boolean isCompany;
+    public static boolean rbIsOwner;
+    public static boolean rbNotOwner;
+    public static JSONObject deliveryDetails;
+    public static JSONArray passportData;
+    public static JSONArray licenseData;
+    public static JSONArray nocData;
+    public static boolean isDeliveryByCourier;
     private static Context context;
     public static boolean isLanguageChanged = false;
     public static String noctemplateUrl;
@@ -382,7 +395,7 @@ public class Global {
         CURRENT_LOCALE = lang;
         Locale.setDefault(locale);
 
-        android.content.res.Configuration config = new android.content.res.Configuration();
+        Configuration config = new Configuration();
         if (Build.VERSION.SDK_INT >Build.VERSION_CODES.N){
             config.setLocale(locale);
             context.getApplicationContext().createConfigurationContext(config);

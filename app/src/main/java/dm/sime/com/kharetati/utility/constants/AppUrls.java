@@ -44,13 +44,13 @@ public class AppUrls {
 
     public static final String SAVE_AS_BOOK_MARK = "Bookmark/addBookmark";
 
-    public static final String RETRIEVE_DOC_STREAM = "/retrieveDocStream";
-    public static final String RETRIEVE_PROFILE_DOC = "/retrieveProfileDocs";
+    public static final String RETRIEVE_DOC_STREAM = Global.base_url_site_plan+"/retrieveDocStream";
+    public static final String RETRIEVE_PROFILE_DOC = Global.base_url_site_plan+"/retrieveProfileDocs";
     public static final String RETRIEVE_MY_MAPS = Global.base_url_site_plan+"/retrieveMyMaps";
     public static final String FIND_SITE_PLANS = "/findSitePlans";
     public static final String VALIDATE_REQUEST = "/validateRequest";
     public static final String RETRIEVE_SITE_PLAN_DOC_STREAM = "/retrieveSitePlanDocStream";
-    public static final String CREATE_UPDATE_REQUEST = "/createUpdateRequest";
+    public static final String CREATE_UPDATE_REQUEST = Global.base_url_site_plan+"/createUpdateRequest";
 
     public static final String MYID_ACCESS_TOKEN_URL = BASE_URL + "MyId/getAccessToken";
     public static final String MYID_SESSION_ID = BASE_URL + "KharetatiWebService/getSession";

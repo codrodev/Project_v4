@@ -7,7 +7,23 @@ public final class AppConstants {
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             android.Manifest.permission.READ_EXTERNAL_STORAGE,
     };
+
+    public static String[] ALL_PERMISSIONS = {
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            android.Manifest.permission.READ_EXTERNAL_STORAGE,
+            android.Manifest.permission.CAMERA,
+    };
+    public static final int REQUEST_PHONE_PERMISSION = 101;
+    public static final int REQUEST_CAMERA_PERMISSION = 102;
+    public static final int REQUEST_READ_EXTERNAL_STORAGE = 103;
+    public static final int REQUEST_READ_EXTERNAL_STORAGE_GALLERY = 121;
     public static final int REQUEST_EXTERNAL_STORAGE_SITEPLAN = 104;
+    public static final int REQUEST_EXTERNAL_STORAGE_DOWNLOAD_ZONEREG = 105;
+    public static final int REQUEST_REQUEST_EXTERNAL_STORAGE_FETCHPARCEL_SITEPLAN = 106;
+    public static final int REQUEST_CAMERA_PERMISSION_UPDATE_PROFILE = 107;
+    public static final int REQUEST_READ_EXTERNAL_STORAGE_UPDATE_PROFILE = 108;
+    public static final int REQUEST_EXTERNAL_STORAGE_PLOTUTILITY = 109;
+
 
 
     public static final String TIMESTAMP_FORMAT = "yyyyMMdd_HHmmss";

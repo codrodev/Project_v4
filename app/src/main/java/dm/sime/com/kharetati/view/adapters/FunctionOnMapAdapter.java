@@ -44,7 +44,7 @@ public class FunctionOnMapAdapter extends RecyclerView.Adapter<FunctionOnMapAdap
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         ViewDataBinding binding = DataBindingUtil.inflate(layoutInflater, viewType, parent, false);
 
-        return new FunctionOnMapAdapter.GenericViewHolder(binding);
+        return new GenericViewHolder(binding);
     }
 
     @Override

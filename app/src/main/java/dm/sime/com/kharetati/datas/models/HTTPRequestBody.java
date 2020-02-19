@@ -27,7 +27,7 @@ public class HTTPRequestBody {
         String UserType ="GUEST";
     }
     public static class MakaniBody{
-        String MAKANI =(Global.makani!=null)?Global.makani:"";
+        public static String MAKANI =(Global.makani!=null)?Global.makani:"";
         String SESSION =(Global.session!=null)?Global.session:"";
         String REMARKS =(Global.getPlatformRemark()!=null)? Global.getPlatformRemark():"Android";
 

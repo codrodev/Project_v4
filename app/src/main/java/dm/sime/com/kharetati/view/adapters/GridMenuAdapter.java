@@ -48,7 +48,7 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.Generi
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         ViewDataBinding binding = DataBindingUtil.inflate(layoutInflater, viewType, parent, false);
 
-        return new GridMenuAdapter.GenericViewHolder(binding);
+        return new GenericViewHolder(binding);
     }
 
     @Override

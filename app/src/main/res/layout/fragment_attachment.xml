@@ -1,282 +1,782 @@
-<?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <data>
-        <variable
-            name="fragmentAttachmentVM"
-            type="dm.sime.com.kharetati.view.viewModels.AttachmentViewModel" />
-    </data>
-    <androidx.core.widget.NestedScrollView
+  <data>
+    <variable
+        name="fragmentAttachmentVM"
+        type="dm.sime.com.kharetati.view.viewModels.AttachmentViewModel" />
+  </data>
+
+  <ScrollView android:layout_height="match_parent"
+      android:layout_width="match_parent">
+    <LinearLayout
+        android:id="@+id/rootView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:id="@+id/rootView"
+        android:layout_height="1400dp"
+        android:layout_margin="15dp"
+        android:layout_marginBottom="100dp"
+        android:layoutDirection="locale"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+      <!--<TextView
+          android:id="@+id/checkbox_choose_text"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="8dp"
+          android:layout_marginRight="8dp"
+          android:text="@string/choose_checkbox_option"
+          android:textColor="@color/black"
+          android:textSize="16sp"
+          android:textStyle="bold"
+          android:visibility="gone" />
+
+      <Spinner
+          android:id="@+id/spinner_landOwned"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="8dp"
+          android:layout_marginRight="8dp"
+          android:text="@string/choose_checkbox_option"
+          android:textColor="@color/black"
+          android:textSize="16sp"
+          android:textStyle="bold"
+          android:visibility="gone"
+
+          />
+
+      <CheckBox
+          android:id="@+id/chk_isOwner"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="8dp"
+          android:layout_marginRight="8dp"
+          android:buttonTint="@android:color/holo_blue_dark"
+          android:checked="false"
+          android:text="@string/i_am_owner"
+          android:textColor="@color/black"
+          android:textSize="16sp"
+          android:textStyle="bold"
+          android:visibility="gone" />
+
+      <CheckBox
+          android:id="@+id/chk_isResident"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="8dp"
+          android:layout_marginLeft="8dp"
+          android:layout_marginEnd="8dp"
+          android:layout_marginRight="8dp"
+          android:buttonTint="@android:color/holo_blue_dark"
+          android:text="@string/i_am_resident"
+          android:textColor="@color/black"
+          android:textSize="16sp"
+          android:textStyle="bold"
+          android:visibility="gone" />
+
+      <RadioGroup
+          android:id="@+id/rg"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:visibility="gone">
+
+        <RadioButton
+            android:id="@+id/rb_isOwner"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layoutDirection="locale"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:buttonTint="@android:color/holo_blue_dark"
+            android:checked="false"
+            android:text="@string/i_am_owner"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="visible" />
+
+        <RadioButton
+            android:id="@+id/rb_notOwner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:buttonTint="@android:color/holo_blue_dark"
+            android:text="@string/i_am_not_owner"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+      </RadioGroup>-->
+
+      <androidx.cardview.widget.CardView
+          android:id="@+id/card_emirateId"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="10dp"
+          android:clickable="true"
+          android:focusable="true"
+          android:elevation="15dp"
+          android:foreground="?android:attr/selectableItemBackground"
+          android:paddingLeft="20dp"
+          android:paddingRight="20dp"
+          android:visibility="gone"
+          app:cardCornerRadius="5dp"
+          app:cardElevation="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblEid"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical">
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardPassportPersonal"
+
+          <TextView
+              android:id="@+id/lblEid"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="10dp"
+              android:text="@string/owner_emiratesID"
+              android:textAlignment="center"
+              android:textAppearance="@style/TextAppearance.AppCompat"
+              android:textSize="16sp"
+              android:textStyle="bold" />
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:baselineAligned="false">
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="5dp"
-                android:clickable="true"
-                android:elevation="15dp"
-                android:visibility="visible"
-                app:cardCornerRadius="5dp"
-                app:cardElevation="10dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginHorizontal="10dp"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="5dp"
-                        android:orientation="horizontal">
-                        <TextView
-                            style="@style/font_large_bold"
-                            android:id="@+id/txtPassport"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:text="passport"
-                            android:layout_gravity="center_vertical" />
-                        <TextView
-                            style="@style/font_medium_regular"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:text="(personal info page)"
-                            android:layout_marginHorizontal="5dp"
-                            android:layout_gravity="center_vertical"/>
-                    </LinearLayout>
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/cardview_shadow_start_color"/>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="10dp">
-                        <ImageView
-                            android:id="@+id/imgPassportPersonal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_linked_camera_24dp"/>
+              <TextView
+                  android:id="@+id/textView8"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:scaleType="fitStart"
+                  android:text="@string/front"
+                  android:textAlignment="center"
+                  android:textAppearance="@style/TextAppearance.AppCompat"
+                  android:textColor="@android:color/darker_gray"
+                  android:textSize="16sp" />
 
-                        <LinearLayout
-                            android:id="@+id/layoutDocPassportPersonal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_centerHorizontal="true"
-                            android:orientation="vertical">
+              <ImageView
+                  android:id="@+id/img_eid_front"
+                  android:layout_width="75dp"
+                  android:layout_height="0dp"
+                  android:layout_gravity="center"
+                  android:contentDescription="@string/NOEMIDFRONTALERT"
+                  android:padding="2dp"
+                  android:scaleType="fitXY"
+                  app:srcCompat="@drawable/photo" />
+            </LinearLayout>
 
-                            <Button
-                                android:id="@+id/btnPassportPersonalView"
-                                android:layout_width="77dp"
-                                android:layout_height="25dp"
-                                android:text="view"
-                                android:background="@color/light_green"
-                                android:textAllCaps="false"
-                                android:textColor="@color/white" />
-                            <Button
-                                android:id="@+id/btnPassportPersonalChange"
-                                android:layout_width="77dp"
-                                android:layout_height="25dp"
-                                android:layout_marginTop="10dp"
-                                android:text="change"
-                                android:background="@color/light_blue"
-                                android:textAllCaps="false"
-                                android:textColor="@color/white" />
-                        </LinearLayout>
-                    </RelativeLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardPassportVisa"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="5dp"
-                android:clickable="true"
-                android:elevation="15dp"
-                android:visibility="visible"
-                app:cardCornerRadius="5dp"
-                app:cardElevation="10dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginHorizontal="10dp"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="5dp"
-                        android:orientation="horizontal">
-                        <TextView
-                            style="@style/font_large_bold"
-                            android:id="@+id/txtPassportVisa"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:text="passport"
-                            android:layout_gravity="center_vertical" />
-                        <TextView
-                            style="@style/font_medium_regular"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:text="(personal info page)"
-                            android:layout_marginHorizontal="5dp"
-                            android:layout_gravity="center_vertical"/>
-                    </LinearLayout>
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/cardview_shadow_start_color"/>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="10dp">
-                        <ImageView
-                            android:id="@+id/imgPassportVisa"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_linked_camera_24dp"/>
+              <TextView
+                  android:id="@+id/textView9"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:scaleType="fitStart"
+                  android:text="@string/back"
+                  android:textAlignment="center"
+                  android:textAppearance="@style/TextAppearance.AppCompat"
+                  android:textColor="@android:color/darker_gray"
+                  android:textSize="16sp" />
 
-                        <LinearLayout
-                            android:id="@+id/layoutDocPassportVisa"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_centerHorizontal="true"
-                            android:orientation="vertical">
+              <ImageView
+                  android:id="@+id/img_eid_back"
+                  android:layout_width="75dp"
+                  android:layout_height="0dp"
+                  android:layout_gravity="center"
+                  android:contentDescription="@string/NOEMIDBACKALERT"
+                  android:padding="2dp"
+                  android:scaleType="fitXY"
+                  app:srcCompat="@drawable/photo" />
+            </LinearLayout>
 
-                            <Button
-                                android:id="@+id/btnPassportVisaView"
-                                android:layout_width="77dp"
-                                android:layout_height="25dp"
-                                android:text="view"
-                                android:background="@color/light_green"
-                                android:textAllCaps="false"
-                                android:textColor="@color/white" />
-                            <Button
-                                android:id="@+id/btnPassportVisaChange"
-                                android:layout_width="77dp"
-                                android:layout_height="25dp"
-                                android:layout_marginTop="10dp"
-                                android:text="change"
-                                android:background="@color/light_blue"
-                                android:textAllCaps="false"
-                                android:textColor="@color/white" />
-                        </LinearLayout>
-                    </RelativeLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+          </LinearLayout>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardNOC"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="5dp"
-                android:clickable="true"
-                android:elevation="15dp"
-                android:visibility="visible"
-                app:cardCornerRadius="5dp"
-                app:cardElevation="10dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginHorizontal="10dp"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="5dp"
-                        android:orientation="horizontal">
-                        <TextView
-                            style="@style/font_large_bold"
-                            android:id="@+id/txtNOC"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:text="NOC Letter"
-                            android:layout_gravity="center_vertical" />
-                        <TextView
-                            style="@style/font_medium_regular"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:text="(signed by owner)"
-                            android:layout_marginHorizontal="5dp"
-                            android:layout_gravity="center_vertical"/>
-                    </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/cardview_shadow_start_color"/>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="10dp">
-                        <ImageView
-                            android:id="@+id/imgNOC"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_linked_camera_24dp"/>
-
-                        <LinearLayout
-                            android:id="@+id/layoutDocNOC"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_centerHorizontal="true"
-                            android:orientation="vertical">
-
-                            <Button
-                                android:id="@+id/btnNOCView"
-                                android:layout_width="77dp"
-                                android:layout_height="25dp"
-                                android:text="view"
-                                android:background="@color/light_green"
-                                android:textAllCaps="false"
-                                android:textColor="@color/white" />
-                            <Button
-                                android:id="@+id/btnNOCChange"
-                                android:layout_width="77dp"
-                                android:layout_height="25dp"
-                                android:layout_marginTop="10dp"
-                                android:text="change"
-                                android:background="@color/light_blue"
-                                android:textAllCaps="false"
-                                android:textColor="@color/white" />
-                        </LinearLayout>
-                    </RelativeLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+
+      </androidx.cardview.widget.CardView>
+
+      <androidx.cardview.widget.CardView
+          android:id="@+id/card_passport"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="10dp"
+          android:clickable="true"
+          android:focusable="true"
+          android:elevation="15dp"
+          android:foreground="?android:attr/selectableItemBackground"
+          android:visibility="visible"
+          app:cardCornerRadius="5dp"
+          app:cardElevation="10dp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toRightOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintVertical_bias="0.068">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dsdfe111"
+            android:layout_alignParentStart="true"
+            android:orientation="vertical">
+
+          <TextView
+              android:id="@+id/txtPassport"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="10dp"
+              android:text="@string/passport"
+              android:textAlignment="center"
+              android:textAppearance="@style/TextAppearance.AppCompat"
+              android:textSize="16sp"
+              android:textStyle="bold" />
+
+          <RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_height="75dp"
+              android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:id="@+id/img_passport"
+                android:layout_width="80dp"
+                android:layout_height="90dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/NOUPLOADPASSPORTALERT"
+                app:srcCompat="@drawable/photo" />
+
+            <LinearLayout
+                android:id="@+id/passport_buttons"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="start|center_vertical"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/img_passport"
+                android:gravity="start|center_vertical"
+                android:orientation="vertical">
+
+              <Button
+                  android:id="@+id/personal_view"
+                  android:layout_width="77dp"
+                  android:layout_height="25dp"
+                  android:background="@drawable/button_background"
+                  android:text="@string/view_image"
+                  android:textAllCaps="false"
+                  android:textColor="@color/white"
+                  android:textSize="14sp"
+                  android:textStyle="bold" />
+
+              <Button
+                  android:id="@+id/personal_change"
+                  android:layout_width="77dp"
+                  android:layout_height="25dp"
+                  android:layout_marginTop="10dp"
+                  android:background="@drawable/button_background"
+                  android:text="@string/change"
+                  android:textAllCaps="false"
+                  android:textColor="@color/white"
+                  android:textSize="14sp"
+                  android:textStyle="bold" />
+            </LinearLayout>
+          </RelativeLayout>
+        </LinearLayout>
+      </androidx.cardview.widget.CardView>
+
+      <androidx.cardview.widget.CardView
+          android:id="@+id/card_visa_passport"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="10dp"
+          android:clickable="true"
+          android:focusable="true"
+          android:elevation="15dp"
+          android:foreground="?android:attr/selectableItemBackground"
+          app:cardCornerRadius="5dp"
+          app:cardElevation="10dp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toRightOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintVertical_bias="0.068">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dsdfe111"
+            android:layout_alignParentStart="true"
+            android:orientation="vertical">
+
+          <TextView
+              android:id="@+id/txtVisaPassport"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="10dp"
+              android:text="@string/visa_passport"
+              android:textAlignment="center"
+              android:textAppearance="@style/TextAppearance.AppCompat"
+              android:textSize="16sp"
+              android:textStyle="bold" />
+
+
+          <RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_height="75dp"
+              android:layout_marginBottom="10dp">
+
+            <!--<LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:layout_weight="7"
+                android:gravity="right|center_horizontal"
+                android:orientation="vertical">-->
+
+            <ImageView
+                android:id="@+id/img_visa_passport"
+                android:layout_width="80dp"
+                android:layout_height="90dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/NOUPLOADPASSPORTALERT"
+                app:srcCompat="@drawable/photo" />
+            <!--</LinearLayout>-->
+            <LinearLayout
+                android:id="@+id/visaPassportButtons"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="start|center_vertical"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/img_visa_passport"
+                android:gravity="start|center_vertical"
+                android:orientation="vertical">
+
+              <Button
+                  android:id="@+id/visa_view"
+                  android:layout_width="77dp"
+                  android:layout_height="25dp"
+                  android:background="@drawable/button_background"
+                  android:text="@string/view_image"
+                  android:textAllCaps="false"
+                  android:textColor="@color/white"
+                  android:textSize="14sp"
+                  android:textStyle="bold" />
+
+              <Button
+                  android:id="@+id/visa_change"
+                  android:layout_width="77dp"
+                  android:layout_height="25dp"
+                  android:layout_marginTop="10dp"
+                  android:background="@drawable/button_background"
+                  android:text="@string/change"
+                  android:textAllCaps="false"
+                  android:textColor="@color/white"
+                  android:textSize="14sp"
+                  android:textStyle="bold" />
+            </LinearLayout>
+
+          </RelativeLayout>
+        </LinearLayout>
+      </androidx.cardview.widget.CardView>
+
+      <androidx.cardview.widget.CardView
+          android:id="@+id/card_company_license"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="10dp"
+          android:clickable="true"
+          android:focusable="true"
+          android:elevation="15dp"
+          android:foreground="?android:attr/selectableItemBackground"
+          app:cardCornerRadius="5dp"
+          app:cardElevation="10dp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toRightOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintVertical_bias="0.068">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dsdfe111"
+            android:layout_alignParentStart="true"
+            android:orientation="vertical">
+
+          <TextView
+              android:id="@+id/txtcompanyLicense"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="10dp"
+              android:text="@string/company_license"
+              android:textAlignment="center"
+              android:textAppearance="@style/TextAppearance.AppCompat"
+              android:textSize="16sp"
+              android:textStyle="bold" />
+
+
+          <RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_height="75dp"
+              android:layout_marginBottom="15dp"
+              android:layoutDirection="locale">
+
+            <ImageView
+                android:id="@+id/img_company_license"
+                android:layout_width="80dp"
+                android:layout_height="90dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/NOUPLOADPASSPORTALERT"
+                app:srcCompat="@drawable/photo" />
+
+            <LinearLayout
+                android:id="@+id/company_license_buttons"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="start|center_vertical"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/img_company_license"
+                android:gravity="start|center_vertical"
+                android:orientation="vertical">
+
+              <Button
+                  android:id="@+id/license_view"
+                  android:layout_width="77dp"
+                  android:layout_height="25dp"
+                  android:background="@drawable/button_background"
+                  android:text="@string/view_image"
+                  android:textAllCaps="false"
+                  android:textColor="@color/white"
+                  android:textSize="14sp"
+                  android:textStyle="bold" />
+
+              <Button
+                  android:id="@+id/license_change"
+                  android:layout_width="77dp"
+                  android:layout_height="25dp"
+                  android:layout_marginTop="10dp"
+                  android:background="@drawable/button_background"
+                  android:text="@string/change"
+                  android:textAllCaps="false"
+                  android:textColor="@color/white"
+                  android:textSize="14sp"
+                  android:textStyle="bold" />
+            </LinearLayout>
+          </RelativeLayout>
+        </LinearLayout>
+      </androidx.cardview.widget.CardView>
+
+      <androidx.cardview.widget.CardView
+          android:id="@+id/card_landShipOwner"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="10dp"
+          android:clickable="true"
+          android:focusable="true"
+          android:elevation="15dp"
+          android:foreground="?android:attr/selectableItemBackground"
+          android:gravity="center_horizontal"
+          android:visibility="gone"
+          app:cardCornerRadius="5dp"
+          app:cardElevation="10dp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toRightOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintVertical_bias="0.43">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dsdfe"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+
+          <TextView
+              android:id="@+id/lblOwnership"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="10dp"
+              android:text="@string/land_ownership_certificate"
+              android:textAlignment="center"
+              android:textAppearance="@style/TextAppearance.AppCompat"
+              android:textSize="16sp"
+              android:textStyle="bold" />
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="75dp"
+              android:gravity="center"
+              android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_land_owner"
+                android:layout_width="75dp"
+                android:layout_height="90dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/NO_NOC_CERTIFICATE_ALERT"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/photo" />
+          </LinearLayout>
+        </LinearLayout>
+      </androidx.cardview.widget.CardView>
+
+      <LinearLayout
+          android:id="@+id/fragment_attachement_downloadnoc_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="10dp"
+          android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/fragment_attachment_lblDownload_noc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/download_noc_letter"
+            android:textColor="#0371ff"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/fragment_attachment_lblOr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/or"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/fragment_attachment_lblNoclettertemplate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/view_noc_letter_txt"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+      </LinearLayout>
+
+      <androidx.cardview.widget.CardView
+          android:id="@+id/card_letter_from_Owner"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="10dp"
+          android:clickable="true"
+          android:focusable="true"
+          android:elevation="15dp"
+          android:foreground="?android:attr/selectableItemBackground"
+          android:gravity="center_horizontal"
+          app:cardCornerRadius="2dp"
+          app:cardElevation="5dp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toRightOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintVertical_bias="0.904">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+          <TextView
+              android:id="@+id/lbl_letter_from_owner"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="15dp"
+              android:padding="10dp"
+              android:text="@string/signed_noc_owner"
+              android:textAlignment="center"
+              android:textAppearance="@style/TextAppearance.AppCompat"
+              android:textSize="16sp"
+              android:textStyle="bold" />
+
+          <RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_height="75dp">
+
+            <ImageView
+                android:id="@+id/img_letter_from_owner"
+                android:layout_width="80dp"
+                android:layout_height="90dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/NOUPLOADPASSPORTALERT"
+                app:srcCompat="@drawable/photo" />
+
+            <LinearLayout
+                android:id="@+id/noc_buttons"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="start|center_vertical"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/img_letter_from_owner"
+                android:gravity="start|center_vertical"
+                android:orientation="vertical">
+
+              <Button
+                  android:id="@+id/noc_view"
+                  android:layout_width="77dp"
+                  android:layout_height="25dp"
+                  android:background="@drawable/button_background"
+                  android:text="@string/view_image"
+                  android:textAllCaps="false"
+                  android:textColor="@color/white"
+                  android:textSize="14sp"
+                  android:textStyle="bold" />
+
+              <Button
+                  android:id="@+id/noc_change"
+                  android:layout_width="77dp"
+                  android:layout_height="25dp"
+                  android:layout_marginTop="10dp"
+                  android:background="@drawable/button_background"
+                  android:text="@string/change"
+                  android:textAllCaps="false"
+                  android:textColor="@color/white"
+                  android:textSize="14sp"
+                  android:textStyle="bold" />
+            </LinearLayout>
+          </RelativeLayout>
+
+        </LinearLayout>
+      </androidx.cardview.widget.CardView>
+
+      <!--&lt;!&ndash;<CheckBox
+          android:id="@+id/bycourier"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="start"
+          android:layout_marginStart="2dp"
+          android:layout_marginLeft="2dp"
+          android:buttonTint="@android:color/holo_blue_dark"
+          android:gravity="start"
+          android:text="@string/delivery_by_courier"
+          android:textAppearance="@style/TextAppearance.AppCompat"
+          android:textSize="16sp"
+          android:textStyle="bold" />&ndash;&gt;
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingStart="3dp"
+        android:paddingEnd="3dp"
+        android:layoutDirection="locale"
+        android:text="@string/applicant_details"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:textColor="@color/gray_text_color"
+        android:textDirection="locale"
+        android:textStyle="bold" />
+      <com.google.android.material.textfield.TextInputLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:hintEnabled="false">
+        <EditText
+            android:id="@+id/et_emailaddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:hint="@string/please_enter_email_address"
+            android:maxLength="50"
+            android:textAlignment="center"
+            android:inputType="text"
+            android:textColor="@color/gray_text_color"
+            android:textDirection="locale" />
+      </com.google.android.material.textfield.TextInputLayout>
+      &lt;!&ndash;android:digits="0123456789١٢٣٤٥٦٧٨٩١٠"&ndash;&gt;
+      <EditText
+          android:id="@+id/et_mobile"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="start"
+          android:hint="@string/mobile_number_9715xxxxxxxx"
+          android:inputType="number"
+          android:maxLength="12"
+          android:textAlignment="center"
+          android:textColor="@color/gray_text_color"
+          android:textDirection="locale" />
+
+      &lt;!&ndash;<Button
+          android:id="@+id/btnNextAttachment"
+          android:layout_width="150dp"
+          android:layout_height="40dp"
+          android:layout_gravity="center"
+          android:layout_margin="8dp"
+          android:background="@drawable/rounded_edittext_gradient"
+          android:text="@string/lbl_next"
+          android:textAllCaps="false"
+          android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+          android:textColor="@color/white"
+          android:visibility="gone" />&ndash;&gt;
+
+      <LinearLayout
+          android:id="@+id/payButtons"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:gravity="center"
+          android:orientation="vertical">
+
+        <Button
+            android:id="@+id/payNow"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="30dp"
+            android:background="@drawable/button_background"
+            android:gravity="center"
+            android:text="@string/pay_now"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textFontWeight="800"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/payLater"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_background"
+            android:drawablePadding="10dp"
+            android:gravity="center"
+            android:text="@string/pay_later"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textFontWeight="800"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+      </LinearLayout>
+-->
+
+    </LinearLayout>
+
+  </ScrollView>
 </layout>
+

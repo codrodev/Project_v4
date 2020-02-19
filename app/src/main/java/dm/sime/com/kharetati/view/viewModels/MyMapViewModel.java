@@ -17,7 +17,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -28,14 +27,12 @@ import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.datas.models.MyMapResults;
 import dm.sime.com.kharetati.datas.models.RetrieveDocStreamResponse;
 import dm.sime.com.kharetati.datas.models.RetrieveMyMapResponse;
-import dm.sime.com.kharetati.datas.models.SerializeMyMapModel;
+import dm.sime.com.kharetati.datas.models.SerializedModel;
 import dm.sime.com.kharetati.datas.network.MyApiService;
 import dm.sime.com.kharetati.datas.repositories.MyMapRepository;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.AppConstants;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
-import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
-import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.adapters.MyMapAdapter;
 import dm.sime.com.kharetati.view.navigators.MyMapNavigator;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -119,7 +116,7 @@ public class MyMapViewModel extends ViewModel {
         //HTTPRequestBody.SitePlanBody body = new HTTPRequestBody.SitePlanBody();
 
 
-        SerializeMyMapModel model = new SerializeMyMapModel();
+        SerializedModel model = new SerializedModel();
         model.setToken(Global.site_plan_token);
         model.setLocale(Global.CURRENT_LOCALE);
         model.setMy_id(Global.loginDetails.username);
@@ -170,7 +167,7 @@ public class MyMapViewModel extends ViewModel {
 
         myMapNavigator.onStarted();
 
-        SerializeMyMapModel model = new SerializeMyMapModel();
+        SerializedModel model = new SerializedModel();
         model.setToken(Global.site_plan_token);
         model.setLocale(Global.CURRENT_LOCALE);
         model.setRequest_id(requestId);

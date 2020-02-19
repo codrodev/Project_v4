@@ -1,13 +1,9 @@
 package dm.sime.com.kharetati.datas.repositories;
 
-import org.json.JSONObject;
-
-import dm.sime.com.kharetati.datas.models.HTTPRequestBody;
 import dm.sime.com.kharetati.datas.models.RetrieveDocStreamResponse;
 import dm.sime.com.kharetati.datas.models.RetrieveMyMapResponse;
-import dm.sime.com.kharetati.datas.models.SerializeMyMapModel;
+import dm.sime.com.kharetati.datas.models.SerializedModel;
 import dm.sime.com.kharetati.datas.network.MyApiService;
-import io.reactivex.Completable;
 import io.reactivex.Observable;
 
 public class MyMapRepository {
@@ -18,15 +14,12 @@ public class MyMapRepository {
         this.api = apiService;
     }
 
-    /*public Observable<RetrieveMyMapResponse> getAllSitePlans(String url, JSONObject sitePlanBody){
-        return api.getAllSitePlans(url ,sitePlanBody);
-    }*/
 
-    public Observable<RetrieveMyMapResponse> getAllSitePlans(String url, SerializeMyMapModel model){
+    public Observable<RetrieveMyMapResponse> getAllSitePlans(String url, SerializedModel model){
         return api.getAllSitePlans(url ,model);
     }
 
-    public Observable<RetrieveDocStreamResponse> viewSitePlan(String url, SerializeMyMapModel model) {
+    public Observable<RetrieveDocStreamResponse> viewSitePlan(String url, SerializedModel model) {
         return api.viewSitePlans(url,model);
     }
 }

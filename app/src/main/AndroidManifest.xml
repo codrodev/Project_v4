@@ -38,6 +38,18 @@
             android:configChanges="orientation|screenSize|locale"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity android:name=".view.activities.ImageCropActivity"/>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.kharetati.android.fileprovider"
+            android:enabled="true"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
 
 </manifest>

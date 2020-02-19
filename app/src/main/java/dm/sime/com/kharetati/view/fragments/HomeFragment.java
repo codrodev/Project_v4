@@ -106,6 +106,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     public static String communityId;
     private CleanableEditText editLandP1;
     private CleanableEditText editLandP2;
+    public static HomeViewModel homeVM;
     /*BottomSheetBehavior sheetBehavior;
     LinearLayout layoutBottomSheet;*/
 
@@ -133,6 +134,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         factory = new HomeViewModelFactory(getActivity(),repository);
 
         model = ViewModelProviders.of(getActivity(),factory).get(HomeViewModel.class);
+        homeVM = model;
         model.homeNavigator =this;
 
     }
@@ -617,7 +619,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                             onFailure(getActivity().getResources().getString(R.string.invalid_makani));
                         }
                         else
-                            model.getMakaniToDLTM();
+                            model.getMakaniToDLTM(Global.makani);
                     }
                 }
 

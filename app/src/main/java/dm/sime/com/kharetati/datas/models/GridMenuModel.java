@@ -13,7 +13,7 @@ public class GridMenuModel {
     List<SearchForm> lstSearchForm;
     List<FunctionsOnMap> lstFunctionsOnMap;
     String[] arrayApp = {"Request Site Plan", "Makani Search", "Land Registration", "Land Registration","Land Registration","Land Registration","Land Registration","Land Registration","Land Registration","Land Registration","Land Registration","Land Registration","Makani Search", "Makani Search", "Makani Search", "Makani Search", "Makani Search", "Makani Search", "Makani Search", "Makani Search", "Makani Search","Makani Search"};
-    String[] arrayFunctions = {"Request Site Plan", "Zoning Regulation", "Building Violation"};
+    String[] arrayFunctions = {"Request Site Plan", "Zoning Regulation", "Building Violation","Land Activities"};
 
     public Kharetati getKharetati ()
     {
@@ -63,7 +63,7 @@ public class GridMenuModel {
 
     private List<FunctionsOnMap> populateFunctionsOnMap(){
         lstFunctionsOnMap = new ArrayList<>();
-        for(int i =0; i < 3; i++){
+        for(int i =0; i < 4; i++){
             FunctionsOnMap form = new FunctionsOnMap();
             form.setNameEn(arrayFunctions[i]);
             form.setNameAr("Plot Number");

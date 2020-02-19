@@ -39,7 +39,7 @@ public class InAppNotificationAdapter extends RecyclerView.Adapter<InAppNotifica
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         ViewDataBinding binding = DataBindingUtil.inflate(layoutInflater, viewType, parent, false);
 
-        return new InAppNotificationAdapter.GenericViewHolder(binding);
+        return new GenericViewHolder(binding);
     }
 
     @Override

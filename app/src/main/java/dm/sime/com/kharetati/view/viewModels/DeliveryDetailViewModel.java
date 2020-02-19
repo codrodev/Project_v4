@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel;
 
 public class DeliveryDetailViewModel extends ViewModel {
 
-    public DeliveryDetailViewModel(){
 
+    public DeliveryDetailViewModel() {
     }
 }
