@@ -78,6 +78,7 @@ import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.FileDownloader;
 import dm.sime.com.kharetati.utility.Files.DialogConfigs;
 import dm.sime.com.kharetati.utility.Files.DialogProperties;
+import dm.sime.com.kharetati.utility.Files.DialogSelectionListener;
 import dm.sime.com.kharetati.utility.Files.DocumentUtility;
 import dm.sime.com.kharetati.utility.Files.FilePickerDialog;
 import dm.sime.com.kharetati.utility.Files.ListItem;
@@ -174,7 +175,6 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         mRootView = binding.getRoot();
         initializePage();
 
-
         return binding.getRoot();
     }
 
@@ -186,14 +186,13 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         if(!isDeliveryDetails)
         {
             al = new ArrayList<DocArr>();
-            oldDoc = new ArrayList<DocArr>();
+            if(oldDoc == null) {
+                oldDoc = new ArrayList<DocArr>();
+            }
             lstAttachedDoc = new ArrayList<AttachedDoc>();
-
-
-            clearImage();
-
+            //clearImage();
         }
-        clearBitMap();
+        //clearBitMap();
 
         attachmentState();
 
@@ -360,6 +359,59 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
             }
         });
+
+        filePickerDialog.setDialogSelectionListener(new DialogSelectionListener() {
+            @Override
+            public void onSelectedFilePaths(String[] files) {
+                //files is the array of paths selected by the App User.
+                int size = listItem.size();
+                listItem.clear();
+
+                for(String path:files) {
+                    File myFile=new File(path);
+                    String fileExtension = DocumentUtility.getFileExtension(myFile.getName()).toLowerCase();
+                    if (DocumentUtility.isCorrectDocExtension(fileExtension)) {
+
+
+                        createAttachedDoc(encodeFileToBase64Binary(myFile), "application/pdf",
+                                getCurrentKey(), myFile.getName(), getDocId(currentSelection), currentSelection);
+                        AddDoc(currentSelection, myFile.getPath(), myFile.getName(), "application/pdf", 0);
+
+                        if (currentSelection == PASSPORT) {
+
+                            isCamera = false;
+
+                            binding.imgPassport.setImageDrawable(getResources().getDrawable(R.drawable.pdf_icon));
+                            binding.personalView.setVisibility(View.VISIBLE);
+                            binding.personalChange.setVisibility(View.VISIBLE);
+
+                        } else if (currentSelection == LETTER_FROM_OWNER) {
+
+                            isCamera = false;
+                            binding.imgLetterFromOwner.setImageDrawable(getResources().getDrawable(R.drawable.pdf_icon));
+                            binding.nocView.setVisibility(View.VISIBLE);
+                            binding.nocChange.setVisibility(View.VISIBLE);
+                        } else if (currentSelection == VISA_PASSPORT) {
+
+                            isCamera = false;
+                            binding.imgVisaPassport.setImageDrawable(getResources().getDrawable(R.drawable.pdf_icon));
+                            binding.visaView.setVisibility(View.VISIBLE);
+                            binding.visaChange.setVisibility(View.VISIBLE);
+                        } else if (currentSelection == COMPANY_LICENCE) {
+
+                            isCamera = false;
+                            binding.imgCompanyLicense.setImageDrawable(getResources().getDrawable(R.drawable.pdf_icon));
+                            binding.licenseView.setVisibility(View.VISIBLE);
+                            binding.licenseChange.setVisibility(View.VISIBLE);
+                        }
+
+                    }
+                    imageAlignment();
+                }
+
+            }
+        });
+
         if(Global.docArr!=null){
 
             for(int i=0;i<Global.docArr.length;i++){

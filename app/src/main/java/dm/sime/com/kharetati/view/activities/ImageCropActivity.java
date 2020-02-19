@@ -139,7 +139,7 @@ public class ImageCropActivity extends AppCompatActivity {
                         AttachmentFragment.thumbnail=null;
                 /*if(progressDialog!=null)
                     progressDialog.cancel();*/
-
+                        AlertDialogUtil.showProgressBar(ImageCropActivity.this,false);
                         finish();
 
                     }
