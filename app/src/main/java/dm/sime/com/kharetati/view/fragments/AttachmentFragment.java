@@ -1444,27 +1444,27 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
             galleryURI=Uri.parse(data.getExtras().getString("uri"));
 
-             if (currentSelection == LAND_OWNER_CERTIFICATE) {
+             if (currentSelection.equals(LAND_OWNER_CERTIFICATE)) {
                 binding.imgLandOwner.setImageURI(galleryURI);
                 AttachmentBitmap.land_ownership_certificate=((BitmapDrawable) binding.imgLandOwner.getDrawable()).getBitmap();
                 createAttachedDoc(encodeImage(AttachmentBitmap.land_ownership_certificate), "image/jpg",
                         getCurrentKey(),LETTER_FROM_OWNER+".jpg", getDocId(currentSelection), LAND_OWNER_CERTIFICATE);
-            } else if (currentSelection == PASSPORT) {
+            } else if (currentSelection.equals(PASSPORT)) {
                 binding.imgPassport.setImageURI(galleryURI);
                 AttachmentBitmap.passport_copy=((BitmapDrawable) binding.imgPassport.getDrawable()).getBitmap();
                 createAttachedDoc(encodeImage(AttachmentBitmap.passport_copy), "image/jpg",
                         getCurrentKey(),PASSPORT+".jpg", getDocId(currentSelection), PASSPORT);
-            } else if (currentSelection == LETTER_FROM_OWNER) {
+            } else if (currentSelection.equals(LETTER_FROM_OWNER)) {
                 binding.imgLetterFromOwner.setImageURI(galleryURI);
                 AttachmentBitmap.letter_from_owner=((BitmapDrawable) binding.imgLetterFromOwner.getDrawable()).getBitmap();
                 createAttachedDoc(encodeImage(AttachmentBitmap.letter_from_owner), "image/jpg",
                         getCurrentKey(),LETTER_FROM_OWNER+".jpg", getDocId(currentSelection), LETTER_FROM_OWNER);
-            }else if (currentSelection == VISA_PASSPORT) {
+            }else if (currentSelection.equals(VISA_PASSPORT)) {
                 binding.imgVisaPassport.setImageURI(galleryURI);
                 AttachmentBitmap.visa_passport=((BitmapDrawable) binding.imgVisaPassport.getDrawable()).getBitmap();
                 createAttachedDoc(encodeImage(AttachmentBitmap.visa_passport), "image/jpg",
                         getCurrentKey(),VISA_PASSPORT+".jpg", getDocId(currentSelection), VISA_PASSPORT);
-            }else if (currentSelection == COMPANY_LICENCE) {
+            }else if (currentSelection.equals(COMPANY_LICENCE)) {
                 binding.imgCompanyLicense.setImageURI(galleryURI);
                 AttachmentBitmap.company_license=((BitmapDrawable) binding.imgCompanyLicense.getDrawable()).getBitmap();
                 createAttachedDoc(encodeImage(AttachmentBitmap.company_license), "image/jpg",

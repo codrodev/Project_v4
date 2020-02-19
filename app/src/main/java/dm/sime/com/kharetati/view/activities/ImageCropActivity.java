@@ -36,6 +36,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import dm.sime.com.kharetati.R;
+import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.CustomContextWrapper;
 import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
@@ -108,7 +109,7 @@ public class ImageCropActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        progressDialog.show();
+                        AlertDialogUtil.showProgressBar(ImageCropActivity.this,true);
                     }
                 });
                 resultBitmap = cropView.getCroppedImage();

@@ -214,12 +214,15 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
             case 3:
                 fragment = PayFragment.newInstance();
                 break;
+            default:
+                fragment = LandOwnerSelectionFragment.newInstance();
+                break;
         }
 
         tx.replace(R.id.childFragmentContainer, fragment);
 
         //if (addToBackStack)
-            //tx.addToBackStack(fragment_tag);
+        tx.addToBackStack(fragment.getTag());
         tx.commitAllowingStateLoss();
         return fragment;
     }
