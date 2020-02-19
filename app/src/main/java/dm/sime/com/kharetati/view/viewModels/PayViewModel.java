@@ -5,6 +5,9 @@ import android.app.Activity;
 import androidx.lifecycle.ViewModel;
 
 import com.esri.arcgisruntime.tasks.geoprocessing.GeoprocessingLong;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -20,6 +23,7 @@ import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.activities.MainActivity;
+import dm.sime.com.kharetati.view.fragments.AttachmentFragment;
 import dm.sime.com.kharetati.view.fragments.ParentSiteplanFragment;
 import dm.sime.com.kharetati.view.fragments.PayFragment;
 import dm.sime.com.kharetati.view.navigators.PayNavigator;
@@ -47,8 +51,9 @@ public class PayViewModel extends ViewModel {
         kharetatiApp = KharetatiApp.create(activity);
     }
 
-    public void createAndUpdateRequest() {
+    public void createAndUpdateRequest() throws JSONException {
         payNavigator.onStarted();
+        AttachmentFragment.attachmentModel.attachmentNavigator.navigateToPay();
         SerializedCreateAndUpdateModel model = new SerializedCreateAndUpdateModel();
         model.setMy_id(Global.loginDetails.username);
         model.setToken(Global.site_plan_token);
@@ -57,7 +62,7 @@ public class PayViewModel extends ViewModel {
         model.setApplicant_mobile(PayFragment.applicantMobile);
         model.setApplicant_email_id(PayFragment.applicantEmailId);
         model.setRequest_source("KHARETATI");
-        model.setParcel_id(Long.parseLong(PlotDetails.parcelNo));
+        model.setParcel_id(Integer.parseInt(PlotDetails.parcelNo));
         model.setRequest_id(Global.requestId == null ? "" : Global.requestId);
         model.setIs_hard_copy_reqd(Global.isDeliveryByCourier ? "Y":"N");
         model.setPayment_type(paymentType);
@@ -68,7 +73,8 @@ public class PayViewModel extends ViewModel {
         model.setNoc_docs(Global.nocData);
         model.setLocale(Global.CURRENT_LOCALE);
         String url = AppUrls.CREATE_UPDATE_REQUEST;
-
+        Gson ob = new Gson();
+        String x = ob.toJson(model);
         try {
             Disposable disposable = repository.createAndUpdateRequest(url,model)
                     .subscribeOn(kharetatiApp.subscribeScheduler())
@@ -99,7 +105,7 @@ public class PayViewModel extends ViewModel {
                     createUpdateRequestResponse.getMessageEn():createUpdateRequestResponse.getMessageAr();
 
             if(status == 403){
-                AlertDialogUtil.errorAlertDialog("",msg,activity.getResources().getString(R.string.ok),activity);
+                payNavigator.onFailure(msg);
             } else if(status == 405){
                 ((MainActivity)activity).loadFragment(FragmentTAGS.FR_HOME,true,null);
             }else{
@@ -125,15 +131,15 @@ public class PayViewModel extends ViewModel {
                         ArrayList al = new ArrayList<>();
                         al.add(Global.paymentUrl);
 
-                    ((MainActivity)activity).loadFragment(FragmentTAGS.FR_WEBVIEW,true,null);}
+                    ((MainActivity)activity).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);}
 
 
                     else if(status==402){
 
                         if(msg!=null)
-                            AlertDialogUtil.errorAlertDialog("", msg,activity.getResources().getString(R.string.ok),activity);
+                            payNavigator.onFailure(msg);
                         else
-                            AlertDialogUtil.errorAlertDialog("", Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr(),activity.getResources().getString(R.string.ok),activity);
+                            payNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
 
                     }else if(status==405) {
 
@@ -141,11 +147,10 @@ public class PayViewModel extends ViewModel {
                     }
                     else {
                         if (msg == null || msg.trim().length() < 1) {
-                            AlertDialogUtil.errorAlertDialog("", Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr(), activity.getResources().getString(R.string.ok), activity);
+                            payNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
 
                         } else {
-                            AlertDialogUtil.errorAlertDialog("", msg,activity.getResources().getString(R.string.ok),activity);
-                        }
+                            payNavigator.onFailure(msg);                        }
                     }
                 }
                 else if(paymentType.compareToIgnoreCase("Pay later")==0)
@@ -167,9 +172,9 @@ public class PayViewModel extends ViewModel {
                     else if(status==402){
 
                         if(msg!=null)
-                            AlertDialogUtil.errorAlertDialog("", msg,activity.getResources().getString(R.string.ok),activity);
+                            payNavigator.onFailure(msg);
                         else
-                            AlertDialogUtil.errorAlertDialog("", Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr(),activity.getResources().getString(R.string.ok),activity);
+                            payNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
 
                     }else if(status==405) {
 
@@ -178,10 +183,10 @@ public class PayViewModel extends ViewModel {
                     }
                     else {
                         if (msg == null || msg.trim().length() < 1||msg.equals("")) {
-                            AlertDialogUtil.errorAlertDialog("", Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getErrorFetchingDataEn() : Global.appMsg.getErrorFetchingDataAr(), activity.getResources().getString(R.string.ok), activity);
+                            payNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
 
                         } else {
-                            AlertDialogUtil.errorAlertDialog("", msg, activity.getResources().getString(R.string.ok), activity);
+                            payNavigator.onFailure(msg);
                         }
                     }
 

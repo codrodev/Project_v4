@@ -13,6 +13,8 @@ import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import org.json.JSONException;
+
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -89,7 +91,11 @@ public class PayFragment extends Fragment implements PayNavigator {
                         applicantMobile = binding.etMobile.getText().toString().trim();
                         applicantEmailId = binding.etEmailaddress.getText().toString().trim();
 
-                        model.createAndUpdateRequest();
+                        try {
+                            model.createAndUpdateRequest();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                 }}
@@ -114,7 +120,11 @@ public class PayFragment extends Fragment implements PayNavigator {
                     if(isValidMobile() == true && isValidEmailId() == true) {
                         applicantMobile = binding.etMobile.getText().toString().trim();
                         applicantEmailId = binding.etEmailaddress.getText().toString().trim();
-                        model.createAndUpdateRequest();
+                        try {
+                            model.createAndUpdateRequest();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                 }

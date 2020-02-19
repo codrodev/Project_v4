@@ -106,41 +106,44 @@ public class ImageCropActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                runOnUiThread(new Runnable() {
+                /*runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         AlertDialogUtil.showProgressBar(ImageCropActivity.this,true);
-                        resultBitmap = cropView.getCroppedImage();
+
                     }
-                });
+                });*/
+                resultBitmap = cropView.getCroppedImage();
+
+                isImageCropped=true;
+
+
+                try
+                {
+                    URI=storeImage(resultBitmap).getAbsolutePath();
+                    Bitmap cropped=compressImage(Uri.parse(URI),"cropped_image");
+                    path=storeImage(cropped);
+
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+                resultIntent.putExtra("uri",path.getAbsolutePath());
+
+                setResult(RESULT_OK,resultIntent);
+                AttachmentFragment.thumbnail=null;
+                /*if(progressDialog!=null)
+                    progressDialog.cancel();*/
+                //AlertDialogUtil.showProgressBar(ImageCropActivity.this,false);
+                finish();
+
 
 
                 AsyncTask.execute(new Runnable() {
                     @Override
                     public void run() {
 
-                        isImageCropped=true;
-
-
-                        try
-                        {
-                            URI=storeImage(resultBitmap).getAbsolutePath();
-                            Bitmap cropped=compressImage(Uri.parse(URI),"cropped_image");
-                            path=storeImage(cropped);
-
-                        }
-                        catch (IOException e)
-                        {
-                            e.printStackTrace();
-                        }
-                        resultIntent.putExtra("uri",path.getAbsolutePath());
-
-                        setResult(RESULT_OK,resultIntent);
-                        AttachmentFragment.thumbnail=null;
-                /*if(progressDialog!=null)
-                    progressDialog.cancel();*/
-                        AlertDialogUtil.showProgressBar(ImageCropActivity.this,false);
-                        finish();
 
                     }
                 });

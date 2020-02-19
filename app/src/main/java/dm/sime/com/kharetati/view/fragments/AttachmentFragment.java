@@ -137,7 +137,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
     private File dwldsPath;
     private Bitmap front;
     private String imageType;
-
+    public static AttachmentViewModel attachmentModel;
 
 
     public static AttachmentFragment newInstance(){
@@ -161,6 +161,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
         model = ViewModelProviders.of(getActivity(),factory).get(AttachmentViewModel.class);
         model.attachmentNavigator =this;
+        attachmentModel =model;
         listItem = new ArrayList<>();
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), AppConstants.ALL_PERMISSIONS, AppConstants.REQUEST_READ_EXTERNAL_STORAGE);
@@ -1066,6 +1067,11 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
     }
 
     @Override
+    public void navigateToPay() throws JSONException {
+        prepareDoc();
+    }
+
+    @Override
     public void updateUI(RetrieveDocStreamResponse retrieveDocStreamResponse, int docId) {
 
         if(retrieveDocStreamResponse.getDoc_details() != null)
@@ -1876,7 +1882,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
     }
 
-    public void navigatoToPay() throws JSONException {
+    public void prepareDoc() throws JSONException {
         if(!Global.isConnected(getActivity())){
             return;
         }

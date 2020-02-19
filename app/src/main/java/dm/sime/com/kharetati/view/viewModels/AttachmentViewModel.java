@@ -114,7 +114,7 @@ public class AttachmentViewModel extends ViewModel {
             String msg=Global.CURRENT_LOCALE.equals("en") ? retrieveDocStreamResponse.getMessage_en():retrieveDocStreamResponse.getMessage_ar();
             if( status == 403){
                 isError= true;
-                if(msg!=null||msg.equals("")) AlertDialogUtil.errorAlertDialog("",msg,activity.getResources().getString(R.string.ok),activity);
+                if(msg!=null||msg.equals("")) attachmentNavigator.onFailure(msg);
 
             }
             else{

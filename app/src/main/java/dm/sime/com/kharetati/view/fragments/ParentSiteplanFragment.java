@@ -222,7 +222,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         tx.replace(R.id.childFragmentContainer, fragment);
 
         //if (addToBackStack)
-        tx.addToBackStack(fragment.getTag());
+       // tx.addToBackStack(fragment.getTag());
         tx.commitAllowingStateLoss();
         return fragment;
     }
