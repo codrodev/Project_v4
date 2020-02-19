@@ -34,7 +34,7 @@ public class DocArr{
         }
 
         public void setDocKey(String docKey) {
-            docKey = docKey;
+            this.docKey = docKey;
         }
 
         public String getDocPath() {

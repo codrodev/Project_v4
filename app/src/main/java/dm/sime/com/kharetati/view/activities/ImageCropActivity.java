@@ -1,6 +1,6 @@
 package dm.sime.com.kharetati.view.activities;
 
-import android.app.ProgressDialog;
+
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -62,7 +62,7 @@ public class ImageCropActivity extends AppCompatActivity {
     private Intent resultIntent;
     private String mCurrentPhotoPath;
     private File path;
-    private ProgressDialog progressDialog;
+
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -110,15 +110,14 @@ public class ImageCropActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         AlertDialogUtil.showProgressBar(ImageCropActivity.this,true);
+                        resultBitmap = cropView.getCroppedImage();
                     }
                 });
-                resultBitmap = cropView.getCroppedImage();
+
 
                 AsyncTask.execute(new Runnable() {
                     @Override
                     public void run() {
-
-
 
                         isImageCropped=true;
 
@@ -166,6 +165,7 @@ public class ImageCropActivity extends AppCompatActivity {
 
 
 
+
         /*try {
             bitmap=MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), Uri.parse(img_uri));
             cropView.setImageBitmap(bitmap);
@@ -208,9 +208,9 @@ public class ImageCropActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(progressDialog!=null)
-            progressDialog.cancel();
-        progressDialog=null;
+        if(Global.alertDialog!=null)
+            Global.alertDialog.cancel();
+        Global.alertDialog=null;
     }
 
     private File storeImage(Bitmap image) throws IOException {

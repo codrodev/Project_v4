@@ -120,6 +120,7 @@ public class Global {
     public static JSONArray licenseData;
     public static JSONArray nocData;
     public static boolean isDeliveryByCourier;
+    public static String paymentUrl;
     private static Context context;
     public static boolean isLanguageChanged = false;
     public static String noctemplateUrl;

@@ -85,11 +85,11 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         if(currentIndex != 0 )
             binding.btnPrevious.setVisibility(View.VISIBLE);
         else
-            binding.btnPrevious.setVisibility(View.GONE);
+            binding.btnPrevious.setVisibility(View.INVISIBLE);
         if(currentIndex != 2 )
             binding.btnNext.setVisibility(View.VISIBLE);
         else
-            binding.btnNext.setVisibility(View.GONE);
+            binding.btnNext.setVisibility(View.INVISIBLE);
 
 
 
@@ -271,6 +271,6 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
     public void onResume() {
         super.onResume();
 
-        loadFragment(currentIndex);   //971501298802
+        loadFragment(currentIndex);
     }
 }
