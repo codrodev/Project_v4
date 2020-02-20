@@ -1,6 +1,6 @@
 package dm.sime.com.kharetati.view.activities;
 
-
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -62,7 +62,7 @@ public class ImageCropActivity extends AppCompatActivity {
     private Intent resultIntent;
     private String mCurrentPhotoPath;
     private File path;
-
+    private ProgressDialog progressDialog;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -106,44 +106,42 @@ public class ImageCropActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                /*runOnUiThread(new Runnable() {
+                runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         AlertDialogUtil.showProgressBar(ImageCropActivity.this,true);
-
                     }
-                });*/
+                });
                 resultBitmap = cropView.getCroppedImage();
-
-                isImageCropped=true;
-
-
-                try
-                {
-                    URI=storeImage(resultBitmap).getAbsolutePath();
-                    Bitmap cropped=compressImage(Uri.parse(URI),"cropped_image");
-                    path=storeImage(cropped);
-
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-                resultIntent.putExtra("uri",path.getAbsolutePath());
-
-                setResult(RESULT_OK,resultIntent);
-                AttachmentFragment.thumbnail=null;
-                /*if(progressDialog!=null)
-                    progressDialog.cancel();*/
-                //AlertDialogUtil.showProgressBar(ImageCropActivity.this,false);
-                finish();
-
-
 
                 AsyncTask.execute(new Runnable() {
                     @Override
                     public void run() {
 
+
+
+                        isImageCropped=true;
+
+
+                        try
+                        {
+                            URI=storeImage(resultBitmap).getAbsolutePath();
+                            Bitmap cropped=compressImage(Uri.parse(URI),"cropped_image");
+                            path=storeImage(cropped);
+
+                        }
+                        catch (IOException e)
+                        {
+                            e.printStackTrace();
+                        }
+                        resultIntent.putExtra("uri",path.getAbsolutePath());
+
+                        setResult(RESULT_OK,resultIntent);
+                        AttachmentFragment.thumbnail=null;
+                /*if(progressDialog!=null)
+                    progressDialog.cancel();*/
+                        AlertDialogUtil.showProgressBar(ImageCropActivity.this,false);
+                        finish();
 
                     }
                 });
@@ -163,7 +161,6 @@ public class ImageCropActivity extends AppCompatActivity {
 
             }
         });
-
 
 
 
@@ -211,9 +208,9 @@ public class ImageCropActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(Global.alertDialog!=null)
-            Global.alertDialog.cancel();
-        Global.alertDialog=null;
+        if(progressDialog!=null)
+            progressDialog.cancel();
+        progressDialog=null;
     }
 
     private File storeImage(Bitmap image) throws IOException {

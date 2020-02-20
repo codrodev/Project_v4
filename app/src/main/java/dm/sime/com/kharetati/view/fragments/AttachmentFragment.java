@@ -164,6 +164,17 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         model.attachmentNavigator =this;
         attachmentModel =model;
         listItem = new ArrayList<>();
+        if(!isDeliveryDetails)
+        {
+            if (al == null) {
+                al = new ArrayList<DocArr>();
+            }
+            if(oldDoc == null) {
+                oldDoc = new ArrayList<DocArr>();
+            }
+            lstAttachedDoc = new ArrayList<AttachedDoc>();
+            //clearImage();
+        }
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), AppConstants.ALL_PERMISSIONS, AppConstants.REQUEST_READ_EXTERNAL_STORAGE);
         }
@@ -185,15 +196,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
 
 
-        if(!isDeliveryDetails)
-        {
-            al = new ArrayList<DocArr>();
-            if(oldDoc == null) {
-                oldDoc = new ArrayList<DocArr>();
-            }
-            lstAttachedDoc = new ArrayList<AttachedDoc>();
-            //clearImage();
-        }
+
         //clearBitMap();
 
         attachmentState();
@@ -1502,7 +1505,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         else if (requestCode == GALLERY_CROP && resultCode == -1) {
 
             galleryURI=Uri.parse(data.getExtras().getString("uri"));
-
+            AddDoc(currentSelection, "", "", "jpg", 0);
              if (currentSelection.equals(LAND_OWNER_CERTIFICATE)) {
                 binding.imgLandOwner.setImageURI(galleryURI);
                 AttachmentBitmap.land_ownership_certificate=((BitmapDrawable) binding.imgLandOwner.getDrawable()).getBitmap();
@@ -1746,7 +1749,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         pdfBitmap =((BitmapDrawable) getResources().getDrawable(R.drawable.pdf_icon)).getBitmap();
 
 
-        if (currentSelection == COMPANY_LICENCE) {
+        if (currentSelection == COMPANY_LICENCE && al != null) {
             for (int i = 0; i < al.size(); i++) {
                 if (al.get(i).getDocKey() != null && al.get(i).getDocKey().equals(COMPANY_LICENCE)) {
                     if (al.get(i).getDocFormat().compareToIgnoreCase("pdf") == 0||al.get(i).getDocFormat().compareToIgnoreCase("application/pdf") == 0) {
@@ -1772,7 +1775,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                 }
             }
         }
-        else if (currentSelection == VISA_PASSPORT) {
+        else if (currentSelection == VISA_PASSPORT && al != null) {
             for (int i = 0; i < al.size(); i++) {
                 if (al.get(i).getDocKey() != null && al.get(i).getDocKey().equals(VISA_PASSPORT)) {
                     if (al.get(i).getDocFormat().compareToIgnoreCase("pdf") == 0||al.get(i).getDocFormat().compareToIgnoreCase("application/pdf") == 0) {
@@ -1795,7 +1798,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                 }
             }
 
-        } else if (currentSelection == LAND_OWNER_CERTIFICATE) {
+        } else if (currentSelection == LAND_OWNER_CERTIFICATE && al != null) {
             for (int i = 0; i < al.size(); i++) {
                 if (al.get(i).getDocKey() != null && al.get(i).getDocKey().equals(LAND_OWNER_CERTIFICATE)) {
                     if (al.get(i).getDocFormat().compareToIgnoreCase("pdf") == 0||al.get(i).getDocFormat().compareToIgnoreCase("application/pdf") == 0) {
@@ -1820,7 +1823,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
 
         }
-        else if (currentSelection == PASSPORT)
+        else if (currentSelection == PASSPORT && al != null)
         {
             for (int i = 0; i < al.size(); i++)
             {
@@ -1846,7 +1849,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
             }
 
         }
-        else if (currentSelection == LETTER_FROM_OWNER)
+        else if (currentSelection == LETTER_FROM_OWNER && al != null)
         {
             for (int i = 0; i < al.size(); i++)
             {
