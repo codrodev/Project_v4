@@ -39,6 +39,7 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity android:name=".view.activities.ImageCropActivity"/>
+        <activity android:name=".view.activities.ViewImage"/>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.kharetati.android.fileprovider"

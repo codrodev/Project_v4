@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
+import dm.sime.com.kharetati.view.fragments.AttachmentFragment;
 
 
 public class ViewImage extends AppCompatActivity {
@@ -35,6 +36,7 @@ public class ViewImage extends AppCompatActivity {
         ImageView imageView=(ImageView) findViewById(R.id.viewImage);
          String imgPath = getIntent().getStringExtra("bitmap");
         Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
+        AttachmentFragment.isDeliveryDetails =true;
         if(Global.CURRENT_LOCALE.equals("en")){
 
             back.setRotationY(0);

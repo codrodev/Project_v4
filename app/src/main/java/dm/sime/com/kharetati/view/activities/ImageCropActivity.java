@@ -106,6 +106,7 @@ public class ImageCropActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
+                AttachmentFragment.isDeliveryDetails =true;
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
