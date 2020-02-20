@@ -3,6 +3,7 @@ package dm.sime.com.kharetati.view.fragments;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -1739,7 +1740,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
     private void viewImage() throws IOException {
 
 
-        Intent intent = new Intent(getActivity(), ViewImage.class);
+        Intent intent = new Intent(this.getActivity(), ViewImage.class);
         File file = null;
 
         pdfBitmap =((BitmapDrawable) getResources().getDrawable(R.drawable.pdf_icon)).getBitmap();
@@ -1883,9 +1884,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
     }
 
     public void prepareDoc() throws JSONException {
-        if(!Global.isConnected(getActivity())){
-            return;
-        }
+
         populateLstDoc();
         if(lstAttachedDoc!=null && lstAttachedDoc.size()>0){
             for(int i=0;i<lstAttachedDoc.size();i++){
@@ -1898,7 +1897,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         }
 
 
-        User user=Global.getUser(getActivity());
+        //User user=Global.getUser(getActivity());
 
         if(Global.isDeliveryByCourier) {
             Global.deliveryDetails=new JSONObject();

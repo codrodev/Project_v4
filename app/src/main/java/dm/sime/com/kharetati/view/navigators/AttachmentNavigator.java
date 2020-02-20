@@ -1,5 +1,7 @@
 package dm.sime.com.kharetati.view.navigators;
 
+import android.app.Activity;
+
 import org.json.JSONException;
 
 import dm.sime.com.kharetati.datas.models.RetrieveDocStreamResponse;
