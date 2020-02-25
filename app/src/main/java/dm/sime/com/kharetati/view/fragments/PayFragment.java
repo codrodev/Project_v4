@@ -27,6 +27,7 @@ import dm.sime.com.kharetati.datas.repositories.PayRepository;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.view.navigators.PayNavigator;
+import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 import dm.sime.com.kharetati.view.viewModels.PayViewModel;
 import dm.sime.com.kharetati.view.viewmodelfactories.PayViewModelFactory;
 
@@ -74,7 +75,7 @@ public class PayFragment extends Fragment implements PayNavigator {
         binding.payNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ParentSiteplanViewModel.initializeDocuments();
                 if (!Global.isConnected(getActivity())) {
 
                     if(Global.appMsg!=null)

@@ -3,8 +3,11 @@ package dm.sime.com.kharetati.datas.network;
 import org.json.JSONObject;
 
 import dm.sime.com.kharetati.datas.models.AccessTokenResponse;
+import dm.sime.com.kharetati.datas.models.AppServiceResponse;
+import dm.sime.com.kharetati.datas.models.AppSessionResponse;
 import dm.sime.com.kharetati.datas.models.BookmarksResponse;
 import dm.sime.com.kharetati.datas.models.CreateUpdateRequestResponse;
+import dm.sime.com.kharetati.datas.models.GetAppResponse;
 import dm.sime.com.kharetati.datas.models.GetAreaNamesResponse;
 import dm.sime.com.kharetati.datas.models.HTTPRequestBody;
 import dm.sime.com.kharetati.datas.models.KharetatiUser;
@@ -13,8 +16,11 @@ import dm.sime.com.kharetati.datas.models.ParcelResponse;
 import dm.sime.com.kharetati.datas.models.RetrieveDocStreamResponse;
 import dm.sime.com.kharetati.datas.models.RetrieveMyMapResponse;
 import dm.sime.com.kharetati.datas.models.RetrieveProfileDocsResponse;
+import dm.sime.com.kharetati.datas.models.SearchParameterModel;
+import dm.sime.com.kharetati.datas.models.SearchResult;
 import dm.sime.com.kharetati.datas.models.SerializeBookMarksModel;
 import dm.sime.com.kharetati.datas.models.SerializeBookmarkModel;
+import dm.sime.com.kharetati.datas.models.SerializeGetAppRequestModel;
 import dm.sime.com.kharetati.datas.models.SerializedCreateAndUpdateModel;
 import dm.sime.com.kharetati.datas.models.SerializedModel;
 import dm.sime.com.kharetati.datas.models.SessionResponse;
@@ -102,4 +108,13 @@ public interface MyApiService {
     //to Create and Update request
     @POST
     Observable<CreateUpdateRequestResponse> createAndUpdateRequest(@Url String url, @Body SerializedCreateAndUpdateModel model);
+
+    @POST
+    Observable<GetAppResponse> getApps(@Url String url,@Body SerializeGetAppRequestModel model);
+
+    @POST
+    Observable<AppSessionResponse> getAppSession(@Url String url);
+
+    @POST
+    Observable<SearchResult> getMapBasedSearchResult(@Url String url, @Body SearchParameterModel model);
 }

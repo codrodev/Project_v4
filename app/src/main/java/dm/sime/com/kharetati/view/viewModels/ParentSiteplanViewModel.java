@@ -5,9 +5,12 @@ import android.content.Context;
 
 import androidx.lifecycle.ViewModel;
 
+import java.util.ArrayList;
+
 import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.datas.models.DeliveryDetails;
+import dm.sime.com.kharetati.datas.models.DocArr;
 import dm.sime.com.kharetati.datas.models.RetrieveProfileDocsResponse;
 import dm.sime.com.kharetati.datas.models.SerializedModel;
 import dm.sime.com.kharetati.datas.repositories.ParentSitePlanRepository;
@@ -34,12 +37,40 @@ public class ParentSiteplanViewModel extends ViewModel {
     public static String applicantMailId;
     public static String applicantMobileNo;
 
+    private static ArrayList<DocArr> downloadedDoc;
+    private static ArrayList<DocArr> newlyAttachedDoc;
 
+    public static ArrayList<DocArr> getDownloadedDoc() {
+        return downloadedDoc;
+    }
+
+    public static void addDownloadedDoc(DocArr doc) {
+        ParentSiteplanViewModel.downloadedDoc.add(doc);
+    }
+
+    public static ArrayList<DocArr> getNewlyAttachedDoc() {
+        return newlyAttachedDoc;
+    }
+
+    public static void addNewlyAttachedDoc(DocArr doc) {
+        ParentSiteplanViewModel.newlyAttachedDoc.add(doc);
+    }
 
     public ParentSiteplanViewModel(Activity context, ParentSitePlanRepository repository) {
         this.activity = context;
         this.repository = repository;
         kharetatiApp = KharetatiApp.create(activity);
+        if(downloadedDoc == null){
+            downloadedDoc = new ArrayList<>();
+        }
+        if(newlyAttachedDoc == null){
+            newlyAttachedDoc = new ArrayList<>();
+        }
+    }
+
+    public static void initializeDocuments(){
+        downloadedDoc = new ArrayList<>();
+        newlyAttachedDoc = new ArrayList<>();
     }
 
     public void manageAppBar(Context ctx, boolean status){

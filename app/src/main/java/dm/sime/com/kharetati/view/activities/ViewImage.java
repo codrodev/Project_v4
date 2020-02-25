@@ -36,7 +36,6 @@ public class ViewImage extends AppCompatActivity {
         ImageView imageView=(ImageView) findViewById(R.id.viewImage);
          String imgPath = getIntent().getStringExtra("bitmap");
         Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-        AttachmentFragment.isDeliveryDetails =true;
         if(Global.CURRENT_LOCALE.equals("en")){
 
             back.setRotationY(0);

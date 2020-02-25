@@ -99,6 +99,7 @@ import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.adapters.DashboardPagerAdapter;
 import dm.sime.com.kharetati.view.navigators.MapNavigator;
 import dm.sime.com.kharetati.view.viewModels.MapViewModel;
+import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 import dm.sime.com.kharetati.view.viewmodelfactories.MapViewModelFactory;
 
 public class MapFragment extends Fragment implements MapNavigator {
@@ -213,6 +214,7 @@ public class MapFragment extends Fragment implements MapNavigator {
     }
 
     private void initializePage(){
+        ParentSiteplanViewModel.initializeDocuments();
         model.manageAppBar(getActivity(), false);
         model.manageAppBottomBAtr(getActivity(), false);
 

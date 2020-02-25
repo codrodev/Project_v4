@@ -7,4 +7,6 @@ public interface HomeNavigator {
     public void onSuccess();
 
     public void populateAreaNames();
+
+    public void populateGridMenu();
 }

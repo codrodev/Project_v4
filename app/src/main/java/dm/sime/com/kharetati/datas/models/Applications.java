@@ -3,139 +3,133 @@ package dm.sime.com.kharetati.datas.models;
 import java.util.List;
 
 public class Applications {
-    public boolean isClick;
-    private String IconUrl;
-    private String IsPublic;
-    private String NameEn;
-    private String IconVersion;
-    private String LaunchUrl;
+    private String SearchUrl;
+
     private String IsNative;
+
     private String IsDisabled;
+
+    private boolean HasMap;
+
+    private String IconBase64;
+
+    private String DescAr;
+
+    private String IconUrl;
+
+    private String DescEn;
+
+    private String IsPublic;
+
+    private String NameEn;
+
     private String Id;
-    private String Icon;
-    private List<FunctionsOnMap> FunctionsOnMap;
+
     private List<SearchForm> SearchForm;
+
     private String NameAr;
 
-    public String getIconUrl ()
-    {
-        return IconUrl;
+    public String getSearchUrl() {
+        return SearchUrl;
     }
 
-    public void setIconUrl (String IconUrl)
-    {
-        this.IconUrl = IconUrl;
+    public void setSearchUrl(String searchUrl) {
+        SearchUrl = searchUrl;
     }
 
-    public String getIsPublic ()
-    {
-        return IsPublic;
-    }
-
-    public void setIsPublic (String IsPublic)
-    {
-        this.IsPublic = IsPublic;
-    }
-
-    public String getNameEn ()
-    {
-        return NameEn;
-    }
-
-    public void setNameEn (String NameEn)
-    {
-        this.NameEn = NameEn;
-    }
-
-    public String getIconVersion ()
-    {
-        return IconVersion;
-    }
-
-    public void setIconVersion (String IconVersion)
-    {
-        this.IconVersion = IconVersion;
-    }
-
-    public String getLaunchUrl ()
-    {
-        return LaunchUrl;
-    }
-
-    public void setLaunchUrl (String LaunchUrl)
-    {
-        this.LaunchUrl = LaunchUrl;
-    }
-
-    public String getIsNative ()
-    {
+    public String getIsNative() {
         return IsNative;
     }
 
-    public void setIsNative (String IsNative)
-    {
-        this.IsNative = IsNative;
+    public void setIsNative(String isNative) {
+        IsNative = isNative;
     }
 
-    public String getIsDisabled ()
-    {
+    public String getIsDisabled() {
         return IsDisabled;
     }
 
-    public void setIsDisabled (String IsDisabled)
-    {
-        this.IsDisabled = IsDisabled;
+    public void setIsDisabled(String isDisabled) {
+        IsDisabled = isDisabled;
     }
 
-    public String getId ()
-    {
+    public boolean getHasMap() {
+        return HasMap;
+    }
+
+    public void setHasMap(boolean hasMap) {
+        HasMap = hasMap;
+    }
+
+    public String getIconBase64() {
+        return IconBase64;
+    }
+
+    public void setIconBase64(String iconBase64) {
+        IconBase64 = iconBase64;
+    }
+
+    public String getDescAr() {
+        return DescAr;
+    }
+
+    public void setDescAr(String descAr) {
+        DescAr = descAr;
+    }
+
+    public String getIconUrl() {
+        return IconUrl;
+    }
+
+    public void setIconUrl(String iconUrl) {
+        IconUrl = iconUrl;
+    }
+
+    public String getDescEn() {
+        return DescEn;
+    }
+
+    public void setDescEn(String descEn) {
+        DescEn = descEn;
+    }
+
+    public String getIsPublic() {
+        return IsPublic;
+    }
+
+    public void setIsPublic(String isPublic) {
+        IsPublic = isPublic;
+    }
+
+    public String getNameEn() {
+        return NameEn;
+    }
+
+    public void setNameEn(String nameEn) {
+        NameEn = nameEn;
+    }
+
+    public String getId() {
         return Id;
     }
 
-    public void setId (String Id)
-    {
-        this.Id = Id;
+    public void setId(String id) {
+        Id = id;
     }
 
-    public String getIcon ()
-    {
-        return Icon;
-    }
-
-    public void setIcon (String Icon)
-    {
-        this.Icon = Icon;
-    }
-
-    public List<FunctionsOnMap> getFunctionsOnMap ()
-    {
-        return FunctionsOnMap;
-    }
-
-    public void setFunctionsOnMap (List<FunctionsOnMap> FunctionsOnMap)
-    {
-        this.FunctionsOnMap = FunctionsOnMap;
-    }
-
-    public List<SearchForm> getSearchForm ()
-    {
+    public List<SearchForm> getSearchForm() {
         return SearchForm;
     }
 
-    public void setSearchForm (List<SearchForm> SearchForm)
-    {
-        this.SearchForm = SearchForm;
+    public void setSearchForm(List<SearchForm> searchForm) {
+        SearchForm = searchForm;
     }
 
-    public String getNameAr ()
-    {
+    public String getNameAr() {
         return NameAr;
     }
 
-    public void setNameAr (String NameAr)
-    {
-        this.NameAr = NameAr;
+    public void setNameAr(String nameAr) {
+        NameAr = nameAr;
     }
-
-
 }

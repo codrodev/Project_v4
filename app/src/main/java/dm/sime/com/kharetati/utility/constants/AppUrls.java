@@ -13,7 +13,7 @@ public class AppUrls {
     public static final String BASE_URL="https://smart.gis.gov.ae/kharetativ4/"; //staging
 // public static final String BASE_URL="https://www.smartgis.ae/kharetativ5/"; //new production
 
-
+    public static final String BASE_AUXULARY_URL="https://smart.gis.gov.ae/KharetatiAuxiliaryServiceV3/Service.svc/"; //staging
     /************************************ GIS Layer Urls***********************************/
 
     public static String GIS_LAYER_USERNAME = "kharetatiuser";//production

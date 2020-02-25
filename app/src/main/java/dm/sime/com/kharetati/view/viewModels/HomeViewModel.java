@@ -23,9 +23,10 @@ import java.util.List;
 
 import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
+import dm.sime.com.kharetati.datas.models.AppSessionResponse;
 import dm.sime.com.kharetati.datas.models.Applications;
+import dm.sime.com.kharetati.datas.models.GetAppResponse;
 import dm.sime.com.kharetati.datas.models.GetAreaNamesResponse;
-import dm.sime.com.kharetati.datas.models.GridMenuModel;
 import dm.sime.com.kharetati.datas.models.HTTPRequestBody;
 import dm.sime.com.kharetati.datas.models.InAppNotifications;
 import dm.sime.com.kharetati.datas.models.InAppNotificationsModel;
@@ -34,12 +35,19 @@ import dm.sime.com.kharetati.datas.models.ParcelResponse;
 import dm.sime.com.kharetati.datas.models.Parcels;
 import dm.sime.com.kharetati.datas.models.PlotDetails;
 import dm.sime.com.kharetati.datas.models.SearchForm;
+import dm.sime.com.kharetati.datas.models.SearchParameterInput;
+import dm.sime.com.kharetati.datas.models.SearchParameterModel;
+import dm.sime.com.kharetati.datas.models.SearchResult;
+import dm.sime.com.kharetati.datas.models.SerializeGetAppInputRequestModel;
+import dm.sime.com.kharetati.datas.models.SerializeGetAppRequestModel;
+import dm.sime.com.kharetati.datas.models.Tabs;
 import dm.sime.com.kharetati.datas.network.ApiFactory;
 import dm.sime.com.kharetati.datas.network.MyApiService;
 import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
 import dm.sime.com.kharetati.datas.repositories.HomeRepository;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.Global;
+import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.adapters.InAppNotificationAdapter;
 import dm.sime.com.kharetati.view.customview.CleanableEditText;
@@ -60,9 +68,10 @@ public class HomeViewModel extends ViewModel {
 
     InAppNotificationAdapter adapterNotification;
     InAppNotificationsModel model;
-    GridMenuModel modelGridMenu;
     FragmentNavigator navigator;
     public HomeNavigator homeNavigator;
+    private Applications selectedApplication;
+    private Tabs selectedTab;
 
     MutableLiveData<List<InAppNotifications>> mutableInAppNotifications = new MutableLiveData<>();
     MutableLiveData<List<Applications>> mutableHomeGridMenu = new MutableLiveData<>();
@@ -91,9 +100,7 @@ public class HomeViewModel extends ViewModel {
         mutableInAppNotifications.setValue(model.getLstInAppNotifications());
         adapterNotification = new InAppNotificationAdapter(R.layout.adapter_in_app_notifications, this, context);
 
-        modelGridMenu = new GridMenuModel();
-        mutableHomeGridMenu = new MutableLiveData<>();
-        mutableHomeGridMenu.setValue(modelGridMenu.getKharetati().getApplications());
+        getSession();
     }
 
     public void manageAppBar(Context ctx, boolean status){
@@ -214,7 +221,6 @@ public class HomeViewModel extends ViewModel {
                 .subscribe(new Consumer<MakaniToDLTMResponse>() {
                     @Override public void accept(MakaniToDLTMResponse makaniToDLTMResponse) throws Exception {
                         gotoMakani(makaniToDLTMResponse);
-
                     }
                 }, new Consumer<Throwable>() {
                     @Override public void accept(Throwable throwable) throws Exception {
@@ -354,13 +360,9 @@ public class HomeViewModel extends ViewModel {
                 });
 
         compositeDisposable.add(disposable);
-
-
     }
 
     private void getAreaNamesDetails(GetAreaNamesResponse areaNamesResponse) {
-
-
         if (areaNamesResponse != null) {
             homeNavigator.onSuccess();
             if (areaNamesResponse != null && areaNamesResponse.getAreaResponse() != null) {
@@ -374,6 +376,167 @@ public class HomeViewModel extends ViewModel {
             AlertDialogUtil.errorAlertDialog("", activity.getResources().getString(R.string.community_error),
                     activity.getResources().getString(R.string.ok), activity);
         }
+
+    }
+
+    public void getSession() {
+
+        homeNavigator.onStarted();
+        String url = AppUrls.BASE_AUXULARY_URL + "getsession/" + Global.accessToken + "/" + "AndroidV8.0";
+
+        Disposable disposable = repository.getSession(url)
+                .subscribeOn(kharetatiApp.subscribeScheduler())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<AppSessionResponse>() {
+                    @Override public void accept(AppSessionResponse appResponse) throws Exception {
+                        getAppSession(appResponse);
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override public void accept(Throwable throwable) throws Exception {
+                        homeNavigator.onFailure("Unable to connect the remote server");
+                    }
+                });
+
+        compositeDisposable.add(disposable);
+    }
+
+    private void getAppSession(AppSessionResponse appResponse){
+        if (appResponse != null) {
+            homeNavigator.onSuccess();
+            if (appResponse != null && appResponse.getService_response() != null) {
+                Global.app_session_token = appResponse.getService_response().getToken();
+                getApps();
+            } else {
+                AlertDialogUtil.errorAlertDialog("", activity.getResources().getString(R.string.community_error),
+                        activity.getResources().getString(R.string.ok), activity);
+            }
+        } else {
+            AlertDialogUtil.errorAlertDialog("", activity.getResources().getString(R.string.community_error),
+                    activity.getResources().getString(R.string.ok), activity);
+        }
+    }
+
+
+    public void getApps() {
+
+        homeNavigator.onStarted();
+
+        String url = AppUrls.BASE_AUXULARY_URL + "/getapps";
+
+        SerializeGetAppRequestModel model = new SerializeGetAppRequestModel();
+
+        SerializeGetAppInputRequestModel inputModel = new SerializeGetAppInputRequestModel();
+        inputModel.setTOKEN(Global.app_session_token);
+        inputModel.setREMARKS("AndroidV8.0");
+
+        model.setInputJson(inputModel);
+
+        Disposable disposable = repository.getAppResponse(url, model)
+                .subscribeOn(kharetatiApp.subscribeScheduler())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<GetAppResponse>() {
+                    @Override public void accept(GetAppResponse appResponse) throws Exception {
+                        getAppResponse(appResponse);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override public void accept(Throwable throwable) throws Exception {
+                        homeNavigator.onFailure("Unable to connect the remote server");
+                    }
+                });
+
+        compositeDisposable.add(disposable);
+    }
+
+    public void getAppResponse(GetAppResponse appResponse){
+        if (appResponse != null) {
+            homeNavigator.onSuccess();
+            if (appResponse != null && appResponse.getService_response() != null
+            && appResponse.getService_response().getApplications() != null) {
+                mutableHomeGridMenu = new MutableLiveData<>();
+                mutableHomeGridMenu.setValue(appResponse.getService_response().getApplications());
+                homeNavigator.populateGridMenu();
+            } else {
+                AlertDialogUtil.errorAlertDialog("", activity.getResources().getString(R.string.community_error),
+                        activity.getResources().getString(R.string.ok), activity);
+            }
+        } else {
+            AlertDialogUtil.errorAlertDialog("", activity.getResources().getString(R.string.community_error),
+                    activity.getResources().getString(R.string.ok), activity);
+        }
+
+
+    }
+
+    public Applications getSelectedApplication() {
+        return selectedApplication;
+    }
+
+    public void setSelectedApplication(Applications selectedApplication) {
+        this.selectedApplication = selectedApplication;
+    }
+
+    public Tabs getSelectedTab() {
+        return selectedTab;
+    }
+
+    public void setSelectedTab(Tabs selectedTab) {
+        this.selectedTab = selectedTab;
+    }
+
+    public void getAppsSearchResult(String searchText) {
+
+        homeNavigator.onStarted();
+
+        String url = getSelectedApplication().getSearchUrl();
+
+        SearchParameterModel searchModel = new SearchParameterModel();
+
+        SearchParameterInput inputModel = new SearchParameterInput();
+        inputModel.setApplicationId(getSelectedApplication().getId());
+        inputModel.setSearchValue(searchText);
+        inputModel.setTabId(getSelectedTab().getId());
+        inputModel.setTOKEN(Global.app_session_token);
+        inputModel.setREMARKS("AndroidV8.0");
+
+        searchModel.setInputJson(inputModel);
+
+        if(getSelectedApplication().getHasMap()) {
+            Disposable disposable = repository.getMapBasedSearchResult(url, searchModel)
+                    .subscribeOn(kharetatiApp.subscribeScheduler())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<SearchResult>() {
+                        @Override
+                        public void accept(SearchResult response) throws Exception {
+                            getMapBasedSearchResult(response);
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            homeNavigator.onFailure("Unable to connect the remote server");
+                        }
+                    });
+            compositeDisposable.add(disposable);
+        } else {
+
+        }
+    }
+
+    public void getMapBasedSearchResult(SearchResult result){
+        if (result != null) {
+            homeNavigator.onSuccess();
+            if (result != null && result.getService_response() != null) {
+                Global.mapSearchResult = result;
+                navigate(activity, FragmentTAGS.FR_MAP);
+            } else {
+                AlertDialogUtil.errorAlertDialog("", activity.getResources().getString(R.string.community_error),
+                        activity.getResources().getString(R.string.ok), activity);
+            }
+        } else {
+            AlertDialogUtil.errorAlertDialog("", activity.getResources().getString(R.string.community_error),
+                    activity.getResources().getString(R.string.ok), activity);
+        }
+
 
     }
 

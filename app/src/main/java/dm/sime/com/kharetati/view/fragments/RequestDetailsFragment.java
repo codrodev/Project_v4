@@ -83,7 +83,6 @@ public class RequestDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Global.current_fragment_id= FragmentTAGS.FR_REQUEST_DETAILS;
-        AttachmentFragment.isDeliveryDetails=false;
         View view = inflater.inflate(R.layout.fragment_request_details, container, false);
         /*communicator = (Communicator) getActivity();
         communicator.hideMainMenuBar();

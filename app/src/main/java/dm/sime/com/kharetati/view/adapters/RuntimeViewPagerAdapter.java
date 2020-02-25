@@ -42,7 +42,7 @@ public class RuntimeViewPagerAdapter extends PagerAdapter {
         SearchForm form = lstForms.get(position);
         LinearLayout layoutParent = (LinearLayout)view.findViewById(R.id.layoutParent);
         EditText x = new EditText(context);
-        x.setHint(form.getPlaceHolderEn());
+        //x.setHint(form.getPlaceHolderEn());
         layoutParent.addView(x);
         container.addView(view);
         return view;

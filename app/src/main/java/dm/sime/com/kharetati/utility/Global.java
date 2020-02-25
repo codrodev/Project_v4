@@ -43,6 +43,7 @@ import java.util.Locale;
 
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.datas.models.FunctionsOnMap;
+import dm.sime.com.kharetati.datas.models.SearchResult;
 import dm.sime.com.kharetati.utility.constants.AppConstants;
 import dm.sime.com.kharetati.datas.models.AppMsg;
 import dm.sime.com.kharetati.datas.models.AreaResponse;
@@ -90,6 +91,7 @@ public class Global {
     public static Fragment current_fragment;
     public static String arcgis_token = null;
     public static String accessToken = null;
+    public static String app_session_token = null;
     public static String session = null;
     public static String base_url_site_plan;
     public static String site_plan_token;
@@ -153,6 +155,8 @@ public class Global {
     public static float height;
     public static float width;
     public static List<FunctionsOnMap> lstMapFunctions;
+    public static SearchResult mapSearchResult;
+
 
     public static List<FunctionsOnMap> getLstMapFunctions() {
         return lstMapFunctions;

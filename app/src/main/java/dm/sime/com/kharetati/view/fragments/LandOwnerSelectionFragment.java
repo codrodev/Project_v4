@@ -46,7 +46,6 @@ public class LandOwnerSelectionFragment extends Fragment {
         mRootView = binding.getRoot();
 
         ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
-        AttachmentFragment.isDeliveryDetails =false;
         landOwnedType = new String[] {getResources().getString(R.string.select),getResources().getString(R.string.land_owned_By_person),getResources().getString(R.string.land_owned_By_company)};
 
         ArrayList<String> arrayList= new ArrayList();

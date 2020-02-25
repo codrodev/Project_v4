@@ -124,4 +124,17 @@ public class AttachmentViewModel extends ViewModel {
         }
 
     }
+
+    public boolean isImageFormat(String format) {
+        boolean isImage = false;
+        if (format.compareToIgnoreCase("jpg") == 0 ||
+                format.compareToIgnoreCase("png") == 0 ||
+                format.compareToIgnoreCase("image/png") == 0 ||
+                format.compareToIgnoreCase("image/jpg") == 0 ||
+                format.compareToIgnoreCase("image/jpeg") == 0 ||
+                format.compareToIgnoreCase("jpeg") == 0) {
+            isImage = true;
+        }
+        return isImage;
+    }
 }

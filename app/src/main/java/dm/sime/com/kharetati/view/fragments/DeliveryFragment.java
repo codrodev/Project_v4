@@ -353,7 +353,6 @@ public class DeliveryFragment extends Fragment {
         isDetailsSaved = true;
         Global.isDeliveryByCourier = true;
         binding.deliveryByCourier.setChecked(true);
-        AttachmentFragment.isDeliveryDetails =true;
         if(Global.isDeliveryByCourier) {
             Global.deliveryDetails=new JSONObject();
             if(ParentSiteplanViewModel.deliveryDetails != null){

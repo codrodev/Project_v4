@@ -56,11 +56,10 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.Generi
         holder.bind(viewModel, position);
         viewHolder = holder;
         pos=position;
-//        lstHomeGridMenuItems.get(i).isClick=false;
-        if(lstHomeGridMenuItems.get(holder.getAdapterPosition()).isClick)
+       /* if(lstHomeGridMenuItems.get(holder.getAdapterPosition()).isClick)
             holder.cardView.setBackground(context.getResources().getDrawable(R.drawable.border_background));
         else
-            holder.cardView.setBackground(context.getResources().getDrawable(R.drawable.borderless_background));
+            holder.cardView.setBackground(context.getResources().getDrawable(R.drawable.borderless_background));*/
 
 
     }
@@ -100,7 +99,7 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.Generi
         public void onClick(View v) {
 
 
-            if(lstHomeGridMenuItems.get(getAdapterPosition()).isClick){
+            /*if(lstHomeGridMenuItems.get(getAdapterPosition()).isClick){
 
                 lstHomeGridMenuItems.get(getAdapterPosition()).isClick=false;
                 notifyDataSetChanged();
@@ -116,16 +115,9 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.Generi
                 lstHomeGridMenuItems.get(getAdapterPosition()).isClick =true;
                 notifyDataSetChanged();
 
-            }
-
-           /* if(isClicked) {
-                ((CardView) binding.getRoot().findViewById(R.id.cardHomeGrid)).setBackground(context.getResources().getDrawable(R.drawable.border_background));
-                notifyDataSetChanged();
-            }
-            else{
-                ((CardView) binding.getRoot().findViewById(R.id.cardHomeGrid)).setBackground(context.getResources().getDrawable(R.drawable.borderless_background));
-
             }*/
+
+
             listener.onMenuSelected(((TextView) binding.getRoot().findViewById(R.id.txtAppId)).getText().toString());
         }
     }

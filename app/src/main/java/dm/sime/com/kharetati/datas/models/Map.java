@@ -1,51 +1,30 @@
 package dm.sime.com.kharetati.datas.models;
 
+import java.util.List;
+
 public class Map {
-    private String ServiceUrl;
+    private Details Details;
 
-    private String ServiceTokenUrl;
+    private List<Functions> Functions;
 
-    private String ServiceTokenPassword;
-
-    private String ServiceTokenUserName;
-
-    public String getServiceUrl ()
+    public Details getDetails ()
     {
-        return ServiceUrl;
+        return Details;
     }
 
-    public void setServiceUrl (String ServiceUrl)
+    public void setDetails (Details Details)
     {
-        this.ServiceUrl = ServiceUrl;
+        this.Details = Details;
     }
 
-    public String getServiceTokenUrl ()
+    public List<Functions> getFunctions ()
     {
-        return ServiceTokenUrl;
+        return Functions;
     }
 
-    public void setServiceTokenUrl (String ServiceTokenUrl)
+    public void setFunctions (List<Functions> Functions)
     {
-        this.ServiceTokenUrl = ServiceTokenUrl;
+        this.Functions = Functions;
     }
 
-    public String getServiceTokenPassword ()
-    {
-        return ServiceTokenPassword;
-    }
-
-    public void setServiceTokenPassword (String ServiceTokenPassword)
-    {
-        this.ServiceTokenPassword = ServiceTokenPassword;
-    }
-
-    public String getServiceTokenUserName ()
-    {
-        return ServiceTokenUserName;
-    }
-
-    public void setServiceTokenUserName (String ServiceTokenUserName)
-    {
-        this.ServiceTokenUserName = ServiceTokenUserName;
-    }
 }

@@ -50,7 +50,6 @@ public class ImageCropActivity extends AppCompatActivity {
     public static Uri uri;
     public static String URI;
     public static Bitmap resultBitmap;
-    public static boolean isImageCropped=false;
     //private CropImageView cropImageView;
     public Bitmap bitmap;
 
@@ -106,23 +105,17 @@ public class ImageCropActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                runOnUiThread(new Runnable() {
+                /*runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         AlertDialogUtil.showProgressBar(ImageCropActivity.this,true);
                     }
-                });
+                });*/
                 resultBitmap = cropView.getCroppedImage();
 
                 AsyncTask.execute(new Runnable() {
                     @Override
                     public void run() {
-
-
-
-                        isImageCropped=true;
-
-
                         try
                         {
                             URI=storeImage(resultBitmap).getAbsolutePath();
@@ -140,7 +133,7 @@ public class ImageCropActivity extends AppCompatActivity {
                         AttachmentFragment.thumbnail=null;
                 /*if(progressDialog!=null)
                     progressDialog.cancel();*/
-                        AlertDialogUtil.showProgressBar(ImageCropActivity.this,false);
+                        //AlertDialogUtil.showProgressBar(ImageCropActivity.this,false);
                         finish();
 
                     }
@@ -153,9 +146,6 @@ public class ImageCropActivity extends AppCompatActivity {
         button_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                isImageCropped=false;
                 setResult(RESULT_CANCELED,resultIntent);
                 finish();
 

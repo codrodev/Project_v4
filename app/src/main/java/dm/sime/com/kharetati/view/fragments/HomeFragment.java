@@ -58,6 +58,7 @@ import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.FragmentHomeBinding;
 import dm.sime.com.kharetati.datas.models.Applications;
 import dm.sime.com.kharetati.datas.models.Areas;
+import dm.sime.com.kharetati.datas.models.Controls;
 import dm.sime.com.kharetati.datas.models.InAppNotifications;
 import dm.sime.com.kharetati.datas.models.PlotDetails;
 import dm.sime.com.kharetati.datas.models.SearchForm;
@@ -104,9 +105,8 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     private Areas[] lstAreas;
     private TextView spinnerView;
     public static String communityId;
-    private CleanableEditText editLandP1;
-    private CleanableEditText editLandP2;
     public static HomeViewModel homeVM;
+    public List<CleanableEditText> lstRuntimeCleanableText;
     /*BottomSheetBehavior sheetBehavior;
     LinearLayout layoutBottomSheet;*/
 
@@ -166,12 +166,10 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             }
         });
 
-        gridPagerAdapter = new GridMenuPagerAdapter(getActivity(),model, this);
-        binding.viewPager.setPageTransformer(false, new CustPagerTransformer(getActivity()));
-        binding.viewPager.setOffscreenPageLimit(3);
-        binding.viewPager.addOnPageChangeListener(this);
-        binding.viewPager.setAdapter(gridPagerAdapter);
-        addBottomDots(0, model.getGridPagerSize());
+
+
+
+
         //sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
@@ -188,40 +186,31 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     }
 
     private void initializeRuntimeForm(Applications app){
-        if(app.getLaunchUrl() != null && TextUtils.getTrimmedLength(app.getLaunchUrl()) > 0){
-            binding.layoutRuntimeContainer.setVisibility(View.GONE);
-            //toggleBottomSheet();
-            /*Intent intentOpenBrowser = new Intent(Intent.ACTION_VIEW);
-            intentOpenBrowser.setData(Uri.parse(app.getLaunchUrl()));
-            getActivity().startActivity(intentOpenBrowser);*/
-
-            ArrayList al = new ArrayList();
-            al.add(app.getLaunchUrl());
-            ((MainActivity)getActivity()).loadFragment(FR_WEBVIEW,true,al);
-
-
-        } else {
+        model.setSelectedApplication(app);
+        if(app.getSearchForm() != null && app.getSearchForm().size() > 0){
             lstSearchForm = app.getSearchForm();
-            Global.setLstMapFunctions(app.getFunctionsOnMap());
             binding.layoutRuntimeContainer.setVisibility(View.VISIBLE);
             binding.tabRuntimeLayout.removeAllTabs();
             //binding.tabRuntimeLayout.setupWithViewPager(binding.viewPagerRuntime);
             for(SearchForm form: app.getSearchForm()){
+                if (form.getTabs() != null) {
+                    binding.tabRuntimeLayout.addTab(binding.tabRuntimeLayout.newTab().setText(form.getTabs().getNameEn()));
 
-                //binding.tabRuntimeLayout.addTab(binding.tabRuntimeLayout.newTab().setText(form.getNameEn()));
-
-
+                }
             }
-            binding.tabRuntimeLayout.addTab(binding.tabRuntimeLayout.newTab().setText("PLOT NUMBER"));
-            binding.tabRuntimeLayout.addTab(binding.tabRuntimeLayout.newTab().setText("DEED NUMBER"));
-            binding.tabRuntimeLayout.addTab(binding.tabRuntimeLayout.newTab().setText("MAKANI NUMBER"));
 
-            renderControl(0);
+            runtimeControlRenderer(app.getSearchForm().get(0).getTabs().getControls());
+            model.setSelectedTab(app.getSearchForm().get(0).getTabs());
+            //renderControl(0);
             binding.tabRuntimeLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
-
-                    renderControl(tab.getPosition());
+                    if (app.getSearchForm().get(tab.getPosition()).getTabs().getControls() != null &&
+                            app.getSearchForm().get(tab.getPosition()).getTabs().getControls().size() > 0) {
+                        model.setSelectedTab(app.getSearchForm().get(tab.getPosition()).getTabs());
+                        runtimeControlRenderer(app.getSearchForm().get(tab.getPosition()).getTabs().getControls());
+                    }
+                   // renderControl(tab.getPosition());
 
                 }
 
@@ -235,103 +224,58 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
                 }
             });
-            /*RuntimeViewPagerAdapter runtimePager = new RuntimeViewPagerAdapter(getActivity(),model, app.getSearchForm(),
-                    binding.tabRuntimeLayout.getTabCount());
-            binding.viewPagerRuntime.setAdapter(runtimePager);*/
-
         }
-        /*sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View view, int i) {
-                switch (i) {
-                    case BottomSheetBehavior.STATE_HIDDEN:
-                        break;
-                    case BottomSheetBehavior.STATE_EXPANDED: {
-                        //sheetBehavior.setText("Close Sheet");
-                        WebView web = (WebView)layoutBottomSheet.findViewById(R.id.webView);
-                        web.loadUrl(app.getLaunchUrl());
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_COLLAPSED: {
-                        //sheetBehavior.setText("Expand Sheet");
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_DRAGGING:
-                        break;
-                    case BottomSheetBehavior.STATE_SETTLING:
-                        break;
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View view, float v) {
-
-            }
-        });*/
 
     }
 
-    private void renderControl(int position){
+    private void runtimeControlRenderer(List<Controls> lstControl){
         binding.runtimeParent.removeAllViews();
-        switch (position){
-            case 0: {Global.isPlotSearch =true;
-                    Global.isLand = false;
-                    Global.isMakani =false;}
-            break;
-            case 1: {Global.isMakani =false;
-                    Global.isLand = true;
-                    Global.isPlotSearch =false; }
-            break;
-            case 2: {Global.isMakani =true;
-                    Global.isLand =false;
-                Global.isPlotSearch =false;
+        lstRuntimeCleanableText = new ArrayList<>();
+        communityId = "";
+        for (Controls control:lstControl){
+            if (control.getControlType().equals("TEXTBOX")){
+                binding.runtimeParent.addView(addCleanableEditText(control));
+            } else if(control.getControlType().equals("DROPDOWN")){
+                binding.runtimeParent.addView(addSpinner(control));
             }
-            break;
         }
-        SearchForm form = lstSearchForm.get(position);
+    }
 
-        InputFilter[] FilterArray = new InputFilter[3];
-        FilterArray[0] = new InputFilter.LengthFilter(10);
-        FilterArray[1] = new InputFilter.LengthFilter(10);
-        FilterArray[2] = new InputFilter.LengthFilter(11);
-
-
+    private LinearLayout addCleanableEditText(Controls control){
         Typeface typeface =Typeface.createFromAsset(getActivity().getAssets(),"Dubai-Regular.ttf");
-        if(isLand){
 
-            createLandView();
+       /* InputFilter[] FilterArray = new InputFilter[3];
+        FilterArray[0] = new InputFilter.LengthFilter(10);
+        *//*FilterArray[1] = new InputFilter.LengthFilter(10);
+        FilterArray[2] = new InputFilter.LengthFilter(11);*/
+        LinearLayout layout = new LinearLayout(getActivity());
+        layout.setOrientation(LinearLayout.HORIZONTAL);
+        layout.setGravity(Gravity.CENTER);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 70);
+        layoutParams.setMargins(8,8,8,8);
+        layout.setLayoutParams(layoutParams);
 
-            //model.landsearch();
-
-        }
-        else{
         CleanableEditText x = new CleanableEditText(getActivity());
         //x.setHint(form.getPlaceHolderEn());
-        x.setHint(isPlotSearch?"Enter Your Plot Number": (isMakani?"Enter Your Makani Number":(isLand?"Enter Your Deed Number":"")));
+        x.setHint(control.getPlaceHolderEn());
         x.setInputType(InputType.TYPE_CLASS_NUMBER);
         x.setEms(10);
         x.setMaxLines(1);
         x.setTextSize(16f);
-        x.setFilters(FilterArray);
+        //x.setFilters(FilterArray);
         x.setTypeface(typeface);
         x.setPadding(8,0,8,0);
-        LinearLayout.LayoutParams xparams = new LinearLayout.LayoutParams( ViewGroup.LayoutParams.MATCH_PARENT, 150);
-        xparams.setMargins(8,24,8,16);
         if(isPlotSearch||isMakani)
             x.requestFocus();
         x.setBackground(getActivity().getResources().getDrawable(R.drawable.border_background));
-        binding.runtimeParent.addView(x);
-        /*x.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                model.navigate(getActivity(), FragmentTAGS.FR_MAP);
-            }
-        });*/
         x.setOnEditorActionListener(this);
-        }
+        x.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        layout.addView(x);
+        lstRuntimeCleanableText.add(x);
+        return layout;
     }
 
-    private void createLandView() {
+    private LinearLayout addSpinner(Controls control){
         Typeface typeface =Typeface.createFromAsset(getActivity().getAssets(),"Dubai-Regular.ttf");
 
         LinearLayout dynamiclayout = new LinearLayout(getActivity());
@@ -370,78 +314,12 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         spinnerView = new TextView(getActivity());
         spinnerView.setTextSize(16f);
         spinnerView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        spinnerView.setText("Please Choose Area");
+        spinnerView.setText(control.getPlaceHolderEn());
         spinnerView.setTypeface(typeface);
         spinnerLayout.addView(spinnerView,dynamcLayoutParams);
         spinnerLayout.addView(chevronlayout,chevronParams);
 
         dynamiclayout.addView(spinnerLayout);
-
-        LinearLayout layout = new LinearLayout(getActivity());
-        layout.setOrientation(LinearLayout.HORIZONTAL);
-        layout.setGravity(Gravity.CENTER);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 70);
-        layoutParams.setMargins(8,16,8,8);
-        layout.setLayoutParams(layoutParams);
-
-        editLandP1 = new CleanableEditText(getActivity());
-        LinearLayout.LayoutParams editP1Params = new LinearLayout.LayoutParams( (int) Global.width/6,70);
-        editP1Params.setMargins(8,4,8,4);
-        editLandP1.setPadding(4,4,4,4);
-        editLandP1.setHint("Eg: 123");
-        editLandP1.setInputType(InputType.TYPE_CLASS_NUMBER);
-        editLandP1.setEms(3);
-        editLandP1.setMaxEms(3);
-        editLandP1.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL);
-        editLandP1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        editLandP1.setMaxLines(1);
-        editLandP1.setTextSize(16f);
-        editLandP1.setTypeface(typeface);
-        editLandP1.setBackground(getActivity().getResources().getDrawable(R.drawable.border_background));
-        editLandP1.requestFocus();
-
-        //editLandP1.setLayoutParams(editP1Params);
-        layout.addView(editLandP1,editP1Params);
-
-        TextView slash = new TextView(getActivity());
-        LinearLayout.LayoutParams slashParams = new LinearLayout.LayoutParams( (int) Global.width/15, (int) Global.width/9);
-        slashParams.setMargins(8,4,8,4);
-        //slash.setLayoutParams(slashParams);
-        slash.setText("/");
-        slash.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        slash.setGravity(Gravity.CENTER_VERTICAL);
-        slash.setTextSize(24f);
-        slash.setTypeface(typeface);
-        slash.setTextColor(getActivity().getResources().getColor(R.color.black));
-        layout.addView(slash,slashParams);
-
-        editLandP2 = new CleanableEditText(getActivity());
-        LinearLayout.LayoutParams editP2Params = new LinearLayout.LayoutParams((int) Global.width/7, 70);
-        editP2Params.setMargins(8,4,8,4);
-        editLandP2.setPadding(4,4,4,4);
-        editLandP2.setHint("Eg : 12");
-        editLandP2.setInputType(InputType.TYPE_CLASS_NUMBER);
-        editLandP2.setGravity(Gravity.CENTER_VERTICAL);
-        editLandP2.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        editLandP2.setEms(2);
-        editLandP2.setMaxEms(2);
-        editLandP2.setMaxLines(1);
-        editLandP2.setTextSize(16f);
-        editLandP2.setTypeface(typeface);
-        editLandP2.setBackground(getActivity().getResources().getDrawable(R.drawable.border_background));
-
-        //editLandP2.setLayoutParams(editP2Params);
-        layout.addView(editLandP2,editP2Params);
-
-        editLandP2.setOnEditorActionListener(this);
-        editLandP1.setOnEditorActionListener(this);
-
-        editLandP1.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        editLandP2.setImeOptions(EditorInfo.IME_ACTION_DONE);
-
-
-        dynamiclayout.addView(layout,layoutParams);
-        binding.runtimeParent.addView(dynamiclayout,dynamcLayoutParams);
 
         spinnerLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -479,149 +357,22 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             populateAreaName();
         }
 
+        return dynamiclayout;
     }
 
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
-
-            String s = v.getText().toString();
-            //Toast.makeText(getActivity(),s, Toast.LENGTH_LONG).show();
-            parcelNumber = v.getText().toString();
-            //AlertDialogUtil.showProgressBar(getActivity(),true);
-            /*mTracker.send(new HitBuilders.EventBuilder()
-                    .setCategory("Search Parcel")
-                    .setAction(parcelNumber)
-                    .build());*/
-
-            //PlotDetails.isOwner =false;
-            parcelNumber = parcelNumber.replaceAll("\\s+","");
-            parcelNumber = parcelNumber.replaceAll("_","");
-            if(!Global.isConnected(getActivity())){
-                if(Global.appMsg!=null)
-                    AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning),CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr() , getResources().getString(R.string.ok), getActivity());
+            if (!Global.isConnected(getActivity())) {
+                if (Global.appMsg != null)
+                    AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), CURRENT_LOCALE.equals("en") ? Global.appMsg.getInternetConnCheckEn() : Global.appMsg.getInternetConnCheckAr(), getResources().getString(R.string.ok), getActivity());
                 else
                     AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
-            }
-            else{
-
-                    if (Global.isPlotSearch) {
-                        if (parcelNumber.matches("")) {
-
-                            AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.PLEASE_ENTER_PLOTNUMBER), getResources().getString(R.string.ok), getContext());
-
-                        }else if (parcelNumber.trim().length() > 4 && parcelNumber.trim().length() <= 20) {
-                            if (parcelNumber != null && parcelNumber != "") {
-                                Global.hideSoftKeyboard(getActivity());
-                                onStarted();
-                                parcelNumber = parcelNumber.replaceAll("\\s+", "");
-                                //PlotDetails.clearCommunity();
-                                Global.landNumber = null;
-                                Global.area = null;
-                                Global.area_ar = null;
-                                PlotDetails.parcelNo = parcelNumber;
-
-                                String targetLayer = AppUrls.GIS_LAYER_URL.concat("/" + AppUrls.plot_layerid);
-                                String[] queryArray = {targetLayer, "PARCEL_ID  = '" + parcelNumber + "'"};
-
-                                ArcGISMap map = new ArcGISMap();
-                                ArcGISMapImageLayer dynamicLayer = new ArcGISMapImageLayer(AppUrls.GIS_LAYER_URL);
-                                Credential credential = new UserCredential(AppUrls.GIS_LAYER_USERNAME, AppUrls.GIS_LAYER_PASSWORD);
-                                dynamicLayer.setCredential(credential);
-                                ///mMapView.addLayer(dynamicLayer);
-                                map.getOperationalLayers().add(dynamicLayer);
-
-                                binding.map.setMap(map);
-                                dynamicLayer.addDoneLoadingListener(() -> {
-                                    if (dynamicLayer.getLoadStatus() == LoadStatus.LOADED) {
-                                        ArcGISMapImageSublayer sublayer = (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(2);
-
-                                        sublayer.addDoneLoadingListener(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                ServiceFeatureTable sublayerTable = sublayer.getTable();
-                                                QueryParameters query = new QueryParameters();
-                                                query.setWhereClause("PARCEL_ID  = '" + parcelNumber + "'");
-                                                ListenableFuture<FeatureQueryResult> sublayerQuery = sublayerTable.queryFeaturesAsync(query);
-                                                sublayerQuery.addDoneListener(() -> {
-                                                    try {
-                                                        FeatureQueryResult result = sublayerQuery.get();
-                                                        if (progressBar != null)
-                                                            progressBar.setVisibility(View.GONE);
-                                                        if (!result.iterator().hasNext()) {
-
-                                                            AlertDialogUtil.errorAlertDialog("", getActivity().getResources().getString(R.string.plot_does_not_exist),
-                                                                    getActivity().getResources().getString(R.string.ok), getActivity());
-                                                            onFailure(getActivity().getResources().getString(R.string.plot_does_not_exist));
-                                                        } else {
-                                                            //communicator.navigateToMap(parcelNumber, "");
-
-
-
-                                                            model.navigate(getActivity(), FragmentTAGS.FR_MAP);
-
-
-                                                        }
-                                                    } catch (InterruptedException | ExecutionException e) {
-                                                        Log.e(HomeFragment.class.getSimpleName(), e.toString());
-                                                        AlertDialogUtil.showProgressBar(getActivity(),false);
-
-
-                                                    }
-                                                });
-                                            }
-                                        });
-                                        sublayer.loadAsync();
-
-                                    }
-                                });
-                                //AlertDialogUtil.showProgressBar(getActivity(),false);
-
-                                ////AsyncQueryTask ayncQuery = new AsyncQueryTask();
-                                ////ayncQuery.execute(queryArray);
-                            }
-                        } else
-                            AlertDialogUtil.errorAlertDialog("", getResources().getString(R.string.valid_plot_number), getResources().getString(R.string.ok), getActivity());
-                    }
-                    else if(isLand){
-                        Global.hideSoftKeyboard(getActivity());
-                        if (editLandP1.getText().toString() != null && editLandP1.getText().toString().length() > 0)
-                        {
-                            Global.LandNo = editLandP1.getText().toString();
-                            Global.subNo = editLandP2.getText().toString().isEmpty()? "0":editLandP1.getText().toString();
-
-                            if (communityId != null && communityId != "") {
-                                Global.hideSoftKeyboard(getActivity());
-
-                                model.getParcelID();
-                                communityId =null;
-
-
-                            } else {
-                                AlertDialogUtil.errorAlertDialog("",
-                                        getResources().getString(R.string.invalid_area),
-                                        getResources().getString(R.string.ok), getContext());
-                            }
-
-                        } else {
-                            editLandP1.requestFocus();
-                            AlertDialogUtil.errorAlertDialog("", getResources().getString(R.string.please_enter_land),
-                                    getResources().getString(R.string.ok), getContext());
-                        }
-
-                    }
-                    else if (Global.isMakani) {
-                        Global.hideSoftKeyboard(getActivity());
-                        Global.makani = v.getText().toString();
-                        if(Global.makani.length() == 0){
-                            onFailure(getActivity().getResources().getString(R.string.enter_makani_number));
-                        }else if(Global.makani.length()<10){
-                            onFailure(getActivity().getResources().getString(R.string.invalid_makani));
-                        }
-                        else
-                            model.getMakaniToDLTM(Global.makani);
-                    }
+            } else {
+                if (!isSearchBoxEmpty()) {
+                    model.getAppsSearchResult(populateSearchText());
                 }
+            }
 
             Log.i("Mask", parcelNumber);
             return true;
@@ -629,14 +380,37 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         return false;
     }
 
-    /*public void toggleBottomSheet() {
-        if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
-            sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-
-        } else {
-            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    private boolean isSearchBoxEmpty(){
+        boolean isEmpty = false;
+        if(lstRuntimeCleanableText != null && lstRuntimeCleanableText.size() > 0) {
+            for (int i = 0; i < lstRuntimeCleanableText.size(); i++){
+                CleanableEditText txt = (CleanableEditText)lstRuntimeCleanableText.get(i);
+                if(txt.getText().toString() == null || txt.getText().toString().equals("")){
+                    isEmpty = true;
+                    break;
+                }
+            }
         }
-    }*/
+        return isEmpty;
+    }
+
+    private String populateSearchText(){
+        StringBuilder builder = new StringBuilder();
+        if (communityId != null && communityId.length() > 0){
+            builder.append(communityId);
+            builder.append("|");
+        }
+        if(lstRuntimeCleanableText != null && lstRuntimeCleanableText.size() > 0) {
+            for (int i = 0; i < lstRuntimeCleanableText.size(); i++) {
+                CleanableEditText txt = (CleanableEditText) lstRuntimeCleanableText.get(i);
+                builder.append(txt.getText().toString());
+                if(i < lstRuntimeCleanableText.size() - 1) {
+                    builder.append("|");
+                }
+            }
+        }
+        return builder.toString();
+    }
 
     private void addBottomDots(int currentPage, int length) {
         dots = new TextView[length];
@@ -689,6 +463,21 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     @Override
     public void populateAreaNames() {
         populateAreaName();
+    }
+
+    @Override
+    public void populateGridMenu() {
+        gridPagerAdapter = new GridMenuPagerAdapter(getActivity(),model, this);
+        binding.viewPager.setPageTransformer(false, new CustPagerTransformer(getActivity()));
+        binding.viewPager.setOffscreenPageLimit(3);
+        binding.viewPager.addOnPageChangeListener(this);
+        binding.viewPager.setAdapter(gridPagerAdapter);
+        if(model.getGridPagerSize() > 1) {
+            binding.layoutDots.setVisibility(View.VISIBLE);
+            addBottomDots(0, model.getGridPagerSize());
+        } else {
+            binding.layoutDots.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -751,7 +540,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                                 Global.area_ar=item;
                             else
                                 Global.area=item;*/
-                            if (editLandP1.getText().toString() != null && editLandP1.getText().toString().length() > 0) {
+                            /*if (editLandP1.getText().toString() != null && editLandP1.getText().toString().length() > 0) {
                                 if (communityId != null && communityId != "") {
                                     if(editLandP2.getText().toString() == null || editLandP2.getText().toString().length() == 0){
                                         Global.subNo = "0";
@@ -770,7 +559,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                                 }
                             } else {
                                 editLandP1.requestFocus();
-                            }
+                            }*/
                         }
                         /*if (editLandP2.getText().toString() != null && editLandP2.getText().toString().length() > 0){
 
@@ -781,11 +570,6 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                         }*/
                     }
                 });
-
-                /*spinArea.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.community_drp, R.id.txtCommunity,
-                        area));*/
-                /*spinnerAdapter.setDropDownViewResource(R.layout.community_dropdown_view);
-                spinArea.setAdapter(spinnerAdapter);*/
             }
         }
     }
