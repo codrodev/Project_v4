@@ -137,7 +137,11 @@ public class HomeViewModel extends ViewModel {
     }
 
     public int getGridPagerSize(){
-        return ((mutableHomeGridMenu.getValue().size()/6) + 1);
+        if(mutableHomeGridMenu.getValue().size() < 7){
+            return 1;
+        } else {
+            return ((mutableHomeGridMenu.getValue().size() / 6) + 1);
+        }
     }
 
     public MutableLiveData<List<Applications>> getMutableHomeGridMenu(){
