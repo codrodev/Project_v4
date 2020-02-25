@@ -66,6 +66,14 @@ public class CleanableEditText extends AppCompatEditText implements View.OnTouch
         initIcon();
     }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
     @Override
     public void setOnTouchListener(OnTouchListener l) {
         this.l = l;
@@ -77,6 +85,7 @@ public class CleanableEditText extends AppCompatEditText implements View.OnTouch
     }
 
     private Location loc = Location.RIGHT;
+    private String type;
 
     private Drawable xD;
 

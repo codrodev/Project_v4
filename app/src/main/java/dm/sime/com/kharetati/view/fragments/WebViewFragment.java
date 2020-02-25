@@ -1,5 +1,6 @@
 package dm.sime.com.kharetati.view.fragments;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,12 +16,14 @@ import androidx.fragment.app.Fragment;
 
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
+import dm.sime.com.kharetati.view.navigators.FragmentNavigator;
 
 public class WebViewFragment extends Fragment {
 
     private static String URL = "url";
     WebView webView;
     private static String launchUrl;
+    FragmentNavigator frNavigator;
 
     public static WebViewFragment newInstance(String url){
         WebViewFragment fragment = new WebViewFragment();
@@ -49,8 +52,13 @@ public class WebViewFragment extends Fragment {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new MyWebViewClient());
         webView.loadUrl(launchUrl);
-
+        manageAppBottomBAtr(false);
         return view;
+    }
+
+    public void manageAppBottomBAtr(boolean status){
+        frNavigator = (FragmentNavigator) getActivity();
+        frNavigator.manageBottomBar(status);
     }
 
     public class MyWebViewClient extends android.webkit.WebViewClient{
@@ -72,20 +80,11 @@ public class WebViewFragment extends Fragment {
         @Override
         public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error){
             AlertDialogUtil.showProgressBar(getActivity(),false);
-
-
-
-
         }
 
         @Override
         public void onPageFinished(WebView view, String url) {
-
             AlertDialogUtil.showProgressBar(getActivity(),false);
-
-
-
-
         }
 
     }

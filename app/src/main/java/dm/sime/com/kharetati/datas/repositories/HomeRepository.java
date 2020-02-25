@@ -5,11 +5,14 @@ import dm.sime.com.kharetati.datas.models.GetAppResponse;
 import dm.sime.com.kharetati.datas.models.GetAreaNamesResponse;
 import dm.sime.com.kharetati.datas.models.HTTPRequestBody;
 import dm.sime.com.kharetati.datas.models.KharetatiUser;
+import dm.sime.com.kharetati.datas.models.LookupParameterModel;
+import dm.sime.com.kharetati.datas.models.LookupResponseModel;
 import dm.sime.com.kharetati.datas.models.MakaniToDLTMResponse;
 import dm.sime.com.kharetati.datas.models.ParcelResponse;
 import dm.sime.com.kharetati.datas.models.SearchParameterModel;
 import dm.sime.com.kharetati.datas.models.SearchResult;
 import dm.sime.com.kharetati.datas.models.SerializeGetAppRequestModel;
+import dm.sime.com.kharetati.datas.models.WebSearchResult;
 import dm.sime.com.kharetati.datas.network.MyApiService;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
@@ -43,5 +46,13 @@ public class HomeRepository {
 
     public Observable<SearchResult> getMapBasedSearchResult(String url, SearchParameterModel model) {
         return api.getMapBasedSearchResult(url, model);
+    }
+
+    public Observable<WebSearchResult> getWebBasedSearchResult(String url, SearchParameterModel model) {
+        return api.getWebBasedSearchResult(url, model);
+    }
+
+    public Observable<LookupResponseModel> getLookupResult(String url, LookupParameterModel model) {
+        return api.getLookupResult(url, model);
     }
 }

@@ -18,6 +18,7 @@ import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,6 +31,9 @@ import dm.sime.com.kharetati.datas.models.GetAreaNamesResponse;
 import dm.sime.com.kharetati.datas.models.HTTPRequestBody;
 import dm.sime.com.kharetati.datas.models.InAppNotifications;
 import dm.sime.com.kharetati.datas.models.InAppNotificationsModel;
+import dm.sime.com.kharetati.datas.models.LookupInput;
+import dm.sime.com.kharetati.datas.models.LookupParameterModel;
+import dm.sime.com.kharetati.datas.models.LookupResponseModel;
 import dm.sime.com.kharetati.datas.models.MakaniToDLTMResponse;
 import dm.sime.com.kharetati.datas.models.ParcelResponse;
 import dm.sime.com.kharetati.datas.models.Parcels;
@@ -41,6 +45,7 @@ import dm.sime.com.kharetati.datas.models.SearchResult;
 import dm.sime.com.kharetati.datas.models.SerializeGetAppInputRequestModel;
 import dm.sime.com.kharetati.datas.models.SerializeGetAppRequestModel;
 import dm.sime.com.kharetati.datas.models.Tabs;
+import dm.sime.com.kharetati.datas.models.WebSearchResult;
 import dm.sime.com.kharetati.datas.network.ApiFactory;
 import dm.sime.com.kharetati.datas.network.MyApiService;
 import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
@@ -117,6 +122,12 @@ public class HomeViewModel extends ViewModel {
         lastIndex = 0;
         navigator = (FragmentNavigator) ctx;
         navigator.fragmentNavigator(fragmentTag, true, null);
+    }
+
+    public void navigateWithParam(Context ctx, String fragmentTag, List<Object> param){
+        lastIndex = 0;
+        navigator = (FragmentNavigator) ctx;
+        navigator.fragmentNavigator(fragmentTag, true, param);
     }
 
     /// Home Grid Menu///
@@ -281,104 +292,6 @@ public class HomeViewModel extends ViewModel {
 
     }
 
-
-
-    public void getParcelID() {
-
-        homeNavigator.onStarted();
-
-        HTTPRequestBody.ParcelBody parcelBody = new HTTPRequestBody.ParcelBody();
-
-        Disposable disposable = repository.getParcelID(parcelBody)
-                .subscribeOn(kharetatiApp.subscribeScheduler())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ParcelResponse>() {
-                    @Override public void accept(ParcelResponse parcelResponse) throws Exception {
-                        getParcelDetails(parcelResponse);
-
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override public void accept(Throwable throwable) throws Exception {
-                        homeNavigator.onFailure("Unable to connect the remote server");
-                    }
-                });
-
-        compositeDisposable.add(disposable);
-
-
-    }
-
-    private void getParcelDetails(ParcelResponse parcelResponse) {
-        try {
-
-            if (parcelResponse != null) {
-                homeNavigator.onSuccess();
-
-                if (parcelResponse != null && !Boolean.valueOf(parcelResponse.getIs_exception())) {
-                    lstParcels = parcelResponse.getParcelContainer().getParcels();
-                    if(lstParcels != null && lstParcels.length > 0){
-                        Global.landNumber=Global.LandNo+"/"+(Global.subNo.isEmpty()? "0":Global.subNo);
-                        PlotDetails.parcelNo =lstParcels[0].getParcelId();
-                        PlotDetails.isOwner =false;
-                        PlotDetails.clearCommunity();
-
-                        navigate(activity, FragmentTAGS.FR_MAP);
-                    }
-                } else {
-                    AlertDialogUtil.errorAlertDialog("", activity.getResources().getString(R.string.no_valid_land),
-                            activity.getResources().getString(R.string.ok), activity);
-                }
-            } else {
-                AlertDialogUtil.errorAlertDialog("", activity.getResources().getString(R.string.no_valid_land),
-                        activity.getResources().getString(R.string.ok), activity);
-            }
-        } catch (Exception e) {
-            homeNavigator.onFailure(e.getMessage());
-            e.printStackTrace();
-        }
-
-    }
-
-    public void getAreaNames() {
-
-        homeNavigator.onStarted();
-
-        HTTPRequestBody.AreaBody areaBody = new HTTPRequestBody.AreaBody();
-
-        Disposable disposable = repository.getAreaNames(areaBody)
-                .subscribeOn(kharetatiApp.subscribeScheduler())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<GetAreaNamesResponse>() {
-                    @Override public void accept(GetAreaNamesResponse areaNamesResponse) throws Exception {
-                        getAreaNamesDetails(areaNamesResponse);
-
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override public void accept(Throwable throwable) throws Exception {
-                        homeNavigator.onFailure("Unable to connect the remote server");
-                    }
-                });
-
-        compositeDisposable.add(disposable);
-    }
-
-    private void getAreaNamesDetails(GetAreaNamesResponse areaNamesResponse) {
-        if (areaNamesResponse != null) {
-            homeNavigator.onSuccess();
-            if (areaNamesResponse != null && areaNamesResponse.getAreaResponse() != null) {
-                Global.areaResponse = areaNamesResponse.getAreaResponse();
-                homeNavigator.populateAreaNames();
-            } else {
-                AlertDialogUtil.errorAlertDialog("", activity.getResources().getString(R.string.community_error),
-                        activity.getResources().getString(R.string.ok), activity);
-            }
-        } else {
-            AlertDialogUtil.errorAlertDialog("", activity.getResources().getString(R.string.community_error),
-                    activity.getResources().getString(R.string.ok), activity);
-        }
-
-    }
-
     public void getSession() {
 
         homeNavigator.onStarted();
@@ -518,7 +431,21 @@ public class HomeViewModel extends ViewModel {
                     });
             compositeDisposable.add(disposable);
         } else {
-
+            Disposable disposable = repository.getWebBasedSearchResult(url, searchModel)
+                    .subscribeOn(kharetatiApp.subscribeScheduler())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<WebSearchResult>() {
+                        @Override
+                        public void accept(WebSearchResult response) throws Exception {
+                            getWebBasedSearchResult(response);
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            homeNavigator.onFailure("Unable to connect the remote server");
+                        }
+                    });
+            compositeDisposable.add(disposable);
         }
     }
 
@@ -528,6 +455,71 @@ public class HomeViewModel extends ViewModel {
             if (result != null && result.getService_response() != null) {
                 Global.mapSearchResult = result;
                 navigate(activity, FragmentTAGS.FR_MAP);
+            } else {
+                AlertDialogUtil.errorAlertDialog("", activity.getResources().getString(R.string.community_error),
+                        activity.getResources().getString(R.string.ok), activity);
+            }
+        } else {
+            AlertDialogUtil.errorAlertDialog("", activity.getResources().getString(R.string.community_error),
+                    activity.getResources().getString(R.string.ok), activity);
+        }
+    }
+
+    public void getWebBasedSearchResult(WebSearchResult result){
+        if (result != null) {
+            homeNavigator.onSuccess();
+            if (result != null && result.getService_response() != null) {
+                ArrayList param = new ArrayList<>();
+                param.add(result.getService_response().getDisplayInWebViewPage());
+                navigateWithParam(activity, FragmentTAGS.FR_WEBVIEW, param);
+            } else {
+                AlertDialogUtil.errorAlertDialog("", activity.getResources().getString(R.string.community_error),
+                        activity.getResources().getString(R.string.ok), activity);
+            }
+        } else {
+            AlertDialogUtil.errorAlertDialog("", activity.getResources().getString(R.string.community_error),
+                    activity.getResources().getString(R.string.ok), activity);
+        }
+    }
+
+    public void getLookUp(String lookupId, String lookupValue) {
+
+        homeNavigator.onStarted();
+
+        String url = AppUrls.LOOKUP_URL;
+
+        LookupParameterModel model = new LookupParameterModel();
+
+        LookupInput inputModel = new LookupInput();
+        inputModel.setLkpId(lookupId);
+        inputModel.setLkpValue(lookupValue);
+        inputModel.setTOKEN(Global.app_session_token);
+        inputModel.setREMARKS("AndroidV8.0");
+
+        model.setInputJson(inputModel);
+
+        Disposable disposable = repository.getLookupResult(url, model)
+                .subscribeOn(kharetatiApp.subscribeScheduler())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<LookupResponseModel>() {
+                    @Override public void accept(LookupResponseModel responseModel) throws Exception {
+                        getLookupResponse(responseModel);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override public void accept(Throwable throwable) throws Exception {
+                        homeNavigator.onFailure("Unable to connect the remote server");
+                    }
+                });
+
+        compositeDisposable.add(disposable);
+    }
+
+    public void getLookupResponse(LookupResponseModel responseModel){
+        if (responseModel != null) {
+            homeNavigator.onSuccess();
+            if (responseModel != null && responseModel.getService_response() != null) {
+                Global.lookupResponse = responseModel.getService_response();
+                homeNavigator.populateAreaNames();
             } else {
                 AlertDialogUtil.errorAlertDialog("", activity.getResources().getString(R.string.community_error),
                         activity.getResources().getString(R.string.ok), activity);
