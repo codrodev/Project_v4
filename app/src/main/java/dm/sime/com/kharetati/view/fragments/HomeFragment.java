@@ -60,6 +60,7 @@ import dm.sime.com.kharetati.datas.models.Applications;
 import dm.sime.com.kharetati.datas.models.Areas;
 import dm.sime.com.kharetati.datas.models.Controls;
 import dm.sime.com.kharetati.datas.models.InAppNotifications;
+import dm.sime.com.kharetati.datas.models.LookupValue;
 import dm.sime.com.kharetati.datas.models.PlotDetails;
 import dm.sime.com.kharetati.datas.models.SearchForm;
 import dm.sime.com.kharetati.datas.network.ApiFactory;
@@ -102,7 +103,6 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     private HomeRepository repository;
     public HomeNavigator homeNavigator;
     private SpinnerDialog spinnerDialog;
-    private Areas[] lstAreas;
     private TextView spinnerView;
     public static String communityId;
     public static HomeViewModel homeVM;
@@ -166,11 +166,6 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             }
         });
 
-
-
-
-
-        //sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
     @Override
@@ -187,7 +182,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
     private void initializeRuntimeForm(Applications app){
         model.setSelectedApplication(app);
-        if(app.getSearchForm() != null && app.getSearchForm().size() > 0){
+        if(model.getSelectedApplication().getSearchForm() != null && model.getSelectedApplication().getSearchForm().size() > 0){
             lstSearchForm = app.getSearchForm();
             binding.layoutRuntimeContainer.setVisibility(View.VISIBLE);
             binding.tabRuntimeLayout.removeAllTabs();
@@ -224,19 +219,34 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
                 }
             });
+        } else {
+            clearRuntimeParent();
+            if(!model.getSelectedApplication().getIsNative()){
+                ArrayList param = new ArrayList<>();
+                param.add( model.getSelectedApplication().getSearchUrl());
+                model.navigateWithParam(getActivity(), FR_WEBVIEW, param);
+            }
         }
 
     }
 
-    private void runtimeControlRenderer(List<Controls> lstControl){
+    private void clearRuntimeParent(){
         binding.runtimeParent.removeAllViews();
         lstRuntimeCleanableText = new ArrayList<>();
         communityId = "";
+    }
+
+    private void runtimeControlRenderer(List<Controls> lstControl){
+        clearRuntimeParent();
         for (Controls control:lstControl){
             if (control.getControlType().equals("TEXTBOX")){
                 binding.runtimeParent.addView(addCleanableEditText(control));
             } else if(control.getControlType().equals("DROPDOWN")){
                 binding.runtimeParent.addView(addSpinner(control));
+            }
+
+            if(control.getLkpId() != null && control.getLkpId() != ""){
+                model.getLookUp(control.getLkpId(), control.getLkpValue());
             }
         }
     }
@@ -261,6 +271,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         x.setInputType(InputType.TYPE_CLASS_NUMBER);
         x.setEms(10);
         x.setMaxLines(1);
+        x.setType(control.getType());
         x.setTextSize(16f);
         //x.setFilters(FilterArray);
         x.setTypeface(typeface);
@@ -351,12 +362,6 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             }
         });
 
-        if (Global.areaResponse == null) {
-            model.getAreaNames();
-        } else {
-            populateAreaName();
-        }
-
         return dynamiclayout;
     }
 
@@ -373,8 +378,6 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                     model.getAppsSearchResult(populateSearchText());
                 }
             }
-
-            //Log.i("Mask", parcelNumber);
             return true;
         }
         return false;
@@ -403,13 +406,29 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         if(lstRuntimeCleanableText != null && lstRuntimeCleanableText.size() > 0) {
             for (int i = 0; i < lstRuntimeCleanableText.size(); i++) {
                 CleanableEditText txt = (CleanableEditText) lstRuntimeCleanableText.get(i);
-                builder.append(txt.getText().toString());
+                if(isMakani(txt)){
+                    String s1 = txt.getText().toString().substring(0, 5);
+                    String s2 = txt.getText().toString().substring(5, txt.getText().toString().length());
+
+                    builder.append(s1 + " " + s2);
+                } else {
+                    builder.append(txt.getText().toString());
+                }
                 if(i < lstRuntimeCleanableText.size() - 1) {
                     builder.append("|");
                 }
             }
         }
         return builder.toString();
+    }
+
+    private boolean isMakani(CleanableEditText txt){
+        boolean isMakani = false;
+
+        if(txt.getType().toLowerCase().equals("makani")){
+            isMakani = true;
+        }
+        return isMakani;
     }
 
     private void addBottomDots(int currentPage, int length) {
@@ -487,28 +506,28 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
     }
 
-    private ArrayList<String> getAreaName(Areas[] areas, boolean isEnglish) {
+    private ArrayList<String> getAreaName(List<LookupValue> areas, boolean isEnglish) {
         ArrayList<String> area = new ArrayList<String>();
         //area.add(getResources().getString(R.string.tap_to_choose));
-        for (int i = 0; i < areas.length; i++) {
-            area.add(isEnglish ? areas[i].getAreaNameEN() : areas[i].getAreaNameAR());
+        for (int i = 0; i < areas.size(); i++) {
+            area.add(isEnglish ? areas.get(i).getDescEn() : areas.get(i).getDescEn());
         }
         return area;
     }
 
     private void populateAreaName() {
-        if (Global.areaResponse != null) {
-            if(Global.areaResponse.getAreas() != null && Global.areaResponse.getAreas().length > 0){
-                lstAreas = Global.areaResponse.getAreas();
+        if (Global.lookupResponse != null) {
+            if(Global.lookupResponse.getLkp() != null && Global.lookupResponse.getLkp().size() > 0){
+
                 ArrayList<String> area = new ArrayList<String>();
                 if (CURRENT_LOCALE.compareToIgnoreCase("en") == 0) {
-                    area = getAreaName(Global.areaResponse.getAreas(), true);
+                    area = getAreaName(Global.lookupResponse.getLkp(), true);
                     /*spinnerAdapter = new ArrayAdapter<String>(getActivity(), R.layout.community_drp, R.id.txtCommunity,
                             area);*/
                     spinnerDialog = new SpinnerDialog(getActivity(), area,
                             getResources().getString(R.string.tap_to_choose));
                 } else {
-                    area = getAreaName(Global.areaResponse.getAreas(), false);
+                    area = getAreaName(Global.lookupResponse.getLkp(), false);
                     spinnerDialog = new SpinnerDialog(getActivity(), area,
                             getResources().getString(R.string.tap_to_choose));
                     /*spinnerAdapter = new ArrayAdapter<String>(getActivity(), R.layout.community_drp_ar, R.id.txtCommunity,
@@ -531,43 +550,10 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                         //Toast.makeText(MainActivity.this, item + "  " + position + "", Toast.LENGTH_SHORT).show();
                         //spinArea.setText(item + " Position: " + position);
                         if(!TextUtils.isEmpty(item)) {
-                            communityId = Global.areaResponse.getAreas()[position].getAreaID().toString();
-
+                            communityId = Global.lookupResponse.getLkp().get(position).getId().toString();
                             spinnerView.setText(item);
-                            Global.area_ar = Global.areaResponse.getAreas()[position].getAreaNameAR();
-                            Global.area = Global.areaResponse.getAreas()[position].getAreaNameEN();
-                            /*if(Global.isProbablyArabic(item))
-                                Global.area_ar=item;
-                            else
-                                Global.area=item;*/
-                            /*if (editLandP1.getText().toString() != null && editLandP1.getText().toString().length() > 0) {
-                                if (communityId != null && communityId != "") {
-                                    if(editLandP2.getText().toString() == null || editLandP2.getText().toString().length() == 0){
-                                        Global.subNo = "0";
-                                    } else {
-                                        Global.subNo = editLandP2.getText().toString();
-                                    }
-                                    Global.LandNo=editLandP1.getText().toString();
-
-                                    model.getParcelID();
-                                    communityId =null;
-
-                                } else {
-                                    AlertDialogUtil.errorAlertDialog("",
-                                            getResources().getString(R.string.invalid_area),
-                                            getResources().getString(R.string.ok), getContext());
-                                }
-                            } else {
-                                editLandP1.requestFocus();
-                            }*/
                         }
-                        /*if (editLandP2.getText().toString() != null && editLandP2.getText().toString().length() > 0){
 
-                        } else {
-                            editLandP2.requestFocus();
-                            AlertDialogUtil.errorAlertDialog("", getResources().getString(R.string.please_enter_land),
-                                    getResources().getString(R.string.lbl_ok), getContext());
-                        }*/
                     }
                 });
             }

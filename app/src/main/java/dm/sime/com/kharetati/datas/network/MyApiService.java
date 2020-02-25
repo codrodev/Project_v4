@@ -11,6 +11,8 @@ import dm.sime.com.kharetati.datas.models.GetAppResponse;
 import dm.sime.com.kharetati.datas.models.GetAreaNamesResponse;
 import dm.sime.com.kharetati.datas.models.HTTPRequestBody;
 import dm.sime.com.kharetati.datas.models.KharetatiUser;
+import dm.sime.com.kharetati.datas.models.LookupParameterModel;
+import dm.sime.com.kharetati.datas.models.LookupResponseModel;
 import dm.sime.com.kharetati.datas.models.MakaniToDLTMResponse;
 import dm.sime.com.kharetati.datas.models.ParcelResponse;
 import dm.sime.com.kharetati.datas.models.RetrieveDocStreamResponse;
@@ -26,6 +28,7 @@ import dm.sime.com.kharetati.datas.models.SerializedModel;
 import dm.sime.com.kharetati.datas.models.SessionResponse;
 import dm.sime.com.kharetati.datas.models.User;
 import dm.sime.com.kharetati.datas.models.UserRegistration;
+import dm.sime.com.kharetati.datas.models.WebSearchResult;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -117,4 +120,10 @@ public interface MyApiService {
 
     @POST
     Observable<SearchResult> getMapBasedSearchResult(@Url String url, @Body SearchParameterModel model);
+
+    @POST
+    Observable<WebSearchResult> getWebBasedSearchResult(@Url String url, @Body SearchParameterModel model);
+
+    @POST
+    Observable<LookupResponseModel> getLookupResult(@Url String url, @Body LookupParameterModel model);
 }

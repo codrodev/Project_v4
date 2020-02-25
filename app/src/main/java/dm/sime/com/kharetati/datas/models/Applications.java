@@ -5,9 +5,9 @@ import java.util.List;
 public class Applications {
     private String SearchUrl;
 
-    private String IsNative;
+    private boolean IsNative;
 
-    private String IsDisabled;
+    private boolean IsDisabled;
 
     private boolean HasMap;
 
@@ -19,7 +19,7 @@ public class Applications {
 
     private String DescEn;
 
-    private String IsPublic;
+    private boolean IsPublic;
 
     private String NameEn;
 
@@ -37,19 +37,19 @@ public class Applications {
         SearchUrl = searchUrl;
     }
 
-    public String getIsNative() {
+    public boolean getIsNative() {
         return IsNative;
     }
 
-    public void setIsNative(String isNative) {
+    public void setIsNative(boolean isNative) {
         IsNative = isNative;
     }
 
-    public String getIsDisabled() {
+    public boolean getIsDisabled() {
         return IsDisabled;
     }
 
-    public void setIsDisabled(String isDisabled) {
+    public void setIsDisabled(boolean isDisabled) {
         IsDisabled = isDisabled;
     }
 
@@ -93,11 +93,11 @@ public class Applications {
         DescEn = descEn;
     }
 
-    public String getIsPublic() {
+    public boolean getIsPublic() {
         return IsPublic;
     }
 
-    public void setIsPublic(String isPublic) {
+    public void setIsPublic(boolean isPublic) {
         IsPublic = isPublic;
     }
 

@@ -45,6 +45,8 @@ import java.util.Locale;
 
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.datas.models.FunctionsOnMap;
+import dm.sime.com.kharetati.datas.models.LookupResponse;
+import dm.sime.com.kharetati.datas.models.LookupValue;
 import dm.sime.com.kharetati.datas.models.SearchResult;
 import dm.sime.com.kharetati.utility.constants.AppConstants;
 import dm.sime.com.kharetati.datas.models.AppMsg;
@@ -131,7 +133,7 @@ public class Global {
     public static String forceUserToUpdateBuild_msg_en;
     public static String forceUserToUpdateBuild_msg_ar;
     public static boolean forceUserToUpdateBuild;
-    public static AreaResponse areaResponse;
+    public static LookupResponse lookupResponse;
     public static int LAST_TAB;
     public static String makani;
     public static boolean isHomeMenu;
