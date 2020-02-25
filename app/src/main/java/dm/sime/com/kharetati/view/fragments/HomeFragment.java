@@ -374,7 +374,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                 }
             }
 
-            Log.i("Mask", parcelNumber);
+            //Log.i("Mask", parcelNumber);
             return true;
         }
         return false;

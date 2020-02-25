@@ -28,7 +28,7 @@
                     android:text="@string/title_welcome"
                     android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:textSize="25dp"
+                    android:textSize="20sp"
                     android:layout_marginHorizontal="30dp"
                     android:layout_marginTop="10dp" />
                 <LinearLayout
@@ -40,7 +40,8 @@
                     <dm.sime.com.kharetati.view.customview.RoundedImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:layout_marginLeft="30dp"
+                        android:id="@+id/imgRound"
+                        android:layout_marginStart="30dp"
                         android:gravity="center_vertical"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/profile_avatar"/>
@@ -53,7 +54,7 @@
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="23dp"
+                            android:layout_height="wrap_content"
                             android:id="@+id/txtUsername"
                             android:layout_gravity="center_vertical"
                             android:layout_marginHorizontal="10dp"
@@ -61,7 +62,7 @@
                             android:gravity="center_vertical"
                             android:text="Muhammad"
                             android:textColor="@color/white"
-                            android:textSize="18dp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
                         <TextView
                             android:layout_width="match_parent"
@@ -74,7 +75,7 @@
                             android:textColor="@color/white"
                             android:visibility="gone"
                             android:layout_marginHorizontal="10dp"
-                            android:textSize="18dp" />
+                            android:textSize="18sp" />
                     </LinearLayout>
                 </LinearLayout>
 

@@ -18,7 +18,7 @@
             <RelativeLayout
                 android:id="@+id/layoutProfile"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="90dp"
                 android:background="@drawable/maroon_overlay_bg">
                 <TextView
                     android:id="@+id/txtWelcome"
@@ -28,7 +28,7 @@
                     android:text="@string/title_welcome"
                     android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:textSize="25dp"
+                    android:textSize="18.75sp"
                     android:layout_marginHorizontal="30dp"
                     android:layout_marginTop="10dp" />
                 <LinearLayout
@@ -38,8 +38,8 @@
                     android:gravity="center_vertical"
                     android:layout_below="@+id/txtWelcome">
                     <dm.sime.com.kharetati.view.customview.RoundedImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
                         android:layout_marginLeft="30dp"
                         android:gravity="center_vertical"
                         android:layout_gravity="center_vertical"
@@ -53,7 +53,7 @@
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="23dp"
+                            android:layout_height="wrap_content"
                             android:id="@+id/txtUsername"
                             android:layout_gravity="center_vertical"
                             android:layout_marginHorizontal="10dp"
@@ -61,7 +61,7 @@
                             android:gravity="center_vertical"
                             android:text="Muhammad"
                             android:textColor="@color/white"
-                            android:textSize="18dp"
+                            android:textSize="14sp"
                             android:textStyle="bold" />
                         <TextView
                             android:layout_width="match_parent"

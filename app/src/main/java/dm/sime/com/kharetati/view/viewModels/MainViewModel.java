@@ -1,16 +1,33 @@
 package dm.sime.com.kharetati.view.viewModels;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.util.TypedValue;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import dm.sime.com.kharetati.KharetatiApp;
+import dm.sime.com.kharetati.datas.repositories.MainRepository;
+import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 
 public class MainViewModel extends ViewModel {
 
-    public MainViewModel(){
+    private KharetatiApp kharetatiApp;
+    Activity activity;
+    MainRepository repository;
 
+    /*public MainViewModel(){
+
+    }*/
+    public MainViewModel(Activity context, MainRepository repository){
+        this.activity = context;
+        this.repository = repository;
+
+        kharetatiApp = KharetatiApp.create(activity);
     }
 
     public MutableLiveData<String> sampleText = new MutableLiveData<String>();
@@ -40,5 +57,23 @@ public class MainViewModel extends ViewModel {
             default:
                 return "";
         }
+    }
+    public int getHeaderHieght(){
+        int orientation = activity.getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // In landscape
+            return dp2Px((Global.getScreenHeight(activity)/100)*15);
+        } else {
+            // In portrait
+            return dp2Px((Global.getScreenHeight(activity)/100)*15);
+
+        }
+
+    }
+    private int sp2Px(Float sp){
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, Resources.getSystem().getDisplayMetrics());
+    }
+    private int dp2Px(Float dp){
+        return (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, Resources.getSystem().getDisplayMetrics());
     }
 }

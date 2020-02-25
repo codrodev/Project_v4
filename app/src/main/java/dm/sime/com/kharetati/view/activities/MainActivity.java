@@ -9,18 +9,28 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.ActivityMainBinding;
 import dm.sime.com.kharetati.datas.models.PlotDetails;
+import dm.sime.com.kharetati.datas.network.ApiFactory;
+import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
+import dm.sime.com.kharetati.datas.repositories.HomeRepository;
+import dm.sime.com.kharetati.datas.repositories.MainRepository;
 import dm.sime.com.kharetati.utility.CustomContextWrapper;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
@@ -37,6 +47,8 @@ import dm.sime.com.kharetati.view.navigators.FragmentNavigator;
 import dm.sime.com.kharetati.view.navigators.MainNavigator;
 import dm.sime.com.kharetati.view.viewModels.LoginViewModel;
 import dm.sime.com.kharetati.view.viewModels.MainViewModel;
+import dm.sime.com.kharetati.view.viewmodelfactories.HomeViewModelFactory;
+import dm.sime.com.kharetati.view.viewmodelfactories.MainViewModelFactory;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
@@ -48,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     MainViewModel model;
     FragmentManager fragmentManager = null;
     FragmentTransaction tx = null;
+    MainViewModelFactory factory;
+    private MainRepository repository;
 
     public static Intent newIntent(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -58,7 +72,18 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        model = ViewModelProviders.of(this).get(MainViewModel.class);
+
+        try {
+            repository = new MainRepository(ApiFactory.getClient(new NetworkConnectionInterceptor(this)));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+        factory = new MainViewModelFactory(this,repository);
+        model = ViewModelProviders.of(this,factory).get(MainViewModel.class);
 
         model.initialize();
         binding.setActivityMainVM(model);
@@ -89,6 +114,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             }
         });
 
+
+
         openHomePage();
 
         /*binding.customBottomBar.setOnShowListener(new Function1<MeowBottomNavigation.Model, Unit>() {
@@ -98,6 +125,12 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 return null;
             }
         });*/
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     @Override
