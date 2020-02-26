@@ -84,11 +84,11 @@ public class FunctionOnMapAdapter extends RecyclerView.Adapter<FunctionOnMapAdap
 
         @Override
         public void onClick(View v) {
-            listener.onMenuSelected(((TextView) binding.getRoot().findViewById(R.id.txtFunctionNAme)).getText().toString());
+            listener.onMenuSelected(((TextView) binding.getRoot().findViewById(R.id.txtFunctionNAme)).getText().toString(), getAdapterPosition());
         }
     }
 
     public interface OnMenuSelectedListener {
-        void onMenuSelected(String menu);
+        void onMenuSelected(String menu, int position);
     }
 }

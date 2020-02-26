@@ -21,6 +21,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -69,6 +70,7 @@ import com.esri.arcgisruntime.symbology.SimpleFillSymbol;
 import com.esri.arcgisruntime.symbology.SimpleLineSymbol;
 
 import com.esri.arcgisruntime.symbology.TextSymbol;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.security.KeyManagementException;
@@ -86,7 +88,9 @@ import dm.sime.com.kharetati.databinding.FragmentMapBinding;
 import dm.sime.com.kharetati.datas.models.AgsExtent;
 import dm.sime.com.kharetati.datas.models.EmailParam;
 import dm.sime.com.kharetati.datas.models.ExportParam;
+import dm.sime.com.kharetati.datas.models.Functions;
 import dm.sime.com.kharetati.datas.models.LayerDefinition;
+import dm.sime.com.kharetati.datas.models.Params;
 import dm.sime.com.kharetati.datas.models.PlotDetails;
 import dm.sime.com.kharetati.datas.network.ApiFactory;
 import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
@@ -103,7 +107,7 @@ import dm.sime.com.kharetati.view.viewModels.MapViewModel;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 import dm.sime.com.kharetati.view.viewmodelfactories.MapViewModelFactory;
 
-public class MapFragment extends Fragment implements MapNavigator {
+public class MapFragment extends Fragment implements MapNavigator, MapFunctionBottomSheetFragment.OnFunctionMenuSelectedListener {
 
     public static boolean isMakani,isLand;
     MapViewModel model;
@@ -126,6 +130,8 @@ public class MapFragment extends Fragment implements MapNavigator {
     private MapViewModelFactory factory;
     private ArrayAdapter<String> adapterHistory;
     private ListView searchhistoryListView;
+    BottomSheetBehavior sheetBehavior;
+    WebView webView;
 
 
     public MapFragment() {
@@ -167,6 +173,39 @@ public class MapFragment extends Fragment implements MapNavigator {
         binding.setFragmentMapVM(model);
         mRootView = binding.getRoot();
         mapView = mRootView.findViewById(R.id.mapView);
+        LinearLayout layoutBottomSheet = (LinearLayout)mRootView.findViewById(R.id.bottomSheet);
+        webView = (WebView)layoutBottomSheet.findViewById(R.id.webView);
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View view, int i) {
+                switch (i) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        binding.frameLayout.setVisibility(View.VISIBLE);
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+                        binding.frameLayout.setVisibility(View.INVISIBLE);
+                        //sheetBehavior.setText("Close Sheet");
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+                        binding.frameLayout.setVisibility(View.VISIBLE);
+                        //sheetBehavior.setText("Expand Sheet");
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View view, float v) {
+
+            }
+        });
+        sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         binding.txtPlotNo.setText(Global.mapSearchResult.getService_response().getParcelId());
         onStarted();
         initializePage();
@@ -282,7 +321,7 @@ public class MapFragment extends Fragment implements MapNavigator {
 
             }
         });
-         myBottomSheet = MapFunctionBottomSheetFragment.newInstance();
+         myBottomSheet = MapFunctionBottomSheetFragment.newInstance(this);
         if(isMakani){
             binding.imgBookmark.setVisibility(View.GONE);
         }
@@ -485,6 +524,41 @@ public class MapFragment extends Fragment implements MapNavigator {
     public void onFailure(String Msg) {
         AlertDialogUtil.showProgressBar(getActivity(),false);
         AlertDialogUtil.errorAlertDialog("",Msg,getActivity().getResources().getString(R.string.ok),getActivity());
+    }
+
+    @Override
+    public void onFunctionMenuSelected(int position) {
+        Functions fun = Global.mapSearchResult.getService_response().getMap().getFunctions().get(position);
+        if(fun.getInternalFunctions() != null && fun.getInternalFunctions().length() > 0){
+            if (fun.getInternalFunctions().equals(FragmentTAGS.FR_REQUEST_SITE_PLAN)){
+                model.navigate(getActivity(), FragmentTAGS.FR_REQUEST_SITE_PLAN);
+            }
+        } else if (fun.getLaunchUrl() != null && fun.getLaunchUrl().length() > 0 &&
+                fun.getLaunchUrl().contains("http")){
+            StringBuilder builder = new StringBuilder();
+            builder.append(fun.getLaunchUrl());
+            if(fun.getParams() != null && fun.getParams().size() > 0){
+                builder.append("?");
+                for (Params p : fun.getParams()){
+                    builder.append(p.getParam1() + "&");
+                }
+            }
+            webView.loadUrl(builder.toString());
+            toggleBottomSheet();
+            /*webBottomSheet = new MapFunctionWebViewBottomSheetFragment(fun.getLaunchUrl());
+            webBottomSheet.show(getActivity().getSupportFragmentManager(), webBottomSheet.getTag());*/
+        }
+    }
+
+    public void toggleBottomSheet() {
+        if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+            sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            binding.frameLayout.setVisibility(View.INVISIBLE);
+
+        } else {
+            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            binding.frameLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     class MapViewTouchListener extends DefaultMapViewOnTouchListener {

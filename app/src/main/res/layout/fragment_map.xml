@@ -7,7 +7,7 @@
             name="fragmentMapVM"
             type="dm.sime.com.kharetati.view.viewModels.MapViewModel" />
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -148,6 +148,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/mapView" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <include  layout="@layout/bottomsheet_web_view" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -1,16 +1,16 @@
 package dm.sime.com.kharetati.utility.constants;
 
 public class FragmentTAGS {
-    public static final String FR_HOME = "homeFragment";
-    public static final String FR_DASHBOARD = "dashboardFragment";
-    public static final String FR_HAPPINESS = "happinessFragment";
-    public static final String FR_CONTACT_US = "contactUs";
-    public static final String FR_MAP = "mapFragment";
-    public static final String FR_MAKANI = "makaniFragment";
-    public static final String FR_LAND = "landFragment";
-    public static final String FR_REQUEST_SITE_PLAN = "requestSitePlan";
+    public static final String FR_HOME = "FR_HOME";
+    public static final String FR_DASHBOARD = "FR_DASHBOARD";
+    public static final String FR_HAPPINESS = "FR_HAPPINESS";
+    public static final String FR_CONTACT_US = "FR_CONTACT_US";
+    public static final String FR_MAP = "FR_MAP";
+    public static final String FR_MAKANI = "FR_MAKANI";
+    public static final String FR_LAND = "FR_LAND";
+    public static final String FR_REQUEST_SITE_PLAN = "REQUEST_SITE_PLAN";
 
-    public static final String FR_WEBVIEW = "webview";
-    public static final String FR_REQUEST_DETAILS = "REQUEST DETAILS";
-    public static final String FR_ATTACHMENT ="ATTACHMENT" ;
+    public static final String FR_WEBVIEW = "FR_WEBVIEW";
+    public static final String FR_REQUEST_DETAILS = "FR_REQUEST_DETAILS";
+    public static final String FR_ATTACHMENT ="FR_ATTACHMENT" ;
 }
