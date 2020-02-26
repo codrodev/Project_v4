@@ -86,6 +86,7 @@ import dm.sime.com.kharetati.databinding.FragmentMapBinding;
 import dm.sime.com.kharetati.datas.models.AgsExtent;
 import dm.sime.com.kharetati.datas.models.EmailParam;
 import dm.sime.com.kharetati.datas.models.ExportParam;
+import dm.sime.com.kharetati.datas.models.LayerDefinition;
 import dm.sime.com.kharetati.datas.models.PlotDetails;
 import dm.sime.com.kharetati.datas.network.ApiFactory;
 import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
@@ -104,11 +105,7 @@ import dm.sime.com.kharetati.view.viewmodelfactories.MapViewModelFactory;
 
 public class MapFragment extends Fragment implements MapNavigator {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private String parcelId, latLong;
     public static boolean isMakani,isLand;
-    double latitude, longitude;
     MapViewModel model;
     FragmentMapBinding binding;
     private View mRootView;
@@ -117,9 +114,6 @@ public class MapFragment extends Fragment implements MapNavigator {
     private UserCredential userCredentials = null;
     static String token = Global.arcgis_token;
     Snackbar snack;
-    private boolean hasCommunityTaskCompleted=true;
-    private boolean hasPlotTaskCompleted=true;
-    public Point parcelCenter;
 
     private Envelope initExtent;
     MapView mapView;
@@ -139,12 +133,8 @@ public class MapFragment extends Fragment implements MapNavigator {
 
     private static MapFragment mapFragment=null;
 
-    public static MapFragment newInstance(String param1, String param2){
+    public static MapFragment newInstance(){
         MapFragment fragment = new MapFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -165,32 +155,6 @@ public class MapFragment extends Fragment implements MapNavigator {
 
         model = ViewModelProviders.of(getActivity(),factory).get(MapViewModel.class);
         model.mapNavigator =this;
-        if (getArguments() != null) {
-            parcelId = getArguments().getString(ARG_PARAM1);
-            latLong = getArguments().getString(ARG_PARAM2);
-            if(Global.current_fragment_id == FragmentTAGS.FR_MAKANI) {
-                isMakani = true;
-                isLand = false;
-                String[] arr = latLong.split(" ");
-                latitude = Double.parseDouble(arr[0]);
-                longitude = Double.parseDouble(arr[1]);
-                parcelId = Global.rectifyPlotNo(parcelId);
-            } else if(Global.current_fragment_id == FragmentTAGS.FR_LAND) {
-                parcelId = Global.rectifyPlotNo(parcelId);
-                isMakani = false;
-                isLand = true;
-            }else{
-                parcelId = Global.rectifyPlotNo(parcelId);
-                isMakani = false;
-                isLand = false;
-
-            }
-        }
-
-        /*ApplicationController application = (ApplicationController) getActivity().getApplication();
-        mTracker = application.getDefaultTracker();
-        mTracker.setScreenName(FR_MAP);
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());*/
 
         setRetainInstance(true);
         PlotDetails.currentState=new PlotDetails.CurrentState();
@@ -203,7 +167,7 @@ public class MapFragment extends Fragment implements MapNavigator {
         binding.setFragmentMapVM(model);
         mRootView = binding.getRoot();
         mapView = mRootView.findViewById(R.id.mapView);
-        binding.txtPlotNo.setText(parcelId);
+        binding.txtPlotNo.setText(Global.mapSearchResult.getService_response().getParcelId());
         onStarted();
         initializePage();
         ArcGISRuntimeEnvironment.setLicense("runtimelite,1000,rud3984007683,none,GB2PMD17J0YJ2J7EZ071");
@@ -218,28 +182,18 @@ public class MapFragment extends Fragment implements MapNavigator {
         model.manageAppBar(getActivity(), false);
         model.manageAppBottomBAtr(getActivity(), false);
 
-        SpatialReference mSR = SpatialReference.create(3997);
-        Point px = new Point(54.84, 24.85);
-        Point py = new Point(55.55, 25.34);
-
-        Point p1 = new Point(54.84,24.85,  0, mSR);
-        Point p2 = new Point(55.55,25.34 , 0,mSR);
-        initExtent = new Envelope(p1.getX(), p1.getY(), p2.getX(), p2.getY(), mSR);
-
-        Viewpoint vp = new Viewpoint(initExtent);
-        mapView.setViewpoint(vp);
-
-        SpatialReference sr=SpatialReference.create(3997);
-
-        ArcGISMap map = new ArcGISMap(sr);
+        //ArcGISMap map = new ArcGISMap(Global.mapSearchResult.getService_response().getMap().getDetails().getServiceUrl());
+        ArcGISMap map = new ArcGISMap();
         mapView.setMap(map);
 
         // set up gesture for interacting with the MapView
         MapViewTouchListener mapViewTouchListener = new MapViewTouchListener(getActivity(), mapView);
         mapView.setOnTouchListener(mapViewTouchListener);
 
-        dynamicLayer = new ArcGISMapImageLayer(AppUrls.GIS_LAYER_URL);
-        Credential credential=new UserCredential(AppUrls.GIS_LAYER_USERNAME,AppUrls.GIS_LAYER_PASSWORD);
+
+        dynamicLayer = new ArcGISMapImageLayer(Global.mapSearchResult.getService_response().getMap().getDetails().getServiceUrl());
+        Credential credential=new UserCredential(Global.mapSearchResult.getService_response().getMap().getDetails().getServiceTokenUserName(),
+                Global.mapSearchResult.getService_response().getMap().getDetails().getServiceTokenPassword());
         dynamicLayer.setCredential(credential);
         map.getOperationalLayers().add(dynamicLayer);
 
@@ -251,34 +205,17 @@ public class MapFragment extends Fragment implements MapNavigator {
             if (dynamicLayer.getLoadStatus() == LoadStatus.LOADED) {
                 ArcGISMapServiceInfo mapServiceInfo = dynamicLayer.getMapServiceInfo();
                 //only show dimensions for this plot
-                ArcGISMapImageSublayer sublayer= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(7);
-                sublayer.setDefinitionExpression("PARCEL_ID ='" + parcelId + "'");
+
+                LayerDefinition retriveLayer = getLayerDefination(Global.mapSearchResult.getService_response().getMap().getDetails().getSearch().getLayerId());
+
+                ArcGISMapImageSublayer sublayer= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(retriveLayer.getId()));
+                sublayer.setDefinitionExpression(retriveLayer.getQueryClause());
+
+
+
+
                 if(Global.isConnected(getActivity())){
-
-                    if(isMakani) {
-                        mapView.setVisibility(View.VISIBLE);
-                        //mapToolbar.setVisibility(View.VISIBLE);
-                        //findParcel();
-                        if (parcelId != null && parcelId.trim().length() != 0) {
-                            findParcel(parcelId);
-                        }
-
-                    } else {
-                        if(parcelId!=null && parcelId.trim().length()!=0)
-                        {
-                            mapView.setVisibility(View.VISIBLE);
-                            //mapToolbar.setVisibility(View.VISIBLE);
-                            findParcel(parcelId);
-
-                        }
-                        else{
-
-//                            imgNext.setVisibility(View.GONE);
-                            //progressDialog.hide();
-
-                        }
-                    }
-
+                    findParcel();
                 }
                 else{
                     //progressDialog.hide();
@@ -361,12 +298,7 @@ public class MapFragment extends Fragment implements MapNavigator {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_DONE && binding.txtPlotNo.getText().toString().trim().length()!=0 ) {
-                    isMakani = false;
-                    Global.landNumber = null;
-                    Global.area = null;
-                    Global.area_ar = null;
-                    parcelId = binding.txtPlotNo.getText().toString();
-                    return initiateFindParcelRequest();
+
                 }
                 Global.hideSoftKeyboard(getActivity());
                 return false;
@@ -383,10 +315,6 @@ public class MapFragment extends Fragment implements MapNavigator {
                 binding.txtPlotNo.setText(searchhistoryListView.getItemAtPosition(position).toString());
                 skipOnTextChangeEvent=false;
                 searchhistoryListView.setVisibility(View.GONE);
-                if(!isMakani) {
-                    parcelId = searchhistoryListView.getItemAtPosition(position).toString();
-                    initiateFindParcelRequest();
-                }
             }
         });
 
@@ -451,29 +379,21 @@ public class MapFragment extends Fragment implements MapNavigator {
             public void onClick(View v) {
                 if (!Global.isConnected(getActivity())) {
 
-                    if(Global.appMsg!=null)
-                        AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning),Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr() , getResources().getString(R.string.ok), getActivity());
+                    if (Global.appMsg != null)
+                        AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getInternetConnCheckEn() : Global.appMsg.getInternetConnCheckAr(), getResources().getString(R.string.ok), getActivity());
                     else
                         AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
 
-                }
-                else{
+                } else {
                     onStarted();
                     isMakani = false;
                     Global.landNumber = null;
                     Global.area = null;
                     Global.area_ar = null;
-                    if(binding.txtPlotNo.getText()!=null){
-                        parcelId = binding.txtPlotNo.getText().toString();
-                        initiateFindParcelRequest();
-                    }
-                    else{
-                        onFailure(getString(R.string.PLEASE_ENTER_PLOTNUMBER));
-
-                    }
+                    findParcel();
 
 
-                    }
+                }
             }
         });
 
@@ -482,13 +402,8 @@ public class MapFragment extends Fragment implements MapNavigator {
         binding.imgBookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if(isMakani){
-
-                }
                 try {
-                    if(parcelId.length() > 0) {
-                        if (!Global.isConnected(getActivity())) {
+                     if (!Global.isConnected(getActivity())) {
 
                             if(Global.appMsg!=null)
                                 AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning),Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr() , getResources().getString(R.string.ok), getActivity());
@@ -498,7 +413,6 @@ public class MapFragment extends Fragment implements MapNavigator {
                         }
                         else
                             model.saveAsBookMark(true);
-                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -539,7 +453,7 @@ public class MapFragment extends Fragment implements MapNavigator {
             @Override
             public void onClick(View v) {
                 try {
-                    if(parcelId.length() > 0) {
+
                         if (!Global.isConnected(getActivity())) {
 
                             if(Global.appMsg!=null)
@@ -549,8 +463,7 @@ public class MapFragment extends Fragment implements MapNavigator {
 
                         }
                         else
-                            Global.openMakani(parcelId, getActivity());
-                    }
+                            Global.openMakani(Global.mapSearchResult.getService_response().getParcelId(), getActivity());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -631,66 +544,7 @@ public class MapFragment extends Fragment implements MapNavigator {
         }
 
     }
-    private boolean initiateFindParcelRequest(){
-        onStarted();
-        //searchhistoryListView.setVisibility(View.GONE);
-        PlotDetails.clearCommunity();
-        //parcelId = txtPlotNo.getText().toString().trim().replaceAll("\\s+","");
-        parcelId = parcelId.replaceAll("_","");
-        if(Global.isProbablyArabic(parcelId))
-            parcelId=Global.arabicToDecimal(parcelId);
-        parcelId=Global.rectifyPlotNo(parcelId);
-        if(Global.isConnected(getActivity())){
-            if(isMakani == true){
-                if (parcelId.length() <= 20) {
-                    if (parcelId.length() > 4) {
-                        findParcel(parcelId);
-                    }
-                    else{
-                        onFailure(getString(R.string.valid_plot_number));
-                        Toast.makeText(MapFragment.this.getActivity(), R.string.valid_plot_number,
-                                Toast.LENGTH_LONG).show();
-                    }
-                }
-                else{
-                    onFailure(getString(R.string.valid_plot_number));
-                    Toast.makeText(MapFragment.this.getActivity(), R.string.valid_plot_number,
-                            Toast.LENGTH_LONG).show();
-                }
-                Global.hideSoftKeyboard(getActivity());
-            } else {
-                if (parcelId.length() <= 20) {
-                    if (parcelId.length() > 4) {
 
-                        findParcel(parcelId);
-                        Global.hideSoftKeyboard(getActivity());
-
-                        return true;
-                    } else
-                        onFailure(getString(R.string.valid_plot_number));
-                } else {
-                    onFailure(getString(R.string.valid_plot_number));
-                }
-
-            }
-        }
-        return false;
-    }
-
-
-
-    /*private boolean checkNetworkConnection(){
-        if(Global.isConnected(getActivity())){
-            layoutNetworkCon.setVisibility(View.INVISIBLE);
-            imgNext.setVisibility(View.VISIBLE);
-            return true;
-        }
-        else{
-            layoutNetworkCon.setVisibility(View.VISIBLE);
-            imgNext.setVisibility(View.INVISIBLE);
-            return false;
-        }
-    }*/
 
     public ArcGISSublayer getOrthoLayer(){
         List<ArcGISSublayer> layers=dynamicLayer.getSublayers();
@@ -704,15 +558,20 @@ public class MapFragment extends Fragment implements MapNavigator {
     }
 
     public void findCommunity(){
+        LayerDefinition retriveLayer = getLayerDefination(Global.mapSearchResult.getService_response().getMap().getDetails().getDimension().getLayerId());
+
         try{
-            ArcGISMapImageSublayer communityLayer= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.valueOf(AppUrls.community_layerid));
+
+
+            ArcGISMapImageSublayer communityLayer=
+                    (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.valueOf(retriveLayer.getId()));
             communityLayer.loadAsync();
             communityLayer.addDoneLoadingListener(new Runnable() {
                 @Override
                 public void run() {
                     ServiceFeatureTable sublayerTable = communityLayer.getTable();
                     QueryParameters query = new QueryParameters();
-                    query.setWhereClause("COMM_NUM  = '" + parcelId.substring(0,3) + "'");
+                    query.setWhereClause(retriveLayer.getQueryClause());
                     ListenableFuture<FeatureQueryResult> sublayerQuery = sublayerTable.queryFeaturesAsync(query,ServiceFeatureTable.QueryFeatureFields.LOAD_ALL);
                     sublayerQuery.addDoneListener(() -> {
                         try {
@@ -734,7 +593,6 @@ public class MapFragment extends Fragment implements MapNavigator {
                                     PlotDetails.emailParam.plotArea=PlotDetails.area;
 
                                 }
-                                hasCommunityTaskCompleted=true;
                                 break;
                             }
 
@@ -744,12 +602,6 @@ public class MapFragment extends Fragment implements MapNavigator {
                             searchhistoryListView.setVisibility(View.GONE);
                             if(!Global.isBookmarks)
                             myBottomSheet.show(getActivity().getSupportFragmentManager(), myBottomSheet.getTag());
-
-                            /*imgNext.setVisibility(View.VISIBLE );
-                            imgNext.setEnabled(true);
-                            imgNext.startAnimation(animation);
-                            btnFind.setEnabled(true);*/
-
 
 
                             mapView.setViewpointGeometryAsync(PlotDetails.plotGeometry,extentPadding).addDoneListener(new Runnable() {
@@ -772,27 +624,38 @@ public class MapFragment extends Fragment implements MapNavigator {
             onFailure(ex.getMessage());
         }
     }
-    public void findParcel(String parcelId){
 
-        if(PlotDetails.currentState.graphic!=null){
-            graphicsLayer.getGraphics().remove(PlotDetails.currentState.graphic);
-            graphicsLayer.getGraphics().remove(PlotDetails.currentState.textLabel);
+    private LayerDefinition getLayerDefination(String id){
+        for(int i = 0; i < Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().size(); i++){
+            if(id.equals(Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(i).getId())){
+                return Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(i);
+            }
         }
-        //btnFind.setEnabled(false);
-        HashMap<Integer, String> layerDefs = new HashMap<Integer, String>();
-        layerDefs.put(Integer.valueOf(7), "PARCEL_ID ='" + parcelId + "'");
+        return null;
+    }
+
+    public void findParcel(){
+
+        LayerDefinition retriveLayer = getLayerDefination(Global.mapSearchResult.getService_response().getMap().getDetails().getSearch().getLayerId());
+
+        if(retriveLayer != null){
+            HashMap<Integer, String> layerDefs = new HashMap<Integer, String>();
+            layerDefs.put(Integer.valueOf(retriveLayer.getId()), retriveLayer.getQueryClause());
+        }
+
 
         if(dynamicLayer.getSublayers().size()>0){
-            ArcGISMapImageSublayer sublayerComm= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(7);
-            sublayerComm.setDefinitionExpression("PARCEL_ID ='" + parcelId + "'");
-            ArcGISMapImageSublayer sublayer= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.valueOf(AppUrls.plot_layerid));
+            ArcGISMapImageSublayer sublayerComm= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.valueOf(retriveLayer.getId()));
+            sublayerComm.setDefinitionExpression(retriveLayer.getQueryClause());
+
+            ArcGISMapImageSublayer sublayer= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.valueOf(retriveLayer.getId()));
 
             sublayer.addDoneLoadingListener(new Runnable() {
                 @Override
                 public void run() {
                     ServiceFeatureTable sublayerTable = sublayer.getTable();
                     QueryParameters query = new QueryParameters();
-                    query.setWhereClause("PARCEL_ID  = '" + parcelId + "'");
+                    query.setWhereClause(retriveLayer.getQueryClause());
 
                     if(sublayerTable!=null){
                         ListenableFuture<FeatureQueryResult> sublayerQuery = sublayerTable.queryFeaturesAsync(query,ServiceFeatureTable.QueryFeatureFields.LOAD_ALL);
@@ -822,68 +685,25 @@ public class MapFragment extends Fragment implements MapNavigator {
                                     PlotDetails.plotGeometry=feature.getGeometry();
                                     graphicsLayer.getGraphics().add(sublayerGraphic);
 
-
-                                    TextSymbol txtSymbol=null;
-                                    Graphic parcelTextLabel;
-                                    if(isMakani){
-                                        txtSymbol=new TextSymbol(16,Global.makani,Color.argb(255, 0, 0, 0),TextSymbol.HorizontalAlignment.CENTER,TextSymbol.VerticalAlignment.MIDDLE);
-                                        txtSymbol.setHaloWidth(2);
-                                        txtSymbol.setHaloColor(Color.argb(255, 255, 255, 255));
-
-                                        parcelTextLabel = new Graphic(feature.getGeometry().getExtent().getCenter(), txtSymbol);
-                                        graphicsLayer.getGraphics().add(parcelTextLabel);
-
-                                        Drawable dr = getResources().getDrawable(R.drawable.makani);
-                                        Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
-                                        PictureMarkerSymbol makanisymbol = new PictureMarkerSymbol(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 96, 96, true)));
-                                        makanisymbol.setOffsetY(10);
-                                        Graphic makaniGraphic = new Graphic(feature.getGeometry().getExtent().getCenter(),makanisymbol);
-                                        graphicsLayer.getGraphics().add(makaniGraphic);
-                                    }
-                                    else{
-                                        txtSymbol=new TextSymbol(16,parcelId,Color.argb(255, 0, 0, 0),TextSymbol.HorizontalAlignment.CENTER,TextSymbol.VerticalAlignment.MIDDLE);
-                                        txtSymbol.setHaloWidth(2);
-                                        txtSymbol.setHaloColor(Color.argb(255, 255, 255, 255));
-                                        txtSymbol.setOffsetY(30);
-                                        parcelTextLabel = new Graphic(feature.getGeometry().getExtent().getCenter(), txtSymbol);
-                                        graphicsLayer.getGraphics().add(parcelTextLabel);
-                                    }
-
-                                    PlotDetails.currentState.textLabel=parcelTextLabel;
-                                    PlotDetails.parcelNo=parcelId;
-                                    Global.addToParcelHistory(parcelId,getActivity());
                                     findCommunity();
                                     break;
                                 }
-                                //if(progressDialog != null)
-                                //    progressDialog.hide();
                                 if(!result.iterator().hasNext()){
-
                                     onFailure(getActivity().getResources().getString(R.string.plot_does_not_exist));
-                                    /*imgNext.setVisibility(View.GONE);
-                                    imgNext.clearAnimation();*/
                                 }else{
-                                    /*imgNext.setVisibility(View.VISIBLE);
-                                    imgNext.setEnabled(false);*/
+
                                 }
-                                //btnFind.setEnabled(true);
 
                             } catch (InterruptedException | ExecutionException e) {
                                 Log.e(MainActivity.class.getSimpleName(), e.toString());
 
                                 onFailure(e.getMessage());
 
-                                /*btnFind.setEnabled(true);
-                                imgNext.setVisibility(View.GONE);
-                                imgNext.clearAnimation();*/
                             }
                         });
                     }
                     else{
 
-                        /*btnFind.setEnabled(true);
-                        imgNext.setVisibility(View.GONE);
-                        imgNext.clearAnimation();*/
                     }
 
                 }
@@ -892,17 +712,8 @@ public class MapFragment extends Fragment implements MapNavigator {
         }
         else{
 
-            /*btnFind.setEnabled(true);
-            imgNext.setVisibility(View.GONE);*/
             dynamicLayer.retryLoadAsync();
         }
-
-
-
-        String targetLayer = AppUrls.GIS_LAYER_URL.concat("/" + AppUrls.plot_layerid);
-
-
-        hasPlotTaskCompleted=false;
     }
 
     private int convertToDp(double input) {
@@ -968,7 +779,7 @@ public class MapFragment extends Fragment implements MapNavigator {
         AgsExtent extent = new AgsExtent(bottomLeft.getX(), bottomLeft.getY(), topRight.getX(), topRight.getY());
         android.graphics.Point labelPosScreenPointTmp = mapView.locationToScreen(PlotDetails.plotGeometry.getExtent().getCenter());
         dm.sime.com.kharetati.datas.models.Point labelPosScreenPoint = new dm.sime.com.kharetati.datas.models.Point(labelPosScreenPointTmp.x, labelPosScreenPointTmp.y);
-        String parecelID = parcelId;
+        String parecelID = Global.mapSearchResult.getService_response().getParcelId();
         int offsetWidth = width / 2 - (int) screenCenter.x;
         int offsetHeight = height / 2 - (int) screenCenter.y;
         Polygon polygon = (Polygon) PlotDetails.plotGeometry;
@@ -1003,7 +814,7 @@ public class MapFragment extends Fragment implements MapNavigator {
         exportParam.showCircle = false;
         exportParam.labelFontSize = 12*(int)displaymetrics.density;
         exportParam.labelPosition = new dm.sime.com.kharetati.datas.models.Point(labelPosScreenPoint.x + offsetWidth, labelPosScreenPoint.y + offsetHeight);
-        exportParam.layerDefs = "3:COMM_PARCEL_ID=" + parcelId + ";6:PARCEL_ID=" + parcelId + ";7:PARCEL_ID=" + parcelId;
+        //exportParam.layerDefs = "3:COMM_PARCEL_ID=" + parcelId + ";6:PARCEL_ID=" + parcelId + ";7:PARCEL_ID=" + parcelId;
 
         PlotDetails.exportParam=exportParam;
         PlotDetails.emailParam.plotnumber=parecelID;

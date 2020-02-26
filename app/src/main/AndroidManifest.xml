@@ -26,6 +26,7 @@
         <activity android:name=".view.activities.WebViewActivity"></activity>
         <activity
             android:name=".view.activities.LoginActivity"
+            android:configChanges="orientation|screenSize|locale"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,8 +39,12 @@
             android:configChanges="orientation|screenSize|locale"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-        <activity android:name=".view.activities.ImageCropActivity"/>
-        <activity android:name=".view.activities.ViewImage"/>
+        <activity android:name=".view.activities.ImageCropActivity"
+            android:configChanges="orientation|screenSize|locale"
+            />
+        <activity android:name=".view.activities.ViewImage"
+            android:configChanges="orientation|screenSize|locale"
+            />
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.kharetati.android.fileprovider"

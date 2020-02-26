@@ -111,15 +111,11 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
     final DialogProperties properties=new DialogProperties();
     private int GALLERY = 1, CAMERA = 2, VIEW = 3, CHOOSER = 4;
     private String currentSelection = "";
-    private static final String EID_FRONT = "EID_FRONT";
-    private static final String EID_BACK = "EID_BACK";
     public static final String LAND_OWNER_CERTIFICATE = "LAND_OWNER_CERTIFICATE";
     public static final String VISA_PASSPORT = "VISA_PASSPORT";
     public static final String COMPANY_LICENCE = "COMPANY_LICENSE";
     public static final String PASSPORT = "PASSPORT";
     public static final String LETTER_FROM_OWNER = "LETTER_FROM_OWNER";
-    /*private ArrayList<DocArr> al;
-    public static ArrayList<DocArr> oldDoc;*/
     private ArrayList<ListItem> listItem;
     private static List<AttachedDoc> lstAttachedDoc = new ArrayList<AttachedDoc>();
 
@@ -133,7 +129,6 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
     private Uri galleryURI;
     private String mCurrentPhotoPath;
     private AttachedDoc attachedDoc;
-    private Docs[] Documents;
     private File dwldsPath;
     private Bitmap front;
     private String imageType;
@@ -2083,7 +2078,6 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void downloadDocs(Docs[] docs) {
-        Documents=docs;
         for (int i=0; i < docs.length; i++) {
             model.retrieveDoc(Integer.parseInt(docs[i].getDocid()), i);
         }

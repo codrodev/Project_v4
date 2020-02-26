@@ -9,7 +9,8 @@
     </data>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -80,12 +81,13 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/layoutDots"
                     android:background="@color/maroon_dark"
+                    android:layout_marginBottom="100dp"
                     android:visibility="gone"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="10dp">
                     <TextView
                         android:id="@+id/txtSearchHeader"
-                        style="@style/font_large_bold"
+                        style="@style/font_medium_bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Search"
@@ -97,7 +99,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="2dp"
                         android:background="@color/white"
-                        android:layout_marginVertical="5dp"
+                        android:layout_marginVertical="2dp"
                         android:layout_below="@+id/txtSearchHeader">
                         <com.google.android.material.tabs.TabLayout
                             android:id="@+id/tabRuntimeLayout"
@@ -122,7 +124,8 @@
                         <LinearLayout
                             android:id="@+id/runtimeParent"
                             android:layout_width="match_parent"
-                            android:layout_height="200dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="10dp"
                             android:layout_marginHorizontal="10dp"
                             android:layout_below="@+id/tabRuntimeLayout"
                             android:orientation="vertical"/>

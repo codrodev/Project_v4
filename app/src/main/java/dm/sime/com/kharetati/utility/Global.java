@@ -170,11 +170,6 @@ public class Global {
         Global.lstMapFunctions = lstMapFunctions;
     }
 
-
-
-
-
-
     public static String getCurrentLanguage(Activity activity) {
         return PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext()).getString(USER_LANGUAGE, "en");
     }

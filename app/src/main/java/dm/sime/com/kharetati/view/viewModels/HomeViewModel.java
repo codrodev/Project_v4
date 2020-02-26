@@ -459,6 +459,7 @@ public class HomeViewModel extends ViewModel {
             if (result != null && result.getService_response() != null) {
                 Global.mapSearchResult = result;
                 navigate(activity, FragmentTAGS.FR_MAP);
+                //navigate(activity, FragmentTAGS.FR_REQUEST_SITE_PLAN);
             } else {
                 AlertDialogUtil.errorAlertDialog("", activity.getResources().getString(R.string.community_error),
                         activity.getResources().getString(R.string.ok), activity);
