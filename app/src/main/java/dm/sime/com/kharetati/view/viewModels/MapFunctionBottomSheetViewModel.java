@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 import java.util.List;
 
 import dm.sime.com.kharetati.R;
+import dm.sime.com.kharetati.datas.models.Functions;
 import dm.sime.com.kharetati.datas.models.FunctionsOnMap;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.view.adapters.FunctionOnMapAdapter;
@@ -16,7 +17,7 @@ import dm.sime.com.kharetati.view.navigators.FragmentNavigator;
 
 public class MapFunctionBottomSheetViewModel extends ViewModel {
 
-    private MutableLiveData<List<FunctionsOnMap>> mutableFunctionOnMap = new MutableLiveData<>();
+    private MutableLiveData<List<Functions>> mutableFunctionOnMap = new MutableLiveData<>();
     FunctionOnMapAdapter adapter;
     FragmentNavigator navigator;
 
@@ -26,27 +27,27 @@ public class MapFunctionBottomSheetViewModel extends ViewModel {
 
     public void initializeViewModel(Context context, FunctionOnMapAdapter.OnMenuSelectedListener listner){
         mutableFunctionOnMap = new MutableLiveData<>();
-        mutableFunctionOnMap.setValue(Global.getLstMapFunctions());
+        mutableFunctionOnMap.setValue(Global.mapSearchResult.getService_response().getMap().getFunctions());
         adapter = new FunctionOnMapAdapter(R.layout.adapter_map_function_menu,this, context, listner);
     }
 
-    public MutableLiveData<List<FunctionsOnMap>> getMutableFunctionsOnMap(){
+    public MutableLiveData<List<Functions>> getMutableFunctionsOnMap(){
 
         return mutableFunctionOnMap;
     }
 
-    public List<FunctionsOnMap> getFunctionsOnMapList(){
+    public List<Functions> getFunctionsOnMapList(){
         return mutableFunctionOnMap.getValue();
     }
 
-    public FunctionsOnMap getCurrentFunctionsOnMap(int  position){
+    public Functions getCurrentFunctionsOnMap(int  position){
         if (mutableFunctionOnMap.getValue() != null ) {
             return mutableFunctionOnMap.getValue().get(position);
         }
         return null;
     }
 
-    public void  setFunctionsOnMapAdapter(List<FunctionsOnMap> lstFunctionsOnMap) {
+    public void  setFunctionsOnMapAdapter(List<Functions> lstFunctionsOnMap) {
         this.adapter.setFunctionsOnMap(lstFunctionsOnMap);
         this.adapter.notifyDataSetChanged();
     }

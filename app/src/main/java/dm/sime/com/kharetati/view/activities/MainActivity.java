@@ -130,18 +130,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             case FragmentTAGS.FR_DASHBOARD:
                 fragment = DashboardFragment.newInstance();
                 break;
-            case FragmentTAGS.FR_MAP:{
-                if(Global.isPlotSearch)
-                    fragment = MapFragment.newInstance(PlotDetails.parcelNo,"");
-                else if(Global.isLand){
-                    fragment = MapFragment.newInstance(PlotDetails.parcelNo,"");
-                }
-                else if(Global.isMakani)
-                    fragment = MapFragment.newInstance(PlotDetails.parcelNo,Global.dltm);
-                else if(Global.isBookmarks)
-                    fragment = MapFragment.newInstance(PlotDetails.parcelNo,"");
-                }
-
+            case FragmentTAGS.FR_MAP:
+                fragment = MapFragment.newInstance();
                 break;
             case FragmentTAGS.FR_REQUEST_SITE_PLAN:
                 fragment = ParentSiteplanFragment.newInstance();

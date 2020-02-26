@@ -16,12 +16,13 @@ import java.util.List;
 
 import dm.sime.com.kharetati.BR;
 import dm.sime.com.kharetati.R;
+import dm.sime.com.kharetati.datas.models.Functions;
 import dm.sime.com.kharetati.datas.models.FunctionsOnMap;
 import dm.sime.com.kharetati.view.viewModels.MapFunctionBottomSheetViewModel;
 
 public class FunctionOnMapAdapter extends RecyclerView.Adapter<FunctionOnMapAdapter.GenericViewHolder> {
     private int layoutId;
-    private List<FunctionsOnMap> lstFunctionsOnMap;
+    private List<Functions> lstFunctionsOnMap;
     private MapFunctionBottomSheetViewModel viewModel;
     static Context context;
     static OnMenuSelectedListener listener;
@@ -62,7 +63,7 @@ public class FunctionOnMapAdapter extends RecyclerView.Adapter<FunctionOnMapAdap
         return  lstFunctionsOnMap.size();
     }
 
-    public void setFunctionsOnMap(List<FunctionsOnMap> lstFunctionsOnMap) {
+    public void setFunctionsOnMap(List<Functions> lstFunctionsOnMap) {
         this.lstFunctionsOnMap = lstFunctionsOnMap;
     }
 
