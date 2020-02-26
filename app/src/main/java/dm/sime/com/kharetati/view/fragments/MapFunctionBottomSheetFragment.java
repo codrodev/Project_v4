@@ -27,10 +27,13 @@ public class MapFunctionBottomSheetFragment extends BottomSheetDialogFragment im
 
     MapFunctionBottomSheetViewModel model;
     FragmentBottomsheetMapFunctionBinding binding;
+    MapFunctionWebViewBottomSheetFragment webBottomSheet;
     private View mRootView;
+    static OnFunctionMenuSelectedListener listener;
 
-    public static MapFunctionBottomSheetFragment newInstance() {
+    public static MapFunctionBottomSheetFragment newInstance(OnFunctionMenuSelectedListener listeners) {
         MapFunctionBottomSheetFragment f = new MapFunctionBottomSheetFragment();
+        listener = listeners;
         return f;
     }
 
@@ -63,10 +66,23 @@ public class MapFunctionBottomSheetFragment extends BottomSheetDialogFragment im
     }
 
     @Override
-    public void onMenuSelected(String menu) {
-
-        model.navigate(getActivity(), FragmentTAGS.FR_REQUEST_SITE_PLAN);
+    public void onMenuSelected(String menu, int position) {
+        listener.onFunctionMenuSelected(position);
+        /*Functions fun = model.getCurrentFunctionsOnMap(position);
+        if(fun.getInternalFunctions() != null && fun.getInternalFunctions().length() > 0){
+            if (fun.getInternalFunctions().equals(FragmentTAGS.FR_REQUEST_SITE_PLAN)){
+                model.navigate(getActivity(), FragmentTAGS.FR_REQUEST_SITE_PLAN);
+            }
+        } else if (fun.getLaunchUrl() != null && fun.getLaunchUrl().length() > 0 &&
+                fun.getLaunchUrl().contains("http")){
+            webBottomSheet = new MapFunctionWebViewBottomSheetFragment(fun.getLaunchUrl());
+            webBottomSheet.show(getActivity().getSupportFragmentManager(), webBottomSheet.getTag());
+        }*/
         this.dismiss();
 
+    }
+
+    public interface OnFunctionMenuSelectedListener {
+        void onFunctionMenuSelected(int position);
     }
 }

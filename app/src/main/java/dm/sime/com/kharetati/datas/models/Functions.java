@@ -1,5 +1,7 @@
 package dm.sime.com.kharetati.datas.models;
 
+import java.util.List;
+
 public class Functions {
     private String IconUrl;
 
@@ -9,7 +11,7 @@ public class Functions {
 
     private String LaunchUrl;
 
-    private Params Params;
+    private List<Params> Params;
 
     private String IconBase64;
 
@@ -55,12 +57,12 @@ public class Functions {
         this.LaunchUrl = LaunchUrl;
     }
 
-    public Params getParams ()
+    public List<Params> getParams ()
     {
         return Params;
     }
 
-    public void setParams (Params Params)
+    public void setParams (List<Params> Params)
     {
         this.Params = Params;
     }
