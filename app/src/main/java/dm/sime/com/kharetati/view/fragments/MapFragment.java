@@ -238,7 +238,6 @@ public class MapFragment extends Fragment implements MapNavigator {
         MapViewTouchListener mapViewTouchListener = new MapViewTouchListener(getActivity(), mapView);
         mapView.setOnTouchListener(mapViewTouchListener);
 
-
         dynamicLayer = new ArcGISMapImageLayer(AppUrls.GIS_LAYER_URL);
         Credential credential=new UserCredential(AppUrls.GIS_LAYER_USERNAME,AppUrls.GIS_LAYER_PASSWORD);
         dynamicLayer.setCredential(credential);
