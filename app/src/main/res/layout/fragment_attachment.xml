@@ -6,217 +6,26 @@
         type="dm.sime.com.kharetati.view.viewModels.AttachmentViewModel" />
   </data>
 
-  <ScrollView android:layout_height="match_parent"
-      android:layout_width="match_parent">
+  <androidx.core.widget.NestedScrollView
+      android:layout_height="match_parent"
+      android:layout_width="match_parent"
+      android:layout_marginBottom="50dp">
     <LinearLayout
         android:id="@+id/rootView"
         android:layout_width="match_parent"
         android:layout_height="1400dp"
-        android:layout_margin="15dp"
+        android:layout_margin="5dp"
         android:layout_marginBottom="100dp"
         android:layoutDirection="locale"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="10dp">
 
-      <!--<TextView
-          android:id="@+id/checkbox_choose_text"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="8dp"
-          android:layout_marginRight="8dp"
-          android:text="@string/choose_checkbox_option"
-          android:textColor="@color/black"
-          android:textSize="16sp"
-          android:textStyle="bold"
-          android:visibility="gone" />
-
-      <Spinner
-          android:id="@+id/spinner_landOwned"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="8dp"
-          android:layout_marginRight="8dp"
-          android:text="@string/choose_checkbox_option"
-          android:textColor="@color/black"
-          android:textSize="16sp"
-          android:textStyle="bold"
-          android:visibility="gone"
-
-          />
-
-      <CheckBox
-          android:id="@+id/chk_isOwner"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="8dp"
-          android:layout_marginRight="8dp"
-          android:buttonTint="@android:color/holo_blue_dark"
-          android:checked="false"
-          android:text="@string/i_am_owner"
-          android:textColor="@color/black"
-          android:textSize="16sp"
-          android:textStyle="bold"
-          android:visibility="gone" />
-
-      <CheckBox
-          android:id="@+id/chk_isResident"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="8dp"
-          android:layout_marginLeft="8dp"
-          android:layout_marginEnd="8dp"
-          android:layout_marginRight="8dp"
-          android:buttonTint="@android:color/holo_blue_dark"
-          android:text="@string/i_am_resident"
-          android:textColor="@color/black"
-          android:textSize="16sp"
-          android:textStyle="bold"
-          android:visibility="gone" />
-
-      <RadioGroup
-          android:id="@+id/rg"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:visibility="gone">
-
-        <RadioButton
-            android:id="@+id/rb_isOwner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:buttonTint="@android:color/holo_blue_dark"
-            android:checked="false"
-            android:text="@string/i_am_owner"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:visibility="visible" />
-
-        <RadioButton
-            android:id="@+id/rb_notOwner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:buttonTint="@android:color/holo_blue_dark"
-            android:text="@string/i_am_not_owner"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-      </RadioGroup>-->
-
-      <androidx.cardview.widget.CardView
-          android:id="@+id/card_emirateId"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="10dp"
-          android:clickable="true"
-          android:focusable="true"
-          android:elevation="15dp"
-          android:foreground="?android:attr/selectableItemBackground"
-          android:paddingLeft="20dp"
-          android:paddingRight="20dp"
-          android:visibility="gone"
-          app:cardCornerRadius="5dp"
-          app:cardElevation="10dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lblEid"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="10dp"
-            android:orientation="vertical">
-
-          <TextView
-              android:id="@+id/lblEid"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:padding="10dp"
-              android:text="@string/owner_emiratesID"
-              android:textAlignment="center"
-              android:textAppearance="@style/TextAppearance.AppCompat"
-              android:textSize="16sp"
-              android:textStyle="bold" />
-
-          <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="horizontal"
-              android:baselineAligned="false">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-              <TextView
-                  android:id="@+id/textView8"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:scaleType="fitStart"
-                  android:text="@string/front"
-                  android:textAlignment="center"
-                  android:textAppearance="@style/TextAppearance.AppCompat"
-                  android:textColor="@android:color/darker_gray"
-                  android:textSize="16sp" />
-
-              <ImageView
-                  android:id="@+id/img_eid_front"
-                  android:layout_width="75dp"
-                  android:layout_height="0dp"
-                  android:layout_gravity="center"
-                  android:contentDescription="@string/NOEMIDFRONTALERT"
-                  android:padding="2dp"
-                  android:scaleType="fitXY"
-                  app:srcCompat="@drawable/photo" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-              <TextView
-                  android:id="@+id/textView9"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:scaleType="fitStart"
-                  android:text="@string/back"
-                  android:textAlignment="center"
-                  android:textAppearance="@style/TextAppearance.AppCompat"
-                  android:textColor="@android:color/darker_gray"
-                  android:textSize="16sp" />
-
-              <ImageView
-                  android:id="@+id/img_eid_back"
-                  android:layout_width="75dp"
-                  android:layout_height="0dp"
-                  android:layout_gravity="center"
-                  android:contentDescription="@string/NOEMIDBACKALERT"
-                  android:padding="2dp"
-                  android:scaleType="fitXY"
-                  app:srcCompat="@drawable/photo" />
-            </LinearLayout>
-
-          </LinearLayout>
-
-
-        </LinearLayout>
-
-      </androidx.cardview.widget.CardView>
 
       <androidx.cardview.widget.CardView
           android:id="@+id/card_passport"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_margin="10dp"
+          android:layout_margin="5dp"
           android:clickable="true"
           android:focusable="true"
           android:elevation="15dp"
@@ -243,10 +52,15 @@
               android:layout_height="wrap_content"
               android:padding="10dp"
               android:text="@string/passport"
-              android:textAlignment="center"
+              android:textAlignment="viewStart"
               android:textAppearance="@style/TextAppearance.AppCompat"
               android:textSize="16sp"
               android:textStyle="bold" />
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="2dp"
+              android:layout_marginHorizontal="10dp"
+              android:background="@color/gray"/>
 
           <RelativeLayout
               android:layout_width="match_parent"
@@ -303,7 +117,7 @@
           android:id="@+id/card_visa_passport"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_margin="10dp"
+          android:layout_margin="5dp"
           android:clickable="true"
           android:focusable="true"
           android:elevation="15dp"
@@ -329,11 +143,15 @@
               android:layout_height="wrap_content"
               android:padding="10dp"
               android:text="@string/visa_passport"
-              android:textAlignment="center"
+              android:textAlignment="viewStart"
               android:textAppearance="@style/TextAppearance.AppCompat"
               android:textSize="16sp"
               android:textStyle="bold" />
-
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="2dp"
+              android:layout_marginHorizontal="10dp"
+              android:background="@color/gray"/>
 
           <RelativeLayout
               android:layout_width="match_parent"
@@ -399,7 +217,7 @@
           android:id="@+id/card_company_license"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_margin="10dp"
+          android:layout_margin="5dp"
           android:clickable="true"
           android:focusable="true"
           android:elevation="15dp"
@@ -425,11 +243,15 @@
               android:layout_height="wrap_content"
               android:padding="10dp"
               android:text="@string/company_license"
-              android:textAlignment="center"
+              android:textAlignment="viewStart"
               android:textAppearance="@style/TextAppearance.AppCompat"
               android:textSize="16sp"
               android:textStyle="bold" />
-
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="2dp"
+              android:layout_marginHorizontal="10dp"
+              android:background="@color/gray"/>
 
           <RelativeLayout
               android:layout_width="match_parent"
@@ -483,67 +305,11 @@
         </LinearLayout>
       </androidx.cardview.widget.CardView>
 
-      <androidx.cardview.widget.CardView
-          android:id="@+id/card_landShipOwner"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="10dp"
-          android:clickable="true"
-          android:focusable="true"
-          android:elevation="15dp"
-          android:foreground="?android:attr/selectableItemBackground"
-          android:gravity="center_horizontal"
-          android:visibility="gone"
-          app:cardCornerRadius="5dp"
-          app:cardElevation="10dp"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintLeft_toLeftOf="parent"
-          app:layout_constraintRight_toRightOf="parent"
-          app:layout_constraintTop_toTopOf="parent"
-          app:layout_constraintVertical_bias="0.43">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/dsdfe"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="10dp"
-            android:orientation="vertical">
-
-          <TextView
-              android:id="@+id/lblOwnership"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:padding="10dp"
-              android:text="@string/land_ownership_certificate"
-              android:textAlignment="center"
-              android:textAppearance="@style/TextAppearance.AppCompat"
-              android:textSize="16sp"
-              android:textStyle="bold" />
-
-          <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="75dp"
-              android:gravity="center"
-              android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/img_land_owner"
-                android:layout_width="75dp"
-                android:layout_height="90dp"
-                android:layout_gravity="center"
-                android:contentDescription="@string/NO_NOC_CERTIFICATE_ALERT"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/photo" />
-          </LinearLayout>
-        </LinearLayout>
-      </androidx.cardview.widget.CardView>
-
       <LinearLayout
           android:id="@+id/fragment_attachement_downloadnoc_layout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_margin="10dp"
+          android:layout_margin="5dp"
           android:orientation="vertical">
 
         <TextView
@@ -581,7 +347,7 @@
           android:id="@+id/card_letter_from_Owner"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_margin="10dp"
+          android:layout_margin="5dp"
           android:clickable="true"
           android:focusable="true"
           android:elevation="15dp"
@@ -606,14 +372,17 @@
               android:id="@+id/lbl_letter_from_owner"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginBottom="15dp"
               android:padding="10dp"
               android:text="@string/signed_noc_owner"
-              android:textAlignment="center"
+              android:textAlignment="viewStart"
               android:textAppearance="@style/TextAppearance.AppCompat"
               android:textSize="16sp"
               android:textStyle="bold" />
-
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="2dp"
+              android:layout_marginHorizontal="10dp"
+              android:background="@color/gray"/>
           <RelativeLayout
               android:layout_width="match_parent"
               android:layout_height="75dp">
@@ -665,118 +434,8 @@
         </LinearLayout>
       </androidx.cardview.widget.CardView>
 
-      <!--&lt;!&ndash;<CheckBox
-          android:id="@+id/bycourier"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_gravity="start"
-          android:layout_marginStart="2dp"
-          android:layout_marginLeft="2dp"
-          android:buttonTint="@android:color/holo_blue_dark"
-          android:gravity="start"
-          android:text="@string/delivery_by_courier"
-          android:textAppearance="@style/TextAppearance.AppCompat"
-          android:textSize="16sp"
-          android:textStyle="bold" />&ndash;&gt;
-
-      <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:paddingStart="3dp"
-        android:paddingEnd="3dp"
-        android:layoutDirection="locale"
-        android:text="@string/applicant_details"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-        android:textColor="@color/gray_text_color"
-        android:textDirection="locale"
-        android:textStyle="bold" />
-      <com.google.android.material.textfield.TextInputLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          app:hintEnabled="false">
-        <EditText
-            android:id="@+id/et_emailaddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:hint="@string/please_enter_email_address"
-            android:maxLength="50"
-            android:textAlignment="center"
-            android:inputType="text"
-            android:textColor="@color/gray_text_color"
-            android:textDirection="locale" />
-      </com.google.android.material.textfield.TextInputLayout>
-      &lt;!&ndash;android:digits="0123456789١٢٣٤٥٦٧٨٩١٠"&ndash;&gt;
-      <EditText
-          android:id="@+id/et_mobile"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:gravity="start"
-          android:hint="@string/mobile_number_9715xxxxxxxx"
-          android:inputType="number"
-          android:maxLength="12"
-          android:textAlignment="center"
-          android:textColor="@color/gray_text_color"
-          android:textDirection="locale" />
-
-      &lt;!&ndash;<Button
-          android:id="@+id/btnNextAttachment"
-          android:layout_width="150dp"
-          android:layout_height="40dp"
-          android:layout_gravity="center"
-          android:layout_margin="8dp"
-          android:background="@drawable/rounded_edittext_gradient"
-          android:text="@string/lbl_next"
-          android:textAllCaps="false"
-          android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-          android:textColor="@color/white"
-          android:visibility="gone" />&ndash;&gt;
-
-      <LinearLayout
-          android:id="@+id/payButtons"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:gravity="center"
-          android:orientation="vertical">
-
-        <Button
-            android:id="@+id/payNow"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="30dp"
-            android:background="@drawable/button_background"
-            android:gravity="center"
-            android:text="@string/pay_now"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textFontWeight="800"
-            android:textSize="16dp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/payLater"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/button_background"
-            android:drawablePadding="10dp"
-            android:gravity="center"
-            android:text="@string/pay_later"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textFontWeight="800"
-            android:textSize="16dp"
-            android:textStyle="bold" />
-      </LinearLayout>
--->
-
     </LinearLayout>
 
-  </ScrollView>
+  </androidx.core.widget.NestedScrollView>
 </layout>
 

@@ -1,38 +1,21 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="DeliveryDetailVM"
             type="dm.sime.com.kharetati.view.viewModels.DeliveryDetailViewModel" />
     </data>
-    <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    >
-
-    <TextView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_gravity="center_vertical|center_horizontal"
-        android:background="@drawable/gradient_background"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="@string/address_for_delivery"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="@dimen/loginFontSize"/>
-
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:id ="@+id/linearLayout"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginBottom="100dp">
             <CheckBox
                 android:id="@+id/deliveryByCourier"
                 android:layout_width="match_parent"
@@ -338,7 +321,5 @@
 -->
 
         </LinearLayout>
-    </ScrollView>
-
-</LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>
