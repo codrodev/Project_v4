@@ -58,6 +58,7 @@ import dm.sime.com.kharetati.view.adapters.InAppNotificationAdapter;
 import dm.sime.com.kharetati.view.customview.CleanableEditText;
 import dm.sime.com.kharetati.view.fragments.DeliveryFragment;
 import dm.sime.com.kharetati.view.fragments.HomeFragment;
+import dm.sime.com.kharetati.view.fragments.MapFragment;
 import dm.sime.com.kharetati.view.navigators.FragmentNavigator;
 import dm.sime.com.kharetati.view.navigators.HomeNavigator;
 import dm.sime.com.kharetati.view.navigators.MainNavigator;
@@ -451,6 +452,44 @@ public class HomeViewModel extends ViewModel {
                     });
             compositeDisposable.add(disposable);
         }
+    }
+
+    public void getSearchResult(String searchText){
+
+        homeNavigator.onStarted();
+
+        String url = getSelectedApplication().getSearchUrl();
+
+        SearchParameterModel searchModel = new SearchParameterModel();
+
+        SearchParameterInput inputModel = new SearchParameterInput();
+        inputModel.setApplicationId(getSelectedApplication().getId());
+        inputModel.setSearchValue(searchText);
+        inputModel.setTabId(getSelectedTab().getId());
+        inputModel.setTOKEN(Global.app_session_token);
+        inputModel.setREMARKS("AndroidV8.0");
+
+        searchModel.setInputJson(inputModel);
+
+        if(getSelectedApplication().getHasMap()) {
+            Disposable disposable = repository.getMapBasedSearchResult(url, searchModel)
+                    .subscribeOn(kharetatiApp.subscribeScheduler())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<SearchResult>() {
+                        @Override
+                        public void accept(SearchResult response) throws Exception {
+                            //getMapBasedSearchResult(response);
+                            MapFragment.mapVM.mapNavigator.findParcelID(response);
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            homeNavigator.onFailure("Unable to connect the remote server");
+                        }
+                    });
+            compositeDisposable.add(disposable);
+        }
+
     }
 
     public void getMapBasedSearchResult(SearchResult result){

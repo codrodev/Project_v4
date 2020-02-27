@@ -17,4 +17,6 @@ public interface MainNavigator {
     public void onStarted();
 
     public void onFailure(String Msg);
+
+    public void onWebViewBack();
 }

@@ -140,11 +140,8 @@
     <string name="select_emirate">Please select Emirate</string>
     <string name="deatails_saved"> All the details are saved successfully</string>
     <string name="valid_doc">Please upload the valid documents</string>
-
-
-
-
-
+    <string name="try_kharetati_app">Download Kharetati App</string>
+    <string name="kharetati_app">Kharetati App</string>
 
 
     <string-array name="request_site_plan">

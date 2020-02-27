@@ -92,6 +92,7 @@ import dm.sime.com.kharetati.datas.models.Functions;
 import dm.sime.com.kharetati.datas.models.LayerDefinition;
 import dm.sime.com.kharetati.datas.models.Params;
 import dm.sime.com.kharetati.datas.models.PlotDetails;
+import dm.sime.com.kharetati.datas.models.SearchResult;
 import dm.sime.com.kharetati.datas.network.ApiFactory;
 import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
 import dm.sime.com.kharetati.datas.repositories.MapRepository;
@@ -132,6 +133,7 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
     private ListView searchhistoryListView;
     BottomSheetBehavior sheetBehavior;
     WebView webView;
+    public static MapViewModel mapVM;
 
 
     public MapFragment() {
@@ -160,6 +162,7 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
         factory = new MapViewModelFactory(getActivity(),repository);
 
         model = ViewModelProviders.of(getActivity(),factory).get(MapViewModel.class);
+        mapVM =model;
         model.mapNavigator =this;
 
         setRetainInstance(true);
@@ -249,8 +252,6 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
 
                 ArcGISMapImageSublayer sublayer= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(retriveLayer.getId()));
                 sublayer.setDefinitionExpression(retriveLayer.getQueryClause());
-
-
 
 
                 if(Global.isConnected(getActivity())){
@@ -354,6 +355,7 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                 binding.txtPlotNo.setText(searchhistoryListView.getItemAtPosition(position).toString());
                 skipOnTextChangeEvent=false;
                 searchhistoryListView.setVisibility(View.GONE);
+                HomeFragment.homeVM.getSearchResult(searchhistoryListView.getItemAtPosition(position).toString().trim());
             }
         });
 
@@ -429,7 +431,7 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                     Global.landNumber = null;
                     Global.area = null;
                     Global.area_ar = null;
-                    findParcel();
+                    HomeFragment.homeVM.getSearchResult(binding.txtPlotNo.getText().toString().trim());
 
 
                 }
@@ -458,6 +460,13 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
             }
         });
 
+        binding.imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).onBackPressed();
+            }
+        });
+
 
         // Button Reset click event
         binding.imgRecenter.setOnClickListener(new View.OnClickListener() {
@@ -472,9 +481,9 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
 
                 }
                 else{
-                    if(mapView!=null && PlotDetails.currentState.graphic!=null)
+                    if(mapView!=null && PlotDetails.plotGeometry!=null)
                     {
-                        mapView.setViewpointGeometryAsync(PlotDetails.currentState.graphic.getGeometry(), extentPadding);
+                        mapView.setViewpointGeometryAsync(PlotDetails.plotGeometry, extentPadding);
                         final Timer timer=new Timer();
                         timer.schedule(new TimerTask() {
                             @Override
@@ -525,6 +534,12 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
     public void onFailure(String Msg) {
         AlertDialogUtil.showProgressBar(getActivity(),false);
         AlertDialogUtil.errorAlertDialog("",Msg,getActivity().getResources().getString(R.string.ok),getActivity());
+    }
+
+    @Override
+    public void findParcelID(SearchResult response) {
+        Global.mapSearchResult = response;
+        findParcel();
     }
 
     @Override
@@ -737,11 +752,11 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                         sublayerQuery.addDoneListener(() -> {
                             try {
                                 FeatureQueryResult result = sublayerQuery.get();
-                                SimpleLineSymbol sls = new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, Color.RED, 3);
+                                /*SimpleLineSymbol sls = new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, Color.BLUE, 3);
                                 SimpleFillSymbol simpleFillSymbol = new SimpleFillSymbol(SimpleFillSymbol.Style.SOLID, Color.argb(30, 243, 247, 129),
                                         sls);
                                 simpleFillSymbol.setOutline(sls);
-
+*/
                                 for (Feature feature : result) {
 
                                     List<Field> fields=result.getFields();
@@ -754,10 +769,10 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                                     }
 
 
-                                    Graphic sublayerGraphic = new Graphic(feature.getGeometry(), simpleFillSymbol);
-                                    PlotDetails.currentState.graphic=sublayerGraphic;
+//                                    Graphic sublayerGraphic = new Graphic(feature.getGeometry(), simpleFillSymbol);
+                                    PlotDetails.currentState.graphic=new Graphic(feature.getGeometry(),new SimpleFillSymbol());
                                     PlotDetails.plotGeometry=feature.getGeometry();
-                                    graphicsLayer.getGraphics().add(sublayerGraphic);
+//                                    graphicsLayer.getGraphics().add(sublayerGraphic);
 
                                     findCommunity();
                                     break;

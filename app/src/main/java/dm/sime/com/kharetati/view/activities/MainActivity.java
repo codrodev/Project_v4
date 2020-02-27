@@ -238,6 +238,14 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW)){
+            onWebViewBack();
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         if(Global.alertDialog!=null){
@@ -253,6 +261,12 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
     @Override
     public void onFailure(String Msg) {
+
+    }
+
+    @Override
+    public void onWebViewBack() {
+        binding.customBottomBar.show(3, true);
 
     }
 

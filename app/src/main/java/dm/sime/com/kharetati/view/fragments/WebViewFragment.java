@@ -16,6 +16,9 @@ import androidx.fragment.app.Fragment;
 
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
+import dm.sime.com.kharetati.utility.Global;
+import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.navigators.FragmentNavigator;
 
 public class WebViewFragment extends Fragment {
@@ -47,12 +50,16 @@ public class WebViewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_webview, container, false);
+        Global.current_fragment_id = FragmentTAGS.FR_WEBVIEW;
 
         webView = view.findViewById(R.id.webView);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new MyWebViewClient());
         webView.loadUrl(launchUrl);
         manageAppBottomBAtr(false);
+        if(!webView.canGoBack()){
+            ((MainActivity)getActivity()).onWebViewBack();
+        }
         return view;
     }
 

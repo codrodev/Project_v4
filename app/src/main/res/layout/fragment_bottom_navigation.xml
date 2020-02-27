@@ -27,39 +27,12 @@
                 android:layout_margin="10dp"
                 android:orientation="horizontal"
                 android:layout_below="@+id/topView">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="vertical">
-                    <RelativeLayout
-                        android:id="@+id/layoutView"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:background="@drawable/circular_menu_bg"
-                        android:layout_margin="5dp">
-                        <ImageView
-                            android:id="@+id/iconView"
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:src="@drawable/ic_headset_mic_24dp"
-                            android:layout_centerInParent="true"/>
-                    </RelativeLayout>
-                    <TextView
-                        style="@style/font_medium_regular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="contact us"
-                        android:layout_gravity="center"
-                        android:textColor="@color/white"/>
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:id="@+id/layoutShareApp"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -88,6 +61,74 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:id="@+id/layoutRateUs"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/circular_menu_bg"
+                        android:layout_margin="5dp">
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/ic_share_24dp"
+                            android:layout_centerInParent="true"/>
+                    </RelativeLayout>
+                    <TextView
+                        style="@style/font_medium_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rate us"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/aboutUs"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:id="@+id/layout2"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/circular_menu_bg"
+                        android:layout_margin="5dp">
+                        <ImageView
+                            android:id="@+id/icon2"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/ic_headset_mic_24dp"
+                            android:layout_centerInParent="true"/>
+                    </RelativeLayout>
+                    <TextView
+                        style="@style/font_medium_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="About us"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/bottomMenuLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:weightSum="3"
+                android:orientation="horizontal"
+                android:layout_below="@+id/topMenuLayout">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/help"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -112,29 +153,23 @@
                         android:layout_gravity="center"
                         android:textColor="@color/white"/>
                 </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/bottomMenuLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:orientation="horizontal"
-                android:layout_below="@+id/topMenuLayout">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:id="@+id/faq"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:orientation="vertical">
                     <RelativeLayout
-                        android:id="@+id/layout2"
+                        android:id="@+id/layoutView"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:background="@drawable/circular_menu_bg"
                         android:layout_margin="5dp">
                         <ImageView
-                            android:id="@+id/icon2"
+                            android:id="@+id/iconView"
                             android:layout_width="35dp"
                             android:layout_height="35dp"
                             android:src="@drawable/ic_headset_mic_24dp"
@@ -144,15 +179,17 @@
                         style="@style/font_medium_regular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="contact us"
+                        android:text="Faq"
                         android:layout_gravity="center"
                         android:textColor="@color/white"/>
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:id="@+id/logout"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -164,18 +201,89 @@
                         <ImageView
                             android:layout_width="35dp"
                             android:layout_height="35dp"
-                            android:src="@drawable/ic_share_24dp"
+                            android:src="@drawable/ic_help_outline_24dp"
                             android:layout_centerInParent="true"/>
                     </RelativeLayout>
                     <TextView
                         style="@style/font_medium_regular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="share app"
+                        android:text="Logout"
+                        android:lines="2"
                         android:layout_gravity="center"
                         android:textColor="@color/white"/>
                 </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/thirdMenuLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_below="@+id/bottomMenuLayout">
                 <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:id="@+id/termsAndConditions"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:id="@+id/terms"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/circular_menu_bg"
+                        android:layout_margin="5dp">
+                        <ImageView
+                            android:id="@+id/iconterms"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/ic_help_outline_24dp"
+                            android:layout_centerInParent="true"/>
+                    </RelativeLayout>
+                    <TextView
+                        style="@style/font_medium_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Terms And Conditions"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/registerLand"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:id="@+id/layoutLand"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/circular_menu_bg"
+                        android:layout_margin="5dp">
+                        <ImageView
+                            android:id="@+id/iconLand"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/ic_headset_mic_24dp"
+                            android:layout_centerInParent="true"/>
+                    </RelativeLayout>
+                    <TextView
+                        style="@style/font_medium_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Register Land"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
+
+                <!--<LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -197,10 +305,11 @@
                         style="@style/font_medium_regular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="help"
+                        android:text="Logout"
+                        android:lines="2"
                         android:layout_gravity="center"
                         android:textColor="@color/white"/>
-                </LinearLayout>
+                </LinearLayout>-->
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

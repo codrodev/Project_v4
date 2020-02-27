@@ -35,7 +35,7 @@
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="16dp"
             android:elevation="20dp"
             android:layoutDirection="locale"
             app:layout_constraintTop_toTopOf="parent">
@@ -59,14 +59,14 @@
                         android:id="@+id/imgBack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left|center_vertical"
+                        android:layout_gravity="start|center_vertical"
                         android:layout_marginStart="8dp"
                         android:layout_marginLeft="8dp"
                         android:src="@drawable/ic_arrow_back_24dp" />
 
 
 
-                        <EditText
+                        <dm.sime.com.kharetati.view.customview.CleanableEditText
                             android:id="@+id/txtPlotNo"
                             android:layout_width="120dp"
                             android:layout_height="match_parent"
@@ -92,7 +92,7 @@
                         android:id="@+id/imgSearch"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_gravity="left|center_vertical"
+                        android:layout_gravity="start|center_vertical"
                         android:layout_weight="1"
                         android:src="@drawable/search_100x100" />
 
@@ -100,7 +100,7 @@
                         android:id="@+id/imgLayer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left|center_vertical"
+                        android:layout_gravity="start|center_vertical"
                         android:layout_weight="1"
                         android:src="@drawable/ic_layers_24dp" />
 
@@ -108,7 +108,7 @@
                         android:id="@+id/imgBookmark"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_gravity="left|center_vertical"
+                        android:layout_gravity="start|center_vertical"
                         android:layout_weight="1"
                         android:src="@drawable/ic_book_black_24dp" />
 
@@ -116,7 +116,7 @@
                         android:id="@+id/imgRecenter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left|center_vertical"
+                        android:layout_gravity="start|center_vertical"
                         android:layout_weight="1"
                         android:src="@drawable/ic_center_focus_strong_24dp" />
 
@@ -124,7 +124,7 @@
                         android:id="@+id/imgMakani"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_gravity="left|center_vertical"
+                        android:layout_gravity="start|center_vertical"
                         android:layout_weight="1"
                         android:src="@drawable/makani" />
                 </LinearLayout>
