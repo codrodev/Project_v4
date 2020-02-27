@@ -37,7 +37,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
     FragmentManager fragmentManager = null;
     FragmentTransaction tx = null;
     String[] pagerArray;
-    public static int currentIndex = 0;
+    int currentIndex = 0;
     public static ParentSiteplanViewModel parentModel;
     private ParentSitePlanViewModelFactory factory;
     private ParentSitePlanRepository repository;
@@ -85,11 +85,11 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         if(currentIndex != 0 )
             binding.btnPrevious.setVisibility(View.VISIBLE);
         else
-            binding.btnPrevious.setVisibility(View.INVISIBLE);
+            binding.btnPrevious.setVisibility(View.GONE);
         if(currentIndex != 2 )
             binding.btnNext.setVisibility(View.VISIBLE);
         else
-            binding.btnNext.setVisibility(View.INVISIBLE);
+            binding.btnNext.setVisibility(View.GONE);
 
 
 
@@ -100,9 +100,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
             @Override
             public void onClick(View view) {
                 //binding.viewPagerCreatePackage.setCurrentItem(getNext(), true);
-
-                if(currentIndex < 3) {
-
+                if(currentIndex < 2) {
                     if(currentIndex==0){
                         if(Global.spinPosition ==2){
 
@@ -120,7 +118,6 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
                             model.retrieveProfileDocs();
                     }
                     currentIndex++;
-
                     //loadFragment(currentIndex);
                     binding.txtHeader.setText(pagerArray[currentIndex]);
                     if(currentIndex == 0 ){
@@ -128,18 +125,11 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
                     }
                     else
                         binding.btnPrevious.setVisibility(View.VISIBLE);
-                    if(currentIndex== 2){
-                        loadFragment(2);
-                    }
-                    if(currentIndex == 3){
-                        loadFragment(3);
+                    if(currentIndex==3)
                         binding.btnNext.setVisibility(View.GONE);
-                    }
                     else
                         binding.btnNext.setVisibility(View.VISIBLE);
                     changeStepperBackground(currentIndex);
-
-
                 }
             }
         });
@@ -188,11 +178,6 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
             binding.txtStepperTwo.setBackground(getResources().getDrawable(R.drawable.stepper_background));
             binding.txtStepperThree.setBackground(getResources().getDrawable(R.drawable.stepper_background_selected));
             binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.stepper_background));
-        }else if(index == 3) {
-            binding.txtStepperOne.setBackground(getResources().getDrawable(R.drawable.stepper_background));
-            binding.txtStepperTwo.setBackground(getResources().getDrawable(R.drawable.stepper_background));
-            binding.txtStepperThree.setBackground(getResources().getDrawable(R.drawable.stepper_background));
-            binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.stepper_background_selected));
         }
     }
 
@@ -211,18 +196,15 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
             case 2:
                 fragment = DeliveryFragment.newInstance();
                 break;
-            case 3:
-                fragment = PayFragment.newInstance();
-                break;
-            default:
-                fragment = LandOwnerSelectionFragment.newInstance();
-                break;
+            /*case 3:
+                fragment = MapFragment.newInstance();
+                break;*/
         }
 
         tx.replace(R.id.childFragmentContainer, fragment);
 
         //if (addToBackStack)
-       // tx.addToBackStack(fragment.getTag());
+        //tx.addToBackStack(fragment_tag);
         tx.commitAllowingStateLoss();
         return fragment;
     }
@@ -265,12 +247,5 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
     @Override
     public void navigateToFragment(int position) {
         loadFragment(position);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        loadFragment(currentIndex);
     }
 }

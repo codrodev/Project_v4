@@ -1196,7 +1196,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CHOOSER) {
             // Get the Uri of the selected file
             if(data != null){
@@ -1251,30 +1251,16 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
             }
         }
         if (requestCode == GALLERY) {
-            isCamera = false;
             if (data != null) {
                 contentURI = data.getData();
                 System.out.println(contentURI.toString());
                 System.out.println(contentURI.getPath());
                 AddDoc(currentSelection, "", "", "jpg", 0);
                 try {
-                    isCamera = false;
-                    Intent crop = new Intent(getActivity(), ImageCropActivity.class);
+                    /*Intent crop = new Intent(getActivity(), ImageCropActivity.class);
                     crop.putExtra("uri", contentURI.toString());
-                    startActivityForResult(crop, GALLERY_CROP);
-                    /*if (currentSelection == EID_FRONT)
-                    {
-                        isCamera = false;
-                        Intent crop = new Intent(getActivity(), ImageCropActivity.class);
-                        crop.putExtra("uri", contentURI.toString());
-                        startActivityForResult(crop, GALLERY_CROP);
-                    } else if (currentSelection == EID_BACK) {
-                        isCamera = false;
-                        Intent crop = new Intent(getActivity(), ImageCropActivity.class);
-                        crop.putExtra("uri", contentURI.toString());
-                        startActivityForResult(crop, GALLERY_CROP);
-
-                    } else if (currentSelection == LAND_OWNER_CERTIFICATE) {
+                    startActivityForResult(crop, GALLERY_CROP);*/
+                    if (currentSelection == LAND_OWNER_CERTIFICATE) {
                         isCamera = false;
                         Intent crop = new Intent(getActivity(), ImageCropActivity.class);
                         crop.putExtra("uri", contentURI.toString());
@@ -1294,7 +1280,10 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                         crop.putExtra("uri", contentURI.toString());
                         startActivityForResult(crop, GALLERY_CROP);
                     }else if (currentSelection == VISA_PASSPORT) {
-
+                        isCamera = false;
+                        Intent crop = new Intent(getActivity(), ImageCropActivity.class);
+                        crop.putExtra("uri", contentURI.toString());
+                        startActivityForResult(crop, GALLERY_CROP);
 
                     }else if (currentSelection == COMPANY_LICENCE) {
 
@@ -1302,7 +1291,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                         Intent crop = new Intent(getActivity(), ImageCropActivity.class);
                         crop.putExtra("uri", contentURI.toString());
                         startActivityForResult(crop, GALLERY_CROP);
-                    }*/
+                    }
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -1319,20 +1308,10 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
             }
             AddDoc(currentSelection, "", "", "jpg", 0);
-            Intent crop = new Intent(getActivity(), ImageCropActivity.class);
+            /*Intent crop = new Intent(getActivity(), ImageCropActivity.class);
             crop.putExtra("uri", photoURI);
-            startActivityForResult(crop, GALLERY_CROP);
-            /*if (currentSelection == EID_FRONT) {
-
-                Intent crop = new Intent(getActivity(), ImageCropActivity.class);
-                crop.putExtra("uri", photoURI);
-                startActivityForResult(crop, GALLERY_CROP);
-            } else if (currentSelection == EID_BACK) {
-                Intent crop = new Intent(getActivity(), ImageCropActivity.class);
-                crop.putExtra("uri", photoURI);
-                startActivityForResult(crop, GALLERY_CROP);
-
-            } else if (currentSelection == LAND_OWNER_CERTIFICATE) {
+            startActivityForResult(crop, GALLERY_CROP);*/
+            if (currentSelection == LAND_OWNER_CERTIFICATE) {
                 Intent crop = new Intent(getActivity(), ImageCropActivity.class);
                 crop.putExtra("uri", photoURI);
 
@@ -1354,14 +1333,14 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                 crop.putExtra("uri", photoURI);
 
                 startActivityForResult(crop, GALLERY_CROP);
-            }*/
+            }
 
         }
-        else if (requestCode == GALLERY_CROP && resultCode == -1) {
+        else if (requestCode == GALLERY_CROP) {
 
             galleryURI=Uri.parse(data.getExtras().getString("uri"));
             AddDoc(currentSelection, "", "", "jpg", 0);
-             if (currentSelection.equals(LAND_OWNER_CERTIFICATE)) {
+            if (currentSelection.equals(LAND_OWNER_CERTIFICATE)) {
                 binding.imgLandOwner.setImageURI(galleryURI);
                 AttachmentBitmap.land_ownership_certificate=((BitmapDrawable) binding.imgLandOwner.getDrawable()).getBitmap();
                 createAttachedDoc(encodeImage(AttachmentBitmap.land_ownership_certificate), "image/jpg",
@@ -1530,7 +1509,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
         }
         else if (Global.rbNotOwner)
-        {   
+        {
 
             if(((BitmapDrawable) binding.imgPassport.getDrawable()).getBitmap()==((BitmapDrawable) getResources().getDrawable(R.drawable.photo)).getBitmap()
                     || ((BitmapDrawable) binding.imgVisaPassport.getDrawable()).getBitmap()==((BitmapDrawable) getResources().getDrawable(R.drawable.photo)).getBitmap()
@@ -1567,10 +1546,10 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
     }
 
     private void imageAlignment() {
-        
+
 
         if(((BitmapDrawable) binding.imgPassport.getDrawable()).getBitmap()==((BitmapDrawable) getResources().getDrawable(R.drawable.photo)).getBitmap() && ((BitmapDrawable) binding.imgPassport.getDrawable()).getBitmap()!=null)
-            
+
             binding.passportButtons.setVisibility(View.INVISIBLE);
         else
             binding.passportButtons.setVisibility(View.VISIBLE);
@@ -1840,7 +1819,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
         }
 
-        }
+    }
     private void populateLstDoc(){
         if(ParentSiteplanViewModel.getDownloadedDoc() != null && ParentSiteplanViewModel.getDownloadedDoc().size() > 0) {
             for (int i = 0; i < ParentSiteplanViewModel.getDownloadedDoc().size(); i++) {
@@ -1874,7 +1853,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         if(((BitmapDrawable) binding.imgPassport.getDrawable()).getBitmap()==((BitmapDrawable) getResources().getDrawable(R.drawable.unsupported)).getBitmap() && ((BitmapDrawable) binding.imgPassport.getDrawable()).getBitmap()!=null){
 
             binding.personalView.setEnabled(false);
-            binding.personalView.setAlpha(0.5f); 
+            binding.personalView.setAlpha(0.5f);
         }
         else {
             binding.personalView.setEnabled(true);
