@@ -312,7 +312,7 @@ public class HomeViewModel extends ViewModel {
                     }
                 }, new Consumer<Throwable>() {
                     @Override public void accept(Throwable throwable) throws Exception {
-                        homeNavigator.onFailure("Unable to connect the remote server");
+                        homeNavigator.onFailure(activity.getResources().getString(R.string.server_connect_error));
                     }
                 });
 
@@ -359,7 +359,7 @@ public class HomeViewModel extends ViewModel {
                     }
                 }, new Consumer<Throwable>() {
                     @Override public void accept(Throwable throwable) throws Exception {
-                        homeNavigator.onFailure("Unable to connect the remote server");
+                        homeNavigator.onFailure(activity.getResources().getString(R.string.server_connect_error));
                     }
                 });
 
@@ -431,7 +431,7 @@ public class HomeViewModel extends ViewModel {
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
-                            homeNavigator.onFailure("Unable to connect the remote server");
+                            homeNavigator.onFailure(activity.getResources().getString(R.string.server_connect_error));
                         }
                     });
             compositeDisposable.add(disposable);
@@ -447,7 +447,7 @@ public class HomeViewModel extends ViewModel {
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
-                            homeNavigator.onFailure("Unable to connect the remote server");
+                            homeNavigator.onFailure(activity.getResources().getString(R.string.server_connect_error));
                         }
                     });
             compositeDisposable.add(disposable);
@@ -484,7 +484,7 @@ public class HomeViewModel extends ViewModel {
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
-                            homeNavigator.onFailure("Unable to connect the remote server");
+                            homeNavigator.onFailure(activity.getResources().getString(R.string.server_connect_error));
                         }
                     });
             compositeDisposable.add(disposable);
@@ -500,12 +500,11 @@ public class HomeViewModel extends ViewModel {
                 navigate(activity, FragmentTAGS.FR_MAP);
                 //navigate(activity, FragmentTAGS.FR_REQUEST_SITE_PLAN);
             } else {
-                AlertDialogUtil.errorAlertDialog("", activity.getResources().getString(R.string.community_error),
-                        activity.getResources().getString(R.string.ok), activity);
+                homeNavigator.onFailure(activity.getResources().getString(R.string.community_error));
             }
         } else {
-            AlertDialogUtil.errorAlertDialog("", activity.getResources().getString(R.string.community_error),
-                    activity.getResources().getString(R.string.ok), activity);
+            homeNavigator.onFailure(activity.getResources().getString(R.string.community_error));
+
         }
     }
 
@@ -551,7 +550,7 @@ public class HomeViewModel extends ViewModel {
                     }
                 }, new Consumer<Throwable>() {
                     @Override public void accept(Throwable throwable) throws Exception {
-                        homeNavigator.onFailure("Unable to connect the remote server");
+                        homeNavigator.onFailure(activity.getResources().getString(R.string.server_connect_error));
                     }
                 });
 

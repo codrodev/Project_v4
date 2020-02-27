@@ -85,10 +85,18 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
 
-                ArrayList al = new ArrayList();
-                al.add("");
-                ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
-                dismiss();
+                if (!Global.isConnected(getActivity())) {
+                    if (Global.appMsg != null)
+                        AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getInternetConnCheckEn() : Global.appMsg.getInternetConnCheckAr(), getResources().getString(R.string.ok), getActivity());
+                    else
+                        AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
+                }
+                else
+                    AlertDialogUtil.ratingAlertDialog(
+                            getResources().getString(R.string.menu_rate_us),
+                            getResources().getString(R.string.msg_rate_us),
+                            getResources().getString(R.string.rate_it),getResources().getString(R.string.remindme),getActivity()
+                    );
             }
         });
         binding.aboutUs.setOnClickListener(new View.OnClickListener() {
@@ -104,8 +112,6 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
                     ArrayList al = new ArrayList();
                     al.add(Global.CURRENT_LOCALE.equals("en")?Global.aboutus_en_url:Global.aboutus_ar_url);
                     ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
-
-
                 }
                 dismiss();
             }
@@ -143,21 +149,6 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
                 al.add(Global.CURRENT_LOCALE.equals("en")?Global.terms_en_url:Global.terms_ar_url);
                 ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
                 }
-                dismiss();
-            }
-        });binding.registerLand.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                if (!Global.isConnected(getActivity())) {
-                    if (Global.appMsg != null)
-                        AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getInternetConnCheckEn() : Global.appMsg.getInternetConnCheckAr(), getResources().getString(R.string.ok), getActivity());
-                    else
-                        AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
-                }
-                else
-                ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_LAND,true,null);
                 dismiss();
             }
         });

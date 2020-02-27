@@ -142,7 +142,31 @@
     <string name="valid_doc">Please upload the valid documents</string>
     <string name="try_kharetati_app">Download Kharetati App</string>
     <string name="kharetati_app">Kharetati App</string>
-
+    <string name="menu_rate_us">Rate Us</string>
+    <string name="msg_rate_us">We value your feedback. Kindly rate us in the store</string>
+    <string name="rate_it">Rate now</string>
+    <string name="remindme">Remind me later</string>
+    <string name="thank_you_feedback">Thank you for your feedback!</string>
+    <string name="open_in_app_store">Open in App Store</string>
+    <string name="email">Email </string>
+    <string name="email_hint">Email(mail@abc.com)*</string>
+    <string name="feedback_subject">Kharetati Feedback</string>
+    <string name="Contact_us_Call_permission">"Kharetati needs permission to make calls to Dubai Municipality."</string>
+    <string name="you_are_about_to_call">Call </string>
+    <string name="phone">Phone</string>
+    <string name="Website">Website</string>
+    <string name="Chat">Chat</string>
+    <string name="Live_chat_with_our_call_center">Live chat with our call center</string>
+    <string name="please_enter_phone">Please enter your phone number</string>
+    <string name="social_network">Social Media</string>
+    <string name="facebook">Facebook</string>
+    <string name="twitter">Twitter</string>
+    <string name="instagram">Instagram</string>
+    <string name="youtube">Youtube</string>
+    <string name="email2">Email</string>
+    <string name="feedback">Feedback</string>
+    <string name="menu_contact_us">Contact Us</string>
+    <string name="send_your_feedback_about_the_app">Send your feedback about Kharetati</string>
 
     <string-array name="request_site_plan">
         <item>land owner</item>

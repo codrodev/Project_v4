@@ -110,6 +110,7 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
     @Override
     public void onFailure(String Msg) {
         AlertDialogUtil.showProgressBar(getActivity(),false);
+        if(getResources()!=null)
         AlertDialogUtil.errorAlertDialog("",Msg,getActivity().getResources().getString(R.string.ok),getActivity());
 
     }
@@ -122,7 +123,6 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
 
     }
 }

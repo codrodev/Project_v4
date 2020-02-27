@@ -142,6 +142,32 @@
     <string name="valid_doc">يرجى تحميل الوثائق الصحيحة</string>
     <string name="try_kharetati_app">لتحميل تطبيق خريطتي</string>
     <string name="kharetati_app">برنامج خريطتي</string>
+    <string name="menu_rate_us"> قيمنا</string>
+    <string name="msg_rate_us">نقدر ملاحظاتكم. يرجى أن تقيمنا في المتجر</string>
+    <string name="remindme">ذكرني لاحقا</string>
+    <string name="rate_it">قيمنا الأن</string>
+    <string name="thank_you_feedback">شكرا على اقتراحاتكم!</string>
+    <string name="open_in_app_store">فتح في المتجر</string>
+    <string name="email">البريد الإلكتروني</string>
+    <string name="email_hint">البريد الإلكتروني* </string>
+    <string name="you_are_about_to_call">للإتصال ب</string>
+    <string name="feedback_subject">رأيك يهمنا</string>
+    <string name="Contact_us_Call_permission">"التطبيق سوف يستخدم خاصية الهاتف لإجراء المكالمات. ولن يتم هذا إلا بعلم المستخدم."</string>
+    <string name="phone">رقم الهاتف</string>
+    <string name="Website">موقع الكتروني</string>
+    <string name="Chat">دردشة</string>
+    <string name="Live_chat_with_our_call_center"> دردشة مباشرة مع الدعم التقني</string>
+    <string name="social_network">وسائل التواصل الإجتماعي</string>
+    <string name="facebook">فيس بوك</string>
+    <string name="twitter">تويتر</string>
+    <string name="instagram">إنستجرام</string>
+    <string name="youtube">يوتيوب</string>
+    <string name="email2">البريد الإلكتروني</string>
+    <string name="feedback">إقتراحات</string>
+    <string name="send_your_feedback_about_the_app">إرسال ملاحظاتك عن خريطتي</string>
+    <string name="menu_contact_us">إتصل بنا</string>
+    <string name="please_enter_phone">من فضلك أدخل رقم الهاتف</string>
+
 
 
     <string-array name="emirates">
@@ -165,11 +191,5 @@
         <item>6</item>
         <item>7</item>
     </string-array>
-
-
-
-
-
-
 
 </resources>

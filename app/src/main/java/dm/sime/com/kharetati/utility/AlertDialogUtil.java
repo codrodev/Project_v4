@@ -53,6 +53,48 @@ public class AlertDialogUtil {
         textView.setTypeface(face);
         textView.setPadding(80, 25, 25, 10);
     }
+    public static void ratingAlertDialog(String title, String message, String btnTxt, String btnTxt2, final Context context) {
+        AlertDialog alertDialog = new AlertDialog.Builder(context)
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton(btnTxt, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_VIEW);
+                        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                        if (Global.CURRENT_LOCALE == "ar") {
+                            intent.setData(Uri.parse(AppUrls.URL_RATE_US_AR));
+                        } else {
+                            intent.setData(Uri.parse(AppUrls.URL_RATE_US_EN));
+                        }
+                        context.startActivity(intent);
+
+
+                    }
+                })
+                .setNegativeButton(btnTxt2, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).show();
+
+        TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+        TextView positiveButton = (Button) alertDialog.findViewById(android.R.id.button1);
+        TextView negativeButton = (Button) alertDialog.findViewById(android.R.id.button2);
+        Typeface face = Typeface.createFromAsset(context.getAssets(), "Dubai-Regular.ttf");
+        textView.setTypeface(face);
+        positiveButton.setAllCaps(false);
+        negativeButton.setAllCaps(false);
+        positiveButton.setTypeface(face);
+        negativeButton.setTypeface(face);
+
+        textView.setPadding(80, 25, 25, 10);
+
+
+    }
+
 
     public static void navigateToMakaniAlert(String message, String btnTxt, String btnTxt2, final Context context, final Activity activity, String plot) {
         final String plotnumber = (Global.current_fragment_id == FR_CONTACT_US ? "1190353" : plot);
