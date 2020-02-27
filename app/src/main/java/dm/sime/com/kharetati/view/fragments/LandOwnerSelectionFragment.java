@@ -46,7 +46,7 @@ public class LandOwnerSelectionFragment extends Fragment {
         mRootView = binding.getRoot();
 
         ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
-        landOwnedType = new String[] {getResources().getString(R.string.select),getResources().getString(R.string.land_owned_By_person),getResources().getString(R.string.land_owned_By_company)};
+        landOwnedType = new String[] {getResources().getString(R.string.land_owned_By_person),getResources().getString(R.string.land_owned_By_company)};
 
         ArrayList<String> arrayList= new ArrayList();
         for (int i=0; i<landOwnedType.length; i++){
@@ -68,14 +68,10 @@ public class LandOwnerSelectionFragment extends Fragment {
                 Global.spinPosition=position;
                 switch (position){
                     case 0: {
-                        ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
+                        /*ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
                         binding.rg.setVisibility(View.GONE);
                         Global.rbIsOwner =false;
-                        Global.rbNotOwner = false;
-
-                    }
-                    break;
-                    case 1:{
+                        Global.rbNotOwner = false;*/
                         Global.isPerson=true;
                         Global.isCompany=false;
                         ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
@@ -85,15 +81,16 @@ public class LandOwnerSelectionFragment extends Fragment {
 
                             ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
                         }
-
                     }
                     break;
-                    case 2:
+                    case 1:{
                         Global.isCompany=true;
                         Global.isPerson=false;
                         binding.rg.setVisibility(View.GONE);
                         ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
-                        break;
+                    }
+                    break;
+
                 }
             }
 
@@ -111,16 +108,18 @@ public class LandOwnerSelectionFragment extends Fragment {
 
                 if (Global.spinPosition == 0){
 
-                    ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
-                }
-                else if(Global.spinPosition==1)
                     ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
-                else if(Global.spinPosition==2){
+                }
+                else if(Global.spinPosition==1) {
                     ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
                     binding.rbIsOwner.setChecked(false);
                     binding.rbNotOwner.setChecked(false);
-
                 }
+                /*else if(Global.spinPosition==2){
+                    ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
+
+
+                }*/
 
 
             }
@@ -131,14 +130,16 @@ public class LandOwnerSelectionFragment extends Fragment {
 
                 Global.rbNotOwner = isChecked;
                 if (Global.spinPosition == 0)
-                    ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
-                else if(Global.spinPosition==1)
                     ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
-                else if(Global.spinPosition==2){
+                else if(Global.spinPosition==1) {
                     ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
                     binding.rbIsOwner.setChecked(false);
                     binding.rbNotOwner.setChecked(false);
                 }
+               /* else if(Global.spinPosition==2){
+                    ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
+
+                }*/
 
             }
         });

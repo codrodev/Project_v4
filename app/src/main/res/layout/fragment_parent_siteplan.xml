@@ -207,7 +207,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/layoutProfile"
-            android:layout_marginBottom="70dp"
+            android:layout_marginBottom="50dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
         <FrameLayout
             android:layout_width="match_parent"
@@ -217,14 +217,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
                 <Button
                     style="@style/font_medium_regular"
                     android:id="@+id/btnPrevious"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_margin="10dp"
+                    android:layout_height="40dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="5dp"
                     android:layout_weight="1.5"
                     android:layout_gravity="start|center_vertical"
                     android:gravity="center"
@@ -238,10 +238,11 @@
                     android:id="@+id/btnNext"
                     android:layout_width="match_parent"
                     android:gravity="center"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:layout_weight="1.5"
                     android:layout_gravity="end|center_vertical"
-                    android:layout_margin="10dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="5dp"
                     android:background="@drawable/maroon_angle_background"
                     android:text="next"
                     android:textColor="@color/white"

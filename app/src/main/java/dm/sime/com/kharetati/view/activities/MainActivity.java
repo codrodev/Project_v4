@@ -188,11 +188,11 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     public void manageBottomBar(boolean key) {
         if(!key) {
             binding.customBottomBar.setVisibility(View.GONE);
-            /*RelativeLayout.LayoutParams uiContainerParam =
+            RelativeLayout.LayoutParams uiContainerParam =
                     new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
                             RelativeLayout.LayoutParams.MATCH_PARENT);
             uiContainerParam.setMargins(0, 0, 0, 0);
-            binding.uiContainer.setLayoutParams(uiContainerParam);*/
+            binding.uiContainer.setLayoutParams(uiContainerParam);
         } else {
             binding.customBottomBar.setVisibility(View.VISIBLE);
             RelativeLayout.LayoutParams uiContainerParam =

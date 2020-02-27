@@ -86,21 +86,16 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
             binding.btnPrevious.setVisibility(View.VISIBLE);
         else
             binding.btnPrevious.setVisibility(View.GONE);
-        if(currentIndex != 2 )
+       /* if(currentIndex != 2 )
             binding.btnNext.setVisibility(View.VISIBLE);
         else
-            binding.btnNext.setVisibility(View.GONE);
-
-
-
-
-
+            binding.btnNext.setVisibility(View.GONE);*/
 
         binding.btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //binding.viewPagerCreatePackage.setCurrentItem(getNext(), true);
-                if(currentIndex < 2) {
+                if(currentIndex < 3) {
                     if(currentIndex==0){
                         if(Global.spinPosition ==2){
 
@@ -118,7 +113,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
                             model.retrieveProfileDocs();
                     }
                     currentIndex++;
-                    //loadFragment(currentIndex);
+                    loadFragment(currentIndex);
                     binding.txtHeader.setText(pagerArray[currentIndex]);
                     if(currentIndex == 0 ){
                         binding.btnPrevious.setVisibility(View.GONE);
@@ -129,6 +124,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
                         binding.btnNext.setVisibility(View.GONE);
                     else
                         binding.btnNext.setVisibility(View.VISIBLE);
+
                     changeStepperBackground(currentIndex);
                 }
             }
@@ -162,6 +158,12 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         });
     }
 
+    private boolean isTransitionValid(int index){
+        boolean isValid = false;
+
+        return isValid;
+    }
+
     private void changeStepperBackground(int index){
         if(index == 0){
             binding.txtStepperOne.setBackground(getResources().getDrawable(R.drawable.stepper_background_selected));
@@ -169,15 +171,20 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
             binding.txtStepperThree.setBackground(getResources().getDrawable(R.drawable.stepper_background));
             binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.stepper_background));
         } else if(index == 1) {
-            binding.txtStepperOne.setBackground(getResources().getDrawable(R.drawable.stepper_background));
+            binding.txtStepperOne.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
             binding.txtStepperTwo.setBackground(getResources().getDrawable(R.drawable.stepper_background_selected));
             binding.txtStepperThree.setBackground(getResources().getDrawable(R.drawable.stepper_background));
             binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.stepper_background));
         } else if(index == 2) {
-            binding.txtStepperOne.setBackground(getResources().getDrawable(R.drawable.stepper_background));
-            binding.txtStepperTwo.setBackground(getResources().getDrawable(R.drawable.stepper_background));
+            binding.txtStepperOne.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
+            binding.txtStepperTwo.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
             binding.txtStepperThree.setBackground(getResources().getDrawable(R.drawable.stepper_background_selected));
             binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.stepper_background));
+        } else if(index == 3) {
+            binding.txtStepperOne.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
+            binding.txtStepperTwo.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
+            binding.txtStepperThree.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
+            binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.stepper_background_selected));
         }
     }
 
@@ -196,9 +203,9 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
             case 2:
                 fragment = DeliveryFragment.newInstance();
                 break;
-            /*case 3:
-                fragment = MapFragment.newInstance();
-                break;*/
+            case 3:
+                fragment = PayFragment.newInstance();
+                break;
         }
 
         tx.replace(R.id.childFragmentContainer, fragment);

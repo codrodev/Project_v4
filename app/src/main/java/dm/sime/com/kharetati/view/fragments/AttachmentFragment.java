@@ -244,7 +244,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
             }
         });
-        binding.imgLandOwner.setOnClickListener(new View.OnClickListener() {
+        /*binding.imgLandOwner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 currentSelection = LAND_OWNER_CERTIFICATE;
@@ -254,7 +254,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                     showPictureDialog1();
 
             }
-        });
+        });*/
         binding.fragmentAttachmentLblDownloadNoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1257,14 +1257,15 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                 System.out.println(contentURI.getPath());
                 AddDoc(currentSelection, "", "", "jpg", 0);
                 try {
+                    isCamera = false;
+                    Intent crop = new Intent(getActivity(), ImageCropActivity.class);
+                    crop.putExtra("uri", contentURI.toString());
+                    startActivityForResult(crop, GALLERY_CROP);
                     /*Intent crop = new Intent(getActivity(), ImageCropActivity.class);
                     crop.putExtra("uri", contentURI.toString());
                     startActivityForResult(crop, GALLERY_CROP);*/
-                    if (currentSelection == LAND_OWNER_CERTIFICATE) {
-                        isCamera = false;
-                        Intent crop = new Intent(getActivity(), ImageCropActivity.class);
-                        crop.putExtra("uri", contentURI.toString());
-                        startActivityForResult(crop, GALLERY_CROP);
+                    /*if (currentSelection == LAND_OWNER_CERTIFICATE) {
+
 
                     } else if (currentSelection == PASSPORT) {
 
@@ -1291,7 +1292,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                         Intent crop = new Intent(getActivity(), ImageCropActivity.class);
                         crop.putExtra("uri", contentURI.toString());
                         startActivityForResult(crop, GALLERY_CROP);
-                    }
+                    }*/
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -1311,7 +1312,11 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
             /*Intent crop = new Intent(getActivity(), ImageCropActivity.class);
             crop.putExtra("uri", photoURI);
             startActivityForResult(crop, GALLERY_CROP);*/
-            if (currentSelection == LAND_OWNER_CERTIFICATE) {
+            Intent crop = new Intent(getActivity(), ImageCropActivity.class);
+            crop.putExtra("uri", photoURI);
+
+            startActivityForResult(crop, GALLERY_CROP);
+            /*if (currentSelection == LAND_OWNER_CERTIFICATE) {
                 Intent crop = new Intent(getActivity(), ImageCropActivity.class);
                 crop.putExtra("uri", photoURI);
 
@@ -1333,19 +1338,14 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                 crop.putExtra("uri", photoURI);
 
                 startActivityForResult(crop, GALLERY_CROP);
-            }
+            }*/
 
         }
         else if (requestCode == GALLERY_CROP) {
 
             galleryURI=Uri.parse(data.getExtras().getString("uri"));
             AddDoc(currentSelection, "", "", "jpg", 0);
-            if (currentSelection.equals(LAND_OWNER_CERTIFICATE)) {
-                binding.imgLandOwner.setImageURI(galleryURI);
-                AttachmentBitmap.land_ownership_certificate=((BitmapDrawable) binding.imgLandOwner.getDrawable()).getBitmap();
-                createAttachedDoc(encodeImage(AttachmentBitmap.land_ownership_certificate), "image/jpg",
-                        getCurrentKey(),LETTER_FROM_OWNER+".jpg", getDocId(currentSelection), LAND_OWNER_CERTIFICATE);
-            } else if (currentSelection.equals(PASSPORT)) {
+           if (currentSelection.equals(PASSPORT)) {
                 binding.imgPassport.setImageURI(galleryURI);
                 //AddDoc(currentSelection, galleryURI.toString(), PASSPORT+".jpg", "jpg", 0);
                 AttachmentBitmap.passport_copy=((BitmapDrawable) binding.imgPassport.getDrawable()).getBitmap();
@@ -1626,30 +1626,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                 }
             }
 
-        } else if (currentSelection == LAND_OWNER_CERTIFICATE && ParentSiteplanViewModel.getNewlyAttachedDoc() != null) {
-            for (int i = 0; i < ParentSiteplanViewModel.getNewlyAttachedDoc().size(); i++) {
-                if (ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocKey() != null &&
-                        ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocKey().equals(LAND_OWNER_CERTIFICATE)) {
-                    if (ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocFormat().compareToIgnoreCase("pdf") == 0||
-                            ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocFormat().compareToIgnoreCase("application/pdf") == 0) {
-                        DocumentUtility.previewDocument(getActivity(),
-                                ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocPath(), "pdf");
-
-                    } else if (model.isImageFormat(ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocFormat())) {
-                        viewBitmap = ((BitmapDrawable) binding.imgLandOwner.getDrawable()).getBitmap();
-                        file = storeImage(viewBitmap);
-                        intent.putExtra("bitmap", file.getAbsolutePath());
-                        if (viewBitmap == ((BitmapDrawable) getResources().getDrawable(R.drawable.photo)).getBitmap())
-                            Toast.makeText(getActivity(), getResources().getString(R.string.choose_image), Toast.LENGTH_SHORT).show();
-                        else if (!(viewBitmap == pdfBitmap))
-                            startActivity(intent);
-                    }
-                }
-            }
-
-
-        }
-        else if (currentSelection == PASSPORT && ParentSiteplanViewModel.getNewlyAttachedDoc() != null)
+        } else if (currentSelection == PASSPORT && ParentSiteplanViewModel.getNewlyAttachedDoc() != null)
         {
             for (int i = 0; i < ParentSiteplanViewModel.getNewlyAttachedDoc().size(); i++)
             {
