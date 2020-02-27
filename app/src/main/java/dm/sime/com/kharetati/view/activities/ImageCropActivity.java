@@ -50,6 +50,7 @@ public class ImageCropActivity extends AppCompatActivity {
     public static Uri uri;
     public static String URI;
     public static Bitmap resultBitmap;
+    public static boolean isImageCropped=false;
     //private CropImageView cropImageView;
     public Bitmap bitmap;
 
@@ -76,17 +77,17 @@ public class ImageCropActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       setContentView(R.layout.crop_image);
+        setContentView(R.layout.crop_image);
         FontChangeCrawler fontChanger = new FontChangeCrawler(getAssets(), "Dubai-Regular.ttf");
         fontChanger.replaceFonts((ViewGroup)this.findViewById(android.R.id.content));
 
-       cropView = (CropImageView) findViewById(R.id.cropImageView);
-       button_choose = (Button) findViewById(R.id.button_choose);
-       button_cancel = (Button) findViewById(R.id.button_cancel);
-       cameraUri =getIntent().getStringExtra("uri");
+        cropView = (CropImageView) findViewById(R.id.cropImageView);
+        button_choose = (Button) findViewById(R.id.button_choose);
+        button_cancel = (Button) findViewById(R.id.button_cancel);
+        cameraUri =getIntent().getStringExtra("uri");
 
 
-       //cropView.setImageBitmap(bitmap);
+        //cropView.setImageBitmap(bitmap);
         if(AttachmentFragment.isCamera) {
             if(AttachmentFragment.thumbnail != null) {
                 cropView.setImageBitmap(AttachmentFragment.thumbnail);
@@ -105,17 +106,23 @@ public class ImageCropActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                /*runOnUiThread(new Runnable() {
+                runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        AlertDialogUtil.showProgressBar(ImageCropActivity.this,true);
+                        //progressDialog.show();
                     }
-                });*/
+                });
                 resultBitmap = cropView.getCroppedImage();
 
                 AsyncTask.execute(new Runnable() {
                     @Override
                     public void run() {
+
+
+
+                        isImageCropped=true;
+
+
                         try
                         {
                             URI=storeImage(resultBitmap).getAbsolutePath();
@@ -133,7 +140,7 @@ public class ImageCropActivity extends AppCompatActivity {
                         AttachmentFragment.thumbnail=null;
                 /*if(progressDialog!=null)
                     progressDialog.cancel();*/
-                        //AlertDialogUtil.showProgressBar(ImageCropActivity.this,false);
+
                         finish();
 
                     }
@@ -146,6 +153,9 @@ public class ImageCropActivity extends AppCompatActivity {
         button_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                isImageCropped=false;
                 setResult(RESULT_CANCELED,resultIntent);
                 finish();
 
