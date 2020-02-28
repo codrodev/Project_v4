@@ -153,6 +153,12 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
                 dismiss();
             }
         });
+        binding.logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Global.logout(getActivity());
+            }
+        });
 
         return binding.getRoot();
     }

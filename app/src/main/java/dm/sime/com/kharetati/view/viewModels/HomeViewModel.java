@@ -516,16 +516,25 @@ public class HomeViewModel extends ViewModel {
     public void getMapBasedSearchResult(SearchResult result){
         if (result != null) {
             homeNavigator.onSuccess();
-            if (result != null && result.getService_response() != null) {
-                Global.mapSearchResult = result;
-                navigate(activity, FragmentTAGS.FR_MAP);
-                //navigate(activity, FragmentTAGS.FR_REQUEST_SITE_PLAN);
+            if(result.getIs_exception().equals("true")){
+                if(result.getMessage() != null && result.getMessage().length() > 0){
+                    homeNavigator.onFailure(result.getMessage());
+                } else {
+
+                    homeNavigator.onFailure(activity.getResources().getString(R.string.community_error));
+                }
             } else {
-                homeNavigator.onFailure(activity.getResources().getString(R.string.community_error));
+                if (result != null && result.getService_response() != null) {
+                    Global.mapSearchResult = result;
+                    navigate(activity, FragmentTAGS.FR_MAP);
+                    //navigate(activity, FragmentTAGS.FR_REQUEST_SITE_PLAN);
+                } else {
+                    homeNavigator.onFailure(activity.getResources().getString(R.string.community_error));
+                }
             }
+
         } else {
             homeNavigator.onFailure(activity.getResources().getString(R.string.community_error));
-
         }
     }
 
@@ -537,12 +546,10 @@ public class HomeViewModel extends ViewModel {
                 param.add(result.getService_response().getDisplayInWebViewPage());
                 navigateWithParam(activity, FragmentTAGS.FR_WEBVIEW, param);
             } else {
-                AlertDialogUtil.errorAlertDialog("", activity.getResources().getString(R.string.community_error),
-                        activity.getResources().getString(R.string.ok), activity);
+                homeNavigator.onFailure(activity.getResources().getString(R.string.community_error));
             }
         } else {
-            AlertDialogUtil.errorAlertDialog("", activity.getResources().getString(R.string.community_error),
-                    activity.getResources().getString(R.string.ok), activity);
+            homeNavigator.onFailure(activity.getResources().getString(R.string.community_error));
         }
     }
 
@@ -585,12 +592,10 @@ public class HomeViewModel extends ViewModel {
                 Global.lookupResponse = responseModel.getService_response();
                 homeNavigator.populateAreaNames();
             } else {
-                AlertDialogUtil.errorAlertDialog("", activity.getResources().getString(R.string.community_error),
-                        activity.getResources().getString(R.string.ok), activity);
+                homeNavigator.onFailure(activity.getResources().getString(R.string.community_error));
             }
         } else {
-            AlertDialogUtil.errorAlertDialog("", activity.getResources().getString(R.string.community_error),
-                    activity.getResources().getString(R.string.ok), activity);
+            homeNavigator.onFailure(activity.getResources().getString(R.string.community_error));
         }
 
 

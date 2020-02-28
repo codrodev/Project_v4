@@ -613,6 +613,7 @@ public class Global {
         Global.current_fragment_id = null;
 //        AttachmentFragment.deliveryByCourier=false;
         Global.requestId = null;
+        Global.isBookmarks = false;
 //        AttachmentFragment.isDeliveryDetails=false;
 
         //Global.loginDetails.showFormPrefilledOnRememberMe=true;

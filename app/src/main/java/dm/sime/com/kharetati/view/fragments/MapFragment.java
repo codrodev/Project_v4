@@ -538,8 +538,17 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
 
     @Override
     public void findParcelID(SearchResult response) {
-        Global.mapSearchResult = response;
-        findParcel();
+        if(response.getIs_exception().equals("true")){
+            if(response.getMessage() != null && response.getMessage().length() > 0){
+                onFailure(response.getMessage());
+            } else {
+
+                onFailure(getActivity().getResources().getString(R.string.community_error));
+            }
+        } else {
+            Global.mapSearchResult = response;
+            findParcel();
+        }
     }
 
     @Override
@@ -547,6 +556,8 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
         Functions fun = Global.mapSearchResult.getService_response().getMap().getFunctions().get(position);
         if(fun.getInternalFunctions() != null && fun.getInternalFunctions().length() > 0){
             if (fun.getInternalFunctions().equals(FragmentTAGS.FR_REQUEST_SITE_PLAN)){
+
+                //validateParcel call required
                 model.navigate(getActivity(), FragmentTAGS.FR_REQUEST_SITE_PLAN);
             }
         } else if (fun.getLaunchUrl() != null && fun.getLaunchUrl().length() > 0 &&
