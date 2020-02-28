@@ -62,15 +62,21 @@ public class PayViewModel extends ViewModel {
         model.setApplicant_mobile(PayFragment.applicantMobile);
         model.setApplicant_email_id(PayFragment.applicantEmailId);
         model.setRequest_source("KHARETATI");
-        model.setParcel_id(Integer.parseInt(PlotDetails.parcelNo));
+        model.setParcel_id(Integer.parseInt(Global.mapSearchResult.getService_response().getParcelId()));
         model.setRequest_id(Global.requestId == null ? "" : Global.requestId);
         model.setIs_hard_copy_reqd(Global.isDeliveryByCourier ? "Y":"N");
         model.setPayment_type(paymentType);
         if(Global.isDeliveryByCourier)
             model.setDelivery_details(Global.deliveryDetails);
-        model.setPassport_docs(Global.passportData);
-        model.setLicense(Global.licenseData);
-        model.setNoc_docs(Global.nocData);
+        if(Global.passportData != null && Global.passportData.size() > 0) {
+            model.setPassport_docs(Global.passportData);
+        }
+        if(Global.licenseData != null && Global.licenseData.size() > 0) {
+            model.setLicense(Global.licenseData);
+        }
+        if(Global.nocData != null && Global.nocData.size() > 0) {
+            model.setNoc_docs(Global.nocData);
+        }
         model.setLocale(Global.CURRENT_LOCALE);
         String url = AppUrls.CREATE_UPDATE_REQUEST;
         Gson ob = new Gson();

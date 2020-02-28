@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,21 +19,24 @@ import androidx.fragment.app.Fragment;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.Global;
-import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
-import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.navigators.FragmentNavigator;
+import dm.sime.com.kharetati.view.viewModels.LoginViewModel;
 
 public class WebViewFragment extends Fragment {
 
     private static String URL = "url";
+    private static String APP_NAME = "app_name";
     WebView webView;
-    private static String launchUrl;
+    TextView txtUsername, txtWelcome;
+    ImageView imgBack;
+    private static String launchUrl, appName;
     FragmentNavigator frNavigator;
 
-    public static WebViewFragment newInstance(String url){
+    public static WebViewFragment newInstance(String url, String appName){
         WebViewFragment fragment = new WebViewFragment();
         Bundle args = new Bundle();
         args.putString(URL, url);
+        args.putString(APP_NAME, appName);
         launchUrl= url;
         return fragment;
     }
@@ -41,6 +46,7 @@ public class WebViewFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             launchUrl = getArguments().getString(URL);
+            appName = getArguments().getString(APP_NAME);
         }
 
 
@@ -50,22 +56,38 @@ public class WebViewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_webview, container, false);
-        Global.current_fragment_id = FragmentTAGS.FR_WEBVIEW;
-
+        txtUsername = view.findViewById(R.id.txtUsername);
+        txtWelcome = view.findViewById(R.id.txtWelcome);
+        imgBack = view.findViewById(R.id.imgBack);
+        txtUsername.setText(Global.isUserLoggedIn?(Global.getUser(getActivity()).getFullname()): LoginViewModel.guestName);
+        if(appName != null && appName != "") {
+            txtWelcome.setText(appName);
+        } else {
+            txtWelcome.setText("WELCOME");
+        }
         webView = view.findViewById(R.id.webView);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new MyWebViewClient());
         webView.loadUrl(launchUrl);
         manageAppBottomBAtr(false);
-        if(!webView.canGoBack()){
-            ((MainActivity)getActivity()).onWebViewBack();
-        }
+        manageAppBar(false);
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
         return view;
     }
 
     public void manageAppBottomBAtr(boolean status){
         frNavigator = (FragmentNavigator) getActivity();
         frNavigator.manageBottomBar(status);
+    }
+
+    public void manageAppBar(boolean status){
+        frNavigator = (FragmentNavigator) getActivity();
+        frNavigator.manageActionBar(status);
     }
 
     public class MyWebViewClient extends android.webkit.WebViewClient{

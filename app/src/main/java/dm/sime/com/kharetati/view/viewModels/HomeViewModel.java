@@ -2,10 +2,15 @@ package dm.sime.com.kharetati.view.viewModels;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.DynamicLayout;
 import android.text.InputType;
+import android.util.Base64;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +23,9 @@ import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -172,6 +180,19 @@ public class HomeViewModel extends ViewModel {
             return mutableHomeGridMenu.getValue().get(position);
         }
         return null;
+    }
+
+    public Bitmap getIconImage(int position){
+        Applications app = getCurrentHomeGridMenuItems(position);
+        Bitmap icon;
+        try {
+            InputStream stream = new ByteArrayInputStream(Base64.decode(app.getIconBase64().getBytes(), Base64.URL_SAFE));
+            icon = BitmapFactory.decodeStream(stream);
+        } catch (Exception ex){
+            Drawable d =  activity.getResources().getDrawable(R.drawable.bookmark);
+            icon = ((BitmapDrawable)d).getBitmap();
+        }
+        return icon;
     }
 
     public Applications getApplication(String appID){

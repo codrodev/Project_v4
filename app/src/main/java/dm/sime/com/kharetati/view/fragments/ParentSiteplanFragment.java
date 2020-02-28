@@ -160,7 +160,13 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
 
     private boolean isTransitionValid(int index){
         boolean isValid = false;
-
+        if (index == 1){
+           /* if(Global.docArr == null || Global.docArr.length == 0){
+                if(ParentSiteplanViewModel.getNewlyAttachedDoc() == null || ParentSiteplanViewModel.getNewlyAttachedDoc().size() == )
+                binding.btnNext.setEnabled(false);
+            } else if (Global.docArr != null && )*/
+            //if(ParentSiteplanViewModel.getNewlyAttachedDoc().size() < ParentSiteplanViewModel.)
+        }
         return isValid;
     }
 

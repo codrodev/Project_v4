@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.LayoutRes;
@@ -56,6 +57,7 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.Generi
         holder.bind(viewModel, position);
         viewHolder = holder;
         pos=position;
+        holder.imgIcon.setImageBitmap(viewModel.getIconImage(position));
        /* if(lstHomeGridMenuItems.get(holder.getAdapterPosition()).isClick)
             holder.cardView.setBackground(context.getResources().getDrawable(R.drawable.border_background));
         else
@@ -77,6 +79,7 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.Generi
     public class GenericViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         final ViewDataBinding binding;
         private final CardView cardView;
+        private final ImageView imgIcon;
 
 
         GenericViewHolder(ViewDataBinding binding) {
@@ -85,6 +88,7 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.Generi
 
             this.binding.getRoot().setOnClickListener(this);
             cardView =(CardView)this.binding.getRoot().findViewById(R.id.cardHomeGrid);
+            imgIcon =(ImageView) this.binding.getRoot().findViewById(R.id.imgMenuIcon);
         }
 
         void bind(HomeViewModel viewModel, int position) {

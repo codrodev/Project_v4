@@ -224,6 +224,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             if(!model.getSelectedApplication().getIsNative()){
                 ArrayList param = new ArrayList<>();
                 param.add( model.getSelectedApplication().getSearchUrl());
+                param.add( model.getSelectedApplication().getNameEn());
                 model.navigateWithParam(getActivity(), FR_WEBVIEW, param);
             }
         }

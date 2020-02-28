@@ -180,9 +180,14 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 fragment = FeedbackFragment.newInstance();
                 break;
             case FragmentTAGS.FR_WEBVIEW:
-                if(params!=null)
-                    Global.webViewUrl =params.get(0).toString();
-                fragment = WebViewFragment.newInstance(Global.webViewUrl);
+                String appName = "";
+                if(params!=null) {
+                    Global.webViewUrl = params.get(0).toString();
+                    if(params.size() > 1){
+                        appName = params.get(1).toString();
+                    }
+                }
+                fragment = WebViewFragment.newInstance(Global.webViewUrl, appName);
                 break;
             case FragmentTAGS.FR_REQUEST_DETAILS:
                 if(params != null && params.size() > 0) {
