@@ -757,7 +757,9 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                 public void run() {
                     ServiceFeatureTable sublayerTable = sublayer.getTable();
                     QueryParameters query = new QueryParameters();
+                    QueryParameters queryDimention = new QueryParameters();
                     query.setWhereClause(retriveLayer.getQueryClause());
+                    queryDimention.setWhereClause(retriveLayer.getQueryClause());
 
                     if(sublayerTable!=null){
                         ListenableFuture<FeatureQueryResult> sublayerQuery = sublayerTable.queryFeaturesAsync(query,ServiceFeatureTable.QueryFeatureFields.LOAD_ALL);
