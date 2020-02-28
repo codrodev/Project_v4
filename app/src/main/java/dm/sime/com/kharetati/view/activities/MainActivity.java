@@ -34,6 +34,7 @@ import dm.sime.com.kharetati.datas.repositories.MainRepository;
 import dm.sime.com.kharetati.utility.CustomContextWrapper;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.fragments.FeedbackFragment;
 import dm.sime.com.kharetati.view.fragments.RequestDetailsFragment;
 import dm.sime.com.kharetati.view.fragments.WebViewFragment;
 import dm.sime.com.kharetati.view.fragments.BottomNavigationFragmentSheet;
@@ -175,6 +176,9 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             case FragmentTAGS.FR_CONTACT_US:
                 fragment = ContactusFragment.newInstance();
                 break;
+            case FragmentTAGS.FR_FEEDBACK:
+                fragment = FeedbackFragment.newInstance();
+                break;
             case FragmentTAGS.FR_WEBVIEW:
                 if(params!=null)
                     Global.webViewUrl =params.get(0).toString();
@@ -240,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW)){
+        if(Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW)||Global.current_fragment_id.equals(FragmentTAGS.FR_BOTTOMSHEET)){
             onWebViewBack();
         }
     }

@@ -7,6 +7,7 @@ import dm.sime.com.kharetati.datas.models.AppServiceResponse;
 import dm.sime.com.kharetati.datas.models.AppSessionResponse;
 import dm.sime.com.kharetati.datas.models.BookmarksResponse;
 import dm.sime.com.kharetati.datas.models.CreateUpdateRequestResponse;
+import dm.sime.com.kharetati.datas.models.GeneralResponse;
 import dm.sime.com.kharetati.datas.models.GetAppResponse;
 import dm.sime.com.kharetati.datas.models.GetAreaNamesResponse;
 import dm.sime.com.kharetati.datas.models.HTTPRequestBody;
@@ -20,6 +21,7 @@ import dm.sime.com.kharetati.datas.models.RetrieveMyMapResponse;
 import dm.sime.com.kharetati.datas.models.RetrieveProfileDocsResponse;
 import dm.sime.com.kharetati.datas.models.SearchParameterModel;
 import dm.sime.com.kharetati.datas.models.SearchResult;
+import dm.sime.com.kharetati.datas.models.SerializableFeedBackModel;
 import dm.sime.com.kharetati.datas.models.SerializeBookMarksModel;
 import dm.sime.com.kharetati.datas.models.SerializeBookmarkModel;
 import dm.sime.com.kharetati.datas.models.SerializeGetAppRequestModel;
@@ -126,4 +128,8 @@ public interface MyApiService {
 
     @POST
     Observable<LookupResponseModel> getLookupResult(@Url String url, @Body LookupParameterModel model);
+
+    //to Send Feedback mail
+    @POST("util/sendFeedBackEmail")
+    Observable<GeneralResponse> sendFeedBack(@Body SerializableFeedBackModel model);
 }

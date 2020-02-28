@@ -1,17 +1,26 @@
 package dm.sime.com.kharetati.utility;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
+import android.text.InputType;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
@@ -22,6 +31,7 @@ import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.datas.models.Bookmark;
 import dm.sime.com.kharetati.utility.constants.AppConstants;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
+import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.activities.WebViewActivity;
 import dm.sime.com.kharetati.view.fragments.AttachmentFragment;
@@ -34,6 +44,11 @@ public class AlertDialogUtil {
 
 
     private static final String MAKANI_PACKAGE = "com.dm.makani" ;
+    public static final String DM_CHAT_URL_AR ="https://chat.dm.gov.ae/Arabic/chatOrCallback.html?lang=ar&dir=rtl&chatUsername=";
+    public static final String DM_CHAT_URL_EN = "https://chat.dm.gov.ae/English/chatOrCallback.html?chatUsername=";
+    private static final String DM_PHONE_NUMBER = "800900";
+
+
     private static ViewGroup viewGroup;
 
     public static void errorAlertDialog(String title, String message, String btnTxt, Context context) {
@@ -94,6 +109,162 @@ public class AlertDialogUtil {
 
 
     }
+    public static void FeedBackSuccessAlert(String message, String btnTxt, final Context context) {
+
+
+        AlertDialog alertDialog = new AlertDialog.Builder(context)
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton(btnTxt, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ((MainActivity)context).loadFragment(FR_CONTACT_US,false,null);
+
+                    }
+                }).show();
+
+        TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+//        TextView textView1= (TextView) alertDialog.findViewById(android.support.v7.appcompat.R.id.alertTitle);
+
+        TextView positiveButton = (Button) alertDialog.findViewById(android.R.id.button1);
+        TextView negativeButton = (Button) alertDialog.findViewById(android.R.id.button2);
+        Typeface face= Typeface.createFromAsset(context.getAssets(),"Dubai-Regular.ttf");
+        textView.setTypeface(face);
+        positiveButton.setAllCaps(false);
+        negativeButton.setAllCaps(false);
+        positiveButton.setTypeface(face);
+        negativeButton.setTypeface(face);
+//        textView1.setTypeface(face);
+
+        textView.setPadding(80, 25, 25, 10);
+
+    }
+    public static void callAlert(String message, String btnTxt, String btnTxt2, final Context context) {
+
+
+        AlertDialog alertDialog = new AlertDialog.Builder(context)
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton(btnTxt, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Intent intent = new Intent(Intent.ACTION_CALL);
+                        intent.setData(Uri.parse("tel:" + DM_PHONE_NUMBER));
+                        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                            // TODO: Consider calling
+                            //    ActivityCompat#requestPermissions
+                            // here to request the missing permissions, and then overriding
+                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                            //                                          int[] grantResults)
+                            // to handle the case where the user grants the permission. See the documentation
+                            // for ActivityCompat#requestPermissions for more details.
+                            return;
+                        }
+                        context.startActivity(intent);
+
+                    }
+
+                }).setNegativeButton(btnTxt2, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).show();
+
+        TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+//        TextView textView1= (TextView) alertDialog.findViewById(android.support.v7.appcompat.R.id.alertTitle);
+
+        TextView positiveButton = (Button) alertDialog.findViewById(android.R.id.button1);
+        TextView negativeButton = (Button) alertDialog.findViewById(android.R.id.button2);
+        Typeface face= Typeface.createFromAsset(context.getAssets(),"Dubai-Regular.ttf");
+        textView.setTypeface(face);
+        positiveButton.setAllCaps(false);
+        negativeButton.setAllCaps(false);
+        positiveButton.setTypeface(face);
+        negativeButton.setTypeface(face);
+//        textView1.setTypeface(face);
+
+        textView.setPadding(80, 25, 25, 10);
+
+    }
+    public static void chatAlert(String message, String btnTxt, String btnTxt2, final Context context) {
+
+        final EditText input = new EditText(context);
+        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        input.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+        input.setRawInputType(Configuration.KEYBOARD_12KEY);
+        input.setGravity(Gravity.CENTER);
+        input.requestFocus();
+        input.setHint("05XXXXXXXX");
+        input.setBackgroundColor(Color.parseColor("#00000000"));
+        input.setPadding(40,0,40,0);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.setMargins(80,10,80,0);
+        input.setLayoutParams(params);
+        final AlertDialog alertDialog = new AlertDialog.Builder(context)
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton(btnTxt, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        /*AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                        alert.setMessage(context.getResources().getString(R.string.please_enter_phone));
+
+                        alert.setView(input);
+
+*/
+
+                        String chatURL="";
+                        if (Global.CURRENT_LOCALE=="ar") {
+                            chatURL = DM_CHAT_URL_AR;
+                        } else {
+                            chatURL = DM_CHAT_URL_EN;
+                        }
+                        if (input.getText().toString().trim().length() <8 )
+                            Toast.makeText(context, context.getResources().getString(R.string.mobile_validation), Toast.LENGTH_SHORT).show();
+                        else {
+                            chatURL += input.getText().toString();
+                            ArrayList al = new ArrayList();
+                            al.add(chatURL);
+                            ((MainActivity)context).loadFragment(FR_WEBVIEW,true,al);
+
+                        /*alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                //Put actions for OK button here
+
+                            }
+                        });*/
+                        }
+                    }
+
+                }).setNegativeButton(btnTxt2, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).setView(input).show();
+
+        TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+        //TextView textView1= (TextView) alertDialog.findViewById(android.support.v7.appcompat.R.id.alertTitle);
+
+
+        TextView positiveButton = (Button) alertDialog.findViewById(android.R.id.button1);
+        TextView negativeButton = (Button) alertDialog.findViewById(android.R.id.button2);
+        Typeface face= Typeface.createFromAsset(context.getAssets(),"Dubai-Regular.ttf");
+        textView.setTypeface(face);
+        positiveButton.setAllCaps(false);
+        negativeButton.setAllCaps(false);
+        positiveButton.setTypeface(face);
+        negativeButton.setTypeface(face);
+        input.setTypeface(face);
+        //textView1.setTypeface(face);
+
+        textView.setPadding(25, 25, 25, 10);
+
+    }
+
 
 
     public static void navigateToMakaniAlert(String message, String btnTxt, String btnTxt2, final Context context, final Activity activity, String plot) {

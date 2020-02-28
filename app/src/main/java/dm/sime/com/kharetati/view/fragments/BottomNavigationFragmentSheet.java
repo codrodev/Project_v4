@@ -45,6 +45,7 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_bottom_navigation, container, false);
+        Global.current_fragment_id = FragmentTAGS.FR_BOTTOMSHEET;
         binding.setFragmentBottomNavigation(model);
         mRootView = binding.getRoot();
 

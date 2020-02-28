@@ -20,17 +20,19 @@
                 android:id="@+id/title_about_us"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:height="40dp"
-                android:background="?attr/colorPrimary"
-                android:gravity="center_vertical"
+                android:height="48dp"
+                android:background="@drawable/maroon_overlay_bg"
+                android:gravity="center"
+                android:textStyle="bold"
                 android:text="@string/menu_contact_us"
-                android:textAlignment="gravity"
+                android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginBottom="48dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -66,6 +68,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
                                 android:orientation="vertical">
 
                                 <TextView
@@ -73,6 +76,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/phone"
+                                    android:textAlignment="gravity"
                                     android:textColor="@color/black" />
 
                                 <TextView
@@ -88,7 +92,7 @@
                             android:id="@+id/textView30"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="@color/gray" />
+                            android:background="@color/maroon_light" />
 
                         <LinearLayout
                             android:id="@+id/LLDMEmail"
@@ -223,7 +227,7 @@
                             android:id="@+id/textView33"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="@color/gray" />
+                            android:background="@color/maroon_light" />
 
                         <LinearLayout
                             android:id="@+id/LLDMWebsite"
@@ -311,7 +315,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="@color/gray" />
+                            android:background="@color/maroon_light" />
 
 
                         <LinearLayout
@@ -354,7 +358,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="@color/gray" />
+                            android:background="@color/maroon_light" />
 
 
                         <LinearLayout

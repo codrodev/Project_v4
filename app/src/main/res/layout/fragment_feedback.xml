@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="fragmentFeedbackVM"
+            type="dm.sime.com.kharetati.view.viewModels.FeedbackViewModel" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:background="@drawable/maroon_overlay_bg"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/feedback"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/loginFontSize"/>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <dm.sime.com.kharetati.view.customview.CleanableEditText
+                        android:id="@+id/name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:textDirection="locale"
+                        android:textAlignment="viewStart"
+                        android:hint="@string/feedback_name"
+                        android:maxLength="255"
+                        android:inputType="textPersonName"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <dm.sime.com.kharetati.view.customview.CleanableEditText
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:textDirection="locale"
+                        android:textAlignment="viewStart"
+                        android:maxLength="50"
+                        android:hint="@string/email_hint"
+                        android:inputType="textEmailAddress"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <dm.sime.com.kharetati.view.customview.CleanableEditText
+                        android:id="@+id/phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:maxLength="20"
+                        android:textDirection="locale"
+                        android:textAlignment="viewStart"
+                        android:gravity="start"
+                        android:hint="@string/feedback_mobile_number" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <dm.sime.com.kharetati.view.customview.CleanableEditText
+                        android:id="@+id/subject"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:hint="@string/subject"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <dm.sime.com.kharetati.view.customview.CleanableEditText
+                        android:id="@+id/desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:hint="@string/feedback_description"
+                        android:inputType="textMultiLine"
+                        android:lines="3"
+                        android:textAlignment="viewStart"
+                        android:textDirection="locale" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:id="@+id/seekValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true" />
+
+
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/btn_submitFeedback"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/gradient_background"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:text="@string/submit"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+
+</layout>

@@ -168,6 +168,15 @@
     <string name="menu_contact_us">Contact Us</string>
     <string name="send_your_feedback_about_the_app">Send your feedback about Kharetati</string>
 
+    <string name="feedback_name">Name *</string>
+    <string name="profile_name">Name</string>
+    <string name="subject">Subject *</string>
+    <string name="feedback_description">Description *</string>
+    <string name="description_fav">Description *</string>
+    <string name="feedback_mobile_number">Phone *</string>
+    <string name="submit">Submit</string>
+    <string name="all_fields_are_required">All fields are required</string>
+
     <string-array name="request_site_plan">
         <item>land owner</item>
         <item>proof attachment</item>

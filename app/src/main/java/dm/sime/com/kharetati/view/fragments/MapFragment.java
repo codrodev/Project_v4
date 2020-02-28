@@ -612,7 +612,7 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                         List<Graphic> graphic = grOverlayResult.getGraphics();
                         // get size of list in results
                         int identifyResultSize = graphic.size();
-                        if(!graphic.isEmpty()){
+
                             if(PlotDetails.plotGeometry!=null)
                             {
                                 //goToNext();
@@ -621,7 +621,7 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                                 // map click event perform here
 
                             }
-                        }
+                        
                     }catch(InterruptedException | ExecutionException ie){
                         ie.printStackTrace();
                     }

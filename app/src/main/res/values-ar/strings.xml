@@ -168,6 +168,16 @@
     <string name="menu_contact_us">إتصل بنا</string>
     <string name="please_enter_phone">من فضلك أدخل رقم الهاتف</string>
 
+    <string name="feedback_name">الاسم *</string>
+    <string name="profile_name">الاسم</string>
+    <string name="subject">العنوان* </string>
+    <string name="feedback_description"> الوصف*</string>
+    <string name="description_fav">الوصف*</string>
+    <string name="feedback_mobile_number">رقم الهاتف المحمول</string>
+    <string name="submit">إرسال</string>
+    <string name="all_fields_are_required">جميع الحقول مطلوبه</string>
+
+
 
 
     <string-array name="emirates">

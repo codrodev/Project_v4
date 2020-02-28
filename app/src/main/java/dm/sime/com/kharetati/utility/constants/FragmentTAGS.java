@@ -13,4 +13,6 @@ public class FragmentTAGS {
     public static final String FR_WEBVIEW = "FR_WEBVIEW";
     public static final String FR_REQUEST_DETAILS = "FR_REQUEST_DETAILS";
     public static final String FR_ATTACHMENT ="FR_ATTACHMENT" ;
+    public static final String FR_BOTTOMSHEET = "FR_BOTTOMSHEET";
+    public static final String FR_FEEDBACK = "FR_FEEDBACK";
 }
