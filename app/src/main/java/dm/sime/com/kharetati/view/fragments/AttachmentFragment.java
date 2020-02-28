@@ -530,7 +530,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
     }
     public void attachmentState() {
-
+        ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
         if(Global.isPerson && Global.rbIsOwner){
 
 
@@ -541,7 +541,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
             binding.cardCompanyLicense.setVisibility(View.GONE);
             //payButtonsLayout.setVisibility(View.VISIBLE);
             //submit.setVisibility(View.GONE);
-            ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
+
         }
         else if(Global.isPerson && Global.rbNotOwner ){
 
@@ -552,7 +552,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
             binding.cardCompanyLicense.setVisibility(View.GONE);
             //payButtonsLayout.setVisibility(View.VISIBLE);
             //submit.setVisibility(View.GONE);
-            ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
+            //ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
 
         }
         else if(Global.isCompany){
@@ -564,7 +564,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
             binding.cardLetterFromOwner.setVisibility(View.VISIBLE);
             //payButtonsLayout.setVisibility(View.VISIBLE);
             //submit.setVisibility(View.GONE);
-            ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
+            //ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
 
         }
 
@@ -1341,7 +1341,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
             }*/
 
         }
-        else if (requestCode == GALLERY_CROP) {
+        else if (requestCode == GALLERY_CROP && resultCode == -1) {
 
             galleryURI=Uri.parse(data.getExtras().getString("uri"));
             AddDoc(currentSelection, "", "", "jpg", 0);

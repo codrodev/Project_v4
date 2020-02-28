@@ -538,7 +538,9 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
             StringBuilder builder = new StringBuilder();
             builder.append(fun.getLaunchUrl());
             if(fun.getParams() != null && fun.getParams().size() > 0){
-                builder.append("?");
+                if(!fun.getLaunchUrl().endsWith("?")) {
+                    builder.append("?");
+                }
                 for (Params p : fun.getParams()){
                     builder.append(p.getParam1() + "&");
                 }
