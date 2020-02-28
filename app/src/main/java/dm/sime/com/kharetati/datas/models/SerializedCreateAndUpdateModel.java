@@ -3,7 +3,10 @@ package dm.sime.com.kharetati.datas.models;
 import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 public class SerializedCreateAndUpdateModel {
 
@@ -32,11 +35,11 @@ public class SerializedCreateAndUpdateModel {
     @SerializedName("payment_type")
     private String payment_type;
     @SerializedName("passport_docs")
-    private JSONArray passport_docs;
+    public List<PassportDocs> passport_docs;
     @SerializedName("license")
-    private JSONArray license;
+    public List<LicenceDocs> license;
     @SerializedName("noc_docs")
-    private JSONArray noc_docs;
+    public List<NocDocs> noc_docs;
     @SerializedName("locale")
     private String locale;
 
@@ -136,27 +139,27 @@ public class SerializedCreateAndUpdateModel {
         this.payment_type = payment_type;
     }
 
-    public JSONArray getPassport_docs() {
+    public List<PassportDocs> getPassport_docs() {
         return passport_docs;
     }
 
-    public void setPassport_docs(JSONArray passport_docs) {
+    public void setPassport_docs(List<PassportDocs> passport_docs){
         this.passport_docs = passport_docs;
     }
 
-    public JSONArray getLicense() {
+    public List<LicenceDocs> getLicense() {
         return license;
     }
 
-    public void setLicense(JSONArray license) {
+    public void setLicense(List<LicenceDocs> license) {
         this.license = license;
     }
 
-    public JSONArray getNoc_docs() {
+    public List<NocDocs> getNoc_docs() {
         return noc_docs;
     }
 
-    public void setNoc_docs(JSONArray noc_docs) {
+    public void setNoc_docs(List<NocDocs> noc_docs) {
         this.noc_docs = noc_docs;
     }
 

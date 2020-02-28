@@ -70,6 +70,9 @@ import dm.sime.com.kharetati.datas.models.AttachedDoc;
 import dm.sime.com.kharetati.datas.models.AttachmentBitmap;
 import dm.sime.com.kharetati.datas.models.DocArr;
 import dm.sime.com.kharetati.datas.models.Docs;
+import dm.sime.com.kharetati.datas.models.LicenceDocs;
+import dm.sime.com.kharetati.datas.models.NocDocs;
+import dm.sime.com.kharetati.datas.models.PassportDocs;
 import dm.sime.com.kharetati.datas.models.RetrieveDocStreamResponse;
 import dm.sime.com.kharetati.datas.models.User;
 import dm.sime.com.kharetati.datas.network.ApiFactory;
@@ -1720,10 +1723,10 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
             Global.deliveryDetails.put("emirate",DeliveryFragment.emId);
         }
 
-        Global.passportData = new JSONArray();
+        Global.passportData = new ArrayList<>();
         for (int i = 0; i < lstAttachedDoc.size(); i++) {
             if (lstAttachedDoc.get(i).getDoc_type().equals("passport")) {
-                JSONObject obj = new JSONObject();
+                PassportDocs obj = new PassportDocs();
                 String file = lstAttachedDoc.get(i).getDoc();
                 if (!(lstAttachedDoc.get(i).getDoc_format().equals("pdf")
                         || lstAttachedDoc.get(i).getDoc_format().equals("application/pdf")
@@ -1734,21 +1737,21 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                         || lstAttachedDoc.get(i).getDoc_format().equals("image/jpeg")
                         || lstAttachedDoc.get(i).getDoc_format().equals("jpeg")))
                     file = encodeImage(((BitmapDrawable) getActivity().getResources().getDrawable(R.drawable.unsupported)).getBitmap());
-                obj.put("doc_desc_en", lstAttachedDoc.get(i).getDoc_desc_en());
-                obj.put("doc_type", lstAttachedDoc.get(i).getDoc_type());
-                obj.put("doc_format", lstAttachedDoc.get(i).getDoc_format());
-                obj.put("doc_id", 0);
-                obj.put("doc_name", lstAttachedDoc.get(i).getDoc_name());
-                obj.put("doc", file);
+                obj.setDoc_desc_en(lstAttachedDoc.get(i).getDoc_desc_en());
+                obj.setDoc_type(lstAttachedDoc.get(i).getDoc_type());
+                obj.setDoc_format(lstAttachedDoc.get(i).getDoc_format());
+                obj.setDoc_id(0);
+                obj.setDoc_name(lstAttachedDoc.get(i).getDoc_name());
+                obj.setDoc(file);
 
 
-                Global.passportData.put(obj);
+                Global.passportData.add(obj);
             }
 
-            licenseData = new JSONArray();
+            licenseData = new ArrayList<>();
             for (int k = 0; k < lstAttachedDoc.size(); k++) {
                 if (lstAttachedDoc.get(k).getDoc_type().equals("license")) {
-                    JSONObject obj = new JSONObject();
+                    LicenceDocs obj = new LicenceDocs();
                     String file = lstAttachedDoc.get(k).getDoc();
                     if (!(lstAttachedDoc.get(k).getDoc_format().equals("pdf")
                             || lstAttachedDoc.get(k).getDoc_format().equals("application/pdf")
@@ -1759,20 +1762,20 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                             || lstAttachedDoc.get(k).getDoc_format().equals("image/jpeg")
                             || lstAttachedDoc.get(k).getDoc_format().equals("jpeg")))
                         file = encodeImage(((BitmapDrawable) getActivity().getResources().getDrawable(R.drawable.unsupported)).getBitmap());
-                    obj.put("doc_desc_en", lstAttachedDoc.get(k).getDoc_desc_en());
-                    obj.put("doc_type", lstAttachedDoc.get(k).getDoc_type());
-                    obj.put("doc_format", lstAttachedDoc.get(k).getDoc_format());
-                    obj.put("doc_id", 0);
-                    obj.put("doc_name", lstAttachedDoc.get(k).getDoc_name());
-                    obj.put("doc", file);
-                    licenseData.put(obj);
+                    obj.setDoc_desc_en(lstAttachedDoc.get(k).getDoc_desc_en());
+                    obj.setDoc_type(lstAttachedDoc.get(k).getDoc_type());
+                    obj.setDoc_format(lstAttachedDoc.get(k).getDoc_format());
+                    obj.setDoc_id(0);
+                    obj.setDoc_name(lstAttachedDoc.get(k).getDoc_name());
+                    obj.setDoc(file);
+                    licenseData.add(obj);
                 }
             }
 
-            Global.nocData = new JSONArray();
+            Global.nocData = new ArrayList<>();
             for (int j = 0; j < lstAttachedDoc.size(); j++) {
                 if (lstAttachedDoc.get(j).getDoc_type().toLowerCase().equals("noc")) {
-                    JSONObject obj = new JSONObject();
+                    NocDocs obj = new NocDocs();
                     String file = lstAttachedDoc.get(j).getDoc();
                     if (!(lstAttachedDoc.get(j).getDoc_format().equals("pdf")
                             || lstAttachedDoc.get(j).getDoc_format().equals("application/pdf")
@@ -1783,13 +1786,13 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                             || lstAttachedDoc.get(j).getDoc_format().equals("image/jpeg")
                             || lstAttachedDoc.get(j).getDoc_format().equals("jpeg")))
                         file = encodeImage(((BitmapDrawable) getActivity().getResources().getDrawable(R.drawable.unsupported)).getBitmap());
-                    obj.put("doc_desc_en", lstAttachedDoc.get(j).getDoc_desc_en());
-                    obj.put("doc_type", lstAttachedDoc.get(j).getDoc_type());
-                    obj.put("doc_format", lstAttachedDoc.get(j).getDoc_format());
-                    obj.put("doc_id", 0);
-                    obj.put("doc_name", lstAttachedDoc.get(j).getDoc_name());
-                    obj.put("doc", file);
-                    Global.nocData.put(obj);
+                    obj.setDoc_desc_en(lstAttachedDoc.get(j).getDoc_desc_en());
+                    obj.setDoc_type(lstAttachedDoc.get(j).getDoc_type());
+                    obj.setDoc_format(lstAttachedDoc.get(j).getDoc_format());
+                    obj.setDoc_id(0);
+                    obj.setDoc_name(lstAttachedDoc.get(j).getDoc_name());
+                    obj.setDoc(file);
+                    Global.nocData.add(obj);
                 }
             }
 

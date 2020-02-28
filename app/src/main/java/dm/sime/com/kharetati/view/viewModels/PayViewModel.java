@@ -68,13 +68,13 @@ public class PayViewModel extends ViewModel {
         model.setPayment_type(paymentType);
         if(Global.isDeliveryByCourier)
             model.setDelivery_details(Global.deliveryDetails);
-        if(Global.passportData != null && Global.passportData.length() > 0) {
+        if(Global.passportData != null && Global.passportData.size() > 0) {
             model.setPassport_docs(Global.passportData);
         }
-        if(Global.licenseData != null && Global.licenseData.length() > 0) {
+        if(Global.licenseData != null && Global.licenseData.size() > 0) {
             model.setLicense(Global.licenseData);
         }
-        if(Global.nocData != null && Global.nocData.length() > 0) {
+        if(Global.nocData != null && Global.nocData.size() > 0) {
             model.setNoc_docs(Global.nocData);
         }
         model.setLocale(Global.CURRENT_LOCALE);

@@ -43,8 +43,11 @@ import java.util.Locale;
 
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.datas.models.FunctionsOnMap;
+import dm.sime.com.kharetati.datas.models.LicenceDocs;
 import dm.sime.com.kharetati.datas.models.LookupResponse;
 import dm.sime.com.kharetati.datas.models.LookupValue;
+import dm.sime.com.kharetati.datas.models.NocDocs;
+import dm.sime.com.kharetati.datas.models.PassportDocs;
 import dm.sime.com.kharetati.datas.models.SearchResult;
 import dm.sime.com.kharetati.utility.constants.AppConstants;
 import dm.sime.com.kharetati.datas.models.AppMsg;
@@ -120,9 +123,9 @@ public class Global {
     public static boolean rbIsOwner;
     public static boolean rbNotOwner;
     public static JSONObject deliveryDetails;
-    public static JSONArray passportData;
-    public static JSONArray licenseData;
-    public static JSONArray nocData;
+    public static List<PassportDocs> passportData;
+    public static List<LicenceDocs> licenseData;
+    public static List<NocDocs> nocData;
     public static boolean isDeliveryByCourier;
     public static String paymentUrl;
     private static Context context;
