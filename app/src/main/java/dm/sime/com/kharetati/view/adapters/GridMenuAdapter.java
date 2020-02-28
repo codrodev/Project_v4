@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.LayoutRes;
@@ -57,13 +58,14 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.Generi
         holder.bind(viewModel, position);
         viewHolder = holder;
         pos=position;
+        if(viewModel.getSelectedApplication() != null) {
+            if (viewModel.getSelectedApplication().getId().equals(lstHomeGridMenuItems.get(position).getId())) {
+                holder.cardView.setBackground(context.getResources().getDrawable(R.drawable.border_background));
+            } else {
+                holder.cardView.setBackground(context.getResources().getDrawable(R.drawable.borderless_background));
+            }
+        }
         holder.imgIcon.setImageBitmap(viewModel.getIconImage(position));
-       /* if(lstHomeGridMenuItems.get(holder.getAdapterPosition()).isClick)
-            holder.cardView.setBackground(context.getResources().getDrawable(R.drawable.border_background));
-        else
-            holder.cardView.setBackground(context.getResources().getDrawable(R.drawable.borderless_background));*/
-
-
     }
 
     @Override
@@ -76,10 +78,10 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.Generi
         return  lstHomeGridMenuItems.size();
     }
 
-    public class GenericViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class GenericViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         final ViewDataBinding binding;
-        private final CardView cardView;
         private final ImageView imgIcon;
+        private final CardView cardView;
 
 
         GenericViewHolder(ViewDataBinding binding) {
@@ -87,8 +89,8 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.Generi
             this.binding = binding;
 
             this.binding.getRoot().setOnClickListener(this);
-            cardView =(CardView)this.binding.getRoot().findViewById(R.id.cardHomeGrid);
-            imgIcon =(ImageView) this.binding.getRoot().findViewById(R.id.imgMenuIcon);
+            imgIcon = (ImageView) this.binding.getRoot().findViewById(R.id.imgMenuIcon);
+            cardView = (CardView) this.binding.getRoot().findViewById(R.id.cardHomeGrid);
         }
 
         void bind(HomeViewModel viewModel, int position) {
@@ -101,28 +103,8 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.Generi
 
         @Override
         public void onClick(View v) {
-
-
-            /*if(lstHomeGridMenuItems.get(getAdapterPosition()).isClick){
-
-                lstHomeGridMenuItems.get(getAdapterPosition()).isClick=false;
-                notifyDataSetChanged();
-            }
-            else{
-                for(int i=0;i<lstHomeGridMenuItems.size();i++)
-                {
-                    if(lstHomeGridMenuItems.get(i).isClick)
-                    {
-                        lstHomeGridMenuItems.get(i).isClick=false;
-                    }
-                }
-                lstHomeGridMenuItems.get(getAdapterPosition()).isClick =true;
-                notifyDataSetChanged();
-
-            }*/
-
-
             listener.onMenuSelected(((TextView) binding.getRoot().findViewById(R.id.txtAppId)).getText().toString());
+            notifyDataSetChanged();
         }
     }
 
