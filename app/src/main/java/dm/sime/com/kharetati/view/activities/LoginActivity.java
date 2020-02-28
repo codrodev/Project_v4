@@ -174,7 +174,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewModel.setCredentials(binding.editUserName.getText().toString(), binding.editPassword.getText().toString());
+                viewModel.setCredentials(binding.editUserName.getText().toString().trim(), binding.editPassword.getText().toString().trim());
                 viewModel.onLoginButtonClick();
             }
         });

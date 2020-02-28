@@ -113,6 +113,7 @@ public class PayViewModel extends ViewModel {
             if(status == 403){
                 payNavigator.onFailure(msg);
             } else if(status == 405){
+                payNavigator.onFailure(msg);
                 ((MainActivity)activity).loadFragment(FragmentTAGS.FR_HOME,true,null);
             }else{
                 Global.requestId= createUpdateRequestResponse.getRequestId();
@@ -172,7 +173,7 @@ public class PayViewModel extends ViewModel {
                         hm.add(customerName);
                         hm.add(mobileNo);
                         hm.add(emailId);
-                        ParentSiteplanFragment.parentModel.retrieveProfileDocs();
+                        //ParentSiteplanFragment.parentModel.retrieveProfileDocs();
                     }
 
                     else if(status==402){
