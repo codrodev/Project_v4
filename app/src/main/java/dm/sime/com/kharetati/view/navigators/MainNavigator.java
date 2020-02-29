@@ -14,9 +14,13 @@ public interface MainNavigator {
 
     void manageBottomBar(boolean key);
 
+    public void navigateToDashboard();
+
     public void onStarted();
 
     public void onFailure(String Msg);
+
+    public void onSuccess();
 
     public void onWebViewBack();
 }

@@ -5,14 +5,18 @@ import android.content.Context;
 
 import androidx.lifecycle.ViewModel;
 
+import com.google.gson.Gson;
+
 import org.json.JSONObject;
 
 import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
+import dm.sime.com.kharetati.datas.models.BaseResponseModel;
 import dm.sime.com.kharetati.datas.models.HTTPRequestBody;
 import dm.sime.com.kharetati.datas.models.MakaniToDLTMResponse;
 import dm.sime.com.kharetati.datas.models.PlotDetails;
 import dm.sime.com.kharetati.datas.models.SerializeBookMarksModel;
+import dm.sime.com.kharetati.datas.models.SerializedValidateParcelModel;
 import dm.sime.com.kharetati.datas.network.ApiFactory;
 import dm.sime.com.kharetati.datas.network.MyApiService;
 import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
@@ -21,6 +25,7 @@ import dm.sime.com.kharetati.datas.repositories.MapRepository;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
+import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.navigators.FragmentNavigator;
 import dm.sime.com.kharetati.view.navigators.MapNavigator;
 import io.reactivex.Observable;
@@ -115,6 +120,74 @@ public class MapViewModel extends ViewModel {
                             else{
                                 mapNavigator.onFailure(activity.getResources().getString(R.string.error_response));
                             }
+                        } catch (Exception e) {
+                            mapNavigator.onFailure(e.getMessage());
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        mapNavigator.onFailure(throwable.getMessage());
+                    }
+                });
+
+        compositeDisposable.add(disposable);
+
+
+    }
+
+    public void validateRequest(String fragmentTag) {
+
+        mapNavigator.onStarted();
+
+
+        kharetatiApp = KharetatiApp.create(activity);
+
+        String url = Global.base_url_site_plan + "/validateRequest";
+
+        SerializedValidateParcelModel model = new SerializedValidateParcelModel();
+        model.setLocale(Global.CURRENT_LOCALE);
+        model.setMy_id(Global.loginDetails.username);
+        model.setParcel_id(Integer.parseInt(Global.mapSearchResult.getService_response().getParcelId()));
+        model.setToken(Global.site_plan_token);
+
+        /*Gson ob = new Gson();
+        String x = ob.toJson(model);*/
+
+        Disposable disposable = repository.validateParcel(url, model)
+                .subscribeOn(kharetatiApp.subscribeScheduler())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<BaseResponseModel>() {
+                    @Override
+                    public void accept(BaseResponseModel response) throws Exception {
+
+                        try {
+                            if (response != null) {
+                                if(response.getStatus()==405){
+
+                                    navigate(activity, fragmentTag);
+                                } else if(response.getStatus() == 406) {
+                                    if (response.getMessage_en() != null && !response.getMessage_en().equals("") ||
+                                            response.getMessage_ar() != null && !response.getMessage_ar().equals("")) {
+                                        AlertDialogUtil.alreadyinProgressAlert(Global.CURRENT_LOCALE.equals("en") ? response.getMessage_en(): response.getMessage_ar(),
+                                                activity.getResources().getString(R.string.ok), activity);
+                                    } else {
+                                        AlertDialogUtil.alreadyinProgressAlert(Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getRequestUnderProgressEn() : Global.appMsg.getRequestUnderProgressAr(),
+                                                activity.getResources().getString(R.string.ok), activity);
+                                    }
+                                }
+                                else {
+                                    if(response.getMessage_en()!=null && !response.getMessage_en().equals("") ||
+                                            response.getMessage_ar()!=null && !response.getMessage_ar().equals("")){
+                                        mapNavigator.onFailure(Global.CURRENT_LOCALE.equals("en") ? response.getMessage_en() : response.getMessage_ar());
+                                    } else {
+                                        mapNavigator.onFailure(Global.CURRENT_LOCALE.equals("en") ? response.getMessage_en() : response.getMessage_ar());
+                                    }
+                                }
+                            }
+
                         } catch (Exception e) {
                             mapNavigator.onFailure(e.getMessage());
                             e.printStackTrace();

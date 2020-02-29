@@ -74,6 +74,14 @@ public class CleanableEditText extends AppCompatEditText implements View.OnTouch
         return this.type;
     }
 
+    public void setRegXPattern(String regXPattern) {
+        this.regXPattern = regXPattern;
+    }
+
+    public String getRegXPattern() {
+        return this.regXPattern;
+    }
+
     @Override
     public void setOnTouchListener(OnTouchListener l) {
         this.l = l;
@@ -86,6 +94,7 @@ public class CleanableEditText extends AppCompatEditText implements View.OnTouch
 
     private Location loc = Location.RIGHT;
     private String type;
+    private String regXPattern;
 
     private Drawable xD;
 

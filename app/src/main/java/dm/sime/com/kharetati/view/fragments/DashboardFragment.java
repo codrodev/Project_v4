@@ -46,6 +46,9 @@ public class DashboardFragment extends Fragment implements ViewPager.OnPageChang
         binding.viewPagerCreatePackage.addOnPageChangeListener(this);
         binding.viewPagerCreatePackage.setAdapter(model.getDashboardPagerAdapter());
 
+        model.manageAppBar(getActivity(), true);
+        model.manageAppBottomBAtr(getActivity(), true);
+
         binding.layoutBookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

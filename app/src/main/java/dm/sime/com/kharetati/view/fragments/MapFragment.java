@@ -554,11 +554,14 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
     @Override
     public void onFunctionMenuSelected(int position) {
         Functions fun = Global.mapSearchResult.getService_response().getMap().getFunctions().get(position);
+        mapFunctionAction(fun);
+    }
+
+    private void mapFunctionAction(Functions fun){
         if(fun.getInternalFunctions() != null && fun.getInternalFunctions().length() > 0){
             if (fun.getInternalFunctions().equals(FragmentTAGS.FR_REQUEST_SITE_PLAN)){
-
+                model.validateRequest(FragmentTAGS.FR_REQUEST_SITE_PLAN);
                 //validateParcel call required
-                model.navigate(getActivity(), FragmentTAGS.FR_REQUEST_SITE_PLAN);
             }
         } else if (fun.getLaunchUrl() != null && fun.getLaunchUrl().length() > 0 &&
                 fun.getLaunchUrl().contains("http")){
@@ -574,8 +577,6 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
             }
             webView.loadUrl(builder.toString());
             toggleBottomSheet();
-            /*webBottomSheet = new MapFunctionWebViewBottomSheetFragment(fun.getLaunchUrl());
-            webBottomSheet.show(getActivity().getSupportFragmentManager(), webBottomSheet.getTag());*/
         }
     }
 
@@ -629,8 +630,17 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                             if(PlotDetails.plotGeometry!=null)
                             {
                                 //goToNext();
-                                if(!Global.isBookmarks)
-                                myBottomSheet.show(getActivity().getSupportFragmentManager(), myBottomSheet.getTag());
+                                if(!Global.isBookmarks){
+                                    if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null &&
+                                            Global.mapSearchResult.getService_response().getMap().getFunctions().size() > 1) {
+                                        myBottomSheet.show(getActivity().getSupportFragmentManager(), myBottomSheet.getTag());
+                                    } else {
+                                        if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null){
+                                            mapFunctionAction(Global.mapSearchResult.getService_response().getMap().getFunctions().get(0));
+                                        }
+                                    }
+                                }
+                                //myBottomSheet.show(getActivity().getSupportFragmentManager(), myBottomSheet.getTag());
                                 // map click event perform here
 
                             }
@@ -703,8 +713,12 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                             showSnackBar();
                             onSuccess();
                             searchhistoryListView.setVisibility(View.GONE);
-                            if(!Global.isBookmarks)
-                            myBottomSheet.show(getActivity().getSupportFragmentManager(), myBottomSheet.getTag());
+                            if(!Global.isBookmarks) {
+                                if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null &&
+                                        Global.mapSearchResult.getService_response().getMap().getFunctions().size() > 1) {
+                                    myBottomSheet.show(getActivity().getSupportFragmentManager(), myBottomSheet.getTag());
+                                }
+                            }
 
 
                             mapView.setViewpointGeometryAsync(PlotDetails.plotGeometry,extentPadding).addDoneListener(new Runnable() {

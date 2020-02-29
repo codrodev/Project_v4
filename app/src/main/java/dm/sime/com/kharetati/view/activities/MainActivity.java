@@ -31,6 +31,7 @@ import dm.sime.com.kharetati.datas.network.ApiFactory;
 import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
 import dm.sime.com.kharetati.datas.repositories.HomeRepository;
 import dm.sime.com.kharetati.datas.repositories.MainRepository;
+import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.CustomContextWrapper;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
     ActivityMainBinding binding;
     MainViewModel model;
+    public static MainViewModel mainVM;
     FragmentManager fragmentManager = null;
     FragmentTransaction tx = null;
     MainViewModelFactory factory;
@@ -85,7 +87,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         }
         factory = new MainViewModelFactory(this,repository);
         model = ViewModelProviders.of(this,factory).get(MainViewModel.class);
-
+        mainVM = model;
+        model.mainNavigator =this;
         model.initialize();
         binding.setActivityMainVM(model);
         initializeActivity();
@@ -247,6 +250,13 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     }
 
     @Override
+    public void navigateToDashboard() {
+
+        binding.customBottomBar.show(3, true);
+
+    }
+
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
         if(Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW)||Global.current_fragment_id.equals(FragmentTAGS.FR_BOTTOMSHEET)){
@@ -265,11 +275,21 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
     @Override
     public void onStarted() {
-
+        AlertDialogUtil.showProgressBar(this,true);
     }
 
     @Override
     public void onFailure(String Msg) {
+
+        AlertDialogUtil.showProgressBar(this,false);
+        AlertDialogUtil.errorAlertDialog("",Msg,getResources().getString(R.string.ok),this);
+
+    }
+
+    @Override
+    public void onSuccess() {
+
+        AlertDialogUtil.showProgressBar(this,false);
 
     }
 

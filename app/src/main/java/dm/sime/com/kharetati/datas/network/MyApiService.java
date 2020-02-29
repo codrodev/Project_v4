@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import dm.sime.com.kharetati.datas.models.AccessTokenResponse;
 import dm.sime.com.kharetati.datas.models.AppServiceResponse;
 import dm.sime.com.kharetati.datas.models.AppSessionResponse;
+import dm.sime.com.kharetati.datas.models.BaseResponseModel;
 import dm.sime.com.kharetati.datas.models.BookmarksResponse;
 import dm.sime.com.kharetati.datas.models.CreateUpdateRequestResponse;
 import dm.sime.com.kharetati.datas.models.GeneralResponse;
@@ -27,6 +28,7 @@ import dm.sime.com.kharetati.datas.models.SerializeBookmarkModel;
 import dm.sime.com.kharetati.datas.models.SerializeGetAppRequestModel;
 import dm.sime.com.kharetati.datas.models.SerializedCreateAndUpdateModel;
 import dm.sime.com.kharetati.datas.models.SerializedModel;
+import dm.sime.com.kharetati.datas.models.SerializedValidateParcelModel;
 import dm.sime.com.kharetati.datas.models.SessionResponse;
 import dm.sime.com.kharetati.datas.models.User;
 import dm.sime.com.kharetati.datas.models.UserRegistration;
@@ -132,4 +134,7 @@ public interface MyApiService {
     //to Send Feedback mail
     @POST("util/sendFeedBackEmail")
     Observable<GeneralResponse> sendFeedBack(@Body SerializableFeedBackModel model);
+
+    @POST
+    Observable<BaseResponseModel> validateParcel(@Url String url, @Body SerializedValidateParcelModel model);
 }
