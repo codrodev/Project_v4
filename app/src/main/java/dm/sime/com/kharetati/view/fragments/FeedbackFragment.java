@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -19,6 +20,7 @@ import dm.sime.com.kharetati.databinding.FragmentFeedbackBinding;
 import dm.sime.com.kharetati.datas.models.GuestDetails;
 import dm.sime.com.kharetati.datas.models.User;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
+import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.view.viewModels.FeedbackViewModel;
 
@@ -32,6 +34,13 @@ public class FeedbackFragment extends Fragment {
     public static FeedbackFragment newInstance(){
         FeedbackFragment fragment = new FeedbackFragment();
         return fragment;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        FontChangeCrawler fontChanger = new FontChangeCrawler(getActivity().getAssets(), "Dubai-Regular.ttf");
+        fontChanger.replaceFonts((ViewGroup) this.getView());
     }
 
     @Override

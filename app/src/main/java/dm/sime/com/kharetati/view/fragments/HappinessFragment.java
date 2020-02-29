@@ -63,6 +63,7 @@ public class HappinessFragment extends Fragment {
         model = ViewModelProviders.of(this).get(HappinessViewModel.class);
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
