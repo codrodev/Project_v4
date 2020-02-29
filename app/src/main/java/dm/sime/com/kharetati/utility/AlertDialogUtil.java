@@ -36,6 +36,7 @@ import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.activities.WebViewActivity;
 import dm.sime.com.kharetati.view.fragments.AttachmentFragment;
 import dm.sime.com.kharetati.view.fragments.BookmarkFragment;
+import dm.sime.com.kharetati.view.navigators.MainNavigator;
 
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_CONTACT_US;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_WEBVIEW;
@@ -1457,6 +1458,42 @@ public class AlertDialogUtil {
                 Global.alertDialog.cancel();
 
         }
+
+    }
+
+    public static void alreadyinProgressAlert(String message, String btnTxt, final Context context) {
+
+
+        AlertDialog alertDialog = new AlertDialog.Builder(context)
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton(btnTxt, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show();
+                        context.getApplicationContext();
+
+                        ((MainActivity)context).loadFragment(FragmentTAGS.FR_DASHBOARD,true,null);
+                        //MainActivity.mainVM.mainNavigator.onSuccess();
+                        MainActivity.mainVM.mainNavigator.navigateToDashboard();
+
+                    }
+                }).show();
+
+        TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+        //TextView textView1= (TextView) alertDialog.findViewById(android.support.v7.appcompat.R.id.alertTitle);
+
+        TextView positiveButton = (Button) alertDialog.findViewById(android.R.id.button1);
+        TextView negativeButton = (Button) alertDialog.findViewById(android.R.id.button2);
+        Typeface face= Typeface.createFromAsset(context.getAssets(),"Dubai-Regular.ttf");
+        textView.setTypeface(face);
+        positiveButton.setAllCaps(false);
+        negativeButton.setAllCaps(false);
+        positiveButton.setTypeface(face);
+        negativeButton.setTypeface(face);
+        //textView1.setTypeface(face);
+
+        textView.setPadding(80, 25, 25, 10);
 
     }
 }

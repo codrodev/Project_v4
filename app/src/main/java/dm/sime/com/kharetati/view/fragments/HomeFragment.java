@@ -6,10 +6,12 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -40,6 +42,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.regex.Pattern;
 
 
 import com.esri.arcgisruntime.concurrent.ListenableFuture;
@@ -269,10 +272,16 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         CleanableEditText x = new CleanableEditText(getActivity());
         //x.setHint(form.getPlaceHolderEn());
         x.setHint(control.getPlaceHolderEn());
+        if(control.getInputType().toLowerCase().equals("number")) {
+
+        }
         x.setInputType(InputType.TYPE_CLASS_NUMBER);
         x.setEms(10);
         x.setMaxLines(1);
         x.setType(control.getType());
+        if(control.getRegexExp() != null && control.getRegexExp().length() > 0){
+            x.setRegXPattern(control.getRegexExp());
+        }
         x.setTextSize(16f);
         //x.setFilters(FilterArray);
         x.setTypeface(typeface);
@@ -282,6 +291,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         x.setBackground(getActivity().getResources().getDrawable(R.drawable.border_background));
         x.setOnEditorActionListener(this);
         x.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
         layout.addView(x);
         lstRuntimeCleanableText.add(x);
         return layout;
@@ -384,15 +394,28 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         return false;
     }
 
+    private Pattern getsPattern(String pattern){
+        return Pattern.compile(pattern);
+    }
+
+    private boolean isValid(CharSequence c, String pattern) {
+        return getsPattern(pattern).matcher(c).matches();
+    }
+
     private boolean isSearchBoxEmpty(){
         boolean isEmpty = false;
         if(lstRuntimeCleanableText != null && lstRuntimeCleanableText.size() > 0) {
             for (int i = 0; i < lstRuntimeCleanableText.size(); i++){
                 CleanableEditText txt = (CleanableEditText)lstRuntimeCleanableText.get(i);
-                if(txt.getText().toString() == null || txt.getText().toString().equals("")){
+                //if(isValid(txt.toString(), txt.getRegXPattern())){
+                    if(txt.getText().toString() == null || txt.getText().toString().equals("")){
+                        isEmpty = true;
+                        break;
+                    }
+               /* } else {
                     isEmpty = true;
                     break;
-                }
+                }*/
             }
         }
         return isEmpty;

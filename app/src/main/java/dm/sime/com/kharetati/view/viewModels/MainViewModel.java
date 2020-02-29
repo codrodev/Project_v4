@@ -13,12 +13,14 @@ import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.datas.repositories.MainRepository;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.navigators.MainNavigator;
 
 public class MainViewModel extends ViewModel {
 
     private KharetatiApp kharetatiApp;
     Activity activity;
     MainRepository repository;
+    public MainNavigator mainNavigator;
 
     /*public MainViewModel(){
 
