@@ -667,6 +667,7 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
 
             ArcGISMapImageSublayer communityLayer=
                     (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.valueOf(retriveLayer.getId()));
+            communityLayer.setDefinitionExpression(retriveLayer.getQueryClause());
             communityLayer.loadAsync();
             communityLayer.addDoneLoadingListener(new Runnable() {
                 @Override
