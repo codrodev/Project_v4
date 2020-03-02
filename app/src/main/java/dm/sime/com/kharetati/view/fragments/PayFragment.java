@@ -75,7 +75,6 @@ public class PayFragment extends Fragment implements PayNavigator {
         binding.payNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ParentSiteplanViewModel.initializeDocuments();
                 if (!Global.isConnected(getActivity())) {
 
                     if(Global.appMsg!=null)

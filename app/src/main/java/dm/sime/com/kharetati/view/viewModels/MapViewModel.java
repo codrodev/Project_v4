@@ -165,8 +165,9 @@ public class MapViewModel extends ViewModel {
 
                         try {
                             if (response != null) {
+                                ParentSiteplanViewModel.initializeDocuments();
                                 if(response.getStatus()==405){
-
+                                    mapNavigator.onSuccess();
                                     navigate(activity, fragmentTag);
                                 } else if(response.getStatus() == 406) {
                                     if (response.getMessage_en() != null && !response.getMessage_en().equals("") ||
