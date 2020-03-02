@@ -43,7 +43,7 @@ public class PayViewModel extends ViewModel {
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private long parcelId;
     private int voucherAmount;
-    private ArrayList hm;
+    public static ArrayList hm;
 
     public PayViewModel(Activity activity, PayRepository repository) {
         this.activity = activity;
@@ -135,14 +135,12 @@ public class PayViewModel extends ViewModel {
                 if(paymentType.compareToIgnoreCase("Pay Now")==0){
 
                     if(status==600){
-                        //ParentSiteplanFragment.parentModel.retrieveProfileDocs();
+                        ParentSiteplanFragment.parentModel.retrieveProfileDocs();
                         ArrayList al = new ArrayList<>();
                         al.add(Global.paymentUrl);
 
-                    ((MainActivity)activity).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);}
-
-
-                    else if(status==402){
+                        //((MainActivity)activity).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+                    } else if(status==402){
 
                         if(msg!=null)
                             payNavigator.onFailure(msg);
@@ -174,7 +172,7 @@ public class PayViewModel extends ViewModel {
                         hm.add(customerName);
                         hm.add(mobileNo);
                         hm.add(emailId);
-                        //ParentSiteplanFragment.parentModel.retrieveProfileDocs();
+                        ParentSiteplanFragment.parentModel.retrieveProfileDocs();
                     }
 
                     else if(status==402){
