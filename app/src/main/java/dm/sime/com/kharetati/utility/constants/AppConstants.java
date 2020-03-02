@@ -60,7 +60,7 @@ public final class AppConstants {
     public static final int FILE_SELECT_CODE = 1051;
     public static final String  DOC_TYPE_FORMAT = "file/*";
     public static final String  DEVICE_TYPE = "ANDROID";
-    public static final String  PLATFORM_VERSION = "2.0";
+    public static final String  PLATFORM_VERSION = "8.0";
     public static final String  REMARKS  = DEVICE_TYPE + "-" + PLATFORM_VERSION;
 
     public static String CURRENT_LOCALE = "en";

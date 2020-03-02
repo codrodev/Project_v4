@@ -16,11 +16,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
+
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.view.navigators.FragmentNavigator;
 import dm.sime.com.kharetati.view.viewModels.LoginViewModel;
+import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
+import dm.sime.com.kharetati.view.viewModels.PayViewModel;
 
 public class WebViewFragment extends Fragment {
 
@@ -77,6 +81,11 @@ public class WebViewFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
+
+        PayViewModel.hm = new ArrayList();
+        PayFragment.paymentType = "";
+        Global.paymentUrl = "";
+        ParentSiteplanViewModel.initializeDocuments();
         return view;
     }
 

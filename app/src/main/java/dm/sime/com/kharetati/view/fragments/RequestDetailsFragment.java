@@ -17,6 +17,7 @@ import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.activities.MainActivity;
+import dm.sime.com.kharetati.view.viewModels.PayViewModel;
 
 public class RequestDetailsFragment extends Fragment {
     private static final String REQUEST_NUMBER = "requestNumber";
@@ -141,6 +142,9 @@ public class RequestDetailsFragment extends Fragment {
             }
         });
 
+        PayViewModel.hm = new ArrayList();
+        PayFragment.paymentType = "";
+        Global.paymentUrl = "";
 
         return view;
     }

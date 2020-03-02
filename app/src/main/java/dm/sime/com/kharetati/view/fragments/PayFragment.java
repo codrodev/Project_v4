@@ -39,7 +39,7 @@ public class PayFragment extends Fragment implements PayNavigator {
     private PayViewModel model;
     private FragmentPayBinding binding;
     private View mRootView;
-    public static String paymentType;
+    public static String paymentType = "";
     public static String applicantMobile;
     public static String applicantEmailId;
 

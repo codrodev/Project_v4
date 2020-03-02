@@ -567,10 +567,13 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                 fun.getLaunchUrl().contains("http")){
             StringBuilder builder = new StringBuilder();
             builder.append(fun.getLaunchUrl());
+            if(!fun.getLaunchUrl().endsWith("?")) {
+                builder.append("?");
+            }
+            builder.append("token=" + Global.accessToken + "&");
+            builder.append("remarks=" + Global.getPlatformRemark() + "&");
             if(fun.getParams() != null && fun.getParams().size() > 0){
-                if(!fun.getLaunchUrl().endsWith("?")) {
-                    builder.append("?");
-                }
+
                 for (Params p : fun.getParams()){
                     builder.append(p.getParam1() + "&");
                 }

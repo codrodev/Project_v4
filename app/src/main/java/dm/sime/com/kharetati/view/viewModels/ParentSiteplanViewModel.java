@@ -17,6 +17,10 @@ import dm.sime.com.kharetati.datas.repositories.ParentSitePlanRepository;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
+import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.activities.MainActivity;
+import dm.sime.com.kharetati.view.fragments.ParentSiteplanFragment;
+import dm.sime.com.kharetati.view.fragments.PayFragment;
 import dm.sime.com.kharetati.view.navigators.FragmentNavigator;
 import dm.sime.com.kharetati.view.navigators.ParentSitePlanNavigator;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -149,24 +153,41 @@ public class ParentSiteplanViewModel extends ViewModel {
                     msg = retrieveProfileDocsResponse.getMessageAr();
                 }
             }
-            if(status == 403){
-                if(Global.CURRENT_LOCALE.compareToIgnoreCase("en")==0)  {
-                    if(msg!=null||!msg.equals("")) parentSitePlanNavigator.onFailure(msg);
+
+            if(PayFragment.paymentType != null && PayFragment.paymentType.length() > 0){
+                if(PayFragment.paymentType.compareToIgnoreCase("Pay Now")==0){
+                    ParentSiteplanFragment.currentIndex = 0;
+                    if(Global.paymentUrl != null && Global.paymentUrl.length() > 0){
+                        ArrayList al = new ArrayList<>();
+                        al.add(Global.paymentUrl);
+                        ((MainActivity)activity).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+                    }
+                } else if(PayFragment.paymentType.compareToIgnoreCase("Pay later")==0){
+                    ParentSiteplanFragment.currentIndex = 0;
+                    if(PayViewModel.hm != null && PayViewModel.hm.size() > 0) {
+                        ((MainActivity) activity).loadFragment(FragmentTAGS.FR_REQUEST_DETAILS, true, PayViewModel.hm);
+                    }
                 }
-            } else if(status == 501){
-                parentSitePlanNavigator.navigateToFragment(1);
-            } else if(status == 500){
-                parentSitePlanNavigator.navigateToFragment(1);
-            } else if(status == 502){
-                parentSitePlanNavigator.navigateToFragment(1);
-            } else if(status == 503){
-                parentSitePlanNavigator.navigateToFragment(1);
-            }else if(status == 504||status == 410){
-                parentSitePlanNavigator.navigateToFragment(1);
             } else {
-                if(msg.equals("")){
-                    msg = Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr();
-                    parentSitePlanNavigator.onFailure(msg);
+                if (status == 403) {
+                    if (Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0) {
+                        if (msg != null || !msg.equals("")) parentSitePlanNavigator.onFailure(msg);
+                    }
+                } else if (status == 501) {
+                    parentSitePlanNavigator.navigateToFragment(1);
+                } else if (status == 500) {
+                    parentSitePlanNavigator.navigateToFragment(1);
+                } else if (status == 502) {
+                    parentSitePlanNavigator.navigateToFragment(1);
+                } else if (status == 503) {
+                    parentSitePlanNavigator.navigateToFragment(1);
+                } else if (status == 504 || status == 410) {
+                    parentSitePlanNavigator.navigateToFragment(1);
+                } else {
+                    if (msg.equals("")) {
+                        msg = Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getErrorFetchingDataEn() : Global.appMsg.getErrorFetchingDataAr();
+                        parentSitePlanNavigator.onFailure(msg);
+                    }
                 }
             }
 
