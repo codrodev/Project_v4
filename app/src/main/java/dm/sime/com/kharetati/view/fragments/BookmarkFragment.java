@@ -120,6 +120,7 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
     @Override
     public void onDeleteSuccess(List<Bookmark> lstBookmark) {
         AlertDialogUtil.showProgressBar(getActivity(),false);
+        //model.getBookmarkAdapter().notifyDataSetChanged();
         if(lstBookmark.size()==0)
             binding.textHeading.setText(getActivity().getResources().getString(R.string.NO_FAVOURITE_PLOTS_FOUND));
 

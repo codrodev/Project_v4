@@ -130,6 +130,7 @@ public class Global {
     public static List<NocDocs> nocData;
     public static boolean isDeliveryByCourier;
     public static String paymentUrl;
+    public static String searchText;
     private static Context context;
     public static boolean isLanguageChanged = false;
     public static String noctemplateUrl;

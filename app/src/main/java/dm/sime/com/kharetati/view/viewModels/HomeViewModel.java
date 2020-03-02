@@ -426,6 +426,7 @@ public class HomeViewModel extends ViewModel {
     public void getAppsSearchResult(String searchText) {
 
         homeNavigator.onStarted();
+        Global.searchText = searchText;
 
         String url = getSelectedApplication().getSearchUrl();
 

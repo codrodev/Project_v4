@@ -12,10 +12,16 @@ import org.json.JSONObject;
 import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.datas.models.BaseResponseModel;
+import dm.sime.com.kharetati.datas.models.GetAppResponse;
 import dm.sime.com.kharetati.datas.models.HTTPRequestBody;
 import dm.sime.com.kharetati.datas.models.MakaniToDLTMResponse;
+import dm.sime.com.kharetati.datas.models.ParcelDetails;
 import dm.sime.com.kharetati.datas.models.PlotDetails;
+import dm.sime.com.kharetati.datas.models.SerializableParcelDetails;
+import dm.sime.com.kharetati.datas.models.SerializableSaveBookMarks;
 import dm.sime.com.kharetati.datas.models.SerializeBookMarksModel;
+import dm.sime.com.kharetati.datas.models.SerializeGetAppInputRequestModel;
+import dm.sime.com.kharetati.datas.models.SerializeGetAppRequestModel;
 import dm.sime.com.kharetati.datas.models.SerializedValidateParcelModel;
 import dm.sime.com.kharetati.datas.network.ApiFactory;
 import dm.sime.com.kharetati.datas.network.MyApiService;
@@ -57,6 +63,7 @@ public class MapViewModel extends ViewModel {
     public MapViewModel(Activity context, MapRepository repository){
         this.activity = context;
         this.repository = repository;
+        kharetatiApp = KharetatiApp.create(activity);
     }
 
     public void manageAppBar(Context ctx, boolean status){
@@ -74,18 +81,53 @@ public class MapViewModel extends ViewModel {
         frNavigator.fragmentNavigator(fragmentTag, true, null);
     }
 
+    public void getParceldetails(){
+        mapNavigator.onStarted();
+        String url = AppUrls.BASE_AUXULARY_URL + "/getparceldetails";
+
+        SerializeGetAppRequestModel model = new SerializeGetAppRequestModel();
+
+        SerializeGetAppInputRequestModel inputModel = new SerializeGetAppInputRequestModel();
+        inputModel.setParcel_id(Integer.parseInt(Global.searchText));
+        inputModel.setTOKEN(Global.app_session_token);
+        inputModel.setREMARKS("AndroidV8.0");
+
+        model.setInputJson(inputModel);
+
+        Disposable disposable = repository.getParcelDetails(url, model)
+                .subscribeOn(kharetatiApp.subscribeScheduler())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<SerializableParcelDetails>() {
+                    @Override public void accept(SerializableParcelDetails appResponse) throws Exception {
+
+                        //mapNavigator.onSuccess();
+                        PlotDetails.communityAr = appResponse.getService_response().get(0).getCommNameAr();
+                        PlotDetails.communityEn = appResponse.getService_response().get(0).getCommNameEn();
+//                        PlotDetails.area = appResponse.getService_response().get(0).getAreaInSqMt();
+                        saveAsBookMark(true);
+
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override public void accept(Throwable throwable) throws Exception {
+                        mapNavigator.onFailure(activity.getResources().getString(R.string.server_connect_error));
+                    }
+                });
+
+        compositeDisposable.add(disposable);
+    }
+
     public void saveAsBookMark(Boolean isSave) {
 
+
+        //getParceldetails();
         mapNavigator.onStarted();
 
 
-        kharetatiApp = KharetatiApp.create(activity);
-
-
         SerializeBookMarksModel model = new SerializeBookMarksModel();
-        model.setUserID(Global.sime_userid);
+        model.setUserID(1003);
         model.setArea(PlotDetails.area);
-        model.setParcelNumber(PlotDetails.parcelNo);
+        model.setParcelNumber(Integer.parseInt(Global.searchText));
         model.setCommunity(PlotDetails.communityEn);
         model.setCommunityAr(PlotDetails.communityAr);
 
@@ -95,16 +137,16 @@ public class MapViewModel extends ViewModel {
         Disposable disposable = repository.saveAsBookMark(model)
                 .subscribeOn(kharetatiApp.subscribeScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<JSONObject>() {
+                .subscribe(new Consumer<SerializableSaveBookMarks>() {
                     @Override
-                    public void accept(JSONObject response) throws Exception {
+                    public void accept(SerializableSaveBookMarks response) throws Exception {
 
                         try {
-                            if (response != null && response.toString().isEmpty()) {
+                            if (response != null && !response.toString().isEmpty()) {
                                 mapNavigator.onSuccess();
-                                if (!response.getBoolean("isError")) {
+                                if (!response.isError()) {
                                     if (isSave) {
-                                        if (response.getBoolean("isExisting"))
+                                        if (response.isExisting())
                                             AlertDialogUtil.errorAlertDialog(activity.getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getPlotAvailableFavEn() : Global.appMsg.getPlotAvailableFavAr(), activity.getResources().getString(R.string.ok), activity);
                                         else
                                             AlertDialogUtil.errorAlertDialog(activity.getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getPlotAddedFavEn() : Global.appMsg.getPlotAddedFavAr(), activity.getResources().getString(R.string.ok), activity);

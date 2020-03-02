@@ -502,8 +502,11 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
     @Override
     public void onFailure(String Msg) {
+
+        if(getActivity()!=null){
         AlertDialogUtil.showProgressBar(getActivity(),false);
         AlertDialogUtil.errorAlertDialog("",Msg,getActivity().getResources().getString(R.string.ok),getActivity());
+        }
 
     }
 

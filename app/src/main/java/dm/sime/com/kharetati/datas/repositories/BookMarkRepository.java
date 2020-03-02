@@ -3,6 +3,7 @@ package dm.sime.com.kharetati.datas.repositories;
 import org.json.JSONObject;
 
 import dm.sime.com.kharetati.datas.models.BookmarksResponse;
+import dm.sime.com.kharetati.datas.models.SerializableSaveBookMarks;
 import dm.sime.com.kharetati.datas.models.SerializeBookmarkModel;
 import dm.sime.com.kharetati.datas.models.ZZBookmark;
 import dm.sime.com.kharetati.datas.network.MyApiService;
@@ -21,7 +22,7 @@ public class BookMarkRepository {
         return api.getAllBookMarks(model);
     }
 
-    public Observable<JSONObject> deleteBookMark(SerializeBookmarkModel model) {
+    public Observable<SerializableSaveBookMarks> deleteBookMark(SerializeBookmarkModel model) {
         return api.deleteBookMark(model);
     }
 }

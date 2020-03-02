@@ -7,6 +7,16 @@ public class SerializeGetAppInputRequestModel {
     private String TOKEN;
     @SerializedName("REMARKS")
     private String REMARKS;
+    @SerializedName("parcel_id")
+    private int parcel_id;
+
+    public int getParcel_id() {
+        return parcel_id;
+    }
+
+    public void setParcel_id(int parcel_id) {
+        this.parcel_id = parcel_id;
+    }
 
     public String getTOKEN() {
         return TOKEN;

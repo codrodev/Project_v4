@@ -23,6 +23,8 @@ import dm.sime.com.kharetati.datas.models.RetrieveProfileDocsResponse;
 import dm.sime.com.kharetati.datas.models.SearchParameterModel;
 import dm.sime.com.kharetati.datas.models.SearchResult;
 import dm.sime.com.kharetati.datas.models.SerializableFeedBackModel;
+import dm.sime.com.kharetati.datas.models.SerializableParcelDetails;
+import dm.sime.com.kharetati.datas.models.SerializableSaveBookMarks;
 import dm.sime.com.kharetati.datas.models.SerializeBookMarksModel;
 import dm.sime.com.kharetati.datas.models.SerializeBookmarkModel;
 import dm.sime.com.kharetati.datas.models.SerializeGetAppRequestModel;
@@ -80,7 +82,7 @@ public interface MyApiService {
 
     //to save Book mark
     @POST("Bookmark/addBookmark")
-    Observable<JSONObject> saveAsBookMark(@Body SerializeBookMarksModel bookMarkBody);
+    Observable<SerializableSaveBookMarks> saveAsBookMark(@Body SerializeBookMarksModel bookMarkBody);
 
 
     // to get parcel Id in land search
@@ -102,7 +104,7 @@ public interface MyApiService {
 
     // to delete BookMark in Bookmarks
     @POST("Bookmark/deleteBookMark")
-    Observable<JSONObject> deleteBookMark(@Body SerializeBookmarkModel model);
+    Observable<SerializableSaveBookMarks> deleteBookMark(@Body SerializeBookmarkModel model);
 
     //to get the profile documents if any
     @POST
@@ -137,4 +139,8 @@ public interface MyApiService {
 
     @POST
     Observable<BaseResponseModel> validateParcel(@Url String url, @Body SerializedValidateParcelModel model);
+
+    //To get the Community details in the BookMark
+    @POST
+    Observable<SerializableParcelDetails> getParcelDetails(@Url String url, @Body SerializeGetAppRequestModel model);
 }

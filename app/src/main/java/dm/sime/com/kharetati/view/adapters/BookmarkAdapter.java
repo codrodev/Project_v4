@@ -31,7 +31,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
     private int layoutId;
     private BookmarkViewModel viewModel;
     static Context context;
-    public List<Bookmark> lstBookmark;
+    public static List<Bookmark> lstBookmark;
 
 
     public BookmarkAdapter(@LayoutRes int layoutId, BookmarkViewModel viewModel,Context context) {

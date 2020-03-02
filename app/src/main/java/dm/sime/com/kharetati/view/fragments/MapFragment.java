@@ -453,7 +453,7 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
 
                         }
                         else
-                            model.saveAsBookMark(true);
+                            model.getParceldetails();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

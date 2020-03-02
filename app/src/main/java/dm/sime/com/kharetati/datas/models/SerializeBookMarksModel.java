@@ -6,7 +6,7 @@ public class SerializeBookMarksModel {
     @SerializedName("UserID")
     private int UserID;
     @SerializedName("ParcelNumber")
-    private String ParcelNumber;
+    private int ParcelNumber;
     @SerializedName("CommunityAr")
     private String CommunityAr;
     @SerializedName("Community")
@@ -30,11 +30,11 @@ public class SerializeBookMarksModel {
         UserID = userID;
     }
 
-    public String getParcelNumber() {
+    public int getParcelNumber() {
         return ParcelNumber;
     }
 
-    public void setParcelNumber(String parcelNumber) {
+    public void setParcelNumber(int parcelNumber) {
         ParcelNumber = parcelNumber;
     }
 

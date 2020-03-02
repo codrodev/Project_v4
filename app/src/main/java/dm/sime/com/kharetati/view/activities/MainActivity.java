@@ -1,5 +1,6 @@
 package dm.sime.com.kharetati.view.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -65,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     FragmentTransaction tx = null;
     MainViewModelFactory factory;
     private MainRepository repository;
+    public int loadPosition;
+    private MeowBottomNavigation.Model myBottomModel;
 
     public static Intent newIntent(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -91,10 +94,6 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         model.mainNavigator =this;
         model.initialize();
         binding.setActivityMainVM(model);
-        initializeActivity();
-    }
-
-    private void initializeActivity(){
         final BottomNavigationFragmentSheet myBottomSheet = BottomNavigationFragmentSheet.newInstance();
         binding.customBottomBar.add(new MeowBottomNavigation.Model(1, R.drawable.ic_dashboard_white_24dp));
         binding.customBottomBar.add(new MeowBottomNavigation.Model(2, R.drawable.ic_insert_emoticon_white_24dp));
@@ -109,10 +108,13 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             @Override
             public Unit invoke(MeowBottomNavigation.Model bottomModel) {
                 // YOUR CODES
+                myBottomModel = bottomModel;
                 if(bottomModel.getId() == 5){
                     myBottomSheet.show(getSupportFragmentManager(), myBottomSheet.getTag());
                 } else {
-                    loadFragment(model.bottomNavigationTAG(bottomModel.getId()), false, null);
+                    loadFragment(model.bottomNavigationTAG(myBottomModel.getId()), false, null);
+                    if(savedInstanceState!=null)
+                    savedInstanceState.putInt("loadPosition",myBottomModel.getId());
                 }
                 return null;
             }
@@ -121,6 +123,11 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
 
         openHomePage();
+        initializeActivity();
+    }
+
+    private void initializeActivity(){
+
 
         /*binding.customBottomBar.setOnShowListener(new Function1<MeowBottomNavigation.Model, Unit>() {
             @Override
@@ -129,6 +136,14 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 return null;
             }
         });*/
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if(savedInstanceState!=null)
+        myBottomModel.setId(savedInstanceState.getInt("position"));
+
     }
 
     @Override

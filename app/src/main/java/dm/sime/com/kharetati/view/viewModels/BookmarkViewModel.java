@@ -18,6 +18,7 @@ import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.datas.models.Bookmark;
 import dm.sime.com.kharetati.datas.models.BookmarksResponse;
+import dm.sime.com.kharetati.datas.models.SerializableSaveBookMarks;
 import dm.sime.com.kharetati.datas.models.SerializeBookmarkModel;
 import dm.sime.com.kharetati.datas.repositories.BookMarkRepository;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
@@ -143,8 +144,8 @@ public class BookmarkViewModel extends ViewModel {
         Disposable disposable = repository.deleteBookMark(model)
                 .subscribeOn(kharetatiApp.subscribeScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<JSONObject>() {
-                    @Override public void accept(JSONObject deleteResponse) throws Exception {
+                .subscribe(new Consumer<SerializableSaveBookMarks>() {
+                    @Override public void accept(SerializableSaveBookMarks deleteResponse) throws Exception {
                         deleteBookmarks(deleteResponse,data);
 
                     }
@@ -162,16 +163,16 @@ public class BookmarkViewModel extends ViewModel {
 
     }
 
-    private void deleteBookmarks(JSONObject deleteResponse, Bookmark data) {
+    private void deleteBookmarks(SerializableSaveBookMarks deleteResponse, Bookmark data) {
         try {
             if(deleteResponse != null){
 
-                if(!deleteResponse.getBoolean("isError")){
-                    if(deleteResponse.getString("message").compareToIgnoreCase("success")==0){
+                if(!deleteResponse.isError()){
+                    if(deleteResponse.getMessage().compareToIgnoreCase("success")==0){
                         //BookmarksAdapter.this.data.remove(data);
-                        ((BookmarkAdapter)(Adapter)activity).lstBookmark.remove(data);
-                        ((BookmarkAdapter)(Adapter)activity).notifyDataSetChanged();
-                        bookMarksNavigator.onDeleteSuccess(((BookmarkAdapter)(Adapter)activity).lstBookmark);
+                        BookmarkAdapter.lstBookmark.remove(data);
+                        //BookmarkAdapter.notifyDataSetChanged();
+                        bookMarksNavigator.onDeleteSuccess(BookmarkAdapter.lstBookmark);
                         AlertDialogUtil.errorAlertDialog("", activity.getString(R.string.favourite_deleted), activity.getString(R.string.ok), activity);
 
 
