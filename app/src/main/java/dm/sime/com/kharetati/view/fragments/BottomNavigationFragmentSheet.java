@@ -2,6 +2,7 @@ package dm.sime.com.kharetati.view.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,6 +99,13 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
                             getResources().getString(R.string.msg_rate_us),
                             getResources().getString(R.string.rate_it),getResources().getString(R.string.remindme),getActivity()
                     );
+            }
+        });
+        binding.layoutAccessibility.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+                startActivity(intent);
             }
         });
         binding.aboutUs.setOnClickListener(new View.OnClickListener() {
