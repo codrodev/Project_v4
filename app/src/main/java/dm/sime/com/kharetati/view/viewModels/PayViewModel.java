@@ -106,6 +106,7 @@ public class PayViewModel extends ViewModel {
     private void createUpdateRequest(CreateUpdateRequestResponse createUpdateRequestResponse) {
 
         if(createUpdateRequestResponse!=null){
+            ParentSiteplanViewModel.initializeDocuments();
             int status=createUpdateRequestResponse.getStatus();
             String msg=Global.CURRENT_LOCALE.compareToIgnoreCase("en")==0 ?
                     createUpdateRequestResponse.getMessageEn():createUpdateRequestResponse.getMessageAr();
@@ -134,7 +135,7 @@ public class PayViewModel extends ViewModel {
                 if(paymentType.compareToIgnoreCase("Pay Now")==0){
 
                     if(status==600){
-                        ParentSiteplanFragment.parentModel.retrieveProfileDocs();
+                        //ParentSiteplanFragment.parentModel.retrieveProfileDocs();
                         ArrayList al = new ArrayList<>();
                         al.add(Global.paymentUrl);
 
