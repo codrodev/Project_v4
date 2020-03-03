@@ -23,6 +23,7 @@
                 android:text="Click on Bookmark details"
                 android:fontFamily="@font/dubai_font"
                 android:textSize="20dp"
+                android:visibility="gone"
                 android:id="@+id/textHeading"
                 android:textColor="@color/black"
                 android:layout_marginVertical="10dp"/>

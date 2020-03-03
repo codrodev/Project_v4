@@ -185,6 +185,15 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         super.onResume();
         model.manageAppBar(getActivity(), true);
         model.manageAppBottomBAtr(getActivity(), true);
+        model.getMutableInAppNotifications().observe(getActivity(), new Observer<List<InAppNotifications>>() {
+            @Override
+            public void onChanged(List<InAppNotifications> lstInAppNotifications) {
+                //model.loading.set(View.GONE);
+                if (lstInAppNotifications.size() > 0) {
+                    model.setInAppNotificationsAdapter(lstInAppNotifications);
+                }
+            }
+        });
     }
 
     @Override

@@ -26,6 +26,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.esri.arcgisruntime.ArcGISRuntimeEnvironment;
+import com.esri.arcgisruntime.geometry.Envelope;
 import com.esri.arcgisruntime.geometry.Point;
 import com.esri.arcgisruntime.geometry.SpatialReference;
 import com.esri.arcgisruntime.layers.ArcGISMapImageLayer;
@@ -33,6 +34,7 @@ import com.esri.arcgisruntime.layers.ArcGISSublayer;
 import com.esri.arcgisruntime.loadable.LoadStatus;
 import com.esri.arcgisruntime.mapping.ArcGISMap;
 import com.esri.arcgisruntime.mapping.Basemap;
+import com.esri.arcgisruntime.mapping.Viewpoint;
 import com.esri.arcgisruntime.mapping.view.Graphic;
 import com.esri.arcgisruntime.mapping.view.GraphicsOverlay;
 import com.esri.arcgisruntime.mapping.view.MapView;
@@ -59,6 +61,7 @@ import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.AppConstants;
+import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.navigators.ContactusNavigator;
@@ -77,10 +80,10 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
     private static final String DM_PHONE_NUMBER = "800900";
     private static final String DM_EMAIL = "info@dm.gov.ae";
     private static final String DM_WEB_SITE = "http://www.dm.gov.ae";
-    private static final String DM_FB_EN = "https://www.facebook.com/search/top/?q=Kharetati";
-    private static final String DM_FB_AR = "https://www.facebook.com/search/top/?q=خريطتي";
-    private static final String DM_TWITTER_EN = "https://twitter.com/search?q=kharetati&src=typd";
-    private static final String DM_TWITTER_AR = "https://twitter.com/search?q=خريطتي&src=typd";
+    private static final String DM_FB_EN = "https://www.facebook.com/DubaiMunicipality";
+    private static final String DM_FB_AR = "https://www.facebook.com/DubaiMunicipality";
+    private static String DM_TWITTER_EN = "";
+    private static String DM_TWITTER_AR = "";
     private static final String DM_INSTAGRAM_EN = "https://www.instagram.com/explore/tags/kharetati/?hl=en";
     private static final String DM_INSTAGRAM_AR = "https://www.instagram.com/explore/tags/خريطتي/?hl=ar/";
     private static final String DM_YOUTUBE_EN = "https://www.youtube.com/results?search_query=kharetati";
@@ -89,6 +92,7 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
     public static ContactusViewModel contactUsVM;
     ContactusViewModelFactory factory;
     private ContactusRepository repository;
+    private MapView mMapView;
 
     public static ContactusFragment newInstance(){
         ContactusFragment fragment = new ContactusFragment();
@@ -251,8 +255,11 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
                 }
                 else{
                     if (CURRENT_LOCALE=="ar") {
+                        DM_TWITTER_AR ="https://twitter.com/search?q=%23%D8%AE%D8%B1%D9%8A%D8%B7%D8%AA%D9%8A&src=typeahead_click#kharetati'&src=typd";
+
                         openURL(DM_TWITTER_AR);
                     }else{
+                        DM_TWITTER_EN ="https://twitter.com/search?q=%23kharetati&src=typed_query#kharetati'&src=typd";
                         openURL(DM_TWITTER_EN);
                     }}
             }
@@ -320,23 +327,21 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
 
     public void initMap(View v){
         ArcGISRuntimeEnvironment.setLicense("runtimelite,1000,rud3984007683,none,GB2PMD17J0YJ2J7EZ071");
-
-        String serviceUrl = "https://smart.gis.gov.ae/dmgis104/rest/services/Kharetati/Kharetati/MapServer";
-        String mapUser = "kharetatiuser";
-        String password = "kha##stg@2018";
-
-        ArcGISMap map = new ArcGISMap(Basemap.Type.IMAGERY,56.008993, -2.725301, 10);
-        binding.mapContactUs.setMap(map);
-        dynamicLayer = new ArcGISMapImageLayer(serviceUrl);
-        Credential credential=new UserCredential(mapUser,password);
-        dynamicLayer.setCredential(credential);
+        Credential userCredentials = new UserCredential(AppUrls.GIS_LAYER_USERNAME,AppUrls.GIS_LAYER_PASSWORD);
+    /*userCredentials.setUserAccount(Constant.GIS_LAYER_USERNAME,Constant.GIS_LAYER_PASSWORD);
+    userCredentials.setTokenServiceUrl(Constant.GIS_LAYER_TOKEN_URL);*/
+        mMapView = (MapView)binding.getRoot().findViewById(R.id.mapContactUs);
+        ArcGISMap map = new ArcGISMap();
+        mMapView.setMap(map);
         int[] visible={5};
+        dynamicLayer  = new ArcGISMapImageLayer(AppUrls.GIS_LAYER_URL);
+        dynamicLayer.setCredential(userCredentials);
         dynamicLayer.addDoneLoadingListener(() -> {
             if (dynamicLayer.getLoadStatus() == LoadStatus.LOADED) {
                 List<ArcGISSublayer> layers=dynamicLayer.getSublayers();
                 for(int i=0;i<layers.size();i++){
                     ArcGISSublayer layer=layers.get(i);
-                    if(layer.getId()==5)
+                    if(layer.getId()==5||layer.getId()==2)
                         layer.setVisible(true);
                     else
                         layer.setVisible(false);
@@ -344,8 +349,8 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
             }
         });
         map.getOperationalLayers().add(dynamicLayer);
-        binding.mapContactUs.setMap(map);
-        binding.mapContactUs.setAttributionTextVisible(false);
+        mMapView.setMap(map);
+        mMapView.setAttributionTextVisible(false);
         //mMapView.getGraphicsOverlays().add(map);
 
 
@@ -358,9 +363,49 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
     Viewpoint vp = new Viewpoint(initExtent);
     mMapView.setViewpoint(vp);
     mMapView.setViewpoint(vp);*/
-        binding.mapContactUs.setViewpointGeometryAsync(new Point(497818.691, 2795353.692),100);
+        mMapView.setViewpointGeometryAsync(new Point(497818.691, 2795353.692),100);
+        //Resize image
+        Drawable dr = getResources().getDrawable(R.drawable.makani);
+        Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
+        //Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 32, 32, true));
 
-        binding.mapContactUs.setOnTouchListener(new MapView.OnTouchListener (){
+        PictureMarkerSymbol symbol = new PictureMarkerSymbol(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 96, 96, true)));
+        final Point graphicPoint = new Point(497818.691, 2795353.692);
+
+        Graphic graphic = new Graphic(graphicPoint,symbol);
+
+        //Add makani Icon to the map
+        GraphicsOverlay graphicsLayer = new GraphicsOverlay();
+        // mMapView.getGraphicsOverlays().add(graphicsLayer);
+        graphicsLayer.getGraphics().add(graphic);
+        mMapView.getGraphicsOverlays().add(graphicsLayer);
+        //mMapView.setViewpointGeometryAsync(new Point(497818.691, 2795353.692),100);
+        mMapView.setViewpointCenterAsync(graphicPoint);
+        //mMapView.setViewpointScaleAsync(2000);
+        mMapView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+            @Override
+            public void onViewAttachedToWindow(View v){
+                final Timer timer=new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        //mMapView.setViewpointCenterAsync(graphicPoint);
+                        mMapView.setViewpointScaleAsync(2000);
+                        timer.cancel();
+                    }
+                }, 1000*1);
+            }
+
+            @Override
+            public void onViewDetachedFromWindow(View v){
+                //mMapView.setVisibility(View.GONE);
+            }
+
+
+        });
+
+
+        mMapView.setOnTouchListener(new MapView.OnTouchListener (){
 
             @Override
             public boolean onScale(ScaleGestureDetector detector) {
@@ -424,7 +469,7 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
 
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
-                if(binding.mapContactUs!=null){
+                if(mMapView!=null){
                     return Global.openMakani("1190353",getActivity());
                 }
                 return false;
@@ -447,7 +492,7 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(binding.mapContactUs!=null) {
+                if(mMapView!=null) {
                     //mMapView.setOnPanListener(null);
                     //mMapView.addMapScaleChangedListener(null);
                     if(event.getAction()==MotionEvent.ACTION_DOWN){
@@ -459,63 +504,6 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
         });
 
 
-        //Resize image
-        Drawable dr = getResources().getDrawable(R.drawable.makani);
-        Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
-        //Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 32, 32, true));
-
-        PictureMarkerSymbol symbol = new PictureMarkerSymbol(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 96, 96, true)));
-        final Point graphicPoint = new Point(497818.691, 2795353.692);
-
-        Graphic graphic = new Graphic(graphicPoint,symbol);
-
-        //Add makani Icon to the map
-        GraphicsOverlay graphicsLayer = new GraphicsOverlay();
-        // mMapView.getGraphicsOverlays().add(graphicsLayer);
-        graphicsLayer.getGraphics().add(graphic);
-        binding.mapContactUs.getGraphicsOverlays().add(graphicsLayer);
-        //mMapView.setViewpointGeometryAsync(new Point(497818.691, 2795353.692),100);
-        binding.mapContactUs.setViewpointCenterAsync(graphicPoint);
-        //mMapView.setViewpointScaleAsync(2000);
-        binding.mapContactUs.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
-            @Override
-            public void onViewAttachedToWindow(View v){
-                final Timer timer=new Timer();
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        //mMapView.setViewpointCenterAsync(graphicPoint);
-                        //mMapView.setViewpointGeometryAsync(new Point(497818.691, 2795353.692),100);
-                        binding.mapContactUs.setViewpointScaleAsync(2000);
-                        timer.cancel();
-                    }
-                }, 1000*1);
-            }
-
-            @Override
-            public void onViewDetachedFromWindow(View v){
-                binding.mapContactUs.setVisibility(View.GONE);
-            }
-
-      /*@Override
-      public void onStatusChanged(Object o, STATUS status) {
-        if( o instanceof ArcGISDynamicMapServiceLayer && status==STATUS.LAYER_LOADED)
-        {
-          final Timer timer=new Timer();
-          timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-              mMapView.zoomin();
-              timer.cancel();
-            }
-          }, 1000*1);
-        }
-        if( o instanceof ArcGISDynamicMapServiceLayer && status==STATUS.LAYER_LOADING_FAILED)
-        {
-          layoutMap.setVisibility(View.GONE);
-        }
-      }*/
-        });
 
 
 
