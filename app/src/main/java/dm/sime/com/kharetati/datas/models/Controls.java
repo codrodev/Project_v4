@@ -31,6 +31,16 @@ public class Controls {
 
     private String NameAr;
 
+    private String IsVisible;
+
+    public String getIsVisible() {
+        return IsVisible;
+    }
+
+    public void setIsVisible(String isVisible) {
+        IsVisible = isVisible;
+    }
+
     public String getRegexExp() {
         return RegexExp;
     }
