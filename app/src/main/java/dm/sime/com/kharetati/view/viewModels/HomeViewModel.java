@@ -321,7 +321,7 @@ public class HomeViewModel extends ViewModel {
     public void getSession() {
 
         homeNavigator.onStarted();
-        String url = AppUrls.BASE_AUXULARY_URL + "getsession/" + Global.accessToken + "/" + "AndroidV8.0";
+        String url = AppUrls.BASE_AUXULARY_URL + "getsession/" + Global.accessToken + "/" + Global.getPlatformRemark();
 
         Disposable disposable = repository.getSession(url)
                 .subscribeOn(kharetatiApp.subscribeScheduler())

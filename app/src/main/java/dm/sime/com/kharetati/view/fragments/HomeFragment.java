@@ -203,6 +203,13 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
     private void initializeRuntimeForm(Applications app){
         model.setSelectedApplication(app);
+        if(model.getSelectedApplication().getHelpUrlEn() != null && model.getSelectedApplication().getHelpUrlEn().length() > 0){
+            Global.helpUrlEn = model.getSelectedApplication().getHelpUrlEn();
+        }
+        if(model.getSelectedApplication().getHelpUrlAr() != null && model.getSelectedApplication().getHelpUrlAr().length() > 0){
+            Global.helpUrlEn = model.getSelectedApplication().getHelpUrlAr();
+        }
+
         if(model.getSelectedApplication().getSearchForm() != null && model.getSelectedApplication().getSearchForm().size() > 0){
             lstSearchForm = app.getSearchForm();
             binding.layoutRuntimeContainer.setVisibility(View.VISIBLE);

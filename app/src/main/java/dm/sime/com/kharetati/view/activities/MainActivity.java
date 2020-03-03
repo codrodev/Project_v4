@@ -23,6 +23,7 @@ import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 
 import dm.sime.com.kharetati.R;
@@ -120,7 +121,18 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             }
         });
 
+        binding.imgHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Global.helpUrlEn != null || Global.helpUrlAr != null) {
+                    ArrayList al = new ArrayList();
+                    al.add(Global.CURRENT_LOCALE.equals("en")? Global.helpUrlEn:Global.helpUrlAr);
+                    loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+                } else {
 
+                }
+            }
+        });
 
         openHomePage();
         initializeActivity();

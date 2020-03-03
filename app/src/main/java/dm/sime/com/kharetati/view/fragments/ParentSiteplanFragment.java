@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProviders;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 
 import dm.sime.com.kharetati.R;
@@ -25,6 +26,7 @@ import dm.sime.com.kharetati.datas.repositories.ParentSitePlanRepository;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.navigators.ParentSitePlanNavigator;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 import dm.sime.com.kharetati.view.viewmodelfactories.ParentSitePlanViewModelFactory;
@@ -129,6 +131,20 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
                 }
             }
         });
+
+        binding.imgHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Global.helpUrlEn != null || Global.helpUrlAr != null) {
+                    ArrayList al = new ArrayList();
+                    al.add(Global.CURRENT_LOCALE.equals("en")? Global.helpUrlEn:Global.helpUrlAr);
+                    ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+                } else {
+
+                }
+            }
+        });
+
         binding.btnPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

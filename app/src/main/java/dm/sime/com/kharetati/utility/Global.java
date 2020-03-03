@@ -164,6 +164,8 @@ public class Global {
     public static float width;
     public static List<FunctionsOnMap> lstMapFunctions;
     public static SearchResult mapSearchResult;
+    public static String helpUrlEn;
+    public static String helpUrlAr;
 
 
     public static List<FunctionsOnMap> getLstMapFunctions() {

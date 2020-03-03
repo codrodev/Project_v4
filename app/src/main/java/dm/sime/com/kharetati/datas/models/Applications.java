@@ -29,6 +29,10 @@ public class Applications {
 
     private String NameAr;
 
+    private String HelpUrlEn;
+
+    private String HelpUrlAr;
+
     public String getSearchUrl() {
         return SearchUrl;
     }
@@ -131,5 +135,21 @@ public class Applications {
 
     public void setNameAr(String nameAr) {
         NameAr = nameAr;
+    }
+
+    public String getHelpUrlEn() {
+        return HelpUrlEn;
+    }
+
+    public void setHelpUrlEn(String helpUrlEn) {
+        HelpUrlEn = helpUrlEn;
+    }
+
+    public String getHelpUrlAr() {
+        return HelpUrlAr;
+    }
+
+    public void setHelpUrlAr(String helpUrlAr) {
+        HelpUrlAr = helpUrlAr;
     }
 }
