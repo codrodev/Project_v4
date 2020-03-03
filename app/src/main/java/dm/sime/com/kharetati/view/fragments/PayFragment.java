@@ -72,6 +72,7 @@ public class PayFragment extends Fragment implements PayNavigator {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_pay, container, false);
         binding.setFragmentPayVM(model);
         mRootView = binding.getRoot();
+        setRetainInstance(true);
         binding.payNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

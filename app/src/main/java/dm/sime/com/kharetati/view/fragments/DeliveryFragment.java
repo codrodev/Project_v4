@@ -83,6 +83,8 @@ public class DeliveryFragment extends Fragment {
 //        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         Global.hideSoftKeyboard(getActivity());
 
+        setRetainInstance(true);
+
         ArrayList al=new ArrayList();
         for(int i=0;i<spinnerItems.length;i++)
         {

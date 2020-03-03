@@ -112,9 +112,9 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 if(bottomModel.getId() == 5){
                     myBottomSheet.show(getSupportFragmentManager(), myBottomSheet.getTag());
                 } else {
-                    loadFragment(model.bottomNavigationTAG(myBottomModel.getId()), false, null);
-                    if(savedInstanceState!=null)
-                    savedInstanceState.putInt("loadPosition",myBottomModel.getId());
+                    loadFragment(model.bottomNavigationTAG(bottomModel.getId()), false, null);
+                    /*if(savedInstanceState=null)
+                    savedInstanceState.putInt("loadPosition",myBottomModel.getId());*/
                 }
                 return null;
             }
@@ -141,8 +141,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        if(savedInstanceState!=null)
-        myBottomModel.setId(savedInstanceState.getInt("position"));
+        /*if(savedInstanceState!=null)
+        myBottomModel.setId(savedInstanceState.getInt("position"));*/
 
     }
 

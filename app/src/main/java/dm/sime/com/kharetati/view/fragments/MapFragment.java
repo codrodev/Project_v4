@@ -178,6 +178,7 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
         mapView = mRootView.findViewById(R.id.mapView);
         LinearLayout layoutBottomSheet = (LinearLayout)mRootView.findViewById(R.id.bottomSheet);
         webView = (WebView)layoutBottomSheet.findViewById(R.id.webView);
+        setRetainInstance(true);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override

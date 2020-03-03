@@ -29,8 +29,8 @@
                     android:layout_height="match_parent">
                     <ImageView
                         android:id="@+id/imgMyMap"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="5dp"
                         android:layout_centerHorizontal="true"/>
@@ -38,7 +38,7 @@
                         android:id="@+id/txtMyMap"
                         android:layout_below="@+id/imgMyMap"
                         android:layout_width="match_parent"
-                        android:textSize="20dp"
+                        android:textSize="16sp"
                         android:layout_height="wrap_content"
                         android:text="Site Plan"
                         android:fontFamily="@font/dubai_font"
@@ -61,8 +61,8 @@
                     android:layout_height="match_parent">
                     <ImageView
                         android:id="@+id/imgBookMark"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="5dp"
                         android:layout_centerHorizontal="true"/>
@@ -70,7 +70,7 @@
                         android:id="@+id/txtBookmark"
                         android:layout_below="@+id/imgBookMark"
                         android:layout_width="match_parent"
-                        android:textSize="20dp"
+                        android:textSize="16sp"
                         android:layout_height="wrap_content"
                         android:text="Bookmark"
                         android:fontFamily="@font/dubai_font"

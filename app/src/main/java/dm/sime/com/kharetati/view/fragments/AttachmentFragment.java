@@ -140,6 +140,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
     public static AttachmentFragment newInstance(){
         AttachmentFragment fragment = new AttachmentFragment();
+        fragment.setRetainInstance(true);
         return fragment;
     }
 
@@ -177,6 +178,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
             ActivityCompat.requestPermissions(getActivity(), AppConstants.ALL_PERMISSIONS, AppConstants.REQUEST_READ_EXTERNAL_STORAGE);
         }
 
+
     }
 
     @Override
@@ -185,6 +187,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         binding.setFragmentAttachmentVM(model);
         mRootView = binding.getRoot();
         initializePage();
+        setRetainInstance(true);
 
         return binding.getRoot();
     }

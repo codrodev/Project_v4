@@ -32,6 +32,7 @@ import com.esri.arcgisruntime.layers.ArcGISMapImageLayer;
 import com.esri.arcgisruntime.layers.ArcGISSublayer;
 import com.esri.arcgisruntime.loadable.LoadStatus;
 import com.esri.arcgisruntime.mapping.ArcGISMap;
+import com.esri.arcgisruntime.mapping.Basemap;
 import com.esri.arcgisruntime.mapping.view.Graphic;
 import com.esri.arcgisruntime.mapping.view.GraphicsOverlay;
 import com.esri.arcgisruntime.mapping.view.MapView;
@@ -125,6 +126,7 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
         binding.setFragmentContactusVM(model);
         mRootView = binding.getRoot();
         initializePage();
+        setRetainInstance(true);
         if (!Global.isConnected(getActivity())) {
 
             if(Global.appMsg!=null)
@@ -323,7 +325,7 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
         String mapUser = "kharetatiuser";
         String password = "kha##stg@2018";
 
-        ArcGISMap map = new ArcGISMap();
+        ArcGISMap map = new ArcGISMap(Basemap.Type.IMAGERY,56.008993, -2.725301, 10);
         binding.mapContactUs.setMap(map);
         dynamicLayer = new ArcGISMapImageLayer(serviceUrl);
         Credential credential=new UserCredential(mapUser,password);

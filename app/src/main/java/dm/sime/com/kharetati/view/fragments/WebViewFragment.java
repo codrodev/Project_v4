@@ -86,6 +86,7 @@ public class WebViewFragment extends Fragment {
         PayFragment.paymentType = "";
         Global.paymentUrl = "";
         ParentSiteplanViewModel.initializeDocuments();
+        setRetainInstance(true);
         return view;
     }
 

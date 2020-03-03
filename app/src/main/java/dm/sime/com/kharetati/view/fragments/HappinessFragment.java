@@ -71,6 +71,7 @@ public class HappinessFragment extends Fragment {
         binding.setFragmentHappinessVM(model);
         mRootView = binding.getRoot();
         initializePage();
+        setRetainInstance(true);
         return binding.getRoot();
     }
 

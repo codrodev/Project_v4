@@ -120,7 +120,6 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
-        fragment.setRetainInstance(true);
         return fragment;
     }
     @Override
@@ -158,6 +157,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         mRootView = binding.getRoot();
         model.initializeHomeVM(getContext());
         initializePage();
+        setRetainInstance(true);
         return binding.getRoot();
     }
 
@@ -274,7 +274,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         LinearLayout layout = new LinearLayout(getActivity());
         layout.setOrientation(LinearLayout.HORIZONTAL);
         layout.setGravity(Gravity.CENTER);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 70);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(8,8,8,8);
         layout.setLayoutParams(layoutParams);
 
@@ -315,14 +315,14 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         //dynamiclayout.setBackgroundColor(Color.RED);
         dynamiclayout.setLayoutDirection(View.LAYOUT_DIRECTION_LOCALE);
         LinearLayout.LayoutParams dynamcLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dynamcLayoutParams.setMargins(8,8,8,8);
+        dynamcLayoutParams.setMargins(20,8,20,8);
 
 
         LinearLayout spinnerLayout = new LinearLayout(getActivity());
         spinnerLayout.setOrientation(LinearLayout.HORIZONTAL);
         spinnerLayout.setBackgroundColor(getActivity().getResources().getColor(R.color.white));
-        LinearLayout.LayoutParams spinnerlayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 75);
-        spinnerlayoutParams.setMargins(8,8,8,8);
+        LinearLayout.LayoutParams spinnerlayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        spinnerlayoutParams.setMargins(48,8,48,8);
         spinnerLayout.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);
         spinnerLayout.setBackground(getActivity().getResources().getDrawable(R.drawable.border_background));
         spinnerLayout.setLayoutParams(spinnerlayoutParams);
@@ -330,7 +330,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         LinearLayout chevronlayout = new LinearLayout(getActivity());
         chevronlayout.setOrientation(LinearLayout.HORIZONTAL);
         chevronlayout.setBackgroundColor(getActivity().getResources().getColor(R.color.white));
-        LinearLayout.LayoutParams chevronlayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 75);
+        LinearLayout.LayoutParams chevronlayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         chevronlayoutParams.setMargins(8,8,8,8);
         chevronlayout.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);
         chevronlayout.setLayoutParams(chevronlayoutParams);
