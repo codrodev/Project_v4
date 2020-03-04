@@ -32,6 +32,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.esri.arcgisruntime.mapping.view.MapView;
@@ -78,6 +80,7 @@ import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.adapters.GridMenuAdapter;
 import dm.sime.com.kharetati.view.adapters.GridMenuPagerAdapter;
+import dm.sime.com.kharetati.view.adapters.InAppNotificationAdapter;
 import dm.sime.com.kharetati.view.customview.CleanableEditText;
 import dm.sime.com.kharetati.view.customview.CustPagerTransformer;
 import dm.sime.com.kharetati.view.customview.OnSpinerItemClick;
@@ -112,6 +115,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     public static String communityId;
     public static HomeViewModel homeVM;
     public List<CleanableEditText> lstRuntimeCleanableText;
+    InAppNotificationAdapter adapterNotification;
     /*BottomSheetBehavior sheetBehavior;
     LinearLayout layoutBottomSheet;*/
 
@@ -168,7 +172,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         /*layoutBottomSheet = (LinearLayout)mRootView.findViewById(R.id.bottomSheetWebView);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);*/
 
-        model.getMutableInAppNotifications().observe(getActivity(), new Observer<List<InAppNotifications>>() {
+        /*model.getMutableInAppNotifications().observe(getActivity(), new Observer<List<InAppNotifications>>() {
             @Override
             public void onChanged(List<InAppNotifications> lstInAppNotifications) {
                 //model.loading.set(View.GONE);
@@ -176,8 +180,24 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                     model.setInAppNotificationsAdapter(lstInAppNotifications);
                 }
             }
-        });
+        });*/
 
+    }
+
+    private void initializeInAppNotification(){
+        LinearLayoutManager linearLayoutManager;
+        linearLayoutManager =  new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
+        /*if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0){
+
+        } else {
+            linearLayoutManager =  new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, true);
+        }*/
+
+
+        adapterNotification = new InAppNotificationAdapter(model, getActivity());
+        binding.recycleNotification.setAdapter(adapterNotification);
+        binding.recycleNotification.setLayoutManager(linearLayoutManager);
+        adapterNotification.notifyDataSetChanged();
     }
 
     @Override
@@ -185,15 +205,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         super.onResume();
         model.manageAppBar(getActivity(), true);
         model.manageAppBottomBAtr(getActivity(), true);
-        model.getMutableInAppNotifications().observe(getActivity(), new Observer<List<InAppNotifications>>() {
-            @Override
-            public void onChanged(List<InAppNotifications> lstInAppNotifications) {
-                //model.loading.set(View.GONE);
-                if (lstInAppNotifications.size() > 0) {
-                    model.setInAppNotificationsAdapter(lstInAppNotifications);
-                }
-            }
-        });
+        //initializeInAppNotification();
     }
 
     @Override

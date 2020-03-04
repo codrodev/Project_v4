@@ -112,7 +112,7 @@ public class HomeViewModel extends ViewModel {
         model = new InAppNotificationsModel();
         mutableInAppNotifications = new MutableLiveData<>();
         mutableInAppNotifications.setValue(model.getLstInAppNotifications());
-        adapterNotification = new InAppNotificationAdapter(R.layout.adapter_in_app_notifications, this, context);
+        //adapterNotification = new InAppNotificationAdapter(R.layout.adapter_in_app_notifications, this, context);
 
         getSession();
     }

@@ -32,6 +32,7 @@ import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.fragments.ParentSiteplanFragment;
 import dm.sime.com.kharetati.view.navigators.FragmentNavigator;
 import dm.sime.com.kharetati.view.navigators.MapNavigator;
 import io.reactivex.Observable;
@@ -210,6 +211,7 @@ public class MapViewModel extends ViewModel {
                                 ParentSiteplanViewModel.initializeDocuments();
                                 if(response.getStatus()==405){
                                     mapNavigator.onSuccess();
+                                    ParentSiteplanFragment.currentIndex = 0;
                                     navigate(activity, fragmentTag);
                                 } else if(response.getStatus() == 406) {
                                     if (response.getMessage_en() != null && !response.getMessage_en().equals("") ||

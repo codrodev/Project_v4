@@ -32,12 +32,14 @@
             app:layout_editor_absoluteX="0dp"
             app:layout_editor_absoluteY="0dp"/>
 
-        <FrameLayout
+        <LinearLayout
             android:id="@+id/layoutNotification"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_marginTop="10dp"
+            android:layoutDirection="locale"
             android:elevation="10dp"
+            android:visibility="gone"
             android:background="@color/transparent"
             android:layout_marginHorizontal="10dp"
             app:layout_constraintTop_toTopOf="parent"
@@ -46,15 +48,16 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:setHorizontalAdapter="@{fragmentHomeVM.getInAppNotificationAdapter()}" />
-        </FrameLayout>
+                android:visibility="gone"
+                android:layoutDirection="locale" />
+        </LinearLayout>
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_editor_absoluteX="30dp"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="100dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="40dp"
             app:layout_constraintTop_toBottomOf="@+id/layoutNotification">
             <RelativeLayout
                 android:layout_width="match_parent"
