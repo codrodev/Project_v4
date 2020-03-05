@@ -572,12 +572,25 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
             }
             builder.append("token=" + Global.accessToken + "&");
             builder.append("remarks=" + Global.getPlatformRemark() + "&");
+            String lang = Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0 ? "en" : "ar";
+            builder.append("lang=" + lang + "&");
+            if(!Global.isUserLoggedIn){
+                builder.append("isGuest=true&");
+            }
             if(fun.getParams() != null && fun.getParams().size() > 0){
 
-                for (Params p : fun.getParams()){
+               /* for (Params p : fun.getParams()){
                     builder.append(p.getParam1() + "&");
+                }*/
+
+                for(int i = 0; i< fun.getParams().size(); i++){
+                    builder.append(fun.getParams().get(i).getParam1());
+                    if(i < fun.getParams().size() - 1){
+                        builder.append("&");
+                    }
                 }
             }
+
             webView.loadUrl(builder.toString());
             toggleBottomSheet();
         }

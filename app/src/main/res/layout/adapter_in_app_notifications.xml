@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<!--<layout >
     <data>
         <variable
             name="position"
@@ -8,8 +7,10 @@
         <variable
             name="adapterNotificationHomeVM"
             type="dm.sime.com.kharetati.view.viewModels.HomeViewModel" />
-    </data>
+    </data>-->
     <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layoutDirection="locale"
@@ -22,30 +23,27 @@
             android:layoutDirection="locale"
             android:layout_marginHorizontal="10dp"
             android:orientation="vertical">
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginHorizontal="10dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp">
                 <TextView
                     android:id="@+id/txtNotification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{adapterNotificationHomeVM.getCurrentInAppNotifications(position).subject}"
                     android:textColor="@color/black"
                     android:textSize="20dp"
-                    android:layout_centerVertical="true"
+                    android:text="sample"
                     android:textStyle="bold"
                     android:fontFamily="@font/dubai_font"/>
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_access_time_24dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"/>
-            </RelativeLayout>
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:src="@drawable/ic_access_time_24dp"/>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -64,7 +62,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{adapterNotificationHomeVM.getCurrentInAppNotifications(position).date}"
                     android:textColor="@color/black"
                     android:textSize="15dp"
                     android:textStyle="bold"
@@ -72,4 +69,3 @@
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-</layout>

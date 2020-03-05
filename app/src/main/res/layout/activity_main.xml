@@ -39,7 +39,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/ic_help_outline_white_24dp"
+                    android:src="@drawable/ic_help"
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="-60dp"
                     android:layout_marginEnd="50dp"/>

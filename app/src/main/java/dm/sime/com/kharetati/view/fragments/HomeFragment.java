@@ -32,6 +32,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.esri.arcgisruntime.mapping.view.MapView;
@@ -78,6 +80,7 @@ import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.adapters.GridMenuAdapter;
 import dm.sime.com.kharetati.view.adapters.GridMenuPagerAdapter;
+import dm.sime.com.kharetati.view.adapters.InAppNotificationAdapter;
 import dm.sime.com.kharetati.view.customview.CleanableEditText;
 import dm.sime.com.kharetati.view.customview.CustPagerTransformer;
 import dm.sime.com.kharetati.view.customview.OnSpinerItemClick;
@@ -112,6 +115,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     public static String communityId;
     public static HomeViewModel homeVM;
     public List<CleanableEditText> lstRuntimeCleanableText;
+    InAppNotificationAdapter adapterNotification;
     /*BottomSheetBehavior sheetBehavior;
     LinearLayout layoutBottomSheet;*/
 
@@ -169,7 +173,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         /*layoutBottomSheet = (LinearLayout)mRootView.findViewById(R.id.bottomSheetWebView);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);*/
 
-        model.getMutableInAppNotifications().observe(getActivity(), new Observer<List<InAppNotifications>>() {
+        /*model.getMutableInAppNotifications().observe(getActivity(), new Observer<List<InAppNotifications>>() {
             @Override
             public void onChanged(List<InAppNotifications> lstInAppNotifications) {
                 //model.loading.set(View.GONE);
@@ -177,8 +181,24 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                     model.setInAppNotificationsAdapter(lstInAppNotifications);
                 }
             }
-        });
+        });*/
 
+    }
+
+    private void initializeInAppNotification(){
+        LinearLayoutManager linearLayoutManager;
+        linearLayoutManager =  new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
+        /*if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0){
+
+        } else {
+            linearLayoutManager =  new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, true);
+        }*/
+
+
+        adapterNotification = new InAppNotificationAdapter(model, getActivity());
+        binding.recycleNotification.setAdapter(adapterNotification);
+        binding.recycleNotification.setLayoutManager(linearLayoutManager);
+        adapterNotification.notifyDataSetChanged();
     }
 
     @Override
@@ -186,15 +206,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         super.onResume();
         model.manageAppBar(getActivity(), true);
         model.manageAppBottomBAtr(getActivity(), true);
-        model.getMutableInAppNotifications().observe(getActivity(), new Observer<List<InAppNotifications>>() {
-            @Override
-            public void onChanged(List<InAppNotifications> lstInAppNotifications) {
-                //model.loading.set(View.GONE);
-                if (lstInAppNotifications.size() > 0) {
-                    model.setInAppNotificationsAdapter(lstInAppNotifications);
-                }
-            }
-        });
+        //initializeInAppNotification();
     }
 
     @Override
@@ -211,15 +223,19 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             Global.helpUrlEn = model.getSelectedApplication().getHelpUrlAr();
         }
 
-        if(model.getSelectedApplication().getSearchForm() != null && model.getSelectedApplication().getSearchForm().size() > 0){
+        if(model.getSelectedApplication().getSearchForm() != null && model.getSelectedApplication().getSearchForm().size() > 1){
             lstSearchForm = app.getSearchForm();
+            binding.tabRuntimeLayout.setVisibility(View.VISIBLE);
+            binding.layoutControlHeader.setVisibility(View.GONE);
             binding.layoutRuntimeContainer.setVisibility(View.VISIBLE);
             binding.tabRuntimeLayout.removeAllTabs();
             //binding.tabRuntimeLayout.setupWithViewPager(binding.viewPagerRuntime);
+            int x =0;
             for(SearchForm form: app.getSearchForm()){
                 if (form.getTabs() != null) {
                     binding.tabRuntimeLayout.addTab(binding.tabRuntimeLayout.newTab().setText(CURRENT_LOCALE.equals("en")?form.getTabs().getNameEn():form.getTabs().getNameAr()));
-
+                    binding.tabRuntimeLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+                    binding.tabRuntimeLayout.setTabMode(TabLayout.MODE_FIXED);
                 }
             }
 
@@ -248,8 +264,17 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
                 }
             });
+        } else if(model.getSelectedApplication().getSearchForm() != null && model.getSelectedApplication().getSearchForm().size() == 1){
+            binding.tabRuntimeLayout.setVisibility(View.GONE);
+            binding.layoutControlHeader.setVisibility(View.VISIBLE);
+            binding.layoutRuntimeContainer.setVisibility(View.VISIBLE);
+            binding.txtHeader.setText(app.getSearchForm().get(0).getTabs().getNameEn());
+
+            runtimeControlRenderer(app.getSearchForm().get(0).getTabs().getControls());
         } else {
             clearRuntimeParent();
+            binding.layoutControlHeader.setVisibility(View.GONE);
+            binding.layoutRuntimeContainer.setVisibility(View.GONE);
             if(!model.getSelectedApplication().getIsNative()){
                 ArrayList param = new ArrayList<>();
                 param.add( model.getSelectedApplication().getSearchUrl());
@@ -292,7 +317,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         layout.setOrientation(LinearLayout.HORIZONTAL);
         layout.setGravity(Gravity.CENTER);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(8,8,8,8);
+        layoutParams.setMargins(0,8,0,8);
         layout.setLayoutParams(layoutParams);
 
         CleanableEditText x = new CleanableEditText(getActivity());
@@ -332,14 +357,14 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         //dynamiclayout.setBackgroundColor(Color.RED);
         dynamiclayout.setLayoutDirection(View.LAYOUT_DIRECTION_LOCALE);
         LinearLayout.LayoutParams dynamcLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dynamcLayoutParams.setMargins(20,8,20,8);
+        dynamcLayoutParams.setMargins(0,8,0,8);
 
 
         LinearLayout spinnerLayout = new LinearLayout(getActivity());
         spinnerLayout.setOrientation(LinearLayout.HORIZONTAL);
         spinnerLayout.setBackgroundColor(getActivity().getResources().getColor(R.color.white));
         LinearLayout.LayoutParams spinnerlayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        spinnerlayoutParams.setMargins(48,8,48,8);
+        spinnerlayoutParams.setMargins(65,8,65,8);
         spinnerLayout.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);
         spinnerLayout.setBackground(getActivity().getResources().getDrawable(R.drawable.border_background));
         spinnerLayout.setLayoutParams(spinnerlayoutParams);
