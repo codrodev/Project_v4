@@ -186,8 +186,12 @@ public class HomeViewModel extends ViewModel {
         Applications app = getCurrentHomeGridMenuItems(position);
         Bitmap icon;
         try {
-            InputStream stream = new ByteArrayInputStream(Base64.decode(app.getIconBase64().getBytes(), Base64.URL_SAFE));
-            icon = BitmapFactory.decodeStream(stream);
+            /*InputStream stream = new ByteArrayInputStream(Base64.decode(app.getIconBase64().getBytes(), Base64.URL_SAFE|Base64.DEFAULT|Base64.NO_WRAP));
+            icon = BitmapFactory.decodeStream(stream);*/
+
+            byte[] decodedString = Base64.decode(app.getIconBase64(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            icon = decodedByte;
         } catch (Exception ex){
             Drawable d =  activity.getResources().getDrawable(R.drawable.bookmark);
             icon = ((BitmapDrawable)d).getBitmap();

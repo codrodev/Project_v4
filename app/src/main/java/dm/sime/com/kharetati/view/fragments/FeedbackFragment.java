@@ -22,6 +22,7 @@ import dm.sime.com.kharetati.datas.models.User;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
+import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.viewModels.FeedbackViewModel;
 
 public class FeedbackFragment extends Fragment {
@@ -51,6 +52,7 @@ public class FeedbackFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Global.current_fragment_id = FragmentTAGS.FR_FEEDBACK;
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_feedback, container, false);
         binding.setFragmentFeedbackVM(model);
         mRootView = binding.getRoot();

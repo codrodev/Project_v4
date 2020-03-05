@@ -30,6 +30,7 @@ import dm.sime.com.kharetati.datas.models.DeliveryDetails;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
+import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.viewModels.DeliveryDetailViewModel;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 
@@ -73,6 +74,7 @@ public class DeliveryFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Global.current_fragment_id = FragmentTAGS.FR_DELIVERY;
         binding = DataBindingUtil.inflate(inflater, R.layout.activity_delivery_deatails, container, false);
         binding.setDeliveryDetailVM(model);
         mRootView = binding.getRoot();
@@ -262,7 +264,7 @@ public class DeliveryFragment extends Fragment {
 
 
 
-    private boolean isValidEmailId(){
+    public  boolean isValidEmailId(){
         boolean isValid = true;
         if (TextUtils.isEmpty(binding.etEmailaddress.getText().toString())) {
 

@@ -25,6 +25,7 @@ import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
+import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.activities.WebViewActivity;
 import dm.sime.com.kharetati.view.viewModels.HappinessViewModel;
 
@@ -67,6 +68,7 @@ public class HappinessFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Global.current_fragment_id = FragmentTAGS.FR_HAPPINESS;
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_happiness, container, false);
         binding.setFragmentHappinessVM(model);
         mRootView = binding.getRoot();

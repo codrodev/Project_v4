@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     private MainRepository repository;
     public int loadPosition;
     private MeowBottomNavigation.Model myBottomModel;
+    private Fragment fragmentAfterBackPress;
 
     public static Intent newIntent(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -103,6 +104,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         binding.customBottomBar.add(new MeowBottomNavigation.Model(5, R.drawable.ic_more_horiz_white_24dp));
 
         binding.customBottomBar.show(3, true);
+
+
         binding.txtUsername.setText(Global.isUserLoggedIn?(Global.getUser(this).getFullname()): LoginViewModel.guestName);
 
         binding.customBottomBar.setOnClickMenuListener(new Function1<MeowBottomNavigation.Model, Unit>() {
@@ -113,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 if(bottomModel.getId() == 5){
                     myBottomSheet.show(getSupportFragmentManager(), myBottomSheet.getTag());
                 } else {
-                    loadFragment(model.bottomNavigationTAG(bottomModel.getId()), false, null);
+                    loadFragment(model.bottomNavigationTAG(bottomModel.getId()), true, null);
                     /*if(savedInstanceState=null)
                     savedInstanceState.putInt("loadPosition",myBottomModel.getId());*/
                 }
@@ -219,6 +222,16 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 }
                 fragment = WebViewFragment.newInstance(Global.webViewUrl, appName);
                 break;
+            case FragmentTAGS.FR_WEBVIEW_PAYMENT:
+                String appName1 = "";
+                if(params!=null) {
+                    Global.webViewUrl = params.get(0).toString();
+                    if(params.size() > 1){
+                        appName1 = params.get(1).toString();
+                    }
+                }
+                fragment = WebViewFragment.newInstance(Global.webViewUrl, appName1);
+                break;
             case FragmentTAGS.FR_REQUEST_DETAILS:
                 if(params != null && params.size() > 0) {
                     fragment = RequestDetailsFragment.newInstance(params.get(0).toString(), params.get(1).toString(), params.get(2).toString(),
@@ -260,18 +273,18 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     public void manageBottomBar(boolean key) {
         if(!key) {
             binding.customBottomBar.setVisibility(View.GONE);
-            RelativeLayout.LayoutParams uiContainerParam =
-                    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-                            RelativeLayout.LayoutParams.MATCH_PARENT);
+            LinearLayout.LayoutParams uiContainerParam =
+                    new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.MATCH_PARENT);
             uiContainerParam.setMargins(0, 0, 0, 0);
             binding.uiContainer.setLayoutParams(uiContainerParam);
         } else {
             binding.customBottomBar.setVisibility(View.VISIBLE);
-            RelativeLayout.LayoutParams uiContainerParam =
-                    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-                            RelativeLayout.LayoutParams.MATCH_PARENT);
+            LinearLayout.LayoutParams uiContainerParam =
+                    new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.MATCH_PARENT);
             uiContainerParam.setMargins(0, 0, 0, 60);
-            uiContainerParam.addRule(RelativeLayout.BELOW, R.id.layoutProfile);
+            //uiContainerParam.addRule(LinearLayout.BELOW, R.id.layoutProfile);
             binding.uiContainer.setLayoutParams(uiContainerParam);
         }
     }
@@ -279,16 +292,77 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     @Override
     public void navigateToDashboard() {
 
-        binding.customBottomBar.show(3, true);
+        binding.customBottomBar.show(1, true);
 
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        if(Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW)||Global.current_fragment_id.equals(FragmentTAGS.FR_BOTTOMSHEET)){
-            onWebViewBack();
+        //super.onBackPressed();
+
+
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+        if (count == 0)
+        {
+
+            AlertDialogUtil.backPressedAlertDialog(
+                    "",
+                    getResources().getString(R.string.exit_alert_message),
+                    getResources().getString(R.string.ok),
+                    getResources().getString(R.string.cancel),
+                    this);
+            //clearBackStack();
         }
+        else{
+
+            if(Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW_PAYMENT)){
+                if (Global.paymentStatus == null) {
+                    AlertDialogUtil.paymentBackAlert("",
+                            getString(R.string.CANCELTRANSACTIONALERT),
+                            getResources().getString(R.string.ok),
+                            getResources().getString(R.string.cancel), MainActivity.this);
+                }
+                else if (Global.paymentStatus.equals("0")) {
+                    //fragmentManager.popBackStack();
+                    clearStack(FragmentTAGS.FR_DASHBOARD,1);
+                    //createAndLoadFragment(Constant.FR_DOWNLOADEDSITEPLAN, false, null);
+                }
+                else if (Global.paymentStatus.equals("1")) {
+                    clearBackStack();
+                }
+
+            }
+            if(Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW))
+                onWebViewBack();
+            else{
+                Fragment fragmentBeforeBackPress = getCurrentFragment();
+                // Perform the usual back action
+                super.onBackPressed();
+                if(count>1){
+                fragmentAfterBackPress = getCurrentFragment();
+                if(fragmentAfterBackPress.getTag().equals(FragmentTAGS.FR_DASHBOARD)||fragmentAfterBackPress.getTag().equals(FragmentTAGS.FR_BOOKMARK)||fragmentAfterBackPress.getTag().equals(FragmentTAGS.FR_MYMAP))
+                    binding.customBottomBar.show(1, true);
+                if(Global.current_fragment_id.equals(FragmentTAGS.FR_HAPPINESS))
+                    binding.customBottomBar.show(2, true);
+                if(Global.current_fragment_id.equals(FragmentTAGS.FR_HOME))
+                    binding.customBottomBar.show(3, true);
+                if(Global.current_fragment_id.equals(FragmentTAGS.FR_CONTACT_US))
+                    binding.customBottomBar.show(4, true);
+                if(Global.current_fragment_id.equals(FragmentTAGS.FR_BOTTOMSHEET))
+                    binding.customBottomBar.show(5, true);
+                }
+                if(count == 1)
+                    binding.customBottomBar.show(3, true);
+            }
+
+        }
+
+    }
+    private Fragment getCurrentFragment(){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        String fragmentTag = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1).getName();
+        Fragment currentFragment = fragmentManager.findFragmentByTag(fragmentTag);
+        return currentFragment;
     }
 
     @Override
@@ -322,15 +396,51 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
     @Override
     public void onWebViewBack() {
+        getSupportFragmentManager().popBackStackImmediate();
         binding.customBottomBar.show(3, true);
+        //if(Global.current_fragment_id.equals(FragmentTAGS.FR_))
 
     }
 
-    private void changeActionBarStatus(boolean key){
+    public void changeActionBarStatus(boolean key){
         if(!key) {
             binding.layoutProfile.setVisibility(View.GONE);
+            binding.profileUsername.setVisibility(View.GONE);
         } else {
             binding.layoutProfile.setVisibility(View.VISIBLE);
+            binding.profileUsername.setVisibility(View.VISIBLE);
         }
+    }
+    public void clearStack(String FragmentTAG,int loadPosition){
+        FragmentManager fragmentManager=getSupportFragmentManager();
+        if(fragmentManager!=null)
+            while(fragmentManager.getBackStackEntryCount() >=1) {
+                if(fragmentManager.getBackStackEntryCount()==1){
+                    fragmentManager.popBackStackImmediate();
+                    loadFragment(FragmentTAG, false, null);
+                    binding.customBottomBar.show(loadPosition, true);
+                } else {
+                    fragmentManager.popBackStackImmediate();
+                }
+            }
+    }
+    public void clearBackStack(){
+        FragmentManager fragmentManager=getSupportFragmentManager();
+        if(fragmentManager!=null){
+            while(fragmentManager.getBackStackEntryCount() > 1)
+            {
+                int index = getSupportFragmentManager().getBackStackEntryCount()-1;
+                FragmentManager.BackStackEntry backEntry = getSupportFragmentManager().getBackStackEntryAt(index);
+                String tag = backEntry.getName();
+                Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
+
+                if(fragment.getTag().compareToIgnoreCase(FragmentTAGS.FR_PAY)==0||fragment.getTag().compareToIgnoreCase(FragmentTAGS.FR_DASHBOARD)==0)
+                {
+                    break;
+                }
+                else
+                    fragmentManager.popBackStackImmediate();
+
+        }   }
     }
 }

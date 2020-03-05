@@ -26,6 +26,7 @@ import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
 import dm.sime.com.kharetati.datas.repositories.PayRepository;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.Global;
+import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.navigators.PayNavigator;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 import dm.sime.com.kharetati.view.viewModels.PayViewModel;
@@ -69,10 +70,12 @@ public class PayFragment extends Fragment implements PayNavigator {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Global.current_fragment_id = FragmentTAGS.FR_PAY;
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_pay, container, false);
         binding.setFragmentPayVM(model);
         mRootView = binding.getRoot();
         setRetainInstance(true);
+        setEmailAndMobileField();
         binding.payNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -197,6 +200,20 @@ public class PayFragment extends Fragment implements PayNavigator {
             }
         }
         return isValid;
+    }
+    private void setEmailAndMobileField(){
+        if(ParentSiteplanViewModel.applicantMailId != null &&
+                ParentSiteplanViewModel.applicantMailId.length() > 0){
+            binding.etEmailaddress.setText(ParentSiteplanViewModel.applicantMailId.trim());
+        } else if(Global.getUser(getActivity()).getEmail() != null) {
+            binding.etEmailaddress.setText(Global.getUser(getActivity()).getEmail().trim());
+        }
+        if(ParentSiteplanViewModel.applicantMobileNo != null &&
+                ParentSiteplanViewModel.applicantMobileNo.length() > 0){
+            binding.etMobile.setText(ParentSiteplanViewModel.applicantMobileNo.trim());
+        } else if(Global.getUser(getActivity()).getMobile() != null) {
+            binding.etMobile.setText(Global.getUser(getActivity()).getMobile().trim());
+        }
     }
 
 

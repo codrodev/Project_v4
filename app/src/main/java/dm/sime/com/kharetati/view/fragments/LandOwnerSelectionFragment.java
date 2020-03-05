@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.FragmentLandOwnershipSelectionBinding;
 import dm.sime.com.kharetati.utility.Global;
+import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.viewModels.LandOwnerViewModel;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 
@@ -41,6 +42,7 @@ public class LandOwnerSelectionFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Global.current_fragment_id = FragmentTAGS.FR_LANDOWNER_SELECTION;
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_land_ownership_selection, container, false);
         binding.setFragmentLandOwnerSelectionVM(model);
         mRootView = binding.getRoot();

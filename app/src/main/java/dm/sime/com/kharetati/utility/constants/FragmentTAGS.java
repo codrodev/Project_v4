@@ -15,4 +15,11 @@ public class FragmentTAGS {
     public static final String FR_ATTACHMENT ="FR_ATTACHMENT" ;
     public static final String FR_BOTTOMSHEET = "FR_BOTTOMSHEET";
     public static final String FR_FEEDBACK = "FR_FEEDBACK";
+    public static final String FR_PAY = "FR_PAY";
+    public static final String FR_BOOKMARK = "FR_BOOKMARK";
+    public static final String FR_MYMAP = "FR_MYMAP";
+    public static final String FR_PARENT_SITEPLAN = "FR_PARENT_SITEPLAN";
+    public static final String FR_LANDOWNER_SELECTION = "FR_LANDOWNER_SELECTION";
+    public static final String FR_DELIVERY = "FR_DELIVERY";
+    public static final String FR_WEBVIEW_PAYMENT = "FR_WEBVIEW_PAYMENT";
 }

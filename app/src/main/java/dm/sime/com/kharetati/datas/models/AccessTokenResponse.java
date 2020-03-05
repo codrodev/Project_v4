@@ -17,15 +17,7 @@ public class AccessTokenResponse {
   @SerializedName("community_layerid")
   @Expose
   private String communityLayerid;
-  @SerializedName("url_plotfinder")
-  @Expose
-  private String urlPlotfinder;
-  @SerializedName("parcelLayerExportUrl_en")
-  @Expose
-  private String parcelLayerExportUrlEn;
-  @SerializedName("parcelLayerExportUrl_ar")
-  @Expose
-  private String parcelLayerExportUrlAr;
+
   @SerializedName("plot_layerid")
   @Expose
   private String plotLayerid;
@@ -50,9 +42,7 @@ public class AccessTokenResponse {
   @SerializedName("error_description")
   @Expose
   private Object errorDescription;
-  @SerializedName("arcgis_token")
-  @Expose
-  private String arcgisToken;
+
   @SerializedName("noctemplateUrl")
   @Expose
   private String noctemplateUrl;
@@ -110,9 +100,6 @@ public class AccessTokenResponse {
   @SerializedName("appMsg")
   @Expose
   private AppMsg appMsg;
-  @SerializedName("news_ticker_interval")
-  @Expose
-  private Integer newsTickerInterval;
   @SerializedName("happiness_url")
   @Expose
   private String happinessUrl;
@@ -161,29 +148,7 @@ public class AccessTokenResponse {
     this.communityLayerid = communityLayerid;
   }
 
-  public String getUrlPlotfinder() {
-    return urlPlotfinder;
-  }
 
-  public void setUrlPlotfinder(String urlPlotfinder) {
-    this.urlPlotfinder = urlPlotfinder;
-  }
-
-  public String getParcelLayerExportUrlEn() {
-    return parcelLayerExportUrlEn;
-  }
-
-  public void setParcelLayerExportUrlEn(String parcelLayerExportUrlEn) {
-    this.parcelLayerExportUrlEn = parcelLayerExportUrlEn;
-  }
-
-  public String getParcelLayerExportUrlAr() {
-    return parcelLayerExportUrlAr;
-  }
-
-  public void setParcelLayerExportUrlAr(String parcelLayerExportUrlAr) {
-    this.parcelLayerExportUrlAr = parcelLayerExportUrlAr;
-  }
 
   public String getPlotLayerid() {
     return plotLayerid;
@@ -247,14 +212,6 @@ public class AccessTokenResponse {
 
   public void setErrorDescription(Object errorDescription) {
     this.errorDescription = errorDescription;
-  }
-
-  public String getArcgisToken() {
-    return arcgisToken;
-  }
-
-  public void setArcgisToken(String arcgisToken) {
-    this.arcgisToken = arcgisToken;
   }
 
   public String getNoctemplateUrl() {
@@ -407,14 +364,6 @@ public class AccessTokenResponse {
 
   public void setAppMsg(AppMsg appMsg) {
     this.appMsg = appMsg;
-  }
-
-  public Integer getNewsTickerInterval() {
-    return newsTickerInterval;
-  }
-
-  public void setNewsTickerInterval(Integer newsTickerInterval) {
-    this.newsTickerInterval = newsTickerInterval;
   }
 
   public String getHappinessUrl() {

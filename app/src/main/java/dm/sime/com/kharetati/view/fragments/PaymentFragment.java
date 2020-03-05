@@ -1,6 +1,5 @@
 package dm.sime.com.kharetati.view.fragments;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,12 +22,10 @@ import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.navigators.FragmentNavigator;
-import dm.sime.com.kharetati.view.viewModels.LoginViewModel;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 import dm.sime.com.kharetati.view.viewModels.PayViewModel;
 
-public class WebViewFragment extends Fragment {
-
+public class PaymentFragment extends Fragment {
     private static String URL = "url";
     private static String APP_NAME = "app_name";
     WebView webView;
@@ -37,8 +34,8 @@ public class WebViewFragment extends Fragment {
     private static String launchUrl, appName;
     FragmentNavigator frNavigator;
 
-    public static WebViewFragment newInstance(String url, String appName){
-        WebViewFragment fragment = new WebViewFragment();
+    public static PaymentFragment newInstance(String url, String appName){
+        PaymentFragment fragment = new PaymentFragment();
         Bundle args = new Bundle();
         args.putString(URL, url);
         args.putString(APP_NAME, appName);
@@ -60,8 +57,8 @@ public class WebViewFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Global.current_fragment_id = FragmentTAGS.FR_WEBVIEW;
-        View view = inflater.inflate(R.layout.fragment_webview, container, false);
+        Global.current_fragment_id = FragmentTAGS.FR_WEBVIEW_PAYMENT;
+        View view = inflater.inflate(R.layout.fragment_payment, container, false);
         //txtUsername = view.findViewById(R.id.txtUsername);
         //txtWelcome = view.findViewById(R.id.txtWelcome);
         imgBack = view.findViewById(R.id.imgBack);
@@ -129,6 +126,4 @@ public class WebViewFragment extends Fragment {
         }
 
     }
-
-
 }

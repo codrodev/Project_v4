@@ -176,8 +176,10 @@
     <string name="feedback_mobile_number">رقم الهاتف المحمول</string>
     <string name="submit">إرسال</string>
     <string name="all_fields_are_required">جميع الحقول مطلوبه</string>
-
-
+    <string name="search">البحث</string>
+    <string name="enter_valid_username">الرجاء إدخال اسم مستخدم صالح</string>
+    <string name="CANCELTRANSACTIONALERT">هل انت متأكد من إلغاء العملية؟</string>
+    <string name="exit_alert_message">هل أنت متأكد من أنك تريد الخروج من التطبيق؟</string>
 
 
     <string-array name="emirates">

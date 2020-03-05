@@ -247,12 +247,15 @@ public class Global {
 //            else return false;
 //        } else
 //            return false;
+        NetworkInfo activeNetworkInfo=null;
 
+        if(context!=null){
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        activeNetworkInfo = connectivityManager.getActiveNetworkInfo();}
         if (activeNetworkInfo == null) return false;
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+
     }
 
     public static void hideSoftKeyboard(Activity activity) {

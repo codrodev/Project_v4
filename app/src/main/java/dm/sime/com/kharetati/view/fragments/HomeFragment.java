@@ -152,6 +152,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Global.current_fragment_id = FragmentTAGS.FR_HOME;
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         binding.setFragmentHomeVM(model);
         mRootView = binding.getRoot();
@@ -217,7 +218,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             //binding.tabRuntimeLayout.setupWithViewPager(binding.viewPagerRuntime);
             for(SearchForm form: app.getSearchForm()){
                 if (form.getTabs() != null) {
-                    binding.tabRuntimeLayout.addTab(binding.tabRuntimeLayout.newTab().setText(form.getTabs().getNameEn()));
+                    binding.tabRuntimeLayout.addTab(binding.tabRuntimeLayout.newTab().setText(CURRENT_LOCALE.equals("en")?form.getTabs().getNameEn():form.getTabs().getNameAr()));
 
                 }
             }
@@ -296,7 +297,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
         CleanableEditText x = new CleanableEditText(getActivity());
         //x.setHint(form.getPlaceHolderEn());
-        x.setHint(control.getPlaceHolderEn());
+        x.setHint(Global.CURRENT_LOCALE.equals("en")?control.getPlaceHolderEn():control.getPlaceHolderAr());
         if(control.getInputType().toLowerCase().equals("number")) {
 
         }
@@ -361,7 +362,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         spinnerView = new TextView(getActivity());
         spinnerView.setTextSize(16f);
         spinnerView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        spinnerView.setText(control.getPlaceHolderEn());
+        spinnerView.setText(Global.CURRENT_LOCALE.equals("en")?control.getPlaceHolderEn():control.getPlaceHolderAr());
         spinnerView.setTypeface(typeface);
         spinnerLayout.addView(spinnerView,dynamcLayoutParams);
         spinnerLayout.addView(chevronlayout,chevronParams);

@@ -12,13 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.activities.MainActivity">
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <RelativeLayout
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
                 android:id="@+id/layoutProfile"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:background="@drawable/maroon_overlay_bg">
                 <TextView
                     android:id="@+id/txtWelcome"
@@ -29,8 +31,8 @@
                     android:textStyle="bold"
                     android:textColor="@color/white"
                     android:textSize="20sp"
-                    android:layout_marginRight="100dp"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="30dp"
                     android:layout_marginTop="10dp" />
                 <ImageView
                     android:id="@+id/imgHelp"
@@ -39,63 +41,69 @@
                     android:layout_alignParentRight="true"
                     android:src="@drawable/ic_help_outline_white_24dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_below="@+id/txtWelcome">
-                    <dm.sime.com.kharetati.view.customview.RoundedImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:id="@+id/imgRound"
-                        android:layout_marginStart="30dp"
-                        android:gravity="center_vertical"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/profile_avatar"/>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:layout_gravity="center_vertical"
-                        android:orientation="vertical">
+                    android:layout_marginStart="-60dp"
+                    android:layout_marginEnd="50dp"/>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/txtUsername"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginHorizontal="10dp"
-                            android:fontFamily="@font/dubai_font"
-                            android:gravity="center_vertical"
-                            android:text="Muhammad"
-                            android:textColor="@color/white"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/dubai_font"
-                            android:text="Bin Saleh Abdullah"
-                            android:textStyle="bold"
-                            android:gravity="center_vertical"
-                            android:layout_gravity="center_vertical"
-                            android:textColor="@color/white"
-                            android:visibility="gone"
-                            android:layout_marginHorizontal="10dp"
-                            android:textSize="18sp" />
-                    </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/profileUsername"
+                android:background="@drawable/maroon_overlay_bg"
+                android:gravity="center_vertical">
+                <dm.sime.com.kharetati.view.customview.RoundedImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/imgRound"
+                    android:layout_marginStart="30dp"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/arab_avatar"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtUsername"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginHorizontal="10dp"
+                        android:fontFamily="@font/dubai_font"
+                        android:gravity="center_vertical"
+                        android:text="Muhammad"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/dubai_font"
+                        android:text="Bin Saleh Abdullah"
+                        android:textStyle="bold"
+                        android:gravity="center_vertical"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/white"
+                        android:visibility="gone"
+                        android:layout_marginHorizontal="10dp"
+                        android:textSize="18sp" />
                 </LinearLayout>
 
-            </RelativeLayout>
-            <RelativeLayout
+            </LinearLayout>
+            <FrameLayout
                 android:id="@+id/ui_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/layoutProfile"
                 android:layout_marginBottom="60dp"/>
-        </RelativeLayout>
+
+
+        </LinearLayout>
         <com.etebarian.meowbottomnavigation.MeowBottomNavigation
             android:id="@+id/customBottomBar"
             android:layout_width="match_parent"

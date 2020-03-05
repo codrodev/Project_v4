@@ -88,6 +88,7 @@ import dm.sime.com.kharetati.utility.Files.FilePickerDialog;
 import dm.sime.com.kharetati.utility.Files.ListItem;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.AppConstants;
+import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.activities.ImageCropActivity;
 import dm.sime.com.kharetati.view.activities.ViewImage;
 import dm.sime.com.kharetati.view.customview.CameraPermissionInterface;
@@ -183,6 +184,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Global.current_fragment_id = FragmentTAGS.FR_ATTACHMENT;
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_attachment, container, false);
         binding.setFragmentAttachmentVM(model);
         mRootView = binding.getRoot();

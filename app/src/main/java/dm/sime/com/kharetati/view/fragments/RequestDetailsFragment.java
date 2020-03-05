@@ -101,6 +101,9 @@ public class RequestDetailsFragment extends Fragment {
         tvParcelId.setText(parcelId);
         tvVoucher.setText(voucherNo);
         tvAmount.setText(voucherAmount);
+        ((MainActivity)getActivity()).manageActionBar(false);
+        ((MainActivity)getActivity()).manageBottomBar(false);
+        Global.hideSoftKeyboard(getActivity());
 
         payNow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +114,7 @@ public class RequestDetailsFragment extends Fragment {
                 AttachmentFragment.paymentUrl = eradUrl+"&locale="+locale+"&VoucherNo="+voucherNo+"&PayeeNameEN="+userName+"&MobileNo="+mobile+"&eMail="+email+"&ReturnURL="+callBackUrl;
                 ArrayList al = new ArrayList<>();
                 al.add(AttachmentFragment.paymentUrl);
+                Global.current_fragment_id = FragmentTAGS.FR_WEBVIEW_PAYMENT;
                 ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
 
             }
@@ -120,25 +124,35 @@ public class RequestDetailsFragment extends Fragment {
             public void onClick(View v) {
                 Global.paymentStatus = null;
                 int index = ((MainActivity)getActivity()).getSupportFragmentManager().getBackStackEntryCount()-1;
-                FragmentManager.BackStackEntry backEntry = getFragmentManager().getBackStackEntryAt(index-1);
+                FragmentManager.BackStackEntry backEntry = getFragmentManager().getBackStackEntryAt(index);
                 String tag = backEntry.getName();
                 Fragment fragment = getFragmentManager().findFragmentByTag(tag);
 
-                if(fragment.getTag().compareToIgnoreCase(FragmentTAGS.FR_ATTACHMENT)==0){
-                    FragmentManager fragmentManager=getFragmentManager();
+                if(getFragmentManager().getBackStackEntryAt(index-1).getName().compareToIgnoreCase(FragmentTAGS.FR_DASHBOARD)==0){
+                    /*FragmentManager fragmentManager=getFragmentManager();
                     if(fragmentManager!=null)
                         while(fragmentManager.getBackStackEntryCount() >=0) {
-                            if(fragmentManager.getBackStackEntryCount()== 0 ){
+                            if(fragmentManager.getBackStackEntryCount() == 0 ){
                                 break;
                             } else {
-                                fragmentManager.popBackStackImmediate();
+                                while (fragment.getTag().compareToIgnoreCase(FragmentTAGS.FR_MYMAP)==0)
+                                    fragmentManager.popBackStackImmediate();
+                               *//* if(fragment.getTag().compareToIgnoreCase(FragmentTAGS.FR_MYMAP)==0){
+
+                                    break;
+                                }
+                                else*//*
+
                             }
-                        }
+                        }*/
+                    ((MainActivity)getActivity()).clearStack(FragmentTAGS.FR_DASHBOARD,1);
+                }
+                else if(fragment.getTag().compareToIgnoreCase(FragmentTAGS.FR_REQUEST_DETAILS)==0){
+                    ((MainActivity)getActivity()).clearStack(FragmentTAGS.FR_HOME,3);
 
                 }
                 else
                     ((MainActivity)getActivity()).onBackPressed();
-
             }
         });
 

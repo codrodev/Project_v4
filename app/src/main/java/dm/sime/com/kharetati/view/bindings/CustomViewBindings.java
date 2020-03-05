@@ -20,7 +20,7 @@ public class CustomViewBindings {
     @BindingAdapter("setHorizontalAdapter")
     public static void bindHorizontalRecyclerViewAdapter(RecyclerView recyclerView, RecyclerView.Adapter<?> adapter) {
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(), RecyclerView.HORIZONTAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(), RecyclerView.HORIZONTAL, true));
         recyclerView.setAdapter(adapter);
     }
 

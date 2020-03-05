@@ -70,6 +70,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Global.current_fragment_id = FragmentTAGS.FR_PARENT_SITEPLAN;
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_parent_siteplan, container, false);
         binding.setFragmentParentSiteplanVM(model);
         mRootView = binding.getRoot();

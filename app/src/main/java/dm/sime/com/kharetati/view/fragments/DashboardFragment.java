@@ -13,6 +13,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.FragmentDashboardBinding;
+import dm.sime.com.kharetati.utility.Global;
+import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.viewModels.DashboardViewModel;
 
 public class DashboardFragment extends Fragment implements ViewPager.OnPageChangeListener{
@@ -34,6 +36,7 @@ public class DashboardFragment extends Fragment implements ViewPager.OnPageChang
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Global.current_fragment_id = FragmentTAGS.FR_DASHBOARD;
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dashboard, container, false);
         binding.setFragmentDashboardVM(model);
         mRootView = binding.getRoot();

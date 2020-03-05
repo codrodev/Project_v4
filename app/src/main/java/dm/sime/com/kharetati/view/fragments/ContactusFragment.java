@@ -126,6 +126,7 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Global.current_fragment_id = FragmentTAGS.FR_CONTACT_US;
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_contactus, container, false);
         binding.setFragmentContactusVM(model);
         mRootView = binding.getRoot();

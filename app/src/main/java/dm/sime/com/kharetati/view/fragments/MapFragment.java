@@ -172,6 +172,7 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Global.current_fragment_id = FragmentTAGS.FR_MAP;
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_map, container, false);
         binding.setFragmentMapVM(model);
         mRootView = binding.getRoot();
@@ -254,14 +255,12 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                 ArcGISMapImageSublayer sublayer= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(retriveLayer.getId()));
                 sublayer.setDefinitionExpression(retriveLayer.getQueryClause());
 
+                if (getActivity() != null) {
+                    if (Global.isConnected(getActivity())) {
+                        findParcel();
+                    }
+                }
 
-                if(Global.isConnected(getActivity())){
-                    findParcel();
-                }
-                else{
-                    //progressDialog.hide();
-                }
-                //initiateFindParcelRequest();
             }
             else{
                 /*imgNext.clearAnimation();

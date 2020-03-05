@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
@@ -33,6 +35,7 @@ import dm.sime.com.kharetati.datas.models.User;
 import dm.sime.com.kharetati.datas.models.UserRegistration;
 import dm.sime.com.kharetati.datas.repositories.UserRepository;
 import dm.sime.com.kharetati.view.activities.LoginActivity;
+import dm.sime.com.kharetati.view.fragments.DeliveryFragment;
 import dm.sime.com.kharetati.view.navigators.AuthListener;
 import dm.sime.com.kharetati.view.activities.MainActivity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -157,7 +160,10 @@ public class LoginViewModel extends ViewModel {
 
             authListener.onFailure(activity.getResources().getString(R.string.enter_password));
 
-        } else {
+        }else if(!isValidEmail(getDataEmail())) {
+            authListener.onFailure(activity.getResources().getString(R.string.enter_valid_username));
+            }
+            else {
 
 
             kharetatiApp = KharetatiApp.create(activity);
@@ -202,7 +208,6 @@ public class LoginViewModel extends ViewModel {
                 loginDetails.username = email;
                 loginDetails.pwd = password;
                 //Global.loginDetails.showFormPrefilledOnRememberMe=false;
-                Global.arcgis_token = accessTokenResponse.getArcgisToken();
                 Global.forceUserToUpdateBuild_msg_en = accessTokenResponse.getForceUserToUpdateBuildMsgEn();
                 Global.forceUserToUpdateBuild_msg_ar = accessTokenResponse.getForceUserToUpdateBuildMsgAr();
                 Global.noctemplateUrl = accessTokenResponse.getNoctemplateUrl();
@@ -233,10 +238,8 @@ public class LoginViewModel extends ViewModel {
                 AppUrls.GIS_LAYER_USERNAME = (accessTokenResponse.getGisUserName() != null && accessTokenResponse.getGisUserName() != "") ? accessTokenResponse.getGisUserName() : AppUrls.GIS_LAYER_USERNAME;
                 AppUrls.GIS_LAYER_URL = (accessTokenResponse.getGisLayerUrl() != null && accessTokenResponse.getGisLayerUrl() != "") ? accessTokenResponse.getGisLayerUrl() : AppUrls.GIS_LAYER_URL;
                 AppUrls.GIS_LAYER_TOKEN_URL = (accessTokenResponse.getGisTokenUrl() != null && accessTokenResponse.getGisTokenUrl() != "") ? accessTokenResponse.getGisTokenUrl() : AppUrls.GIS_LAYER_TOKEN_URL;
-                AppUrls.URL_PLOTFINDER = (accessTokenResponse.getUrlPlotfinder() != null && accessTokenResponse.getUrlPlotfinder() != "") ? accessTokenResponse.getUrlPlotfinder() : AppUrls.URL_PLOTFINDER;
                 AppUrls.GIS_LAYER_COMMUNITY_URL = (accessTokenResponse.getCommunityLayerid() != null && accessTokenResponse.getCommunityLayerid() != "") ? AppUrls.GIS_LAYER_URL.toString() + "/" + accessTokenResponse.getCommunityLayerid() : AppUrls.GIS_LAYER_URL.toString() + "/" + AppUrls.community_layerid;
-                AppUrls.parcelLayerExportUrl_en = (accessTokenResponse.getParcelLayerExportUrlEn() != null && accessTokenResponse.getParcelLayerExportUrlEn() != "") ? accessTokenResponse.getParcelLayerExportUrlEn().toString() + "?token=" + Global.arcgis_token : AppUrls.parcelLayerExportUrl_en.toString() + "?token=" + Global.arcgis_token;
-                AppUrls.parcelLayerExportUrl_ar = (accessTokenResponse.getParcelLayerExportUrlAr() != null && accessTokenResponse.getParcelLayerExportUrlAr() != "") ? accessTokenResponse.getParcelLayerExportUrlAr().toString() + "?token=" + Global.arcgis_token : AppUrls.parcelLayerExportUrl_ar.toString() + "?token=" + Global.arcgis_token;
+
                 AppUrls.plot_layerid = (accessTokenResponse.getPlotLayerid() != null && accessTokenResponse.getPlotLayerid() != "") ? accessTokenResponse.getPlotLayerid() : AppUrls.plot_layerid;
 
                 authListener.addUserToHistory(loginDetails.username);
@@ -418,4 +421,8 @@ public class LoginViewModel extends ViewModel {
             authListener.onFailure("Unable to connect with the remote server");
         }
     }
+    public static boolean isValidEmail(CharSequence target) {
+        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
+    }
+
 }

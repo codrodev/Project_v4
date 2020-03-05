@@ -36,6 +36,7 @@ import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.activities.WebViewActivity;
 import dm.sime.com.kharetati.view.fragments.AttachmentFragment;
 import dm.sime.com.kharetati.view.fragments.BookmarkFragment;
+import dm.sime.com.kharetati.view.fragments.WebViewFragment;
 import dm.sime.com.kharetati.view.navigators.MainNavigator;
 
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_CONTACT_US;
@@ -324,6 +325,87 @@ public class AlertDialogUtil {
         textView.setPadding(80, 25, 25, 10);
 
     }
+    public static void backPressedAlertDialog(String title, String message, String btnTxt, String btnTxt2, final Context context) {
+        AlertDialog alertDialog = new AlertDialog.Builder(context)
+                .setMessage(message)
+                .setTitle(title)
+                .setCancelable(false)
+                .setPositiveButton(btnTxt, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        if(Global.current_fragment_id.equals(FR_WEBVIEW))
+                            ((Activity) context).onBackPressed();
+                        else
+                            ((Activity) context).finish();
+
+                    }
+                })
+                .setNegativeButton(btnTxt2, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).show();
+
+        TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+        //TextView textView1 = (TextView) alertDialog.findViewById(android.support.v7.appcompat.R.id.alertTitle);
+
+        TextView positiveButton = (Button) alertDialog.findViewById(android.R.id.button1);
+        TextView negativeButton = (Button) alertDialog.findViewById(android.R.id.button2);
+        Typeface face = Typeface.createFromAsset(context.getAssets(), "Dubai-Regular.ttf");
+        textView.setTypeface(face);
+        positiveButton.setAllCaps(false);
+        negativeButton.setAllCaps(false);
+        positiveButton.setTypeface(face);
+        negativeButton.setTypeface(face);
+        //textView1.setTypeface(face);
+
+        textView.setPadding(80, 25, 25, 10);
+
+    }
+    public static void paymentBackAlert(String title,String message, String btnTxt, String btnTxt2, final Context context) {
+
+
+        AlertDialog alertDialog = new AlertDialog.Builder(context)
+                .setTitle(title)
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton(btnTxt, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //(((MainActivity)context)).getSupportFragmentManager().popBackStackImmediate();
+                        ((MainActivity)context).changeActionBarStatus(true);
+                        (((MainActivity)context)).clearBackStack();
+                        (((MainActivity)context)).getSupportFragmentManager().beginTransaction().remove(new WebViewFragment()).commit();
+
+
+                    }
+
+                }).setNegativeButton(btnTxt2, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).show();
+
+        TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+//        TextView textView1= (TextView) alertDialog.findViewById(android.support.v7.appcompat.R.id.alertTitle);
+
+        TextView positiveButton = (Button) alertDialog.findViewById(android.R.id.button1);
+        TextView negativeButton = (Button) alertDialog.findViewById(android.R.id.button2);
+        Typeface face= Typeface.createFromAsset(context.getAssets(),"Dubai-Regular.ttf");
+        textView.setTypeface(face);
+        positiveButton.setAllCaps(false);
+        negativeButton.setAllCaps(false);
+        positiveButton.setTypeface(face);
+        negativeButton.setTypeface(face);
+//        textView1.setTypeface(face);
+
+        textView.setPadding(80, 25, 25, 10);
+
+    }
+
    /* private static final String DM_PHONE_NUMBER ="800900" ;
 
     public static void warningAlertDialog(String title, String message, String btnTxt, Context context) {

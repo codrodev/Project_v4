@@ -160,7 +160,8 @@ public class ParentSiteplanViewModel extends ViewModel {
                     if(Global.paymentUrl != null && Global.paymentUrl.length() > 0){
                         ArrayList al = new ArrayList<>();
                         al.add(Global.paymentUrl);
-                        ((MainActivity)activity).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+
+                        ((MainActivity)activity).loadFragment(FragmentTAGS.FR_WEBVIEW_PAYMENT,true,al);
                     }
                 } else if(PayFragment.paymentType.compareToIgnoreCase("Pay later")==0){
                     ParentSiteplanFragment.currentIndex = 0;

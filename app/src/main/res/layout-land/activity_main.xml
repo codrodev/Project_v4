@@ -18,7 +18,7 @@
             <RelativeLayout
                 android:id="@+id/layoutProfile"
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
+                android:layout_height="120dp"
                 android:background="@drawable/maroon_overlay_bg">
                 <TextView
                     android:id="@+id/txtWelcome"
@@ -28,9 +28,18 @@
                     android:text="@string/title_welcome"
                     android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:textSize="18.75sp"
-                    android:layout_marginHorizontal="30dp"
+                    android:textSize="20sp"
+                    android:layout_marginRight="100dp"
+                    android:layout_marginLeft="30dp"
                     android:layout_marginTop="10dp" />
+                <ImageView
+                    android:id="@+id/imgHelp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_help_outline_white_24dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -38,9 +47,10 @@
                     android:gravity="center_vertical"
                     android:layout_below="@+id/txtWelcome">
                     <dm.sime.com.kharetati.view.customview.RoundedImageView
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:layout_marginLeft="30dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:id="@+id/imgRound"
+                        android:layout_marginStart="30dp"
                         android:gravity="center_vertical"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/profile_avatar"/>
@@ -61,7 +71,7 @@
                             android:gravity="center_vertical"
                             android:text="Muhammad"
                             android:textColor="@color/white"
-                            android:textSize="14sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
                         <TextView
                             android:layout_width="match_parent"
@@ -74,7 +84,7 @@
                             android:textColor="@color/white"
                             android:visibility="gone"
                             android:layout_marginHorizontal="10dp"
-                            android:textSize="18dp" />
+                            android:textSize="18sp" />
                     </LinearLayout>
                 </LinearLayout>
 

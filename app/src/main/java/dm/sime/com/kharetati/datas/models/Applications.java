@@ -2,6 +2,8 @@ package dm.sime.com.kharetati.datas.models;
 
 import java.util.List;
 
+import dm.sime.com.kharetati.utility.Global;
+
 public class Applications {
     private String SearchUrl;
 
@@ -66,7 +68,8 @@ public class Applications {
     }
 
     public String getIconBase64() {
-        return IconBase64;
+
+        return IconBase64.contains("data:image/png;base64,")?IconBase64.replace("data:image/png;base64,",""):IconBase64;
     }
 
     public void setIconBase64(String iconBase64) {
@@ -106,7 +109,7 @@ public class Applications {
     }
 
     public String getNameEn() {
-        return NameEn;
+        return Global.CURRENT_LOCALE.equals("en")?NameEn:NameAr;
     }
 
     public void setNameEn(String nameEn) {
