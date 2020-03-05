@@ -222,15 +222,19 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             Global.helpUrlEn = model.getSelectedApplication().getHelpUrlAr();
         }
 
-        if(model.getSelectedApplication().getSearchForm() != null && model.getSelectedApplication().getSearchForm().size() > 0){
+        if(model.getSelectedApplication().getSearchForm() != null && model.getSelectedApplication().getSearchForm().size() > 1){
             lstSearchForm = app.getSearchForm();
+            binding.tabRuntimeLayout.setVisibility(View.VISIBLE);
+            binding.layoutControlHeader.setVisibility(View.GONE);
             binding.layoutRuntimeContainer.setVisibility(View.VISIBLE);
             binding.tabRuntimeLayout.removeAllTabs();
             //binding.tabRuntimeLayout.setupWithViewPager(binding.viewPagerRuntime);
+            int x =0;
             for(SearchForm form: app.getSearchForm()){
                 if (form.getTabs() != null) {
                     binding.tabRuntimeLayout.addTab(binding.tabRuntimeLayout.newTab().setText(form.getTabs().getNameEn()));
-
+                    binding.tabRuntimeLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+                    binding.tabRuntimeLayout.setTabMode(TabLayout.MODE_FIXED);
                 }
             }
 
@@ -259,8 +263,17 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
                 }
             });
+        } else if(model.getSelectedApplication().getSearchForm() != null && model.getSelectedApplication().getSearchForm().size() == 1){
+            binding.tabRuntimeLayout.setVisibility(View.GONE);
+            binding.layoutControlHeader.setVisibility(View.VISIBLE);
+            binding.layoutRuntimeContainer.setVisibility(View.VISIBLE);
+            binding.txtHeader.setText(app.getSearchForm().get(0).getTabs().getNameEn());
+
+            runtimeControlRenderer(app.getSearchForm().get(0).getTabs().getControls());
         } else {
             clearRuntimeParent();
+            binding.layoutControlHeader.setVisibility(View.GONE);
+            binding.layoutRuntimeContainer.setVisibility(View.GONE);
             if(!model.getSelectedApplication().getIsNative()){
                 ArrayList param = new ArrayList<>();
                 param.add( model.getSelectedApplication().getSearchUrl());
@@ -303,7 +316,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         layout.setOrientation(LinearLayout.HORIZONTAL);
         layout.setGravity(Gravity.CENTER);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(8,8,8,8);
+        layoutParams.setMargins(0,8,0,8);
         layout.setLayoutParams(layoutParams);
 
         CleanableEditText x = new CleanableEditText(getActivity());
@@ -343,14 +356,14 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         //dynamiclayout.setBackgroundColor(Color.RED);
         dynamiclayout.setLayoutDirection(View.LAYOUT_DIRECTION_LOCALE);
         LinearLayout.LayoutParams dynamcLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dynamcLayoutParams.setMargins(20,8,20,8);
+        dynamcLayoutParams.setMargins(0,8,0,8);
 
 
         LinearLayout spinnerLayout = new LinearLayout(getActivity());
         spinnerLayout.setOrientation(LinearLayout.HORIZONTAL);
         spinnerLayout.setBackgroundColor(getActivity().getResources().getColor(R.color.white));
         LinearLayout.LayoutParams spinnerlayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        spinnerlayoutParams.setMargins(48,8,48,8);
+        spinnerlayoutParams.setMargins(65,8,65,8);
         spinnerLayout.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);
         spinnerLayout.setBackground(getActivity().getResources().getDrawable(R.drawable.border_background));
         spinnerLayout.setLayoutParams(spinnerlayoutParams);

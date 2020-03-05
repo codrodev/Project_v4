@@ -68,21 +68,21 @@ public class DashboardFragment extends Fragment implements ViewPager.OnPageChang
     private void changeBookmarkColor(){
         binding.txtBookmark.setTextColor(getResources().getColor(R.color.white));
         binding.layoutBookmark.setBackgroundColor(getResources().getColor(R.color.maroon_dark));
-        binding.imgBookMark.setImageDrawable(getResources().getDrawable(R.drawable.ic_book_white_24dp));
+        binding.imgBookMark.setImageDrawable(getResources().getDrawable(R.drawable.ic_bookmark_white));
 
         binding.txtMyMap.setTextColor(getResources().getColor(R.color.black));
         binding.layoutMyMap.setBackgroundColor(getResources().getColor(R.color.white));
-        binding.imgMyMap.setImageDrawable(getResources().getDrawable(R.drawable.ic_pin_drop_24dp));
+        binding.imgMyMap.setImageDrawable(getResources().getDrawable(R.drawable.ic_site_plan));
     }
 
     private void changeMyMapColor(){
         binding.txtBookmark.setTextColor(getResources().getColor(R.color.black));
         binding.layoutBookmark.setBackgroundColor(getResources().getColor(R.color.white));
-        binding.imgBookMark.setImageDrawable(getResources().getDrawable(R.drawable.ic_book_black_24dp));
+        binding.imgBookMark.setImageDrawable(getResources().getDrawable(R.drawable.ic_bookmark));
 
         binding.txtMyMap.setTextColor(getResources().getColor(R.color.white));
         binding.layoutMyMap.setBackgroundColor(getResources().getColor(R.color.maroon_dark));
-        binding.imgMyMap.setImageDrawable(getResources().getDrawable(R.drawable.ic_pin_drop_white_24dp));
+        binding.imgMyMap.setImageDrawable(getResources().getDrawable(R.drawable.ic_site_plan_white));
     }
 
     private int getNext() {

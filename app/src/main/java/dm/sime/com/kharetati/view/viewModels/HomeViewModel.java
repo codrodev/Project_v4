@@ -113,8 +113,11 @@ public class HomeViewModel extends ViewModel {
         mutableInAppNotifications = new MutableLiveData<>();
         mutableInAppNotifications.setValue(model.getLstInAppNotifications());
         //adapterNotification = new InAppNotificationAdapter(R.layout.adapter_in_app_notifications, this, context);
-
-        getSession();
+        if(Global.isUserLoggedIn) {
+            getSession();
+        } else {
+            getApps();
+        }
     }
 
     public void manageAppBar(Context ctx, boolean status){
@@ -366,7 +369,7 @@ public class HomeViewModel extends ViewModel {
         SerializeGetAppRequestModel model = new SerializeGetAppRequestModel();
 
         SerializeGetAppInputRequestModel inputModel = new SerializeGetAppInputRequestModel();
-        inputModel.setTOKEN(Global.app_session_token);
+        inputModel.setTOKEN(Global.app_session_token == null ? "" : Global.app_session_token);
         inputModel.setREMARKS("AndroidV8.0");
 
         model.setInputJson(inputModel);
@@ -396,12 +399,18 @@ public class HomeViewModel extends ViewModel {
                 mutableHomeGridMenu.setValue(appResponse.getService_response().getApplications());
                 homeNavigator.populateGridMenu();
             } else {
-                AlertDialogUtil.errorAlertDialog("", activity.getResources().getString(R.string.community_error),
-                        activity.getResources().getString(R.string.ok), activity);
+                if(appResponse.getMessage() != null){
+                    homeNavigator.onFailure(appResponse.getMessage());
+                } else {
+                    homeNavigator.onFailure(activity.getResources().getString(R.string.community_error));
+                }
             }
         } else {
-            AlertDialogUtil.errorAlertDialog("", activity.getResources().getString(R.string.community_error),
-                    activity.getResources().getString(R.string.ok), activity);
+            if(appResponse.getMessage() != null){
+                homeNavigator.onFailure(appResponse.getMessage());
+            } else {
+                homeNavigator.onFailure(activity.getResources().getString(R.string.community_error));
+            }
         }
 
 

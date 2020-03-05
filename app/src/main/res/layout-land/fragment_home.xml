@@ -78,13 +78,14 @@
                     android:layout_marginVertical="5dp"
                     android:gravity="center"
                     android:orientation="horizontal"/>
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/layoutRuntimeContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/layoutDots"
                     android:background="@color/maroon_dark"
                     android:layout_marginBottom="100dp"
+                    android:orientation="vertical"
                     android:visibility="gone"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="10dp">
@@ -97,13 +98,13 @@
                         android:textColor="@color/white"
                         android:layout_marginVertical="10dp"
                         android:layout_marginHorizontal="10dp"/>
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="2dp"
                         android:background="@color/white"
                         android:layout_marginVertical="2dp"
-                        android:layout_below="@+id/txtSearchHeader">
+                        android:orientation="vertical">
                         <com.google.android.material.tabs.TabLayout
                             android:id="@+id/tabRuntimeLayout"
                             android:layout_width="match_parent"
@@ -117,23 +118,29 @@
                             app:tabIndicatorColor="@color/yellow_light"
                             app:tabIndicatorHeight="3dp"
                             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
-                        <!--<androidx.viewpager.widget.ViewPager
-                            android:id="@+id/viewPagerRuntime"
-                            android:layout_width="fill_parent"
-                            android:layout_height="200dp"
-                            android:layout_marginHorizontal="10dp"
-                            android:layout_below="@+id/tabRuntimeLayout"
-                            android:clipChildren="false"/>-->
                         <LinearLayout
-                            android:id="@+id/runtimeParent"
+                            android:id="@+id/layoutControlHeader"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginVertical="10dp"
                             android:layout_marginHorizontal="10dp"
                             android:layout_below="@+id/tabRuntimeLayout"
+                            android:background="@color/extra_light_gray">
+                            <TextView
+                                android:id="@+id/txtHeader"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:textColor="@color/maroon_dark" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/runtimeParent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="10dp"
                             android:orientation="vertical"/>
-                    </RelativeLayout>
-                </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
         </RelativeLayout>
         </androidx.core.widget.NestedScrollView>
         <!--<include layout="@layout/bottomsheet_webpage" />-->

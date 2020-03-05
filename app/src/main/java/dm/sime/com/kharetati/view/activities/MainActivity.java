@@ -96,11 +96,11 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         model.initialize();
         binding.setActivityMainVM(model);
         final BottomNavigationFragmentSheet myBottomSheet = BottomNavigationFragmentSheet.newInstance();
-        binding.customBottomBar.add(new MeowBottomNavigation.Model(1, R.drawable.ic_dashboard_white_24dp));
-        binding.customBottomBar.add(new MeowBottomNavigation.Model(2, R.drawable.ic_insert_emoticon_white_24dp));
-        binding.customBottomBar.add(new MeowBottomNavigation.Model(3, R.drawable.ic_home_white_24dp));
-        binding.customBottomBar.add(new MeowBottomNavigation.Model(4, R.drawable.ic_message_white_24dp));
-        binding.customBottomBar.add(new MeowBottomNavigation.Model(5, R.drawable.ic_more_horiz_white_24dp));
+        binding.customBottomBar.add(new MeowBottomNavigation.Model(1, R.drawable.ic_dashboard));
+        binding.customBottomBar.add(new MeowBottomNavigation.Model(2, R.drawable.ic_happiness));
+        binding.customBottomBar.add(new MeowBottomNavigation.Model(3, R.drawable.ic_home_run));
+        binding.customBottomBar.add(new MeowBottomNavigation.Model(4, R.drawable.ic_comment));
+        binding.customBottomBar.add(new MeowBottomNavigation.Model(5, R.drawable.ic_more));
 
         binding.customBottomBar.show(3, true);
         binding.txtUsername.setText(Global.isUserLoggedIn?(Global.getUser(this).getFullname()): LoginViewModel.guestName);
