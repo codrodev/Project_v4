@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -68,8 +69,11 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     MainViewModelFactory factory;
     private MainRepository repository;
     public int loadPosition;
+    private long startTime=10*60*1000;
+    private final long interval = 1 * 1000;
     private MeowBottomNavigation.Model myBottomModel;
     private Fragment fragmentAfterBackPress;
+    private MyCountDownTimer countDownTimer;
 
     public static Intent newIntent(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -104,6 +108,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         binding.customBottomBar.add(new MeowBottomNavigation.Model(5, R.drawable.ic_more));
 
         binding.customBottomBar.show(3, true);
+        countDownTimer = new MyCountDownTimer(startTime, interval);
+
 
 
         binding.txtUsername.setText(Global.isUserLoggedIn?(Global.getUser(this).getFullname()): LoginViewModel.guestName);
@@ -442,5 +448,36 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                     fragmentManager.popBackStackImmediate();
 
         }   }
+    }
+
+    @Override
+    public void onUserInteraction(){
+
+        super.onUserInteraction();
+
+        //Reset the timer on user interaction...
+        countDownTimer.cancel();
+        if(!(Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW_PAYMENT)))
+            countDownTimer.start();
+    }
+    public class MyCountDownTimer extends CountDownTimer {
+        public MyCountDownTimer(long startTime, long interval) {
+            super(startTime, interval);
+        }
+
+        @Override
+        public void onFinish() {
+
+
+            AlertDialogUtil.timeoutAlertDialog("", CURRENT_LOCALE.equals("en") ? Global.appMsg.getSessionTimeoutEn(): Global.appMsg.getSessionTimeoutAr(), getResources().getString(R.string.ok), MainActivity.this);
+
+
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            //Toast.makeText(MainActivity.this, "seconds remaining: " + millisUntilFinished / 1000, Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

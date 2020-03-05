@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,6 +26,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.ArrayList;
 
 import dm.sime.com.kharetati.R;
@@ -32,6 +36,7 @@ import dm.sime.com.kharetati.datas.models.Bookmark;
 import dm.sime.com.kharetati.utility.constants.AppConstants;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.activities.LoginActivity;
 import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.activities.WebViewActivity;
 import dm.sime.com.kharetati.view.fragments.AttachmentFragment;
@@ -39,6 +44,7 @@ import dm.sime.com.kharetati.view.fragments.BookmarkFragment;
 import dm.sime.com.kharetati.view.fragments.WebViewFragment;
 import dm.sime.com.kharetati.view.navigators.MainNavigator;
 
+import static dm.sime.com.kharetati.utility.constants.AppConstants.USER_LOGIN_DETAILS;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_CONTACT_US;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_WEBVIEW;
 
@@ -189,6 +195,42 @@ public class AlertDialogUtil {
 
         textView.setPadding(80, 25, 25, 10);
 
+    }public static void logoutAlert(String message, String btnTxt, String btnTxt2, final Context context) {
+
+
+        AlertDialog alertDialog = new AlertDialog.Builder(context)
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton(btnTxt, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                       Global.logout(context);
+
+                    }
+
+                }).setNegativeButton(btnTxt2, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).show();
+
+        TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+//        TextView textView1= (TextView) alertDialog.findViewById(android.support.v7.appcompat.R.id.alertTitle);
+
+        TextView positiveButton = (Button) alertDialog.findViewById(android.R.id.button1);
+        TextView negativeButton = (Button) alertDialog.findViewById(android.R.id.button2);
+        Typeface face= Typeface.createFromAsset(context.getAssets(),"Dubai-Regular.ttf");
+        textView.setTypeface(face);
+        positiveButton.setAllCaps(false);
+        negativeButton.setAllCaps(false);
+        positiveButton.setTypeface(face);
+        negativeButton.setTypeface(face);
+//        textView1.setTypeface(face);
+
+        textView.setPadding(80, 25, 25, 10);
+
     }
     public static void chatAlert(String message, String btnTxt, String btnTxt2, final Context context) {
 
@@ -264,6 +306,45 @@ public class AlertDialogUtil {
         //textView1.setTypeface(face);
 
         textView.setPadding(25, 25, 25, 10);
+
+    }
+    public static void timeoutAlertDialog(String title, String message, String btnTxt, final Context context) {
+        AlertDialog alertDialog = new AlertDialog.Builder(context)
+                .setMessage(message)
+                .setTitle(title)
+                .setCancelable(false)
+                .setPositiveButton(btnTxt, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Global.current_fragment_id = null;
+                        //Global.loginDetails.showFormPrefilledOnRememberMe=true;
+                        Global.logout(context);
+                        /*Gson gson = new GsonBuilder().serializeNulls().create();
+                        PreferenceManager.getDefaultSharedPreferences(context).edit().putString(USER_LOGIN_DETAILS, gson.toJson(Global.loginDetails)).apply();
+                        Intent intent = new Intent(context, LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(intent);*/
+
+
+                    }
+
+                }).show();
+
+        TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+//        TextView textView1 = (TextView) alertDialog.findViewById(android.support.v7.appcompat.R.id.alertTitle);
+
+        TextView positiveButton = (Button) alertDialog.findViewById(android.R.id.button1);
+        //TextView negativeButton = (Button) alertDialog.findViewById(android.R.id.button2);
+        Typeface face = Typeface.createFromAsset(context.getAssets(), "Dubai-Regular.ttf");
+        textView.setTypeface(face);
+        positiveButton.setAllCaps(false);
+        //negativeButton.setAllCaps(false);
+        positiveButton.setTypeface(face);
+        //negativeButton.setTypeface(face);
+//        textView1.setTypeface(face);
+
+        textView.setPadding(80, 25, 25, 10);
 
     }
 

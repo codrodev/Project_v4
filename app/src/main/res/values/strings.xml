@@ -180,6 +180,9 @@
     <string name="enter_valid_username">Please enter valid username</string>
     <string name="CANCELTRANSACTIONALERT">Are you sure you want to cancel the transaction?</string>
     <string name="exit_alert_message">Are you sure you want to exit from the application?</string>
+    <string name="logout">Logout</string>
+    <string name="logout_msg">Are you sure you want to logout?</string>
+
 
     <string-array name="request_site_plan">
         <item>land owner</item>

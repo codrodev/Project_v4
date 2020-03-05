@@ -620,6 +620,7 @@ public class Global {
 //        AttachmentFragment.deliveryByCourier=false;
         Global.requestId = null;
         Global.isBookmarks = false;
+        isLanguageChanged =true;
 //        AttachmentFragment.isDeliveryDetails=false;
 
         //Global.loginDetails.showFormPrefilledOnRememberMe=true;

@@ -50,6 +50,8 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
         binding.setFragmentBottomNavigation(model);
         mRootView = binding.getRoot();
 
+
+        binding.logoutText.setText(Global.isUserLoggedIn? getActivity().getResources().getText(R.string.logout):getActivity().getResources().getText(R.string.login));
         binding.layoutShareApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,7 +166,11 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
         binding.logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Global.logout(getActivity());
+
+                if(Global.isUserLoggedIn)
+                    AlertDialogUtil.logoutAlert(getActivity().getResources().getString(R.string.logout_msg),getActivity().getResources().getString(R.string.ok),getActivity().getResources().getString(R.string.cancel),getActivity());
+                else
+                    Global.logout(getActivity());
             }
         });
 

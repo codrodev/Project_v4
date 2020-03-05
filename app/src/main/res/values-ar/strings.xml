@@ -180,6 +180,8 @@
     <string name="enter_valid_username">الرجاء إدخال اسم مستخدم صالح</string>
     <string name="CANCELTRANSACTIONALERT">هل انت متأكد من إلغاء العملية؟</string>
     <string name="exit_alert_message">هل أنت متأكد من أنك تريد الخروج من التطبيق؟</string>
+    <string name="logout">خروج</string>
+    <string name="logout_msg">هل أنت متأكد أنك تريد تسجيل الخروج؟</string>
 
 
     <string-array name="emirates">
