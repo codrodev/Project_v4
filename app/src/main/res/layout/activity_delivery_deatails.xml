@@ -243,6 +243,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
+                    android:singleLine="true"
                     android:textColor="@color/gray_text_color"
                     android:textAlignment="viewStart"
                     android:textDirection="locale" />
@@ -254,6 +255,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="-7dp"
                 android:paddingLeft="3dp"
+                android:singleLine="true"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/gray_text_color"
                 android:textStyle="bold"
@@ -280,6 +282,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/nearest_landmark"
                 android:layout_marginTop="10dp"
+                android:singleLine="true"
                 android:layout_marginBottom="-7dp"
                 android:paddingLeft="3dp"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
@@ -297,6 +300,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="start"
                     android:inputType="text"
+                    android:singleLine="true"
                     android:textColor="@color/gray_text_color"
                     android:textAlignment="viewStart"
                     android:textDirection="locale" />

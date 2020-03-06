@@ -482,10 +482,12 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             for (int i = 0; i < lstRuntimeCleanableText.size(); i++) {
                 CleanableEditText txt = (CleanableEditText) lstRuntimeCleanableText.get(i);
                 if(isMakani(txt)){
+                    if(txt.length()>=5){
                     String s1 = txt.getText().toString().substring(0, 5);
                     String s2 = txt.getText().toString().substring(5, txt.getText().toString().length());
 
                     builder.append(s1 + " " + s2);
+                    }
                 } else {
                     builder.append(txt.getText().toString());
                 }

@@ -269,7 +269,7 @@ public class HomeViewModel extends ViewModel {
                     }
                 }, new Consumer<Throwable>() {
                     @Override public void accept(Throwable throwable) throws Exception {
-                        homeNavigator.onFailure(throwable.getMessage());
+                        showErrorMessage(throwable.getMessage());
                     }
                 });
 
@@ -321,7 +321,7 @@ public class HomeViewModel extends ViewModel {
 
     }
 
-    private void showInvalidMakaniError() {
+    public void showInvalidMakaniError() {
         if(Global.appMsg!=null)
             homeNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getInvalidmakaniEn():Global.appMsg.getInvalidmakaniAr());
         else
