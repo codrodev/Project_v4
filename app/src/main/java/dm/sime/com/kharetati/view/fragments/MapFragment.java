@@ -71,6 +71,7 @@ import com.esri.arcgisruntime.symbology.SimpleLineSymbol;
 
 import com.esri.arcgisruntime.symbology.TextSymbol;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.security.KeyManagementException;
@@ -108,7 +109,7 @@ import dm.sime.com.kharetati.view.viewModels.MapViewModel;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 import dm.sime.com.kharetati.view.viewmodelfactories.MapViewModelFactory;
 
-public class MapFragment extends Fragment implements MapNavigator, MapFunctionBottomSheetFragment.OnFunctionMenuSelectedListener {
+public class MapFragment extends Fragment implements MapNavigator, MapFunctionBottomsheetDialogFragment.OnFunctionMenuSelectedListener {
 
     public static boolean isMakani,isLand;
     MapViewModel model;
@@ -126,14 +127,14 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
     private int extentPadding=100;
 
     private boolean skipOnTextChangeEvent=false;
-    MapFunctionBottomSheetFragment myBottomSheet;
     private MapRepository repository;
     private MapViewModelFactory factory;
     private ArrayAdapter<String> adapterHistory;
     private ListView searchhistoryListView;
-    BottomSheetBehavior sheetBehavior;
+    BottomSheetBehavior sheetBehavior, mapSheetBehaviour;
     WebView webView;
     public static MapViewModel mapVM;
+    BottomSheetDialogFragment bottomSheetDialogFragment;
 
 
     public MapFragment() {
@@ -177,10 +178,13 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
         binding.setFragmentMapVM(model);
         mRootView = binding.getRoot();
         mapView = mRootView.findViewById(R.id.mapView);
+        bottomSheetDialogFragment = MapFunctionBottomsheetDialogFragment.newInstance(this);
         LinearLayout layoutBottomSheet = (LinearLayout)mRootView.findViewById(R.id.bottomSheet);
         webView = (WebView)layoutBottomSheet.findViewById(R.id.webView);
         setRetainInstance(true);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+
+
         sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View view, int i) {
@@ -211,12 +215,69 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
             }
         });
         sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+        View bottomSheet = mRootView.findViewById(R.id.mapFunctionSheet);
+        mapSheetBehaviour = BottomSheetBehavior.from(bottomSheet);
+
+        mapSheetBehaviour.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        //mapSheetBehaviour.setPeekHeight(100);
+
+        mapSheetBehaviour.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+
+                        break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED:
+
+                        break;
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+            }
+        });
+
+        bottomSheet.findViewById(R.id.layoutParentMapFunctionBottomSheet).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetDialogFragment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+            }
+        });
+
+        bottomSheet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetDialogFragment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+            }
+        });
+
+        if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null &&
+                Global.mapSearchResult.getService_response().getMap().getFunctions().size() == 1){
+            sheetBehavior.setPeekHeight(100);
+            mapSheetBehaviour.setPeekHeight(0);
+
+        } else {
+            sheetBehavior.setPeekHeight(0);
+            mapSheetBehaviour.setPeekHeight(100);
+        }
+
+
         binding.txtPlotNo.setText(Global.mapSearchResult.getService_response().getParcelId());
         onStarted();
         initializePage();
         ArcGISRuntimeEnvironment.setLicense("runtimelite,1000,rud3984007683,none,GB2PMD17J0YJ2J7EZ071");
         //progressBar = new //progressBar(getActivity(),null,android.R.attr.//progressBarStyleSmall);
-        snack = Snackbar.make(getActivity().findViewById(R.id.ui_container), R.string.click_on_map, Snackbar.LENGTH_LONG);
+        //snack = Snackbar.make(getActivity().findViewById(R.id.ui_container), R.string.click_on_map, Snackbar.LENGTH_LONG);
 
         return binding.getRoot();
     }
@@ -324,7 +385,7 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
 
             }
         });
-         myBottomSheet = MapFunctionBottomSheetFragment.newInstance(this);
+         //myBottomSheet = MapFunctionBottomSheetFragment.newInstance(this);
         if(isMakani){
             binding.imgBookmark.setVisibility(View.GONE);
         }
@@ -651,7 +712,8 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                                 if(!Global.isBookmarks){
                                     if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null &&
                                             Global.mapSearchResult.getService_response().getMap().getFunctions().size() > 1) {
-                                        myBottomSheet.show(getActivity().getSupportFragmentManager(), myBottomSheet.getTag());
+                                        //myBottomSheet.show(getActivity().getSupportFragmentManager(), myBottomSheet.getTag());
+                                        bottomSheetDialogFragment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
                                     } else {
                                         if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null){
                                             mapFunctionAction(Global.mapSearchResult.getService_response().getMap().getFunctions().get(0));
@@ -728,13 +790,13 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                             }
 
 
-                            showSnackBar();
+                            //showSnackBar();
                             onSuccess();
                             searchhistoryListView.setVisibility(View.GONE);
                             if(!Global.isBookmarks) {
                                 if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null &&
                                         Global.mapSearchResult.getService_response().getMap().getFunctions().size() > 1) {
-                                    myBottomSheet.show(getActivity().getSupportFragmentManager(), myBottomSheet.getTag());
+                                    bottomSheetDialogFragment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
                                 }
                             }
 

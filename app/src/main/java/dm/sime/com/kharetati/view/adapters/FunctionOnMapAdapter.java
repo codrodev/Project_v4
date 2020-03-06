@@ -21,71 +21,66 @@ import dm.sime.com.kharetati.datas.models.FunctionsOnMap;
 import dm.sime.com.kharetati.view.viewModels.MapFunctionBottomSheetViewModel;
 
 public class FunctionOnMapAdapter extends RecyclerView.Adapter<FunctionOnMapAdapter.GenericViewHolder> {
-    private int layoutId;
     private List<Functions> lstFunctionsOnMap;
     private MapFunctionBottomSheetViewModel viewModel;
     static Context context;
     static OnMenuSelectedListener listener;
 
-    public FunctionOnMapAdapter(@LayoutRes int layoutId, MapFunctionBottomSheetViewModel viewModel, Context context, OnMenuSelectedListener listener) {
-        this.layoutId = layoutId;
+    public FunctionOnMapAdapter(MapFunctionBottomSheetViewModel viewModel, Context context, OnMenuSelectedListener listener,
+                                List<Functions> lstFunctions) {
         this.viewModel = viewModel;
-        lstFunctionsOnMap = viewModel.getFunctionsOnMapList();
+        lstFunctionsOnMap = lstFunctions;
         this.context = context;
         this.listener = listener;
-    }
-
-    private int getLayoutIdForPosition(int position) {
-        return layoutId;
     }
 
     @NonNull
     @Override
     public GenericViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        ViewDataBinding binding = DataBindingUtil.inflate(layoutInflater, viewType, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_map_function_menu, parent, false);
 
-        return new GenericViewHolder(binding);
+        return new FunctionOnMapAdapter.GenericViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull GenericViewHolder holder, int position) {
-        holder.bind(viewModel, position);
+          holder.functionName.setText(lstFunctionsOnMap.get(position).getNameEn());
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onMenuSelected(holder.functionName.getText().toString(), position);
+            }
+        });
     }
 
-    @Override
+    /*@Override
     public int getItemViewType(int position) {
         return getLayoutIdForPosition(position);
     }
-
+*/
     @Override
     public int getItemCount() {
         return  lstFunctionsOnMap.size();
     }
 
-    public void setFunctionsOnMap(List<Functions> lstFunctionsOnMap) {
+   /* public void setFunctionsOnMap(List<Functions> lstFunctionsOnMap) {
         this.lstFunctionsOnMap = lstFunctionsOnMap;
-    }
+    }*/
 
-    public static class GenericViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        final ViewDataBinding binding;
-        GenericViewHolder(ViewDataBinding binding) {
-            super(binding.getRoot());
-            this.binding = binding;
-            this.binding.getRoot().setOnClickListener(this);
+    public static class GenericViewHolder extends RecyclerView.ViewHolder{
+        private final TextView functionName;
+        View container;
+        public GenericViewHolder(@NonNull View itemView) {
+            super(itemView);
+            container = itemView;
+            functionName = (TextView) itemView.findViewById(R.id.txtFunctionNAme);
         }
 
-        void bind(MapFunctionBottomSheetViewModel viewModel, int position) {
-            binding.setVariable(BR.adapterMapFunctionVM, viewModel);
-            binding.setVariable(BR.position, position);
 
-            binding.executePendingBindings();
-        }
-
-        @Override
+        /*@Override
         public void onClick(View v) {
-            listener.onMenuSelected(((TextView) binding.getRoot().findViewById(R.id.txtFunctionNAme)).getText().toString(), getAdapterPosition());
-        }
+            //listener.onMenuSelected(((TextView) binding.getRoot().findViewById(R.id.txtFunctionNAme)).getText().toString(), getAdapterPosition());
+        }*/
     }
 
     public interface OnMenuSelectedListener {

@@ -25,10 +25,10 @@ public class MapFunctionBottomSheetViewModel extends ViewModel {
 
     }
 
-    public void initializeViewModel(Context context, FunctionOnMapAdapter.OnMenuSelectedListener listner){
+    public void initializeViewModel(Context context){
         mutableFunctionOnMap = new MutableLiveData<>();
         mutableFunctionOnMap.setValue(Global.mapSearchResult.getService_response().getMap().getFunctions());
-        adapter = new FunctionOnMapAdapter(R.layout.adapter_map_function_menu,this, context, listner);
+        /*adapter = new FunctionOnMapAdapter(R.layout.adapter_map_function_menu,this, context, listner);*/
     }
 
     public MutableLiveData<List<Functions>> getMutableFunctionsOnMap(){
@@ -48,8 +48,8 @@ public class MapFunctionBottomSheetViewModel extends ViewModel {
     }
 
     public void  setFunctionsOnMapAdapter(List<Functions> lstFunctionsOnMap) {
-        this.adapter.setFunctionsOnMap(lstFunctionsOnMap);
-        this.adapter.notifyDataSetChanged();
+        /*this.adapter.setFunctionsOnMap(lstFunctionsOnMap);
+        this.adapter.notifyDataSetChanged();*/
     }
 
     public FunctionOnMapAdapter getFunctionsOnMapAdapter() {
