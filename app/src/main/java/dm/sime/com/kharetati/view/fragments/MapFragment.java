@@ -221,7 +221,7 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
         return binding.getRoot();
     }
 
-    private void initializePage(){
+    private  void initializePage(){
         ParentSiteplanViewModel.initializeDocuments();
         model.manageAppBar(getActivity(), false);
         model.manageAppBottomBAtr(getActivity(), false);
@@ -229,6 +229,8 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
         //ArcGISMap map = new ArcGISMap(Global.mapSearchResult.getService_response().getMap().getDetails().getServiceUrl());
         ArcGISMap map = new ArcGISMap();
         mapView.setMap(map);
+        mapView.setAttributionTextVisible(false);
+
 
         // set up gesture for interacting with the MapView
         MapViewTouchListener mapViewTouchListener = new MapViewTouchListener(getActivity(), mapView);

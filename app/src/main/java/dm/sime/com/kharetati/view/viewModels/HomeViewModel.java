@@ -11,6 +11,7 @@ import android.os.Build;
 import android.text.DynamicLayout;
 import android.text.InputType;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -282,11 +283,7 @@ public class HomeViewModel extends ViewModel {
 
         if (!Global.isConnected(activity)) {
 
-            if(Global.appMsg!=null)
-                AlertDialogUtil.errorAlertDialog(activity.getResources().getString(R.string.lbl_warning),Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr() , activity.getResources().getString(R.string.ok), activity);
-            else
-                AlertDialogUtil.errorAlertDialog(activity.getResources().getString(R.string.lbl_warning), activity.getResources().getString(R.string.internet_connection_problem1), activity.getResources().getString(R.string.ok), activity);
-            return;
+            showInternetError();
         }
         else{
 
@@ -310,19 +307,33 @@ public class HomeViewModel extends ViewModel {
                             navigate(activity, FragmentTAGS.FR_MAP);
 
                     } else {
-                        homeNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getInvalidmakaniEn():Global.appMsg.getInvalidmakaniAr());
+                                showInvalidMakaniError();
 
                     }
                 }
                 else
-                    homeNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getInvalidmakaniEn():Global.appMsg.getInvalidmakaniAr());
+                    showInvalidMakaniError();
 
             }
             else
-                homeNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
-
+                showErrorMessage("");
         }
 
+    }
+
+    private void showInvalidMakaniError() {
+        if(Global.appMsg!=null)
+            homeNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getInvalidmakaniEn():Global.appMsg.getInvalidmakaniAr());
+        else
+            homeNavigator.onFailure(activity.getResources().getString(R.string.invalid_makani));
+    }
+
+    private void showInternetError() {
+        if(Global.appMsg!=null)
+            homeNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr());
+        else
+            homeNavigator.onFailure(activity.getResources().getString(R.string.internet_connection_problem1));
+        return;
     }
 
     public void getSession() {
@@ -340,7 +351,7 @@ public class HomeViewModel extends ViewModel {
                     }
                 }, new Consumer<Throwable>() {
                     @Override public void accept(Throwable throwable) throws Exception {
-                        homeNavigator.onFailure(activity.getResources().getString(R.string.server_connect_error));
+                            showErrorMessage(throwable.getMessage());
                     }
                 });
 
@@ -387,7 +398,8 @@ public class HomeViewModel extends ViewModel {
                     }
                 }, new Consumer<Throwable>() {
                     @Override public void accept(Throwable throwable) throws Exception {
-                        homeNavigator.onFailure(activity.getResources().getString(R.string.server_connect_error));
+
+                        showErrorMessage(throwable.getMessage());
                     }
                 });
 
@@ -466,8 +478,7 @@ public class HomeViewModel extends ViewModel {
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
-                            homeNavigator.onFailure(activity.getResources().getString(R.string.server_connect_error));
-                        }
+                            showErrorMessage(throwable.getMessage());                        }
                     });
             compositeDisposable.add(disposable);
         } else {
@@ -482,8 +493,7 @@ public class HomeViewModel extends ViewModel {
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
-                            homeNavigator.onFailure(activity.getResources().getString(R.string.server_connect_error));
-                        }
+                            showErrorMessage(throwable.getMessage());                        }
                     });
             compositeDisposable.add(disposable);
         }
@@ -519,7 +529,7 @@ public class HomeViewModel extends ViewModel {
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
-                            homeNavigator.onFailure(activity.getResources().getString(R.string.server_connect_error));
+                            showErrorMessage(throwable.getMessage());
                         }
                     });
             compositeDisposable.add(disposable);
@@ -592,7 +602,7 @@ public class HomeViewModel extends ViewModel {
                     }
                 }, new Consumer<Throwable>() {
                     @Override public void accept(Throwable throwable) throws Exception {
-                        homeNavigator.onFailure(activity.getResources().getString(R.string.server_connect_error));
+                        showErrorMessage(throwable.getMessage());
                     }
                 });
 
@@ -613,6 +623,15 @@ public class HomeViewModel extends ViewModel {
         }
 
 
+    }
+    public void showErrorMessage(String exception){
+        if(Global.appMsg!=null){
+            homeNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
+        }
+        else
+            homeNavigator.onFailure(activity.getResources().getString(R.string.error_response));
+
+        Log.d(activity.getClass().getSimpleName(),exception);
     }
 
 }

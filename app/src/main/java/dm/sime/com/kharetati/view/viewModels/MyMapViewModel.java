@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Base64;
+import android.util.Log;
 
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.MutableLiveData;
@@ -131,7 +132,7 @@ public class MyMapViewModel extends ViewModel {
                         }
                     }, new Consumer<Throwable>() {
                         @Override public void accept(Throwable throwable) throws Exception {
-                            myMapNavigator.onFailure(throwable.getMessage());
+                            showErrorMessage(throwable.getMessage());
                             //homeNavigator.onFailure("Unable to connect the remote server");
                         }
                     });
@@ -189,7 +190,7 @@ public class MyMapViewModel extends ViewModel {
                     });
             compositeDisposable.add(disposable);
         } catch (Exception ex){
-            myMapNavigator.onFailure(ex.getMessage());
+            showErrorMessage(ex.getMessage());
         }
     }
 
@@ -249,17 +250,22 @@ public class MyMapViewModel extends ViewModel {
                 } catch (IOException e) {
                     e.printStackTrace();
 
-                    msg = (Global.appMsg != null) ? (Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getErrorFetchingDataEn() : Global.appMsg.getErrorFetchingDataAr()) : activity.getResources().getString(R.string.error_response);
-
-                    myMapNavigator.onFailure(msg);
+                    showErrorMessage(e.getMessage());
                 }
             } else {
-                msg = (Global.appMsg != null) ? (Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getErrorFetchingDataEn() : Global.appMsg.getErrorFetchingDataAr()) : activity.getResources().getString(R.string.error_response);
-
-                myMapNavigator.onFailure(msg);
+                showErrorMessage("");
 
             }
         }
 
+    }
+    public void showErrorMessage(String exception){
+        if(Global.appMsg!=null){
+            myMapNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
+        }
+        else
+            myMapNavigator.onFailure(activity.getResources().getString(R.string.error_response));
+
+        Log.d(activity.getClass().getSimpleName(),exception);
     }
 }

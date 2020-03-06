@@ -240,7 +240,7 @@ public class AlertDialogUtil {
         input.setRawInputType(Configuration.KEYBOARD_12KEY);
         input.setGravity(Gravity.CENTER);
         input.requestFocus();
-        input.setHint("05XXXXXXXX");
+        input.setHint("9715XXXXXXXX");
         input.setBackgroundColor(Color.parseColor("#00000000"));
         input.setPadding(40,0,40,0);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -1546,7 +1546,7 @@ public class AlertDialogUtil {
         textView.setPadding(80, 25, 25, 10);
 
     }
-    public static void bookMarksDeleteAlert(String title, String message, String btnTxt, String btnTxt2, final Context context, Bookmark data) {
+    public static void bookMarksDeleteAlert(String title, String message, String btnTxt, String btnTxt2, final Context context, Bookmark data,int position) {
 
 
         AlertDialog alertDialog = new AlertDialog.Builder(context)

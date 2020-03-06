@@ -98,6 +98,21 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
             }}
         });
     }
+    public void intializeAdapter(){
+        model.getMutableBookmark().observe(getActivity(), new Observer<List<Bookmark>>() {
+            @Override
+            public void onChanged(List<Bookmark> lstBookmark) {
+                if(lstBookmark!=null){
+                    if (lstBookmark.size() > 0) {
+                        model.setBookmarkAdapter(lstBookmark);
+                        binding.recyclerBookMarks.setAdapter(model.getBookmarkAdapter());
+                        binding.recyclerBookMarks.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        binding.recyclerBookMarks.setHasFixedSize(true);
+
+                    }
+                }}
+        });
+    }
 
     @Override
     public void onStarted() {
@@ -108,6 +123,7 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
     public void onSuccess() {
         AlertDialogUtil.showProgressBar(getActivity(),false);
         binding.recyclerBookMarks.setAdapter(model.getBookmarkAdapter());
+
 
 
     }
@@ -124,9 +140,23 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
     public void onDeleteSuccess(List<Bookmark> lstBookmark) {
         AlertDialogUtil.showProgressBar(getActivity(),false);
         //model.getBookmarkAdapter().notifyDataSetChanged();
-        if(lstBookmark.size()==0)
-            binding.textHeading.setText(getActivity().getResources().getString(R.string.NO_FAVOURITE_PLOTS_FOUND));
 
+        model.getBookmarkAdapter().notifyDataSetChanged();
+        if(lstBookmark.size()==0)
+            onFailure(getActivity().getResources().getString(R.string.NO_FAVOURITE_PLOTS_FOUND));
+
+    }
+
+    @Override
+    public void removeData(Bookmark data) {
+        //model.getBookMarks().remove(data);
+        //model.getBookmarkAdapter().notifyDataSetChanged();
+    }
+
+    @Override
+    public void updateAdapter() {
+        intializeAdapter();
+        model.getBookmarkAdapter().notifyDataSetChanged();
     }
 
 

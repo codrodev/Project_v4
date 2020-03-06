@@ -61,6 +61,7 @@ import dm.sime.com.kharetati.datas.models.MyMapResults;
 import dm.sime.com.kharetati.datas.models.User;
 import dm.sime.com.kharetati.view.activities.LoginActivity;
 import dm.sime.com.kharetati.view.activities.MainActivity;
+import dm.sime.com.kharetati.view.navigators.AuthListener;
 import retrofit2.http.Url;
 
 import static dm.sime.com.kharetati.utility.constants.AppConstants.REMEMBER_USER;
@@ -740,6 +741,7 @@ public class Global {
     public static int dp2Px(Float dp){
         return (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, Resources.getSystem().getDisplayMetrics());
     }
+
 
 
 

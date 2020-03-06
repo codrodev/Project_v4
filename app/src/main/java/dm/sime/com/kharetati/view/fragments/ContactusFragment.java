@@ -29,6 +29,7 @@ import com.esri.arcgisruntime.ArcGISRuntimeEnvironment;
 import com.esri.arcgisruntime.geometry.Envelope;
 import com.esri.arcgisruntime.geometry.Point;
 import com.esri.arcgisruntime.geometry.SpatialReference;
+import com.esri.arcgisruntime.internal.m.h;
 import com.esri.arcgisruntime.layers.ArcGISMapImageLayer;
 import com.esri.arcgisruntime.layers.ArcGISSublayer;
 import com.esri.arcgisruntime.loadable.LoadStatus;
@@ -328,50 +329,28 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
 
     public void initMap(View v){
         ArcGISRuntimeEnvironment.setLicense("runtimelite,1000,rud3984007683,none,GB2PMD17J0YJ2J7EZ071");
-        Credential userCredentials = new UserCredential(AppUrls.GIS_LAYER_USERNAME,AppUrls.GIS_LAYER_PASSWORD);
-    /*userCredentials.setUserAccount(Constant.GIS_LAYER_USERNAME,Constant.GIS_LAYER_PASSWORD);
-    userCredentials.setTokenServiceUrl(Constant.GIS_LAYER_TOKEN_URL);*/
-        mMapView = (MapView)binding.getRoot().findViewById(R.id.mapContactUs);
+        UserCredential userCredentials = new UserCredential(AppUrls.GIS_LAYER_USERNAME,AppUrls.GIS_LAYER_PASSWORD);
+    /*userCredentials.setUserAccount(Constant.GIS_LAYER_USERNAME,Constant.GIS_LAYER_PASSWORD);*/
+
+        mMapView = (MapView)v.findViewById(R.id.mapContactUs);
         ArcGISMap map = new ArcGISMap();
-        mMapView.setMap(map);
-        int[] visible={5};
         dynamicLayer  = new ArcGISMapImageLayer(AppUrls.GIS_LAYER_URL);
         dynamicLayer.setCredential(userCredentials);
-        dynamicLayer.addDoneLoadingListener(() -> {
-            if (dynamicLayer.getLoadStatus() == LoadStatus.LOADED) {
-                List<ArcGISSublayer> layers=dynamicLayer.getSublayers();
-                for(int i=0;i<layers.size();i++){
-                    ArcGISSublayer layer=layers.get(i);
-                    if(layer.getId()==5||layer.getId()==2)
-                        layer.setVisible(true);
-                    else
-                        layer.setVisible(false);
-                }
-            }
-        });
-        map.getOperationalLayers().add(dynamicLayer);
-        mMapView.setMap(map);
+
+
         mMapView.setAttributionTextVisible(false);
-        //mMapView.getGraphicsOverlays().add(map);
 
 
         SpatialReference mSR = SpatialReference.create(3997);
-        //Point p1 = GeometryEngine.project(55.31,25.263,  mSR);
-    /*Point p1 = new Point(55.31,25.263,  mSR);
-    //Point p2 = GeometryEngine.project(55.313,25.266 , mSR);
-    Point p2 =new Point(55.313,25.266 , mSR);
-    Envelope initExtent = new Envelope(p1.getX(), p1.getY(), p2.getX(), p2.getY(), mSR);
-    Viewpoint vp = new Viewpoint(initExtent);
-    mMapView.setViewpoint(vp);
-    mMapView.setViewpoint(vp);*/
-        mMapView.setViewpointGeometryAsync(new Point(497818.691, 2795353.692),100);
-        //Resize image
+        Envelope env = new Envelope(497649.53668657254, 2795188.158731632, 497951.78945724847, 2795520.440117718, mSR);
+
+        mMapView.setViewpointGeometryAsync(env,-200);
         Drawable dr = getResources().getDrawable(R.drawable.makani);
         Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
         //Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 32, 32, true));
 
         PictureMarkerSymbol symbol = new PictureMarkerSymbol(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 96, 96, true)));
-        final Point graphicPoint = new Point(497818.691, 2795353.692);
+        final Point graphicPoint = new Point(497818.691, 2795353.692,mSR);
 
         Graphic graphic = new Graphic(graphicPoint,symbol);
 
@@ -379,31 +358,12 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
         GraphicsOverlay graphicsLayer = new GraphicsOverlay();
         // mMapView.getGraphicsOverlays().add(graphicsLayer);
         graphicsLayer.getGraphics().add(graphic);
+
+        //map.getOperationalLayers().add(dynamicLayer);
         mMapView.getGraphicsOverlays().add(graphicsLayer);
-        //mMapView.setViewpointGeometryAsync(new Point(497818.691, 2795353.692),100);
-        mMapView.setViewpointCenterAsync(graphicPoint);
-        //mMapView.setViewpointScaleAsync(2000);
-        mMapView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
-            @Override
-            public void onViewAttachedToWindow(View v){
-                final Timer timer=new Timer();
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        //mMapView.setViewpointCenterAsync(graphicPoint);
-                        mMapView.setViewpointScaleAsync(2000);
-                        timer.cancel();
-                    }
-                }, 1000*1);
-            }
+        map.setBasemap(Basemap.createImagery());
+        mMapView.setMap(map);
 
-            @Override
-            public void onViewDetachedFromWindow(View v){
-                //mMapView.setVisibility(View.GONE);
-            }
-
-
-        });
 
 
         mMapView.setOnTouchListener(new MapView.OnTouchListener (){
@@ -505,6 +465,47 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
         });
 
 
+        //Resize image
+
+        /*mMapView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+            @Override
+            public void onViewAttachedToWindow(View v){
+                final Timer timer=new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        //mMapView.setViewpointCenterAsync(graphicPoint);
+                        //mMapView.setViewpointGeometryAsync(new Point(497818.691, 2795353.692),100);
+                        mMapView.setViewpointScaleAsync(2000);
+                        timer.cancel();
+                    }
+                }, 1000*1);
+            }
+
+            @Override
+            public void onViewDetachedFromWindow(View v){
+
+            }
+
+      *//*@Override
+      public void onStatusChanged(Object o, STATUS status) {
+        if( o instanceof ArcGISDynamicMapServiceLayer && status==STATUS.LAYER_LOADED)
+        {
+          final Timer timer=new Timer();
+          timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+              mMapView.zoomin();
+              timer.cancel();
+            }
+          }, 1000*1);
+        }
+        if( o instanceof ArcGISDynamicMapServiceLayer && status==STATUS.LAYER_LOADING_FAILED)
+        {
+          layoutMap.setVisibility(View.GONE);
+        }
+      }*//*
+        });*/
 
 
 

@@ -9,6 +9,7 @@ import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import dm.sime.com.kharetati.utility.constants.AppUrls;
@@ -18,17 +19,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiFactory {
 
-    private static TLSSocketFactory tlsSocketFactory;
-
     public static MyApiService getClient(NetworkConnectionInterceptor networkConnectionInterceptor) throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
 
-         tlsSocketFactory = new TLSSocketFactory();
+        TLSSocketFactory tlsSocketFactory = new TLSSocketFactory();
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
 
                 .addInterceptor(networkConnectionInterceptor).connectTimeout(100, TimeUnit.SECONDS)
                 .readTimeout(200, TimeUnit.SECONDS)
-                .sslSocketFactory(tlsSocketFactory, tlsSocketFactory.getTrustManager())
+                .sslSocketFactory(tlsSocketFactory, Objects.requireNonNull(tlsSocketFactory.getTrustManager()))
                 .build();
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")

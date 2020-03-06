@@ -100,7 +100,12 @@ public class LoginViewModel extends ViewModel {
                     }
                 }, new Consumer<Throwable>() {
                     @Override public void accept(Throwable throwable) throws Exception {
-                        authListener.onFailure("Unable to register the Guest User");
+                        if(Global.appMsg!=null){
+                            authListener.onFailure(Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
+                        }
+                        else
+                            authListener.onFailure(activity.getResources().getString(R.string.error_response));
+
                     }
                 });
 
@@ -179,7 +184,7 @@ public class LoginViewModel extends ViewModel {
                         }
                     }, new Consumer<Throwable>() {
                         @Override public void accept(Throwable throwable) throws Exception {
-                            authListener.onFailure(throwable.getMessage());
+                            showErrorMessage();
 
                         }
                     });
@@ -255,7 +260,7 @@ public class LoginViewModel extends ViewModel {
                             }
                         }, new Consumer<Throwable>() {
                             @Override public void accept(Throwable throwable) throws Exception {
-                                authListener.onFailure(throwable.getMessage());
+                                showErrorMessage();
 
                             }
                         });
@@ -264,10 +269,14 @@ public class LoginViewModel extends ViewModel {
 
 
             } else {
-                authListener.onFailure(activity.getResources().getString(R.string.wrong_username_password));
+                if(Global.appMsg!=null){
+                    authListener.onFailure(Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInvalidUserNamePwdEn():Global.appMsg.getInvalidUserNamePwdAr());
+                }
+                else
+                    authListener.onFailure(activity.getResources().getString(R.string.wrong_username_password));
             }
         } else {
-            authListener.onFailure(activity.getResources().getString(R.string.server_connect_error));
+            showErrorMessage();
         }
     }
 
@@ -336,7 +345,7 @@ public class LoginViewModel extends ViewModel {
                     }, new Consumer<Throwable>() {
                         @Override public void accept(Throwable throwable) throws Exception {
 
-                            authListener.onFailure(throwable.getMessage());
+                            showErrorMessage();
 
                         }
                     });
@@ -344,9 +353,7 @@ public class LoginViewModel extends ViewModel {
             compositeDisposable.add(disposable);
 
         } else {
-
-            authListener.onFailure("Unable to connect with the remote server");
-
+            showErrorMessage();
         }
     }
 
@@ -358,6 +365,7 @@ public class LoginViewModel extends ViewModel {
                 authListener.showAppUpdateAlert();
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
+                Log.e("Exception",e.getMessage());
             }
 
             Global.sime_userid = userRegistrationResponse.getUserID();
@@ -373,8 +381,7 @@ public class LoginViewModel extends ViewModel {
                         }
                     }, new Consumer<Throwable>() {
                         @Override public void accept(Throwable throwable) throws Exception {
-                            authListener.onFailure(throwable.getMessage());
-                            Toast.makeText(activity, throwable.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                            showErrorMessage();
                             Log.e("Exception",throwable.getMessage());
                         }
                     });
@@ -385,8 +392,7 @@ public class LoginViewModel extends ViewModel {
 
         } else {
 
-            Log.d("User Registration :", userRegistrationResponse.getErrorDetail().toString());
-            authListener.onFailure("Unable to register user");
+            showErrorMessage();
 
         }
     }
@@ -412,17 +418,23 @@ public class LoginViewModel extends ViewModel {
 
                 } else {
 
-                    Log.d("Session :", session.getMessage().toString());
-                    authListener.onFailure("Unable to create the Session");
+                    showErrorMessage();
                 }
             }
 
         } else {
-            authListener.onFailure("Unable to connect with the remote server");
+            showErrorMessage();
         }
     }
     public static boolean isValidEmail(CharSequence target) {
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
+    }
+    public void showErrorMessage(){
+        if(Global.appMsg!=null){
+            authListener.onFailure(Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
+        }
+        else
+            authListener.onFailure(activity.getResources().getString(R.string.error_response));
     }
 
 }

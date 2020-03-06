@@ -90,7 +90,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
 
                 Global.bookmarkPlotNo = lstBookmark.get(position).ParcelNumber;
                 Bookmark data = lstBookmark.get(position);
-                AlertDialogUtil.bookMarksDeleteAlert("",context.getResources().getString(R.string.confirmation_delete),context.getResources().getString(R.string.ok),context.getResources().getString(R.string.cancel),context,data);
+                AlertDialogUtil.bookMarksDeleteAlert("",context.getResources().getString(R.string.confirmation_delete),context.getResources().getString(R.string.ok),context.getResources().getString(R.string.cancel),context,data,position);
 
 
 
@@ -126,6 +126,12 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
 
     public void setBookmark(List<Bookmark> lstBookmark) {
         this.lstBookmark = lstBookmark;
+    }
+
+    public void remove(Bookmark data){
+        lstBookmark.remove(data);
+        //notifyDataSetChanged();
+
     }
 
     public static class GenericViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

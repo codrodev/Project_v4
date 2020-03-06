@@ -2,6 +2,7 @@ package dm.sime.com.kharetati.view.viewModels;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.widget.Adapter;
 
 import androidx.lifecycle.MutableLiveData;
@@ -42,7 +43,7 @@ public class BookmarkViewModel extends ViewModel {
     public BookMarksNavigator bookMarksNavigator;
     @SerializedName("UserID")
     private int userId;
-
+    private List<Bookmark> listData;
 
 
     public BookmarkViewModel(Activity context, BookMarkRepository repository){
@@ -85,7 +86,10 @@ public class BookmarkViewModel extends ViewModel {
     }
 
     public BookmarkAdapter getBookmarkAdapter() {
-        return adapter;
+        return this.adapter;
+    }
+    public List<Bookmark> getBookMarks(){
+        return listData;
     }
 
     public void getAllBookMarks() {
@@ -111,7 +115,7 @@ public class BookmarkViewModel extends ViewModel {
                     }
                 }, new Consumer<Throwable>() {
                     @Override public void accept(Throwable throwable) throws Exception {
-                        bookMarksNavigator.onFailure(throwable.getMessage());
+                        showErrorMessage(throwable.getMessage());
 
                     }
                 });
@@ -124,6 +128,8 @@ public class BookmarkViewModel extends ViewModel {
 
 
         mutableBookmark =new MutableLiveData<>();
+        listData = Arrays.asList(bookmarksResponse.getBookmarklist());
+
         mutableBookmark.setValue(Arrays.asList(bookmarksResponse.getBookmarklist()));
         adapter = new BookmarkAdapter(R.layout.adapter_bookmark, this, activity);
 
@@ -151,7 +157,7 @@ public class BookmarkViewModel extends ViewModel {
                     }
                 }, new Consumer<Throwable>() {
                     @Override public void accept(Throwable throwable) throws Exception {
-                        bookMarksNavigator.onFailure(throwable.getMessage());
+                        showErrorMessage(throwable.getMessage());
 
                     }
                 });
@@ -170,9 +176,16 @@ public class BookmarkViewModel extends ViewModel {
                 if(!deleteResponse.isError()){
                     if(deleteResponse.getMessage().compareToIgnoreCase("success")==0){
                         //BookmarksAdapter.this.data.remove(data);
-                        BookmarkAdapter.lstBookmark.remove(data);
+
+                        //bookMarksNavigator.removeData(data);
+                        new BookmarkAdapter(R.layout.adapter_bookmark, this, activity).remove(data);
+
                         //BookmarkAdapter.notifyDataSetChanged();
+                        getAllBookMarks();
+                        bookMarksNavigator.updateAdapter();
                         bookMarksNavigator.onDeleteSuccess(BookmarkAdapter.lstBookmark);
+
+
                         AlertDialogUtil.errorAlertDialog("", activity.getString(R.string.favourite_deleted), activity.getString(R.string.ok), activity);
 
 
@@ -183,16 +196,25 @@ public class BookmarkViewModel extends ViewModel {
                         else fragment.txtMsg.setVisibility(View.GONE);*/
                     }
                     else {
-                        bookMarksNavigator.onFailure(activity.getResources().getString(R.string.error_response));
+                        showErrorMessage(deleteResponse.getMessage());
                     }
                 }
 
             }
         } catch (Exception e) {
 
-            bookMarksNavigator.onFailure(e.getMessage());
+            showErrorMessage(e.getMessage());
             e.printStackTrace();
         }
 
+    }
+    public void showErrorMessage(String exception){
+        if(Global.appMsg!=null){
+            bookMarksNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
+        }
+        else
+            bookMarksNavigator.onFailure(activity.getResources().getString(R.string.error_response));
+
+        Log.d(activity.getClass().getSimpleName(),exception);
     }
 }

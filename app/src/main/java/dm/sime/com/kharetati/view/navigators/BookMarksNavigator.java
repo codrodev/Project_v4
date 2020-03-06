@@ -13,4 +13,8 @@ public interface BookMarksNavigator {
 
 
    public void onDeleteSuccess(List<Bookmark> lstBookmark);
+
+   public void removeData(Bookmark data);
+
+   public void updateAdapter();
 }
