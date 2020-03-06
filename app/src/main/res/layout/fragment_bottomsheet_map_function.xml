@@ -7,6 +7,7 @@
             type="dm.sime.com.kharetati.view.viewModels.MapFunctionBottomSheetViewModel" />
     </data>
     <LinearLayout
+        android:id="@+id/layoutParentMapFunctionBottomSheet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/maroon_dark"
@@ -22,8 +23,8 @@
             android:layout_height="2dp"
             android:background="@color/white"/>
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleMapFunction"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:setStaggeredAdapter="@{fragmentBottomSheetMapFunction.getFunctionsOnMapAdapter()}"/>
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 </layout>
