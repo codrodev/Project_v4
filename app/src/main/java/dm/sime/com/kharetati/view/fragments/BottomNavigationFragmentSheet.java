@@ -30,9 +30,11 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
     BottomNavigationViewModel model;
     FragmentBottomNavigationBinding binding;
     private View mRootView;
+    private static OnActionListener listener;
 
-    public static BottomNavigationFragmentSheet newInstance() {
+    public static BottomNavigationFragmentSheet newInstance(OnActionListener list) {
         BottomNavigationFragmentSheet f = new BottomNavigationFragmentSheet();
+        listener = list;
         return f;
     }
 
@@ -175,5 +177,15 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
         });
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        listener.onAction("dismiss");
+    }
+
+    public interface OnActionListener {
+        void onAction(String actionCode);
     }
 }

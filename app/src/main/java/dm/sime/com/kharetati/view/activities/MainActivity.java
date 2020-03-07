@@ -59,7 +59,7 @@ import kotlin.jvm.functions.Function1;
 
 import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
 
-public class MainActivity extends AppCompatActivity implements FragmentNavigator, MainNavigator {
+public class MainActivity extends AppCompatActivity implements FragmentNavigator, MainNavigator, BottomNavigationFragmentSheet.OnActionListener {
 
     ActivityMainBinding binding;
     MainViewModel model;
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         model.mainNavigator =this;
         model.initialize();
         binding.setActivityMainVM(model);
-        final BottomNavigationFragmentSheet myBottomSheet = BottomNavigationFragmentSheet.newInstance();
+        final BottomNavigationFragmentSheet myBottomSheet = BottomNavigationFragmentSheet.newInstance(this);
         binding.customBottomBar.add(new MeowBottomNavigation.Model(1, R.drawable.ic_dashboard));
         binding.customBottomBar.add(new MeowBottomNavigation.Model(2, R.drawable.ic_happiness));
         binding.customBottomBar.add(new MeowBottomNavigation.Model(3, R.drawable.ic_home_run));
@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 if(bottomModel.getId() == 5){
                     myBottomSheet.show(getSupportFragmentManager(), myBottomSheet.getTag());
                 } else {
+                    Global.lastSelectedBottomTab = bottomModel.getId();
                     loadFragment(model.bottomNavigationTAG(bottomModel.getId()), true, null);
                     /*if(savedInstanceState=null)
                     savedInstanceState.putInt("loadPosition",myBottomModel.getId());*/
@@ -346,19 +347,29 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 super.onBackPressed();
                 if(count>1){
                 fragmentAfterBackPress = getCurrentFragment();
-                if(fragmentAfterBackPress.getTag().equals(FragmentTAGS.FR_DASHBOARD)||fragmentAfterBackPress.getTag().equals(FragmentTAGS.FR_BOOKMARK)||fragmentAfterBackPress.getTag().equals(FragmentTAGS.FR_MYMAP))
+                if(fragmentAfterBackPress.getTag().equals(FragmentTAGS.FR_DASHBOARD)||fragmentAfterBackPress.getTag().equals(FragmentTAGS.FR_BOOKMARK)||fragmentAfterBackPress.getTag().equals(FragmentTAGS.FR_MYMAP)) {
                     binding.customBottomBar.show(1, true);
-                if(Global.current_fragment_id.equals(FragmentTAGS.FR_HAPPINESS))
+                    Global.lastSelectedBottomTab = 1;
+                }
+                if(Global.current_fragment_id.equals(FragmentTAGS.FR_HAPPINESS)) {
                     binding.customBottomBar.show(2, true);
-                if(Global.current_fragment_id.equals(FragmentTAGS.FR_HOME))
+                    Global.lastSelectedBottomTab = 2;
+                }
+                if(Global.current_fragment_id.equals(FragmentTAGS.FR_HOME)) {
                     binding.customBottomBar.show(3, true);
-                if(Global.current_fragment_id.equals(FragmentTAGS.FR_CONTACT_US))
+                    Global.lastSelectedBottomTab = 3;
+                }
+                if(Global.current_fragment_id.equals(FragmentTAGS.FR_CONTACT_US)) {
                     binding.customBottomBar.show(4, true);
+                    Global.lastSelectedBottomTab = 4;
+                }
                 if(Global.current_fragment_id.equals(FragmentTAGS.FR_BOTTOMSHEET))
                     binding.customBottomBar.show(5, true);
                 }
-                if(count == 1)
+                if(count == 1) {
                     binding.customBottomBar.show(3, true);
+                    Global.lastSelectedBottomTab = 3;
+                }
             }
 
         }
@@ -460,6 +471,14 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         if(!(Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW_PAYMENT)))
             countDownTimer.start();
     }
+
+    @Override
+    public void onAction(String actionCode) {
+        if(actionCode.equals("dismiss")){
+            binding.customBottomBar.show(Global.lastSelectedBottomTab, true);
+        }
+    }
+
     public class MyCountDownTimer extends CountDownTimer {
         public MyCountDownTimer(long startTime, long interval) {
             super(startTime, interval);
