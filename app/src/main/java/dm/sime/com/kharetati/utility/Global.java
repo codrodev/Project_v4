@@ -167,6 +167,7 @@ public class Global {
     public static SearchResult mapSearchResult;
     public static String helpUrlEn;
     public static String helpUrlAr;
+    public static int lastSelectedBottomTab = 3;
 
 
     public static List<FunctionsOnMap> getLstMapFunctions() {
