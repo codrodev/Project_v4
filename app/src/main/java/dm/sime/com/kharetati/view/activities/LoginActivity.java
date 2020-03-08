@@ -28,6 +28,8 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -274,9 +276,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
             }
         });
 
-
-
-        Global.deviceId = generateRandomID();
+        Global.deviceId = FirebaseInstanceId.getInstance().getToken();
 
         binding.layoutRoot.postDelayed(new Runnable() {
             @Override
