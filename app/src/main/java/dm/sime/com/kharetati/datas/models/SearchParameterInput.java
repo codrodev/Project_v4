@@ -18,6 +18,17 @@ public class SearchParameterInput {
     @SerializedName("REMARKS")
     private String REMARKS;
 
+    @SerializedName("IsGuest")
+    private boolean IsGuest;
+
+    public boolean isGuest() {
+        return IsGuest;
+    }
+
+    public void setGuest(boolean guest) {
+        IsGuest = guest;
+    }
+
     public String getApplicationId() {
         return ApplicationId;
     }

@@ -39,7 +39,16 @@
             android:name=".view.activities.MainActivity"
             android:configChanges="locale|orientation|screenSize"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="kharetati"
+                    android:host="myhost"
+                    android:pathPrefix="/home"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".view.activities.ImageCropActivity"
             android:configChanges="locale|orientation|screenSize"
             />

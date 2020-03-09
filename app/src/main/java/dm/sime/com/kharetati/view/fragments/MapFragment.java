@@ -94,6 +94,7 @@ import dm.sime.com.kharetati.datas.models.LayerDefinition;
 import dm.sime.com.kharetati.datas.models.Params;
 import dm.sime.com.kharetati.datas.models.PlotDetails;
 import dm.sime.com.kharetati.datas.models.SearchResult;
+import dm.sime.com.kharetati.datas.models.User;
 import dm.sime.com.kharetati.datas.network.ApiFactory;
 import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
 import dm.sime.com.kharetati.datas.repositories.MapRepository;
@@ -639,6 +640,11 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
             builder.append("lang=" + lang + "&");
             if(!Global.isUserLoggedIn){
                 builder.append("isGuest=true&");
+                builder.append("user_id="+ Global.sime_userid +"&");
+                builder.append("user_name=GUEST&");
+            } else {
+                builder.append("user_id=" + Global.sime_userid + "&");
+                builder.append("user_name=" + Global.username + "&");
             }
             if(fun.getParams() != null && fun.getParams().size() > 0){
 

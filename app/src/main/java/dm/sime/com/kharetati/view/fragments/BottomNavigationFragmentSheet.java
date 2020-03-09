@@ -112,6 +112,15 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
                 startActivity(intent);
             }
         });
+        binding.layoutHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayList al = new ArrayList();
+                al.add(Global.CURRENT_LOCALE.equals("en")? Global.home_en_url:Global.home_ar_url);
+                ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+            }
+        });
+
         binding.aboutUs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

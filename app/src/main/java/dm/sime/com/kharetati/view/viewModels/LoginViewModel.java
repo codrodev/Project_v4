@@ -131,6 +131,7 @@ public class LoginViewModel extends ViewModel {
             AppUrls.parcelLayerExportUrl_en=kharetatiUser.parcelLayerExportUrl_en!=null && kharetatiUser.parcelLayerExportUrl_en!=""?       kharetatiUser.parcelLayerExportUrl_en + "?token=" + Global.arcgis_token:AppUrls.parcelLayerExportUrl_en + "?token=" + Global.arcgis_token;
             AppUrls.parcelLayerExportUrl_ar=kharetatiUser.parcelLayerExportUrl_ar!=null && kharetatiUser.parcelLayerExportUrl_ar!=""?       kharetatiUser.parcelLayerExportUrl_ar + "?token=" + Global.arcgis_token:AppUrls.parcelLayerExportUrl_ar + "?token=" + Global.arcgis_token;
             AppUrls.plot_layerid=kharetatiUser.plot_layerid!=null && kharetatiUser.plot_layerid!=""?kharetatiUser.plot_layerid:AppUrls.plot_layerid;
+            AppUrls.BASE_AUXULARY_URL=kharetatiUser.auxiliaryServiceUrl!=null && kharetatiUser.auxiliaryServiceUrl!=""?kharetatiUser.auxiliaryServiceUrl:"";
             User user = new User();
             Global.accessToken=kharetatiUser.access_token;
             user.setUsername("GUEST");
@@ -142,6 +143,13 @@ public class LoginViewModel extends ViewModel {
             Global.terms_en_url = kharetatiUser.getTerms_en_url();
             Global.terms_ar_url = kharetatiUser.getTerms_ar_url();
             Global.appMsg = kharetatiUser.getAppMsg();
+
+            Global.bookmarks_en_url = kharetatiUser.bookmarks_en_url;
+            Global.bookmarks_ar_url = kharetatiUser.bookmarks_ar_url;
+            Global.mymaps_en_url = kharetatiUser.mymaps_en_url;
+            Global.mymaps_ar_url = kharetatiUser.mymaps_ar_url;
+            Global.home_en_url = kharetatiUser.home_en_url;
+            Global.home_ar_url = kharetatiUser.home_ar_url;
 
             authListener.saveUser(user);
             Global.isUserLoggedIn = false;
@@ -233,6 +241,13 @@ public class LoginViewModel extends ViewModel {
                 Global.terms_ar_url = accessTokenResponse.getTermsArUrl();
                 Global.appMsg = accessTokenResponse.getAppMsg();
 
+                Global.bookmarks_en_url = accessTokenResponse.getBookmarks_en_url();
+                Global.bookmarks_ar_url = accessTokenResponse.getBookmarks_ar_url();
+                Global.mymaps_en_url = accessTokenResponse.getMymaps_en_url();
+                Global.mymaps_ar_url = accessTokenResponse.getMymaps_ar_url();
+                Global.home_en_url = accessTokenResponse.getHome_en_url();
+                Global.home_ar_url = accessTokenResponse.getHome_ar_url();
+
                 AttachmentBitmap.letter_from_owner = null;
                 AttachmentBitmap.emirateId_back = null;
                 AttachmentBitmap.emirateId_front = null;
@@ -246,6 +261,7 @@ public class LoginViewModel extends ViewModel {
                 AppUrls.GIS_LAYER_COMMUNITY_URL = (accessTokenResponse.getCommunityLayerid() != null && accessTokenResponse.getCommunityLayerid() != "") ? AppUrls.GIS_LAYER_URL.toString() + "/" + accessTokenResponse.getCommunityLayerid() : AppUrls.GIS_LAYER_URL.toString() + "/" + AppUrls.community_layerid;
 
                 AppUrls.plot_layerid = (accessTokenResponse.getPlotLayerid() != null && accessTokenResponse.getPlotLayerid() != "") ? accessTokenResponse.getPlotLayerid() : AppUrls.plot_layerid;
+                AppUrls.BASE_AUXULARY_URL = (accessTokenResponse.getAuxiliaryServiceUrl() != null && accessTokenResponse.getAuxiliaryServiceUrl() != "") ? accessTokenResponse.getAuxiliaryServiceUrl() : "";
 
                 authListener.addUserToHistory(loginDetails.username);
                 authListener.saveUserToRemember(loginDetails);

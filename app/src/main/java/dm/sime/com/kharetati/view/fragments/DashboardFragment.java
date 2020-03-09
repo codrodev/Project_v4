@@ -46,6 +46,7 @@ public class DashboardFragment extends Fragment implements ViewPager.OnPageChang
     }
 
     private void initializePage(){
+        Global.FragmentTagForDashboardHelpUrl = 0;
         model.setDashboardPagerAdapter(this, 2);
         binding.viewPagerCreatePackage.addOnPageChangeListener(this);
         binding.viewPagerCreatePackage.setAdapter(model.getDashboardPagerAdapter());
@@ -98,6 +99,7 @@ public class DashboardFragment extends Fragment implements ViewPager.OnPageChang
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        Global.FragmentTagForDashboardHelpUrl = position;
         if(position == 1){
             changeBookmarkColor();
         } else {
