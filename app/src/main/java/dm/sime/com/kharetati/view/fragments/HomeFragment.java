@@ -590,7 +590,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         ArrayList<String> area = new ArrayList<String>();
         //area.add(getResources().getString(R.string.tap_to_choose));
         for (int i = 0; i < areas.size(); i++) {
-            area.add(isEnglish ? areas.get(i).getDescEn() : areas.get(i).getDescEn());
+            area.add(isEnglish ? areas.get(i).getDescEn() : areas.get(i).getDescAr());
         }
         return area;
     }

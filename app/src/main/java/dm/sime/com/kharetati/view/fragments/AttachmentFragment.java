@@ -1177,13 +1177,13 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
     }
 
     private String getCurrentKey(){
-        if(currentSelection == PASSPORT){
+        if(currentSelection.equals(PASSPORT)){
             return "passport";
-        } else if(currentSelection == LETTER_FROM_OWNER){
+        } else if(currentSelection.equals(LETTER_FROM_OWNER)){
             return "noc";
-        } else if(currentSelection == VISA_PASSPORT){
+        } else if(currentSelection.equals(VISA_PASSPORT)){
             return "passport";
-        }else if(currentSelection == COMPANY_LICENCE){
+        }else if(currentSelection.equals(COMPANY_LICENCE)){
             return "license";
         } else {
             return "";
@@ -1224,7 +1224,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                                     getCurrentKey(), myFile.getName(), getDocId(currentSelection), currentSelection);
                             AddDoc(currentSelection, myFile.getPath(), myFile.getName(), "application/pdf", 0);
 
-                            if (currentSelection == PASSPORT) {
+                            if (currentSelection.equals(PASSPORT)) {
 
                                 isCamera = false;
 
@@ -1232,28 +1232,26 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                                 binding.personalView.setVisibility(View.VISIBLE);
                                 binding.personalChange.setVisibility(View.VISIBLE);
 
-                            } else if (currentSelection == LETTER_FROM_OWNER) {
+                            } else if (currentSelection.equals(LETTER_FROM_OWNER)) {
 
                                 isCamera = false;
                                 binding.imgLetterFromOwner.setImageDrawable(getResources().getDrawable(R.drawable.pdf_icon));
                                 binding.nocView.setVisibility(View.VISIBLE);
                                 binding.nocChange.setVisibility(View.VISIBLE);
-                            } else if (currentSelection == VISA_PASSPORT) {
+                            } else if (currentSelection.equals(VISA_PASSPORT)) {
 
                                 isCamera = false;
                                 binding.imgVisaPassport.setImageDrawable(getResources().getDrawable(R.drawable.pdf_icon));
                                 binding.visaView.setVisibility(View.VISIBLE);
                                 binding.visaChange.setVisibility(View.VISIBLE);
-                            } else if (currentSelection == COMPANY_LICENCE) {
+                            } else if (currentSelection.equals(COMPANY_LICENCE)) {
 
                                 isCamera = false;
                                 binding.imgCompanyLicense.setImageDrawable(getResources().getDrawable(R.drawable.pdf_icon));
                                 binding.licenseView.setVisibility(View.VISIBLE);
                                 binding.licenseChange.setVisibility(View.VISIBLE);
                             }
-
                         }
-
                     }
                 }
             }

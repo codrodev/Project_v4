@@ -165,8 +165,6 @@ public class HomeViewModel extends ViewModel {
         List<Applications> temp;
         int x = mutableHomeGridMenu.getValue().subList(lastIndex, mutableHomeGridMenu.getValue().size()).size();
 
-
-
         if(x > 6){
             temp = mutableHomeGridMenu.getValue().subList(lastIndex, lastIndex + 6);
         } else {
@@ -385,7 +383,7 @@ public class HomeViewModel extends ViewModel {
 
         SerializeGetAppInputRequestModel inputModel = new SerializeGetAppInputRequestModel();
         inputModel.setTOKEN(Global.app_session_token == null ? "" : Global.app_session_token);
-        inputModel.setREMARKS("AndroidV8.0");
+        inputModel.setREMARKS(Global.getPlatformRemark());
 
         model.setInputJson(inputModel);
 
@@ -425,7 +423,7 @@ public class HomeViewModel extends ViewModel {
             if(appResponse.getMessage() != null){
                 homeNavigator.onFailure(appResponse.getMessage());
             } else {
-                homeNavigator.onFailure(activity.getResources().getString(R.string.community_error));
+                showErrorMessage("");
             }
         }
 
@@ -462,7 +460,7 @@ public class HomeViewModel extends ViewModel {
         inputModel.setSearchValue(searchText);
         inputModel.setTabId(getSelectedTab().getId());
         inputModel.setTOKEN(Global.app_session_token);
-        inputModel.setREMARKS("AndroidV8.0");
+        inputModel.setREMARKS(Global.getPlatformRemark());
 
         searchModel.setInputJson(inputModel);
 
@@ -512,7 +510,7 @@ public class HomeViewModel extends ViewModel {
         inputModel.setSearchValue(searchText);
         inputModel.setTabId(getSelectedTab().getId());
         inputModel.setTOKEN(Global.app_session_token);
-        inputModel.setREMARKS("AndroidV8.0");
+        inputModel.setREMARKS(Global.getPlatformRemark());
 
         searchModel.setInputJson(inputModel);
 
@@ -553,12 +551,12 @@ public class HomeViewModel extends ViewModel {
                     navigate(activity, FragmentTAGS.FR_MAP);
                     //navigate(activity, FragmentTAGS.FR_REQUEST_SITE_PLAN);
                 } else {
-                    homeNavigator.onFailure(activity.getResources().getString(R.string.community_error));
+                    showErrorMessage("");
                 }
             }
 
         } else {
-            homeNavigator.onFailure(activity.getResources().getString(R.string.community_error));
+            showErrorMessage("");
         }
     }
 
@@ -573,7 +571,7 @@ public class HomeViewModel extends ViewModel {
                 homeNavigator.onFailure(activity.getResources().getString(R.string.community_error));
             }
         } else {
-            homeNavigator.onFailure(activity.getResources().getString(R.string.community_error));
+            showErrorMessage("");
         }
     }
 
@@ -589,7 +587,7 @@ public class HomeViewModel extends ViewModel {
         inputModel.setLkpId(lookupId);
         inputModel.setLkpValue(lookupValue);
         inputModel.setTOKEN(Global.app_session_token);
-        inputModel.setREMARKS("AndroidV8.0");
+        inputModel.setREMARKS(Global.getPlatformRemark());
 
         model.setInputJson(inputModel);
 
@@ -619,7 +617,7 @@ public class HomeViewModel extends ViewModel {
                 homeNavigator.onFailure(activity.getResources().getString(R.string.community_error));
             }
         } else {
-            homeNavigator.onFailure(activity.getResources().getString(R.string.community_error));
+            showErrorMessage("");
         }
 
 

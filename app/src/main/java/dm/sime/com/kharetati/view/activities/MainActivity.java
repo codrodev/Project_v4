@@ -205,7 +205,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 fragment = DashboardFragment.newInstance();
                 break;
             case FragmentTAGS.FR_MAP:
-                fragment = MapFragment.newInstance();
+
+                fragment = MapFragment.newInstance(PlotDetails.parcelNo!=null?PlotDetails.parcelNo:"");
                 break;
             case FragmentTAGS.FR_REQUEST_SITE_PLAN:
                 fragment = ParentSiteplanFragment.newInstance();

@@ -156,6 +156,11 @@ public class Global {
     public static String landregPopupMsgHeadingAr;
     public static String landregUrl;
     public static String requestId;
+    public static String plotDimLayerId;
+    public static String plotHighlightLayerId;
+    public static String plotLayerParcelAttrName;
+    public static String plotImgLayerId;
+    public static String plotDimLayerParcelAttrName;
     public static boolean isLandRegMessageDisplayed = false;
     public static boolean isFromDelivery = false;
     public static Docs[] docArr;
@@ -640,8 +645,10 @@ public class Global {
         return true;
     }
 
-    public static String getPlatformRemark() {
-        return AppConstants.REMARKS;
+
+    public static String getPlatformRemark()
+    {
+        return AppConstants.DEVICE_TYPE + "-" +Build.VERSION.RELEASE;
     }
 
     public static float getScreenHeight(Activity activity){

@@ -49,8 +49,8 @@ public class WebViewActivity extends AppCompatActivity {
 
         @Override
         public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error){
-            AlertDialogUtil.showProgressBar(WebViewActivity.this,false);
 
+            AlertDialogUtil.showProgressBar(WebViewActivity.this,false);
 
         }
 
@@ -58,8 +58,6 @@ public class WebViewActivity extends AppCompatActivity {
         public void onPageFinished(WebView view, String url) {
 
             AlertDialogUtil.showProgressBar(WebViewActivity.this,false);
-
-
         }
 
     }
