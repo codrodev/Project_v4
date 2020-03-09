@@ -9,6 +9,16 @@ public class SerializeGetAppInputRequestModel {
     private String REMARKS;
     @SerializedName("parcel_id")
     private int parcel_id;
+    @SerializedName("IsGuest")
+    private boolean IsGuest;
+
+    public boolean isGuest() {
+        return IsGuest;
+    }
+
+    public void setGuest(boolean guest) {
+        IsGuest = guest;
+    }
 
     public int getParcel_id() {
         return parcel_id;

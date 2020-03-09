@@ -269,6 +269,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             binding.layoutControlHeader.setVisibility(View.VISIBLE);
             binding.layoutRuntimeContainer.setVisibility(View.VISIBLE);
             binding.txtHeader.setText(app.getSearchForm().get(0).getTabs().getNameEn());
+            model.setSelectedTab(app.getSearchForm().get(0).getTabs());
 
             runtimeControlRenderer(app.getSearchForm().get(0).getTabs().getControls());
         } else {
@@ -277,12 +278,33 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             binding.layoutRuntimeContainer.setVisibility(View.GONE);
             if(!model.getSelectedApplication().getIsNative()){
                 ArrayList param = new ArrayList<>();
-                param.add( model.getSelectedApplication().getSearchUrl());
+                param.add( constructUrl(model.getSelectedApplication().getSearchUrl()));
                 param.add( model.getSelectedApplication().getNameEn());
                 model.navigateWithParam(getActivity(), FR_WEBVIEW, param);
             }
         }
 
+    }
+
+    private String constructUrl(String url){
+        StringBuilder builder = new StringBuilder();
+        builder.append(url);
+        if(!url.endsWith("?")) {
+            builder.append("?");
+        }
+        builder.append("token=" + Global.accessToken + "&");
+        builder.append("remarks=" + Global.getPlatformRemark() + "&");
+        String lang = Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0 ? "en" : "ar";
+        builder.append("lang=" + lang + "&");
+        if(!Global.isUserLoggedIn){
+            builder.append("isGuest=true&");
+            builder.append("user_id="+ Global.sime_userid +"&");
+            builder.append("user_name=GUEST");
+        } else {
+            builder.append("user_id=" + Global.sime_userid + "&");
+            builder.append("user_name=" + Global.username);
+        }
+        return builder.toString();
     }
 
     private void clearRuntimeParent(){

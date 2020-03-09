@@ -134,12 +134,32 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         binding.imgHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(Global.helpUrlEn != null || Global.helpUrlAr != null) {
-                    ArrayList al = new ArrayList();
-                    al.add(Global.CURRENT_LOCALE.equals("en")? Global.helpUrlEn:Global.helpUrlAr);
-                    loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
-                } else {
+                ArrayList al = new ArrayList();
+                if(Global.FragmentTagForHelpUrl.equals(FragmentTAGS.FR_HOME)){
+                    /*if(Global.helpUrlEn != null || Global.helpUrlAr != null) {
+                        al.add(Global.CURRENT_LOCALE.equals("en")? Global.helpUrlEn:Global.helpUrlAr);
 
+                    } else {
+
+                    }*/
+                    if(Global.home_en_url != null || Global.home_en_url != null) {
+                        al.add(Global.CURRENT_LOCALE.equals("en") ? Global.home_en_url : Global.home_en_url);
+                    }
+                } else if(Global.FragmentTagForHelpUrl.equals(FragmentTAGS.FR_DASHBOARD)){
+                    if(Global.FragmentTagForDashboardHelpUrl == 0) {
+                        al.add(Global.CURRENT_LOCALE.equals("en")? Global.mymaps_en_url:Global.mymaps_ar_url);
+
+                    } else {
+                        al.add(Global.CURRENT_LOCALE.equals("en")? Global.bookmarks_en_url:Global.bookmarks_ar_url);
+                    }
+                }
+                if(al != null & al.size() > 0) {
+                    loadFragment(FragmentTAGS.FR_WEBVIEW, true, al);
+                } else {
+                    if(Global.home_en_url != null || Global.home_en_url != null) {
+                        al.add(Global.CURRENT_LOCALE.equals("en") ? Global.home_en_url : Global.home_en_url);
+                    }
+                    loadFragment(FragmentTAGS.FR_WEBVIEW, true, al);
                 }
             }
         });
@@ -194,14 +214,16 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
     public Fragment loadFragment(String fragment_tag, Boolean addToBackStack, List<Object> params) {
         fragmentManager = getSupportFragmentManager();
-
+        Global.FragmentTagForHelpUrl = "";
         tx = fragmentManager.beginTransaction();
         Fragment fragment = null;
         switch (fragment_tag) {
             case FragmentTAGS.FR_HOME:
+                Global.FragmentTagForHelpUrl = FragmentTAGS.FR_HOME;
                 fragment = HomeFragment.newInstance();
                 break;
             case FragmentTAGS.FR_DASHBOARD:
+                Global.FragmentTagForHelpUrl = FragmentTAGS.FR_DASHBOARD;
                 fragment = DashboardFragment.newInstance();
                 break;
             case FragmentTAGS.FR_MAP:
@@ -307,7 +329,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
-
+        Global.helpUrlEn = "";
+        Global.helpUrlAr = "";
 
         int count = getSupportFragmentManager().getBackStackEntryCount();
         if (count == 0)
@@ -349,6 +372,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 if(count>1){
                 fragmentAfterBackPress = getCurrentFragment();
                 if(fragmentAfterBackPress.getTag().equals(FragmentTAGS.FR_DASHBOARD)||fragmentAfterBackPress.getTag().equals(FragmentTAGS.FR_BOOKMARK)||fragmentAfterBackPress.getTag().equals(FragmentTAGS.FR_MYMAP)) {
+                    Global.FragmentTagForHelpUrl = FragmentTAGS.FR_DASHBOARD;
                     binding.customBottomBar.show(1, true);
                     Global.lastSelectedBottomTab = 1;
                 }
@@ -357,6 +381,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                     Global.lastSelectedBottomTab = 2;
                 }
                 if(Global.current_fragment_id.equals(FragmentTAGS.FR_HOME)) {
+                    Global.FragmentTagForHelpUrl = FragmentTAGS.FR_HOME;
                     binding.customBottomBar.show(3, true);
                     Global.lastSelectedBottomTab = 3;
                 }
@@ -376,7 +401,13 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         }
 
     }
-    private Fragment getCurrentFragment(){
+
+    private void processIntentData(Intent intent) {
+        /*if (intent.getStringExtra(DIntent.OPEN_NOTIFICATION_FRAGMENT_FROM_NOTIFICATION, false)) {
+            //openNotificationFragment();
+        }*/
+    }
+        private Fragment getCurrentFragment(){
         FragmentManager fragmentManager = getSupportFragmentManager();
         String fragmentTag = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1).getName();
         Fragment currentFragment = fragmentManager.findFragmentByTag(fragmentTag);

@@ -172,7 +172,15 @@ public class Global {
     public static SearchResult mapSearchResult;
     public static String helpUrlEn;
     public static String helpUrlAr;
+    public static String bookmarks_en_url;
+    public static String bookmarks_ar_url;
+    public static String mymaps_en_url;
+    public static String mymaps_ar_url;
+    public static String home_en_url;
+    public static String home_ar_url;
     public static int lastSelectedBottomTab = 3;
+    public static String FragmentTagForHelpUrl;
+    public static int FragmentTagForDashboardHelpUrl;
 
 
     public static List<FunctionsOnMap> getLstMapFunctions() {

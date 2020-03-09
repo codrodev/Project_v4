@@ -131,6 +131,91 @@ public class AccessTokenResponse {
   @Expose
   private String happinessServicecode;
 
+  @SerializedName("auxiliaryServiceUrl")
+  @Expose
+  private String auxiliaryServiceUrl;
+
+
+  @SerializedName("bookmarks_en_url")
+  @Expose
+  private String bookmarks_en_url;
+
+  @SerializedName("bookmarks_ar_url")
+  @Expose
+  private String bookmarks_ar_url;
+
+  @SerializedName("mymaps_en_url")
+  @Expose
+  private String mymaps_en_url;
+
+  @SerializedName("mymaps_ar_url")
+  @Expose
+  private String mymaps_ar_url;
+
+  @SerializedName("home_en_url")
+  @Expose
+  private String home_en_url;
+
+  @SerializedName("home_ar_url")
+  @Expose
+  private String home_ar_url;
+
+  public String getBookmarks_en_url() {
+    return bookmarks_en_url;
+  }
+
+  public void setBookmarks_en_url(String bookmarks_en_url) {
+    this.bookmarks_en_url = bookmarks_en_url;
+  }
+
+  public String getBookmarks_ar_url() {
+    return bookmarks_ar_url;
+  }
+
+  public void setBookmarks_ar_url(String bookmarks_ar_url) {
+    this.bookmarks_ar_url = bookmarks_ar_url;
+  }
+
+  public String getMymaps_en_url() {
+    return mymaps_en_url;
+  }
+
+  public void setMymaps_en_url(String mymaps_en_url) {
+    this.mymaps_en_url = mymaps_en_url;
+  }
+
+  public String getMymaps_ar_url() {
+    return mymaps_ar_url;
+  }
+
+  public void setMymaps_ar_url(String mymaps_ar_url) {
+    this.mymaps_ar_url = mymaps_ar_url;
+  }
+
+  public String getHome_en_url() {
+    return home_en_url;
+  }
+
+  public void setHome_en_url(String home_en_url) {
+    this.home_en_url = home_en_url;
+  }
+
+  public String getHome_ar_url() {
+    return home_ar_url;
+  }
+
+  public void setHome_ar_url(String home_ar_url) {
+    this.home_ar_url = home_ar_url;
+  }
+
+  public String getAuxiliaryServiceUrl() {
+    return auxiliaryServiceUrl;
+  }
+
+  public void setAuxiliaryServiceUrl(String auxiliaryServiceUrl) {
+    this.auxiliaryServiceUrl = auxiliaryServiceUrl;
+  }
+
   public String getGisTokenUrl() {
     return gisTokenUrl;
   }

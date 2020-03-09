@@ -102,8 +102,9 @@
                             android:id="@+id/icon2"
                             android:layout_width="35dp"
                             android:layout_height="35dp"
-                            android:src="@drawable/ic_about_us"
+
                             android:layout_centerInParent="true"/>
+                        <!--android:src="@drawable/ic_about_us"-->
                     </RelativeLayout>
                     <TextView
                         style="@style/font_medium_regular"
@@ -133,13 +134,13 @@
                     android:gravity="center"
                     android:orientation="vertical">
                     <RelativeLayout
-                        android:id="@+id/layoutFavourite"
+                        android:id="@+id/layoutHelp"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:background="@drawable/circular_menu_bg"
                         android:layout_margin="5dp">
                         <ImageView
-                            android:id="@+id/iconFavourite"
+                            android:id="@+id/iconlayoutHelp"
                             android:layout_width="35dp"
                             android:layout_height="35dp"
                             android:src="@drawable/ic_help_black"
