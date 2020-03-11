@@ -592,6 +592,31 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                 }
             }
         });
+
+        binding.imgHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0){
+                    ArrayList al = new ArrayList();
+                    if(Global.map_en_url != null && Global.map_en_url.length() > 0){
+                        al.add(Global.map_en_url);
+                        ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+                    } else {
+                        al.add(Global.helpUrlEn);
+                        ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+                    }
+                } else {
+                    ArrayList al = new ArrayList();
+                    if(Global.map_ar_url != null && Global.map_ar_url.length() > 0){
+                        al.add(Global.map_ar_url);
+                        ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+                    } else {
+                        al.add(Global.helpUrlEn);
+                        ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+                    }
+                }
+            }
+        });
     }
 
 

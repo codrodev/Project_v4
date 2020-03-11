@@ -150,6 +150,8 @@ public class LoginViewModel extends ViewModel {
             Global.mymaps_ar_url = kharetatiUser.mymaps_ar_url;
             Global.home_en_url = kharetatiUser.home_en_url;
             Global.home_ar_url = kharetatiUser.home_ar_url;
+            Global.map_en_url = kharetatiUser.map_en_url;
+            Global.map_ar_url = kharetatiUser.map_ar_url;
 
             authListener.saveUser(user);
             Global.isUserLoggedIn = false;
@@ -247,6 +249,8 @@ public class LoginViewModel extends ViewModel {
                 Global.mymaps_ar_url = accessTokenResponse.getMymaps_ar_url();
                 Global.home_en_url = accessTokenResponse.getHome_en_url();
                 Global.home_ar_url = accessTokenResponse.getHome_ar_url();
+                Global.map_en_url = accessTokenResponse.getMap_en_url();
+                Global.map_ar_url = accessTokenResponse.getMap_ar_url();
 
                 AttachmentBitmap.letter_from_owner = null;
                 AttachmentBitmap.emirateId_back = null;
