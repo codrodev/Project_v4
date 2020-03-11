@@ -94,6 +94,7 @@ import dm.sime.com.kharetati.datas.models.LayerDefinition;
 import dm.sime.com.kharetati.datas.models.Params;
 import dm.sime.com.kharetati.datas.models.PlotDetails;
 import dm.sime.com.kharetati.datas.models.SearchResult;
+import dm.sime.com.kharetati.datas.models.SerializableParcelDetails;
 import dm.sime.com.kharetati.datas.models.User;
 import dm.sime.com.kharetati.datas.network.ApiFactory;
 import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
@@ -192,6 +193,7 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
         LinearLayout layoutBottomSheet = (LinearLayout)mRootView.findViewById(R.id.bottomSheet);
         webView = (WebView)layoutBottomSheet.findViewById(R.id.webView);
         setRetainInstance(true);
+        initializePage();
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
 
 
@@ -285,17 +287,20 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
             sheetBehavior.setPeekHeight(0);
             mapSheetBehaviour.setPeekHeight(100);
         }
+        ArcGISRuntimeEnvironment.setLicense("runtimelite,1000,rud3984007683,none,GB2PMD17J0YJ2J7EZ071");
+        mapView.setAttributionTextVisible(false);
 
-        if(Global.isBookmarks)
+        if(Global.isBookmarks){
             binding.txtPlotNo.setText(parcelId);
+            model.manageAppBar(getActivity(), false);
+            model.manageAppBottomBAtr(getActivity(), false);
+        }
         else{
             binding.txtPlotNo.setText(Global.mapSearchResult.getService_response().getParcelId());
             onStarted();
-            initializePage();
-            ArcGISRuntimeEnvironment.setLicense("runtimelite,1000,rud3984007683,none,GB2PMD17J0YJ2J7EZ071");
         }
-        //progressBar = new //progressBar(getActivity(),null,android.R.attr.//progressBarStyleSmall);
-        //snack = Snackbar.make(getActivity().findViewById(R.id.ui_container), R.string.click_on_map, Snackbar.LENGTH_LONG);
+
+
 
         return binding.getRoot();
     }
@@ -308,51 +313,50 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
         //ArcGISMap map = new ArcGISMap(Global.mapSearchResult.getService_response().getMap().getDetails().getServiceUrl());
         ArcGISMap map = new ArcGISMap();
         mapView.setMap(map);
-        mapView.setAttributionTextVisible(false);
+
 
         // set up gesture for interacting with the MapView
         MapViewTouchListener mapViewTouchListener = new MapViewTouchListener(getActivity(), mapView);
         mapView.setOnTouchListener(mapViewTouchListener);
 
 
+        if(!Global.isBookmarks) {
+            dynamicLayer = new ArcGISMapImageLayer(Global.mapSearchResult.getService_response().getMap().getDetails().getServiceUrl());
+            Credential credential = new UserCredential(Global.mapSearchResult.getService_response().getMap().getDetails().getServiceTokenUserName(),
+                    Global.mapSearchResult.getService_response().getMap().getDetails().getServiceTokenPassword());
+            dynamicLayer.setCredential(credential);
+            map.getOperationalLayers().add(dynamicLayer);
 
-        dynamicLayer = new ArcGISMapImageLayer(Global.mapSearchResult.getService_response().getMap().getDetails().getServiceUrl());
-        Credential credential=new UserCredential(Global.mapSearchResult.getService_response().getMap().getDetails().getServiceTokenUserName(),
-                Global.mapSearchResult.getService_response().getMap().getDetails().getServiceTokenPassword());
-        dynamicLayer.setCredential(credential);
-        map.getOperationalLayers().add(dynamicLayer);
 
+            graphicsLayer = new GraphicsOverlay();
+            mapView.getGraphicsOverlays().add(graphicsLayer);
 
-        graphicsLayer = new GraphicsOverlay();
-        mapView.getGraphicsOverlays().add(graphicsLayer);
+            dynamicLayer.addDoneLoadingListener(() -> {
+                if (dynamicLayer.getLoadStatus() == LoadStatus.LOADED) {
+                    ArcGISMapServiceInfo mapServiceInfo = dynamicLayer.getMapServiceInfo();
+                    //only show dimensions for this plot
 
-        dynamicLayer.addDoneLoadingListener(() -> {
-            if (dynamicLayer.getLoadStatus() == LoadStatus.LOADED) {
-                ArcGISMapServiceInfo mapServiceInfo = dynamicLayer.getMapServiceInfo();
-                //only show dimensions for this plot
+                    LayerDefinition retriveLayer = getLayerDefination(Global.mapSearchResult.getService_response().getMap().getDetails().getSearch().getLayerId());
 
-                LayerDefinition retriveLayer = getLayerDefination(Global.mapSearchResult.getService_response().getMap().getDetails().getSearch().getLayerId());
+                    ArcGISMapImageSublayer sublayer = (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(retriveLayer.getId()));
+                    sublayer.setDefinitionExpression(retriveLayer.getQueryClause());
 
-                ArcGISMapImageSublayer sublayer= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(retriveLayer.getId()));
-                sublayer.setDefinitionExpression(retriveLayer.getQueryClause());
-
-                if (getActivity() != null) {
-                    if (Global.isConnected(getActivity())) {
-                        findParcel();
+                    if (getActivity() != null) {
+                        if (Global.isConnected(getActivity())) {
+                            findParcel();
+                        }
                     }
-                }
 
-            }
-            else{
+                } else {
                 /*imgNext.clearAnimation();
                 imgNext.setVisibility(View.GONE);*/
-                //progressDialog.hide();
-            }
-        });
+                    //progressDialog.hide();
+                }
+            });
 
 
-
-        ViewAnimationUtils.blinkAnimationView(binding.imgBack);
+            ViewAnimationUtils.blinkAnimationView(binding.imgBack);
+        }
 
         binding.imgLayer.setTag("layer");
         //Button Layer Click event
@@ -371,9 +375,7 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                 }
                 else{
                     try {
-
-
-                        if(view.getTag().toString().equalsIgnoreCase("layer")){
+                            if(view.getTag().toString().equalsIgnoreCase("layer")){
                             ((ImageView)view).setImageResource(R.drawable.ic_layers_24dp);
                             view.setTag("layer_active");
                             if(getOrthoLayer()!=null)
@@ -398,9 +400,6 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                         e.printStackTrace();
                     }
                 }
-
-
-
             }
         });
          //myBottomSheet = MapFunctionBottomSheetFragment.newInstance(this);
@@ -436,7 +435,10 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                 binding.txtPlotNo.setText(searchhistoryListView.getItemAtPosition(position).toString());
                 skipOnTextChangeEvent=false;
                 searchhistoryListView.setVisibility(View.GONE);
-                HomeFragment.homeVM.getSearchResult(searchhistoryListView.getItemAtPosition(position).toString().trim());
+                if(Global.isBookmarks)
+                    findParcel(searchhistoryListView.getItemAtPosition(position).toString().trim());
+                else
+                    HomeFragment.homeVM.getSearchResult(searchhistoryListView.getItemAtPosition(position).toString().trim());
             }
         });
 
@@ -512,8 +514,10 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                     Global.landNumber = null;
                     Global.area = null;
                     Global.area_ar = null;
-                    HomeFragment.homeVM.getSearchResult(binding.txtPlotNo.getText().toString().trim());
-
+                    if(Global.isBookmarks)
+                        findParcel(binding.txtPlotNo.getText().toString().trim());
+                    else
+                        HomeFragment.homeVM.getSearchResult(binding.txtPlotNo.getText().toString().trim());
 
                 }
             }
@@ -525,6 +529,7 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
             @Override
             public void onClick(View view) {
                 try {
+
                      if (!Global.isConnected(getActivity())) {
 
                             if(Global.appMsg!=null)
@@ -533,8 +538,10 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                                 AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
 
                         }
-                        else
+                        else{
+                            Global.isSaveAsBookmark =true;
                             model.getParceldetails();
+                        }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -591,8 +598,12 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                                 AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
 
                         }
-                        else
-                            Global.openMakani(Global.mapSearchResult.getService_response().getParcelId(), getActivity());
+                        else{
+                                if(Global.isBookmarks)
+                                    Global.openMakani(parcelId,getActivity());
+                                else
+                                    Global.openMakani(Global.mapSearchResult.getService_response().getParcelId(), getActivity());
+                        }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -629,6 +640,56 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
             Global.mapSearchResult = response;
             findParcel();
         }
+    }
+
+    @Override
+    public void getPlotDetais(SerializableParcelDetails appResponse) {
+
+        onSuccess();
+
+        if(Global.isBookmarks){
+            if(mapView!=null && PlotDetails.plotGeometry!=null)
+            {
+                mapView.setViewpointGeometryAsync(PlotDetails.plotGeometry, extentPadding);
+                ArcGISMapImageSublayer plotLayer=
+                        (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(Global.plotHighlightLayerId));
+                ArcGISMapImageSublayer communityLayer=
+                        (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(Global.plotDimLayerId));
+
+                plotLayer.loadAsync();
+                communityLayer.loadAsync();
+                plotLayer.addDoneLoadingListener(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        plotLayer.setDefinitionExpression("PARCEL_ID ='" + parcelId + "'");
+                    }
+                });
+                communityLayer.addDoneLoadingListener(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        communityLayer.setDefinitionExpression("COMM_PARCEL_ID ='" + parcelId + "'");
+                        onSuccess();
+                        searchhistoryListView.setVisibility(View.GONE);
+
+                        // bottomSheetDialogFragment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+                    }
+                });
+                final Timer timer=new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        ////mMapView.zoomout();
+                        timer.cancel();
+                        //initiateFindParcelRequest();
+                    }
+                }, 1000*1);
+            }
+
+        }
+
+
     }
 
     @Override
@@ -764,7 +825,7 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
         List<ArcGISSublayer> layers=dynamicLayer.getSublayers();
         for(int i=0;i<layers.size();i++){
             ArcGISSublayer layer=layers.get(i);
-            if(layer.getId()==5)
+            if(layer.getId()==6)
                 return layer;
         }
 
@@ -773,7 +834,7 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
     public void fromBookmarksFindCommunity(){
         try{
 
-            ArcGISMapImageSublayer communityLayer= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.valueOf(AppUrls.community_layerid));
+            ArcGISMapImageSublayer communityLayer= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(Global.plotDimLayerId));
             communityLayer.loadAsync();
             communityLayer.addDoneLoadingListener(new Runnable() {
                 @Override
@@ -908,12 +969,12 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
         }
 
         HashMap<Integer, String> layerDefs = new HashMap<Integer, String>();
-        layerDefs.put(Integer.valueOf(7), "PARCEL_ID ='" + parcelId + "'");
+        layerDefs.put(Integer.valueOf(AppUrls.plot_layerid), "PARCEL_ID ='" + parcelId + "'");
 
         if(dynamicLayer.getSublayers().size()>0){
-            ArcGISMapImageSublayer sublayerComm= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(7);
+            ArcGISMapImageSublayer sublayerComm= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(AppUrls.plot_layerid));
             sublayerComm.setDefinitionExpression("PARCEL_ID ='" + parcelId + "'");
-            ArcGISMapImageSublayer sublayer= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.valueOf(AppUrls.plot_layerid));
+            ArcGISMapImageSublayer sublayer= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(AppUrls.plot_layerid));
 
             sublayer.addDoneLoadingListener(new Runnable() {
                 @Override
@@ -980,7 +1041,8 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                                     PlotDetails.currentState.textLabel=parcelTextLabel;
                                     PlotDetails.parcelNo=parcelId;
                                     Global.addToParcelHistory(parcelId,getActivity());
-                                    fromBookmarksFindCommunity();
+                                    //fromBookmarksFindCommunity();
+                                    model.getParceldetails();
                                     break;
                                 }
                                 //if(progressDialog != null)
@@ -1130,7 +1192,7 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
             if (dynamicLayer.getLoadStatus() == LoadStatus.LOADED) {
                 ArcGISMapServiceInfo mapServiceInfo = dynamicLayer.getMapServiceInfo();
                 //only show dimensions for this plot
-                ArcGISMapImageSublayer sublayer= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(7);
+                ArcGISMapImageSublayer sublayer= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(AppUrls.plot_layerid));
                 sublayer.setDefinitionExpression("PARCEL_ID ='" + parcelId + "'");
                 if(Global.isConnected(getActivity())){
 

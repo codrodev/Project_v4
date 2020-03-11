@@ -46,6 +46,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static dm.sime.com.kharetati.utility.Global.isBookmarks;
+
 public class MapViewModel extends ViewModel {
 
     FragmentNavigator frNavigator;
@@ -90,7 +92,7 @@ public class MapViewModel extends ViewModel {
         SerializeGetAppRequestModel model = new SerializeGetAppRequestModel();
 
         SerializeGetAppInputRequestModel inputModel = new SerializeGetAppInputRequestModel();
-        inputModel.setParcel_id(Integer.parseInt(Global.searchText));
+        inputModel.setParcel_id(isBookmarks?Integer.parseInt(PlotDetails.parcelNo):Integer.parseInt(Global.searchText));
         inputModel.setTOKEN(Global.app_session_token);
         inputModel.setREMARKS(Global.getPlatformRemark());
 
@@ -106,7 +108,15 @@ public class MapViewModel extends ViewModel {
                         PlotDetails.communityAr = appResponse.getService_response().get(0).getCommNameAr();
                         PlotDetails.communityEn = appResponse.getService_response().get(0).getCommNameEn();
 //                        PlotDetails.area = appResponse.getService_response().get(0).getAreaInSqMt();
-                        saveAsBookMark(true);
+
+                        if(Global.isSaveAsBookmark && Global.isBookmarks){
+                            saveAsBookMark(true);
+                        }
+                        else if(isBookmarks)
+                            mapNavigator.getPlotDetais(appResponse);
+                        else
+                            saveAsBookMark(true);
+
 
 
                     }
@@ -129,7 +139,7 @@ public class MapViewModel extends ViewModel {
         //model.setUserID(1003);
         model.setUserID(Global.sime_userid);
         model.setArea(PlotDetails.area);
-        model.setParcelNumber(Integer.parseInt(Global.searchText));
+        model.setParcelNumber(Global.isBookmarks?Integer.parseInt(PlotDetails.parcelNo):Integer.parseInt(Global.searchText));
         model.setCommunity(PlotDetails.communityEn);
         model.setCommunityAr(PlotDetails.communityAr);
 

@@ -331,7 +331,7 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
         ArcGISRuntimeEnvironment.setLicense("runtimelite,1000,rud3984007683,none,GB2PMD17J0YJ2J7EZ071");
         UserCredential userCredentials = new UserCredential(AppUrls.GIS_LAYER_USERNAME,AppUrls.GIS_LAYER_PASSWORD);
     /*userCredentials.setUserAccount(Constant.GIS_LAYER_USERNAME,Constant.GIS_LAYER_PASSWORD);*/
-
+        AlertDialogUtil.showProgressBar(getActivity(),true);
         mMapView = (MapView)v.findViewById(R.id.mapContactUs);
         ArcGISMap map = new ArcGISMap();
         dynamicLayer  = new ArcGISMapImageLayer(AppUrls.GIS_LAYER_URL);
@@ -357,11 +357,28 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
         //Add makani Icon to the map
         GraphicsOverlay graphicsLayer = new GraphicsOverlay();
         // mMapView.getGraphicsOverlays().add(graphicsLayer);
-        graphicsLayer.getGraphics().add(graphic);
 
-        //map.getOperationalLayers().add(dynamicLayer);
+        dynamicLayer.addDoneLoadingListener(() -> {
+            if (dynamicLayer.getLoadStatus() == LoadStatus.LOADED) {
+                List<ArcGISSublayer> layers=dynamicLayer.getSublayers();
+                for(int i=0;i<layers.size();i++){
+                    ArcGISSublayer layer=layers.get(i);
+                    if(layer.getId()==6){
+                        layer.setVisible(true);
+                        graphicsLayer.getGraphics().add(graphic);
+                        AlertDialogUtil.showProgressBar(getActivity(),false);
+
+                    }
+                    else
+                        layer.setVisible(false);
+                }
+            }
+        });
+
+        map.getOperationalLayers().add(dynamicLayer);
         mMapView.getGraphicsOverlays().add(graphicsLayer);
-        map.setBasemap(Basemap.createImagery());
+
+        //map.setBasemap(Basemap.createImagery());
         mMapView.setMap(map);
 
 
@@ -467,7 +484,7 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
 
         //Resize image
 
-        /*mMapView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+        mMapView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
             @Override
             public void onViewAttachedToWindow(View v){
                 final Timer timer=new Timer();
@@ -476,7 +493,15 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
                     public void run() {
                         //mMapView.setViewpointCenterAsync(graphicPoint);
                         //mMapView.setViewpointGeometryAsync(new Point(497818.691, 2795353.692),100);
-                        mMapView.setViewpointScaleAsync(2000);
+                        final Timer timer=new Timer();
+                        timer.schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                mMapView.setViewpointScaleAsync(2000);
+                                timer.cancel();
+                            }
+                        }, 1000*1);
+
                         timer.cancel();
                     }
                 }, 1000*1);
@@ -487,27 +512,18 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
 
             }
 
-      *//*@Override
+     /* @Override
       public void onStatusChanged(Object o, STATUS status) {
         if( o instanceof ArcGISDynamicMapServiceLayer && status==STATUS.LAYER_LOADED)
         {
-          final Timer timer=new Timer();
-          timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-              mMapView.zoomin();
-              timer.cancel();
-            }
-          }, 1000*1);
+
         }
         if( o instanceof ArcGISDynamicMapServiceLayer && status==STATUS.LAYER_LOADING_FAILED)
         {
           layoutMap.setVisibility(View.GONE);
         }
-      }*//*
-        });*/
-
-
+      }*/
+        });
 
     }
 

@@ -132,6 +132,7 @@ public class Global {
     public static boolean isDeliveryByCourier;
     public static String paymentUrl;
     public static String searchText;
+    public static boolean isSaveAsBookmark;
     private static Context context;
     public static boolean isLanguageChanged = false;
     public static String noctemplateUrl;

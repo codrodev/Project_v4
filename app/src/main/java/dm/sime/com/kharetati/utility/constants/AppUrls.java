@@ -30,7 +30,7 @@ public class AppUrls {
     //public static String GIS_LAYER_PARCEL_URL = "https://smart.gis.gov.ae/dmgis104/rest/services/Kharetati/Kharetati/MapServer/2";
     //public static String GIS_LAYER_COMMUNITY_URL = "https://www.makani.ae/arcgis/rest/services/ZoningRegulations/ZoningRegulations/MapServer/9";
     public static String community_layerid="16";
-    public static String plot_layerid="2";
+    public static String plot_layerid="3";
     public static String GIS_LAYER_COMMUNITY_URL = GIS_LAYER_URL + "/" + community_layerid;
     //public static String parcelLayerExportUrl_en = "http://www.makani.ae/arcgis/rest/services/ZoningRegulations/ZoningRegulations/MapServer/export" ;//+ "?token=" + Global.arcgis_token;
     //public static String parcelLayerExportUrl_ar = "http://www.makani.ae/arcgis/rest/services/ZoningRegulations/ZoningRegulations_Arabic/MapServer/export" ;//+ "?token=" + Global.arcgis_token;

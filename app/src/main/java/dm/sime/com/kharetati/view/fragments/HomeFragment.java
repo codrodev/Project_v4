@@ -157,6 +157,8 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Global.current_fragment_id = FragmentTAGS.FR_HOME;
+        Global.isBookmarks =false;
+        Global.isSaveAsBookmark =false;
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         binding.setFragmentHomeVM(model);
         mRootView = binding.getRoot();
