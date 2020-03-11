@@ -181,9 +181,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     }
 
     private void processIntentData(Intent intent) {
-        if (intent.getStringExtra(AppConstants.OPEN_FROM_DEEP_LINK) != null) {
-            AlertDialogUtil.errorAlertDialog("deep link", "deep link",
-                    getString(R.string.ok), this);
+        if (intent.getStringExtra("access") != null) {
+            Global.accessToken = intent.getStringExtra("access");
         }
     }
 
@@ -214,9 +213,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         Intent intent = getIntent();
         if (intent != null && intent.getData() != null) {
             processIntentData(intent);
-        } else {
-            loadFragment(FragmentTAGS.FR_HOME, false, null);
         }
+        loadFragment(FragmentTAGS.FR_HOME, false, null);
     }
 
     @Override
