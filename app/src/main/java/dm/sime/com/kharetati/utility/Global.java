@@ -179,6 +179,8 @@ public class Global {
     public static String mymaps_ar_url;
     public static String home_en_url;
     public static String home_ar_url;
+    public static String map_en_url;
+    public static String map_ar_url;
     public static int lastSelectedBottomTab = 3;
     public static String FragmentTagForHelpUrl;
     public static int FragmentTagForDashboardHelpUrl;

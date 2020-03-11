@@ -105,6 +105,26 @@ public class KharetatiUser extends BaseObservable {
 
   public String home_ar_url;
 
+  public String map_en_url;
+
+  public String map_ar_url;
+
+  public String getMap_en_url() {
+    return map_en_url;
+  }
+
+  public void setMap_en_url(String map_en_url) {
+    this.map_en_url = map_en_url;
+  }
+
+  public String getMap_ar_url() {
+    return map_ar_url;
+  }
+
+  public void setMap_ar_url(String map_ar_url) {
+    this.map_ar_url = map_ar_url;
+  }
+
   public String getAuxiliaryServiceUrl() {
     return auxiliaryServiceUrl;
   }
