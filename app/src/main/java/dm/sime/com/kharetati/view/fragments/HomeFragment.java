@@ -301,8 +301,8 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             builder.append("user_id="+ Global.sime_userid +"&");
             builder.append("user_name=GUEST");
         } else {
-            builder.append("user_id=" + Global.sime_userid + "&");
-            builder.append("user_name=" + Global.username);
+            builder.append("user_id=" + Global.username + "&");
+            builder.append("user_name=" + Global.getUser(getActivity()).getFullname());
         }
         return builder.toString();
     }

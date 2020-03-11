@@ -37,6 +37,7 @@ import dm.sime.com.kharetati.datas.repositories.MainRepository;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.CustomContextWrapper;
 import dm.sime.com.kharetati.utility.Global;
+import dm.sime.com.kharetati.utility.constants.AppConstants;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.fragments.FeedbackFragment;
 import dm.sime.com.kharetati.view.fragments.RequestDetailsFragment;
@@ -170,7 +171,6 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
     private void initializeActivity(){
 
-
         /*binding.customBottomBar.setOnShowListener(new Function1<MeowBottomNavigation.Model, Unit>() {
             @Override
             public Unit invoke(MeowBottomNavigation.Model model) {
@@ -178,6 +178,13 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 return null;
             }
         });*/
+    }
+
+    private void processIntentData(Intent intent) {
+        if (intent.getStringExtra(AppConstants.OPEN_FROM_DEEP_LINK) != null) {
+            AlertDialogUtil.errorAlertDialog("deep link", "deep link",
+                    getString(R.string.ok), this);
+        }
     }
 
     @Override
@@ -204,7 +211,12 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     }
 
     private void openHomePage(){
-        loadFragment(FragmentTAGS.FR_HOME, false, null);
+        Intent intent = getIntent();
+        if (intent != null && intent.getData() != null) {
+            processIntentData(intent);
+        } else {
+            loadFragment(FragmentTAGS.FR_HOME, false, null);
+        }
     }
 
     @Override
@@ -401,12 +413,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
     }
 
-    private void processIntentData(Intent intent) {
-        /*if (intent.getStringExtra(DIntent.OPEN_NOTIFICATION_FRAGMENT_FROM_NOTIFICATION, false)) {
-            //openNotificationFragment();
-        }*/
-    }
-        private Fragment getCurrentFragment(){
+    private Fragment getCurrentFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         String fragmentTag = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1).getName();
         Fragment currentFragment = fragmentManager.findFragmentByTag(fragmentTag);

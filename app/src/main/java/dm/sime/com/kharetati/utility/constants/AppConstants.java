@@ -72,6 +72,9 @@ public final class AppConstants {
     public static String GIS_LAYER_TOKEN_URL =   "https://www.smartgis.ae/dmgis104/tokens/";
     public static String GIS_LAYER_URL = "https://www.smartgis.ae/dmgis104/rest/services/Kharetati/Kharetati/MapServer";//production
 
+
+    public static String OPEN_FROM_DEEP_LINK = "deepLinkAccessToken";
+
     private AppConstants() {
         // This utility class is not publicly instantiable
     }

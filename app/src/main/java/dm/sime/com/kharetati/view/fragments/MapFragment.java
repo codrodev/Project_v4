@@ -182,6 +182,7 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
         bottomSheetDialogFragment = MapFunctionBottomsheetDialogFragment.newInstance(this);
         LinearLayout layoutBottomSheet = (LinearLayout)mRootView.findViewById(R.id.bottomSheet);
         webView = (WebView)layoutBottomSheet.findViewById(R.id.webView);
+        webView.getSettings().setJavaScriptEnabled(true);
         setRetainInstance(true);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
 
@@ -192,14 +193,22 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                 switch (i) {
                     case BottomSheetBehavior.STATE_HIDDEN:
                         binding.frameLayout.setVisibility(View.VISIBLE);
+                        if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null &&
+                                Global.mapSearchResult.getService_response().getMap().getFunctions().size() > 1) {
+                            mapSheetBehaviour.setPeekHeight(100);
+                        }
                         break;
-                    case BottomSheetBehavior.STATE_EXPANDED: {
+                    case BottomSheetBehavior.STATE_EXPANDED:
                         binding.frameLayout.setVisibility(View.INVISIBLE);
+                        mapSheetBehaviour.setPeekHeight(0);
                         //sheetBehavior.setText("Close Sheet");
-                    }
                     break;
                     case BottomSheetBehavior.STATE_COLLAPSED: {
                         binding.frameLayout.setVisibility(View.VISIBLE);
+                        if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null &&
+                                Global.mapSearchResult.getService_response().getMap().getFunctions().size() > 1) {
+                            mapSheetBehaviour.setPeekHeight(100);
+                        }
                         //sheetBehavior.setText("Expand Sheet");
                     }
                     break;
@@ -251,6 +260,7 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
         bottomSheet.findViewById(R.id.layoutParentMapFunctionBottomSheet).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //toggleBottomSheet();
                 bottomSheetDialogFragment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
             }
         });
@@ -258,6 +268,7 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
         bottomSheet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //toggleBottomSheet();
                 bottomSheetDialogFragment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
             }
         });
@@ -629,6 +640,7 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
             }
         } else if (fun.getLaunchUrl() != null && fun.getLaunchUrl().length() > 0 &&
                 fun.getLaunchUrl().contains("http")){
+            toggleBottomSheet();
             StringBuilder builder = new StringBuilder();
             builder.append(fun.getLaunchUrl());
             if(!fun.getLaunchUrl().endsWith("?")) {
@@ -643,8 +655,8 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                 builder.append("user_id="+ Global.sime_userid +"&");
                 builder.append("user_name=GUEST&");
             } else {
-                builder.append("user_id=" + Global.sime_userid + "&");
-                builder.append("user_name=" + Global.username + "&");
+                builder.append("user_id=" + Global.username + "&");
+                builder.append("user_name=" + Global.getUser(getActivity()).getFullname() + "&");
             }
             if(fun.getParams() != null && fun.getParams().size() > 0){
 
@@ -803,6 +815,10 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                                 if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null &&
                                         Global.mapSearchResult.getService_response().getMap().getFunctions().size() > 1) {
                                     bottomSheetDialogFragment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+                                } else {
+                                    if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null){
+                                        mapFunctionAction(Global.mapSearchResult.getService_response().getMap().getFunctions().get(0));
+                                    }
                                 }
                             }
 
