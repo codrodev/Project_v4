@@ -2,6 +2,7 @@ package dm.sime.com.kharetati.view.viewModels;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
@@ -44,6 +45,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+
+import static dm.sime.com.kharetati.utility.Global.isBookmarks;
 
 public class MapViewModel extends ViewModel {
 
@@ -89,9 +92,9 @@ public class MapViewModel extends ViewModel {
         SerializeGetAppRequestModel model = new SerializeGetAppRequestModel();
 
         SerializeGetAppInputRequestModel inputModel = new SerializeGetAppInputRequestModel();
-        inputModel.setParcel_id(Integer.parseInt(Global.searchText));
+        inputModel.setParcel_id(isBookmarks?Integer.parseInt(PlotDetails.parcelNo):Integer.parseInt(Global.searchText));
         inputModel.setTOKEN(Global.app_session_token);
-        inputModel.setREMARKS("AndroidV8.0");
+        inputModel.setREMARKS(Global.getPlatformRemark());
 
         model.setInputJson(inputModel);
 
@@ -105,13 +108,21 @@ public class MapViewModel extends ViewModel {
                         PlotDetails.communityAr = appResponse.getService_response().get(0).getCommNameAr();
                         PlotDetails.communityEn = appResponse.getService_response().get(0).getCommNameEn();
 //                        PlotDetails.area = appResponse.getService_response().get(0).getAreaInSqMt();
-                        saveAsBookMark(true);
+
+                        if(Global.isSaveAsBookmark && Global.isBookmarks){
+                            saveAsBookMark(true);
+                        }
+                        else if(isBookmarks)
+                            mapNavigator.getPlotDetais(appResponse);
+                        else
+                            saveAsBookMark(true);
+
 
 
                     }
                 }, new Consumer<Throwable>() {
                     @Override public void accept(Throwable throwable) throws Exception {
-                        mapNavigator.onFailure(activity.getResources().getString(R.string.server_connect_error));
+                        showErrorMessage(throwable.getMessage());
                     }
                 });
 
@@ -124,11 +135,11 @@ public class MapViewModel extends ViewModel {
         //getParceldetails();
         mapNavigator.onStarted();
 
-
         SerializeBookMarksModel model = new SerializeBookMarksModel();
-        model.setUserID(1003);
+        //model.setUserID(1003);
+        model.setUserID(Global.sime_userid);
         model.setArea(PlotDetails.area);
-        model.setParcelNumber(Integer.parseInt(Global.searchText));
+        model.setParcelNumber(Global.isBookmarks?Integer.parseInt(PlotDetails.parcelNo):Integer.parseInt(Global.searchText));
         model.setCommunity(PlotDetails.communityEn);
         model.setCommunityAr(PlotDetails.communityAr);
 
@@ -161,11 +172,10 @@ public class MapViewModel extends ViewModel {
                                 }
                             }
                             else{
-                                mapNavigator.onFailure(activity.getResources().getString(R.string.error_response));
+                                showErrorMessage("");
                             }
                         } catch (Exception e) {
-                            mapNavigator.onFailure(e.getMessage());
-                            e.printStackTrace();
+                            showErrorMessage(e.getMessage());
                         }
 
                     }
@@ -234,15 +244,14 @@ public class MapViewModel extends ViewModel {
                             }
 
                         } catch (Exception e) {
-                            mapNavigator.onFailure(e.getMessage());
-                            e.printStackTrace();
+                            showErrorMessage(e.getMessage());
                         }
 
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        mapNavigator.onFailure(throwable.getMessage());
+                       showErrorMessage(throwable.getMessage());
                     }
                 });
 
@@ -250,4 +259,14 @@ public class MapViewModel extends ViewModel {
 
 
     }
+    public void showErrorMessage(String exception){
+        if(Global.appMsg!=null){
+            mapNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
+        }
+        else
+            mapNavigator.onFailure(activity.getResources().getString(R.string.error_response));
+
+        Log.d(activity.getClass().getSimpleName(),exception);
+    }
+
 }

@@ -2,6 +2,7 @@ package dm.sime.com.kharetati.view.viewModels;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
@@ -108,13 +109,12 @@ public class ParentSiteplanViewModel extends ViewModel {
                         }
                     }, new Consumer<Throwable>() {
                         @Override public void accept(Throwable throwable) throws Exception {
-                            parentSitePlanNavigator.onFailure(throwable.getMessage());
-                            //homeNavigator.onFailure("Unable to connect the remote server");
+                            showErrorMessage(throwable.getMessage());
                         }
                     });
             compositeDisposable.add(disposable);
         } catch (Exception ex){
-            parentSitePlanNavigator.onFailure(ex.getMessage());
+            showErrorMessage(ex.getMessage());
         }
 
     }
@@ -185,14 +185,24 @@ public class ParentSiteplanViewModel extends ViewModel {
                 } else if (status == 504 || status == 410) {
                     parentSitePlanNavigator.navigateToFragment(1);
                 } else {
-                    if (msg.equals("")) {
-                        msg = Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getErrorFetchingDataEn() : Global.appMsg.getErrorFetchingDataAr();
+                    if (!msg.equals("")||msg!=null)
                         parentSitePlanNavigator.onFailure(msg);
-                    }
+                    else
+                        showErrorMessage("");
+
                 }
             }
 
         }
 
+    }
+    public void showErrorMessage(String exception){
+        if(Global.appMsg!=null){
+            parentSitePlanNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
+        }
+        else
+            parentSitePlanNavigator.onFailure(activity.getResources().getString(R.string.error_response));
+
+        Log.d(activity.getClass().getSimpleName(),exception);
     }
 }

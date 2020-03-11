@@ -157,6 +157,8 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Global.current_fragment_id = FragmentTAGS.FR_HOME;
+        Global.isBookmarks =false;
+        Global.isSaveAsBookmark =false;
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         binding.setFragmentHomeVM(model);
         mRootView = binding.getRoot();
@@ -612,7 +614,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         ArrayList<String> area = new ArrayList<String>();
         //area.add(getResources().getString(R.string.tap_to_choose));
         for (int i = 0; i < areas.size(); i++) {
-            area.add(isEnglish ? areas.get(i).getDescEn() : areas.get(i).getDescEn());
+            area.add(isEnglish ? areas.get(i).getDescEn() : areas.get(i).getDescAr());
         }
         return area;
     }

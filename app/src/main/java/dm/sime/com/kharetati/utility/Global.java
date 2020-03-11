@@ -132,6 +132,7 @@ public class Global {
     public static boolean isDeliveryByCourier;
     public static String paymentUrl;
     public static String searchText;
+    public static boolean isSaveAsBookmark;
     private static Context context;
     public static boolean isLanguageChanged = false;
     public static String noctemplateUrl;
@@ -156,6 +157,11 @@ public class Global {
     public static String landregPopupMsgHeadingAr;
     public static String landregUrl;
     public static String requestId;
+    public static String plotDimLayerId;
+    public static String plotHighlightLayerId;
+    public static String plotLayerParcelAttrName;
+    public static String plotImgLayerId;
+    public static String plotDimLayerParcelAttrName;
     public static boolean isLandRegMessageDisplayed = false;
     public static boolean isFromDelivery = false;
     public static Docs[] docArr;
@@ -650,8 +656,10 @@ public class Global {
         return true;
     }
 
-    public static String getPlatformRemark() {
-        return AppConstants.REMARKS;
+
+    public static String getPlatformRemark()
+    {
+        return AppConstants.DEVICE_TYPE + "-" +Build.VERSION.RELEASE;
     }
 
     public static float getScreenHeight(Activity activity){

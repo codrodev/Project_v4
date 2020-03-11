@@ -124,8 +124,6 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
         AlertDialogUtil.showProgressBar(getActivity(),false);
         binding.recyclerBookMarks.setAdapter(model.getBookmarkAdapter());
 
-
-
     }
 
     @Override

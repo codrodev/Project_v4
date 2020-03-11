@@ -33,6 +33,62 @@ public class KharetatiUser extends BaseObservable {
   public String aboutus_en_url;
   public String terms_ar_url;
   public String terms_en_url;
+  @SerializedName("plot_dim_layer_id")
+  @Expose
+  private String plotDimLayerId;
+  @SerializedName("plot_highlight_layer_id")
+  @Expose
+  private String plotHighlightLayerId;
+  @SerializedName("plot_layer_parcel_attr_name")
+  @Expose
+  private String plotLayerParcelAttrName;
+  @SerializedName("plot_img_layer_id")
+  @Expose
+  private String plotImgLayerId;
+  @SerializedName("plot_dim_layer_parcel_attr_name")
+  @Expose
+  private String plotDimLayerParcelAttrName;
+
+  public String getPlotDimLayerId() {
+    return plotDimLayerId;
+  }
+
+  public void setPlotDimLayerId(String plotDimLayerId) {
+    this.plotDimLayerId = plotDimLayerId;
+  }
+
+  public String getPlotHighlightLayerId() {
+    return plotHighlightLayerId;
+  }
+
+  public void setPlotHighlightLayerId(String plotHighlightLayerId) {
+    this.plotHighlightLayerId = plotHighlightLayerId;
+  }
+
+  public String getPlotLayerParcelAttrName() {
+    return plotLayerParcelAttrName;
+  }
+
+  public void setPlotLayerParcelAttrName(String plotLayerParcelAttrName) {
+    this.plotLayerParcelAttrName = plotLayerParcelAttrName;
+  }
+
+  public String getPlotImgLayerId() {
+    return plotImgLayerId;
+  }
+
+  public void setPlotImgLayerId(String plotImgLayerId) {
+    this.plotImgLayerId = plotImgLayerId;
+  }
+
+  public String getPlotDimLayerParcelAttrName() {
+    return plotDimLayerParcelAttrName;
+  }
+
+  public void setPlotDimLayerParcelAttrName(String plotDimLayerParcelAttrName) {
+    this.plotDimLayerParcelAttrName = plotDimLayerParcelAttrName;
+  }
+
   public AppMsg appMsg;
 
   public String auxiliaryServiceUrl;

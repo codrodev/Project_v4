@@ -21,6 +21,21 @@ public class AccessTokenResponse {
   @SerializedName("plot_layerid")
   @Expose
   private String plotLayerid;
+  @SerializedName("plot_dim_layer_id")
+  @Expose
+  private String plotDimLayerId;
+  @SerializedName("plot_highlight_layer_id")
+  @Expose
+  private String plotHighlightLayerId;
+  @SerializedName("plot_layer_parcel_attr_name")
+  @Expose
+  private String plotLayerParcelAttrName;
+  @SerializedName("plot_img_layer_id")
+  @Expose
+  private String plotImgLayerId;
+  @SerializedName("plot_dim_layer_parcel_attr_name")
+  @Expose
+  private String plotDimLayerParcelAttrName;
   @SerializedName("gis_layer_url")
   @Expose
   private String gisLayerUrl;
@@ -257,7 +272,45 @@ public class AccessTokenResponse {
     this.communityLayerid = communityLayerid;
   }
 
+  public String getPlotDimLayerId() {
+    return plotDimLayerId;
+  }
 
+  public void setPlotDimLayerId(String plotDimLayerId) {
+    this.plotDimLayerId = plotDimLayerId;
+  }
+
+  public String getPlotHighlightLayerId() {
+    return plotHighlightLayerId;
+  }
+
+  public void setPlotHighlightLayerId(String plotHighlightLayerId) {
+    this.plotHighlightLayerId = plotHighlightLayerId;
+  }
+
+  public String getPlotLayerParcelAttrName() {
+    return plotLayerParcelAttrName;
+  }
+
+  public void setPlotLayerParcelAttrName(String plotLayerParcelAttrName) {
+    this.plotLayerParcelAttrName = plotLayerParcelAttrName;
+  }
+
+  public String getPlotImgLayerId() {
+    return plotImgLayerId;
+  }
+
+  public void setPlotImgLayerId(String plotImgLayerId) {
+    this.plotImgLayerId = plotImgLayerId;
+  }
+
+  public String getPlotDimLayerParcelAttrName() {
+    return plotDimLayerParcelAttrName;
+  }
+
+  public void setPlotDimLayerParcelAttrName(String plotDimLayerParcelAttrName) {
+    this.plotDimLayerParcelAttrName = plotDimLayerParcelAttrName;
+  }
 
   public String getPlotLayerid() {
     return plotLayerid;

@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Environment;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.RequiresApi;
@@ -93,13 +94,12 @@ public class AttachmentViewModel extends ViewModel {
                         }
                     }, new Consumer<Throwable>() {
                         @Override public void accept(Throwable throwable) throws Exception {
-                            attachmentNavigator.onFailure(throwable.getMessage());
-                            //homeNavigator.onFailure("Unable to connect the remote server");
+                            showErrorMessage(throwable.getMessage());
                         }
                     });
             compositeDisposable.add(disposable);
         } catch (Exception ex){
-            attachmentNavigator.onFailure(ex.getMessage());
+            showErrorMessage(ex.getMessage());
         }
 
     }
@@ -114,7 +114,10 @@ public class AttachmentViewModel extends ViewModel {
             String msg=Global.CURRENT_LOCALE.equals("en") ? retrieveDocStreamResponse.getMessage_en():retrieveDocStreamResponse.getMessage_ar();
             if( status == 403){
                 isError= true;
-                if(msg!=null||msg.equals("")) attachmentNavigator.onFailure(msg);
+                if(msg!=null||!msg.equals(""))
+                    attachmentNavigator.onFailure(msg);
+                else
+                    showErrorMessage("");
 
             }
             else{
@@ -136,5 +139,14 @@ public class AttachmentViewModel extends ViewModel {
             isImage = true;
         }
         return isImage;
+    }
+    public void showErrorMessage(String exception){
+        if(Global.appMsg!=null){
+            attachmentNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
+        }
+        else
+            attachmentNavigator.onFailure(activity.getResources().getString(R.string.error_response));
+
+        Log.d(activity.getClass().getSimpleName(),exception);
     }
 }

@@ -128,10 +128,15 @@ public class LoginViewModel extends ViewModel {
             AppUrls.GIS_LAYER_TOKEN_URL=kharetatiUser.gis_token_url != null && kharetatiUser.gis_token_url!=""? kharetatiUser.gis_token_url:AppUrls.GIS_LAYER_TOKEN_URL;
             AppUrls.URL_PLOTFINDER=kharetatiUser.url_plotfinder !=null && kharetatiUser.url_plotfinder!=""? kharetatiUser.url_plotfinder:AppUrls.URL_PLOTFINDER;
             AppUrls.GIS_LAYER_COMMUNITY_URL=kharetatiUser.community_layerid!=null && kharetatiUser.community_layerid!=""?       AppUrls.GIS_LAYER_URL + "/" + kharetatiUser.community_layerid:AppUrls.GIS_LAYER_URL + "/" + AppUrls.community_layerid;
-            AppUrls.parcelLayerExportUrl_en=kharetatiUser.parcelLayerExportUrl_en!=null && kharetatiUser.parcelLayerExportUrl_en!=""?       kharetatiUser.parcelLayerExportUrl_en + "?token=" + Global.arcgis_token:AppUrls.parcelLayerExportUrl_en + "?token=" + Global.arcgis_token;
-            AppUrls.parcelLayerExportUrl_ar=kharetatiUser.parcelLayerExportUrl_ar!=null && kharetatiUser.parcelLayerExportUrl_ar!=""?       kharetatiUser.parcelLayerExportUrl_ar + "?token=" + Global.arcgis_token:AppUrls.parcelLayerExportUrl_ar + "?token=" + Global.arcgis_token;
+            AppUrls.parcelLayerExportUrl_en=kharetatiUser.parcelLayerExportUrl_en!=null && kharetatiUser.parcelLayerExportUrl_en!=""?  kharetatiUser.parcelLayerExportUrl_en + "?token=" + Global.arcgis_token:AppUrls.parcelLayerExportUrl_en + "?token=" + Global.arcgis_token;
+            AppUrls.parcelLayerExportUrl_ar=kharetatiUser.parcelLayerExportUrl_ar!=null && kharetatiUser.parcelLayerExportUrl_ar!=""?  kharetatiUser.parcelLayerExportUrl_ar + "?token=" + Global.arcgis_token:AppUrls.parcelLayerExportUrl_ar + "?token=" + Global.arcgis_token;
             AppUrls.plot_layerid=kharetatiUser.plot_layerid!=null && kharetatiUser.plot_layerid!=""?kharetatiUser.plot_layerid:AppUrls.plot_layerid;
             AppUrls.BASE_AUXULARY_URL=kharetatiUser.auxiliaryServiceUrl!=null && kharetatiUser.auxiliaryServiceUrl!=""?kharetatiUser.auxiliaryServiceUrl:"";
+            Global.plotDimLayerId = (kharetatiUser.getPlotDimLayerId() != null && kharetatiUser.getPlotDimLayerId() != "") ? kharetatiUser.getPlotDimLayerId():"";
+            Global.plotHighlightLayerId = (kharetatiUser.getPlotHighlightLayerId() != null && kharetatiUser.getPlotHighlightLayerId() != "") ? kharetatiUser.getPlotHighlightLayerId():"";
+            Global.plotImgLayerId = (kharetatiUser.getPlotImgLayerId() != null && kharetatiUser.getPlotImgLayerId() != "") ? kharetatiUser.getPlotImgLayerId():"";
+            Global.plotLayerParcelAttrName = (kharetatiUser.getPlotLayerParcelAttrName() != null && kharetatiUser.getPlotLayerParcelAttrName() != "") ? kharetatiUser.getPlotLayerParcelAttrName():"";
+            Global.plotDimLayerParcelAttrName = (kharetatiUser.getPlotDimLayerParcelAttrName() != null && kharetatiUser.getPlotDimLayerParcelAttrName() != "") ? kharetatiUser.getPlotDimLayerParcelAttrName():"";
             User user = new User();
             Global.accessToken=kharetatiUser.access_token;
             user.setUsername("GUEST");
@@ -266,6 +271,12 @@ public class LoginViewModel extends ViewModel {
 
                 AppUrls.plot_layerid = (accessTokenResponse.getPlotLayerid() != null && accessTokenResponse.getPlotLayerid() != "") ? accessTokenResponse.getPlotLayerid() : AppUrls.plot_layerid;
                 AppUrls.BASE_AUXULARY_URL = (accessTokenResponse.getAuxiliaryServiceUrl() != null && accessTokenResponse.getAuxiliaryServiceUrl() != "") ? accessTokenResponse.getAuxiliaryServiceUrl() : "";
+                Global.plotDimLayerId = (accessTokenResponse.getPlotDimLayerId() != null && accessTokenResponse.getPlotDimLayerId() != "") ? accessTokenResponse.getPlotDimLayerId():"";
+                Global.plotHighlightLayerId = (accessTokenResponse.getPlotHighlightLayerId() != null && accessTokenResponse.getPlotHighlightLayerId() != "") ? accessTokenResponse.getPlotHighlightLayerId():"";
+                Global.plotImgLayerId = (accessTokenResponse.getPlotImgLayerId() != null && accessTokenResponse.getPlotImgLayerId() != "") ? accessTokenResponse.getPlotImgLayerId():"";
+                Global.plotLayerParcelAttrName = (accessTokenResponse.getPlotLayerParcelAttrName() != null && accessTokenResponse.getPlotLayerParcelAttrName() != "") ? accessTokenResponse.getPlotLayerParcelAttrName():"";
+                Global.plotDimLayerParcelAttrName = (accessTokenResponse.getPlotDimLayerParcelAttrName() != null && accessTokenResponse.getPlotDimLayerParcelAttrName() != "") ? accessTokenResponse.getPlotDimLayerParcelAttrName():"";
+
 
                 authListener.addUserToHistory(loginDetails.username);
                 authListener.saveUserToRemember(loginDetails);

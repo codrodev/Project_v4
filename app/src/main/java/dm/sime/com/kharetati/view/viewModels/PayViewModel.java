@@ -1,6 +1,7 @@
 package dm.sime.com.kharetati.view.viewModels;
 
 import android.app.Activity;
+import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
@@ -145,16 +146,14 @@ public class PayViewModel extends ViewModel {
                         if(msg!=null)
                             payNavigator.onFailure(msg);
                         else
-                            payNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
-
+                            showErrorMessage("");
                     }else if(status==405) {
 
                         ((MainActivity)activity).loadFragment(FragmentTAGS.FR_HOME,true,null);
                     }
                     else {
                         if (msg == null || msg.trim().length() < 1) {
-                            payNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
-
+                            showErrorMessage("");
                         } else {
                             payNavigator.onFailure(msg);                        }
                     }
@@ -180,8 +179,7 @@ public class PayViewModel extends ViewModel {
                         if(msg!=null)
                             payNavigator.onFailure(msg);
                         else
-                            payNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
-
+                            showErrorMessage("");
                     }else if(status==405) {
 
                         ((MainActivity)activity).loadFragment(FragmentTAGS.FR_HOME,true,null);
@@ -189,8 +187,7 @@ public class PayViewModel extends ViewModel {
                     }
                     else {
                         if (msg == null || msg.trim().length() < 1||msg.equals("")) {
-                            payNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
-
+                                showErrorMessage("");
                         } else {
                             payNavigator.onFailure(msg);
                         }
@@ -202,5 +199,14 @@ public class PayViewModel extends ViewModel {
 
         }
 
+    }
+    public void showErrorMessage(String exception){
+        if(Global.appMsg!=null){
+            payNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
+        }
+        else
+            payNavigator.onFailure(activity.getResources().getString(R.string.error_response));
+
+        Log.d(activity.getClass().getSimpleName(),exception);
     }
 }

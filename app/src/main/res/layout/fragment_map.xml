@@ -43,6 +43,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:id="@+id/toolBarLayout"
                 android:layout_marginHorizontal="5dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
@@ -142,18 +143,21 @@
 
         <ListView
             android:id="@+id/fragment_map_searchhistory"
-            android:layout_width="120dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginTop="145dp"
+            android:layout_marginTop="50dp"
             android:layout_marginEnd="170dp"
+            android:layout_marginStart="64dp"
             android:alpha=".9"
             android:background="@android:color/white"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
             app:layout_constraintEnd_toEndOf="parent"
+
+
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/mapView" />
+            app:layout_constraintTop_toBottomOf="@+id/toolBarLayout" />
         <include  layout="@layout/bottomsheet_web_view" />
 
         <androidx.core.widget.NestedScrollView
