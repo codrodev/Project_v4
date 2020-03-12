@@ -43,6 +43,7 @@ import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.regex.Pattern;
@@ -208,6 +209,12 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         super.onResume();
         model.manageAppBar(getActivity(), true);
         model.manageAppBottomBAtr(getActivity(), true);
+        if(model.getSelectedApplication() != null && model.getSelectedApplication().getId() != null &&
+                model.getSelectedApplication().getId().length() > 0){
+            if(model.getSelectedApplication().getSearchForm() != null && model.getSelectedApplication().getSearchForm().size() > 0) {
+                initializeRuntimeForm(model.getSelectedApplication());
+            }
+        }
         //initializeInAppNotification();
     }
 
@@ -217,6 +224,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     }
 
     private void initializeRuntimeForm(Applications app){
+        Global.isFirstLoad = false;
         model.setSelectedApplication(app);
         if(model.getSelectedApplication().getHelpUrlEn() != null && model.getSelectedApplication().getHelpUrlEn().length() > 0){
             Global.helpUrlEn = model.getSelectedApplication().getHelpUrlEn();
@@ -238,6 +246,9 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                     binding.tabRuntimeLayout.addTab(binding.tabRuntimeLayout.newTab().setText(CURRENT_LOCALE.equals("en")?form.getTabs().getNameEn():form.getTabs().getNameAr()));
                     binding.tabRuntimeLayout.setTabGravity(TabLayout.GRAVITY_FILL);
                     binding.tabRuntimeLayout.setTabMode(TabLayout.MODE_FIXED);
+                    /*ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) binding.tabRuntimeLayout.getLayoutParams();
+                    p.setMargins(10, 10, 10, 0);
+                    binding.tabRuntimeLayout.requestLayout();*/
                 }
             }
 
@@ -271,6 +282,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             binding.layoutControlHeader.setVisibility(View.VISIBLE);
             binding.layoutRuntimeContainer.setVisibility(View.VISIBLE);
             binding.txtHeader.setText(app.getSearchForm().get(0).getTabs().getNameEn());
+            binding.txtHeader.setTextColor(getResources().getColor(R.color.white));
             model.setSelectedTab(app.getSearchForm().get(0).getTabs());
 
             runtimeControlRenderer(app.getSearchForm().get(0).getTabs().getControls());
@@ -363,9 +375,14 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         x.setPadding(8,0,8,0);
         if(isPlotSearch||isMakani)
             x.requestFocus();
-        x.setBackground(getActivity().getResources().getDrawable(R.drawable.border_background));
+        x.setBackground(getActivity().getResources().getDrawable(R.drawable.control_background));
         x.setOnEditorActionListener(this);
         x.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        if(Global.hashSearchFieldValue != null && Global.hashSearchFieldValue.size() > 0){
+            String val = Global.hashSearchFieldValue.get(control.getType()) == null ? "" : Global.hashSearchFieldValue.get(control.getType());
+            x.setText(val);
+        }
 
         layout.addView(x);
         lstRuntimeCleanableText.add(x);
@@ -390,7 +407,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         LinearLayout.LayoutParams spinnerlayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         spinnerlayoutParams.setMargins(65,8,65,8);
         spinnerLayout.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);
-        spinnerLayout.setBackground(getActivity().getResources().getDrawable(R.drawable.border_background));
+        spinnerLayout.setBackground(getActivity().getResources().getDrawable(R.drawable.control_background));
         spinnerLayout.setLayoutParams(spinnerlayoutParams);
 
         LinearLayout chevronlayout = new LinearLayout(getActivity());
@@ -601,13 +618,29 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         } else {
             binding.layoutDots.setVisibility(View.GONE);
         }
+
+        //initializeRuntimeForm(model.getDefaultApplication(0));
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        //saveInputValues();
+    }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        saveInputValues();
+    }
 
+    private void saveInputValues(){
+        Global.hashSearchFieldValue = new HashMap<>();
+        if(lstRuntimeCleanableText != null && lstRuntimeCleanableText.size() > 0) {
+            for (int i = 0; i < lstRuntimeCleanableText.size(); i++) {
+                Global.hashSearchFieldValue.put(lstRuntimeCleanableText.get(i).getType(), lstRuntimeCleanableText.get(i).getText().toString());
+            }
+        }
     }
 
     private ArrayList<String> getAreaName(List<LookupValue> areas, boolean isEnglish) {
