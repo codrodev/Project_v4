@@ -43,6 +43,7 @@ import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.regex.Pattern;
@@ -378,6 +379,11 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         x.setOnEditorActionListener(this);
         x.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
+        if(Global.hashSearchFieldValue != null && Global.hashSearchFieldValue.size() > 0){
+            String val = Global.hashSearchFieldValue.get(control.getType()) == null ? "" : Global.hashSearchFieldValue.get(control.getType());
+            x.setText(val);
+        }
+
         layout.addView(x);
         lstRuntimeCleanableText.add(x);
         return layout;
@@ -619,8 +625,22 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     @Override
     public void onDestroy() {
         super.onDestroy();
+        //saveInputValues();
+    }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        saveInputValues();
+    }
 
+    private void saveInputValues(){
+        Global.hashSearchFieldValue = new HashMap<>();
+        if(lstRuntimeCleanableText != null && lstRuntimeCleanableText.size() > 0) {
+            for (int i = 0; i < lstRuntimeCleanableText.size(); i++) {
+                Global.hashSearchFieldValue.put(lstRuntimeCleanableText.get(i).getType(), lstRuntimeCleanableText.get(i).getText().toString());
+            }
+        }
     }
 
     private ArrayList<String> getAreaName(List<LookupValue> areas, boolean isEnglish) {

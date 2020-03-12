@@ -40,6 +40,7 @@ import org.json.JSONObject;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -185,6 +186,7 @@ public class Global {
     public static String FragmentTagForHelpUrl;
     public static int FragmentTagForDashboardHelpUrl;
     public static boolean isFirstLoad = true;
+    public static HashMap<String, String> hashSearchFieldValue;
 
 
     public static List<FunctionsOnMap> getLstMapFunctions() {
