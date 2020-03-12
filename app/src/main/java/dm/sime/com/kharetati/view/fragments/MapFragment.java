@@ -144,6 +144,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
     public static MapViewModel mapVM;
     BottomSheetDialogFragment bottomSheetDialogFragment;
     private String parcelId;
+    private String lastSelectedWebFunction;
 
 
     public MapFragment() {
@@ -812,7 +813,12 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                 }
             }
 
-            webView.loadUrl(builder.toString());
+            if(lastSelectedWebFunction == null || lastSelectedWebFunction.length() == 0 ||
+                    !lastSelectedWebFunction.equals(fun.getNameEn())){
+                webView.loadUrl(builder.toString());
+                lastSelectedWebFunction = fun.getNameEn();
+            }
+
             //toggleBottomSheet();
             setWebSheetPeekHeight(600);
             setMapFunctionSheetPeekHeight(0);
