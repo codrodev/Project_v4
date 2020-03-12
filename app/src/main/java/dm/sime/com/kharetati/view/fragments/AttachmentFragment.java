@@ -31,6 +31,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -86,6 +87,7 @@ import dm.sime.com.kharetati.utility.Files.DialogSelectionListener;
 import dm.sime.com.kharetati.utility.Files.DocumentUtility;
 import dm.sime.com.kharetati.utility.Files.FilePickerDialog;
 import dm.sime.com.kharetati.utility.Files.ListItem;
+import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.AppConstants;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
@@ -143,6 +145,13 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         AttachmentFragment fragment = new AttachmentFragment();
         fragment.setRetainInstance(true);
         return fragment;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        FontChangeCrawler fontChanger = new FontChangeCrawler(getActivity().getAssets(), "Dubai-Regular.ttf");
+        fontChanger.replaceFonts((ViewGroup) this.getView());
     }
 
     @Override

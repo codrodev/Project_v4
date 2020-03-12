@@ -631,7 +631,7 @@ public class HomeViewModel extends ViewModel {
         else
             homeNavigator.onFailure(activity.getResources().getString(R.string.error_response));
 
-        Log.d(activity.getClass().getSimpleName(),exception);
+        Log.e(activity.getClass().getSimpleName(),exception);
     }
 
 }

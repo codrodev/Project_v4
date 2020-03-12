@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
+import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.navigators.FragmentNavigator;
@@ -41,6 +42,12 @@ public class PaymentFragment extends Fragment {
         args.putString(APP_NAME, appName);
         launchUrl= url;
         return fragment;
+    }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        FontChangeCrawler fontChanger = new FontChangeCrawler(getActivity().getAssets(), "Dubai-Regular.ttf");
+        fontChanger.replaceFonts((ViewGroup) this.getView());
     }
 
     @Override

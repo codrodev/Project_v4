@@ -33,6 +33,18 @@ public class KharetatiUser extends BaseObservable {
   public String aboutus_en_url;
   public String terms_ar_url;
   public String terms_en_url;
+  @SerializedName("faq_url")
+  @Expose
+  private String faq_url;
+
+  public String getFaq_url() {
+    return faq_url;
+  }
+
+  public void setFaq_url(String faq_url) {
+    this.faq_url = faq_url;
+  }
+
   @SerializedName("plot_dim_layer_id")
   @Expose
   private String plotDimLayerId;

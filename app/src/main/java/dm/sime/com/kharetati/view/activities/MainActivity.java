@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        Global.isLoginActivity = false;
 
         try {
             repository = new MainRepository(ApiFactory.getClient(new NetworkConnectionInterceptor(this)));
@@ -110,6 +111,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
         binding.customBottomBar.show(3, true);
         countDownTimer = new MyCountDownTimer(startTime, interval);
+
+        binding.imgHelp.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
 
 
 

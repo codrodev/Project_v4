@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.FragmentLandOwnershipSelectionBinding;
+import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.viewModels.LandOwnerViewModel;
@@ -32,6 +34,12 @@ public class LandOwnerSelectionFragment extends Fragment {
     public static LandOwnerSelectionFragment newInstance(){
         LandOwnerSelectionFragment fragment = new LandOwnerSelectionFragment();
         return fragment;
+    }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        FontChangeCrawler fontChanger = new FontChangeCrawler(getActivity().getAssets(), "Dubai-Regular.ttf");
+        fontChanger.replaceFonts((ViewGroup) this.getView());
     }
 
     @Override
@@ -147,9 +155,6 @@ public class LandOwnerSelectionFragment extends Fragment {
 
             }
         });
-
-
-
 
 
         //initializePage();

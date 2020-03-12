@@ -228,11 +228,11 @@ public class DeliveryFragment extends Fragment {
                     if (TextUtils.isEmpty(name) ||
                             TextUtils.isEmpty(emirates)||TextUtils.isEmpty(email)) {
 
-                        AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.fields_are_required), getResources().getString(R.string.ok), getActivity());
+                        //AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.fields_are_required), getResources().getString(R.string.ok), getActivity());
                         Global.isDeliveryByCourier=false;
                     }else if(!email.contains("@")||!email.contains("."))
                     {
-                        AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.enter_valid_email), getResources().getString(R.string.ok), getActivity());
+                        //AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.enter_valid_email), getResources().getString(R.string.ok), getActivity());
 
                     }
                     if(!binding.etMakani.getText().toString().equals(""))
@@ -363,7 +363,7 @@ public class DeliveryFragment extends Fragment {
         editor.apply();
         editor.commit();
         Global.hideSoftKeyboard(getActivity());
-        Toast.makeText(getActivity(), getResources().getString(R.string.deatails_saved), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), getResources().getString(R.string.deatails_saved), Toast.LENGTH_SHORT).show();
 
         isDetailsSaved = true;
         Global.isDeliveryByCourier = true;

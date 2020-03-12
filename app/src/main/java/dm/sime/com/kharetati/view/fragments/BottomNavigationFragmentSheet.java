@@ -10,15 +10,19 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.FragmentBottomNavigationBinding;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
+import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.activities.MainActivity;
@@ -39,6 +43,13 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        FontChangeCrawler fontChanger = new FontChangeCrawler(getActivity().getAssets(), "Dubai-Regular.ttf");
+        fontChanger.replaceFonts((ViewGroup) this.getView());
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         model = ViewModelProviders.of(this).get(BottomNavigationViewModel.class);
@@ -54,6 +65,33 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
 
 
         binding.logoutText.setText(Global.isUserLoggedIn? getActivity().getResources().getText(R.string.logout):getActivity().getResources().getText(R.string.login));
+        binding.txtLanguage.setText(Global.CURRENT_LOCALE.equals("en")?"عربى":"English");
+        binding.imgLanguage.setImageResource(Global.CURRENT_LOCALE.equals("en")?R.drawable.arabic:R.drawable.english);
+        binding.iconlayoutHelp.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
+        binding.layoutLanguage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Fragment> fragments = getActivity().getSupportFragmentManager().getFragments();
+                if(fragments!=null){
+                    fragments.removeAll(Collections.singleton(null));//remove null values
+                    if (fragments.size() > 0){
+                        Global.current_fragment_id_locale_change = fragments.get(fragments.size() - 1).getTag();
+                        Global.isLanguageChanged=true;
+                    }
+                }
+
+
+                Global.CURRENT_LOCALE = (Global.CURRENT_LOCALE.compareToIgnoreCase("en")==0 ? "ar" : "en");
+                Global.changeLang(Global.CURRENT_LOCALE,getActivity());
+            /*locale = new Locale(CURRENT_LOCALE);
+            Locale.setDefault(locale);
+            android.content.res.Configuration config = new android.content.res.Configuration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());*/
+                getActivity().recreate();
+                dismiss();
+            }
+        });
         binding.layoutShareApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,7 +189,7 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 ArrayList al = new ArrayList();
-                al.add("");
+                al.add(Global.faq_url);
                 ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
                 dismiss();
             }

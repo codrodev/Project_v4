@@ -52,7 +52,7 @@
     <string name="done">تم الانتهاء</string>
     <string name="request_num">رقم الطلب</string>
     <string name="request_details">تفاصيل الطلب</string>
-    <string name="plot_no">عدد مؤامرة</string>
+    <string name="plot_no">عدد مؤامرة :</string>
     <string name="favourite_deleted">تم حذف المفضلة بنجاح</string>
     <string name="NO_FAVOURITE_PLOTS_FOUND">لا تتوفر إشارات مرجعية</string>
     <string name="confirmation_delete">هل أنت متأكد أنك تريد الحذف؟</string>
@@ -182,6 +182,21 @@
     <string name="exit_alert_message">هل أنت متأكد من أنك تريد الخروج من التطبيق؟</string>
     <string name="logout">خروج</string>
     <string name="logout_msg">هل أنت متأكد أنك تريد تسجيل الخروج؟</string>
+    <string name="SHAREKHARETATIAPP">انشر تطبيق خریطتي</string>
+    <string name="RATEUS">قيمنا</string>
+    <string name="ABOUTUS">نبذة عنا</string>
+    <string name="FAQMENU">الأسئلة الأكثر تكرارا </string>
+    <string name="TERMSANDCONDITIONS">الشروط والاحكام</string>
+    <string name="ACCESSIBILITY">إمكانية الوصول</string>
+    <string name="iamowner">أنا صاحب قطعة الأرض</string>
+    <string name="iamnotowner">أنا لست صاحب الأرض</string>
+    <string name="INTROHELP">مساعدة</string>
+    <string name="bookmark">إشارة مرجعية</string>
+    <string name="mymaps">خرائطي</string>
+    <string name="area">منطقة :</string>
+
+
+
 
 
     <string-array name="emirates">

@@ -86,6 +86,8 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Global.isLoginActivity = true;
+
         binding = DataBindingUtil.setContentView(LoginActivity.this, R.layout.activity_login);
 
         gson = new GsonBuilder().serializeNulls().create();

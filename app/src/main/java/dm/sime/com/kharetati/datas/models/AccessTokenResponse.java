@@ -167,6 +167,17 @@ public class AccessTokenResponse {
   @SerializedName("map_ar_url")
   @Expose
   private String map_ar_url;
+  @SerializedName("faq_url")
+  @Expose
+  private String faq_url;
+
+  public String getFaq_url() {
+    return faq_url;
+  }
+
+  public void setFaq_url(String faq_url) {
+    this.faq_url = faq_url;
+  }
 
   public String getMap_en_url() {
     return map_en_url;

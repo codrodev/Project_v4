@@ -147,6 +147,7 @@ public class LoginViewModel extends ViewModel {
             Global.aboutus_ar_url = kharetatiUser.getAboutus_ar_url();
             Global.terms_en_url = kharetatiUser.getTerms_en_url();
             Global.terms_ar_url = kharetatiUser.getTerms_ar_url();
+            Global.faq_url = kharetatiUser.getFaq_url();
             Global.appMsg = kharetatiUser.getAppMsg();
 
             Global.bookmarks_en_url = kharetatiUser.bookmarks_en_url;
@@ -256,6 +257,7 @@ public class LoginViewModel extends ViewModel {
                 Global.home_ar_url = accessTokenResponse.getHome_ar_url();
                 Global.map_en_url = accessTokenResponse.getMap_en_url();
                 Global.map_ar_url = accessTokenResponse.getMap_ar_url();
+                Global.faq_url = accessTokenResponse.getFaq_url();
 
                 AttachmentBitmap.letter_from_owner = null;
                 AttachmentBitmap.emirateId_back = null;

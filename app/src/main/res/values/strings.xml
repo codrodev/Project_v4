@@ -53,6 +53,7 @@
     <string name="request_num">Request Number</string>
     <string name="request_details">Request Details</string>
     <string name="plot_no">Plot No:</string>
+    <string name="area">Area:</string>
     <string name="favourite_deleted">Favorite has been successfully deleted</string>
     <string name="NO_FAVOURITE_PLOTS_FOUND">Currently no favourites are available</string>
     <string name="confirmation_delete">Are you sure you want to delete?</string>
@@ -182,6 +183,17 @@
     <string name="exit_alert_message">Are you sure you want to exit from the application?</string>
     <string name="logout">Logout</string>
     <string name="logout_msg">Are you sure you want to logout?</string>
+    <string name="SHAREKHARETATIAPP">Share App</string>
+    <string name="RATEUS">Rate Us</string>
+    <string name="ABOUTUS">About Us</string>
+    <string name="FAQMENU">FAQs</string>
+    <string name="TERMSANDCONDITIONS">Terms and\n Conditions</string>
+    <string name="ACCESSIBILITY">Accessibility</string>
+    <string name="INTROHELP">Help</string>
+    <string name="iamowner">I am the owner of the plot</string>
+    <string name="iamnotowner">I am not the owner of the plot</string>
+    <string name="bookmark">Bookmarks</string>
+    <string name="mymaps">My Maps</string>
 
 
     <string-array name="request_site_plan">

@@ -40,9 +40,10 @@
                 android:layout_marginRight="8dp"
                 android:buttonTint="@android:color/holo_blue_dark"
                 android:checked="false"
-                android:text="i am owner"
+                android:text="@string/iamowner"
                 android:layout_marginBottom="30dp"
                 android:visibility="visible"
+                android:textStyle="bold"
                 />
             <RadioButton
                 style="@style/font_medium_regular"
@@ -55,7 +56,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginBottom="30dp"
                 android:buttonTint="@android:color/holo_blue_dark"
-                android:text="i am not owner"
+                android:text="@string/iamnotowner"
                 android:textStyle="bold"
                 />
         </RadioGroup>
