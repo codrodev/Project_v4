@@ -25,6 +25,6 @@
     <color name="gray">#dddebd</color>
     <color name="orange">#fa881e</color>
     <color name="green">#65d44e</color>
-    <color name="extra_light_gray">#d8e6df</color>
+    <color name="extra_light_gray">#555555</color>
 
 </resources>

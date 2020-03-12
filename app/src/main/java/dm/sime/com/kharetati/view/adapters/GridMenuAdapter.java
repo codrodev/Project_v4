@@ -20,6 +20,7 @@ import java.util.List;
 import dm.sime.com.kharetati.BR;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.datas.models.Applications;
+import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.view.viewModels.HomeViewModel;
 
 public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.GenericViewHolder> {
@@ -61,11 +62,21 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.Generi
         if(viewModel.getSelectedApplication() != null) {
             if (viewModel.getSelectedApplication().getId().equals(lstHomeGridMenuItems.get(position).getId())) {
                 holder.cardView.setBackground(context.getResources().getDrawable(R.drawable.border_background));
+                holder.txtMenuName.setTextColor(context.getResources().getColor(R.color.white));
             } else {
                 holder.cardView.setBackground(context.getResources().getDrawable(R.drawable.borderless_background));
+                holder.txtMenuName.setTextColor(context.getResources().getColor(R.color.maroon_dark));
             }
         }
+
         holder.imgIcon.setImageBitmap(viewModel.getIconImage(position));
+        if(Global.isFirstLoad){
+            if(position == 0) {
+                holder.cardView.setBackground(context.getResources().getDrawable(R.drawable.border_background));
+                holder.txtMenuName.setTextColor(context.getResources().getColor(R.color.white));
+                listener.onMenuSelected(holder.txtAppId.getText().toString());
+            }
+        }
     }
 
     @Override
@@ -82,6 +93,7 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.Generi
         final ViewDataBinding binding;
         private final ImageView imgIcon;
         private final CardView cardView;
+        private final TextView txtMenuName, txtAppId;
 
 
         GenericViewHolder(ViewDataBinding binding) {
@@ -91,6 +103,8 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.Generi
             this.binding.getRoot().setOnClickListener(this);
             imgIcon = (ImageView) this.binding.getRoot().findViewById(R.id.imgMenuIcon);
             cardView = (CardView) this.binding.getRoot().findViewById(R.id.cardHomeGrid);
+            txtMenuName = (TextView) this.binding.getRoot().findViewById(R.id.txtMenuName);
+            txtAppId = (TextView) this.binding.getRoot().findViewById(R.id.txtAppId);
         }
 
         void bind(HomeViewModel viewModel, int position) {

@@ -114,21 +114,21 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:tabMode="fixed"
-                            app:tabTextColor="@color/tab_text_color"
+                            app:tabTextColor="@color/white"
                             app:tabBackground="@drawable/tab_color_selector"
-                            android:layout_marginVertical="10dp"
+                            android:layout_margin="5dp"
                             app:tabGravity="fill"
-                            android:layout_marginHorizontal="10dp"
-                            app:tabIndicatorColor="@color/maroon_dark"
-                            app:tabIndicatorHeight="3dp"
                             app:tabMaxWidth="0dp"
                             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+                        <!--app:tabIndicatorColor="@color/maroon_dark"
+                        app:tabIndicatorHeight="3dp"-->
+
                         <LinearLayout
                             android:id="@+id/layoutControlHeader"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginVertical="10dp"
-                            android:layout_marginHorizontal="10dp"
+                            android:layout_margin="5dp"
                             android:layout_below="@+id/tabRuntimeLayout"
                             android:background="@color/extra_light_gray">
                             <TextView

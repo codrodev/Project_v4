@@ -293,7 +293,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="4dp"
-                    android:background="@drawable/border_background"
+                    android:background="@drawable/maroon_border_background"
                     android:id="@+id/btnSignUp"
                     android:fontFamily="@font/dubai_font"
                     android:text="@string/createAccount"

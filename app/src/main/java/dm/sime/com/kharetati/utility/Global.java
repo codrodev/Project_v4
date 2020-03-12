@@ -184,6 +184,7 @@ public class Global {
     public static int lastSelectedBottomTab = 3;
     public static String FragmentTagForHelpUrl;
     public static int FragmentTagForDashboardHelpUrl;
+    public static boolean isFirstLoad = true;
 
 
     public static List<FunctionsOnMap> getLstMapFunctions() {

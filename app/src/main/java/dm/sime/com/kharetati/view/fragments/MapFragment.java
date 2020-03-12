@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 import android.os.Handler;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -24,6 +25,7 @@ import android.view.inputmethod.EditorInfo;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -112,7 +114,9 @@ import dm.sime.com.kharetati.view.viewModels.MapViewModel;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 import dm.sime.com.kharetati.view.viewmodelfactories.MapViewModelFactory;
 
-public class MapFragment extends Fragment implements MapNavigator, MapFunctionBottomsheetDialogFragment.OnFunctionMenuSelectedListener {
+import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
+
+public class MapFragment extends Fragment implements MapNavigator, EditText.OnEditorActionListener,MapFunctionBottomsheetDialogFragment.OnFunctionMenuSelectedListener {
 
     private static final String ARG_PARAM1 = "param1";
     public static boolean isMakani,isLand;
@@ -206,21 +210,23 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                         binding.frameLayout.setVisibility(View.VISIBLE);
                         if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null &&
                                 Global.mapSearchResult.getService_response().getMap().getFunctions().size() > 1) {
-                            mapSheetBehaviour.setPeekHeight(100);
+                            setMapFunctionSheetPeekHeight(60);
                         }
                         break;
                     case BottomSheetBehavior.STATE_EXPANDED:
                         binding.frameLayout.setVisibility(View.INVISIBLE);
-                        mapSheetBehaviour.setPeekHeight(0);
-                        //sheetBehavior.setText("Close Sheet");
+                        setMapFunctionSheetPeekHeight(0);
+                        if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null &&
+                                Global.mapSearchResult.getService_response().getMap().getFunctions().size() > 1) {
+                            setMapFunctionSheetPeekHeight(0);
+                        }
                     break;
                     case BottomSheetBehavior.STATE_COLLAPSED: {
                         binding.frameLayout.setVisibility(View.VISIBLE);
                         if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null &&
                                 Global.mapSearchResult.getService_response().getMap().getFunctions().size() > 1) {
-                            mapSheetBehaviour.setPeekHeight(100);
+                            setMapFunctionSheetPeekHeight(60);
                         }
-                        //sheetBehavior.setText("Expand Sheet");
                     }
                     break;
                     case BottomSheetBehavior.STATE_DRAGGING:
@@ -291,12 +297,12 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
         }
         else if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null &&
                 Global.mapSearchResult.getService_response().getMap().getFunctions().size() == 1){
-            sheetBehavior.setPeekHeight(100);
-            mapSheetBehaviour.setPeekHeight(0);
+            setWebSheetPeekHeight(600);;
+            setMapFunctionSheetPeekHeight(0);
 
         } else {
-            sheetBehavior.setPeekHeight(0);
-            mapSheetBehaviour.setPeekHeight(100);
+            setWebSheetPeekHeight(0);
+            setMapFunctionSheetPeekHeight(60);
         }
         ArcGISRuntimeEnvironment.setLicense("runtimelite,1000,rud3984007683,none,GB2PMD17J0YJ2J7EZ071");
         mapView.setAttributionTextVisible(false);
@@ -316,10 +322,26 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
         return binding.getRoot();
     }
 
+    private void setWebSheetPeekHeight(int value){
+        if (sheetBehavior.getState() == BottomSheetBehavior.STATE_HIDDEN) {
+            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        }
+        //sheetBehavior.setPeekHeight(0);
+        sheetBehavior.setPeekHeight(value);
+    }
+
+    private void setMapFunctionSheetPeekHeight(int value){
+        mapSheetBehaviour.setPeekHeight(value);
+    }
+
     private  void initializePage(){
         ParentSiteplanViewModel.initializeDocuments();
         model.manageAppBar(getActivity(), false);
         model.manageAppBottomBAtr(getActivity(), false);
+        binding.txtPlotNo.setInputType(InputType.TYPE_CLASS_NUMBER);
+        binding.txtPlotNo.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        binding.txtPlotNo.setEms(10);
+        binding.txtPlotNo.setOnEditorActionListener(this);
 
         //ArcGISMap map = new ArcGISMap(Global.mapSearchResult.getService_response().getMap().getDetails().getServiceUrl());
         ArcGISMap map = new ArcGISMap();
@@ -425,7 +447,7 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
 
 
         binding.txtPlotNo.setVisibility(View.VISIBLE);
-        binding.txtPlotNo.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        /*binding.txtPlotNo.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_DONE && binding.txtPlotNo.getText().toString().trim().length()!=0 ) {
@@ -435,7 +457,7 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                 return false;
             }
         });
-
+*/
 
         searchhistoryListView=(ListView)binding.getRoot().findViewById(R.id.fragment_map_searchhistory);
         searchhistoryListView.setAdapter(adapterHistory);
@@ -512,25 +534,7 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
         binding.imgSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!Global.isConnected(getActivity())) {
-
-                    if (Global.appMsg != null)
-                        AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getInternetConnCheckEn() : Global.appMsg.getInternetConnCheckAr(), getResources().getString(R.string.ok), getActivity());
-                    else
-                        AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
-
-                } else {
-                    onStarted();
-                    isMakani = false;
-                    Global.landNumber = null;
-                    Global.area = null;
-                    Global.area_ar = null;
-                    if(Global.isBookmarks)
-                        findParcel(binding.txtPlotNo.getText().toString().trim());
-                    else
-                        HomeFragment.homeVM.getSearchResult(binding.txtPlotNo.getText().toString().trim());
-
-                }
+                searchPlot();
             }
         });
 
@@ -647,6 +651,39 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
         });
     }
 
+    private void searchPlot(){
+        if(binding.txtPlotNo.getText().toString().trim().length()!=0) {
+            if (!Global.isConnected(getActivity())) {
+
+                if (Global.appMsg != null)
+                    AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getInternetConnCheckEn() : Global.appMsg.getInternetConnCheckAr(), getResources().getString(R.string.ok), getActivity());
+                else
+                    AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
+
+            } else {
+                onStarted();
+                isMakani = false;
+                Global.landNumber = null;
+                Global.area = null;
+                Global.area_ar = null;
+                if (Global.isBookmarks)
+                    findParcel(binding.txtPlotNo.getText().toString().trim());
+                else
+                    HomeFragment.homeVM.getSearchResult(binding.txtPlotNo.getText().toString().trim());
+
+            }
+        }
+    }
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
+            searchPlot();
+            return true;
+        }
+        return false;
+    }
+
 
     @Override
     public void onStarted() {
@@ -740,9 +777,10 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
                 model.validateRequest(FragmentTAGS.FR_REQUEST_SITE_PLAN);
                 //validateParcel call required
             }
+            setWebSheetPeekHeight(0);
         } else if (fun.getLaunchUrl() != null && fun.getLaunchUrl().length() > 0 &&
                 fun.getLaunchUrl().contains("http")){
-            toggleBottomSheet();
+            setWebSheetPeekHeight(0);
             StringBuilder builder = new StringBuilder();
             builder.append(fun.getLaunchUrl());
             if(!fun.getLaunchUrl().endsWith("?")) {
@@ -775,7 +813,9 @@ public class MapFragment extends Fragment implements MapNavigator, MapFunctionBo
             }
 
             webView.loadUrl(builder.toString());
-            toggleBottomSheet();
+            //toggleBottomSheet();
+            setWebSheetPeekHeight(600);
+            setMapFunctionSheetPeekHeight(0);
         }
     }
 

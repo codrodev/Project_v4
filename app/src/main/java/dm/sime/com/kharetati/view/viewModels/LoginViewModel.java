@@ -219,7 +219,7 @@ public class LoginViewModel extends ViewModel {
 
             if (accessTokenResponse.getAccessToken() != null) {
                 //get the response here
-
+                Global.isFirstLoad = true;
                 Global.accessToken = accessTokenResponse.getAccessToken();
 
                 Log.d("Access token : ", Global.accessToken);

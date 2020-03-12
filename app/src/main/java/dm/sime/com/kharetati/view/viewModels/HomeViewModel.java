@@ -210,6 +210,11 @@ public class HomeViewModel extends ViewModel {
         return null;
     }
 
+    public Applications getDefaultApplication(int position){
+        mutableHomeGridMenu.getValue().get(position);
+        return null;
+    }
+
     public List<SearchForm> getSearchForm(String appID){
         for (Applications app: mutableHomeGridMenu.getValue()) {
             if(app.getId().equals(appID)){
