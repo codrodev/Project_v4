@@ -55,7 +55,7 @@ public class GridMenuPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-       super.destroyItem((View) container, position, object);
+       //super.destroyItem((View) container, position, object);
     }
 
     @Override
