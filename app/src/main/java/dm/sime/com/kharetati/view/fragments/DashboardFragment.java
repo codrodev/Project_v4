@@ -47,12 +47,21 @@ public class DashboardFragment extends Fragment implements ViewPager.OnPageChang
 
     private void initializePage(){
         Global.FragmentTagForDashboardHelpUrl = 0;
-        model.setDashboardPagerAdapter(this, 2);
+        if(!Global.isUserLoggedIn){
+            guestUserUI();
+            binding.layoutParent.setWeightSum(1);
+            model.setDashboardPagerAdapter(this, 1);
+        } else {
+            binding.layoutParent.setWeightSum(2);
+            model.setDashboardPagerAdapter(this, 2);
+        }
         binding.viewPagerCreatePackage.addOnPageChangeListener(this);
         binding.viewPagerCreatePackage.setAdapter(model.getDashboardPagerAdapter());
 
         model.manageAppBar(getActivity(), true);
         model.manageAppBottomBAtr(getActivity(), true);
+
+
 
         binding.layoutBookmark.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +76,13 @@ public class DashboardFragment extends Fragment implements ViewPager.OnPageChang
                 binding.viewPagerCreatePackage.setCurrentItem(getPrevious(), true);
             }
         });
+    }
+
+    private void guestUserUI(){
+        binding.layoutCardMyMap.setVisibility(View.GONE);
+        binding.txtBookmark.setTextColor(getResources().getColor(R.color.white));
+        binding.layoutBookmark.setBackgroundColor(getResources().getColor(R.color.maroon_dark));
+        binding.imgBookMark.setImageDrawable(getResources().getDrawable(R.drawable.ic_bookmark_white));
     }
 
     private void changeBookmarkColor(){
@@ -100,10 +116,12 @@ public class DashboardFragment extends Fragment implements ViewPager.OnPageChang
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         Global.FragmentTagForDashboardHelpUrl = position;
-        if(position == 1){
-            changeBookmarkColor();
-        } else {
-            changeMyMapColor();
+        if(Global.isUserLoggedIn) {
+            if (position == 1) {
+                changeBookmarkColor();
+            } else {
+                changeMyMapColor();
+            }
         }
     }
 
