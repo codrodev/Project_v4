@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.Html;
 import android.text.InputFilter;
@@ -23,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,6 +78,7 @@ import dm.sime.com.kharetati.datas.repositories.HomeRepository;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
+import dm.sime.com.kharetati.utility.ViewAnimationUtils;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.activities.MainActivity;
@@ -209,22 +212,17 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         super.onResume();
         model.manageAppBar(getActivity(), true);
         model.manageAppBottomBAtr(getActivity(), true);
-        if(model.getSelectedApplication() != null && model.getSelectedApplication().getId() != null &&
-                model.getSelectedApplication().getId().length() > 0){
-            if(model.getSelectedApplication().getSearchForm() != null && model.getSelectedApplication().getSearchForm().size() > 0) {
-                initializeRuntimeForm(model.getSelectedApplication());
-            }
-        }
+
         //initializeInAppNotification();
     }
 
     @Override
-    public void onMenuSelected(String appID) {
-        initializeRuntimeForm(model.getApplication(appID));
+    public void onMenuSelected(String appID, boolean isAnimation) {
+        initializeRuntimeForm(model.getApplication(appID), isAnimation);
     }
 
-    private void initializeRuntimeForm(Applications app){
-        Global.isFirstLoad = false;
+    private void initializeRuntimeForm(Applications app, boolean isAnimation){
+
         model.setSelectedApplication(app);
         if(model.getSelectedApplication().getHelpUrlEn() != null && model.getSelectedApplication().getHelpUrlEn().length() > 0){
             Global.helpUrlEn = model.getSelectedApplication().getHelpUrlEn();
@@ -297,7 +295,10 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                 model.navigateWithParam(getActivity(), FR_WEBVIEW, param);
             }
         }
-
+        if(isAnimation) {
+            ViewAnimationUtils.scaleAnimateViewPopFirstLoad(binding.layoutRuntimeContainer);
+        }
+        Global.isFirstLoad = false;
     }
 
     private String constructUrl(String url){
@@ -618,7 +619,22 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         } else {
             binding.layoutDots.setVisibility(View.GONE);
         }
-
+        RelativeLayout.LayoutParams lp;
+        if(model.getMutableHomeGridMenu().getValue().size() < 4){
+            lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    200);
+            binding.viewPager.setLayoutParams(lp);
+        } else {
+            lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    400);
+            binding.viewPager.setLayoutParams(lp);
+        }
+        if(model.getSelectedApplication() != null && model.getSelectedApplication().getId() != null &&
+                model.getSelectedApplication().getId().length() > 0){
+            if(model.getSelectedApplication().getSearchForm() != null && model.getSelectedApplication().getSearchForm().size() > 0) {
+                initializeRuntimeForm(model.getSelectedApplication(), false);
+            }
+        }
         //initializeRuntimeForm(model.getDefaultApplication(0));
     }
 

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.viewpager.widget.PagerAdapter;
 
 import dm.sime.com.kharetati.R;
+import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.ViewAnimationUtils;
 import dm.sime.com.kharetati.view.viewModels.HomeViewModel;
 
@@ -40,7 +41,9 @@ public class GridMenuPagerAdapter extends PagerAdapter {
         recycleGridMenu.setLayoutManager(new StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL));
         adapterGridMenu = new GridMenuAdapter(R.layout.adapter_grid_menu, model, context, listner, position);
         recycleGridMenu.setAdapter(adapterGridMenu);
-        ViewAnimationUtils.scaleAnimateViewPop(recycleGridMenu);
+        if(Global.isFirstLoad) {
+            ViewAnimationUtils.scaleAnimateViewPop(recycleGridMenu);
+        }
         container.addView(view);
         return view;
     }

@@ -117,7 +117,8 @@ public class LoginViewModel extends ViewModel {
 
 
         if (kharetatiUser != null && !kharetatiUser.isError()) {
-
+            Global.lastSelectedBottomTab =3;
+            Global.isFirstLoad = true;
             Global.sime_userid = kharetatiUser.userID;
             Global.isUserLoggedIn = false;
             Global.arcgis_token = kharetatiUser.getArcgis_token();
@@ -221,6 +222,7 @@ public class LoginViewModel extends ViewModel {
             if (accessTokenResponse.getAccessToken() != null) {
                 //get the response here
                 Global.isFirstLoad = true;
+                Global.lastSelectedBottomTab =3;
                 Global.accessToken = accessTokenResponse.getAccessToken();
 
                 Log.d("Access token : ", Global.accessToken);

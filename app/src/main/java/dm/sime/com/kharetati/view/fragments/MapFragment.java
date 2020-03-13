@@ -236,7 +236,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                         binding.frameLayout.setVisibility(View.VISIBLE);
                         if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null &&
                                 Global.mapSearchResult.getService_response().getMap().getFunctions().size() > 1) {
-                            setMapFunctionSheetPeekHeight(60);
+                           // setMapFunctionSheetPeekHeight(60);
                         }
                     }
                     break;
@@ -677,6 +677,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                 Global.landNumber = null;
                 Global.area = null;
                 Global.area_ar = null;
+                lastSelectedWebFunction = "";
                 if (Global.isBookmarks)
                     findParcel(binding.txtPlotNo.getText().toString().trim());
                 else
@@ -690,6 +691,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
             searchPlot();
+            Global.hideSoftKeyboard(getActivity());
             return true;
         }
         return false;
@@ -791,6 +793,10 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             setWebSheetPeekHeight(0);
         } else if (fun.getLaunchUrl() != null && fun.getLaunchUrl().length() > 0 &&
                 fun.getLaunchUrl().contains("http")){
+            if(lastSelectedWebFunction == null || lastSelectedWebFunction.length() == 0 ||
+                    !lastSelectedWebFunction.equals(fun.getNameEn())) {
+                webView.loadUrl("about:blank");
+            }
             setWebSheetPeekHeight(0);
             StringBuilder builder = new StringBuilder();
             builder.append(fun.getLaunchUrl());
@@ -825,6 +831,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
 
             if(lastSelectedWebFunction == null || lastSelectedWebFunction.length() == 0 ||
                     !lastSelectedWebFunction.equals(fun.getNameEn())){
+                //webView.loadUrl("about:blank");
                 webView.loadUrl(builder.toString());
                 lastSelectedWebFunction = fun.getNameEn();
             }

@@ -74,9 +74,12 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.Generi
             if(position == 0) {
                 holder.cardView.setBackground(context.getResources().getDrawable(R.drawable.border_background));
                 holder.txtMenuName.setTextColor(context.getResources().getColor(R.color.white));
-                listener.onMenuSelected(holder.txtAppId.getText().toString());
+            }
+            if(position == lstHomeGridMenuItems.size() - 1){
+                listener.onMenuSelected(lstHomeGridMenuItems.get(0).getId(), true);
             }
         }
+
     }
 
     @Override
@@ -117,14 +120,14 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.Generi
 
         @Override
         public void onClick(View v) {
-            listener.onMenuSelected(((TextView) binding.getRoot().findViewById(R.id.txtAppId)).getText().toString());
+            listener.onMenuSelected(((TextView) binding.getRoot().findViewById(R.id.txtAppId)).getText().toString(), false);
             notifyDataSetChanged();
         }
     }
 
 
     public interface OnMenuSelectedListener {
-        void onMenuSelected(String menu);
+        void onMenuSelected(String menu, boolean isAnimation);
 
     }
 }
