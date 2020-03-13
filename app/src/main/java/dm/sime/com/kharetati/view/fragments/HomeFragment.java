@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -618,10 +619,20 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         } else {
             binding.layoutDots.setVisibility(View.GONE);
         }
+        RelativeLayout.LayoutParams lp;
+        if(model.getMutableHomeGridMenu().getValue().size() < 4){
+            lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    200);
+            binding.viewPager.setLayoutParams(lp);
+        } else {
+            lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    400);
+            binding.viewPager.setLayoutParams(lp);
+        }
         if(model.getSelectedApplication() != null && model.getSelectedApplication().getId() != null &&
                 model.getSelectedApplication().getId().length() > 0){
             if(model.getSelectedApplication().getSearchForm() != null && model.getSelectedApplication().getSearchForm().size() > 0) {
-                initializeRuntimeForm(model.getSelectedApplication(), true);
+                initializeRuntimeForm(model.getSelectedApplication(), false);
             }
         }
         //initializeRuntimeForm(model.getDefaultApplication(0));

@@ -825,6 +825,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
 
             if(lastSelectedWebFunction == null || lastSelectedWebFunction.length() == 0 ||
                     !lastSelectedWebFunction.equals(fun.getNameEn())){
+                webView.loadUrl("about:blank");
                 webView.loadUrl(builder.toString());
                 lastSelectedWebFunction = fun.getNameEn();
             }

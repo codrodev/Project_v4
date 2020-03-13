@@ -117,7 +117,7 @@ public class LoginViewModel extends ViewModel {
 
 
         if (kharetatiUser != null && !kharetatiUser.isError()) {
-
+            Global.isFirstLoad = true;
             Global.sime_userid = kharetatiUser.userID;
             Global.isUserLoggedIn = false;
             Global.arcgis_token = kharetatiUser.getArcgis_token();
