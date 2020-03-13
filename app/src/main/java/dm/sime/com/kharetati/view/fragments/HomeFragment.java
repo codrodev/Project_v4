@@ -216,11 +216,11 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     }
 
     @Override
-    public void onMenuSelected(String appID) {
-        initializeRuntimeForm(model.getApplication(appID));
+    public void onMenuSelected(String appID, boolean isAnimation) {
+        initializeRuntimeForm(model.getApplication(appID), isAnimation);
     }
 
-    private void initializeRuntimeForm(Applications app){
+    private void initializeRuntimeForm(Applications app, boolean isAnimation){
 
         model.setSelectedApplication(app);
         if(model.getSelectedApplication().getHelpUrlEn() != null && model.getSelectedApplication().getHelpUrlEn().length() > 0){
@@ -294,7 +294,9 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                 model.navigateWithParam(getActivity(), FR_WEBVIEW, param);
             }
         }
-        ViewAnimationUtils.scaleAnimateViewPopFirstLoad(binding.layoutRuntimeContainer);
+        if(isAnimation) {
+            ViewAnimationUtils.scaleAnimateViewPopFirstLoad(binding.layoutRuntimeContainer);
+        }
         Global.isFirstLoad = false;
     }
 
@@ -619,7 +621,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         if(model.getSelectedApplication() != null && model.getSelectedApplication().getId() != null &&
                 model.getSelectedApplication().getId().length() > 0){
             if(model.getSelectedApplication().getSearchForm() != null && model.getSelectedApplication().getSearchForm().size() > 0) {
-                initializeRuntimeForm(model.getSelectedApplication());
+                initializeRuntimeForm(model.getSelectedApplication(), true);
             }
         }
         //initializeRuntimeForm(model.getDefaultApplication(0));

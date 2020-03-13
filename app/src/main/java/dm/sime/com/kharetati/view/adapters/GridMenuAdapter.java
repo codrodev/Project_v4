@@ -76,7 +76,7 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.Generi
                 holder.txtMenuName.setTextColor(context.getResources().getColor(R.color.white));
             }
             if(position == lstHomeGridMenuItems.size() - 1){
-                listener.onMenuSelected(lstHomeGridMenuItems.get(0).getId());
+                listener.onMenuSelected(lstHomeGridMenuItems.get(0).getId(), true);
             }
         }
 
@@ -120,14 +120,14 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.Generi
 
         @Override
         public void onClick(View v) {
-            listener.onMenuSelected(((TextView) binding.getRoot().findViewById(R.id.txtAppId)).getText().toString());
+            listener.onMenuSelected(((TextView) binding.getRoot().findViewById(R.id.txtAppId)).getText().toString(), false);
             notifyDataSetChanged();
         }
     }
 
 
     public interface OnMenuSelectedListener {
-        void onMenuSelected(String menu);
+        void onMenuSelected(String menu, boolean isAnimation);
 
     }
 }
