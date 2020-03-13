@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.Html;
 import android.text.InputFilter;
@@ -76,6 +77,7 @@ import dm.sime.com.kharetati.datas.repositories.HomeRepository;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
+import dm.sime.com.kharetati.utility.ViewAnimationUtils;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.activities.MainActivity;
@@ -209,12 +211,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         super.onResume();
         model.manageAppBar(getActivity(), true);
         model.manageAppBottomBAtr(getActivity(), true);
-        if(model.getSelectedApplication() != null && model.getSelectedApplication().getId() != null &&
-                model.getSelectedApplication().getId().length() > 0){
-            if(model.getSelectedApplication().getSearchForm() != null && model.getSelectedApplication().getSearchForm().size() > 0) {
-                initializeRuntimeForm(model.getSelectedApplication());
-            }
-        }
+
         //initializeInAppNotification();
     }
 
@@ -224,7 +221,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     }
 
     private void initializeRuntimeForm(Applications app){
-        Global.isFirstLoad = false;
+
         model.setSelectedApplication(app);
         if(model.getSelectedApplication().getHelpUrlEn() != null && model.getSelectedApplication().getHelpUrlEn().length() > 0){
             Global.helpUrlEn = model.getSelectedApplication().getHelpUrlEn();
@@ -297,7 +294,8 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                 model.navigateWithParam(getActivity(), FR_WEBVIEW, param);
             }
         }
-
+        ViewAnimationUtils.scaleAnimateViewPopFirstLoad(binding.layoutRuntimeContainer);
+        Global.isFirstLoad = false;
     }
 
     private String constructUrl(String url){
@@ -618,7 +616,12 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         } else {
             binding.layoutDots.setVisibility(View.GONE);
         }
-
+        if(model.getSelectedApplication() != null && model.getSelectedApplication().getId() != null &&
+                model.getSelectedApplication().getId().length() > 0){
+            if(model.getSelectedApplication().getSearchForm() != null && model.getSelectedApplication().getSearchForm().size() > 0) {
+                initializeRuntimeForm(model.getSelectedApplication());
+            }
+        }
         //initializeRuntimeForm(model.getDefaultApplication(0));
     }
 

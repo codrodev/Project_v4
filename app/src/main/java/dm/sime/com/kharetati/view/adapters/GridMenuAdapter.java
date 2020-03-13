@@ -74,9 +74,12 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.Generi
             if(position == 0) {
                 holder.cardView.setBackground(context.getResources().getDrawable(R.drawable.border_background));
                 holder.txtMenuName.setTextColor(context.getResources().getColor(R.color.white));
-                listener.onMenuSelected(holder.txtAppId.getText().toString());
+            }
+            if(position == lstHomeGridMenuItems.size() - 1){
+                listener.onMenuSelected(lstHomeGridMenuItems.get(0).getId());
             }
         }
+
     }
 
     @Override

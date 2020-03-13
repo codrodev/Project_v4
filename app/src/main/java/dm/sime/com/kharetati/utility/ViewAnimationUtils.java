@@ -31,6 +31,14 @@ public final class ViewAnimationUtils {
         animation.start();
     }
 
+    public static void scaleAnimateViewPopFirstLoad(View view) {
+        ScaleAnimation animation = new ScaleAnimation(0f, 1f, 0f, 1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        animation.setDuration(2500);
+        animation.setFillAfter(true);
+        view.setAnimation(animation);
+        animation.start();
+    }
+
     public static void blinkAnimationView(View view){
         Animation animation = new AlphaAnimation(1, 0); // Change alpha from fully visible to invisible
         animation.setDuration(800); // duration - half a second
