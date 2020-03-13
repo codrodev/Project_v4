@@ -123,6 +123,14 @@ public class DeliveryFragment extends Fragment {
                     binding.etEmirates.setSelection(emId);
                     ParentSiteplanViewModel.deliveryDetails.setEmirate(Integer.toString(emId));
                     spinner_position = emId;
+                    //save here
+                    if(isValidEmailId() == true && isValidMobile() == true && isValidEmirate() == true) {
+                        try {
+                            save(userid);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 } else {
                     spinner_position = 0;
                     ParentSiteplanViewModel.deliveryDetails.setEmirate(Integer.toString(0));
@@ -243,6 +251,7 @@ public class DeliveryFragment extends Fragment {
                     } else {
                         if(isValidEmailId() == true && isValidMobile() == true && isValidEmirate() == true) {
                             try {
+
                                 save(userid);
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -260,7 +269,7 @@ public class DeliveryFragment extends Fragment {
     private boolean isValidEmirate(){
         boolean isValid = true;
         if(ParentSiteplanViewModel.deliveryDetails.getEmirate().equals("0")) {
-            AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.select_emirate), getResources().getString(R.string.ok), getActivity());
+            //AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.select_emirate), getResources().getString(R.string.ok), getActivity());
             isValid=false;
             return isValid;
         }
@@ -273,22 +282,30 @@ public class DeliveryFragment extends Fragment {
         boolean isValid = true;
         if (TextUtils.isEmpty(binding.etEmailaddress.getText().toString())) {
 
-            if(Global.appMsg!=null)
+            /*if(Global.appMsg!=null)
                 AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getEnterValidEmailEn():Global.appMsg.getEnterValidEmailAr(), getResources().getString(R.string.ok), getActivity());
             else
-                AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.enter_valid_email), getResources().getString(R.string.ok), getActivity());
+                AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.enter_valid_email), getResources().getString(R.string.ok), getActivity());*/
             isValid=false;
 
             return isValid;
         }
         if(!binding.etEmailaddress.getText().toString().contains("@")||!binding.etEmailaddress.getText().toString().contains(".")) {
-            if(Global.appMsg!=null)
+            /*if(Global.appMsg!=null)
                 AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getEnterValidEmailEn():Global.appMsg.getEnterValidEmailAr(), getResources().getString(R.string.ok), getActivity());
             else
-                AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.enter_valid_email), getResources().getString(R.string.ok), getActivity());
+                AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.enter_valid_email), getResources().getString(R.string.ok), getActivity());*/
             isValid=false;
             return isValid;
         }
+        if(isValid && isValidMobile() == true && isValidEmirate() == true) {
+            try {
+                save(userid);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
         return isValid;
     }
 
@@ -296,19 +313,19 @@ public class DeliveryFragment extends Fragment {
         boolean isValid = true;
         if (TextUtils.isEmpty(binding.etMobile.getText().toString())) {
 
-            AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.mobile_validation), getResources().getString(R.string.ok), getActivity());
+//            AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.mobile_validation), getResources().getString(R.string.ok), getActivity());
             isValid=false;
 
             return isValid;
         }
         if (mobileNoInitialValidation() == false) {
-            AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.mobile_validation), getResources().getString(R.string.ok), getActivity());
+//            AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.mobile_validation), getResources().getString(R.string.ok), getActivity());
             isValid=false;
 
             return isValid;
         }
         if (binding.etMobile.length() != 12) {
-            AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.mobile_validation), getResources().getString(R.string.ok), getActivity());
+//            AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.mobile_validation), getResources().getString(R.string.ok), getActivity());
             isValid=false;
 
             return isValid;
@@ -326,6 +343,14 @@ public class DeliveryFragment extends Fragment {
                     int val = Integer.parseInt(st);
                     if(val > 0){
                         isValid = true;
+                        if(isValidEmirate()&&isValidEmailId())
+
+                                try {
+                                    save(userid);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
                     }
                 } catch (Exception ex){
 
