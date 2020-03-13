@@ -516,8 +516,9 @@ public class HomeViewModel extends ViewModel {
         inputModel.setApplicationId(getSelectedApplication().getId());
         inputModel.setSearchValue(searchText);
         inputModel.setTabId(getSelectedTab().getId());
-        inputModel.setTOKEN(Global.app_session_token);
+        inputModel.setTOKEN(Global.app_session_token == null ? "" : Global.app_session_token);
         inputModel.setREMARKS(Global.getPlatformRemark());
+        inputModel.setGuest(!Global.isUserLoggedIn);
 
         searchModel.setInputJson(inputModel);
 

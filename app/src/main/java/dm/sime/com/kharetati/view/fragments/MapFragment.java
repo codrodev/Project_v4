@@ -677,6 +677,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                 Global.landNumber = null;
                 Global.area = null;
                 Global.area_ar = null;
+                lastSelectedWebFunction = "";
                 if (Global.isBookmarks)
                     findParcel(binding.txtPlotNo.getText().toString().trim());
                 else
@@ -690,6 +691,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
             searchPlot();
+            Global.hideSoftKeyboard(getActivity());
             return true;
         }
         return false;
