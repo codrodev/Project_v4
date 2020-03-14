@@ -124,7 +124,7 @@ public class DeliveryFragment extends Fragment {
                     ParentSiteplanViewModel.deliveryDetails.setEmirate(Integer.toString(emId));
                     spinner_position = emId;
                     //save here
-                    if(isValidEmailId() == true && isValidMobile() == true && isValidEmirate() == true) {
+                    if(isValidEmailId() == true && isValidMobile() == true && binding.etRecievername.getText().toString().trim()!=null) {
                         try {
                             save(userid);
                         } catch (JSONException e) {
@@ -290,7 +290,7 @@ public class DeliveryFragment extends Fragment {
 
             return isValid;
         }
-        if(!binding.etEmailaddress.getText().toString().contains("@")||!binding.etEmailaddress.getText().toString().contains(".")) {
+        else if(!binding.etEmailaddress.getText().toString().contains("@")||!binding.etEmailaddress.getText().toString().contains(".")) {
             /*if(Global.appMsg!=null)
                 AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getEnterValidEmailEn():Global.appMsg.getEnterValidEmailAr(), getResources().getString(R.string.ok), getActivity());
             else
@@ -298,13 +298,13 @@ public class DeliveryFragment extends Fragment {
             isValid=false;
             return isValid;
         }
-        if(isValid && isValidMobile() == true && isValidEmirate() == true) {
+        /*if(isValidEmirate() == true && isValidMobile() == true && binding.etRecievername.getText().toString().trim()!=null) {
             try {
                 save(userid);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
 
         return isValid;
     }
@@ -343,14 +343,13 @@ public class DeliveryFragment extends Fragment {
                     int val = Integer.parseInt(st);
                     if(val > 0){
                         isValid = true;
-                        if(isValidEmirate()&&isValidEmailId())
-
-                                try {
-                                    save(userid);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
+                        /*if(isValidEmailId() == true && isValidEmirate() == true && binding.etRecievername.getText().toString().trim()!=null) {
+                            try {
+                                save(userid);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }*/
                     }
                 } catch (Exception ex){
 
@@ -549,4 +548,14 @@ public class DeliveryFragment extends Fragment {
             binding.etEmirates.setSelection(spinner_position);
     }
 
+    public void setNextEnabledStatus(){
+
+        if(isValidMobile()&& isValidEmailId() && isValidEmirate()&&binding.etRecievername.getText().toString().trim()!=null)
+            ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
+        else
+            ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
+
+    }
+
 }
+

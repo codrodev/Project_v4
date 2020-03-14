@@ -583,7 +583,8 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
     @Override
     public void onStarted() {
-        AlertDialogUtil.showProgressBar(getActivity(),true);
+        if (Global.alertDialog != null)
+            AlertDialogUtil.showProgressBar(getActivity(), true);
     }
 
     @Override
@@ -622,11 +623,11 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         RelativeLayout.LayoutParams lp;
         if(model.getMutableHomeGridMenu().getValue().size() < 4){
             lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    200);
+                    250);
             binding.viewPager.setLayoutParams(lp);
         } else {
             lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    400);
+                    450);
             binding.viewPager.setLayoutParams(lp);
         }
         if(model.getSelectedApplication() != null && model.getSelectedApplication().getId() != null &&

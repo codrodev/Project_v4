@@ -111,7 +111,7 @@ dependencies {
     implementation 'com.etebarian:meow-bottom-navigation:1.1.0'
 
     //implementation 'com.esri.arcgis.android:arcgis-android:10.2.9'
-    implementation 'com.google.firebase:firebase-messaging:11.0.2'
+    //implementation 'com.google.firebase:firebase-messaging:11.0.2'
     // (Recommended) Add the Google Analytics dependency.
     implementation 'com.google.firebase:firebase-analytics:17.2.3'
 
