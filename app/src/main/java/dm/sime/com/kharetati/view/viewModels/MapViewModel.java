@@ -93,8 +93,9 @@ public class MapViewModel extends ViewModel {
 
         SerializeGetAppInputRequestModel inputModel = new SerializeGetAppInputRequestModel();
         inputModel.setParcel_id(isBookmarks?Integer.parseInt(PlotDetails.parcelNo):Integer.parseInt(Global.searchText));
-        inputModel.setTOKEN(Global.app_session_token);
+        inputModel.setTOKEN(Global.app_session_token == null ? "" : Global.app_session_token);
         inputModel.setREMARKS(Global.getPlatformRemark());
+        inputModel.setGuest(!Global.isUserLoggedIn);
 
         model.setInputJson(inputModel);
 

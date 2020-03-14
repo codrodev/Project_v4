@@ -623,11 +623,11 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         RelativeLayout.LayoutParams lp;
         if(model.getMutableHomeGridMenu().getValue().size() < 4){
             lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    250);
+                    275);
             binding.viewPager.setLayoutParams(lp);
         } else {
             lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    450);
+                    475);
             binding.viewPager.setLayoutParams(lp);
         }
         if(model.getSelectedApplication() != null && model.getSelectedApplication().getId() != null &&

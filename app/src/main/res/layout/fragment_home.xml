@@ -118,8 +118,7 @@
                             app:tabBackground="@drawable/tab_color_selector"
                             android:layout_margin="5dp"
                             app:tabGravity="fill"
-                            app:tabMaxWidth="0dp"
-                            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+                            app:tabMaxWidth="0dp"/>
 
                         <!--app:tabIndicatorColor="@color/maroon_dark"
                         app:tabIndicatorHeight="3dp"-->

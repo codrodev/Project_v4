@@ -302,11 +302,10 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         });
 
         if(Global.isBookmarks){
-
+            setWebSheetPeekHeight(0);;
+            setMapFunctionSheetPeekHeight(0);
             fromBookmarks(parcelId);
-
-        }
-        else if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null &&
+        } else if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null &&
                 Global.mapSearchResult.getService_response().getMap().getFunctions().size() == 1){
             setWebSheetPeekHeight(600);;
             setMapFunctionSheetPeekHeight(0);
@@ -315,6 +314,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             setWebSheetPeekHeight(0);
             setMapFunctionSheetPeekHeight(60);
         }
+
         ArcGISRuntimeEnvironment.setLicense("runtimelite,1000,rud3984007683,none,GB2PMD17J0YJ2J7EZ071");
         mapView.setAttributionTextVisible(false);
 

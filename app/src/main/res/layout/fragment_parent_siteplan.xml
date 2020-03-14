@@ -13,15 +13,15 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/layoutProfile"
             android:layout_width="match_parent"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:layout_height="wrap_content">
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/collapsableLayout"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
                 android:fitsSystemWindows="true"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:layout_scrollFlags="noScroll"
                 android:background="@drawable/maroon_overlay_bg">
                 <FrameLayout
                     android:layout_width="match_parent"
