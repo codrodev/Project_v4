@@ -109,11 +109,12 @@
                         android:orientation="vertical"
                         android:layout_below="@+id/txtSearchHeader">
                         <com.google.android.material.tabs.TabLayout
-                            style="@style/font_medium_bold"
+                            style="@style/font_medium_bold_tab"
                             android:id="@+id/tabRuntimeLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:tabMode="fixed"
+                            app:tabTextAppearance="@style/font_medium_bold_tab"
                             app:tabTextColor="@color/white"
                             app:tabBackground="@drawable/tab_color_selector"
                             android:layout_margin="5dp"

@@ -38,6 +38,12 @@
         <item name="android:singleLine">true</item>
         <item name="android:fontFamily">@font/dubai_font</item>
     </style>
+    <style name="font_medium_bold_tab">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:fontFamily">@font/dubai_font</item>
+    </style>
     <style name="font_medium_regular">
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/black</item>
