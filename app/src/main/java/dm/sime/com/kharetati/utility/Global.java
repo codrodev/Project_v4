@@ -643,6 +643,7 @@ public class Global {
 //        AttachmentFragment.deliveryByCourier=false;
         Global.requestId = null;
         Global.isBookmarks = false;
+        Global.alertDialog = null;
         isLanguageChanged =true;
 //        AttachmentFragment.isDeliveryDetails=false;
 

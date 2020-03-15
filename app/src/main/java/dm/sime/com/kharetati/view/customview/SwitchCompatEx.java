@@ -6,12 +6,16 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.SwitchCompat;
 
+import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
 
 
@@ -31,8 +35,8 @@ public class SwitchCompatEx extends SwitchCompat {
 
     public ThumbDrawable thumbDrawable;
     public TrackDrawable trackDrawable;
-    public CharSequence thumbLabel;
-    public CharSequence trackLabel;
+    public TextView thumbLabel;
+    public TextView trackLabel;
 
 
     public SwitchCompatEx(Context context) {
@@ -45,6 +49,8 @@ public class SwitchCompatEx extends SwitchCompat {
         //this.setBackground(null);
         thumbDrawable = new ThumbDrawable();
         trackDrawable = new TrackDrawable();
+        thumbLabel = new TextView(context);
+        trackLabel = new TextView(context);
 
         //trackLabel =this.getTextOn();
         thumbLabelPaint = new Paint();
@@ -52,10 +58,15 @@ public class SwitchCompatEx extends SwitchCompat {
         thumbLabelPaint.setColor(THUMB_LABEL_COLOR);
         thumbLabelPaint.setAntiAlias(true);
         thumbLabelPaint.setTextSize(THUMB_LABEL_SIZE);
+        Typeface typeface =  Typeface.createFromAsset(context.getAssets(),"Dubai-Regular.ttf");
+        this.setSwitchTypeface(typeface);
         setTextOff(Global.CURRENT_LOCALE.equals("en")? "English":"العربية");
         setTextOn(Global.CURRENT_LOCALE.equals("ar")? "English":"العربية");
-        thumbLabel = this.isChecked()?this.getTextOn():this.getTextOff();
-        trackLabel = this.isChecked()?this.getTextOff():this.getTextOn();
+        thumbLabel.setText(this.isChecked()?this.getTextOn():this.getTextOff());
+        trackLabel.setText(this.isChecked()?this.getTextOff():this.getTextOn());
+        thumbLabel.setTypeface(typeface);
+        trackLabel.setTypeface(typeface);
+
         this.setBackground(null);
         this.setTrackDrawable(trackDrawable);
         this.setThumbDrawable(thumbDrawable);
@@ -167,7 +178,7 @@ public class SwitchCompatEx extends SwitchCompat {
             requestLayout();
             //setTextOff(Global.CURRENT_LOCALE.equals("en")? "English":"العربية");
 
-            drawLabel(canvas, thumbLabelBounds, thumbLabelPaint, thumbLabel);
+            drawLabel(canvas, thumbLabelBounds, thumbLabelPaint, thumbLabel.getText());
         }
     }
 }

@@ -197,10 +197,10 @@
 
 
     <string-array name="request_site_plan">
-        <item>land owner</item>
-        <item>proof attachment</item>
-        <item>delivery detail</item>
-        <item>payment</item>
+        <item>Land owner</item>
+        <item>Proof attachment</item>
+        <item>Delivery detail</item>
+        <item>Payment</item>
     </string-array>
 
     <string-array name="emirates">

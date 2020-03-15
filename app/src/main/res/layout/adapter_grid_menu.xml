@@ -11,7 +11,7 @@
     </data>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="130dp"
         android:id="@+id/cardHomeGrid"
         android:elevation="10dp"
         android:background="@drawable/grid_background_drawable"

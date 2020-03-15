@@ -260,6 +260,8 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                             app.getSearchForm().get(tab.getPosition()).getTabs().getControls().size() > 0) {
                         model.setSelectedTab(app.getSearchForm().get(tab.getPosition()).getTabs());
                         runtimeControlRenderer(app.getSearchForm().get(tab.getPosition()).getTabs().getControls());
+
+                        Global.hideSoftKeyboard(getActivity());
                     }
                    // renderControl(tab.getPosition());
 
@@ -609,7 +611,21 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
     @Override
     public void populateGridMenu() {
-        gridPagerAdapter = new GridMenuPagerAdapter(getActivity(),model, this);
+
+        RelativeLayout.LayoutParams lp;
+
+
+
+
+        gridPagerAdapter = new GridMenuPagerAdapter(getActivity(),model, this);/*if(model.getMutableHomeGridMenu().getValue().size() < 4){
+            lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    160);
+            binding.viewPager.setLayoutParams(lp);
+        } else {
+            lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    275);
+            binding.viewPager.setLayoutParams(lp);
+        }*/
         binding.viewPager.setPageTransformer(false, new CustPagerTransformer(getActivity()));
         binding.viewPager.setOffscreenPageLimit(3);
         binding.viewPager.addOnPageChangeListener(this);
@@ -620,16 +636,15 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         } else {
             binding.layoutDots.setVisibility(View.GONE);
         }
-        RelativeLayout.LayoutParams lp;
-        if(model.getMutableHomeGridMenu().getValue().size() < 4){
+        /*if(model.getMutableHomeGridMenu().getValue().size() < 4){
             lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    275);
+                    305);
             binding.viewPager.setLayoutParams(lp);
         } else {
             lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    475);
+                    505);
             binding.viewPager.setLayoutParams(lp);
-        }
+        }*/
         if(model.getSelectedApplication() != null && model.getSelectedApplication().getId() != null &&
                 model.getSelectedApplication().getId().length() > 0){
             if(model.getSelectedApplication().getSearchForm() != null && model.getSelectedApplication().getSearchForm().size() > 0) {

@@ -12,6 +12,8 @@
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:textStyle="bold"
+        style="@style/font_large_bold"
+        android:fontFamily="@font/dubai_font"
         android:layout_toLeftOf="@+id/imgChevron"
         android:textColor="@color/black" />
     <ImageView
