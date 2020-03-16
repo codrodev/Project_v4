@@ -115,7 +115,6 @@
                             android:layout_marginVertical="10dp"
                             app:tabGravity="fill"
                             android:layout_marginHorizontal="10dp"
-                            app:tabIndicatorColor="@color/yellow_light"
                             app:tabIndicatorHeight="3dp"
                             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
                         <LinearLayout

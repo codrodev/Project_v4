@@ -241,11 +241,23 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             int x =0;
             for(SearchForm form: app.getSearchForm()){
                 if (form.getTabs() != null) {
-                    binding.tabRuntimeLayout.addTab(binding.tabRuntimeLayout.newTab().setText(CURRENT_LOCALE.equals("en")?form.getTabs().getNameEn():form.getTabs().getNameAr()));
+                    //binding.tabRuntimeLayout.addTab(binding.tabRuntimeLayout.newTab().setText(CURRENT_LOCALE.equals("en")?form.getTabs().getNameEn():form.getTabs().getNameAr()));
+                    TabLayout.Tab tab = binding.tabRuntimeLayout.newTab();
+                    RelativeLayout relativeLayout = (RelativeLayout)
+                            LayoutInflater.from(getActivity()).inflate(R.layout.tab_custom_view, binding.tabRuntimeLayout, false);
+
+                    TextView tabTextView = (TextView) relativeLayout.findViewById(R.id.tab_title);
+                    tabTextView.setText(CURRENT_LOCALE.equals("en")?form.getTabs().getNameEn():form.getTabs().getNameAr());
+                    tab.setCustomView(relativeLayout);
+                    //tab.select();
+
+                    binding.tabRuntimeLayout.addTab(tab);
                     binding.tabRuntimeLayout.setTabGravity(TabLayout.GRAVITY_FILL);
                     binding.tabRuntimeLayout.setTabMode(TabLayout.MODE_FIXED);
+
+
                     /*ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) binding.tabRuntimeLayout.getLayoutParams();
-                    p.setMargins(10, 10, 10, 0);
+                    p.setMargins(15, 15, 15, 15);
                     binding.tabRuntimeLayout.requestLayout();*/
                 }
             }
@@ -352,6 +364,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         FilterArray[0] = new InputFilter.LengthFilter(10);
         *//*FilterArray[1] = new InputFilter.LengthFilter(10);
         FilterArray[2] = new InputFilter.LengthFilter(11);*/
+
         LinearLayout layout = new LinearLayout(getActivity());
         layout.setOrientation(LinearLayout.HORIZONTAL);
         layout.setGravity(Gravity.CENTER);
@@ -359,6 +372,8 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         layoutParams.setMargins(0,8,0,8);
         layout.setLayoutParams(layoutParams);
 
+        final LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lparams.setMargins(30, 0, 30, 0);
         CleanableEditText x = new CleanableEditText(getActivity());
         //x.setHint(form.getPlaceHolderEn());
         x.setHint(Global.CURRENT_LOCALE.equals("en")?control.getPlaceHolderEn():control.getPlaceHolderAr());
@@ -366,6 +381,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
         }
         x.setInputType(InputType.TYPE_CLASS_NUMBER);
+        x.setLayoutParams(lparams);
         x.setEms(10);
         x.setMaxLines(1);
         x.setType(control.getType());
@@ -408,7 +424,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         spinnerLayout.setOrientation(LinearLayout.HORIZONTAL);
         spinnerLayout.setBackgroundColor(getActivity().getResources().getColor(R.color.white));
         LinearLayout.LayoutParams spinnerlayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        spinnerlayoutParams.setMargins(65,8,65,8);
+        spinnerlayoutParams.setMargins(30,8,30,8);
         spinnerLayout.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);
         spinnerLayout.setBackground(getActivity().getResources().getDrawable(R.drawable.control_background));
         spinnerLayout.setLayoutParams(spinnerlayoutParams);
