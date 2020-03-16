@@ -3,13 +3,16 @@ package dm.sime.com.kharetati.view.fragments;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,6 +38,7 @@ import dm.sime.com.kharetati.view.viewModels.DeliveryDetailViewModel;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 
 import static android.content.Context.MODE_PRIVATE;
+import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
 import static dm.sime.com.kharetati.utility.Global.makani;
 
 public class DeliveryFragment extends Fragment {
@@ -201,6 +205,65 @@ public class DeliveryFragment extends Fragment {
                 binding.linearLayout.getChildAt(i).setEnabled(false);
         }
 
+
+        binding.etRecievername.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
+                    if (v.getText().length() > 0)
+                    {
+                        if (isValidEmailId() && isValidMobile() && isValidEmirate()) {
+                            try {
+                                save(userid);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+        binding.etMobile.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
+                    if (isValidMobile())
+                    {
+                        if (isValidEmailId() && isValidEmirate() && binding.etRecievername.getText()!=null) {
+                            try {
+                                save(userid);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+        binding.etEmailaddress.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
+                    if (isValidEmailId())
+                    {
+                        if (isValidMobile() && isValidEmirate() && binding.etRecievername.getText()!=null) {
+                            try {
+                                save(userid);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        return true;
+                    }
+
+                }
+                return false;
+            }
+        });
 
         return binding.getRoot();
     }
