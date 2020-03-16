@@ -612,11 +612,6 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     @Override
     public void populateGridMenu() {
 
-        RelativeLayout.LayoutParams lp;
-
-
-
-
         gridPagerAdapter = new GridMenuPagerAdapter(getActivity(),model, this);/*if(model.getMutableHomeGridMenu().getValue().size() < 4){
             lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     160);
