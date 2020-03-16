@@ -21,7 +21,8 @@ import dm.sime.com.kharetati.utility.Global;
 
 public class SwitchCompatEx extends SwitchCompat {
 
-    private Paint thumbLabelPaint;
+    public Paint thumbLabelPaint;
+    public Paint trackLabelPaint;
     public int TRACK_COLOR = 0xFFFFFFFF;
     public int TRACK_STROKE_WIDTH = dp2Px(2f);
     public int TRACK_STROKE_COLOR = 0xFFb71e3e;
@@ -54,12 +55,20 @@ public class SwitchCompatEx extends SwitchCompat {
 
         //trackLabel =this.getTextOn();
         thumbLabelPaint = new Paint();
+        trackLabelPaint = new Paint();
 
         thumbLabelPaint.setColor(THUMB_LABEL_COLOR);
         thumbLabelPaint.setAntiAlias(true);
         thumbLabelPaint.setTextSize(THUMB_LABEL_SIZE);
+
+        trackLabelPaint.setColor(TRACK_LABEL_COLOR);
+        trackLabelPaint.setAntiAlias(true);
+        trackLabelPaint.setTextSize(TRACK_LABEL_SIZE);
+
         Typeface typeface =  Typeface.createFromAsset(context.getAssets(),"Dubai-Regular.ttf");
         this.setSwitchTypeface(typeface);
+        thumbLabelPaint.setTypeface(typeface);
+        trackLabelPaint.setTypeface(typeface);
         setTextOff(Global.CURRENT_LOCALE.equals("en")? "English":"العربية");
         setTextOn(Global.CURRENT_LOCALE.equals("ar")? "English":"العربية");
         thumbLabel.setText(this.isChecked()?this.getTextOn():this.getTextOff());
@@ -134,12 +143,9 @@ public class SwitchCompatEx extends SwitchCompat {
             super.draw(canvas);
             invalidate();
             requestLayout();
-            Paint trackLabelPaint = new Paint();
-            Paint thumbLabelPaint = new Paint();
 
-            trackLabelPaint.setColor(TRACK_LABEL_COLOR);
-            trackLabelPaint.setAntiAlias(true);
-            trackLabelPaint.setTextSize(TRACK_LABEL_SIZE);
+
+
             //setTextOn(Global.CURRENT_LOCALE.equals("en")? "العربية":"English");
 
             /*if(Global.CURRENT_LOCALE.equals("en")){
@@ -149,7 +155,6 @@ public class SwitchCompatEx extends SwitchCompat {
             else{
                 setTextOn("English");
                 //setText("Arabic");
-
             }*/
             drawLabel(canvas, textOffBounds, thumbLabelPaint, getTextOff());
             drawLabel(canvas, textOnBounds, trackLabelPaint, getTextOn());

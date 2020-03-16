@@ -223,24 +223,15 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         /*binding.switchLanguage.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
                 if(isChecked) {
                     Global.isLanguageChanged = true;
-
                     CURRENT_LOCALE = (CURRENT_LOCALE.equals("en")) ? "ar" : "en";
                     Global.changeLang(CURRENT_LOCALE, LoginActivity.this);
                     isChecked =false;
-
                     ((SwitchCompatEx)buttonView).setChecked(isChecked);
-
                     ((SwitchCompatEx)buttonView).setTextOff((CURRENT_LOCALE.equals("en")) ? "العربية" : "English");
-
-
-
                     recreate();
                 }
-
-
             }
         });*/
         if(CURRENT_LOCALE.equals("en")){
@@ -323,7 +314,6 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                 binding.layoutLogo.setLayoutParams(logoLayoutParams);
 
                 /*//Progress Bar
-
                 LinearLayout.LayoutParams progressBarParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,elementHeight);
                 progressBarParams.gravity = Gravity.CENTER_VERTICAL;
                 progressBarParams.setMargins(leftMargin,topMargin+5,rightMargin,bottomMargin);

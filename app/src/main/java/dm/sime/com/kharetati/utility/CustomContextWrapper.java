@@ -34,7 +34,6 @@ public class CustomContextWrapper extends ContextWrapper {
     } /*else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
         configuration.setLocale(newLocale);
         context = context.createConfigurationContext(configuration);
-
     }*/ else {
         configuration.locale = newLocale;
         res.updateConfiguration(configuration, res.getDisplayMetrics());

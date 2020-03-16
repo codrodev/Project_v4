@@ -37,8 +37,11 @@ public class NetworkConnectionInterceptor implements Interceptor {
             return chain.proceed(requestBuilder.build());
         }
         else if (Global.accessToken==null||Global.accessToken.isEmpty()){
+
             if(!Global.isLoginActivity)
-            Global.logout(applicationContext);
+                Global.logout(applicationContext);
+
+
         }
         return chain.proceed(chain.request());
 
