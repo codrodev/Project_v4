@@ -67,6 +67,7 @@
                 android:minHeight="40dp"
                 android:layoutDirection="ltr"
                 android:fontFamily="@font/dubai_font"
+                app:theme="@style/Custom.Widget.SwitchCompat"
                 android:visibility="gone"
                 android:textOn="Arabic"
                 android:textOff="English"

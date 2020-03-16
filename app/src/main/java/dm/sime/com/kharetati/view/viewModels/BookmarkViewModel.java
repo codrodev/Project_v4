@@ -96,8 +96,8 @@ public class BookmarkViewModel extends ViewModel {
 
 
         bookMarksNavigator.onStarted();
-        //userId =Global.sime_userid;
-        userId =1003;
+        userId =Global.sime_userid;
+        //userId =1003;
 
         SerializeBookmarkModel model = new SerializeBookmarkModel();
         model.setUserID(1003);
@@ -144,7 +144,8 @@ public class BookmarkViewModel extends ViewModel {
     public void deleteBookMark(Bookmark data) {
         bookMarksNavigator.onStarted();
         SerializeBookmarkModel model = new SerializeBookmarkModel();
-        model.setUserID(1003);
+        //model.setUserID(1003);
+        model.setUserID(Global.sime_userid);
         model.setParcelNumber(data.ParcelNumber);
 
         Disposable disposable = repository.deleteBookMark(model)

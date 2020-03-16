@@ -45,6 +45,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
     public static ParentSiteplanViewModel parentModel;
     private ParentSitePlanViewModelFactory factory;
     private ParentSitePlanRepository repository;
+    public static onNextListner listner;
 
     public static ParentSiteplanFragment newInstance(){
         ParentSiteplanFragment fragment = new ParentSiteplanFragment();
@@ -90,6 +91,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         model.manageAppBar(getActivity(), false);
         model.manageAppBottomBAtr(getActivity(), false);
         pagerArray =  getActivity().getResources().getStringArray(R.array.request_site_plan);
+        binding.imgHelp.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
         loadFragment(0);
         binding.txtHeader.setText(pagerArray[currentIndex]);
         changeStepperBackground(currentIndex);
@@ -235,6 +237,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
                 fragment = DeliveryFragment.newInstance();
                 break;
             case 3:
+                listner.onNextClicked();
                 fragment = PayFragment.newInstance();
                 break;
         }
@@ -285,5 +288,9 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
     @Override
     public void navigateToFragment(int position) {
         loadFragment(position);
+    }
+
+    public interface onNextListner{
+        public void onNextClicked();
     }
 }

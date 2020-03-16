@@ -65,6 +65,7 @@
                     android:id="@+id/layoutLanguage"
                     android:layout_gravity="center"
                     android:gravity="center"
+                    android:visibility="invisible"
                     android:orientation="vertical">
                     <RelativeLayout
                         android:layout_width="60dp"

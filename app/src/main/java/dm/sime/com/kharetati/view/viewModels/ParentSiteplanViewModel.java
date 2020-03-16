@@ -2,9 +2,13 @@ package dm.sime.com.kharetati.view.viewModels;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -20,6 +24,7 @@ import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.activities.MainActivity;
+import dm.sime.com.kharetati.view.fragments.DeliveryFragment;
 import dm.sime.com.kharetati.view.fragments.ParentSiteplanFragment;
 import dm.sime.com.kharetati.view.fragments.PayFragment;
 import dm.sime.com.kharetati.view.navigators.FragmentNavigator;
@@ -28,6 +33,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+
+import static android.content.Context.MODE_PRIVATE;
+import static dm.sime.com.kharetati.utility.Global.makani;
 
 public class ParentSiteplanViewModel extends ViewModel {
 
@@ -196,6 +204,9 @@ public class ParentSiteplanViewModel extends ViewModel {
         }
 
     }
+
+
+
     public void showErrorMessage(String exception){
         if(Global.appMsg!=null){
             parentSitePlanNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,10 +21,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
@@ -44,6 +47,7 @@ import dm.sime.com.kharetati.datas.network.MyApiService;
 import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.CustomContextWrapper;
+import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
 
 import dm.sime.com.kharetati.utility.constants.AppConstants;
@@ -139,6 +143,12 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, Global.getUsernamesFromHistory(this));
         binding.editUserName.setAdapter(adapter);
 
+
+        Typeface typeface =  Typeface.createFromAsset(getAssets(),"Dubai-Regular.ttf");
+        ((SwitchCompat)findViewById(R.id.switchLanguage)).setSwitchTypeface(typeface);
+        binding.switchLanguage.trackLabel.setTypeface(typeface);
+        binding.switchLanguage.thumbLabel.setTypeface(typeface);
+
         LoginDetails loginDetails = Global.getUserLoginDeatils(this);
         if (loginDetails != null && loginDetails.username != null && loginDetails.pwd != null && Global.isRememberLogin(this)) {
             binding.editUserName.setText(loginDetails.username);
@@ -153,6 +163,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         binding.switchLanguage.setVisibility( View.GONE);
         Global.enableClearTextInEditBox(binding.editUserName,LoginActivity.this);
         Global.enableClearTextInEditBox(binding.editPassword,LoginActivity.this);
+
 
         binding.editUserName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -530,7 +541,8 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
     @Override
     public void onStarted() {
 
-        progressBar.setVisibility(View.VISIBLE);
+        //progressBar.setVisibility(View.VISIBLE);
+
         AlertDialogUtil.showProgressBar(this,true);
         //binding.txtOR.setVisibility(View.GONE);
 

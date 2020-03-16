@@ -153,6 +153,7 @@
                         android:layout_weight="1"/>
 
                     <Button
+                        style="@style/font_medium_bold"
                         android:id="@+id/siteplan_payButton"
                         android:layout_width="30dp"
                         android:layout_height="23dp"

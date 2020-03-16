@@ -64,4 +64,9 @@
         <item name="android:singleLine">true</item>
         <item name="android:fontFamily">@font/dubai_font</item>
     </style>
+    <style name="Custom.Widget.SwitchCompat" parent="Widget.AppCompat.CompoundButton.Switch" >
+
+        <item name="android:fontFamily">@font/dubai_font</item>
+    </style>
+
 </resources>

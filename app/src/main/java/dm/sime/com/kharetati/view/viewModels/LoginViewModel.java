@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.HashMap;
 import java.util.Observable;
 
 import dm.sime.com.kharetati.KharetatiApp;
@@ -117,6 +118,7 @@ public class LoginViewModel extends ViewModel {
 
 
         if (kharetatiUser != null && !kharetatiUser.isError()) {
+            Global.hashSearchFieldValue = new HashMap<>();
             Global.lastSelectedBottomTab =3;
             Global.isFirstLoad = true;
             Global.sime_userid = kharetatiUser.userID;
@@ -220,6 +222,7 @@ public class LoginViewModel extends ViewModel {
         if (accessTokenResponse != null) {
 
             if (accessTokenResponse.getAccessToken() != null) {
+                Global.hashSearchFieldValue = new HashMap<>();
                 //get the response here
                 Global.isFirstLoad = true;
                 Global.lastSelectedBottomTab =3;

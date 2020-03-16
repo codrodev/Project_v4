@@ -2,7 +2,9 @@ package dm.sime.com.kharetati.view.fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,10 +40,9 @@ import dm.sime.com.kharetati.view.viewModels.DeliveryDetailViewModel;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 
 import static android.content.Context.MODE_PRIVATE;
-import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
 import static dm.sime.com.kharetati.utility.Global.makani;
 
-public class DeliveryFragment extends Fragment {
+public class DeliveryFragment extends Fragment implements ParentSiteplanFragment.onNextListner{
 
 
     public static boolean isDetailsSaved;
@@ -83,6 +84,7 @@ public class DeliveryFragment extends Fragment {
         binding.setDeliveryDetailVM(model);
         mRootView = binding.getRoot();
         isDeliveryFragment =true;
+        ParentSiteplanFragment.listner = this;
         initializePage();
         final String spinnerItems[]=getActivity().getResources().getStringArray(R.array.emirates);
         userid=Global.getUser(getActivity()).getEmail();
@@ -97,7 +99,12 @@ public class DeliveryFragment extends Fragment {
             al.add(spinnerItems[i]);
         }
 
-        ArrayAdapter<String> aa =new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_dropdown_item,al);
+        ArrayAdapter<String> aa =new ArrayAdapter(getActivity(),R.layout.attachment_drp_view,R.id.txtLandOwner,al);
+        /*if (Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0) {
+            aa= new ArrayAdapter(getActivity(),R.layout.attachment_drp_view,R.id.txtLandOwner,arrayList);
+        } else {
+            adapter= new ArrayAdapter(getActivity(),R.layout.attachment_drp_ar,R.id.txtLandOwner,arrayList);
+        }*/
         binding.etEmirates.setAdapter(aa);
         binding.etEmirates.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -128,8 +135,9 @@ public class DeliveryFragment extends Fragment {
                     ParentSiteplanViewModel.deliveryDetails.setEmirate(Integer.toString(emId));
                     spinner_position = emId;
                     //save here
-                    if(isValidEmailId() == true && isValidMobile() == true && binding.etRecievername.getText().toString().trim()!=null) {
+                    if(binding.etEmailaddress.getText().toString().length()>0 && binding.etMobile.getText().toString().length()>=10 && binding.etRecievername.getText().toString().length()>0) {
                         try {
+                            if(isValidEmailId()&&isValidMobile())
                             save(userid);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -174,7 +182,7 @@ public class DeliveryFragment extends Fragment {
                     AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getAllFieldsRequiredEn():Global.appMsg.getAllFieldsRequiredAr(), getResources().getString(R.string.ok), getActivity());
                 else
                     AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.fields_are_required), getResources().getString(R.string.ok), getActivity());
-                Global.isDeliveryByCourier=false;
+                //Global.isDeliveryByCourier=false;
             }else if(!email.contains("@")||!email.contains("."))
             {
                 if(Global.appMsg!=null)
@@ -190,23 +198,22 @@ public class DeliveryFragment extends Fragment {
                 }
             } else {
                 if(isValidEmailId() == true && isValidMobile() == true && isValidEmirate() == true) {
-                    try {
-                        save(userid);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    setNextEnabledStatus(true);
                 }
+                else
+                    setNextEnabledStatus(false);
             }
 
-        }
-        int count= binding.linearLayout.getChildCount();
-        for(int i= 0; i<count;i++){
-            if(binding.linearLayout.getChildAt(i)!=binding.deliveryByCourier)
-                binding.linearLayout.getChildAt(i).setEnabled(false);
+        } else {
+            int count= binding.linearLayout.getChildCount();
+            for(int i= 0; i<count;i++){
+                if(binding.linearLayout.getChildAt(i)!=binding.deliveryByCourier)
+                    binding.linearLayout.getChildAt(i).setEnabled(false);
+            }
         }
 
-
-        binding.etRecievername.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        /**/
+        /*binding.etRecievername.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
@@ -218,14 +225,91 @@ public class DeliveryFragment extends Fragment {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+                        } else {
+                            ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
                         }
                         return true;
                     }
                 }
                 return false;
             }
+        });*/
+        binding.etRecievername.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() > 0) {
+                    if (isValidEmailId() && isValidEmirate() && isValidMobile())
+                        setNextEnabledStatus(true);
+                    else
+                        setNextEnabledStatus(false);
+                } else
+                    setNextEnabledStatus(false);
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
         });
-        binding.etMobile.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        binding.etEmailaddress.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() > 0 ) {
+                    if(binding.etEmailaddress.getText().toString().contains("@") && binding.etEmailaddress.getText().toString().contains(".")) {
+                        if (binding.etRecievername.getText().length() > 0 && isValidEmirate() && isValidMobile())
+                            setNextEnabledStatus(true);
+                        else
+                            setNextEnabledStatus(false);
+                    } else
+                        setNextEnabledStatus(false);
+                } else
+                    setNextEnabledStatus(false);
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        binding.etMobile.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() >= 12) {
+                    if (binding.etRecievername.getText().length() > 0 && isValidEmirate() && isValidEmailId())
+                        setNextEnabledStatus(true);
+                    else
+                        setNextEnabledStatus(false);
+                } else
+                    setNextEnabledStatus(false);
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        /*binding.etMobile.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
@@ -237,14 +321,16 @@ public class DeliveryFragment extends Fragment {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+                        } else {
+                            ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
                         }
                         return true;
                     }
                 }
                 return false;
             }
-        });
-        binding.etEmailaddress.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        });*/
+        /*binding.etEmailaddress.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
@@ -256,15 +342,15 @@ public class DeliveryFragment extends Fragment {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+                        } else {
+                            ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
                         }
                         return true;
                     }
-
                 }
                 return false;
             }
-        });
-
+        });*/
         return binding.getRoot();
     }
 
@@ -294,13 +380,15 @@ public class DeliveryFragment extends Fragment {
                     int count= binding.linearLayout.getChildCount();
                     for(int i= 0; i<count;i++){
                         if(binding.linearLayout.getChildAt(i)!=binding.deliveryByCourier)
-                            binding.linearLayout.getChildAt(i).setEnabled(true);
+                            if(!binding.linearLayout.getChildAt(i).isEnabled()) {
+                                binding.linearLayout.getChildAt(i).setEnabled(true);
+                            }
                     }
                     if (TextUtils.isEmpty(name) ||
                             TextUtils.isEmpty(emirates)||TextUtils.isEmpty(email)) {
 
                         //AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.fields_are_required), getResources().getString(R.string.ok), getActivity());
-                        Global.isDeliveryByCourier=false;
+                        //Global.isDeliveryByCourier=false;
                     }else if(!email.contains("@")||!email.contains("."))
                     {
                         //AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.enter_valid_email), getResources().getString(R.string.ok), getActivity());
@@ -312,14 +400,11 @@ public class DeliveryFragment extends Fragment {
                             HomeFragment.homeVM.getMakaniToDLTM(makani);
                         }
                     } else {
-                        if(isValidEmailId() == true && isValidMobile() == true && isValidEmirate() == true) {
-                            try {
-
-                                save(userid);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                        if(isValidEmailId() == true && isValidMobile() == true && isValidEmirate() == true && binding.etRecievername.getText().length()>0) {
+                            setNextEnabledStatus(true);
                         }
+                        else
+                            setNextEnabledStatus(false);
                     }
 
                 }
@@ -426,26 +511,26 @@ public class DeliveryFragment extends Fragment {
 
 
         SharedPreferences.Editor editor = getActivity().getSharedPreferences(userid, MODE_PRIVATE).edit();
-        editor.putString("name", name);
+        editor.putString("name", binding.etRecievername.getText().toString());
 
         if(ParentSiteplanViewModel.deliveryDetails == null){
             ParentSiteplanViewModel.deliveryDetails = new DeliveryDetails();
         }
-        if(Global.getCurrentLanguage(getActivity()).compareToIgnoreCase("en") == 0){
-            ParentSiteplanViewModel.deliveryDetails.setNameEn(name);
+        if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0){
+            ParentSiteplanViewModel.deliveryDetails.setNameEn(binding.etRecievername.getText().toString());
             ParentSiteplanViewModel.deliveryDetails.setNameAr("");
         } else {
             ParentSiteplanViewModel.deliveryDetails.setNameEn("");
-            ParentSiteplanViewModel.deliveryDetails.setNameAr(name);
+            ParentSiteplanViewModel.deliveryDetails.setNameAr(binding.etRecievername.getText().toString());
         }
-        ParentSiteplanViewModel.deliveryDetails.setEmailId(email);
-        ParentSiteplanViewModel.deliveryDetails.setMobileNo(phone);
-        ParentSiteplanViewModel.deliveryDetails.setBldgName(building);
-        ParentSiteplanViewModel.deliveryDetails.setBldgNo(buildingnum);
-        ParentSiteplanViewModel.deliveryDetails.setNearestLandmark(lndmark);
-        ParentSiteplanViewModel.deliveryDetails.setStreetAddress(strtAdress);
-        ParentSiteplanViewModel.deliveryDetails.setMainAddress(addr);
-        ParentSiteplanViewModel.deliveryDetails.setMakaniNo(makani);
+        ParentSiteplanViewModel.deliveryDetails.setEmailId(binding.etEmailaddress.getText().toString());
+        ParentSiteplanViewModel.deliveryDetails.setMobileNo(binding.etMobile.getText().toString());
+        ParentSiteplanViewModel.deliveryDetails.setBldgName(binding.etBuildingName.getText().toString());
+        ParentSiteplanViewModel.deliveryDetails.setBldgNo(binding.etVillaBuildingNumber.getText().toString());
+        ParentSiteplanViewModel.deliveryDetails.setNearestLandmark(binding.etLandmark.getText().toString());
+        ParentSiteplanViewModel.deliveryDetails.setStreetAddress(binding.etStreetAddress.getText().toString());
+        ParentSiteplanViewModel.deliveryDetails.setMainAddress(binding.etAdress.getText().toString());
+        ParentSiteplanViewModel.deliveryDetails.setMakaniNo(binding.etMakani.getText().toString());
 
         editor.apply();
         editor.commit();
@@ -499,7 +584,7 @@ public class DeliveryFragment extends Fragment {
                     ParentSiteplanViewModel.deliveryDetails.getMakaniNo().length() > 0){
                 binding.etMakani.setText(ParentSiteplanViewModel.deliveryDetails.getMakaniNo());
             }
-            if(Global.getCurrentLanguage(getActivity()).compareToIgnoreCase("en")==0) {
+            if(Global.CURRENT_LOCALE.compareToIgnoreCase("en")==0) {
                 if (ParentSiteplanViewModel.deliveryDetails.getNameEn() != null &&
                         ParentSiteplanViewModel.deliveryDetails.getNameEn().length() > 0) {
                     binding.etRecievername.setText("");
@@ -609,16 +694,30 @@ public class DeliveryFragment extends Fragment {
             binding.etEmirates.setSelection(saved_position);
         else if(spinner_position!=0)
             binding.etEmirates.setSelection(spinner_position);
+
+        if(binding.deliveryByCourier.isChecked()){
+            Global.isDeliveryByCourier =false;
+        }
     }
 
-    public void setNextEnabledStatus(){
-
-        if(isValidMobile()&& isValidEmailId() && isValidEmirate()&&binding.etRecievername.getText().toString().trim()!=null)
-            ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
-        else
-            ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
-
+    public void setNextEnabledStatus(boolean enabledStatus){
+        if(enabledStatus){
+            /*try {
+                save(userid);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }*/
+        }
+        ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(enabledStatus);
     }
 
+    @Override
+    public void onNextClicked() {
+        try {
+            save(userid);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
