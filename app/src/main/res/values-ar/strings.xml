@@ -52,7 +52,7 @@
     <string name="done">تم الانتهاء</string>
     <string name="request_num">رقم الطلب</string>
     <string name="request_details">تفاصيل الطلب</string>
-    <string name="plot_no">عدد مؤامرة :</string>
+    <string name="plot_no">عدد مؤامرة : </string>
     <string name="favourite_deleted">تم حذف المفضلة بنجاح</string>
     <string name="NO_FAVOURITE_PLOTS_FOUND">لا تتوفر إشارات مرجعية</string>
     <string name="confirmation_delete">هل أنت متأكد أنك تريد الحذف؟</string>
@@ -193,7 +193,7 @@
     <string name="INTROHELP">مساعدة</string>
     <string name="bookmark">إشارة مرجعية</string>
     <string name="mymaps">خرائطي</string>
-    <string name="area">منطقة :</string>
+    <string name="area">منطقة : </string>
 
 
 
@@ -220,5 +220,5 @@
         <item>6</item>
         <item>7</item>
     </string-array>
-
+    <string name="enter_favourite_name">يرجى إدخال اسم المفضلة</string>
 </resources>

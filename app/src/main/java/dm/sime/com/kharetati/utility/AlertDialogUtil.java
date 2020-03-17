@@ -17,6 +17,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -1584,6 +1586,95 @@ public class AlertDialogUtil {
         textView.setPadding(80, 25, 25, 10);
 
     }
+
+    public static void bookMarksEditAlert(final Activity context, Bookmark data) {
+
+
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context);
+        builder.setCancelable(false);
+
+        Typeface face = Typeface.createFromAsset(context.getAssets(), "Dubai-Regular.ttf");
+
+
+        View viewInflated = LayoutInflater.from(context).inflate(R.layout.bookmarks_description_dialog,
+                (ViewGroup)context.findViewById(android.R.id.content), false);
+        // Set up the input
+        final EditText txtdescEn = (EditText) viewInflated.findViewById(R.id.edtBookmarksDescriptionDialogEn);
+        txtdescEn.requestFocus();
+        txtdescEn.setTypeface(face);
+        txtdescEn.setText(data.descriptionEn);
+        txtdescEn.setImeOptions(EditorInfo.IME_ACTION_NONE);
+
+        final EditText txtdescAr = (EditText) viewInflated.findViewById(R.id.edtBookmarksDescriptionDialogAr);
+        txtdescAr.setImeOptions(EditorInfo.IME_ACTION_NONE);
+        txtdescAr.requestFocus();
+        txtdescAr.setTypeface(face);
+        txtdescAr.setText(data.descriptionAr);
+
+        final TextInputLayout enInputLayout = (TextInputLayout) viewInflated.findViewById(R.id.enInputLayout);
+        final TextInputLayout arInputLayout = (TextInputLayout) viewInflated.findViewById(R.id.arInputLayout);
+
+        if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0){
+            txtdescEn.setVisibility(View.VISIBLE);
+            enInputLayout.setVisibility(View.VISIBLE);
+            txtdescAr.setVisibility(View.GONE);
+            arInputLayout.setVisibility(View.GONE);
+        } else {
+            txtdescEn.setVisibility(View.GONE);
+            enInputLayout.setVisibility(View.GONE);
+            txtdescAr.setVisibility(View.VISIBLE);
+            arInputLayout.setVisibility(View.VISIBLE);
+        }
+        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        builder.setView(viewInflated);
+
+        // Set up the buttons
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        final android.app.AlertDialog dialog = builder.create();
+
+        dialog.show();
+
+        TextView textView = (TextView) dialog.findViewById(android.R.id.message);
+        TextView positiveButton = (Button) dialog.findViewById(android.R.id.button1);
+        TextView negativeButton = (Button) dialog.findViewById(android.R.id.button2);
+
+        textView.setTypeface(face);
+        positiveButton.setAllCaps(false);
+        negativeButton.setAllCaps(false);
+        positiveButton.setTypeface(face);
+        negativeButton.setTypeface(face);
+
+        positiveButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+
+                if(txtdescEn.getText().toString().isEmpty() && txtdescAr.getText().toString().isEmpty()){
+                    Toast.makeText(context,context.getResources().getString(R.string.enter_favourite_name) , Toast.LENGTH_SHORT).show();
+                } else {
+                    data.descriptionEn = txtdescEn.getText().toString();
+                    data.descriptionAr = txtdescAr.getText().toString();
+                    dialog.dismiss();
+                    BookmarkFragment.bmModel.editBookMark(data);
+                }
+                //else dialog stays open. Make sure you have an obvious way to close the dialog especially if you set cancellable to false.
+            }
+        });
+
+    }
+
     public static void showProgressBar(Activity context,boolean isShow) {
         //before inflating the custom alert dialog layout, we will get the current activity viewgroup
         if(context!=null){
