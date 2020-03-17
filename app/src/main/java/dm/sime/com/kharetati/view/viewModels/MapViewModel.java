@@ -92,7 +92,7 @@ public class MapViewModel extends ViewModel {
         SerializeGetAppRequestModel model = new SerializeGetAppRequestModel();
 
         SerializeGetAppInputRequestModel inputModel = new SerializeGetAppInputRequestModel();
-        inputModel.setParcel_id(isBookmarks?Integer.parseInt(PlotDetails.parcelNo):Integer.parseInt(Global.searchText));
+        inputModel.setParcel_id(Integer.parseInt(PlotDetails.parcelNo));
         inputModel.setTOKEN(Global.app_session_token == null ? "" : Global.app_session_token);
         inputModel.setREMARKS(Global.getPlatformRemark());
         inputModel.setGuest(!Global.isUserLoggedIn);
@@ -140,7 +140,7 @@ public class MapViewModel extends ViewModel {
         //model.setUserID(1003);
         model.setUserID(Global.sime_userid);
         model.setArea(PlotDetails.area);
-        model.setParcelNumber(Global.isBookmarks?Integer.parseInt(PlotDetails.parcelNo):Integer.parseInt(Global.searchText));
+        model.setParcelNumber(Integer.parseInt(PlotDetails.parcelNo));
         model.setCommunity(PlotDetails.communityEn);
         model.setCommunityAr(PlotDetails.communityAr);
 

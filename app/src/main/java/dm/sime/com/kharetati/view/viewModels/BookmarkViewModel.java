@@ -100,7 +100,7 @@ public class BookmarkViewModel extends ViewModel {
         //userId =1003;
 
         SerializeBookmarkModel model = new SerializeBookmarkModel();
-        model.setUserID(1003);
+        model.setUserID(userId);
 
 
 

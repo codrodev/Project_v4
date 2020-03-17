@@ -6,9 +6,16 @@
             name="fragmentPayVM"
             type="dm.sime.com.kharetati.view.viewModels.PayViewModel" />
     </data>
-    <LinearLayout
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_marginBottom="48dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
@@ -37,7 +44,7 @@
                 android:id="@+id/et_emailaddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="start"
+                android:gravity="center"
                 android:hint="@string/please_enter_email_address"
                 android:inputType="text"
                 android:maxLength="50"
@@ -51,7 +58,7 @@
             android:id="@+id/et_mobile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="start"
+            android:gravity="center"
             android:hint="@string/mobile_number_9715xxxxxxxx"
             android:inputType="number"
             android:maxLength="12"
@@ -100,6 +107,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
+    </ScrollView>
 
 </layout>

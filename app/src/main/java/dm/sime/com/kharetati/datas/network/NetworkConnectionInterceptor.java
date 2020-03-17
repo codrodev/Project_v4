@@ -26,22 +26,23 @@ public class NetworkConnectionInterceptor implements Interceptor {
     @NotNull
     @Override
     public Response intercept(@NotNull Chain chain) throws IOException {
-        if(!Global.isConnected(applicationContext))
+        if (!Global.isConnected(applicationContext))
             throw new Exceptions.NoInternetException("Make sure you have active data connection");
-        if (Global.accessToken!=null){
+        if (Global.isUserLoggedIn) {
+            if (Global.accessToken != null) {
 
-            Request.Builder requestBuilder = chain.request().newBuilder();
-            requestBuilder.header("Content-Type", "application/json");
-            requestBuilder.header("token", Global.accessToken);
+                Request.Builder requestBuilder = chain.request().newBuilder();
+                requestBuilder.header("Content-Type", "application/json");
+                requestBuilder.header("token", Global.accessToken);
 
-            return chain.proceed(requestBuilder.build());
-        }
-        else if (Global.accessToken==null||Global.accessToken.isEmpty()){
+                return chain.proceed(requestBuilder.build());
+            } else if (Global.accessToken == null || Global.accessToken.isEmpty()) {
 
-            if(!Global.isLoginActivity)
-                Global.logout(applicationContext);
+                if (!Global.isLoginActivity)
+                    Global.logout(applicationContext);
 
 
+            }
         }
         return chain.proceed(chain.request());
 

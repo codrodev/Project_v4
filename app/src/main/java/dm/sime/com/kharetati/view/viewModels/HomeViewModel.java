@@ -456,6 +456,7 @@ public class HomeViewModel extends ViewModel {
 
         homeNavigator.onStarted();
         Global.searchText = searchText;
+        PlotDetails.parcelNo = searchText;
 
         String url = getSelectedApplication().getSearchUrl();
 

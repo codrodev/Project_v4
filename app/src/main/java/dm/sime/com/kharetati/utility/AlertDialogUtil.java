@@ -71,9 +71,12 @@ public class AlertDialogUtil {
                     }
                 }).show();
         TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+        TextView positiveButton = (Button) alertDialog.findViewById(android.R.id.button1);
+        positiveButton.setAllCaps(false);
 
         Typeface face = Typeface.createFromAsset(context.getAssets(), "Dubai-Regular.ttf");
         textView.setTypeface(face);
+        positiveButton.setTypeface(face);
         textView.setPadding(80, 25, 25, 10);
     }
     public static void ratingAlertDialog(String title, String message, String btnTxt, String btnTxt2, final Context context) {
