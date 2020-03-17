@@ -1,10 +1,18 @@
 package dm.sime.com.kharetati.view.adapters;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
@@ -30,11 +38,11 @@ import dm.sime.com.kharetati.view.viewModels.BookmarkViewModel;
 public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.GenericViewHolder> {
     private int layoutId;
     private BookmarkViewModel viewModel;
-    static Context context;
+    static Activity context;
     public static List<Bookmark> lstBookmark;
 
 
-    public BookmarkAdapter(@LayoutRes int layoutId, BookmarkViewModel viewModel,Context context) {
+    public BookmarkAdapter(@LayoutRes int layoutId, BookmarkViewModel viewModel,Activity context) {
         this.layoutId = layoutId;
         this.viewModel = viewModel;
         this.context = context;
@@ -59,6 +67,21 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
     @Override
     public void onBindViewHolder(@NonNull GenericViewHolder holder, int position) {
         holder.bind(viewModel, position);
+        if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0){
+            if(lstBookmark.get(position).descriptionEn != null && lstBookmark.get(position).descriptionEn.length() > 0) {
+                holder.txtDescription.setVisibility(View.VISIBLE);
+                holder.txtDescription.setText(lstBookmark.get(position).descriptionEn);
+            } else {
+                holder.txtDescription.setVisibility(View.GONE);
+            }
+        } else {
+            if(lstBookmark.get(position).descriptionAr != null && lstBookmark.get(position).descriptionAr.length() > 0) {
+                holder.txtDescription.setVisibility(View.VISIBLE);
+                holder.txtDescription.setText(lstBookmark.get(position).descriptionAr);
+            } else {
+                holder.txtDescription.setVisibility(View.GONE);
+            }
+        }
         holder.binding.getRoot().findViewById(R.id.gotomap).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +104,16 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
                 ((MainActivity)context).loadFragment(FragmentTAGS.FR_MAP,true,al);
 
 
+
+            }
+        });
+        holder.binding.getRoot().findViewById(R.id.edit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Global.bookmarkPlotNo = lstBookmark.get(position).ParcelNumber;
+                Bookmark data = lstBookmark.get(position);
+                AlertDialogUtil.bookMarksEditAlert(context, data);
 
             }
         });
@@ -136,9 +169,11 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
 
     public static class GenericViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         final ViewDataBinding binding;
+        private final TextView txtDescription;
         GenericViewHolder(ViewDataBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+            txtDescription = (TextView) this.binding.getRoot().findViewById(R.id.txtDescriptionEn);
         }
 
         void bind(BookmarkViewModel viewModel, int position) {

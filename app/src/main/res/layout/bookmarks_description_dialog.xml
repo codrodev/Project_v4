@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/arInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:theme="@style/Theme.AppCompat">
+
+        <EditText
+            android:id="@+id/edtBookmarksDescriptionDialogAr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="description"
+            android:textColor="@color/black"
+            android:inputType="textPersonName"
+            android:textAlignment="center" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/enInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:theme="@style/Theme.AppCompat"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/edtBookmarksDescriptionDialogEn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="description"
+            android:textColor="@color/black"
+            android:inputType="textPersonName"
+            android:textAlignment="center" />
+    </com.google.android.material.textfield.TextInputLayout>
+</LinearLayout>

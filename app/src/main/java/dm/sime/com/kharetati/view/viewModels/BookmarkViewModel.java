@@ -19,6 +19,7 @@ import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.datas.models.Bookmark;
 import dm.sime.com.kharetati.datas.models.BookmarksResponse;
+import dm.sime.com.kharetati.datas.models.GeneralResponse;
 import dm.sime.com.kharetati.datas.models.SerializableSaveBookMarks;
 import dm.sime.com.kharetati.datas.models.SerializeBookmarkModel;
 import dm.sime.com.kharetati.datas.repositories.BookMarkRepository;
@@ -100,7 +101,7 @@ public class BookmarkViewModel extends ViewModel {
         //userId =1003;
 
         SerializeBookmarkModel model = new SerializeBookmarkModel();
-        model.setUserID(userId);
+        model.setUserID(Global.sime_userid);
 
 
 
@@ -129,7 +130,7 @@ public class BookmarkViewModel extends ViewModel {
 
         mutableBookmark =new MutableLiveData<>();
         listData = Arrays.asList(bookmarksResponse.getBookmarklist());
-
+        addSqMt();
         mutableBookmark.setValue(Arrays.asList(bookmarksResponse.getBookmarklist()));
         adapter = new BookmarkAdapter(R.layout.adapter_bookmark, this, activity);
 
@@ -139,6 +140,43 @@ public class BookmarkViewModel extends ViewModel {
         bookMarksNavigator.onSuccess();
 
 
+    }
+
+    private void addSqMt(){
+        if(listData != null && listData.size() > 0) {
+            for (Bookmark bm : listData) {
+                bm.Area = " " + bm.Area + " Sq Mt";
+                bm.ParcelNumber = " " + bm.ParcelNumber;
+            }
+        }
+    }
+
+    public void editBookMark(Bookmark data) {
+        bookMarksNavigator.onStarted();
+        SerializeBookmarkEditModel model = new SerializeBookmarkEditModel();
+        //model.setUserID(1003);
+        model.setUserID(Global.sime_userid);
+        model.setParcelNumber(data.ParcelNumber);
+        model.setDescriptionEn(data.descriptionEn == null ? "" : data.descriptionEn);
+        model.setDescriptionAr(data.descriptionAr == null ? "" : data.descriptionAr );
+
+        Disposable disposable = repository.editBookMark(model)
+                .subscribeOn(kharetatiApp.subscribeScheduler())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<GeneralResponse>() {
+                    @Override public void accept(GeneralResponse editResponse) throws Exception {
+                        editBookmarksAdapter(editResponse);
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override public void accept(Throwable throwable) throws Exception {
+                        showErrorMessage(throwable.getMessage());
+
+                    }
+                });
+
+
+        compositeDisposable.add(disposable);
     }
 
     public void deleteBookMark(Bookmark data) {
@@ -170,6 +208,10 @@ public class BookmarkViewModel extends ViewModel {
 
     }
 
+    private void editBookmarksAdapter(GeneralResponse response) {
+        getAllBookMarks();
+        bookMarksNavigator.updateAdapter();
+    }
     private void deleteBookmarks(SerializableSaveBookMarks deleteResponse, Bookmark data) {
         try {
             if(deleteResponse != null){

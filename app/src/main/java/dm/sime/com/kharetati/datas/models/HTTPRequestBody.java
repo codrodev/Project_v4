@@ -6,9 +6,9 @@ import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.view.fragments.HomeFragment;
 
 public class HTTPRequestBody {
-    String emiratesID  = (Global.emiratesID!=null)? Global.emiratesID:"";
-    String mobile= (Global.mobile!=null)? Global.mobile:"";
-    String email = (Global.email!=null)? Global.email:"";
+    String EmirateID  = (Global.emiratesID!=null)? Global.emiratesID:"";
+    String Mobile= (Global.mobile!=null)? Global.mobile:"";
+    String Email = (Global.email!=null)? Global.email:"";
     String username =(Global.username!=null)? Global.username:"";
     String password = "";
     String DeviceID = (Global.deviceId!=null)? Global.deviceId:"";

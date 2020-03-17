@@ -36,6 +36,7 @@ import dm.sime.com.kharetati.datas.models.User;
 import dm.sime.com.kharetati.datas.models.UserRegistration;
 import dm.sime.com.kharetati.datas.models.WebSearchResult;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
+import dm.sime.com.kharetati.view.viewModels.SerializeBookmarkEditModel;
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -105,6 +106,9 @@ public interface MyApiService {
     // to delete BookMark in Bookmarks
     @POST("Bookmark/deleteBookMark")
     Observable<SerializableSaveBookMarks> deleteBookMark(@Body SerializeBookmarkModel model);
+
+    @POST("Bookmark/updateBookMark")
+    Observable<GeneralResponse> editBookMark(@Body SerializeBookmarkEditModel model);
 
     //to get the profile documents if any
     @POST
