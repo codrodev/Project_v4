@@ -307,7 +307,6 @@ public class Global {
                 while (end.length() != 4)
                     end = "0" + end;
             }
-
             return (start + end);*/
         } catch (Exception ex) {
             //ignore

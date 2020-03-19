@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -103,7 +104,8 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
             binding.btnNext.setVisibility(View.VISIBLE);
         else
             binding.btnNext.setVisibility(View.GONE);*/
-
+        /*LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,((int)Global.height/10)*2);
+        binding.stepperHeader.setLayoutParams(params);*/
         binding.btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

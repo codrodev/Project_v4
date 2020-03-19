@@ -479,10 +479,11 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                 binding.txtPlotNo.setText(searchhistoryListView.getItemAtPosition(position).toString());
                 skipOnTextChangeEvent=false;
                 searchhistoryListView.setVisibility(View.GONE);
+                PlotDetails.parcelNo = searchhistoryListView.getItemAtPosition(position).toString().trim();
                 if(Global.isBookmarks)
-                    findParcel(searchhistoryListView.getItemAtPosition(position).toString().trim());
+                    findParcel(PlotDetails.parcelNo);
                 else
-                    HomeFragment.homeVM.getSearchResult(searchhistoryListView.getItemAtPosition(position).toString().trim());
+                    HomeFragment.homeVM.getSearchResult(PlotDetails.parcelNo);
             }
         });
 
@@ -679,6 +680,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                 Global.area = null;
                 Global.area_ar = null;
                 lastSelectedWebFunction = "";
+                PlotDetails.parcelNo = binding.txtPlotNo.getText().toString().trim();
                 if (Global.isBookmarks)
                     findParcel(binding.txtPlotNo.getText().toString().trim());
                 else
