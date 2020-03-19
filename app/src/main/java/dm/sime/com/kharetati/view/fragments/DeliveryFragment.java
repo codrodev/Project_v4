@@ -361,10 +361,15 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
+                Global.isDeliveryByCourier = isChecked;
+                buttonView.setChecked(Global.isDeliveryByCourier);
+
+
                 if (!isChecked) {
 
 
                     Global.isDeliveryByCourier =false;
+
                     ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
 
                     int count= binding.linearLayout.getChildCount();
@@ -538,7 +543,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
         //Toast.makeText(getActivity(), getResources().getString(R.string.deatails_saved), Toast.LENGTH_SHORT).show();
 
         isDetailsSaved = true;
-        Global.isDeliveryByCourier = true;
+        //Global.isDeliveryByCourier = true;
         binding.deliveryByCourier.setChecked(true);
         if(Global.isDeliveryByCourier) {
             Global.deliveryDetails=new JSONObject();
@@ -695,9 +700,9 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
         else if(spinner_position!=0)
             binding.etEmirates.setSelection(spinner_position);
 
-        if(binding.deliveryByCourier.isChecked()){
+        /*if(binding.deliveryByCourier.isChecked()){
             Global.isDeliveryByCourier =false;
-        }
+        }*/
     }
 
     public void setNextEnabledStatus(boolean enabledStatus){

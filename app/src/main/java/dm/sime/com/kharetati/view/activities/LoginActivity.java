@@ -11,17 +11,20 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.ScaleAnimation;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -215,6 +218,62 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                 viewModel.onGuestLoginButtonClick();
             }
         });
+        binding.editUserName.setImeOptions(EditorInfo.IME_ACTION_NEXT);
+        binding.editPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
+                    if (!Global.isConnected(LoginActivity.this)) {
+                        if (Global.appMsg != null)
+                            AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), CURRENT_LOCALE.equals("en") ? Global.appMsg.getInternetConnCheckEn() : Global.appMsg.getInternetConnCheckAr(), getResources().getString(R.string.ok), LoginActivity.this);
+                        else
+                            AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), LoginActivity.this);
+                    } else {
+                        if(binding.editUserName.getText()!=null){
+                            binding.editPassword.requestFocus();
+                        }
+                        else
+                            onFailure(getString(R.string.enter_username));
+
+                    }
+                    return true;
+                }
+                return false;
+
+            }
+        });
+
+
+        binding.editPassword.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        binding.editPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
+                    if (!Global.isConnected(LoginActivity.this)) {
+                        if (Global.appMsg != null)
+                            AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), CURRENT_LOCALE.equals("en") ? Global.appMsg.getInternetConnCheckEn() : Global.appMsg.getInternetConnCheckAr(), getResources().getString(R.string.ok), LoginActivity.this);
+                        else
+                            AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), LoginActivity.this);
+                    } else {
+                        if(binding.editUserName.getText()!=null){
+                            if(binding.editPassword.getText()!=null){
+                                viewModel.setCredentials(binding.editUserName.getText().toString().trim(), binding.editPassword.getText().toString().trim());
+                                viewModel.onLoginButtonClick();
+                            }
+                            else
+                                onFailure(getString(R.string.enter_password));
+                        }
+                        else
+                            onFailure(getString(R.string.enter_username));
+
+                    }
+                    return true;
+                }
+                return false;
+
+            }
+        });
+
 
 
 

@@ -47,6 +47,7 @@
                         android:textAlignment="viewStart"
                         android:singleLine="true"
                         android:hint="@string/feedback_name"
+                        android:fontFamily="@font/dubai_font"
                         android:maxLength="255"
                         android:inputType="textPersonName"
                         />
@@ -66,6 +67,7 @@
                         android:singleLine="true"
                         android:textAlignment="viewStart"
                         android:maxLength="50"
+                        android:fontFamily="@font/dubai_font"
                         android:hint="@string/email_hint"
                         android:inputType="textEmailAddress"
                         />
@@ -85,6 +87,7 @@
                         android:textDirection="locale"
                         android:textAlignment="viewStart"
                         android:gravity="start"
+                        android:fontFamily="@font/dubai_font"
                         android:singleLine="true"
                         android:hint="@string/feedback_mobile_number" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -118,6 +121,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="start"
                         android:hint="@string/feedback_description"
+                        android:fontFamily="@font/dubai_font"
                         android:inputType="textMultiLine"
                         android:lines="3"
                         android:textAlignment="viewStart"
@@ -150,6 +154,7 @@
                     android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:paddingRight="@dimen/activity_horizontal_margin"
                     android:text="@string/submit"
+                    android:fontFamily="@font/dubai_font"
                     android:textAllCaps="false"
                     android:textColor="@color/white" />
 
