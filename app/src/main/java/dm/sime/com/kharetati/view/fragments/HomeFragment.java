@@ -163,6 +163,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         Global.current_fragment_id = FragmentTAGS.FR_HOME;
         Global.isBookmarks =false;
         Global.isSaveAsBookmark =false;
+        Global.isDeliveryByCourier= false;
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         binding.setFragmentHomeVM(model);
         mRootView = binding.getRoot();

@@ -159,7 +159,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
         if(userid!=null){
             retrieve(userid);
         }
-
+        binding.deliveryByCourier.setChecked(Global.isDeliveryByCourier);
         if(Global.isDeliveryByCourier){
 
 
@@ -544,7 +544,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
 
         isDetailsSaved = true;
         //Global.isDeliveryByCourier = true;
-        binding.deliveryByCourier.setChecked(true);
+        binding.deliveryByCourier.setChecked(Global.isDeliveryByCourier);
         if(Global.isDeliveryByCourier) {
             Global.deliveryDetails=new JSONObject();
             if(ParentSiteplanViewModel.deliveryDetails != null){

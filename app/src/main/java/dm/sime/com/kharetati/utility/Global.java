@@ -644,6 +644,7 @@ public class Global {
         Global.isBookmarks = false;
         Global.alertDialog = null;
         isLanguageChanged =true;
+        Global.isDeliveryByCourier= false;
 //        AttachmentFragment.isDeliveryDetails=false;
 
         //Global.loginDetails.showFormPrefilledOnRememberMe=true;

@@ -1619,11 +1619,13 @@ public class AlertDialogUtil {
 
         if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0){
             txtdescEn.setVisibility(View.VISIBLE);
+            txtdescEn.requestFocus();
             enInputLayout.setVisibility(View.VISIBLE);
             txtdescAr.setVisibility(View.GONE);
             arInputLayout.setVisibility(View.GONE);
         } else {
             txtdescEn.setVisibility(View.GONE);
+            txtdescAr.requestFocus();
             enInputLayout.setVisibility(View.GONE);
             txtdescAr.setVisibility(View.VISIBLE);
             arInputLayout.setVisibility(View.VISIBLE);

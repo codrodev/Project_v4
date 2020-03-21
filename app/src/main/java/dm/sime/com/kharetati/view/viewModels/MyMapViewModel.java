@@ -265,7 +265,7 @@ public class MyMapViewModel extends ViewModel {
         }
         else
             myMapNavigator.onFailure(activity.getResources().getString(R.string.error_response));
-
+        if(exception!=null)
         Log.d(activity.getClass().getSimpleName(),exception);
     }
 }
