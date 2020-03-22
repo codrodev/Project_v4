@@ -96,7 +96,16 @@ public class LoginViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<KharetatiUser>() {
                     @Override public void accept(KharetatiUser kharetatiUser) throws Exception {
-                        guestLogin(kharetatiUser);
+                        if(kharetatiUser!=null)
+                            guestLogin(kharetatiUser);
+                        else{
+                            if(Global.appMsg!=null){
+                                authListener.onFailure(Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
+                            }
+                            else
+                                authListener.onFailure(activity.getResources().getString(R.string.error_response));
+
+                        }
 
                     }
                 }, new Consumer<Throwable>() {

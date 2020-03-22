@@ -9,6 +9,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -340,9 +341,10 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         });
 
 
-        Global.deviceId = FirebaseInstanceId.getInstance().getToken();
+        Global.deviceId = FirebaseInstanceId.getInstance().getToken()!=null?FirebaseInstanceId.getInstance().getToken():generateRandomID();
 
-        binding.layoutRoot.postDelayed(new Runnable() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
 
@@ -498,6 +500,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
                 if(!Global.isLanguageChanged){
                     binding.imgBackground.startAnimation(anim);
+
                     binding.imgBackground.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -505,6 +508,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                             animateView(binding.imgBackground, 1000L,1000L,true,0f,0f,0f,Global.height);
                             animateView(binding.slantViewLoginHeader,1000L,1000L,true,0f,0f,0f, (-Global.height/4)+100);
                             animateView(binding.cardLogin,1000L,1000L,true,0f,0f,Global.height, (-Global.height/2)+Global.height/3);
+
 
                         }
                     },2500);
@@ -522,7 +526,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                     binding.layoutLogo.setLayoutParams(logoLayoutParams1);
 
                     LinearLayout.LayoutParams slantViewParams1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/4)+100));
-                    slantViewParams.gravity = Gravity.CENTER_HORIZONTAL;
+                    slantViewParams1.gravity = Gravity.CENTER_HORIZONTAL;
                     //slantViewParams.setMargins(0,(-height).toInt(),0,0)
                     binding.slantViewLoginHeader.setLayoutParams(slantViewParams1);
 
@@ -531,6 +535,16 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                     cardViewParams.setMargins(0, (int) ((-Global.height/4)+150),0,0);
                     binding.cardLogin.setLayoutParams(cardViewParams);
                 }
+
+            }
+
+        }, 500);
+
+        binding.layoutRoot.postDelayed(new Runnable() {
+
+
+            @Override
+            public void run() {
 
             }
         },0);//
@@ -602,7 +616,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
     @Override
     public void onSuccess() {
-        progressBar.setVisibility(View.GONE);
+        //progressBar.setVisibility(View.GONE);
 
         binding.txtOR.setVisibility(View.VISIBLE);
         AlertDialogUtil.showProgressBar(this,false);
@@ -615,7 +629,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
     @Override
     public void onFailure(String message) {
-        progressBar.setVisibility(View.GONE);
+        //progressBar.setVisibility(View.GONE);
         //binding.txtOR.setVisibility(View.VISIBLE);
         AlertDialogUtil.showProgressBar(this,false);
         //Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();

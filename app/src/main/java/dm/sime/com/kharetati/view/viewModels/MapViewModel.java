@@ -183,7 +183,7 @@ public class MapViewModel extends ViewModel {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        mapNavigator.onFailure(throwable.getMessage());
+                        showErrorMessage(throwable.getMessage());
                     }
                 });
 
