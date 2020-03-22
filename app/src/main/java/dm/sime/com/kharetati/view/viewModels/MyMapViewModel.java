@@ -127,7 +127,8 @@ public class MyMapViewModel extends ViewModel {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<RetrieveMyMapResponse>() {
                         @Override public void accept(RetrieveMyMapResponse retrieveMyMapResponse) throws Exception {
-                            getSitePlans(retrieveMyMapResponse, context);
+                                if(retrieveMyMapResponse !=null)
+                                    getSitePlans(retrieveMyMapResponse, context);
 
                         }
                     }, new Consumer<Throwable>() {

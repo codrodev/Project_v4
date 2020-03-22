@@ -339,6 +339,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
             }
         });
 
+
         Global.deviceId = FirebaseInstanceId.getInstance().getToken();
 
         binding.layoutRoot.postDelayed(new Runnable() {
@@ -492,6 +493,8 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
 
                 binding.imgBackground.setPadding(0, (int) ((Global.height/100)*24),0,0);
+
+
 
                 if(!Global.isLanguageChanged){
                     binding.imgBackground.startAnimation(anim);

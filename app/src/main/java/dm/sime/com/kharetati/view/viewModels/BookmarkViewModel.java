@@ -111,6 +111,7 @@ public class BookmarkViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<BookmarksResponse>() {
                     @Override public void accept(BookmarksResponse bookmarkResponse) throws Exception {
+                       if(bookmarkResponse!=null)
                         getBookMarks(bookmarkResponse);
 
                     }
