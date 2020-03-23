@@ -66,7 +66,7 @@ public class WebViewActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         if(Global.alertDialog!=null){
-            Global.alertDialog.dismiss();
+            Global.alertDialog.cancel();
             Global.alertDialog =null;
         }
     }

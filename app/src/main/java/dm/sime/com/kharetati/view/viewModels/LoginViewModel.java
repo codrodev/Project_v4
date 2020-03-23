@@ -184,17 +184,18 @@ public class LoginViewModel extends ViewModel {
         authListener.onStarted();
         if (getDataEmail().isEmpty() && getDataPassword().isEmpty()) {
 
-            authListener.onFailure(activity.getResources().getString(R.string.enter_username_and_password));
+            authListener.onFailure(activity.getString(R.string.username_and_password));
         }else if(getDataEmail().isEmpty()){
 
-            authListener.onFailure(activity.getResources().getString(R.string.enter_username));
+            authListener.onFailure(activity.getString(R.string.enter_username));
+
 
         } else if(getDataPassword().isEmpty()){
 
-            authListener.onFailure(activity.getResources().getString(R.string.enter_password));
+            authListener.onFailure(activity.getString(R.string.enter_password));
 
         }else if(!isValidEmail(getDataEmail())) {
-            authListener.onFailure(activity.getResources().getString(R.string.enter_valid_username));
+            authListener.onFailure(activity.getString(R.string.enter_valid_username));
             }
             else {
 
@@ -481,7 +482,7 @@ public class LoginViewModel extends ViewModel {
             authListener.onFailure(Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
         }
         else
-            authListener.onFailure(activity.getResources().getString(R.string.error_response));
+            authListener.onFailure(activity.getString(R.string.error_response));
     }
 
 }

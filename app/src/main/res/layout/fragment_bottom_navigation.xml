@@ -55,6 +55,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/INTROHELP"
+                        android:textAlignment="center"
                         android:layout_gravity="center"
                         android:textColor="@color/white"/>
                 </LinearLayout>
@@ -84,6 +85,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id= "@+id/txtLanguage"
+                        android:textAlignment="center"
                         android:text="@string/RATEUS"
                         android:layout_gravity="center"
                         android:textColor="@color/white"/>
@@ -112,6 +114,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Logout"
+                        android:textAlignment="center"
                         android:id="@+id/logoutText"
                         android:lines="2"
                         android:layout_gravity="center"
@@ -152,9 +155,10 @@
                     </RelativeLayout>
                     <TextView
                         style="@style/font_medium_regular"
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="@string/SHAREKHARETATIAPP"
+                        android:textAlignment="center"
                         android:layout_gravity="center"
                         android:textColor="@color/white"/>
                 </LinearLayout>
@@ -183,9 +187,12 @@
                     </RelativeLayout>
                     <TextView
                         style="@style/font_medium_regular"
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="@string/FAQMENU"
+                        android:singleLine="false"
+                        android:maxLines="2"
+                        android:textAlignment="center"
                         android:layout_gravity="center"
                         android:textColor="@color/white"/>
                 </LinearLayout>
@@ -216,9 +223,10 @@
                     </RelativeLayout>
                     <TextView
                         style="@style/font_medium_regular"
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="@string/ABOUTUS"
+                        android:textAlignment="center"
                         android:layout_gravity="center"
                         android:textColor="@color/white"/>
                 </LinearLayout>
@@ -261,6 +269,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:textAlignment="center"
                         android:singleLine="false"
                         android:text="@string/TERMSANDCONDITIONS"
                         android:textColor="@color/white" />
@@ -289,6 +298,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/RATEUS"
+                        android:textAlignment="center"
                         android:layout_gravity="center"
                         android:textColor="@color/white"/>
                 </LinearLayout>
@@ -325,6 +335,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/ACCESSIBILITY"
+                        android:textAlignment="center"
                         android:layout_gravity="center"
                         android:textColor="@color/white"/>
                 </LinearLayout>

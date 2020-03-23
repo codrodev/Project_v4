@@ -602,7 +602,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
     @Override
     public void onStarted() {
-        if (Global.alertDialog != null)
+        if(getActivity()!=null)
             AlertDialogUtil.showProgressBar(getActivity(), true);
     }
 
@@ -618,6 +618,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
     @Override
     public void onSuccess() {
+        if(getActivity()!=null)
         AlertDialogUtil.showProgressBar(getActivity(),false);
     }
 
