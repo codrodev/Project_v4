@@ -3,9 +3,11 @@ package dm.sime.com.kharetati.datas.repositories;
 
 
 import dm.sime.com.kharetati.datas.models.AccessTokenResponse;
+import dm.sime.com.kharetati.datas.models.GetConfigResponse;
 import dm.sime.com.kharetati.datas.models.HTTPRequestBody;
 import dm.sime.com.kharetati.datas.models.KharetatiUser;
 import dm.sime.com.kharetati.datas.models.SessionResponse;
+import dm.sime.com.kharetati.datas.models.UaePassConfig;
 import dm.sime.com.kharetati.datas.models.User;
 import dm.sime.com.kharetati.datas.models.UserRegistration;
 import dm.sime.com.kharetati.datas.network.MyApiService;
@@ -40,5 +42,12 @@ public class UserRepository {
         return api.guestLogin(guestBody);
     }
 
+    public Observable<UaePassConfig> uaePassConfig(String url){
+        return api.uaePassConfig(url);
+    }
+
+    public Observable<GetConfigResponse> getConfig(String url){
+        return api.getConfig(url);
+    }
 
 }

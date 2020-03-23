@@ -15,4 +15,5 @@ public interface AuthListener {
     public void saveUser(User user);
     public void showAppUpdateAlert() throws PackageManager.NameNotFoundException;
     public void showMessage(String message);
+    public void onConfig(boolean status);
 }
