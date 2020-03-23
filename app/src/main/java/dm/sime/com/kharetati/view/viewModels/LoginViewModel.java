@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -19,12 +20,18 @@ import com.google.gson.GsonBuilder;
 import java.util.HashMap;
 import java.util.Observable;
 
+import ae.sdg.libraryuaepass.UAEPassAccessTokenCallback;
+import ae.sdg.libraryuaepass.UAEPassController;
+import ae.sdg.libraryuaepass.business.authentication.model.UAEPassAccessTokenRequestModel;
 import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
+import dm.sime.com.kharetati.datas.models.GetConfigResponse;
 import dm.sime.com.kharetati.datas.models.KharetatiUser;
+import dm.sime.com.kharetati.datas.models.UaePassConfig;
 import dm.sime.com.kharetati.datas.network.ApiFactory;
 import dm.sime.com.kharetati.datas.network.MyApiService;
 import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
+import dm.sime.com.kharetati.utility.AES;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
@@ -36,6 +43,7 @@ import dm.sime.com.kharetati.datas.models.User;
 import dm.sime.com.kharetati.datas.models.UserRegistration;
 import dm.sime.com.kharetati.datas.repositories.UserRepository;
 import dm.sime.com.kharetati.view.activities.LoginActivity;
+import dm.sime.com.kharetati.view.activities.WebViewActivity;
 import dm.sime.com.kharetati.view.fragments.DeliveryFragment;
 import dm.sime.com.kharetati.view.navigators.AuthListener;
 import dm.sime.com.kharetati.view.activities.MainActivity;
@@ -482,6 +490,90 @@ public class LoginViewModel extends ViewModel {
         }
         else
             authListener.onFailure(activity.getResources().getString(R.string.error_response));
+    }
+
+    public void getConfigAPI(){
+        authListener.onStarted();
+        kharetatiApp = KharetatiApp.create(activity);
+
+        Disposable disposable = repository.getConfig(AppUrls.URL_GET_CONFIG)
+                .subscribeOn(kharetatiApp.subscribeScheduler())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<GetConfigResponse>() {
+                    @Override public void accept(GetConfigResponse configResponse) throws Exception {
+                        getConfigAPIResponse(configResponse);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override public void accept(Throwable throwable) throws Exception {
+                        if(Global.appMsg!=null){
+                            authListener.onFailure(Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
+                        }
+                        else
+                            authListener.onFailure(activity.getResources().getString(R.string.error_response));
+
+                    }
+                });
+
+        compositeDisposable.add(disposable);
+    }
+
+    public void getConfigAPIResponse(GetConfigResponse configResponse){
+        if(configResponse != null){
+            authListener.onConfig(false);
+            //authListener.onConfig(configResponse.disableMyId);
+        }
+    }
+
+    public void uaePassConfigAPI(){
+        authListener.onStarted();
+        kharetatiApp = KharetatiApp.create(activity);
+
+        Disposable disposable = repository.uaePassConfig(AppUrls.URL_UAE_ID_CONFIG)
+                .subscribeOn(kharetatiApp.subscribeScheduler())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<UaePassConfig>() {
+                    @Override public void accept(UaePassConfig configResponse) throws Exception {
+                        uaePassConfigAPIResponse(configResponse);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override public void accept(Throwable throwable) throws Exception {
+                        if(Global.appMsg!=null){
+                            authListener.onFailure(Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
+                        }
+                        else
+                            authListener.onFailure(activity.getResources().getString(R.string.error_response));
+
+                    }
+                });
+
+        compositeDisposable.add(disposable);
+    }
+
+    public void uaePassConfigAPIResponse(UaePassConfig configResponse){
+        String clientId = AES.decrypt(configResponse.UAEID_clientid, "800F475AC0E7A9ED01B2D5D2C25A59B3");
+        String clientId2 = AES.decrypt("G0XpdyC/gqaOErGaAdJF/83fzA4ncOBawVi6MikjfF0=", "800F475AC0E7A9ED01B2D5D2C25A59B3");
+        //String clientId = AES.encrypt("testData", "800F475AC0E7A9ED01B2D5D2C25A59B3");
+        String secretId = AES.decrypt(configResponse.UAEID_secret, "800F475AC0E7A9ED01B2D5D2C25A59B3");
+        login();
+        //UAEPassAccessTokenRequestModel
+        //String secretId = AES.decrypt(clientId, "800F475AC0E7A9ED01B2D5D2C25A59B3");
+    }
+
+    private void login() {
+        /*Intent intent = new Intent(activity, WebViewActivity.class);
+        intent.setData(Uri.parse(Global.uaePassUrl));
+        activity.startActivity(intent);*/
+        UAEPassAccessTokenRequestModel requestModel = UAEPassRequestModels.getAuthenticationRequestModel(activity);
+        UAEPassController.getInstance().getAccessToken(activity, requestModel, new UAEPassAccessTokenCallback() {
+            @Override
+            public void getToken(String accessToken, String error) {
+                if (error != null) {
+                    Toast.makeText(activity, "Error while getting access token", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(activity, "Access Token Received", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
 }

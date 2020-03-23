@@ -219,6 +219,14 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                 viewModel.onGuestLoginButtonClick();
             }
         });
+
+        binding.imgUAEPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewModel.uaePassConfigAPI();
+            }
+        });
+
         binding.editUserName.setImeOptions(EditorInfo.IME_ACTION_NEXT);
         binding.editPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -343,6 +351,21 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
         Global.deviceId = FirebaseInstanceId.getInstance().getToken()!=null?FirebaseInstanceId.getInstance().getToken():generateRandomID();
 
+
+
+        binding.layoutRoot.postDelayed(new Runnable() {
+
+
+            @Override
+            public void run() {
+
+            }
+        },0);//
+
+        viewModel.getConfigAPI();
+    }
+
+    private void displayContent(){
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -539,16 +562,6 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
             }
 
         }, 500);
-
-        binding.layoutRoot.postDelayed(new Runnable() {
-
-
-            @Override
-            public void run() {
-
-            }
-        },0);//
-
     }
 
     public void animateView( View view,Long duration, Long startOffSet, Boolean isFillAfter, Float fromXDelta, Float toXDelta, Float fromYDelta,Float toYDelta) {
@@ -693,5 +706,17 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
     @Override
     public void showMessage(String message) {
         Toast.makeText(LoginActivity.this,message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onConfig(boolean status) {
+        progressBar.setVisibility(View.GONE);
+        AlertDialogUtil.showProgressBar(this,false);
+        if(status){
+            binding.loginContainer.setVisibility(View.GONE);
+        } else {
+            binding.loginContainer.setVisibility(View.VISIBLE);
+        }
+        displayContent();
     }
 }

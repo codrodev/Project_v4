@@ -11,6 +11,7 @@ import dm.sime.com.kharetati.datas.models.CreateUpdateRequestResponse;
 import dm.sime.com.kharetati.datas.models.GeneralResponse;
 import dm.sime.com.kharetati.datas.models.GetAppResponse;
 import dm.sime.com.kharetati.datas.models.GetAreaNamesResponse;
+import dm.sime.com.kharetati.datas.models.GetConfigResponse;
 import dm.sime.com.kharetati.datas.models.HTTPRequestBody;
 import dm.sime.com.kharetati.datas.models.KharetatiUser;
 import dm.sime.com.kharetati.datas.models.LookupParameterModel;
@@ -32,6 +33,7 @@ import dm.sime.com.kharetati.datas.models.SerializedCreateAndUpdateModel;
 import dm.sime.com.kharetati.datas.models.SerializedModel;
 import dm.sime.com.kharetati.datas.models.SerializedValidateParcelModel;
 import dm.sime.com.kharetati.datas.models.SessionResponse;
+import dm.sime.com.kharetati.datas.models.UaePassConfig;
 import dm.sime.com.kharetati.datas.models.User;
 import dm.sime.com.kharetati.datas.models.UserRegistration;
 import dm.sime.com.kharetati.datas.models.WebSearchResult;
@@ -65,6 +67,12 @@ public interface MyApiService {
     //guest user login
     @POST(AppUrls.REGISTER_GUEST_USER)
     Observable<KharetatiUser> guestLogin(@Body HTTPRequestBody.GuestBody guestBody);
+
+    @POST
+    Observable<UaePassConfig> uaePassConfig(@Url String url);
+
+    @POST
+    Observable<GetConfigResponse> getConfig(@Url String url);
 
     //to get user details
     @GET

@@ -88,6 +88,9 @@ public class AppUrls {
     //public static String URL_BUILDING_VIOLATIONS="https://www.smartgis.ae/BuildingViolationWebService/ViolationServlet?TOKEN=teste&ACTION=GETDATA&parcelid=";
     public static String URL_BUILDING_VIOLATIONS=BASE_URL + "Util/getBuildingViolations";
 
+    public static final String URL_UAE_ID_CONFIG =BASE_URL + "MyID/getUAEIDConfig";
+    public static final String URL_GET_CONFIG =BASE_URL + "myid/getConfig";
+
 
 
 

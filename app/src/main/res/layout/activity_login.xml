@@ -106,6 +106,13 @@
 
                     android:layout_marginEnd="16dp"
                     android:src="@drawable/myid_logo" />
+
+            <LinearLayout
+                android:id="@+id/loginContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -154,7 +161,7 @@
                     android:layout_marginRight="8dp"
                     android:background="@color/light_gray"/>
 
-            <LinearLayout
+                <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layoutDirection="locale"
@@ -314,6 +321,14 @@
                     android:textAlignment="center"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/login_font_size" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layoutUAEPass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_gravity="center">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -336,6 +351,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:src="@drawable/uae_pass" />
+            </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
