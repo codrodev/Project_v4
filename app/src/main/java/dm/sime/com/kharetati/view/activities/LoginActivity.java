@@ -563,14 +563,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
         }, Global.isLanguageChanged?0:500);
 
-        binding.layoutRoot.postDelayed(new Runnable() {
 
-
-            @Override
-            public void run() {
-
-            }
-        },0);//
 
     }
 

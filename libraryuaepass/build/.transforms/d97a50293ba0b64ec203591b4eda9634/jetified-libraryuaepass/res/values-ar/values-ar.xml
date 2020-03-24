@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dubai_ar">دبي</string>
+    <string name="dubai_en">dubai</string>
+    <string name="err_authorization_required">التفويض المطلوب  غير موجود</string>
+    <string name="err_field_empty">الحقل فارغ</string>
+    <string name="err_location">خدمة الموقع غير مفعلة</string>
+    <string name="err_no_internet_connection">التطبيق يحتاج إلى تواجد إنترنت. يرجى توصيل الهاتف بالإنترنت للمتابعة</string>
+    <string name="err_service_down">ألخدمة غير متاحة حالياً. يرجى المحاولة في وقتٍ لاحق</string>
+    <string name="lbl_alert">تنبيه</string>
+    <string name="lbl_please_wait">الرجاء الانتظار …</string>
+    <string name="open_settings">افتح الإعدادات</string>
+    <string name="permission_message_gallery">يتم استخدام مكتبة الصور لتكون قادرة على اختيار صورة ملفك الشخصي أو الإبلاغ عن حادث لنحن جميعا خدمة الشرطة.</string>
+    <string name="permission_message_location">يتم استخدام موقعك للبحث عن المرافق القريبة مثل: محطات الوقود، أجهزة الصراف الآلية ودعم خطة رحلتك.</string>
+    <string name="permission_message_phone">هذا التطبيق يتطلب إذن الهاتف لإجراء مكالمات</string>
+    <string name="select">اختر</string>
+</resources>

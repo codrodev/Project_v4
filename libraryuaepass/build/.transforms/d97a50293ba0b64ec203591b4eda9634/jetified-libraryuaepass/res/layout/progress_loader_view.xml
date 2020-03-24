@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:id="@+id/applicationProgressLoaderView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:clickable="true">
+
+    <ImageView
+        android:id="@+id/progressBarHolderShadow"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:contentDescription="@null"
+        android:src="@drawable/application_loader_fg_shadow"/>
+
+    <FrameLayout
+        android:id="@+id/progressBarHolder"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_gravity="center"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+            android:src="@drawable/application_loader_shape_fg"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:contentDescription="@string/lbl_please_wait"/>
+
+        <ImageView
+            android:id="@+id/progressBarErrorOverlay"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_gravity="center"
+            android:padding="5dp"
+            android:src="@drawable/ic_error_colored"
+            android:visibility="gone"/>
+    </FrameLayout>
+</FrameLayout>
+
