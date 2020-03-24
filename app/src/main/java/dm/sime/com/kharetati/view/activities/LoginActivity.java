@@ -448,7 +448,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                     binding.editPassword.setCompoundDrawables(null, null,x_editTextPass , null);*/
                 // rememberme Layout
 
-                LinearLayout.LayoutParams remebermeLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,elementHeight);
+                LinearLayout.LayoutParams remebermeLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 remebermeLayoutParams.gravity = Gravity.CENTER_VERTICAL;
                 remebermeLayoutParams.setMargins(leftMargin,topMargin,rightMargin,bottomMargin);
                 binding.layoutRememberMe.setLayoutParams(remebermeLayoutParams);
@@ -561,7 +561,17 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
             }
 
-        }, 500);
+        }, Global.isLanguageChanged?0:500);
+
+        binding.layoutRoot.postDelayed(new Runnable() {
+
+
+            @Override
+            public void run() {
+
+            }
+        },0);//
+
     }
 
     public void animateView( View view,Long duration, Long startOffSet, Boolean isFillAfter, Float fromXDelta, Float toXDelta, Float fromYDelta,Float toYDelta) {
@@ -595,7 +605,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         super.onDestroy();
 
         if(Global.alertDialog!=null){
-              Global.alertDialog.dismiss();
+              Global.alertDialog.cancel();
               Global.alertDialog =null;
 
         }

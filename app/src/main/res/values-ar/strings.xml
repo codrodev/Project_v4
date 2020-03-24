@@ -31,7 +31,7 @@
     <string name="no_valid_land">يرجى إدخال رقم ملكية صحيح</string>
     <string name="community_error">حدث خطا اثناء إحضار المجتمع</string>
     <string name="please_enter_land">يرجى إدخال رقم الملكية</string>
-    <string name="enter_username_and_password">الرجاء إدخال اسم المستخدم وكلمة المرور الخاصة بك</string>
+    <string name="username_and_password">الرجاء إدخال اسم المستخدم وكلمة المرور الخاصة بك</string>
     <string name="enter_username">الرجاء إدخال اسم المستخدم</string>
     <string name="enter_password">من فضلك أدخل رقمك السري</string>
     <string name="wrong_username_password">اسم المستخدم أو كلمة المرور خاطئة</string>

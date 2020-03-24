@@ -239,7 +239,8 @@
                         android:gravity="center_vertical|end"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
-
+                        android:singleLine="false"
+                        android:maxLines="2"
                         android:fontFamily="@font/dubai_font"
                         android:text="@string/forgot_username_password"
                         android:textAlignment="viewEnd"

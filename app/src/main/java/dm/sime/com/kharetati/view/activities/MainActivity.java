@@ -426,7 +426,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     protected void onDestroy() {
         super.onDestroy();
         if(Global.alertDialog!=null){
-            Global.alertDialog.dismiss();
+            Global.alertDialog.cancel();
             Global.alertDialog =null;
         }
     }

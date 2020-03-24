@@ -68,7 +68,8 @@ public class MyMapViewModel extends ViewModel {
         model = new RetrieveMyMapResponse();
 
         //mutableMyMap.setValue(model.getMyMapList());
-        getAllSitePlans(context);
+        if(Global.isUserLoggedIn)
+            getAllSitePlans(context);
     }
 
     public MutableLiveData<List<MyMapResults>> getMutableMyMap(){
