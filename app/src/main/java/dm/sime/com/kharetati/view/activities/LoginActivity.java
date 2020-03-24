@@ -223,7 +223,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         binding.imgUAEPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewModel.uaePassConfigAPI();
+                viewModel.login();
             }
         });
 
@@ -362,7 +362,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
             }
         },0);//
 
-        viewModel.getConfigAPI();
+        viewModel.uaePassConfigAPI();
     }
 
     private void displayContent(){

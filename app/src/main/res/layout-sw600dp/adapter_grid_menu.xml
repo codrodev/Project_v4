@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:textSize="12sp"
                 android:layout_height="wrap_content"
-                android:text="@{adapterGridMenuVM.getCurrentHomeGridMenuItems(position).nameEn}"
+                android:text='@{adapterGridMenuVM.getCurrentHomeGridMenuItems(position).nameEn ?? ""}'
                 android:fontFamily="@font/dubai_font"
                 android:maxLines="2"
                 android:layout_centerHorizontal="true"
@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:textSize="12sp"
                 android:layout_height="wrap_content"
-                android:text="@{adapterGridMenuVM.getCurrentHomeGridMenuItems(position).id}"
+                android:text='@{adapterGridMenuVM.getCurrentHomeGridMenuItems(position).id ?? ""}'
                 android:visibility="gone"
                 android:layout_alignParentBottom="true"/>
         </LinearLayout>

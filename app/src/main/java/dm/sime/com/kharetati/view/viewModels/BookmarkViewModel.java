@@ -111,9 +111,10 @@ public class BookmarkViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<BookmarksResponse>() {
                     @Override public void accept(BookmarksResponse bookmarkResponse) throws Exception {
-                       if(bookmarkResponse!=null)
-                        getBookMarks(bookmarkResponse);
-
+                       if(bookmarkResponse!=null) {
+                           //bookmarkResponse=null;
+                           getBookMarks(bookmarkResponse);
+                       }
                     }
                 }, new Consumer<Throwable>() {
                     @Override public void accept(Throwable throwable) throws Exception {
@@ -127,27 +128,29 @@ public class BookmarkViewModel extends ViewModel {
     }
 
     private void getBookMarks(BookmarksResponse bookmarksResponse) {
-
-
-        mutableBookmark =new MutableLiveData<>();
-        listData = Arrays.asList(bookmarksResponse.getBookmarklist());
-        addSqMt();
-        mutableBookmark.setValue(Arrays.asList(bookmarksResponse.getBookmarklist()));
-        adapter = new BookmarkAdapter(R.layout.adapter_bookmark, this, activity);
-
-        setBookmarkAdapter(Arrays.asList(bookmarksResponse.getBookmarklist()));      //bookMarksNavigator.updateUI();
-
-
-        bookMarksNavigator.onSuccess();
-
-
+        if(bookmarksResponse != null){
+            if(bookmarksResponse.bookmarklist != null && bookmarksResponse.bookmarklist.length > 0){
+                mutableBookmark =new MutableLiveData<>();
+                listData = Arrays.asList(bookmarksResponse.getBookmarklist());
+                addSqMt();
+                mutableBookmark.setValue(Arrays.asList(bookmarksResponse.getBookmarklist()));
+                adapter = new BookmarkAdapter(R.layout.adapter_bookmark, this, activity);
+                setBookmarkAdapter(Arrays.asList(bookmarksResponse.getBookmarklist()));      //bookMarksNavigator.updateUI();
+                bookMarksNavigator.onSuccess();
+            } else if(bookmarksResponse.isError || bookmarksResponse.message != null){
+                showErrorMessage(bookmarksResponse.message);
+            } else
+                bookMarksNavigator.onFailure(activity.getResources().getString(R.string.error_response));
+        }
     }
 
     private void addSqMt(){
         if(listData != null && listData.size() > 0) {
             for (Bookmark bm : listData) {
-                bm.Area = " " + bm.Area + " Sq Mt";
-                bm.ParcelNumber = " " + bm.ParcelNumber;
+                bm.Area = null;
+                //bm.Area = " " + bm.Area + " Sq Mt";
+                bm.ParcelNumber = null;
+                //bm.ParcelNumber = " " + bm.ParcelNumber;
             }
         }
     }

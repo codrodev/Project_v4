@@ -6,6 +6,7 @@ public class UaePassConfig {
     public String UAEID_callback_url;
     public String UAEID_clientid;
     public String UAEID_secret;
+    public boolean disableMyId;
 
     public String getGetAuthCodeUAEID_url() {
         return getAuthCodeUAEID_url;
@@ -45,5 +46,13 @@ public class UaePassConfig {
 
     public void setUAEID_secret(String UAEID_secret) {
         this.UAEID_secret = UAEID_secret;
+    }
+
+    public boolean getDisableMyId() {
+        return disableMyId;
+    }
+
+    public void setDisableMyId(boolean disableMyId) {
+        this.disableMyId = disableMyId;
     }
 }
