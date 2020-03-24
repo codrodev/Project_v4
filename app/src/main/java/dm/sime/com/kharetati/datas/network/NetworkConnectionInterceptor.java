@@ -28,7 +28,7 @@ public class NetworkConnectionInterceptor implements Interceptor {
     public Response intercept(@NotNull Chain chain) throws IOException {
         if (!Global.isConnected(applicationContext))
             throw new Exceptions.NoInternetException("Make sure you have active data connection");
-        if (Global.isUserLoggedIn) {
+        //if (Global.isUserLoggedIn) {
             if (Global.accessToken != null) {
 
                 Request.Builder requestBuilder = chain.request().newBuilder();
@@ -43,7 +43,7 @@ public class NetworkConnectionInterceptor implements Interceptor {
 
 
             }
-        }
+        //}
         return chain.proceed(chain.request());
 
     }

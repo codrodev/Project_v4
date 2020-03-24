@@ -190,7 +190,7 @@ public class Global {
     public static boolean isFirstLoad = true;
     public static HashMap<String, String> hashSearchFieldValue;
     public static String  uaePassUrl = "https://qa-id.uaepass.ae/trustedx-authserver/oauth/main-as?redirect_uri=https://smart.gis.gov.ae/kharetatiuaepass&client_id=kharetati_mobile_stage&state=QR3QGVmyyfgX0HmZ&response_type=code&scope=urn:uae:digitalid:profile:general&acr_values=urn:safelayer:tws:policies:authentication:level:low&ui_locales=en";
-
+    public static String emptyString = "";
 
     public static List<FunctionsOnMap> getLstMapFunctions() {
         return lstMapFunctions;
@@ -199,6 +199,8 @@ public class Global {
     public static void setLstMapFunctions(List<FunctionsOnMap> lstMapFunctions) {
         Global.lstMapFunctions = lstMapFunctions;
     }
+
+
 
     public static String getCurrentLanguage(Activity activity) {
         return PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext()).getString(USER_LANGUAGE, "en");

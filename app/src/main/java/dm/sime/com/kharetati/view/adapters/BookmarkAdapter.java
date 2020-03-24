@@ -93,40 +93,40 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
                     else
                         AlertDialogUtil.errorAlertDialog(context.getResources().getString(R.string.lbl_warning), context.getResources().getString(R.string.internet_connection_problem1), context.getResources().getString(R.string.ok), context);
                 }
-                PlotDetails.isOwner = false;
-                PlotDetails.parcelNo=lstBookmark.get(position).ParcelNumber;
-                Global.isBookmarks =true;
 
-                ArrayList al= new ArrayList();
-                al.add(PlotDetails.parcelNo);
-                al.add("");
+                if(lstBookmark.get(position).ParcelNumber != null && !lstBookmark.get(position).ParcelNumber.isEmpty()) {
+                    PlotDetails.isOwner = false;
+                    PlotDetails.parcelNo=lstBookmark.get(position).ParcelNumber;
+                    Global.isBookmarks =true;
 
-                ((MainActivity)context).loadFragment(FragmentTAGS.FR_MAP,true,al);
+                    ArrayList al = new ArrayList();
+                    al.add(PlotDetails.parcelNo);
+                    //al.add("");
 
+                    ((MainActivity) context).loadFragment(FragmentTAGS.FR_MAP, true, al);
 
+                }
 
             }
         });
         holder.binding.getRoot().findViewById(R.id.edit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Global.bookmarkPlotNo = lstBookmark.get(position).ParcelNumber;
-                Bookmark data = lstBookmark.get(position);
-                AlertDialogUtil.bookMarksEditAlert(context, data);
-
+                if(lstBookmark.get(position).ParcelNumber != null && !lstBookmark.get(position).ParcelNumber.isEmpty()) {
+                    Global.bookmarkPlotNo = lstBookmark.get(position).ParcelNumber;
+                    Bookmark data = lstBookmark.get(position);
+                    AlertDialogUtil.bookMarksEditAlert(context, data);
+                }
             }
         });
         holder.binding.getRoot().findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Global.bookmarkPlotNo = lstBookmark.get(position).ParcelNumber;
-                Bookmark data = lstBookmark.get(position);
-                AlertDialogUtil.bookMarksDeleteAlert("",context.getResources().getString(R.string.confirmation_delete),context.getResources().getString(R.string.ok),context.getResources().getString(R.string.cancel),context,data,position);
-
-
-
+                if(lstBookmark.get(position).ParcelNumber != null && !lstBookmark.get(position).ParcelNumber.isEmpty()) {
+                    Global.bookmarkPlotNo = lstBookmark.get(position).ParcelNumber;
+                    Bookmark data = lstBookmark.get(position);
+                    AlertDialogUtil.bookMarksDeleteAlert("", context.getResources().getString(R.string.confirmation_delete), context.getResources().getString(R.string.ok), context.getResources().getString(R.string.cancel), context, data, position);
+                }
             }
         });
         holder.binding.getRoot().findViewById(R.id.gotomakani).setOnClickListener(new View.OnClickListener() {
@@ -140,8 +140,11 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
                     else
                         AlertDialogUtil.errorAlertDialog(context.getString(R.string.lbl_warning), context.getString(R.string.internet_connection_problem1), context.getString(R.string.ok), context);
                 }
-                else
-                    Global.openMakani(lstBookmark.get(position).ParcelNumber,(Activity) context);
+                else {
+                    if(lstBookmark.get(position).ParcelNumber != null && !lstBookmark.get(position).ParcelNumber.isEmpty()) {
+                        Global.openMakani(lstBookmark.get(position).ParcelNumber, (Activity) context);
+                    }
+                }
 
             }
         });

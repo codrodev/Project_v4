@@ -551,16 +551,20 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void uaePassConfigAPIResponse(UaePassConfig configResponse){
-        String clientId = AES.decrypt(configResponse.UAEID_clientid, "800F475AC0E7A9ED01B2D5D2C25A59B3");
-        String clientId2 = AES.decrypt("G0XpdyC/gqaOErGaAdJF/83fzA4ncOBawVi6MikjfF0=", "800F475AC0E7A9ED01B2D5D2C25A59B3");
-        //String clientId = AES.encrypt("testData", "800F475AC0E7A9ED01B2D5D2C25A59B3");
-        String secretId = AES.decrypt(configResponse.UAEID_secret, "800F475AC0E7A9ED01B2D5D2C25A59B3");
-        login();
+        if(configResponse != null){
+            authListener.onConfig(configResponse.disableMyId);
+            String clientId = AES.decrypt(configResponse.UAEID_clientid, "800F475AC0E7A9ED01B2D5D2C25A59B3");
+            String clientId2 = AES.decrypt("G0XpdyC/gqaOErGaAdJF/83fzA4ncOBawVi6MikjfF0=", "800F475AC0E7A9ED01B2D5D2C25A59B3");
+            //String clientId = AES.encrypt("testData", "800F475AC0E7A9ED01B2D5D2C25A59B3");
+            String secretId = AES.decrypt(configResponse.UAEID_secret, "800F475AC0E7A9ED01B2D5D2C25A59B3");
+        }
+
+       // login();
         //UAEPassAccessTokenRequestModel
         //String secretId = AES.decrypt(clientId, "800F475AC0E7A9ED01B2D5D2C25A59B3");
     }
 
-    private void login() {
+    public void login() {
         /*Intent intent = new Intent(activity, WebViewActivity.class);
         intent.setData(Uri.parse(Global.uaePassUrl));
         activity.startActivity(intent);*/

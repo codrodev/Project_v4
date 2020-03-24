@@ -39,7 +39,7 @@
                 android:id="@+id/txtMenuName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{adapterGridMenuVM.getCurrentHomeGridMenuItems(position).nameEn}"
+                android:text='@{adapterGridMenuVM.getCurrentHomeGridMenuItems(position).nameEn ?? ""}'
                 android:maxLines="2"
                 android:lines="2"
                 android:singleLine="false"
@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:textSize="12sp"
                 android:layout_height="wrap_content"
-                android:text="@{adapterGridMenuVM.getCurrentHomeGridMenuItems(position).id}"
+                android:text='@{adapterGridMenuVM.getCurrentHomeGridMenuItems(position).id ?? ""}'
                 android:visibility="gone"
                 android:layout_alignParentBottom="true"/>
         </LinearLayout>

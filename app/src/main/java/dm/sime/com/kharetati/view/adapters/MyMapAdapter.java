@@ -123,8 +123,11 @@ public class MyMapAdapter  extends RecyclerView.Adapter<MyMapAdapter.GenericView
                     else
                         AlertDialogUtil.errorAlertDialog(context.getString(R.string.lbl_warning), context.getString(R.string.internet_connection_problem1), context.getString(R.string.ok), context);
                 }
-                else
-                    Global.openMakani(lstMyMap.get(position).getParcelId(),(Activity) context);
+                else {
+                    if(lstMyMap.get(position).getParcelId() != null && !lstMyMap.get(position).getParcelId().isEmpty()) {
+                        Global.openMakani(lstMyMap.get(position).getParcelId(), (Activity) context);
+                    }
+                }
 
             }
         });

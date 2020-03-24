@@ -145,10 +145,12 @@ public class MyMapViewModel extends ViewModel {
     }
 
     private void getSitePlans(RetrieveMyMapResponse retrieveMyMapResponse, Context context) {
-        mutableMyMap = new MutableLiveData<>();
-        mutableMyMap.setValue(Arrays.asList(retrieveMyMapResponse.getMyMapResults()));
-        adapter = new MyMapAdapter(R.layout.adapter_mymap, this, context);
-        setMyMapAdapter(Arrays.asList(retrieveMyMapResponse.getMyMapResults()));
+        if(retrieveMyMapResponse.getMyMapResults() != null && retrieveMyMapResponse.getMyMapResults().length > 0) {
+            mutableMyMap = new MutableLiveData<>();
+            mutableMyMap.setValue(Arrays.asList(retrieveMyMapResponse.getMyMapResults()));
+            adapter = new MyMapAdapter(R.layout.adapter_mymap, this, context);
+            setMyMapAdapter(Arrays.asList(retrieveMyMapResponse.getMyMapResults()));
+        }
         myMapNavigator.onSuccess();
     }
 
