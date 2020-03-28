@@ -16,6 +16,7 @@ public class AppUrls {
 
     public static final String BASE_AUXULARY_URL_STATIC="https://smart.gis.gov.ae/KharetatiAuxiliaryServiceV3/Service.svc/"; //staging
     public static String BASE_AUXULARY_URL; //staging
+    public static String BASE_AUXULARY_URL_UAE_SESSION = "https://smart.gis.gov.ae/KharetatiAuxiliaryServiceV3/Service.svc/"; //staging
     public static final String LOOKUP_URL="https://smart.gis.gov.ae/KharetatiAuxiliaryServiceV3/Service.svc/getlkpdetails"; //staging
     /************************************ GIS Layer Urls***********************************/
 
@@ -57,6 +58,7 @@ public class AppUrls {
 
     public static final String MYID_ACCESS_TOKEN_URL = BASE_URL + "MyId/getAccessToken";
     public static final String MYID_SESSION_ID = BASE_URL + "KharetatiWebService/getSession";
+    public static final String UAE_SESSION_ID = BASE_URL + "KharetatiWebService/getSession";
     public static final String MYID_PARCEL_ID = BASE_URL + "KharetatiWebService/getParcelId";
     public static final String MYID_LAND_ACTIVITY = BASE_URL + "KharetatiWebService/getLandActivities";
     public static final String MYID_SUBMIT_ENQUIRY = BASE_URL + "KharetatiWebService/submitEnquiry";
@@ -90,6 +92,8 @@ public class AppUrls {
 
     public static final String URL_UAE_ID_CONFIG =BASE_URL + "MyID/getUAEIDConfig";
     public static final String URL_GET_CONFIG =BASE_URL + "myid/getConfig";
+    public static final String URL_UAE_GET_ACCESS_TOKEN =BASE_URL + "myid/GetAccessToken";
+    public static final String URL_UAE_GET_USER_PROFILE =BASE_URL + "myid/GetUserProfile";
 
 
 

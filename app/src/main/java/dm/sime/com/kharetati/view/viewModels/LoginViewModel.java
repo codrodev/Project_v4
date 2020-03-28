@@ -17,6 +17,8 @@ import androidx.lifecycle.ViewModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Observable;
 
@@ -27,12 +29,17 @@ import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.datas.models.GetConfigResponse;
 import dm.sime.com.kharetati.datas.models.KharetatiUser;
+import dm.sime.com.kharetati.datas.models.SerializedUAEAccessTokenAPIModelResponse;
+import dm.sime.com.kharetati.datas.models.SerializedUAEAccessTokenRequestAPIModel;
+import dm.sime.com.kharetati.datas.models.SessionUaePassResponse;
+import dm.sime.com.kharetati.datas.models.UAEAccessTokenResponse;
 import dm.sime.com.kharetati.datas.models.UaePassConfig;
 import dm.sime.com.kharetati.datas.network.ApiFactory;
 import dm.sime.com.kharetati.datas.network.MyApiService;
 import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
 import dm.sime.com.kharetati.utility.AES;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
+import dm.sime.com.kharetati.utility.Encryptions;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.datas.models.AccessTokenResponse;
@@ -57,6 +64,7 @@ import retrofit2.Response;
 import static dm.sime.com.kharetati.utility.Global.loginDetails;
 
 public class LoginViewModel extends ViewModel {
+    private static final String TAG = "LoginViewModel";
 
     Activity activity;
 
@@ -211,25 +219,7 @@ public class LoginViewModel extends ViewModel {
             else {
 
 
-            kharetatiApp = KharetatiApp.create(activity);
-
-
-            Disposable disposable = repository.getAccessToken(getDataEmail(), getDataPassword())
-                    .subscribeOn(kharetatiApp.subscribeScheduler())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<AccessTokenResponse>() {
-                        @Override public void accept(AccessTokenResponse accessTokenResponse) throws Exception {
-                            saveAccessTokenResponse(accessTokenResponse);
-
-                        }
-                    }, new Consumer<Throwable>() {
-                        @Override public void accept(Throwable throwable) throws Exception {
-                            showErrorMessage();
-
-                        }
-                    });
-
-            compositeDisposable.add(disposable);
+            getAccessTokenAPI(false);
             //AccessTokenResponse accessTokenResponse = repository.getAccessToken(getDataEmail(), getDataPassword());
 
 
@@ -239,9 +229,35 @@ public class LoginViewModel extends ViewModel {
 
     }
 
-    private void saveAccessTokenResponse(AccessTokenResponse accessTokenResponse) {
-        if (accessTokenResponse != null) {
+    private void getAccessTokenAPI(boolean isUAE){
+        Log.v(TAG, "UAE Pass App: getAccessTokenAPI(): calling");
+        kharetatiApp = KharetatiApp.create(activity);
 
+
+        Disposable disposable = repository.getAccessToken(isUAE ? "" : getDataEmail(),
+                isUAE ? "" : getDataPassword(), isUAE, isUAE ? Global.uae_access_token : "")
+                .subscribeOn(kharetatiApp.subscribeScheduler())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<AccessTokenResponse>() {
+                    @Override public void accept(AccessTokenResponse accessTokenResponse) throws Exception {
+                        Log.v(TAG, "UAE Pass App: getAccessTokenAPI(): success");
+                        saveAccessTokenResponse(accessTokenResponse, isUAE);
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override public void accept(Throwable throwable) throws Exception {
+                        Log.v(TAG, "UAE Pass App: getAccessTokenAPI(): failed:" + throwable.getMessage());
+                        showErrorMessage();
+
+                    }
+                });
+
+        compositeDisposable.add(disposable);
+    }
+
+    private void saveAccessTokenResponse(AccessTokenResponse accessTokenResponse, boolean isUAE) {
+        if (accessTokenResponse != null) {
+            Log.v(TAG, "UAE Pass App: saveAccessTokenResponse(): calling");
             if (accessTokenResponse.getAccessToken() != null) {
                 Global.hashSearchFieldValue = new HashMap<>();
                 //get the response here
@@ -314,11 +330,13 @@ public class LoginViewModel extends ViewModel {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Consumer<User>() {
                             @Override public void accept(User user) throws Exception {
-                                saveUserDetails(user);
+                                Log.v(TAG, "UAE Pass App: saveAccessTokenResponse(): success");
+                                saveUserDetails(user, isUAE);
 
                             }
                         }, new Consumer<Throwable>() {
                             @Override public void accept(Throwable throwable) throws Exception {
+                                Log.v(TAG, "UAE Pass App: saveAccessTokenResponse(): failed:" + throwable.getMessage());
                                 showErrorMessage();
 
                             }
@@ -339,9 +357,9 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
-    private void saveUserDetails(User userDetails) {
+    private void saveUserDetails(User userDetails, boolean isUAE) {
         if (userDetails != null) {
-
+            Log.v(TAG, "UAE Pass App: saveUserDetails(): calling");
             user.setDob(userDetails.getDob());
             user.setPhoto(userDetails.getPhoto());
             user.setFullnameAR(userDetails.getFullnameAR());
@@ -391,19 +409,26 @@ public class LoginViewModel extends ViewModel {
             if (user.getNationality() != null)
                 Global.Nationality = user.getNationality();
 
-            HTTPRequestBody body = new HTTPRequestBody();
+            HTTPRequestBody body;
+            if(isUAE){
+                body = new HTTPRequestBody(Global.uaeSessionResponse);
+                isUAE = true;
+            } else {
+                body = new HTTPRequestBody();
+                isUAE = false;
+            }
 
             Disposable disposable = repository.registerLoggedUser(body)
                     .subscribeOn(kharetatiApp.subscribeScheduler())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<UserRegistration>() {
                         @Override public void accept(UserRegistration userRegistrationResponse) throws Exception {
-
+                            Log.v(TAG, "UAE Pass App: saveUserDetails(): success");
                             registerUser(userRegistrationResponse);
                         }
                     }, new Consumer<Throwable>() {
                         @Override public void accept(Throwable throwable) throws Exception {
-
+                            Log.v(TAG, "UAE Pass App: saveUserDetails(): failed:" + throwable.getMessage());
                             showErrorMessage();
 
                         }
@@ -418,7 +443,7 @@ public class LoginViewModel extends ViewModel {
 
     private void registerUser(UserRegistration userRegistrationResponse) {
         if (userRegistrationResponse!= null) {
-
+            Log.v(TAG, "UAE Pass App: registerUser(): calling:");
             //User registration is successful
             try {
                 authListener.showAppUpdateAlert();
@@ -435,11 +460,12 @@ public class LoginViewModel extends ViewModel {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<SessionResponse>() {
                         @Override public void accept(SessionResponse session) throws Exception {
-
+                            Log.v(TAG, "UAE Pass App: registerUser(): success:");
                             getSession(session);
                         }
                     }, new Consumer<Throwable>() {
                         @Override public void accept(Throwable throwable) throws Exception {
+                            Log.v(TAG, "UAE Pass App: registerUser(): failed:" + throwable.getMessage());
                             showErrorMessage();
                             Log.e("Exception",throwable.getMessage());
                         }
@@ -469,6 +495,7 @@ public class LoginViewModel extends ViewModel {
 
                 if (!Boolean.valueOf(isException))
                 {
+                    Log.v(TAG, "UAE Pass App: getSession(): success: session" + session.getSession().getToken());
                     Global.session = session.getSession().getToken();
 
                     Global.isUserLoggedIn =true;
@@ -476,7 +503,7 @@ public class LoginViewModel extends ViewModel {
                     authListener.onSuccess();
 
                 } else {
-
+                    Log.v(TAG, "UAE Pass App: getSession(): failed:");
                     showErrorMessage();
                 }
             }
@@ -531,16 +558,18 @@ public class LoginViewModel extends ViewModel {
     public void uaePassConfigAPI(){
         authListener.onStarted();
         kharetatiApp = KharetatiApp.create(activity);
-
+        Log.v(TAG, "uaePassConfigAPI(): calling");
         Disposable disposable = repository.uaePassConfig(AppUrls.URL_UAE_ID_CONFIG)
                 .subscribeOn(kharetatiApp.subscribeScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<UaePassConfig>() {
                     @Override public void accept(UaePassConfig configResponse) throws Exception {
+                        Log.v(TAG, "uaePassConfigAPI(): success");
                         uaePassConfigAPIResponse(configResponse);
                     }
                 }, new Consumer<Throwable>() {
                     @Override public void accept(Throwable throwable) throws Exception {
+                        Log.v(TAG, "uaePassConfigAPI(): failed:" + throwable.getMessage());
                         if(Global.appMsg!=null){
                             authListener.onFailure(Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
                         }
@@ -553,35 +582,122 @@ public class LoginViewModel extends ViewModel {
         compositeDisposable.add(disposable);
     }
 
-    public void uaePassConfigAPIResponse(UaePassConfig configResponse){
+    public void uaePassConfigAPIResponse(UaePassConfig configResponse) throws Exception {
         if(configResponse != null){
             authListener.onConfig(configResponse.disableMyId);
-            String clientId = AES.decrypt(configResponse.UAEID_clientid, "800F475AC0E7A9ED01B2D5D2C25A59B3");
-            String clientId2 = AES.decrypt("G0XpdyC/gqaOErGaAdJF/83fzA4ncOBawVi6MikjfF0=", "800F475AC0E7A9ED01B2D5D2C25A59B3");
-            //String clientId = AES.encrypt("testData", "800F475AC0E7A9ED01B2D5D2C25A59B3");
-            String secretId = AES.decrypt(configResponse.UAEID_secret, "800F475AC0E7A9ED01B2D5D2C25A59B3");
+            Global.uaePassConfig =  configResponse;
+            //login();
         }
 
        // login();
         //UAEPassAccessTokenRequestModel
-        //String secretId = AES.decrypt(clientId, "800F475AC0E7A9ED01B2D5D2C25A59B3");
+        //String secretId = AES.decrypt(clientId, "800F4757AC0E7A9ED01B2D5D2C25A59B3");
     }
 
     public void login() {
-        /*Intent intent = new Intent(activity, WebViewActivity.class);
-        intent.setData(Uri.parse(Global.uaePassUrl));
-        activity.startActivity(intent);*/
-        UAEPassAccessTokenRequestModel requestModel = UAEPassRequestModels.getAuthenticationRequestModel(activity);
-        UAEPassController.getInstance().getAccessToken(activity, requestModel, new UAEPassAccessTokenCallback() {
-            @Override
-            public void getToken(String accessToken, String error) {
-                if (error != null) {
-                    Toast.makeText(activity, "Error while getting access token", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(activity, "Access Token Received", Toast.LENGTH_SHORT).show();
-                }
+        if(Global.uaePassConfig != null){
+            Log.v(TAG, "login``(): calling");
+            String clientId = Encryptions.decrypt(Global.uaePassConfig.UAEID_clientid);
+            Log.v(TAG, "clientId:" + clientId);
+            String secretId = Encryptions.decrypt(Global.uaePassConfig.UAEID_secret);
+            Log.v(TAG, "secretId:" + secretId);
+            String callbackUrl = Encryptions.decrypt(Global.uaePassConfig.UAEID_callback_url);
+            Log.v(TAG, "callbackUrl:" + callbackUrl);
+            if(UAEPassRequestModels.isPackageInstalled(UAEPassRequestModels.UAE_PASS_PACKAGE_ID, activity.getPackageManager())){
+                Log.v(TAG, "UAE Pass App: app installed");
+                UAEPassAccessTokenRequestModel requestModel =
+                        UAEPassRequestModels.getAuthenticationRequestModel(activity,
+                                clientId, secretId, callbackUrl);
+                UAEPassController.getInstance().getAccessToken(activity, requestModel, new UAEPassAccessTokenCallback() {
+                    @Override
+                    public void getToken(String accessToken, String error) {
+                        if (error != null) {
+                            Log.v(TAG, "UAE Pass App: error received:" + error);
+                            Toast.makeText(activity, "Error while getting access token", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Log.v(TAG, "UAE Pass App: code received:" + accessToken);
+                            //Toast.makeText(activity, "Access Token Received", Toast.LENGTH_SHORT).show();
+                            //getUAESessionToken(accessToken);
+                            getUAEAccessToken(accessToken);
+                        }
+                    }
+                });
+            } else {
+                Log.v(TAG, "UAE Pass App: app is not installed");
+                String language = Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0 ? "en" : "ar";
+                String authUrl = Global.uaePassConfig.getAuthCodeUAEID_url.endsWith("?") ? Global.uaePassConfig.getAuthCodeUAEID_url : Global.uaePassConfig.getAuthCodeUAEID_url + "?";
+                String url = authUrl + "redirect_uri="+callbackUrl+"&client_id="+clientId+"&state="+secretId+"&response_type=code&scope=urn:uae:digitalid:profile:general&acr_values=urn:safelayer:tws:policies:authentication:level:low&ui_locales=" + language;
+                Log.v(TAG, "UAE Pass App: getAuthorizationUrl: " + url);
+
+                Intent intent = new Intent(activity, WebViewActivity.class);
+                intent.setData(Uri.parse(url));
+                //intent.setData(Uri.parse("http://www.google.com"));
+                activity.startActivity(intent);
             }
-        });
+        }
+
+
     }
 
+    public void getUAEAccessToken(String code){
+        Log.v(TAG, "UAE Pass App: getUAEAccessToken(): calling");
+        authListener.onStarted();
+        kharetatiApp = KharetatiApp.create(activity);
+        if(Global.uaePassConfig != null){
+            String clientId = Encryptions.decrypt(Global.uaePassConfig.UAEID_clientid);
+            String secretId = Encryptions.decrypt(Global.uaePassConfig.UAEID_secret);
+            String callbackUrl = Encryptions.decrypt(Global.uaePassConfig.UAEID_callback_url);
+            String language = Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0 ? "en" : "ar";
+            String accessTokenUrl = Global.uaePassConfig.getGetAccessTokenUAEID_url().endsWith("?") ? Global.uaePassConfig.getGetAccessTokenUAEID_url() : Global.uaePassConfig.getGetAccessTokenUAEID_url() + "?";
+            String url = accessTokenUrl + "redirect_uri="+callbackUrl+"&client_id="+clientId+"&state="+secretId+"&response_type=code&scope=urn:uae:digitalid:profile:general&acr_values=urn:safelayer:tws:policies:authentication:level:low&ui_locales=" + language;
+
+            Disposable disposable = repository.getUAEAccessToken(url)
+                    .subscribeOn(kharetatiApp.subscribeScheduler())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<UAEAccessTokenResponse>() {
+                        @Override public void accept(UAEAccessTokenResponse accessTokenResponse) throws Exception {
+                            Log.v(TAG, "UAE Pass App: getUAEAccessToken(): success");
+                            Global.uae_code = "";
+                            Global.isUAEaccessWeburl =false;
+                            Global.uae_access_token = accessTokenResponse.getAccess_token();
+                            Log.v(TAG, "UAE Pass App: getUAEAccessToken(): Access Token:" + accessTokenResponse.getAccess_token());
+                            getUAESessionToken(accessTokenResponse.getAccess_token());
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override public void accept(Throwable throwable) throws Exception {
+                            Log.v(TAG, "UAE Pass App: getUAEAccessToken(): failed:" + throwable.getMessage());
+                            showErrorMessage();
+                        }
+                    });
+
+            compositeDisposable.add(disposable);
+        }
+    }
+
+    public void getUAESessionToken(String code){
+        Log.v(TAG, "UAE Pass App: getUAESessionToken(): calling");
+        authListener.onStarted();
+        kharetatiApp = KharetatiApp.create(activity);
+
+        String url = AppUrls.BASE_AUXULARY_URL_UAE_SESSION + "getsessionuaepass/" + code + "/" + Global.getPlatformRemark();
+
+        Disposable disposable = repository.getSessionUAEPass(url)
+                .subscribeOn(kharetatiApp.subscribeScheduler())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<SessionUaePassResponse>() {
+                    @Override public void accept(SessionUaePassResponse uaeSessionResponse) throws Exception {
+                        Log.v(TAG, "UAE Pass App: getUAESessionToken(): success");
+                        Global.uaeSessionResponse = uaeSessionResponse;
+                        Log.v(TAG, "UAE Pass App: getUAESessionToken(): sessionToken:" + uaeSessionResponse.getService_response().getUAEPASSDetails().getUuid());
+                        getAccessTokenAPI(true);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override public void accept(Throwable throwable) throws Exception {
+                        Log.v(TAG, "UAE Pass App: getUAESessionToken(): failed:" + throwable.getMessage());
+                        showErrorMessage();
+                    }
+                });
+
+        compositeDisposable.add(disposable);
+    }
 }

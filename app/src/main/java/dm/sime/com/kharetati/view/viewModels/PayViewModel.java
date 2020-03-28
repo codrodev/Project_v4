@@ -56,7 +56,11 @@ public class PayViewModel extends ViewModel {
         payNavigator.onStarted();
         AttachmentFragment.attachmentModel.attachmentNavigator.navigateToPay();
         SerializedCreateAndUpdateModel model = new SerializedCreateAndUpdateModel();
-        model.setMy_id(Global.loginDetails.username);
+        if(Global.isUAE){
+            model.setMy_id(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getUuid());
+        } else {
+            model.setMy_id(Global.loginDetails.username);
+        }
         model.setToken(Global.site_plan_token);
         model.setIs_owner(Global.rbIsOwner);
         model.setIs_owned_by_person(Global.isPerson);

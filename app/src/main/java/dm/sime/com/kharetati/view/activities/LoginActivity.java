@@ -134,17 +134,16 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
         //viewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
         viewModel = ViewModelProviders.of(this,factory).get(LoginViewModel.class);
+
+        //binding.setViewmodel(viewModel);
+        viewModel.authListener = this;
+
         //getting saved locale
         SharedPreferences sharedpreferences = getSharedPreferences(USER_LANGUAGE, Context.MODE_PRIVATE);
         String locale = sharedpreferences.getString(USER_LANGUAGE, "defaultStringIfNothingFound");
         //String locale = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(USER_LANGUAGE, "defaultStringIfNothingFound");
         if(!locale.equals("defaultStringIfNothingFound"))
             CURRENT_LOCALE =locale;
-
-        //binding.setViewmodel(viewModel);
-        viewModel.authListener = this;
-
-
 
         //getting remembered user credentials if any
 
@@ -645,7 +644,10 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         CURRENT_LOCALE = CURRENT_LOCALE.equals("en")?"en":"ar";
         Global.enableClearTextInEditBox(binding.editUserName,LoginActivity.this);
         Global.enableClearTextInEditBox(binding.editPassword,LoginActivity.this);
-
+        if(Global.isUAEaccessWeburl && Global.uae_code != null && Global.uae_code.length() > 0){
+            //viewModel.getUAESessionToken(Global.uae_access_token);
+            viewModel.getUAEAccessToken(Global.uae_code);
+        }
     }
 
     @Override

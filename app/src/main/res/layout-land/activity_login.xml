@@ -8,6 +8,10 @@
             type="dm.sime.com.kharetati.view.viewModels.LoginViewModel" />
     </data>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -63,6 +67,7 @@
                 android:minHeight="40dp"
                 android:layoutDirection="ltr"
                 android:fontFamily="@font/dubai_font"
+                app:theme="@style/Custom.Widget.SwitchCompat"
                 android:visibility="gone"
                 android:textOn="Arabic"
                 android:textOff="English"
@@ -113,7 +118,7 @@
                 android:visibility="visible"
                 android:orientation="vertical">
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layoutDirection="locale"
                     android:orientation="horizontal">
@@ -159,45 +164,45 @@
                     android:layout_marginRight="8dp"
                     android:background="@color/light_gray"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layoutDirection="locale"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="@dimen/edit_drawable_height"
-                    android:layout_height="@dimen/edit_drawable_height"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/login_password"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginTop="4dp"/>
-
-                <EditText
-                    android:id="@+id/editPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/edittext_height"
-                    android:textAlignment="center"
-                    android:gravity="center_vertical|center_horizontal|fill"
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layoutDirection="locale"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:textColor="@color/textColor"
-                    android:fontFamily="@font/dubai_font"
-                    android:layout_marginBottom="4dp"
-                    android:background="@color/white"
-                    android:ems="10"
-                    android:hint="@string/password"
-                    android:textSize="@dimen/login_font_size"
-                    android:inputType="textWebPassword"
-                    android:paddingLeft="8dp"/>
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="@dimen/edit_drawable_height"
+                        android:layout_height="@dimen/edit_drawable_height"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/login_password"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="4dp"/>
 
-            </LinearLayout>
+                    <EditText
+                        android:id="@+id/editPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/edittext_height"
+                        android:textAlignment="center"
+                        android:gravity="center_vertical"
+                        android:layoutDirection="locale"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:textColor="@color/textColor"
+                        android:fontFamily="@font/dubai_font"
+                        android:layout_marginBottom="4dp"
+                        android:background="@color/white"
+                        android:ems="10"
+                        android:hint="@string/password"
+                        android:textSize="@dimen/login_font_size"
+                        android:inputType="textWebPassword"
+                        android:paddingLeft="8dp"/>
+
+                </LinearLayout>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
@@ -268,19 +273,19 @@
                     android:id="@+id/layoutOR"
                     android:orientation="horizontal">
 
-<!--
-                    <ProgressBar
-                        android:id="@+id/progressBar"
-                        style="?android:attr/progressBarStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="invisible"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.498"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
--->
+                    <!--
+                                        <ProgressBar
+                                            android:id="@+id/progressBar"
+                                            style="?android:attr/progressBarStyle"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:visibility="invisible"
+                                            app:layout_constraintBottom_toBottomOf="parent"
+                                            app:layout_constraintEnd_toEndOf="parent"
+                                            app:layout_constraintHorizontal_bias="0.498"
+                                            app:layout_constraintStart_toStartOf="parent"
+                                            app:layout_constraintTop_toTopOf="parent" />
+                    -->
 
                     <TextView
                         android:id="@+id/txtOR"
@@ -369,4 +374,5 @@
 
 
     </LinearLayout>
+    </ScrollView>
 </layout>
