@@ -5,6 +5,10 @@
             name="fragmentLandOwnerSelectionVM"
             type="dm.sime.com.kharetati.view.viewModels.LandOwnerViewModel" />
     </data>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -64,4 +68,5 @@
                 />
         </RadioGroup>
     </LinearLayout>
+    </ScrollView>
 </layout>
