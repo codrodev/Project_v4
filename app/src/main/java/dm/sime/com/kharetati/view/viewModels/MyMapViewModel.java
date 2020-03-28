@@ -121,7 +121,11 @@ public class MyMapViewModel extends ViewModel {
         SerializedModel model = new SerializedModel();
         model.setToken(Global.site_plan_token);
         model.setLocale(Global.CURRENT_LOCALE);
-        model.setMy_id(Global.loginDetails.username);
+        if(Global.isUAE){
+            model.setMy_id(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getUuid());
+        } else {
+            model.setMy_id(Global.loginDetails.username);
+        }
         try {
             Disposable disposable = repository.getAllSitePlans(url,model)
                     .subscribeOn(kharetatiApp.subscribeScheduler())

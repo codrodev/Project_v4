@@ -13,18 +13,18 @@ import ae.sdg.libraryuaepass.business.documentsigning.model.UAEPassDocumentSigni
 public class UAEPassRequestModels {
 
     private static final String UAE_PASS_CLIENT_ID = "kharetati_mobile_stage";
-    private static final String UAE_PASS_CLIENT_SECRET = "QR3QGVmyyfgX0HmZ";
-    private static final String REDIRECT_URL = "https://smart.gis.gov.ae/kharetatiuaepass";
+    public static final String UAE_PASS_CLIENT_SECRET = "QR3QGVmyyfgX0HmZ";
+    public static final String REDIRECT_URL = "https://smart.gis.gov.ae/kharetatiuaepass";
     private static final String DOCUMENT_SIGNING_SCOPE = "urn:safelayer:eidas:sign:process:document";
     private static final String RESPONSE_TYPE = "code";
     private static final String SCOPE = "urn:uae:digitalid:profile";
     private static final String ACR_VALUES_MOBILE = "urn:digitalid:authentication:flow:mobileondevice";
     private static final String ACR_VALUES_WEB = "urn:safelayer:tws:policies:authentication:level:low";
-    private static final String UAE_PASS_PACKAGE_ID = "ae.uaepass.mainapp";
+    public static final String UAE_PASS_PACKAGE_ID = "ae.uaepass.mainapp";
     private static final Environment UAE_PASS_ENVIRONMENT = Environment.STAGING;
 
 
-    private static boolean isPackageInstalled(String packageName, PackageManager packageManager) {
+    public static boolean isPackageInstalled(String packageName, PackageManager packageManager) {
         boolean found = true;
         try {
             packageManager.getPackageInfo(packageName, 0);
@@ -35,7 +35,8 @@ public class UAEPassRequestModels {
         return found;
     }
 
-    public static UAEPassAccessTokenRequestModel getAuthenticationRequestModel(Context context) {
+    public static UAEPassAccessTokenRequestModel getAuthenticationRequestModel(Context context, String clientID,
+                                                                               String secretID, String redirectUrl) {
         final UAEPassAccessTokenRequestModel requestModel = new UAEPassAccessTokenRequestModel();
         if (isPackageInstalled(UAE_PASS_PACKAGE_ID, context.getPackageManager())) {
             requestModel.setAcrValues(ACR_VALUES_MOBILE);
@@ -43,9 +44,9 @@ public class UAEPassRequestModels {
             requestModel.setAcrValues(ACR_VALUES_WEB);
         }
 
-        requestModel.setClientId(UAE_PASS_CLIENT_ID);
-        requestModel.setClientSecret(UAE_PASS_CLIENT_SECRET);
-        requestModel.setRedirectUrl(REDIRECT_URL);
+        requestModel.setClientId(clientID);
+        requestModel.setClientSecret(secretID);
+        requestModel.setRedirectUrl(redirectUrl);
         requestModel.setScope(SCOPE);
         requestModel.setResponseType(RESPONSE_TYPE);
         requestModel.setEnvironment(UAE_PASS_ENVIRONMENT);

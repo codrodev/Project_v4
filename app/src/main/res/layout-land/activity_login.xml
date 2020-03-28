@@ -311,6 +311,7 @@
                     android:textAllCaps="false"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/login_font_size" />
+            </LinearLayout>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -323,7 +324,7 @@
                     android:textAlignment="center"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/login_font_size" />
-            </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/layoutUAEPass"
                 android:layout_width="match_parent"

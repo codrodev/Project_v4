@@ -52,6 +52,8 @@ import dm.sime.com.kharetati.datas.models.LookupValue;
 import dm.sime.com.kharetati.datas.models.NocDocs;
 import dm.sime.com.kharetati.datas.models.PassportDocs;
 import dm.sime.com.kharetati.datas.models.SearchResult;
+import dm.sime.com.kharetati.datas.models.SessionUaePassResponse;
+import dm.sime.com.kharetati.datas.models.UaePassConfig;
 import dm.sime.com.kharetati.utility.constants.AppConstants;
 import dm.sime.com.kharetati.datas.models.AppMsg;
 import dm.sime.com.kharetati.datas.models.AreaResponse;
@@ -191,6 +193,12 @@ public class Global {
     public static HashMap<String, String> hashSearchFieldValue;
     public static String  uaePassUrl = "https://qa-id.uaepass.ae/trustedx-authserver/oauth/main-as?redirect_uri=https://smart.gis.gov.ae/kharetatiuaepass&client_id=kharetati_mobile_stage&state=QR3QGVmyyfgX0HmZ&response_type=code&scope=urn:uae:digitalid:profile:general&acr_values=urn:safelayer:tws:policies:authentication:level:low&ui_locales=en";
     public static String emptyString = "";
+    public static String uae_code = "";
+    public static String uae_access_token = "";
+    public static boolean isUAEaccessWeburl = false;
+    public static UaePassConfig uaePassConfig;
+    public static SessionUaePassResponse uaeSessionResponse;
+    public static boolean isUAE = false;
 
     public static List<FunctionsOnMap> getLstMapFunctions() {
         return lstMapFunctions;

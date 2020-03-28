@@ -31,8 +31,12 @@ import dm.sime.com.kharetati.datas.models.SerializeBookmarkModel;
 import dm.sime.com.kharetati.datas.models.SerializeGetAppRequestModel;
 import dm.sime.com.kharetati.datas.models.SerializedCreateAndUpdateModel;
 import dm.sime.com.kharetati.datas.models.SerializedModel;
+import dm.sime.com.kharetati.datas.models.SerializedUAEAccessTokenAPIModelResponse;
+import dm.sime.com.kharetati.datas.models.SerializedUAEAccessTokenRequestAPIModel;
 import dm.sime.com.kharetati.datas.models.SerializedValidateParcelModel;
 import dm.sime.com.kharetati.datas.models.SessionResponse;
+import dm.sime.com.kharetati.datas.models.SessionUaePassResponse;
+import dm.sime.com.kharetati.datas.models.UAEAccessTokenResponse;
 import dm.sime.com.kharetati.datas.models.UaePassConfig;
 import dm.sime.com.kharetati.datas.models.User;
 import dm.sime.com.kharetati.datas.models.UserRegistration;
@@ -54,7 +58,8 @@ public interface MyApiService {
     //to get accessToken
     @FormUrlEncoded
     @POST(AppUrls.MYID_ACCESS_TOKEN_URL)
-    Observable<AccessTokenResponse> getAccessToken(@Field("username") String username, @Field("password") String password);
+    Observable<AccessTokenResponse> getAccessToken(@Field("username") String username, @Field("password") String password,
+                                                   @Field("isUAEID") boolean isUAE, @Field("uaeIDToken") String uaeIDToken);
 
     //register logged in user
     @POST(AppUrls.REGISTER_MYID_USER)
@@ -64,12 +69,21 @@ public interface MyApiService {
     @POST(AppUrls.MYID_SESSION_ID)
     Observable<SessionResponse> getSession(@Query("accessToken") String accessToken);
 
+    @POST(AppUrls.UAE_SESSION_ID)
+    Observable<SessionUaePassResponse> getSessionUAEPass(@Query("accessToken") String accessToken);
+
+    @POST
+    Observable<UAEAccessTokenResponse> getUAEAccessToken(@Query("accessToken") String accessToken);
+
     //guest user login
     @POST(AppUrls.REGISTER_GUEST_USER)
     Observable<KharetatiUser> guestLogin(@Body HTTPRequestBody.GuestBody guestBody);
 
     @POST
     Observable<UaePassConfig> uaePassConfig(@Url String url);
+
+    @POST
+    Observable<SerializedUAEAccessTokenAPIModelResponse> uaeAccessToken(@Body SerializedUAEAccessTokenRequestAPIModel requestObject);
 
     @POST
     Observable<GetConfigResponse> getConfig(@Url String url);

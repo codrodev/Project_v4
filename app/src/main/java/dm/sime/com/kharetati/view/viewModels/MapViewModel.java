@@ -203,7 +203,11 @@ public class MapViewModel extends ViewModel {
 
         SerializedValidateParcelModel model = new SerializedValidateParcelModel();
         model.setLocale(Global.CURRENT_LOCALE);
-        model.setMy_id(Global.loginDetails.username);
+        if(Global.isUAE){
+            model.setMy_id(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getUuid());
+        } else {
+            model.setMy_id(Global.loginDetails.username);
+        }
         model.setParcel_id(Integer.parseInt(Global.mapSearchResult.getService_response().getParcelId()));
         model.setToken(Global.site_plan_token);
 

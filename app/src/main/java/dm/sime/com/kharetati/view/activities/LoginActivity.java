@@ -625,6 +625,10 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         super.onResume();
         Global.enableClearTextInEditBox(binding.editUserName,LoginActivity.this);
         Global.enableClearTextInEditBox(binding.editPassword,LoginActivity.this);
+        if(Global.isUAEaccessWeburl && Global.uae_code != null && Global.uae_code.length() > 0){
+            //viewModel.getUAESessionToken(Global.uae_access_token);
+            viewModel.getUAEAccessToken(Global.uae_code);
+        }
     }
 
     @Override

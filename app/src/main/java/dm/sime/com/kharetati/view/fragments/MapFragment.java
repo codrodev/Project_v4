@@ -830,12 +830,24 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             String lang = Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0 ? "en" : "ar";
             builder.append("lang=" + lang + "&");
             if(!Global.isUserLoggedIn){
-                builder.append("isGuest=true&");
+                builder.append("userType=GUEST&");
                 builder.append("user_id="+ Global.sime_userid +"&");
                 builder.append("user_name=GUEST&");
             } else {
-                builder.append("user_id=" + Global.username + "&");
-                builder.append("user_name=" + Global.getUser(getActivity()).getFullname() + "&");
+                if(Global.isUAE){
+                    builder.append("userType=UAEPASS&");
+                    builder.append("user_id=" + Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getUuid() + "&");
+                    if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0) {
+                        builder.append("user_name=" + Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN() + "&");
+                    } else {
+                        builder.append("user_name=" + Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameAR() + "&");
+                    }
+                } else {
+                    builder.append("userType=MYID&");
+                    builder.append("user_id=" + Global.username + "&");
+                    builder.append("user_name=" + Global.getUser(getActivity()).getFullname() + "&");
+                }
+
             }
             if(fun.getParams() != null && fun.getParams().size() > 0){
 

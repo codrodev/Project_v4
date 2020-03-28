@@ -35,6 +35,7 @@ public class NetworkConnectionInterceptor implements Interceptor {
                 requestBuilder.header("Content-Type", "application/json");
                 requestBuilder.header("token", Global.accessToken);
 
+
                 return chain.proceed(requestBuilder.build());
             } else if (Global.accessToken == null || Global.accessToken.isEmpty()) {
 

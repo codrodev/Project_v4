@@ -310,19 +310,20 @@
                     android:textAllCaps="false"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/login_font_size" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="4dp"
-                    android:id="@+id/txtGuest"
-                    android:fontFamily="@font/dubai_font"
-                    android:text="@string/signin_as_guest"
-                    android:textAlignment="center"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/login_font_size" />
             </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="4dp"
+                android:id="@+id/txtGuest"
+                android:fontFamily="@font/dubai_font"
+                android:text="@string/signin_as_guest"
+                android:textAlignment="center"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/login_font_size" />
             <LinearLayout
                 android:id="@+id/layoutUAEPass"
                 android:layout_width="match_parent"
