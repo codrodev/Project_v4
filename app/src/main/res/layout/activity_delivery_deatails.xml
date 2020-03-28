@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 app:hintEnabled="false">
 
-                <EditText
+                <dm.sime.com.kharetati.view.customview.CleanableEditText
                     android:id="@+id/et_recievername"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 app:hintEnabled="false">
 
-                <EditText
+                <dm.sime.com.kharetati.view.customview.CleanableEditText
                     android:id="@+id/et_emailaddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 app:hintEnabled="false">
 
-                <EditText
+                <dm.sime.com.kharetati.view.customview.CleanableEditText
                     android:id="@+id/et_mobile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
                 android:layout_height="wrap_content"
                 app:hintEnabled="false">
 
-                <EditText
+                <dm.sime.com.kharetati.view.customview.CleanableEditText
                     android:id="@+id/et_makani"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -183,7 +183,7 @@
                 android:layout_height="wrap_content"
                 app:hintEnabled="false">
 
-                <EditText
+                <dm.sime.com.kharetati.view.customview.CleanableEditText
                     android:id="@+id/et_villa_building_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -210,7 +210,7 @@
                 android:layout_height="wrap_content"
                 app:hintEnabled="false">
 
-                <EditText
+                <dm.sime.com.kharetati.view.customview.CleanableEditText
                     android:id="@+id/et_buildingName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -238,7 +238,7 @@
                 app:hintEnabled="false"
                 >
 
-                <EditText
+                <dm.sime.com.kharetati.view.customview.CleanableEditText
                     android:id="@+id/et_streetAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -265,7 +265,7 @@
                 android:layout_height="wrap_content"
                 app:hintEnabled="false">
 
-                <EditText
+                <dm.sime.com.kharetati.view.customview.CleanableEditText
                     android:id="@+id/et_adress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -294,7 +294,7 @@
                 android:layout_height="wrap_content"
                 app:hintEnabled="false">
 
-                <EditText
+                <dm.sime.com.kharetati.view.customview.CleanableEditText
                     android:id="@+id/et_landmark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

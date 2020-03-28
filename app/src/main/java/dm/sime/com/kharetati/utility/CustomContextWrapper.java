@@ -30,11 +30,9 @@ public class CustomContextWrapper extends ContextWrapper {
         configuration.setLocales(localeList);
 //        context = context.getApplicationContext().createConfigurationContext(configuration);
         context = context.createConfigurationContext(configuration);
+            // res.updateConfiguration(configuration, res.getDisplayMetrics());
 
-    } /*else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-        configuration.setLocale(newLocale);
-        context = context.createConfigurationContext(configuration);
-    }*/ else {
+    } else {
         configuration.locale = newLocale;
         res.updateConfiguration(configuration, res.getDisplayMetrics());
     }

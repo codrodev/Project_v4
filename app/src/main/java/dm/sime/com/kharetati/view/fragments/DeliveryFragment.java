@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.ActivityDeliveryDeatailsBinding;
 import dm.sime.com.kharetati.datas.models.DeliveryDetails;
+import dm.sime.com.kharetati.datas.models.RetrievedDeliveryDetails;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
@@ -88,6 +89,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
         initializePage();
         final String spinnerItems[]=getActivity().getResources().getStringArray(R.array.emirates);
         userid=Global.getUser(getActivity()).getEmail();
+
 //        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         Global.hideSoftKeyboard(getActivity());
 
@@ -132,7 +134,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
                         }
                     }
                     binding.etEmirates.setSelection(emId);
-                    ParentSiteplanViewModel.deliveryDetails.setEmirate(Integer.toString(emId));
+                    ParentSiteplanViewModel.deliveryDetails.setEmirate(String.valueOf(emId));
                     spinner_position = emId;
                     //save here
                     if(binding.etEmailaddress.getText().toString().length()>0 && binding.etMobile.getText().toString().length()>=10 && binding.etRecievername.getText().toString().length()>0) {
@@ -145,7 +147,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
                     }
                 } else {
                     spinner_position = 0;
-                    ParentSiteplanViewModel.deliveryDetails.setEmirate(Integer.toString(0));
+                    ParentSiteplanViewModel.deliveryDetails.setEmirate("0");
                 }
 
             }
@@ -205,6 +207,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
             }
 
         } else {
+            setNextEnabledStatus(true);
             int count= binding.linearLayout.getChildCount();
             for(int i= 0; i<count;i++){
                 if(binding.linearLayout.getChildAt(i)!=binding.deliveryByCourier)
@@ -242,6 +245,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(Global.isDeliveryByCourier){
                 if (charSequence.length() > 0) {
                     if (isValidEmailId() && isValidEmirate() && isValidMobile())
                         setNextEnabledStatus(true);
@@ -249,7 +253,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
                         setNextEnabledStatus(false);
                 } else
                     setNextEnabledStatus(false);
-
+                }
 
             }
 
@@ -266,6 +270,8 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                if(Global.isDeliveryByCourier){
                 if (charSequence.length() > 0 ) {
                     if(binding.etEmailaddress.getText().toString().contains("@") && binding.etEmailaddress.getText().toString().contains(".")) {
                         if (binding.etRecievername.getText().length() > 0 && isValidEmirate() && isValidMobile())
@@ -276,6 +282,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
                         setNextEnabledStatus(false);
                 } else
                     setNextEnabledStatus(false);
+                }
 
 
             }
@@ -293,6 +300,8 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                if(Global.isDeliveryByCourier){
                 if (charSequence.length() >= 12) {
                     if (binding.etRecievername.getText().length() > 0 && isValidEmirate() && isValidEmailId())
                         setNextEnabledStatus(true);
@@ -300,6 +309,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
                         setNextEnabledStatus(false);
                 } else
                     setNextEnabledStatus(false);
+                }
 
 
             }
@@ -357,12 +367,14 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
 
 
     private void initializePage() {
+        ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
         binding.deliveryByCourier.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 Global.isDeliveryByCourier = isChecked;
                 buttonView.setChecked(Global.isDeliveryByCourier);
+
 
 
                 if (!isChecked) {
@@ -421,7 +433,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
 
     private boolean isValidEmirate(){
         boolean isValid = true;
-        if(ParentSiteplanViewModel.deliveryDetails.getEmirate().equals("0")) {
+        if(convertEmirateId(ParentSiteplanViewModel.deliveryDetails.getEmirate())==0) {
             //AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.select_emirate), getResources().getString(R.string.ok), getActivity());
             isValid=false;
             return isValid;
@@ -519,7 +531,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
         editor.putString("name", binding.etRecievername.getText().toString());
 
         if(ParentSiteplanViewModel.deliveryDetails == null){
-            ParentSiteplanViewModel.deliveryDetails = new DeliveryDetails();
+            ParentSiteplanViewModel.deliveryDetails = new RetrievedDeliveryDetails();
         }
         if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0){
             ParentSiteplanViewModel.deliveryDetails.setNameEn(binding.etRecievername.getText().toString());
@@ -546,22 +558,22 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
         //Global.isDeliveryByCourier = true;
         binding.deliveryByCourier.setChecked(Global.isDeliveryByCourier);
         if(Global.isDeliveryByCourier) {
-            Global.deliveryDetails=new JSONObject();
+            Global.deliveryDetails=new DeliveryDetails();
             if(ParentSiteplanViewModel.deliveryDetails != null){
-                Global.deliveryDetails.put("name_en", ParentSiteplanViewModel.deliveryDetails.getNameEn());
-                Global.deliveryDetails.put("name_ar", ParentSiteplanViewModel.deliveryDetails.getNameAr());
-                Global.deliveryDetails.put("email_id", ParentSiteplanViewModel.deliveryDetails.getEmailId());
-                Global.deliveryDetails.put("mobile", ParentSiteplanViewModel.deliveryDetails.getMobileNo());
-                Global.deliveryDetails.put("building_name", ParentSiteplanViewModel.deliveryDetails.getBldgName());
-                Global.deliveryDetails.put("building_no", ParentSiteplanViewModel.deliveryDetails.getBldgNo());
-                Global.deliveryDetails.put("nearest_landmark", ParentSiteplanViewModel.deliveryDetails.getNearestLandmark());
-                Global.deliveryDetails.put("street_address", ParentSiteplanViewModel.deliveryDetails.getStreetAddress());
-                Global.deliveryDetails.put("main_address", ParentSiteplanViewModel.deliveryDetails.getMainAddress());
-                Global.deliveryDetails.put("emirate", ParentSiteplanViewModel.deliveryDetails.getEmirate());
-                Global.deliveryDetails.put("makani_no", ParentSiteplanViewModel.deliveryDetails.getMakaniNo());
+                Global.deliveryDetails.setNameEn(ParentSiteplanViewModel.deliveryDetails.getNameEn());
+                Global.deliveryDetails.setNameAr( ParentSiteplanViewModel.deliveryDetails.getNameAr());
+                Global.deliveryDetails.setEmailId( ParentSiteplanViewModel.deliveryDetails.getEmailId());
+                Global.deliveryDetails.setMobileNo( ParentSiteplanViewModel.deliveryDetails.getMobileNo());
+                Global.deliveryDetails.setBldgName(ParentSiteplanViewModel.deliveryDetails.getBldgName());
+                Global.deliveryDetails.setBldgNo( ParentSiteplanViewModel.deliveryDetails.getBldgNo());
+                Global.deliveryDetails.setNearestLandmark( ParentSiteplanViewModel.deliveryDetails.getNearestLandmark());
+                Global.deliveryDetails.setStreetAddress( ParentSiteplanViewModel.deliveryDetails.getStreetAddress());
+                Global.deliveryDetails.setMainAddress(ParentSiteplanViewModel.deliveryDetails.getMainAddress());
+                Global.deliveryDetails.setEmirate(Integer.parseInt(ParentSiteplanViewModel.deliveryDetails.getEmirate()));
+                Global.deliveryDetails.setMakaniNo( ParentSiteplanViewModel.deliveryDetails.getMakaniNo());
             }
 
-            Global.deliveryDetails.put("emirate",DeliveryFragment.emId);
+            //Global.deliveryDetails.setEmID(DeliveryFragment.emId);
         }
         ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
 
@@ -630,10 +642,10 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
             if(ParentSiteplanViewModel.deliveryDetails.getStreetAddress() != null){
                 binding.etStreetAddress.setText(ParentSiteplanViewModel.deliveryDetails.getStreetAddress());
             }
-            if(ParentSiteplanViewModel.deliveryDetails.getEmirate() != null &&
-                    ParentSiteplanViewModel.deliveryDetails.getEmirate().length() > 0){
+            if(convertEmirateId(ParentSiteplanViewModel.deliveryDetails.getEmirate()) != 0 &&
+                    convertEmirateId(ParentSiteplanViewModel.deliveryDetails.getEmirate())> 0){
                 try {
-                    int val = Integer.parseInt(ParentSiteplanViewModel.deliveryDetails.getEmirate());
+                    int val = convertEmirateId(ParentSiteplanViewModel.deliveryDetails.getEmirate());
                     binding.etEmirates.setSelection(fetchEmirate(val));
                 } catch (Exception e){
 
@@ -658,7 +670,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
                     binding.etRecievername.setText(Global.getUser(getActivity()).getFullnameAR());
                 }
             }
-            ParentSiteplanViewModel.deliveryDetails.setEmirate("0"); 
+            ParentSiteplanViewModel.deliveryDetails.setEmirate("0");
 
         }
 

@@ -87,7 +87,7 @@ public class MapViewModel extends ViewModel {
 
     public void getParceldetails(){
         mapNavigator.onStarted();
-        String url = AppUrls.BASE_AUXULARY_URL + "/getparceldetails";
+        String url = AppUrls.BASE_AUXULARY_URL + "getparceldetails";
 
         SerializeGetAppRequestModel model = new SerializeGetAppRequestModel();
 

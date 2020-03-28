@@ -57,6 +57,7 @@ public class LandOwnerSelectionFragment extends Fragment {
 
         setRetainInstance(true);
 
+
         ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
         landOwnedType = new String[] {getResources().getString(R.string.land_owned_By_person),getResources().getString(R.string.land_owned_By_company)};
 

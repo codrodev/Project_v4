@@ -2,33 +2,24 @@ package dm.sime.com.kharetati.datas.models;
 
 import androidx.databinding.BaseObservable;
 
-public class DeliveryDetails extends BaseObservable {
-    private int emirate;
+public class RetrievedDeliveryDetails extends BaseObservable {
+    private String emirate;
     private String email_id;
-    private String mobile;
+    private String mobile_no;
     private String name_en;
     private String name_ar;
     private String main_address;
     private String nearest_landmark;
     private String street_address;
     private String makani_no;
-    private String building_name;
-    private String building_no;
-    private int emID;
+    private String bldg_name;
+    private String bldg_no;
 
-    public int getEmID() {
-        return emID;
-    }
-
-    public void setEmID(int emID) {
-        this.emID = emID;
-    }
-
-    public int getEmirate() {
+    public String getEmirate() {
         return emirate;
     }
 
-    public void setEmirate(int emirate) {
+    public void setEmirate(String emirate) {
         this.emirate = emirate;
     }
 
@@ -41,11 +32,11 @@ public class DeliveryDetails extends BaseObservable {
     }
 
     public String getMobileNo() {
-        return mobile;
+        return mobile_no;
     }
 
     public void setMobileNo(String mobile_no) {
-        this.mobile = mobile_no;
+        this.mobile_no = mobile_no;
     }
 
     public String getNameEn() {
@@ -97,18 +88,18 @@ public class DeliveryDetails extends BaseObservable {
     }
 
     public String getBldgName() {
-        return building_name;
+        return bldg_name;
     }
 
     public void setBldgName(String bldg_name) {
-        this.building_name = bldg_name;
+        this.bldg_name = bldg_name;
     }
 
     public String getBldgNo() {
-        return building_no;
+        return bldg_no;
     }
 
     public void setBldgNo(String bldg_no) {
-        this.building_no = bldg_no;
+        this.bldg_no = bldg_no;
     }
 }

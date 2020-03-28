@@ -3,6 +3,7 @@ package dm.sime.com.kharetati.view.activities;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
@@ -13,6 +14,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -132,15 +134,17 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
         //viewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
         viewModel = ViewModelProviders.of(this,factory).get(LoginViewModel.class);
+        //getting saved locale
+        SharedPreferences sharedpreferences = getSharedPreferences(USER_LANGUAGE, Context.MODE_PRIVATE);
+        String locale = sharedpreferences.getString(USER_LANGUAGE, "defaultStringIfNothingFound");
+        //String locale = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(USER_LANGUAGE, "defaultStringIfNothingFound");
+        if(!locale.equals("defaultStringIfNothingFound"))
+            CURRENT_LOCALE =locale;
 
         //binding.setViewmodel(viewModel);
         viewModel.authListener = this;
 
-        //getting saved locale
 
-        String locale = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(USER_LANGUAGE, "defaultStringIfNothingFound");
-        if(!locale.equals("defaultStringIfNothingFound"))
-            CURRENT_LOCALE =locale;
 
         //getting remembered user credentials if any
 
@@ -180,6 +184,12 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
             public void onClick(View v) {
                 Global.showSoftKeyboard(v,LoginActivity.this);
 
+            }
+        });
+        binding.switchLanguage.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return event.getActionMasked() == MotionEvent.ACTION_MOVE;
             }
         });
         binding.chkRememberMe.setChecked(Global.isRememberLogin(this));
@@ -228,7 +238,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         });
 
         binding.editUserName.setImeOptions(EditorInfo.IME_ACTION_NEXT);
-        binding.editPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        binding.editUserName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
@@ -238,11 +248,12 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                         else
                             AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), LoginActivity.this);
                     } else {
-                        if(binding.editUserName.getText()!=null){
-                            binding.editPassword.requestFocus();
+                        if(!viewModel.isValidEmail(binding.editUserName.getText().toString())||binding.editUserName.getText().toString().trim().length()<=5) {
+                            onFailure(getResources().getString(R.string.enter_valid_username));
+                            binding.editUserName.requestFocus();
                         }
                         else
-                            onFailure(getString(R.string.enter_username));
+                        binding.editPassword.requestFocus();
 
                     }
                     return true;
@@ -265,9 +276,15 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                             AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), LoginActivity.this);
                     } else {
                         if(binding.editUserName.getText()!=null){
+
                             if(binding.editPassword.getText()!=null){
+                                if(binding.editPassword.getText().toString().length()>=5){
                                 viewModel.setCredentials(binding.editUserName.getText().toString().trim(), binding.editPassword.getText().toString().trim());
-                                viewModel.onLoginButtonClick();
+                                binding.btnLogin.requestFocus();
+                                viewModel.onLoginButtonClick();}
+                                else
+                                    onFailure(getString(R.string.enter_valid_password));
+
                             }
                             else
                                 onFailure(getString(R.string.enter_password));
@@ -323,6 +340,10 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
                     ((SwitchCompatEx)v).setChecked(false);
                     CURRENT_LOCALE = (CURRENT_LOCALE.equals("ar")) ? "en" : "ar";
+                     //PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString(USER_LANGUAGE,CURRENT_LOCALE).apply();
+
+                    sharedpreferences.edit().putString(USER_LANGUAGE,CURRENT_LOCALE).apply();
+
                     Global.changeLang(CURRENT_LOCALE, LoginActivity.this);
 
 
@@ -606,18 +627,25 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
+            SharedPreferences sharedpreferences = newBase.getSharedPreferences(USER_LANGUAGE, Context.MODE_PRIVATE);
+            String locale = sharedpreferences.getString(USER_LANGUAGE, "defaultStringIfNothingFound");
+            if(!locale.equals("defaultStringIfNothingFound"))
+                CURRENT_LOCALE =locale;
+            else
+                CURRENT_LOCALE ="en";
+
             super.attachBaseContext(CustomContextWrapper.wrap(newBase, CURRENT_LOCALE));
-        } else {
-            super.attachBaseContext(newBase);
-        }
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        CURRENT_LOCALE = CURRENT_LOCALE.equals("en")?"en":"ar";
         Global.enableClearTextInEditBox(binding.editUserName,LoginActivity.this);
         Global.enableClearTextInEditBox(binding.editPassword,LoginActivity.this);
+
     }
 
     @Override
@@ -694,7 +722,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
             localversion = String.valueOf(pInfo.versionCode);
         String msg;
 
-        msg = (Global.getCurrentLanguage(LoginActivity.this).equals("en"))?Global.forceUserToUpdateBuild_msg_en : Global.forceUserToUpdateBuild_msg_ar;
+        msg = (CURRENT_LOCALE.equals("en"))?Global.forceUserToUpdateBuild_msg_en : Global.forceUserToUpdateBuild_msg_ar;
 
 
         if (Global.versionCompare(Global.CurrentAndroidVersion, localversion) > 0 && forceUserToUpdateBuild)

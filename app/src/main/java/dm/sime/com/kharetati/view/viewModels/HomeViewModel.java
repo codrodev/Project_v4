@@ -420,7 +420,7 @@ public class HomeViewModel extends ViewModel {
                 homeNavigator.populateGridMenu();
             } else {
                 if(appResponse.getMessage() != null){
-                    homeNavigator.onFailure(appResponse.getMessage());
+                    homeNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")?appResponse.getMessage():appResponse.getMessage_ar());
                 } else {
                     homeNavigator.onFailure(activity.getResources().getString(R.string.community_error));
                 }
@@ -549,7 +549,7 @@ public class HomeViewModel extends ViewModel {
             homeNavigator.onSuccess();
             if(result.getIs_exception().equals("true")){
                 if(result.getMessage() != null && result.getMessage().length() > 0){
-                    homeNavigator.onFailure(result.getMessage());
+                    homeNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")?result.getMessage():result.getMessage_ar());
                 } else {
 
                     homeNavigator.onFailure(activity.getResources().getString(R.string.community_error));

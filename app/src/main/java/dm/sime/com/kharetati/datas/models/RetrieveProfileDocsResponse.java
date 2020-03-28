@@ -58,7 +58,7 @@ public class RetrieveProfileDocsResponse {
     private String mobile_no;
 
 
-    private DeliveryDetails delivery_details;
+    private RetrievedDeliveryDetails delivery_details;
 
     private String messageAr;
 
@@ -108,11 +108,11 @@ public class RetrieveProfileDocsResponse {
         this.status = status;
     }
 
-    public DeliveryDetails getDeliveryDetails() {
+    public RetrievedDeliveryDetails getDeliveryDetails() {
         return delivery_details;
     }
 
-    public void setDeliveryDetails(DeliveryDetails delivery_details) {
+    public void setDeliveryDetails(RetrievedDeliveryDetails delivery_details) {
         this.delivery_details = delivery_details;
     }
 

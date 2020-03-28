@@ -192,18 +192,21 @@ public class LoginViewModel extends ViewModel {
         authListener.onStarted();
         if (getDataEmail().isEmpty() && getDataPassword().isEmpty()) {
 
-            authListener.onFailure(activity.getString(R.string.username_and_password));
+            authListener.onFailure((activity.getString(R.string.username_and_password)));
         }else if(getDataEmail().isEmpty()){
 
-            authListener.onFailure(activity.getString(R.string.enter_username));
+            authListener.onFailure(activity.getResources().getString(R.string.enter_username));
 
 
         } else if(getDataPassword().isEmpty()){
 
-            authListener.onFailure(activity.getString(R.string.enter_password));
+            authListener.onFailure(activity.getResources().getString(R.string.enter_password));
 
-        }else if(!isValidEmail(getDataEmail())) {
-            authListener.onFailure(activity.getString(R.string.enter_valid_username));
+        }else if(!isValidEmail(getDataEmail())||getDataEmail().length()<=5) {
+            authListener.onFailure(activity.getResources().getString(R.string.enter_valid_username));
+            }
+        else if(getDataPassword().length()<=5) {
+            authListener.onFailure(activity.getResources().getString(R.string.enter_valid_password));
             }
             else {
 

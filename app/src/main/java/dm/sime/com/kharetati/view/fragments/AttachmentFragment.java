@@ -28,6 +28,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -69,6 +70,7 @@ import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.FragmentAttachmentBinding;
 import dm.sime.com.kharetati.datas.models.AttachedDoc;
 import dm.sime.com.kharetati.datas.models.AttachmentBitmap;
+import dm.sime.com.kharetati.datas.models.DeliveryDetails;
 import dm.sime.com.kharetati.datas.models.DocArr;
 import dm.sime.com.kharetati.datas.models.Docs;
 import dm.sime.com.kharetati.datas.models.LicenceDocs;
@@ -205,7 +207,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
     private void initializePage() {
 
-        ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
+        ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
 
         //clearBitMap();
 
@@ -485,6 +487,10 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                 binding.imgVisaPassport.setImageBitmap(AttachmentBitmap.visa_passport);
             else
                 binding.imgVisaPassport.setImageResource(R.drawable.photo);
+            if(getBitmapFromView(binding.imgPassport) && getBitmapFromView(binding.imgVisaPassport))
+                ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
+            else
+                ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
 
             retrieved_passport=null;
             retrieved_visa=null;
@@ -511,6 +517,11 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                 binding.imgLetterFromOwner.setImageBitmap(AttachmentBitmap.letter_from_owner);
             else
                 binding.imgLetterFromOwner.setImageResource(R.drawable.photo);
+
+            if(getBitmapFromView(binding.imgPassport) && getBitmapFromView(binding.imgVisaPassport) && getBitmapFromView(binding.imgLetterFromOwner))
+                ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
+            else
+                ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
             retrieved_passport=null;
             retrieved_visa=null;
             retrieved_noc=null;
@@ -533,21 +544,36 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
             else
                 binding.imgLetterFromOwner.setImageResource(R.drawable.photo);
 
+            if(getBitmapFromView(binding.imgCompanyLicense) && getBitmapFromView(binding.imgLetterFromOwner))
+                ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
+            else
+                ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
+
             retrieved_license=null;
             retrieved_noc=null;
 
         }
         else if(ParentSiteplanViewModel.status==504){
             // No previously uploaded documents
-
+            ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
         }
 
 
 
 
     }
+    public Boolean getBitmapFromView(ImageView imageView){
+
+        Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+        if(getActivity()!=null)
+        return (bitmap!=null && bitmap!=((BitmapDrawable)getActivity().getResources().getDrawable(R.drawable.photo)).getBitmap());
+        else
+            return false;
+
+    }
+
     public void attachmentState() {
-        ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
+        ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
         if(Global.isPerson && Global.rbIsOwner){
 
 
@@ -918,7 +944,52 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                 }
             }
         }
+        nextButtonStatus();
         imageAlignment();
+
+    }
+    public void nextButtonStatus(){
+
+        if(ParentSiteplanViewModel.status==501){
+            if(getBitmapFromView(binding.imgPassport) && getBitmapFromView(binding.imgVisaPassport))
+                ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
+            else
+                ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
+        }
+        else if(ParentSiteplanViewModel.status==502){
+            if(getBitmapFromView(binding.imgPassport) && getBitmapFromView(binding.imgVisaPassport) && getBitmapFromView(binding.imgLetterFromOwner))
+                ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
+            else
+                ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
+
+        }
+        else if(ParentSiteplanViewModel.status==503){
+            if(getBitmapFromView(binding.imgCompanyLicense) && getBitmapFromView(binding.imgLetterFromOwner))
+                ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
+            else
+                ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
+        }
+        else {
+            if(Global.isPerson && Global.rbIsOwner){
+                if((getBitmapFromView(binding.imgPassport) && getBitmapFromView(binding.imgVisaPassport)))
+                    ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
+                else
+                    ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
+            }
+            else if(Global.isPerson && !Global.rbIsOwner){
+                if(getBitmapFromView(binding.imgPassport) && getBitmapFromView(binding.imgVisaPassport) && getBitmapFromView(binding.imgLetterFromOwner))
+                    ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
+                else
+                    ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
+            }
+            else if(Global.isCompany){
+                if(getBitmapFromView(binding.imgCompanyLicense) && getBitmapFromView(binding.imgLetterFromOwner))
+                    ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
+                else
+                    ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
+            }
+
+        }
     }
 
     @Override
@@ -935,8 +1006,10 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
     @Override
     public void onFailure(String Msg) {
+        if(getActivity()!=null){
         AlertDialogUtil.showProgressBar(getActivity(),false);
         AlertDialogUtil.errorAlertDialog("",Msg,getActivity().getResources().getString(R.string.ok),getActivity());
+        }
 
     }
 
@@ -1001,6 +1074,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                             dr.setDocKey(LETTER_FROM_OWNER);
 
                         }
+                        nextButtonStatus();
 
                     } else if (model.isImageFormat(dr.getDocFormat())) {
                         InputStream stream = new ByteArrayInputStream(Base64.decode(retrieveDocStreamResponse.getDoc_details().getDoc().trim().getBytes(), Base64.DEFAULT));
@@ -1047,9 +1121,8 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                             imageAlignment();
                             dr.setDocKey(LETTER_FROM_OWNER);
 
-                        } else {
-
                         }
+                        nextButtonStatus();
 
                     } else {
                         imageType = retrieveDocStreamResponse.getDoc_details().getDoctype();
@@ -1086,6 +1159,8 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                             dr.setDocKey(LETTER_FROM_OWNER);
 
                         }
+                        nextButtonStatus();
+
                     }
 
                     if (!isOldDocExistInAttachment(dr.getDocKey())) {
@@ -1097,6 +1172,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                             ParentSiteplanViewModel.getDownloadedDoc().size() > 0) {
                         if (ParentSiteplanViewModel.getDownloadedDoc().size() == Global.docArr.length) {
                             onSuccess();
+                            nextButtonStatus();
                         }
                     }
 
@@ -1240,6 +1316,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                                 binding.imgPassport.setImageDrawable(getResources().getDrawable(R.drawable.pdf_icon));
                                 binding.personalView.setVisibility(View.VISIBLE);
                                 binding.personalChange.setVisibility(View.VISIBLE);
+                                nextButtonStatus();
 
                             } else if (currentSelection.equals(LETTER_FROM_OWNER)) {
 
@@ -1247,19 +1324,23 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                                 binding.imgLetterFromOwner.setImageDrawable(getResources().getDrawable(R.drawable.pdf_icon));
                                 binding.nocView.setVisibility(View.VISIBLE);
                                 binding.nocChange.setVisibility(View.VISIBLE);
+                                nextButtonStatus();
                             } else if (currentSelection.equals(VISA_PASSPORT)) {
 
                                 isCamera = false;
                                 binding.imgVisaPassport.setImageDrawable(getResources().getDrawable(R.drawable.pdf_icon));
                                 binding.visaView.setVisibility(View.VISIBLE);
                                 binding.visaChange.setVisibility(View.VISIBLE);
+                                nextButtonStatus();
                             } else if (currentSelection.equals(COMPANY_LICENCE)) {
 
                                 isCamera = false;
                                 binding.imgCompanyLicense.setImageDrawable(getResources().getDrawable(R.drawable.pdf_icon));
                                 binding.licenseView.setVisibility(View.VISIBLE);
                                 binding.licenseChange.setVisibility(View.VISIBLE);
+                                nextButtonStatus();
                             }
+
                         }
                     }
                 }
@@ -1382,6 +1463,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                 createAttachedDoc(encodeImage(AttachmentBitmap.company_license), "image/jpg",
                         getCurrentKey(),COMPANY_LICENCE+".jpg", getDocId(currentSelection), COMPANY_LICENCE);
             }
+           nextButtonStatus();
 
         }
     }
@@ -1717,22 +1799,22 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         //User user=Global.getUser(getActivity());
 
         if(Global.isDeliveryByCourier) {
-            Global.deliveryDetails=new JSONObject();
+            Global.deliveryDetails=new DeliveryDetails();
             if(ParentSiteplanViewModel.deliveryDetails != null){
-                Global.deliveryDetails.put("name_en", ParentSiteplanViewModel.deliveryDetails.getNameEn());
-                Global.deliveryDetails.put("name_ar", ParentSiteplanViewModel.deliveryDetails.getNameAr());
-                Global.deliveryDetails.put("email_id", ParentSiteplanViewModel.deliveryDetails.getEmailId());
-                Global.deliveryDetails.put("mobile", ParentSiteplanViewModel.deliveryDetails.getMobileNo());
-                Global.deliveryDetails.put("building_name", ParentSiteplanViewModel.deliveryDetails.getBldgName());
-                Global.deliveryDetails.put("building_no", ParentSiteplanViewModel.deliveryDetails.getBldgNo());
-                Global.deliveryDetails.put("nearest_landmark", ParentSiteplanViewModel.deliveryDetails.getNearestLandmark());
-                Global.deliveryDetails.put("street_address", ParentSiteplanViewModel.deliveryDetails.getStreetAddress());
-                Global.deliveryDetails.put("main_address", ParentSiteplanViewModel.deliveryDetails.getMainAddress());
-                Global.deliveryDetails.put("emirate", ParentSiteplanViewModel.deliveryDetails.getEmirate());
-                Global.deliveryDetails.put("makani_no", ParentSiteplanViewModel.deliveryDetails.getMakaniNo());
+                Global.deliveryDetails.setNameEn(ParentSiteplanViewModel.deliveryDetails.getNameEn());
+                Global.deliveryDetails.setNameAr( ParentSiteplanViewModel.deliveryDetails.getNameAr());
+                Global.deliveryDetails.setEmailId( ParentSiteplanViewModel.deliveryDetails.getEmailId());
+                Global.deliveryDetails.setMobileNo( ParentSiteplanViewModel.deliveryDetails.getMobileNo());
+                Global.deliveryDetails.setBldgName(ParentSiteplanViewModel.deliveryDetails.getBldgName());
+                Global.deliveryDetails.setBldgNo( ParentSiteplanViewModel.deliveryDetails.getBldgNo());
+                Global.deliveryDetails.setNearestLandmark( ParentSiteplanViewModel.deliveryDetails.getNearestLandmark());
+                Global.deliveryDetails.setStreetAddress( ParentSiteplanViewModel.deliveryDetails.getStreetAddress());
+                Global.deliveryDetails.setMainAddress(ParentSiteplanViewModel.deliveryDetails.getMainAddress());
+                Global.deliveryDetails.setEmirate(Integer.parseInt(ParentSiteplanViewModel.deliveryDetails.getEmirate()));
+                Global.deliveryDetails.setMakaniNo( ParentSiteplanViewModel.deliveryDetails.getMakaniNo());
             }
 
-            Global.deliveryDetails.put("emirate",DeliveryFragment.emId);
+            //Global.deliveryDetails.setEmID(DeliveryFragment.emId);
         }
 
         Global.passportData = new ArrayList<>();
@@ -1832,6 +1914,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                         doc.setKey(ParentSiteplanViewModel.getDownloadedDoc().get(i).getDocKey());
                         doc.setDoc_type(getDocType(ParentSiteplanViewModel.getDownloadedDoc().get(i).getDocKey()));
                         lstAttachedDoc.add(doc);
+                        nextButtonStatus();
                     }
                 }
             }

@@ -33,9 +33,10 @@
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
                         android:weightSum="2">
-                        <RelativeLayout
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:gravity="start"
                             android:layout_weight="1">
                             <ImageView
                                 android:id="@+id/imgBack"
@@ -43,13 +44,13 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="15dp"
                                 android:layout_marginEnd="50dp"
-                                android:layout_marginRight="50dp"
                                 android:gravity="start"
                                 android:src="@drawable/ic_arrow_white"/>
-                        </RelativeLayout>
-                        <RelativeLayout
+                        </LinearLayout>
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:gravity="end"
                             android:layout_weight="1">
                             <ImageView
                                 android:id="@+id/imgHelp"
@@ -59,7 +60,7 @@
                                 android:layout_margin="15dp"
                                 android:layout_alignParentRight="true"
                                 android:src="@drawable/ic_help" />
-                        </RelativeLayout>
+                        </LinearLayout>
                     </LinearLayout>
 
                 </FrameLayout>
@@ -260,7 +261,8 @@
                     android:background="@drawable/maroon_angle_background"
                     android:text="previous"
                     android:textColor="@color/white"
-                    android:drawableLeft="@drawable/ic_chevron_left_24dp"/>
+                    android:drawableStart="@drawable/ic_chevron_left_24dp"
+                    />
 
                 <Button
                     style="@style/font_medium_regular"
@@ -274,6 +276,7 @@
                     android:layout_marginVertical="5dp"
                     android:background="@drawable/maroon_angle_background"
                     android:text="next"
+                    
                     android:textColor="@color/white"
                     android:drawableEnd="@drawable/ic_chevron_right_24dp"/>
             </LinearLayout>

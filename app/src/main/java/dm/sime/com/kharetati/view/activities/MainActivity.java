@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+
+import org.json.JSONObject;
 
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
@@ -39,6 +42,7 @@ import dm.sime.com.kharetati.utility.CustomContextWrapper;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.AppConstants;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.customview.DataCallback;
 import dm.sime.com.kharetati.view.fragments.FeedbackFragment;
 import dm.sime.com.kharetati.view.fragments.RequestDetailsFragment;
 import dm.sime.com.kharetati.view.fragments.WebViewFragment;
@@ -59,8 +63,9 @@ import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
 import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
+import static dm.sime.com.kharetati.utility.constants.AppConstants.USER_LANGUAGE;
 
-public class MainActivity extends AppCompatActivity implements FragmentNavigator, MainNavigator, BottomNavigationFragmentSheet.OnActionListener {
+public class MainActivity extends AppCompatActivity implements FragmentNavigator, MainNavigator, DataCallback, BottomNavigationFragmentSheet.OnActionListener {
 
     ActivityMainBinding binding;
     MainViewModel model;
@@ -75,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     private MeowBottomNavigation.Model myBottomModel;
     private Fragment fragmentAfterBackPress;
     private MyCountDownTimer countDownTimer;
+    private SharedPreferences sharedpreferences;
 
     public static Intent newIntent(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -200,12 +206,23 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     @Override
     protected void onResume() {
         super.onResume();
+        if(CURRENT_LOCALE.equals("ar")){
+           // binding.customBottomBar.show(sharedpreferences.getInt("position",3), true);
+
+        }
+
 
     }
 
     @Override
     protected void attachBaseContext(Context newBase) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            sharedpreferences = newBase.getSharedPreferences(USER_LANGUAGE, Context.MODE_PRIVATE);
+            String locale = sharedpreferences.getString(USER_LANGUAGE, "defaultStringIfNothingFound");
+            if(!locale.equals("defaultStringIfNothingFound"))
+                CURRENT_LOCALE =locale;
+            else
+                CURRENT_LOCALE="en";
             super.attachBaseContext(CustomContextWrapper.wrap(newBase, CURRENT_LOCALE));
         } else {
             super.attachBaseContext(newBase);
@@ -304,6 +321,13 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
     @Override
     public void openLoginActivity() {
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sharedpreferences.edit().putInt("position",binding.customBottomBar.getId()).apply();
 
     }
 
@@ -517,6 +541,16 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         if(actionCode.equals("dismiss")){
             binding.customBottomBar.show(Global.lastSelectedBottomTab, true);
         }
+    }
+
+    @Override
+    public void onSuccess(JSONObject result) {
+
+    }
+
+    @Override
+    public void onDownloadFinish(Object data) {
+
     }
 
     public class MyCountDownTimer extends CountDownTimer {

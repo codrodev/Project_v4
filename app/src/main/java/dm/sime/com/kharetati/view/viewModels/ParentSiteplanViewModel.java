@@ -17,6 +17,7 @@ import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.datas.models.DeliveryDetails;
 import dm.sime.com.kharetati.datas.models.DocArr;
 import dm.sime.com.kharetati.datas.models.RetrieveProfileDocsResponse;
+import dm.sime.com.kharetati.datas.models.RetrievedDeliveryDetails;
 import dm.sime.com.kharetati.datas.models.SerializedModel;
 import dm.sime.com.kharetati.datas.repositories.ParentSitePlanRepository;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
@@ -46,7 +47,7 @@ public class ParentSiteplanViewModel extends ViewModel {
     public ParentSitePlanNavigator parentSitePlanNavigator;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     public static int status;
-    public static DeliveryDetails deliveryDetails= new DeliveryDetails();
+    public static RetrievedDeliveryDetails deliveryDetails= new RetrievedDeliveryDetails();
     public static String applicantMailId;
     public static String applicantMobileNo;
 

@@ -31,7 +31,7 @@ public class SerializedCreateAndUpdateModel {
     @SerializedName("is_owned_by_person")
     private Boolean is_owned_by_person;
     @SerializedName("delivery_details")
-    private JSONObject delivery_details;
+    private DeliveryDetails delivery_details;
     @SerializedName("payment_type")
     private String payment_type;
     @SerializedName("passport_docs")
@@ -123,11 +123,11 @@ public class SerializedCreateAndUpdateModel {
         this.is_owned_by_person = is_owned_by_person;
     }
 
-    public JSONObject getDelivery_details() {
+    public DeliveryDetails getDelivery_details() {
         return delivery_details;
     }
 
-    public void setDelivery_details(JSONObject delivery_details) {
+    public void setDelivery_details(DeliveryDetails delivery_details) {
         this.delivery_details = delivery_details;
     }
 

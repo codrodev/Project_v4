@@ -80,6 +80,7 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
         mRootView = binding.getRoot();
         try {
             initializePage();
+            setRetainInstance(true);
         } catch (JSONException e) {
             e.printStackTrace();
         }
