@@ -93,6 +93,8 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Global.uae_code = "";
+        Global.isUAEaccessWeburl = false;
 
         Global.isLoginActivity = true;
 

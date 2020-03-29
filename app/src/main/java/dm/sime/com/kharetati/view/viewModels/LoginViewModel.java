@@ -646,8 +646,9 @@ public class LoginViewModel extends ViewModel {
             String callbackUrl = Encryptions.decrypt(Global.uaePassConfig.UAEID_callback_url);
             String language = Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0 ? "en" : "ar";
             String accessTokenUrl = Global.uaePassConfig.getGetAccessTokenUAEID_url().endsWith("?") ? Global.uaePassConfig.getGetAccessTokenUAEID_url() : Global.uaePassConfig.getGetAccessTokenUAEID_url() + "?";
-            String url = accessTokenUrl + "redirect_uri="+callbackUrl+"&client_id="+clientId+"&state="+secretId+"&response_type=code&scope=urn:uae:digitalid:profile:general&acr_values=urn:safelayer:tws:policies:authentication:level:low&ui_locales=" + language;
-
+            String url = accessTokenUrl + "grand_type=authorization_code&redirect_uri="+callbackUrl+"&client_id="+clientId+"&state="+secretId+"&response_type=code&scope=urn:uae:digitalid:profile:general&acr_values=urn:safelayer:tws:policies:authentication:level:low&ui_locales=" + language;
+            Global.uae_code = "";
+            Global.isUAEaccessWeburl = false;
             Disposable disposable = repository.getUAEAccessToken(url)
                     .subscribeOn(kharetatiApp.subscribeScheduler())
                     .observeOn(AndroidSchedulers.mainThread())

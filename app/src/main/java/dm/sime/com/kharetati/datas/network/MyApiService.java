@@ -69,11 +69,11 @@ public interface MyApiService {
     @POST(AppUrls.MYID_SESSION_ID)
     Observable<SessionResponse> getSession(@Query("accessToken") String accessToken);
 
-    @POST(AppUrls.UAE_SESSION_ID)
-    Observable<SessionUaePassResponse> getSessionUAEPass(@Query("accessToken") String accessToken);
+    @POST
+    Observable<SessionUaePassResponse> getSessionUAEPass(@Url String url);
 
     @POST
-    Observable<UAEAccessTokenResponse> getUAEAccessToken(@Query("accessToken") String accessToken);
+    Observable<UAEAccessTokenResponse> getUAEAccessToken(@Url String url);
 
     //guest user login
     @POST(AppUrls.REGISTER_GUEST_USER)

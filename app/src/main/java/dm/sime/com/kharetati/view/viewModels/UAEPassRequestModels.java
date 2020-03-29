@@ -7,6 +7,7 @@ import java.io.File;
 
 import ae.sdg.libraryuaepass.business.Environment;
 import ae.sdg.libraryuaepass.business.authentication.model.UAEPassAccessTokenRequestModel;
+import ae.sdg.libraryuaepass.business.authentication.model.AuthTokenModel;
 import ae.sdg.libraryuaepass.business.documentsigning.model.DocumentSigningRequestParams;
 import ae.sdg.libraryuaepass.business.documentsigning.model.UAEPassDocumentSigningRequestModel;
 
@@ -17,7 +18,7 @@ public class UAEPassRequestModels {
     public static final String REDIRECT_URL = "https://smart.gis.gov.ae/kharetatiuaepass";
     private static final String DOCUMENT_SIGNING_SCOPE = "urn:safelayer:eidas:sign:process:document";
     private static final String RESPONSE_TYPE = "code";
-    private static final String SCOPE = "urn:uae:digitalid:profile";
+    private static final String SCOPE = "urn:uae:digitalid:profile:general";
     private static final String ACR_VALUES_MOBILE = "urn:digitalid:authentication:flow:mobileondevice";
     private static final String ACR_VALUES_WEB = "urn:safelayer:tws:policies:authentication:level:low";
     public static final String UAE_PASS_PACKAGE_ID = "ae.uaepass.mainapp";
