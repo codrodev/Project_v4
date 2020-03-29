@@ -13,6 +13,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.gson.Gson;
+
 import org.json.JSONObject;
 
 import java.io.File;
@@ -102,7 +104,7 @@ public class MyMapViewModel extends ViewModel {
 
         myMapNavigator.onStarted();
 
-        String url = AppUrls.RETRIEVE_MY_MAPS;
+        String url = Global.base_url_site_plan + "/retrieveMyMaps";
 
         Map<String, Object> params = new HashMap<>();
         params.put("token", Global.site_plan_token);
@@ -126,6 +128,7 @@ public class MyMapViewModel extends ViewModel {
         } else {
             model.setMy_id(Global.loginDetails.username);
         }
+        String x = new Gson().toJson(model);
         try {
             Disposable disposable = repository.getAllSitePlans(url,model)
                     .subscribeOn(kharetatiApp.subscribeScheduler())

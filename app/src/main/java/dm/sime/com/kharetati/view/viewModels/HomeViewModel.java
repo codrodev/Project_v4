@@ -114,7 +114,7 @@ public class HomeViewModel extends ViewModel {
         mutableInAppNotifications = new MutableLiveData<>();
         mutableInAppNotifications.setValue(model.getLstInAppNotifications());
         //adapterNotification = new InAppNotificationAdapter(R.layout.adapter_in_app_notifications, this, context);
-        if(Global.isUserLoggedIn) {
+        if(Global.isUserLoggedIn && !Global.isUAE) {
             getSession();
         } else {
             getApps();
