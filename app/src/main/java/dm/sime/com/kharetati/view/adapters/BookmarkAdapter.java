@@ -33,6 +33,7 @@ import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.activities.MainActivity;
+import dm.sime.com.kharetati.view.fragments.MapFragment;
 import dm.sime.com.kharetati.view.viewModels.BookmarkViewModel;
 
 public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.GenericViewHolder> {
@@ -104,6 +105,8 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
                     //al.add("");
 
                     ((MainActivity) context).loadFragment(FragmentTAGS.FR_MAP, true, al);
+                    //MapFragment.mapVM.mapNavigator.findParcelForBookmarks(PlotDetails.parcelNo);
+
 
                 }
 

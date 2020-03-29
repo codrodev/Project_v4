@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="?attr/colorPrimary"
+        android:background="@drawable/maroon_overlay_bg"
         android:gravity="start">
 
         <ImageView
@@ -28,10 +28,11 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:text=""
-            android:background="?attr/colorPrimary"
+            android:background="@drawable/maroon_overlay_bg"
             android:textColor="@color/white"
             android:layout_gravity="center"
             android:gravity="end"
+
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
              />
         <ImageView

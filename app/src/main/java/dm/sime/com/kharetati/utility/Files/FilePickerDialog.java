@@ -99,6 +99,7 @@ public class FilePickerDialog extends Dialog implements AdapterView.OnItemClickL
                 String[] paths = MarkedItemList.getSelectedPaths();
                 if (callbacks != null) {
                     callbacks.onSelectedFilePaths(paths);
+                    //write condition here
                 }
                 dismiss();
             }

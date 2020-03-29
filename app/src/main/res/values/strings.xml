@@ -54,7 +54,7 @@
     <string name="request_details">Request Details</string>
     <string name="plot_no">Plot No: </string>
     <string name="area">Area: </string>
-    <string name="favourite_deleted">Favorite has been successfully deleted</string>
+    <string name="favourite_deleted">Bookmark has been successfully deleted</string>
     <string name="NO_FAVOURITE_PLOTS_FOUND">Currently no favourites are available</string>
     <string name="confirmation_delete">Are you sure you want to delete?</string>
     <string name="select">Select</string>
@@ -224,4 +224,5 @@
         <item>7</item>
     </string-array>
     <string name="enter_favourite_name">Please enter the favourite name</string>
+    <string name="enter_valid_password">Please enter a valid password</string>
 </resources>

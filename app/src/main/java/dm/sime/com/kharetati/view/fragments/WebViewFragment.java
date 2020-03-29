@@ -72,6 +72,7 @@ public class WebViewFragment extends Fragment {
         //txtUsername = view.findViewById(R.id.txtUsername);
         //txtWelcome = view.findViewById(R.id.txtWelcome);
         imgBack = view.findViewById(R.id.imgBack);
+        imgBack.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
         /*txtUsername.setText(Global.isUserLoggedIn?(Global.getUser(getActivity()).getFullname()): LoginViewModel.guestName);
         if(appName != null && appName != "") {
             txtWelcome.setText(appName);

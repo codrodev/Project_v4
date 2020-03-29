@@ -128,6 +128,7 @@ public class AttachmentViewModel extends ViewModel {
 
     }
 
+
     public boolean isImageFormat(String format) {
         boolean isImage = false;
         if (format.compareToIgnoreCase("jpg") == 0 ||

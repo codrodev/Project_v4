@@ -93,6 +93,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         model.manageAppBottomBAtr(getActivity(), false);
         pagerArray =  getActivity().getResources().getStringArray(R.array.request_site_plan);
         binding.imgHelp.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
+        binding.imgBack.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
         loadFragment(0);
         binding.txtHeader.setText(pagerArray[currentIndex]);
         changeStepperBackground(currentIndex);

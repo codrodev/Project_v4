@@ -147,10 +147,10 @@ public class BookmarkViewModel extends ViewModel {
     private void addSqMt(){
         if(listData != null && listData.size() > 0) {
             for (Bookmark bm : listData) {
-                bm.Area = null;
-                //bm.Area = " " + bm.Area + " Sq Mt";
-                bm.ParcelNumber = null;
-                //bm.ParcelNumber = " " + bm.ParcelNumber;
+                //bm.Area = null;
+                bm.Area = " " + bm.Area + " Sq Mt";
+//                bm.ParcelNumber = null;
+                bm.ParcelNumber = " " + bm.ParcelNumber;
             }
         }
     }

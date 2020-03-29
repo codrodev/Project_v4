@@ -14,8 +14,10 @@ import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.URLSpan;
+import android.util.Patterns;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -45,6 +47,7 @@ import java.util.List;
 import java.util.Locale;
 
 import dm.sime.com.kharetati.R;
+import dm.sime.com.kharetati.datas.models.DeliveryDetails;
 import dm.sime.com.kharetati.datas.models.FunctionsOnMap;
 import dm.sime.com.kharetati.datas.models.LicenceDocs;
 import dm.sime.com.kharetati.datas.models.LookupResponse;
@@ -68,6 +71,7 @@ import dm.sime.com.kharetati.view.navigators.AuthListener;
 import retrofit2.http.Url;
 
 import static dm.sime.com.kharetati.utility.constants.AppConstants.REMEMBER_USER;
+import static dm.sime.com.kharetati.utility.constants.AppConstants.USER_LANGUAGE;
 import static dm.sime.com.kharetati.utility.constants.AppConstants.USER_OBJECT;
 
 public class Global {
@@ -128,7 +132,7 @@ public class Global {
     public static boolean isCompany;
     public static boolean rbIsOwner;
     public static boolean rbNotOwner;
-    public static JSONObject deliveryDetails;
+    public static DeliveryDetails deliveryDetails;
     public static List<PassportDocs> passportData;
     public static List<LicenceDocs> licenseData;
     public static List<NocDocs> nocData;
@@ -211,7 +215,7 @@ public class Global {
 
 
     public static String getCurrentLanguage(Activity activity) {
-        return PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext()).getString(USER_LANGUAGE, "en");
+        return activity.getSharedPreferences(USER_LANGUAGE, Context.MODE_PRIVATE).getString(USER_LANGUAGE, "defaultStringIfNothingFound");
     }
 
     public static boolean isRememberLogin(Activity activity) {
@@ -444,7 +448,8 @@ public class Global {
         Configuration config = new Configuration();
         if (Build.VERSION.SDK_INT >Build.VERSION_CODES.N){
             config.setLocale(locale);
-            context.getApplicationContext().createConfigurationContext(config);
+            context.createConfigurationContext(config);
+//            context.getResources().updateConfiguration(config,context.getResources().getDisplayMetrics());
         }
         else{
             config.locale = locale;
@@ -539,12 +544,12 @@ public class Global {
         Intent intentNativeMakani = activity.getPackageManager().getLaunchIntentForPackage("com.dm.makani");
 
         if (!Global.isConnected(activity)) {
-            AlertDialogUtil.errorAlertDialog(activity.getString(R.string.lbl_warning), ((MainActivity) activity).getResources().getString(R.string.internet_connection_problem1), activity.getString(R.string.ok), activity);
+            AlertDialogUtil.errorAlertDialog(activity.getString(R.string.lbl_warning), ((MainActivity) activity).getString(R.string.internet_connection_problem1), activity.getString(R.string.ok), activity);
             return false;
         }
 
-        AlertDialogUtil.navigateToMakaniAlert(activity.getApplicationContext().getResources().getString(R.string.open_makani_confirm),
-                activity.getApplicationContext().getResources().getString(R.string.ok), activity.getApplicationContext().getResources().getString(R.string.cancel), activity, activity, plotnumber);
+        AlertDialogUtil.navigateToMakaniAlert(activity.getString(R.string.open_makani_confirm),
+                activity.getString(R.string.ok), activity.getString(R.string.cancel), activity, activity, plotnumber);
         return true;
     }
 
@@ -776,6 +781,11 @@ public class Global {
     }
     public static int dp2Px(Float dp){
         return (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, Resources.getSystem().getDisplayMetrics());
+    }
+
+    public static boolean isValidEmail(CharSequence target) {
+        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
+
     }
 
 

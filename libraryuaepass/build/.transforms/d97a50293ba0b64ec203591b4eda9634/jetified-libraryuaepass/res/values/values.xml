@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Library Uae Pass</string>
+    <string name="dubai_ar">دبي</string>
+    <string name="dubai_en">dubai</string>
+    <string name="err_authorization_required">Authorization required</string>
+    <string name="err_field_empty">field is empty.</string>
+    <string name="err_location">Location service not enabled.</string>
+    <string name="err_no_internet_connection">Application requires an active data connection, Please enable internet connection</string>
+    <string name="err_service_down">Service provider is currently not responding. Please try later</string>
+    <string name="lbl_alert">Alert</string>
+    <string name="lbl_please_wait">Please wait…</string>
+    <string name="open_settings">Open Settings</string>
+    <string name="permission_message_gallery">Photo library is used to be able to chose your profile picture or report an incident to We are all police service.</string>
+    <string name="permission_message_location">Your location is used to search nearby facilities e.g. fuel pumps, ATMs etc. and support your journey plan.</string>
+    <string name="permission_message_phone">This app needs phone permission to make calls.</string>
+    <string name="select">Select</string>
+</resources>

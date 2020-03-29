@@ -10,6 +10,7 @@ public interface MapNavigator {
     public void onFailure(String Msg);
 
     public void findParcelID(SearchResult response);
+    public void findParcelForBookmarks(String plotno);
 
     public void getPlotDetais(SerializableParcelDetails appResponse);
 }

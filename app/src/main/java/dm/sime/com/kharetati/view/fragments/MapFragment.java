@@ -204,6 +204,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         binding.setFragmentMapVM(model);
         mRootView = binding.getRoot();
         binding.imgHelp.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
+        binding.imgBack.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
         mapView = mRootView.findViewById(R.id.mapView);
         bottomSheetDialogFragment = MapFunctionBottomsheetDialogFragment.newInstance(this);
         LinearLayout layoutBottomSheet = (LinearLayout)mRootView.findViewById(R.id.bottomSheet);
@@ -305,7 +306,8 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         if(Global.isBookmarks){
             setWebSheetPeekHeight(0);;
             setMapFunctionSheetPeekHeight(0);
-            fromBookmarks(parcelId);
+
+
         } else if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null &&
                 Global.mapSearchResult.getService_response().getMap().getFunctions().size() == 1){
             setWebSheetPeekHeight(600);;
@@ -323,6 +325,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             binding.txtPlotNo.setText(parcelId);
             model.manageAppBar(getActivity(), false);
             model.manageAppBottomBAtr(getActivity(), false);
+            fromBookmarks(parcelId);
         }
         else{
             binding.txtPlotNo.setText(Global.mapSearchResult.getService_response().getParcelId());
@@ -481,7 +484,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                 searchhistoryListView.setVisibility(View.GONE);
                 PlotDetails.parcelNo = searchhistoryListView.getItemAtPosition(position).toString().trim();
                 if(Global.isBookmarks)
-                    findParcel(PlotDetails.parcelNo);
+                    findParcel(binding.txtPlotNo.getText().toString().trim());
                 else
                     HomeFragment.homeVM.getSearchResult(PlotDetails.parcelNo);
             }
@@ -568,6 +571,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                         }
                         else{
                             Global.isSaveAsBookmark =true;
+                            PlotDetails.parcelNo = binding.txtPlotNo.getText().toString().trim();
                             model.getParceldetails();
                         }
                 } catch (Exception e) {
@@ -729,7 +733,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
     public void findParcelID(SearchResult response) {
         if(response.getIs_exception().equals("true")){
             if(response.getMessage() != null && response.getMessage().length() > 0){
-                onFailure(response.getMessage());
+                onFailure(Global.CURRENT_LOCALE.equals("en")?response.getMessage():response.getMessage_ar());
             } else {
                 onFailure(getActivity().getResources().getString(R.string.community_error));
             }
@@ -737,6 +741,11 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             Global.mapSearchResult = response;
             findParcel();
         }
+    }
+
+    @Override
+    public void findParcelForBookmarks(String plotno) {
+        findParcel(plotno);
     }
 
     @Override
@@ -1107,12 +1116,20 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         }
 
         HashMap<Integer, String> layerDefs = new HashMap<Integer, String>();
+
         layerDefs.put(Integer.valueOf(AppUrls.plot_layerid), "PARCEL_ID ='" + parcelId + "'");
 
+
+
         if(dynamicLayer.getSublayers().size()>0){
+
             ArcGISMapImageSublayer sublayerComm= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(AppUrls.plot_layerid));
+
             sublayerComm.setDefinitionExpression("PARCEL_ID ='" + parcelId + "'");
+
             ArcGISMapImageSublayer sublayer= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(AppUrls.plot_layerid));
+
+
 
             sublayer.addDoneLoadingListener(new Runnable() {
                 @Override
@@ -1228,10 +1245,10 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
 
 
         if(dynamicLayer.getSublayers().size()>0){
-            ArcGISMapImageSublayer sublayerComm= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.valueOf(retriveLayer.getId()));
+            ArcGISMapImageSublayer sublayerComm= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(retriveLayer.getId()));
             sublayerComm.setDefinitionExpression(retriveLayer.getQueryClause());
 
-            ArcGISMapImageSublayer sublayer= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.valueOf(retriveLayer.getId()));
+            ArcGISMapImageSublayer sublayer= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(retriveLayer.getId()));
 
             sublayer.addDoneLoadingListener(new Runnable() {
                 @Override
@@ -1275,6 +1292,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                                 }
                                 if(!result.iterator().hasNext()){
                                     onFailure(getActivity().getResources().getString(R.string.plot_does_not_exist));
+
                                 }else{
 
                                 }
@@ -1301,6 +1319,8 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
     public void fromBookmarks(String parcelId){
 
         onStarted();
+
+
         SpatialReference mSR = SpatialReference.create(3997);
 
 
@@ -1311,9 +1331,9 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         Viewpoint vp = new Viewpoint(initExtent);
         mapView.setViewpoint(vp);
 
-        SpatialReference sr=SpatialReference.create(3997);
 
-        ArcGISMap map = new ArcGISMap(sr);
+
+        ArcGISMap map = new ArcGISMap(mSR);
         mapView.setMap(map);
 
         // set up gesture for interacting with the MapView
@@ -1335,7 +1355,9 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             if (dynamicLayer.getLoadStatus() == LoadStatus.LOADED) {
                 ArcGISMapServiceInfo mapServiceInfo = dynamicLayer.getMapServiceInfo();
                 //only show dimensions for this plot
+
                 ArcGISMapImageSublayer sublayer= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(AppUrls.plot_layerid));
+
                 sublayer.setDefinitionExpression("PARCEL_ID ='" + parcelId + "'");
                 if(Global.isConnected(getActivity())){
 
@@ -1447,7 +1469,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         exportParam.width = width;
         exportParam.height = height;
         exportParam.extent = extent;
-        exportParam.url = Global.getCurrentLanguage(getActivity()).compareToIgnoreCase("en")==0?AppUrls.parcelLayerExportUrl_en:AppUrls.parcelLayerExportUrl_ar;
+        exportParam.url = CURRENT_LOCALE.equals("en")?AppUrls.parcelLayerExportUrl_en:AppUrls.parcelLayerExportUrl_ar;
         exportParam.visibleLayers = "0, 1, 2, 8, 9, 3, 6, 7";
         exportParam.imageFormat = "jpg";
         exportParam.dpi = displaymetrics.densityDpi;//96;

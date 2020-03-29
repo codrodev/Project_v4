@@ -77,6 +77,7 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
         binding.setFragmentBookmarkVM(model);
         mRootView = binding.getRoot();
         initializePage();
+        setRetainInstance(true);
         return binding.getRoot();
     }
 

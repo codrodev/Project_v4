@@ -21,6 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:gravity="center"
             android:weightSum="1"
             android:background="@drawable/grid_background_drawable"
             android:layout_margin="5dp">
@@ -37,7 +38,7 @@
             <TextView
                 style="@style/font_small_bold"
                 android:id="@+id/txtMenuName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text='@{adapterGridMenuVM.getCurrentHomeGridMenuItems(position).nameEn ?? ""}'
                 android:maxLines="2"

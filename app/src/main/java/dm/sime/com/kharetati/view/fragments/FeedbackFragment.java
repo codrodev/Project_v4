@@ -74,7 +74,7 @@ public class FeedbackFragment extends Fragment {
         else{
             User user= Global.getUser(getActivity());
             if(user!=null){
-                if(Global.getCurrentLanguage(getActivity()).compareToIgnoreCase("en")==0) {
+                if(Global.CURRENT_LOCALE.compareToIgnoreCase("en")==0) {
                     if(user.getFullname() != null && user.getFullname().length() > 0) {
                         binding.name.setText(user.getFullname());
                     } else {

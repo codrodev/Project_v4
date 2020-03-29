@@ -221,4 +221,5 @@
         <item>7</item>
     </string-array>
     <string name="enter_favourite_name">يرجى إدخال اسم المفضلة</string>
+    <string name="enter_valid_password">الرجاء إدخال كلمة مرور صالحة</string>
 </resources>
