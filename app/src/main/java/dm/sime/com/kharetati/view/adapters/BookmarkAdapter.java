@@ -99,9 +99,10 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
                     PlotDetails.isOwner = false;
                     PlotDetails.parcelNo=lstBookmark.get(position).ParcelNumber;
                     Global.isBookmarks =true;
+                    Global.isSaveAsBookmark =false;
 
                     ArrayList al = new ArrayList();
-                    al.add(PlotDetails.parcelNo);
+                    al.add(PlotDetails.parcelNo.trim());
                     //al.add("");
 
                     ((MainActivity) context).loadFragment(FragmentTAGS.FR_MAP, true, al);

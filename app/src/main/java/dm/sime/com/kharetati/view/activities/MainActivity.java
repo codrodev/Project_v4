@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+import com.etebarian.meowbottomnavigation.MeowBottomNavigationCell;
 
 import org.json.JSONObject;
 
@@ -29,6 +30,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.ActivityMainBinding;
@@ -131,12 +133,21 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 myBottomModel = bottomModel;
                 if(bottomModel.getId() == 5){
                     myBottomSheet.show(getSupportFragmentManager(), myBottomSheet.getTag());
+
                 } else {
                     Global.lastSelectedBottomTab = bottomModel.getId();
                     loadFragment(model.bottomNavigationTAG(bottomModel.getId()), true, null);
                     /*if(savedInstanceState=null)
                     savedInstanceState.putInt("loadPosition",myBottomModel.getId());*/
                 }
+                return null;
+            }
+        });
+        binding.customBottomBar.setOnShowListener(new Function1<MeowBottomNavigation.Model, Unit>() {
+            @Override
+            public Unit invoke(MeowBottomNavigation.Model model) {
+                // YOUR CODES
+               sharedpreferences.edit().putInt("position",model.getId()).apply();
                 return null;
             }
         });
@@ -226,6 +237,41 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             super.attachBaseContext(CustomContextWrapper.wrap(newBase, CURRENT_LOCALE));
         } else {
             super.attachBaseContext(newBase);
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        newConfig.setLocale(new Locale(Global.getCurrentLanguage(this)));
+        int position = sharedpreferences.getInt("position",3);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Global.isLandScape = true;
+
+            if(CURRENT_LOCALE.equals("ar")){
+
+
+            binding.customBottomBar.show(position+1,false);
+            loadFragment(model.bottomNavigationTAG(position+1), true, null);
+            //binding.customBottomBar.getCellById(position+1).disableCell();
+            binding.customBottomBar.show(position,true);
+            loadFragment(model.bottomNavigationTAG(position), true, null);
+
+
+
+
+            }
+
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            Global.isLandScape = false;
+            if(CURRENT_LOCALE.equals("ar")){
+                binding.customBottomBar.show(position-1,false);
+                loadFragment(model.bottomNavigationTAG(position-1), true, null);
+                //binding.customBottomBar.getCellById(position-1).disableCell();
+                binding.customBottomBar.show(position,true);
+                loadFragment(model.bottomNavigationTAG(position), true, null);
+            }
         }
     }
 
@@ -330,6 +376,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         sharedpreferences.edit().putInt("position",binding.customBottomBar.getId()).apply();
 
     }
+
 
     @Override
     public void manageActionBar(boolean key) {
@@ -561,7 +608,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         @Override
         public void onFinish() {
 
-
+            if(MainActivity.this!=null)
             AlertDialogUtil.timeoutAlertDialog("", CURRENT_LOCALE.equals("en") ? Global.appMsg.getSessionTimeoutEn(): Global.appMsg.getSessionTimeoutAr(), getResources().getString(R.string.ok), MainActivity.this);
 
 

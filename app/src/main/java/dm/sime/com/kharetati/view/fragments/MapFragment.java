@@ -325,14 +325,12 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             binding.txtPlotNo.setText(parcelId);
             model.manageAppBar(getActivity(), false);
             model.manageAppBottomBAtr(getActivity(), false);
-            fromBookmarks(parcelId);
+            //fromBookmarks(parcelId);
         }
         else{
             binding.txtPlotNo.setText(Global.mapSearchResult.getService_response().getParcelId());
             onStarted();
         }
-
-
 
         return binding.getRoot();
     }
@@ -368,7 +366,8 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         mapView.setOnTouchListener(mapViewTouchListener);
 
 
-        if(!Global.isBookmarks) {
+        if(!Global.isBookmarks)
+        {
             dynamicLayer = new ArcGISMapImageLayer(Global.mapSearchResult.getService_response().getMap().getDetails().getServiceUrl());
             Credential credential = new UserCredential(Global.mapSearchResult.getService_response().getMap().getDetails().getServiceTokenUserName(),
                     Global.mapSearchResult.getService_response().getMap().getDetails().getServiceTokenPassword());
@@ -404,6 +403,47 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
 
 
             ViewAnimationUtils.blinkAnimationView(binding.imgBack);
+        }
+        else{
+            onStarted();
+            dynamicLayer = new ArcGISMapImageLayer("https://smart.gis.gov.ae/dmgis104/rest/services/Kharetati/Kharetati/MapServer");
+            //Credential credential=new UserCredential(AppUrls.GIS_LAYER_USERNAME,AppUrls.GIS_LAYER_PASSWORD);
+            Credential credential=new UserCredential("kharetatiuser","kha##stg@2018");
+            dynamicLayer.setCredential(credential);
+
+            map.getOperationalLayers().add(dynamicLayer);
+
+            graphicsLayer = new GraphicsOverlay();
+            mapView.getGraphicsOverlays().add(graphicsLayer);
+
+
+
+            dynamicLayer.addDoneLoadingListener(() -> {
+                if (dynamicLayer.getLoadStatus() == LoadStatus.LOADED) {
+                    ArcGISMapServiceInfo mapServiceInfo = dynamicLayer.getMapServiceInfo();
+                    //only show dimensions for this plot
+
+                    //LayerDefinition retriveLayer = getLayerDefination(Global.mapSearchResult.getService_response().getMap().getDetails().getSearch().getLayerId());
+
+                    ArcGISMapImageSublayer sublayer = (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(2);
+                    sublayer.setDefinitionExpression("PARCEL_ID ='" + parcelId + "'");
+
+                    if (getActivity() != null) {
+                        if (Global.isConnected(getActivity())) {
+                            findParcel(parcelId.trim());
+                        }
+                    }
+
+                } else {
+                /*imgNext.clearAnimation();
+                imgNext.setVisibility(View.GONE);*/
+                    //progressDialog.hide();
+                }
+            });
+
+
+            ViewAnimationUtils.blinkAnimationView(binding.imgBack);
+
         }
 
         binding.imgLayer.setTag("layer");
@@ -550,6 +590,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             @Override
             public void onClick(View v) {
                 Global.isSaveAsBookmark =false;
+                Global.hideSoftKeyboard(getActivity());
                 searchPlot();
             }
         });
@@ -1117,17 +1158,19 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
 
         HashMap<Integer, String> layerDefs = new HashMap<Integer, String>();
 
-        layerDefs.put(Integer.valueOf(AppUrls.plot_layerid), "PARCEL_ID ='" + parcelId + "'");
+        layerDefs.put(Integer.valueOf(Global.plotHighlightLayerId), "PARCEL_ID ='" + parcelId + "'");
 
 
 
         if(dynamicLayer.getSublayers().size()>0){
 
-            ArcGISMapImageSublayer sublayerComm= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(AppUrls.plot_layerid));
+            ArcGISMapImageSublayer sublayerComm= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(Global.plotHighlightLayerId));
+            //ArcGISMapImageSublayer sublayerComm= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(AppUrls.plot_layerid));
 
             sublayerComm.setDefinitionExpression("PARCEL_ID ='" + parcelId + "'");
 
-            ArcGISMapImageSublayer sublayer= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(AppUrls.plot_layerid));
+            ArcGISMapImageSublayer sublayer= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(Global.plotHighlightLayerId));
+
 
 
 
@@ -1137,6 +1180,8 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                     ServiceFeatureTable sublayerTable = sublayer.getTable();
                     QueryParameters query = new QueryParameters();
                     query.setWhereClause("PARCEL_ID  = '" + parcelId + "'");
+                    /*QueryParameters queryDimention = new QueryParameters();
+                    queryDimention.setWhereClause(retriveLayer.getQueryClause());*/
 
                     if(sublayerTable!=null){
                         ListenableFuture<FeatureQueryResult> sublayerQuery = sublayerTable.queryFeaturesAsync(query,ServiceFeatureTable.QueryFeatureFields.LOAD_ALL);
@@ -1148,6 +1193,12 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                                 SimpleFillSymbol simpleFillSymbol = new SimpleFillSymbol(SimpleFillSymbol.Style.SOLID, Color.argb(30, 243, 247, 129),
                                         sls);
                                 simpleFillSymbol.setOutline(sls);
+
+                                //PlotDetails.currentState.textLabel=parcelTextLabel;
+                                PlotDetails.parcelNo=parcelId.trim();
+                                Global.addToParcelHistory(parcelId,getActivity());
+                                //fromBookmarksFindCommunity();
+
 
                                 for (Feature feature : result) {
 
@@ -1207,7 +1258,6 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                                     onFailure(getActivity().getResources().getString(R.string.plot_does_not_exist));
 
                                 }
-
                             } catch (InterruptedException | ExecutionException e) {
                                 Log.e(MainActivity.class.getSimpleName(), e.toString());
 
@@ -1294,7 +1344,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                                     onFailure(getActivity().getResources().getString(R.string.plot_does_not_exist));
 
                                 }else{
-
+                                    AlertDialogUtil.showProgressBar(getActivity(),false);
                                 }
 
                             } catch (InterruptedException | ExecutionException e) {
@@ -1316,75 +1366,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             dynamicLayer.retryLoadAsync();
         }
     }
-    public void fromBookmarks(String parcelId){
 
-        onStarted();
-
-
-        SpatialReference mSR = SpatialReference.create(3997);
-
-
-        Point p1 = new Point(54.84,24.85,  0, mSR);
-        Point p2 = new Point(55.55,25.34 , 0,mSR);
-        initExtent = new Envelope(p1.getX(), p1.getY(), p2.getX(), p2.getY(), mSR);
-
-        Viewpoint vp = new Viewpoint(initExtent);
-        mapView.setViewpoint(vp);
-
-
-
-        ArcGISMap map = new ArcGISMap(mSR);
-        mapView.setMap(map);
-
-        // set up gesture for interacting with the MapView
-        MapViewTouchListener mMapViewTouchListener = new MapViewTouchListener(this.getActivity(), mapView);
-        mapView.setOnTouchListener(mMapViewTouchListener);
-
-        dynamicLayer = new ArcGISMapImageLayer(AppUrls.GIS_LAYER_URL);
-        Credential credential=new UserCredential(AppUrls.GIS_LAYER_USERNAME,AppUrls.GIS_LAYER_PASSWORD);
-        dynamicLayer.setCredential(credential);
-
-        map.getOperationalLayers().add(dynamicLayer);
-
-        graphicsLayer = new GraphicsOverlay();
-        mapView.getGraphicsOverlays().add(graphicsLayer);
-
-
-
-        dynamicLayer.addDoneLoadingListener(() -> {
-            if (dynamicLayer.getLoadStatus() == LoadStatus.LOADED) {
-                ArcGISMapServiceInfo mapServiceInfo = dynamicLayer.getMapServiceInfo();
-                //only show dimensions for this plot
-
-                ArcGISMapImageSublayer sublayer= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(AppUrls.plot_layerid));
-
-                sublayer.setDefinitionExpression("PARCEL_ID ='" + parcelId + "'");
-                if(Global.isConnected(getActivity())){
-
-                    if(isMakani) {
-                        mapView.setVisibility(View.VISIBLE);
-
-                        if (parcelId != null && parcelId.trim().length() != 0) {
-                            findParcel(parcelId);
-                        }
-
-                    } else {
-                        if(parcelId!=null && parcelId.trim().length()!=0)
-                        {
-                            mapView.setVisibility(View.VISIBLE);
-                            findParcel(parcelId);
-
-                        }
-                    }
-
-                }
-                else{
-                    model.showErrorMessage("");
-                }
-                //initiateFindParcelRequest();
-            }
-        });
-    }
 
     private int convertToDp(double input) {
         final float scale = getResources().getDisplayMetrics().density;

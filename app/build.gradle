@@ -108,7 +108,7 @@ dependencies {
     implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
 
 
-    implementation 'com.etebarian:meow-bottom-navigation:1.1.0'
+    implementation 'com.etebarian:meow-bottom-navigation:1.2.0'
 
     //implementation 'com.esri.arcgis.android:arcgis-android:10.2.9'
     //implementation 'com.google.firebase:firebase-messaging:11.0.2'

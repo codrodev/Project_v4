@@ -16,7 +16,7 @@
     <color name="yellow_light">#cce3e330</color>
     <color name="light_blue">#5057FF</color>
     <color name="light_gray">#8e8e93</color>
-    <color name="gray_text_color">#6f7179</color>
+    <color name="gray_text_color">#F2F2F2</color>
     <color name="colorHeader">#008577</color>
     <color name="textColorPrimary">#FFFFFF</color>
 
@@ -24,7 +24,9 @@
     <color name="light_green">#c7cc41</color>
     <color name="gray">#dddebd</color>
     <color name="orange">#fa881e</color>
-    <color name="green">#65d44e</color>
+    <color name="green">#00B47C</color>
     <color name="extra_light_gray">#555555</color>
+    <color name="stepper_text_color">#FAFAFA</color>
+
 
 </resources>

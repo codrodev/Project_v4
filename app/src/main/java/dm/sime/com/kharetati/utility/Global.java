@@ -142,6 +142,7 @@ public class Global {
     public static boolean isSaveAsBookmark;
     public static boolean isLoginActivity;
     public static String faq_url;
+    public static boolean isLandScape;
     private static Context context;
     public static boolean isLanguageChanged = false;
     public static String noctemplateUrl;

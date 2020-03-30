@@ -202,25 +202,76 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
 
     private void changeStepperBackground(int index){
         if(index == 0){
-            binding.txtStepperOne.setBackground(getResources().getDrawable(R.drawable.stepper_background_selected));
-            binding.txtStepperTwo.setBackground(getResources().getDrawable(R.drawable.stepper_background));
-            binding.txtStepperThree.setBackground(getResources().getDrawable(R.drawable.stepper_background));
-            binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.stepper_background));
+            binding.txtStepperOne.setBackground(getResources().getDrawable(R.drawable.green_ring_background));
+            binding.txtStepperTwo.setBackground(getResources().getDrawable(R.drawable.ring_background));
+            binding.txtStepperThree.setBackground(getResources().getDrawable(R.drawable.ring_background));
+            binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.ring_background));
+            binding.stepperOneText.setTextColor(getResources().getColor(R.color.green));
+            binding.stepperTwoText.setTextColor(getResources().getColor(R.color.stepper_text_color));
+            binding.stepperThreeText.setTextColor(getResources().getColor(R.color.stepper_text_color));
+            binding.stepperFourText.setTextColor(getResources().getColor(R.color.stepper_text_color));
+            binding.view1.setBackgroundColor(getResources().getColor(R.color.stepper_text_color));
+            binding.view2.setBackgroundColor(getResources().getColor(R.color.stepper_text_color));
+            binding.view3.setBackgroundColor(getResources().getColor(R.color.stepper_text_color));
+
+            binding.stepperFourText.setText("4");
+            binding.stepperThreeText.setText("3");
+            binding.stepperTwoText.setText("2");
+            binding.stepperOneText.setText("1");
+
+
+
         } else if(index == 1) {
+
+
+
+            binding.stepperOneText.setText("");
             binding.txtStepperOne.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
-            binding.txtStepperTwo.setBackground(getResources().getDrawable(R.drawable.stepper_background_selected));
-            binding.txtStepperThree.setBackground(getResources().getDrawable(R.drawable.stepper_background));
-            binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.stepper_background));
+            binding.txtStepperTwo.setBackground(getResources().getDrawable(R.drawable.green_ring_background));
+            binding.stepperTwoText.setText("2");
+            binding.txtStepperThree.setBackground(getResources().getDrawable(R.drawable.ring_background));
+            binding.stepperThreeText.setText("3");
+            binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.ring_background));
+            binding.stepperFourText.setText("4");
+            binding.stepperTwoText.setTextColor(getResources().getColor(R.color.green));
+            binding.stepperThreeText.setTextColor(getResources().getColor(R.color.stepper_text_color));
+            binding.stepperFourText.setTextColor(getResources().getColor(R.color.stepper_text_color));
+            binding.view1.setBackgroundColor(getResources().getColor(R.color.green));
+            binding.view2.setBackgroundColor(getResources().getColor(R.color.stepper_text_color));
+            binding.view3.setBackgroundColor(getResources().getColor(R.color.stepper_text_color));
+
         } else if(index == 2) {
+            binding.stepperTwoText.setText("");
+            binding.stepperOneText.setText("");
+
             binding.txtStepperOne.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
             binding.txtStepperTwo.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
-            binding.txtStepperThree.setBackground(getResources().getDrawable(R.drawable.stepper_background_selected));
-            binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.stepper_background));
+            binding.txtStepperThree.setBackground(getResources().getDrawable(R.drawable.green_ring_background));
+            binding.stepperThreeText.setText("3");
+            binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.ring_background));
+            binding.stepperFourText.setText("4");
+
+            binding.stepperThreeText.setTextColor(getResources().getColor(R.color.green));
+            binding.stepperFourText.setTextColor(getResources().getColor(R.color.stepper_text_color));
+            binding.view1.setBackgroundColor(getResources().getColor(R.color.green));
+            binding.view2.setBackgroundColor(getResources().getColor(R.color.green));
+            binding.view3.setBackgroundColor(getResources().getColor(R.color.stepper_text_color));
         } else if(index == 3) {
+
             binding.txtStepperOne.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
             binding.txtStepperTwo.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
             binding.txtStepperThree.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
-            binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.stepper_background_selected));
+            binding.stepperThreeText.setText("");
+            binding.stepperTwoText.setText("");
+            binding.stepperOneText.setText("");
+            binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.green_ring_background));
+            binding.stepperFourText.setText("4");
+
+
+            binding.stepperFourText.setTextColor(getResources().getColor(R.color.green));
+            binding.view1.setBackgroundColor(getResources().getColor(R.color.green));
+            binding.view2.setBackgroundColor(getResources().getColor(R.color.green));
+            binding.view3.setBackgroundColor(getResources().getColor(R.color.green));
         }
     }
 

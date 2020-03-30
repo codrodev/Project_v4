@@ -21,6 +21,7 @@ import dm.sime.com.kharetati.BR;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.datas.models.Applications;
 import dm.sime.com.kharetati.utility.Global;
+import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.viewModels.HomeViewModel;
 
 public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.GenericViewHolder> {
@@ -120,6 +121,7 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.Generi
 
         @Override
         public void onClick(View v) {
+            Global.hideSoftKeyboard((MainActivity)context);
             listener.onMenuSelected(((TextView) binding.getRoot().findViewById(R.id.txtAppId)).getText().toString(), false);
             notifyDataSetChanged();
         }

@@ -92,12 +92,13 @@ public class MapViewModel extends ViewModel {
         SerializeGetAppRequestModel model = new SerializeGetAppRequestModel();
 
         SerializeGetAppInputRequestModel inputModel = new SerializeGetAppInputRequestModel();
-        inputModel.setParcel_id(Integer.parseInt(PlotDetails.parcelNo));
+        inputModel.setParcel_id(Integer.parseInt(PlotDetails.parcelNo.trim()));
         inputModel.setTOKEN(Global.app_session_token == null ? "" : Global.app_session_token);
         inputModel.setREMARKS(Global.getPlatformRemark());
         inputModel.setGuest(!Global.isUserLoggedIn);
 
         model.setInputJson(inputModel);
+
 
         Disposable disposable = repository.getParcelDetails(url, model)
                 .subscribeOn(kharetatiApp.subscribeScheduler())

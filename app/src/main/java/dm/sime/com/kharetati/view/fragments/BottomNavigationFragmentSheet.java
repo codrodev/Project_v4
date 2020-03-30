@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
@@ -61,7 +62,12 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_bottom_navigation, container, false);
         Global.current_fragment_id = FragmentTAGS.FR_BOTTOMSHEET;
         binding.setFragmentBottomNavigation(model);
+       /* BottomSheetBehavior behavior = BottomSheetBehavior.from(binding.bottomSheetMore);
+        if(Global.isLandScape)
+        behavior.setPeekHeight((int) Global.height);*/
+
         mRootView = binding.getRoot();
+
 
 
         binding.logoutText.setText(Global.isUserLoggedIn? getActivity().getResources().getText(R.string.logout):getActivity().getResources().getText(R.string.login));

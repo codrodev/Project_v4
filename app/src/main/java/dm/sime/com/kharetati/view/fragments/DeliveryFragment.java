@@ -212,6 +212,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
             for(int i= 0; i<count;i++){
                 if(binding.linearLayout.getChildAt(i)!=binding.deliveryByCourier)
                     binding.linearLayout.getChildAt(i).setEnabled(false);
+                    binding.linearLayout.getChildAt(i).setAlpha(.5f);
             }
         }
 
@@ -388,6 +389,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
                     for(int i= 0; i<count;i++){
                         if(binding.linearLayout.getChildAt(i)!=binding.deliveryByCourier)
                         binding.linearLayout.getChildAt(i).setEnabled(false);
+                        binding.linearLayout.getChildAt(i).setAlpha(.5f);
                     }
 
                 }
@@ -399,6 +401,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
                         if(binding.linearLayout.getChildAt(i)!=binding.deliveryByCourier)
                             if(!binding.linearLayout.getChildAt(i).isEnabled()) {
                                 binding.linearLayout.getChildAt(i).setEnabled(true);
+                                binding.linearLayout.getChildAt(i).setAlpha(1f);
                             }
                     }
                     if (TextUtils.isEmpty(name) ||

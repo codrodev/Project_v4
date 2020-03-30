@@ -386,7 +386,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         layout.setLayoutParams(layoutParams);
 
         final LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lparams.setMargins(30, 0, 30, 0);
+        lparams.setMargins(35, 0, 35, 0);
         CleanableEditText x = new CleanableEditText(getActivity());
         //x.setHint(form.getPlaceHolderEn());
         x.setHint(Global.CURRENT_LOCALE.equals("en")?control.getPlaceHolderEn():control.getPlaceHolderAr());
@@ -510,7 +510,9 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                 else
                     AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
             } else {
+                Global.hideSoftKeyboard(getActivity());
                 if (!isSearchBoxEmpty()) {
+
                     model.getAppsSearchResult(populateSearchText());
                 }
             }
