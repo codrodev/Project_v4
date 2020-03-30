@@ -162,6 +162,55 @@ public class AppMsg {
     @Expose
     private String noActivityAr;
 
+
+    @SerializedName("favourites_not_found_en")
+    @Expose
+    private String favourites_not_found_en;
+    @SerializedName("favourites_not_found_ar")
+    @Expose
+    private String favourites_not_found_ar;
+    @SerializedName("mymaps_not_found_en")
+    @Expose
+    private String mymaps_not_found_en;
+    @SerializedName("mymaps_not_found_ar")
+    @Expose
+    private String mymaps_not_found_ar;
+
+
+
+
+    public String getFavourites_not_found_en() {
+        return favourites_not_found_en;
+    }
+
+    public void setFavourites_not_found_en(String favourites_not_found_en) {
+        this.favourites_not_found_en = favourites_not_found_en;
+    }
+
+    public String getFavourites_not_found_ar() {
+        return favourites_not_found_ar;
+    }
+
+    public void setFavourites_not_found_ar(String favourites_not_found_ar) {
+        this.favourites_not_found_ar = favourites_not_found_ar;
+    }
+
+    public String getMymaps_not_found_en() {
+        return mymaps_not_found_en;
+    }
+
+    public void setMymaps_not_found_en(String mymaps_not_found_en) {
+        this.mymaps_not_found_en = mymaps_not_found_en;
+    }
+
+    public String getMymaps_not_found_ar() {
+        return mymaps_not_found_ar;
+    }
+
+    public void setMymaps_not_found_ar(String mymaps_not_found_ar) {
+        this.mymaps_not_found_ar = mymaps_not_found_ar;
+    }
+
     public String getUpdateKharetatiEn() {
         return updateKharetatiEn;
     }

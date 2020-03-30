@@ -93,9 +93,15 @@ public class MapViewModel extends ViewModel {
 
         SerializeGetAppInputRequestModel inputModel = new SerializeGetAppInputRequestModel();
         inputModel.setParcel_id(Integer.parseInt(PlotDetails.parcelNo));
-        inputModel.setTOKEN(Global.app_session_token == null ? "" : Global.app_session_token);
+        if(Global.isUAE){
+            inputModel.setTOKEN(Global.uaeSessionResponse == null ? "" : Global.uaeSessionResponse.getService_response().getToken());
+            inputModel.setGuest(false);
+        } else {
+            inputModel.setTOKEN(Global.app_session_token == null ? "" : Global.app_session_token);
+            inputModel.setGuest(!Global.isUserLoggedIn);
+        }
         inputModel.setREMARKS(Global.getPlatformRemark());
-        inputModel.setGuest(!Global.isUserLoggedIn);
+
 
         model.setInputJson(inputModel);
 

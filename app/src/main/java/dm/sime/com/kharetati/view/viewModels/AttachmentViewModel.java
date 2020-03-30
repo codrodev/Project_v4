@@ -78,7 +78,7 @@ public class AttachmentViewModel extends ViewModel {
             return;
         }
         attachmentNavigator.onStarted();
-        String url = AppUrls.RETRIEVE_DOC_STREAM;
+        String url = Global.base_url_site_plan+"/retrieveDocStream";
         SerializedModel model = new SerializedModel();
         model.setToken(Global.site_plan_token);
         model.setLocale(Global.CURRENT_LOCALE);

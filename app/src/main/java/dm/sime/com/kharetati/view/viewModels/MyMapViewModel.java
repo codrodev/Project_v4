@@ -157,8 +157,16 @@ public class MyMapViewModel extends ViewModel {
             mutableMyMap.setValue(Arrays.asList(retrieveMyMapResponse.getMyMapResults()));
             adapter = new MyMapAdapter(R.layout.adapter_mymap, this, context);
             setMyMapAdapter(Arrays.asList(retrieveMyMapResponse.getMyMapResults()));
-        }
-        myMapNavigator.onSuccess();
+            myMapNavigator.onSuccess();
+        } else if(retrieveMyMapResponse.getMyMapResults() == null || retrieveMyMapResponse.getMyMapResults().length == 0){
+            showMessage(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getMymaps_not_found_en():Global.appMsg.getMymaps_not_found_ar());
+        } else
+            myMapNavigator.onFailure(activity.getResources().getString(R.string.error_response));
+
+    }
+
+    public void showMessage(String exception){
+        myMapNavigator.onFailure(exception);
     }
 
     public void viewSitePlan(String requestId) {

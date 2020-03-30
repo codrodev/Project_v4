@@ -45,7 +45,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="kharetati"
-                    android:host="myhost"
+                    android:host="plot_no"
                     android:pathPrefix="/home"/>
             </intent-filter>
         </activity>
