@@ -204,6 +204,9 @@ public class Global {
     public static UaePassConfig uaePassConfig;
     public static SessionUaePassResponse uaeSessionResponse;
     public static boolean isUAE = false;
+    public static boolean isUAEAccessToken = false;
+    public static String clientID = "";
+    public static String state = "";
 
     public static List<FunctionsOnMap> getLstMapFunctions() {
         return lstMapFunctions;

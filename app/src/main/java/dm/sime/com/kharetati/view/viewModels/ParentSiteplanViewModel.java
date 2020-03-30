@@ -100,7 +100,7 @@ public class ParentSiteplanViewModel extends ViewModel {
     public void retrieveProfileDocs(){
 
         parentSitePlanNavigator.onStarted();
-        String url = AppUrls.RETRIEVE_PROFILE_DOC;
+        String url = Global.base_url_site_plan+"/retrieveProfileDocs";
         SerializedModel model = new SerializedModel();
         model.setToken(Global.site_plan_token);
         model.setLocale(Global.CURRENT_LOCALE);

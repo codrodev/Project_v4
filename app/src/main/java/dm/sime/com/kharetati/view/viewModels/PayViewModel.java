@@ -83,7 +83,7 @@ public class PayViewModel extends ViewModel {
             model.setNoc_docs(Global.nocData);
         }
         model.setLocale(Global.CURRENT_LOCALE);
-        String url = AppUrls.CREATE_UPDATE_REQUEST;
+        String url = Global.base_url_site_plan+"/createUpdateRequest";
         Gson ob = new Gson();
         String x = ob.toJson(model);
         try {

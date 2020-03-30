@@ -17,6 +17,7 @@ import java.util.List;
 
 import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
+import dm.sime.com.kharetati.datas.models.AppMsg;
 import dm.sime.com.kharetati.datas.models.Bookmark;
 import dm.sime.com.kharetati.datas.models.BookmarksResponse;
 import dm.sime.com.kharetati.datas.models.GeneralResponse;
@@ -137,6 +138,8 @@ public class BookmarkViewModel extends ViewModel {
                 adapter = new BookmarkAdapter(R.layout.adapter_bookmark, this, activity);
                 setBookmarkAdapter(Arrays.asList(bookmarksResponse.getBookmarklist()));      //bookMarksNavigator.updateUI();
                 bookMarksNavigator.onSuccess();
+            } else if(bookmarksResponse.bookmarklist == null || bookmarksResponse.bookmarklist.length == 0){
+                showMessage(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getFavourites_not_found_en():Global.appMsg.getFavourites_not_found_ar());
             } else if(bookmarksResponse.isError || bookmarksResponse.message != null){
                 showErrorMessage(bookmarksResponse.message);
             } else
@@ -255,6 +258,11 @@ public class BookmarkViewModel extends ViewModel {
         }
 
     }
+
+    public void showMessage(String exception){
+        bookMarksNavigator.onFailure(exception);
+    }
+
     public void showErrorMessage(String exception){
         if(Global.appMsg!=null){
             bookMarksNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());

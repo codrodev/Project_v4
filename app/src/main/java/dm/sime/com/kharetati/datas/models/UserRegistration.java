@@ -6,7 +6,6 @@ public class UserRegistration {
     private String message;
     private int userID;
     private String deviceID;
-    private String errorDetail;
 
     public Boolean getError() {
         return isError;
@@ -15,16 +14,6 @@ public class UserRegistration {
     public void setError(Boolean error) {
         isError = error;
     }
-
-    public String getErrorDetail() {
-        return errorDetail;
-    }
-
-    public void setErrorDetail(String errorDetail) {
-        this.errorDetail = errorDetail;
-    }
-
-
 
     public String getMessage() {
         return message;

@@ -95,8 +95,15 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Global.uae_code = "";
+        Global.isUAEaccessWeburl = false;
         Global.isLoginActivity = true;
+        Global.uaePassConfig = null;
+        Global.uaeSessionResponse = null;
+        Global.isUAE = false;
+        Global.isUAEAccessToken = false;
+        Global.clientID = "";
+        Global.state = "";
 
         binding = DataBindingUtil.setContentView(LoginActivity.this, R.layout.activity_login);
 
@@ -230,6 +237,13 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         });
 
         binding.imgUAEPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewModel.login();
+            }
+        });
+
+        binding.txtUAEPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 viewModel.login();
