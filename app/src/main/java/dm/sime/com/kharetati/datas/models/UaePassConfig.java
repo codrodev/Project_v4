@@ -8,6 +8,34 @@ public class UaePassConfig {
     public String UAEID_secret;
     public String UAE_PASS_ENVIRONMENT;
     public boolean disableMyId;
+    public String UAE_PASS_SCOPE;
+    public String UAE_PASS_ACR_VALUES_WEBVIEW;
+    public String UAE_PASS_ACR_VALUES_MOBILE;
+
+
+    public String getUAE_PASS_SCOPE() {
+        return UAE_PASS_SCOPE;
+    }
+
+    public void setUAE_PASS_SCOPE(String UAE_PASS_SCOPE) {
+        this.UAE_PASS_SCOPE = UAE_PASS_SCOPE;
+    }
+
+    public String getUAE_PASS_ACR_VALUES_WEBVIEW() {
+        return UAE_PASS_ACR_VALUES_WEBVIEW;
+    }
+
+    public void setUAE_PASS_ACR_VALUES_WEBVIEW(String UAE_PASS_ACR_VALUES_WEBVIEW) {
+        this.UAE_PASS_ACR_VALUES_WEBVIEW = UAE_PASS_ACR_VALUES_WEBVIEW;
+    }
+
+    public String getUAE_PASS_ACR_VALUES_MOBILE() {
+        return UAE_PASS_ACR_VALUES_MOBILE;
+    }
+
+    public void setUAE_PASS_ACR_VALUES_MOBILE(String UAE_PASS_ACR_VALUES_MOBILE) {
+        this.UAE_PASS_ACR_VALUES_MOBILE = UAE_PASS_ACR_VALUES_MOBILE;
+    }
 
     public String getUAE_PASS_ENVIRONMENT() {
         return UAE_PASS_ENVIRONMENT;

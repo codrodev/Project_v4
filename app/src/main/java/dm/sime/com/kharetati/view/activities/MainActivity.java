@@ -120,10 +120,15 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
         binding.imgHelp.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
 
-
-
-        binding.txtUsername.setText(Global.isUserLoggedIn?(Global.getUser(this).getFullname()): LoginViewModel.guestName);
-
+        if(Global.isUAE){
+            if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0) {
+                binding.txtUsername.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN());
+            } else {
+                binding.txtUsername.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameAR());
+            }
+        } else {
+            binding.txtUsername.setText(Global.isUserLoggedIn ? (Global.getUser(this).getFullname()) : LoginViewModel.guestName);
+        }
         binding.customBottomBar.setOnClickMenuListener(new Function1<MeowBottomNavigation.Model, Unit>() {
             @Override
             public Unit invoke(MeowBottomNavigation.Model bottomModel) {

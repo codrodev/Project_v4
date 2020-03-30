@@ -619,7 +619,8 @@ public class LoginViewModel extends ViewModel {
                 Log.v(TAG, "UAE Pass App: app installed");
                 UAEPassAccessTokenRequestModel requestModel =
                         UAEPassRequestModels.getAuthenticationRequestModel(activity,
-                                clientId, secretId, callbackUrl, Global.uaePassConfig.getUAE_PASS_ENVIRONMENT());
+                                clientId, secretId, callbackUrl, Global.uaePassConfig.getUAE_PASS_ENVIRONMENT(),
+                                Global.uaePassConfig.UAE_PASS_SCOPE, Global.uaePassConfig.UAE_PASS_ACR_VALUES_MOBILE, Global.uaePassConfig.UAE_PASS_ACR_VALUES_WEBVIEW);
                 UAEPassController.getInstance().getAccessToken(activity, requestModel, new UAEPassAccessTokenCallback() {
                     @Override
                     public void getToken(String accessToken, String error) {
@@ -640,7 +641,7 @@ public class LoginViewModel extends ViewModel {
                 Log.v(TAG, "UAE Pass App: app is not installed");
                 String language = Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0 ? "en" : "ar";
                 String authUrl = Global.uaePassConfig.getAuthCodeUAEID_url.endsWith("?") ? Global.uaePassConfig.getAuthCodeUAEID_url : Global.uaePassConfig.getAuthCodeUAEID_url + "?";
-                String url = authUrl + "redirect_uri="+callbackUrl+"&client_id="+clientId+"&state="+secretId+"&response_type=code&scope=urn:uae:digitalid:profile:general&acr_values=urn:safelayer:tws:policies:authentication:level:low&ui_locales=" + language;
+                String url = authUrl + "redirect_uri="+callbackUrl+"&client_id="+clientId+"&state="+secretId+"&response_type=code&scope="+Global.uaePassConfig.UAE_PASS_SCOPE+"&acr_values="+Global.uaePassConfig.UAE_PASS_ACR_VALUES_WEBVIEW+"&ui_locales=" + language;
                 Log.v(TAG, "UAE Pass App: getAuthorizationUrl: " + url);
 
                 Intent intent = new Intent(activity, WebViewActivity.class);

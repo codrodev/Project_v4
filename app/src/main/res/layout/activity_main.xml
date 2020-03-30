@@ -76,7 +76,6 @@
                         android:layout_marginHorizontal="10dp"
                         android:fontFamily="@font/dubai_font"
                         android:gravity="center_vertical"
-                        android:text="Muhammad"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold" />
