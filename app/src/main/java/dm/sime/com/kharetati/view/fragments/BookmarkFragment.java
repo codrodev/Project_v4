@@ -122,14 +122,22 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
 
     @Override
     public void onSuccess() {
+        binding.textHeading.setVisibility(View.GONE);
         AlertDialogUtil.showProgressBar(getActivity(),false);
         binding.recyclerBookMarks.setAdapter(model.getBookmarkAdapter());
 
     }
 
     @Override
-    public void onFailure(String Msg) {
+    public void onEmpty(String Msg) {
+        AlertDialogUtil.showProgressBar(getActivity(),false);
+        binding.textHeading.setVisibility(View.VISIBLE);
+        binding.textHeading.setText(Msg);
+    }
 
+    @Override
+    public void onFailure(String Msg) {
+        binding.textHeading.setVisibility(View.GONE);
         AlertDialogUtil.showProgressBar(getActivity(),false);
         AlertDialogUtil.errorAlertDialog("",Msg,getActivity().getResources().getString(R.string.ok),getActivity());
 

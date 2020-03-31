@@ -9,6 +9,7 @@ public interface BookMarksNavigator {
 
     public void onStarted();
     public void onSuccess();
+    public void onEmpty(String Msg);
     public void onFailure(String Msg);
 
 

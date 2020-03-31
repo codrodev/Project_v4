@@ -159,7 +159,7 @@ public class MyMapViewModel extends ViewModel {
             setMyMapAdapter(Arrays.asList(retrieveMyMapResponse.getMyMapResults()));
             myMapNavigator.onSuccess();
         } else if(retrieveMyMapResponse.getMyMapResults() == null || retrieveMyMapResponse.getMyMapResults().length == 0){
-            showMessage(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getMymaps_not_found_en():Global.appMsg.getMymaps_not_found_ar());
+            myMapNavigator.onEmpty(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getMymaps_not_found_en():Global.appMsg.getMymaps_not_found_ar());
         } else
             myMapNavigator.onFailure(activity.getResources().getString(R.string.error_response));
 

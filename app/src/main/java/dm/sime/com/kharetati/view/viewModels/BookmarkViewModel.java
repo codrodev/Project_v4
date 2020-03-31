@@ -139,7 +139,7 @@ public class BookmarkViewModel extends ViewModel {
                 setBookmarkAdapter(Arrays.asList(bookmarksResponse.getBookmarklist()));      //bookMarksNavigator.updateUI();
                 bookMarksNavigator.onSuccess();
             } else if(bookmarksResponse.bookmarklist == null || bookmarksResponse.bookmarklist.length == 0){
-                showMessage(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getFavourites_not_found_en():Global.appMsg.getFavourites_not_found_ar());
+                bookMarksNavigator.onEmpty(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getFavourites_not_found_en():Global.appMsg.getFavourites_not_found_ar());
             } else if(bookmarksResponse.isError || bookmarksResponse.message != null){
                 showErrorMessage(bookmarksResponse.message);
             } else
@@ -257,10 +257,6 @@ public class BookmarkViewModel extends ViewModel {
             e.printStackTrace();
         }
 
-    }
-
-    public void showMessage(String exception){
-        bookMarksNavigator.onFailure(exception);
     }
 
     public void showErrorMessage(String exception){

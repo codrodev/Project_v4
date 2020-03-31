@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         }
         factory = new AuthViewModelFactory(this,repository);
         progressBar = new ProgressBar(this);
-
+        Intent intent = getIntent();
         /*LinearLayout.LayoutParams progressBarParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT );
         progressBarParams.gravity = Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL;
         progressBarParams.setMargins((int)Global.width/2,  (int)Global.height/2,(int)Global.width/2,(int)Global.height/2);
