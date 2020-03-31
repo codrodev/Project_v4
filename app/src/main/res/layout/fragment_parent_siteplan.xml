@@ -88,15 +88,19 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_margin="16dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
                         android:weightSum="4">
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            >
                             <LinearLayout
                                 android:id="@+id/txtStepperOne"
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
+                                android:gravity="center"
                                 android:background="@drawable/stepper_background"
                                 android:layout_centerVertical="true">
                                 <TextView
@@ -179,7 +183,7 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
-                            android:layout_weight="1">
+                            android:layout_weight="1.25">
                             <LinearLayout
                                 android:id="@+id/txtStepperFour"
                                 android:layout_width="30dp"

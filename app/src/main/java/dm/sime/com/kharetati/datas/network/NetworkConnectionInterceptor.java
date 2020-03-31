@@ -1,5 +1,6 @@
 package dm.sime.com.kharetati.datas.network;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -30,8 +31,10 @@ public class NetworkConnectionInterceptor implements Interceptor {
     @NotNull
     @Override
     public Response intercept(@NotNull Chain chain) throws IOException {
-        if (!Global.isConnected(applicationContext))
-            throw new Exceptions.NoInternetException("Make sure you have active data connection");
+        if (!Global.isConnected(applicationContext)){
+            throw new Exceptions.NoInternetException(applicationContext,Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr());
+
+        }
         //if (Global.isUserLoggedIn) {
             if (Global.accessToken != null) {
 

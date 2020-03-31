@@ -36,7 +36,6 @@
 
             />
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -216,12 +215,13 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:layoutDirection="locale"
+                    android:weightSum="1"
                     android:layout_gravity="center_vertical"
                     android:id="@+id/layoutRememberMe"
                     android:layout_marginBottom="8dp"
                     android:orientation="horizontal">
                     <CheckBox
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="35dp"
                         android:layout_gravity="start"
                         android:clickable="true"
@@ -229,18 +229,20 @@
                         android:id="@+id/chkRememberMe"
                         android:fontFamily="@font/dubai_font"
                         android:focusable="false"
+                        android:layout_weight=".62"
                         android:textSize="14sp"
                         android:text="@string/rememberme" />
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="35dp"
+                        android:layout_height="wrap_content"
                         android:id="@+id/txtForgotPassword"
                         android:layout_gravity="end"
-                        android:gravity="center_vertical|end"
+                        android:gravity="center|end"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:singleLine="false"
                         android:maxLines="2"
+                        android:layout_weight=".38"
                         android:fontFamily="@font/dubai_font"
                         android:text="@string/forgot_username_password"
                         android:textAlignment="viewEnd"
@@ -338,6 +340,8 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="4dp"
                     android:id="@+id/txtUAEPass"
+                    android:singleLine="false"
+                    android:maxLines="2"
                     android:fontFamily="@font/dubai_font"
                     android:text="@string/login_uaepass"
                     android:textAlignment="center"

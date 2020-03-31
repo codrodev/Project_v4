@@ -1112,7 +1112,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                             if(!Global.isBookmarks) {
                                 if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null &&
                                         Global.mapSearchResult.getService_response().getMap().getFunctions().size() > 1) {
-                                    bottomSheetDialogFragment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+                                   if(getActivity()!=null) bottomSheetDialogFragment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
                                 } else {
                                     if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null){
                                         mapFunctionAction(Global.mapSearchResult.getService_response().getMap().getFunctions().get(0));

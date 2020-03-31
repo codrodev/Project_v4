@@ -528,7 +528,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
                 //UAE Pass Text
 
-                LinearLayout.LayoutParams uaePassTextParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,elementHeight);
+                LinearLayout.LayoutParams uaePassTextParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 uaePassTextParams.gravity = Gravity.CENTER_VERTICAL;
                 uaePassTextParams.setMargins(leftMargin,topMargin,rightMargin,bottomMargin);
                 binding.txtUAEPass.setLayoutParams(uaePassTextParams);
