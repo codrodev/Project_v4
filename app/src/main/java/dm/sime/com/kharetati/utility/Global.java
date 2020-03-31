@@ -301,7 +301,9 @@ public class Global {
     }
     public static void showNoInternetAlert(Context activity,String msg){
         AlertDialogUtil.showProgressBar((Activity) activity,false);
-        if(Global.appMsg!=null)
+        if(msg!=null||msg!="")
+            AlertDialogUtil.errorAlertDialog("",msg,activity.getResources().getString(R.string.ok),activity);
+        else if(Global.appMsg!=null)
             AlertDialogUtil.errorAlertDialog("",Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr(),activity.getResources().getString(R.string.ok),activity);
         else
             AlertDialogUtil.errorAlertDialog("",activity.getResources().getString(R.string.internet_connection_problem1),activity.getResources().getString(R.string.ok),activity);
