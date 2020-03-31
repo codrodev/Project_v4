@@ -17,14 +17,15 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/txtMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="2"
-                android:text="Click on site plan details"
                 android:fontFamily="@font/dubai_font"
                 android:textSize="20dp"
+                android:textAlignment="center"
                 android:textColor="@color/black"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginVertical="5dp"/>
             <androidx.recyclerview.widget.RecyclerView

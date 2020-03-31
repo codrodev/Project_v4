@@ -588,12 +588,20 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
             if(ParentSiteplanViewModel.deliveryDetails.getEmailId() != null &&
                     ParentSiteplanViewModel.deliveryDetails.getEmailId().length() > 0){
                 binding.etEmailaddress.setText(ParentSiteplanViewModel.deliveryDetails.getEmailId());
+            } else if(Global.isUAE){
+                if(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getEmail() != null){
+                    binding.etEmailaddress.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getEmail());
+                }
             } else if(Global.getUser(getActivity()).getEmail() != null) {
                 binding.etEmailaddress.setText(Global.getUser(getActivity()).getEmail());
             }
             if(ParentSiteplanViewModel.deliveryDetails.getMobileNo() != null &&
                     ParentSiteplanViewModel.deliveryDetails.getMobileNo().length() > 0){
                 binding.etMobile.setText(ParentSiteplanViewModel.deliveryDetails.getMobileNo());
+            } else if(Global.isUAE){
+                if(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getMobile() != null){
+                    binding.etMobile.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getMobile());
+                }
             } else if(Global.getUser(getActivity()).getMobile() != null) {
                 binding.etMobile.setText(Global.getUser(getActivity()).getMobile());
             }
@@ -610,16 +618,23 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
                         ParentSiteplanViewModel.deliveryDetails.getNameAr().length() > 0) {
                     binding.etRecievername.setText(ParentSiteplanViewModel.deliveryDetails.getNameAr());
                 } else {
-                    if(Global.getUser(getActivity()).getFullname() != null) {
+                    if(Global.isUAE){
+                        if(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN() != null){
+                            binding.etRecievername.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN());
+                        }
+                    } else if(Global.getUser(getActivity()).getFullname() != null) {
                         binding.etRecievername.setText(Global.getUser(getActivity()).getFullname());
                     }
                 }
             } else {
                 if (ParentSiteplanViewModel.deliveryDetails.getNameAr() != null &&
-                        ParentSiteplanViewModel.deliveryDetails.getNameAr().length() > 0)
-                {
+                        ParentSiteplanViewModel.deliveryDetails.getNameAr().length() > 0) {
                     binding.etRecievername.setText(ParentSiteplanViewModel.deliveryDetails.getNameAr());
-                }else if(Global.getUser(getActivity()).getFullnameAR() != null && !Global.getUser(getActivity()).getFullnameAR().contentEquals("null")){
+                } else if(Global.isUAE){
+                    if(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameAR() != null){
+                        binding.etRecievername.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameAR());
+                    }
+                } else if(Global.getUser(getActivity()).getFullnameAR() != null && !Global.getUser(getActivity()).getFullnameAR().contentEquals("null")){
                     binding.etRecievername.setText(Global.getUser(getActivity()).getFullnameAR());
                 } else if (ParentSiteplanViewModel.deliveryDetails.getNameEn() != null &&
                         ParentSiteplanViewModel.deliveryDetails.getNameEn().length() > 0) {
@@ -654,19 +669,35 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
             }
 
         } else {
-            if(Global.getUser(getActivity()).getEmail() != null) {
+            if(Global.isUAE){
+                if(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getEmail() != null){
+                    binding.etEmailaddress.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getEmail());
+                }
+            } else if(Global.getUser(getActivity()).getEmail() != null) {
                 binding.etEmailaddress.setText(Global.getUser(getActivity()).getEmail());
             }
-            if(Global.getUser(getActivity()).getMobile() != null) {
+            if(Global.isUAE){
+                if(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getMobile() != null){
+                    binding.etMobile.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getMobile());
+                }
+            } else if(Global.getUser(getActivity()).getMobile() != null) {
                 binding.etMobile.setText(Global.getUser(getActivity()).getMobile());
                 
             }
             if(Global.CURRENT_LOCALE.equals("en")) {
-                if (Global.getUser(getActivity()).getFullname() != null) {
+                if(Global.isUAE){
+                    if(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN() != null){
+                        binding.etRecievername.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN());
+                    }
+                } else if (Global.getUser(getActivity()).getFullname() != null) {
                     binding.etRecievername.setText(Global.getUser(getActivity()).getFullname());
                 }
             } else {
-                if (Global.getUser(getActivity()).getFullnameAR() != null) {
+                if(Global.isUAE){
+                    if(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameAR() != null){
+                        binding.etRecievername.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameAR());
+                    }
+                } else if (Global.getUser(getActivity()).getFullnameAR() != null) {
                     binding.etRecievername.setText(Global.getUser(getActivity()).getFullnameAR());
                 }
             }

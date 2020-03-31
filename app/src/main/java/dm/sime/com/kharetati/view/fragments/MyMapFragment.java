@@ -113,13 +113,22 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
     @Override
     public void onSuccess() {
         AlertDialogUtil.showProgressBar(getActivity(),false);
+        binding.txtMessage.setVisibility(View.GONE);
         binding.recylerMyMaps.setAdapter(model.getMyMapAdapter());
 
 
     }
 
     @Override
+    public void onEmpty(String message) {
+        AlertDialogUtil.showProgressBar(getActivity(),false);
+        binding.txtMessage.setVisibility(View.VISIBLE);
+        binding.txtMessage.setText(message);
+    }
+
+    @Override
     public void onFailure(String Msg) {
+        binding.txtMessage.setVisibility(View.GONE);
         AlertDialogUtil.showProgressBar(getActivity(),false);
         if(getResources()!=null)
         AlertDialogUtil.errorAlertDialog("",Msg,getActivity().getResources().getString(R.string.ok),getActivity());

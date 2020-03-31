@@ -195,9 +195,9 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     }
 
     private void processIntentData(Intent intent) {
-        if (intent.getStringExtra("access") != null) {
+        /*if (intent.getStringExtra("access") != null) {
             Global.accessToken = intent.getStringExtra("access");
-        }
+        }*/
     }
 
     @Override
@@ -236,9 +236,12 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
     private void openHomePage(){
         Intent intent = getIntent();
-        if (intent != null && intent.getData() != null) {
+        /*if (intent != null && intent.getData() != null) {
             processIntentData(intent);
-        }
+        }*/
+        /*if (intent != null && intent.getData() != null) {
+            processIntentData(intent);
+        }*/
         loadFragment(FragmentTAGS.FR_HOME, false, null);
     }
 

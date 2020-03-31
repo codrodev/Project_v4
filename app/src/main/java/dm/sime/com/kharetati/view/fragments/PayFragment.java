@@ -204,13 +204,21 @@ public class PayFragment extends Fragment implements PayNavigator {
         if(ParentSiteplanViewModel.applicantMailId != null &&
                 ParentSiteplanViewModel.applicantMailId.length() > 0){
             binding.etEmailaddress.setText(ParentSiteplanViewModel.applicantMailId.trim());
+        } else if(Global.isUAE){
+            if(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getEmail() != null){
+                binding.etEmailaddress.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getEmail());
+            }
         } else if(Global.getUser(getActivity()).getEmail() != null) {
             binding.etEmailaddress.setText(Global.getUser(getActivity()).getEmail().trim());
         }
         if(ParentSiteplanViewModel.applicantMobileNo != null &&
                 ParentSiteplanViewModel.applicantMobileNo.length() > 0){
             binding.etMobile.setText(ParentSiteplanViewModel.applicantMobileNo.trim());
-        } else if(Global.getUser(getActivity()).getMobile() != null) {
+        } else if(Global.isUAE){
+            if(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getMobile() != null){
+                binding.etMobile.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getMobile());
+            }
+        }  else if(Global.getUser(getActivity()).getMobile() != null) {
             binding.etMobile.setText(Global.getUser(getActivity()).getMobile().trim());
         }
     }
