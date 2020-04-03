@@ -68,6 +68,7 @@ public class WebViewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Global.current_fragment_id = FragmentTAGS.FR_WEBVIEW;
+        ParentSiteplanFragment.currentIndex = getActivity().getSharedPreferences(ParentSiteplanFragment.POSITION,Context.MODE_PRIVATE).getInt("stepperPosition",0);
         View view = inflater.inflate(R.layout.fragment_webview, container, false);
         //txtUsername = view.findViewById(R.id.txtUsername);
         //txtWelcome = view.findViewById(R.id.txtWelcome);
@@ -88,6 +89,7 @@ public class WebViewFragment extends Fragment {
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 getActivity().onBackPressed();
             }
         });

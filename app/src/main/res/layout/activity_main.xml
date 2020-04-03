@@ -15,6 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layoutDirection="locale"
             android:orientation="vertical">
             <LinearLayout
                 android:id="@+id/layoutProfile"
@@ -50,6 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+
                 android:id="@+id/profileUsername"
                 android:background="@drawable/maroon_overlay_bg"
                 android:gravity="center_vertical">
@@ -94,9 +96,14 @@
                 </LinearLayout>
 
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@drawable/maroon_overlay_bg"/>
             <FrameLayout
                 android:id="@+id/ui_container"
                 android:layout_width="match_parent"
+                android:layoutDirection="locale"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/layoutProfile"
                 android:layout_marginBottom="60dp"/>
@@ -107,6 +114,7 @@
             android:id="@+id/customBottomBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layoutDirection="locale"
             android:layout_alignParentBottom="true"
             app:mbn_circleColor="@color/maroon_dark"
             app:mbn_backgroundBottomColor="@color/maroon_dark"

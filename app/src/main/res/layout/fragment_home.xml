@@ -98,6 +98,7 @@
                             android:id="@+id/layoutHeader"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layoutDirection="locale"
                             android:background="@color/maroon_dark">
                             <TextView
                                 android:id="@+id/txtSearchHeader"

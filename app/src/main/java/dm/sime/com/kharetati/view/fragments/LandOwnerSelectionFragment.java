@@ -24,6 +24,8 @@ import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.viewModels.LandOwnerViewModel;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 
+import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
+
 public class LandOwnerSelectionFragment extends Fragment {
 
     FragmentLandOwnershipSelectionBinding binding;
@@ -52,6 +54,9 @@ public class LandOwnerSelectionFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Global.current_fragment_id = FragmentTAGS.FR_LANDOWNER_SELECTION;
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_land_ownership_selection, container, false);
+        if(CURRENT_LOCALE.equals("en")) binding.layout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.layout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.spinLandOwned.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.spinLandOwned.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.rg.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.rg.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         binding.setFragmentLandOwnerSelectionVM(model);
         mRootView = binding.getRoot();
 

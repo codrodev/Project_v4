@@ -159,8 +159,9 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
         binding.layoutHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dismiss();
                 ArrayList al = new ArrayList();
-                al.add(Global.CURRENT_LOCALE.equals("en")? Global.home_en_url:Global.home_ar_url);
+                al.add(HomeFragment.constructUrl((Global.CURRENT_LOCALE.equals("en")? Global.home_en_url:Global.home_ar_url),getActivity()));
                 ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
             }
         });
@@ -176,7 +177,7 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
                 }
                 else{
                     ArrayList al = new ArrayList();
-                    al.add(Global.CURRENT_LOCALE.equals("en")?Global.aboutus_en_url:Global.aboutus_ar_url);
+                    al.add(HomeFragment.constructUrl((Global.CURRENT_LOCALE.equals("en")?Global.aboutus_en_url:Global.aboutus_ar_url),getActivity()));
                     ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
                 }
                 dismiss();
@@ -185,6 +186,7 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
         binding.help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dismiss();
                 ArrayList al = new ArrayList();
                 al.add("");
                 ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
@@ -195,7 +197,10 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 ArrayList al = new ArrayList();
-                al.add(Global.faq_url);
+
+                //Global.faq_url =Global.faq_url+"lang="+Global.CURRENT_LOCALE;
+
+                al.add(HomeFragment.constructUrl(Global.faq_url,getActivity()));
                 ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
                 dismiss();
             }
@@ -212,7 +217,7 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
                 }
                 else{
                 ArrayList al = new ArrayList();
-                al.add(Global.CURRENT_LOCALE.equals("en")?Global.terms_en_url:Global.terms_ar_url);
+                al.add(HomeFragment.constructUrl((Global.CURRENT_LOCALE.equals("en")?Global.terms_en_url:Global.terms_ar_url),getActivity()));
                 ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
                 }
                 dismiss();
@@ -240,5 +245,38 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
 
     public interface OnActionListener {
         void onAction(String actionCode);
+    }
+    private String constructUrl(String url){
+        StringBuilder builder = new StringBuilder();
+        builder.append(url);
+        if(!url.endsWith("?")) {
+            builder.append("?");
+        }
+        builder.append("token=" + Global.accessToken + "&");
+        //builder.append("remarks=" + Global.getPlatformRemark() + "&");
+        String lang = Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0 ? "en" : "ar";
+        builder.append("lng=" + lang + "&");
+        builder.append("appsrc=kharetati" + "&");
+        if(!Global.isUserLoggedIn){
+            builder.append("userType=GUEST&");
+            //builder.append("user_id="+ Global.sime_userid +"&");
+            //builder.append("user_name=GUEST");
+        } else {
+            if(Global.isUAE){
+                builder.append("userType=UAEPASS&");
+                builder.append("user_id=" + Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getUuid() + "&");
+                if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0) {
+                    builder.append("user_name=" + Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN() + "&");
+                } else {
+                    builder.append("user_name=" + Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameAR() + "&");
+                }
+            } else {
+                builder.append("userType=MYID&");
+               // builder.append("user_id=" + Global.username + "&");
+                //builder.append("user_name=" + Global.getUser(getActivity()).getFullname());
+            }
+
+        }
+        return builder.toString();
     }
 }

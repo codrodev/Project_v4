@@ -105,6 +105,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="start"
                         android:inputType="text"
+                        android:textAlignment="viewStart"
                         android:singleLine="true"
                         android:hint="@string/subject"
                         />

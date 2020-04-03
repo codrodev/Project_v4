@@ -194,6 +194,7 @@
     <string name="iamnotowner">I am not the owner of the plot</string>
     <string name="bookmark">Bookmarks</string>
     <string name="mymaps">My Maps</string>
+    <string name="timeout">Your session has timed out</string>
 
 
     <string-array name="request_site_plan">
@@ -225,4 +226,6 @@
     </string-array>
     <string name="enter_favourite_name">Please enter the favourite name</string>
     <string name="enter_valid_password">Please enter a valid password</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
 </resources>

@@ -143,6 +143,8 @@ public class Global {
     public static boolean isLoginActivity;
     public static String faq_url;
     public static boolean isLandScape;
+    public static boolean isLogout;
+    public static boolean isDashboard;
     private static Context context;
     public static boolean isLanguageChanged = false;
     public static String noctemplateUrl;
@@ -504,13 +506,20 @@ public class Global {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     if (editText.getCompoundDrawables()[DRAWABLE_RIGHT] != null && event.getRawX() >= (editText.getRight() - editText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
                         editText.setText("");
+                        if(editText.isCursorVisible())
+                            editText.setCursorVisible(false);
+
                         return true;
                     }
                     if (editText.getCompoundDrawables()[DRAWABLE_LEFT] != null && event.getRawX() >= (editText.getLeft() - editText.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())) {
                         editText.setText("");
+                        if(editText.isCursorVisible())
+                            editText.setCursorVisible(false);
                         return true;
                     }
                 }
+                if(!editText.isCursorVisible())
+                    editText.setCursorVisible(true);
                 return false;
             }
         });
@@ -668,6 +677,7 @@ public class Global {
 
     public static void logout(Context context) {
         Global.session = null;
+        Global.app_session_token = null;
         Global.current_fragment_id = null;
 //        AttachmentFragment.deliveryByCourier=false;
         Global.requestId = null;
@@ -675,9 +685,12 @@ public class Global {
         Global.alertDialog = null;
         isLanguageChanged =true;
         Global.isDeliveryByCourier= false;
+        Global.isLogout =true;
 //        AttachmentFragment.isDeliveryDetails=false;
 
         //Global.loginDetails.showFormPrefilledOnRememberMe=true;
+        if(Global.loginDetails!=null)
+            LoginActivity.loginVM.authListener.saveUserToRemember(Global.loginDetails);
         Gson gson = new GsonBuilder().serializeNulls().create();
         PreferenceManager.getDefaultSharedPreferences(context).edit().putString(AppConstants.USER_LOGIN_DETAILS, gson.toJson(Global.loginDetails)).apply();
         Intent intent = new Intent(context, LoginActivity.class);

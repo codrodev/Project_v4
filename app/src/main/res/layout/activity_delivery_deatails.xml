@@ -26,6 +26,7 @@
                 android:layout_gravity="start|center_vertical"
                 android:gravity="start|center_vertical"
                 android:text="@string/delivery_by_courier"
+                android:textColor="@color/gray_text_color"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textSize="17sp"
                 android:textStyle="bold" />

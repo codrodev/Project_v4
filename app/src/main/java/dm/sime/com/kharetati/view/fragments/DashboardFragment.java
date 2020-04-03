@@ -47,6 +47,7 @@ public class DashboardFragment extends Fragment implements ViewPager.OnPageChang
 
     private void initializePage(){
         Global.FragmentTagForDashboardHelpUrl = 0;
+        Global.isDashboard=true;
         if(!Global.isUserLoggedIn){
             guestUserUI();
             binding.layoutParent.setWeightSum(1);

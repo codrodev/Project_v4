@@ -39,6 +39,7 @@ public class GridMenuPagerAdapter extends PagerAdapter {
         model.initializeHomeGridMenu(context, position);
         RecyclerView recycleGridMenu = (RecyclerView)view.findViewById(R.id.recycleGridMenu);
         recycleGridMenu.setLayoutManager(new StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL));
+        if(Global.CURRENT_LOCALE.equals("en")) recycleGridMenu.setLayoutDirection(View.LAYOUT_DIRECTION_LTR); else recycleGridMenu.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         adapterGridMenu = new GridMenuAdapter(R.layout.adapter_grid_menu, model, context, listner, position);
         recycleGridMenu.setAdapter(adapterGridMenu);
         if(Global.isFirstLoad) {

@@ -1,5 +1,7 @@
 package dm.sime.com.kharetati.view.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,8 +36,11 @@ import dm.sime.com.kharetati.view.navigators.ParentSitePlanNavigator;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 import dm.sime.com.kharetati.view.viewmodelfactories.ParentSitePlanViewModelFactory;
 
+import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
+
 public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNavigator {
 
+    public static final String POSITION = "POSITION";
     FragmentParentSiteplanBinding binding;
     ParentSiteplanViewModel model;
     private View mRootView;
@@ -82,7 +87,14 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Global.current_fragment_id = FragmentTAGS.FR_PARENT_SITEPLAN;
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_parent_siteplan, container, false);
+        if(CURRENT_LOCALE.equals("en")) binding.container.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.container.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.childFragmentContainer.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.childFragmentContainer.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.toolbarLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.toolbarLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.toolbarll.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.toolbarll.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.stepper.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.stepper.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.buttons.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.buttons.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         binding.setFragmentParentSiteplanVM(model);
+        setRetainInstance(true);
         mRootView = binding.getRoot();
         initializePage();
         return binding.getRoot();
@@ -100,7 +112,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         if(currentIndex != 0 )
             binding.btnPrevious.setVisibility(View.VISIBLE);
         else
-            binding.btnPrevious.setVisibility(View.GONE);
+            binding.btnPrevious.setVisibility(View.INVISIBLE);
        /* if(currentIndex != 2 )
             binding.btnNext.setVisibility(View.VISIBLE);
         else
@@ -132,12 +144,12 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
                     loadFragment(currentIndex);
                     binding.txtHeader.setText(pagerArray[currentIndex]);
                     if(currentIndex == 0 ){
-                        binding.btnPrevious.setVisibility(View.GONE);
+                        binding.btnPrevious.setVisibility(View.INVISIBLE);
                     }
                     else
                         binding.btnPrevious.setVisibility(View.VISIBLE);
                     if(currentIndex==3)
-                        binding.btnNext.setVisibility(View.GONE);
+                        binding.btnNext.setVisibility(View.INVISIBLE);
                     else
                         binding.btnNext.setVisibility(View.VISIBLE);
 
@@ -150,8 +162,11 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
             @Override
             public void onClick(View view) {
                 if(Global.helpUrlEn != null || Global.helpUrlAr != null) {
+                    SharedPreferences sharedpreferences = getActivity().getSharedPreferences(POSITION, Context.MODE_PRIVATE);
+                    sharedpreferences.edit().putInt("stepperPosition",currentIndex);
                     ArrayList al = new ArrayList();
-                    al.add(Global.CURRENT_LOCALE.equals("en")? Global.helpUrlEn:Global.helpUrlAr);
+                    if(Global.helpUrlEn!=null||Global.helpUrlAr!=null)
+                    al.add(HomeFragment.constructUrl((Global.CURRENT_LOCALE.equals("en")? Global.helpUrlEn:Global.helpUrlAr),getActivity()));
                     ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
                 } else {
 
@@ -167,11 +182,11 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
                     loadFragment(currentIndex);
                     binding.txtHeader.setText(pagerArray[currentIndex]);
                     if(currentIndex == 0 )
-                        binding.btnPrevious.setVisibility(View.GONE);
+                        binding.btnPrevious.setVisibility(View.INVISIBLE);
                     else
                         binding.btnPrevious.setVisibility(View.VISIBLE);
                     if(currentIndex == 3)
-                        binding.btnNext.setVisibility(View.GONE);
+                        binding.btnNext.setVisibility(View.INVISIBLE);
                     else
                         binding.btnNext.setVisibility(View.VISIBLE);
 

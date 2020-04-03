@@ -13,6 +13,7 @@ import java.util.Objects;
 import dm.sime.com.kharetati.utility.Exceptions;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.activities.LoginActivity;
 import okhttp3.Credentials;
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -40,7 +41,7 @@ public class NetworkConnectionInterceptor implements Interceptor {
 
                 Request.Builder requestBuilder = chain.request().newBuilder();
                 requestBuilder.header("Content-Type", "application/json");
-                requestBuilder.header("token", Global.accessToken);
+                requestBuilder.header("access_token", Global.accessToken);
                 if(Global.isUAEAccessToken && Global.clientID.length() > 0 && Global.state.length() > 0){
                     this.credentials = Credentials.basic(Global.clientID, Global.state);
                     requestBuilder.header("Authorization", credentials);
@@ -49,8 +50,10 @@ public class NetworkConnectionInterceptor implements Interceptor {
                 return chain.proceed(requestBuilder.build());
             } else if (Global.accessToken == null || Global.accessToken.isEmpty()) {
 
-                if (!Global.isLoginActivity)
-                    Global.logout(applicationContext);
+                if (!Global.isLoginActivity){
+                    if(Global.loginDetails!=null)
+                        LoginActivity.loginVM.authListener.saveUserToRemember(Global.loginDetails);
+                    Global.logout(applicationContext);}
 
 
             }

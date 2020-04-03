@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="ltr">
     >
     <TextView
         android:id="@+id/txtLandOwner"
@@ -10,8 +12,10 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
+        android:textDirection="locale"
+        android:textAlignment="viewStart"
         android:textStyle="bold"
-        style="@style/font_large_bold"
+        style="@style/font_medium_bold"
         android:fontFamily="@font/dubai_font"
         android:layout_toLeftOf="@+id/imgChevron"
         android:textColor="@color/black" />
@@ -19,6 +23,8 @@
         android:id="@+id/imgChevron"
         android:layout_width="35dp"
         android:layout_height="35dp"
+        android:textAlignment="viewStart"
+        android:textDirection="locale"
         android:layout_marginRight="1dp"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"

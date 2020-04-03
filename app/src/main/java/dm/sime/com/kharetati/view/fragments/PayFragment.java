@@ -32,6 +32,8 @@ import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 import dm.sime.com.kharetati.view.viewModels.PayViewModel;
 import dm.sime.com.kharetati.view.viewmodelfactories.PayViewModelFactory;
 
+import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
+
 public class PayFragment extends Fragment implements PayNavigator {
 
 
@@ -74,6 +76,7 @@ public class PayFragment extends Fragment implements PayNavigator {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_pay, container, false);
         binding.setFragmentPayVM(model);
         mRootView = binding.getRoot();
+        if(CURRENT_LOCALE.equals("en")) binding.rootView.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.rootView.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         setRetainInstance(true);
         setEmailAndMobileField();
         binding.payNow.setOnClickListener(new View.OnClickListener() {

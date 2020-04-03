@@ -16,7 +16,7 @@
             android:id="@+id/edtBookmarksDescriptionDialogAr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="description"
+            android:hint="@string/description_fav"
             android:textColor="@color/black"
             android:inputType="textPersonName"
             android:textAlignment="center" />
@@ -34,7 +34,7 @@
             android:id="@+id/edtBookmarksDescriptionDialogEn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="description"
+            android:hint="@string/description_fav"
             android:textColor="@color/black"
             android:inputType="textPersonName"
             android:textAlignment="center" />

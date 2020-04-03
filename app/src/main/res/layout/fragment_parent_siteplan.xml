@@ -11,245 +11,272 @@
         android:background="@color/transparent"
         android:layout_width="match_parent"
         android:layoutDirection="locale"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-        <com.google.android.material.appbar.AppBarLayout
+        android:layout_height="match_parent">
+        <!--<com.google.android.material.appbar.AppBarLayout
             android:id="@+id/layoutProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/collapsableLayout"
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
+                android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
                 app:layout_scrollFlags="noScroll"
                 android:background="@drawable/maroon_overlay_bg">
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:elevation="30dp">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="start"
-                            android:layout_weight="1">
-                            <ImageView
-                                android:id="@+id/imgBack"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="15dp"
-                                android:layout_marginEnd="50dp"
-                                android:gravity="start"
-                                android:src="@drawable/ic_arrow_white"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="end"
-                            android:layout_weight="1">
-                            <ImageView
-                                android:id="@+id/imgHelp"
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
-                                android:layout_alignParentEnd="true"
-                                android:layout_margin="15dp"
-                                android:layout_alignParentRight="true"
-                                android:src="@drawable/ic_help" />
-                        </LinearLayout>
-                    </LinearLayout>
 
-                </FrameLayout>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>-->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layoutDirection="locale"
+            android:id="@+id/toolbarLayout"
+            android:background="@drawable/maroon_overlay_bg">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:id="@+id/toolbarll"
+                android:layoutDirection="locale"
+                android:weightSum="3">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top"
-                    android:orientation="vertical"
-                    android:id="@+id/stepperHeader"
-                    android:layout_marginTop="20dp"
-                    app:layout_collapseMode="parallax">
+                    android:layout_height="match_parent"
+                    android:gravity="start"
+                    android:layout_weight="1.25">
+                    <ImageView
+                        android:id="@+id/imgBack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:layout_marginEnd="50dp"
+                        android:gravity="start"
+                        android:src="@drawable/ic_arrow_white"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="start|center_vertical"
+                    android:layout_weight=".75">
                     <TextView
                         android:id="@+id/txtHeader"
                         style="@style/font_extra_large_bold"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="sample"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
+                        android:text="Sample"
                         android:textColor="@color/white"
                         android:textSize="24sp" />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_margin="16dp"
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:weightSum="4">
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:layout_weight="1"
-                            >
-                            <LinearLayout
-                                android:id="@+id/txtStepperOne"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:gravity="center"
-                                android:background="@drawable/stepper_background"
-                                android:layout_centerVertical="true">
-                                <TextView
-                                    style="@style/font_medium_bold"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:text="1"
-                                    android:id="@+id/stepperOneText"
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:textAlignment="center"
-                                    android:textColor="@color/white"/>
-                            </LinearLayout>
-                            <View
-                                android:layout_toRightOf="@+id/txtStepperOne"
-                                android:layout_width="wrap_content"
-                                android:layout_height="1dp"
-                                android:id="@+id/view1"
-                                android:background="@color/light_blue"
-                                android:layout_centerVertical="true"/>
-                        </RelativeLayout>
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:layout_weight="1">
-                            <LinearLayout
-                                android:id="@+id/txtStepperTwo"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:background="@drawable/stepper_background"
-                                android:layout_centerVertical="true">
-                                <TextView
-                                    style="@style/font_medium_bold"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:text="2"
-                                    android:id="@+id/stepperTwoText"
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:textAlignment="center"
-                                    android:textColor="@color/white"/>
-                            </LinearLayout>
-                            <View
-                                android:layout_toRightOf="@+id/txtStepperTwo"
-                                android:layout_width="wrap_content"
-                                android:layout_height="1dp"
-                                android:id="@+id/view2"
-                                android:background="@color/light_blue"
-                                android:layout_centerVertical="true"/>
-                        </RelativeLayout>
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:layout_weight="1">
-                            <LinearLayout
-                                android:id="@+id/txtStepperThree"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:background="@drawable/stepper_background"
-                                android:layout_centerVertical="true">
-                                <TextView
-                                    style="@style/font_medium_bold"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:text="3"
-                                    android:id="@+id/stepperThreeText"
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:textAlignment="center"
-                                    android:textColor="@color/white"/>
-                            </LinearLayout>
-                            <View
-                                android:layout_toRightOf="@+id/txtStepperThree"
-                                android:layout_width="wrap_content"
-                                android:layout_height="1dp"
-                                android:id="@+id/view3"
-                                android:background="@color/light_blue"
-                                android:layout_centerVertical="true"/>
-                        </RelativeLayout>
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:layout_weight="1.25">
-                            <LinearLayout
-                                android:id="@+id/txtStepperFour"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:background="@drawable/stepper_background"
-                                android:layout_centerVertical="true">
-                                <TextView
-                                    style="@style/font_medium_bold"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:text="4"
-                                    android:id="@+id/stepperFourText"
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:textAlignment="center"
-                                    android:textColor="@color/white"/>
-                            </LinearLayout>
-                            <!--<View
-                                android:layout_toRightOf="@+id/txtStepperOne"
-                                android:layout_width="wrap_content"
-                                android:layout_height="1dp"
-                                android:background="@color/light_blue"
-                                android:layout_centerVertical="true"/>-->
-                        </RelativeLayout>
-                    </LinearLayout>
-                    <!--<com.google.android.material.tabs.TabLayout
-                        android:id="@+id/tabStepper"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:tabIndicatorColor="#00ffff00"
-                        android:layout_margin="20dp">
-                        <com.google.android.material.tabs.TabItem
-                            style="@style/font_large_bold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            app:tabBackground="@drawable/tab_color_selector"
-                            android:textColor="@color/white"
-                            android:text="1"/>
-                        <com.google.android.material.tabs.TabItem
-                            style="@style/font_large_bold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/white"
-                            android:text="2"/>
-                        <com.google.android.material.tabs.TabItem
-                            style="@style/font_large_bold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/white"
-                            android:text="1"/>
-                        <com.google.android.material.tabs.TabItem
-                            style="@style/font_large_bold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/white"
-                            android:text="1"/>
-                    </com.google.android.material.tabs.TabLayout>-->
                 </LinearLayout>
-            </com.google.android.material.appbar.CollapsingToolbarLayout>
-        </com.google.android.material.appbar.AppBarLayout>
-        <RelativeLayout
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="end"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:id="@+id/imgHelp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_margin="15dp"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/ic_help" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layoutDirection="locale"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/stepperHeader"
+            android:background="@drawable/maroon_overlay_bg"
+            android:layout_marginTop="50dp"
+            app:layout_collapseMode="parallax">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="16dp"
+                android:id="@+id/stepper"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:weightSum="4">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    >
+                    <LinearLayout
+                        android:id="@+id/txtStepperOne"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:background="@drawable/stepper_background"
+                        android:layout_centerVertical="true">
+                        <TextView
+                            style="@style/font_medium_bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="1"
+                            android:id="@+id/stepperOneText"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"/>
+                    </LinearLayout>
+                    <View
+                        android:layout_toRightOf="@+id/txtStepperOne"
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:id="@+id/view1"
+                        android:background="@color/light_blue"
+                        android:layout_centerVertical="true"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:id="@+id/txtStepperTwo"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/stepper_background"
+                        android:layout_centerVertical="true">
+                        <TextView
+                            style="@style/font_medium_bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="2"
+                            android:id="@+id/stepperTwoText"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"/>
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/view2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_toRightOf="@+id/txtStepperTwo"
+                        android:background="@color/light_blue" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:layout_weight="1">
+                    <LinearLayout
+                        android:id="@+id/txtStepperThree"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/stepper_background"
+                        android:layout_centerVertical="true">
+                        <TextView
+                            style="@style/font_medium_bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="3"
+                            android:id="@+id/stepperThreeText"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"/>
+                    </LinearLayout>
+                    <View
+                        android:layout_toRightOf="@+id/txtStepperThree"
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:id="@+id/view3"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/light_blue"
+                        android:layout_centerVertical="true"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_weight="1.18"
+                    android:orientation="horizontal"
+                    >
+                    <LinearLayout
+                        android:id="@+id/txtStepperFour"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/stepper_background"
+                        android:layout_centerVertical="true">
+                        <TextView
+                            style="@style/font_medium_bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="4"
+                            android:id="@+id/stepperFourText"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"/>
+                    </LinearLayout>
+                    <!--<View
+                        android:layout_toRightOf="@+id/txtStepperOne"
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:background="@color/light_blue"
+                        android:layout_centerVertical="true"/>-->
+                </LinearLayout>
+            </LinearLayout>
+            <!--<com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabStepper"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:tabIndicatorColor="#00ffff00"
+                android:layout_margin="20dp">
+                <com.google.android.material.tabs.TabItem
+                    style="@style/font_large_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:tabBackground="@drawable/tab_color_selector"
+                    android:textColor="@color/white"
+                    android:text="1"/>
+                <com.google.android.material.tabs.TabItem
+                    style="@style/font_large_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/white"
+                    android:text="2"/>
+                <com.google.android.material.tabs.TabItem
+                    style="@style/font_large_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/white"
+                    android:text="1"/>
+                <com.google.android.material.tabs.TabItem
+                    style="@style/font_large_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/white"
+                    android:text="1"/>
+            </com.google.android.material.tabs.TabLayout>-->
+        </LinearLayout>
+        <LinearLayout
             android:id="@+id/childFragmentContainer"
             android:layout_width="match_parent"
+            android:layout_marginTop="110dp"
+            android:orientation="vertical"
+            android:layoutDirection="locale"
             android:layout_height="match_parent"
             android:layout_below="@+id/layoutProfile"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            />
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -258,6 +285,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layoutDirection="locale"
+                android:id="@+id/buttons"
                 android:orientation="horizontal">
                 <Button
                     style="@style/font_medium_regular"
@@ -269,10 +298,10 @@
                     android:layout_weight="1.5"
                     android:layout_gravity="start|center_vertical"
                     android:gravity="center"
+                    android:textAllCaps="false"
                     android:background="@drawable/maroon_angle_background"
-                    android:text="previous"
+                    android:text="@string/previous"
                     android:textColor="@color/white"
-                    android:drawableStart="@drawable/ic_chevron_left_24dp"
                     />
 
                 <Button
@@ -285,11 +314,12 @@
                     android:layout_gravity="end|center_vertical"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="5dp"
+                    android:textAllCaps="false"
                     android:background="@drawable/maroon_angle_background"
-                    android:text="next"
+                    android:text="@string/next"
                     
                     android:textColor="@color/white"
-                    android:drawableEnd="@drawable/ic_chevron_right_24dp"/>
+                    />
             </LinearLayout>
         </FrameLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

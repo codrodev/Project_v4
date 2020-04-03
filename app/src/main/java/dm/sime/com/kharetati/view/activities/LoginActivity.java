@@ -85,6 +85,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
     private int topMargin = 0;
     private int bottomMargin = 5;
     LoginViewModel viewModel;
+    public static LoginViewModel loginVM;
     ActivityLoginBinding binding;
     private ProgressBar progressBar;
 
@@ -144,6 +145,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
         //binding.setViewmodel(viewModel);
         viewModel.authListener = this;
+        loginVM = viewModel;
 
         //getting saved locale
         SharedPreferences sharedpreferences = getSharedPreferences(USER_LANGUAGE, Context.MODE_PRIVATE);
@@ -177,6 +179,25 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         binding.switchLanguage.setVisibility( View.GONE);
         Global.enableClearTextInEditBox(binding.editUserName,LoginActivity.this);
         Global.enableClearTextInEditBox(binding.editPassword,LoginActivity.this);
+
+        binding.editUserName.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                binding.editUserName.setFocusableInTouchMode(true);
+
+                return false;
+            }
+        });
+        binding.editPassword.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                binding.editPassword.setFocusableInTouchMode(true);
+
+                return false;
+            }
+        });
 
 
         binding.editUserName.setOnClickListener(new View.OnClickListener() {
@@ -395,8 +416,10 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
             }
         },0);//
-
-        viewModel.uaePassConfigAPI();
+        if(!Global.isLanguageChanged)
+            viewModel.uaePassConfigAPI();
+        else
+            displayContent();
     }
 
     private void displayContent(){
@@ -482,7 +505,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                     binding.editPassword.setCompoundDrawables(null, null,x_editTextPass , null);*/
                 // rememberme Layout
 
-                LinearLayout.LayoutParams remebermeLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                LinearLayout.LayoutParams remebermeLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, elementHeight);
                 remebermeLayoutParams.gravity = Gravity.CENTER_VERTICAL;
                 remebermeLayoutParams.setMargins(leftMargin,topMargin,rightMargin,bottomMargin);
                 binding.layoutRememberMe.setLayoutParams(remebermeLayoutParams);
@@ -544,7 +567,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
                 Animation anim = new ScaleAnimation(1f, 1.4f, 1f, 1.4f, Animation.RELATIVE_TO_PARENT,.5f, Animation.RELATIVE_TO_PARENT,.5f);
                 anim.setStartOffset(1000);
-                anim.setDuration(1000);
+                anim.setDuration(600);
                 anim.setFillEnabled(true);
                 anim.setFillAfter(true);
                 anim.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -562,13 +585,13 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                         @Override
                         public void run() {
 
-                            animateView(binding.imgBackground, 1000L,1000L,true,0f,0f,0f,Global.height);
+                            animateView(binding.imgBackground, 1000L,500L,true,0f,0f,0f,Global.height);
                             animateView(binding.slantViewLoginHeader,1000L,1000L,true,0f,0f,0f, (-Global.height/4)+100);
                             animateView(binding.cardLogin,1000L,1000L,true,0f,0f,Global.height, (-Global.height/2)+Global.height/3);
 
 
                         }
-                    },2500);
+                    },1500);
 
                 }
                 else{
@@ -595,7 +618,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
             }
 
-        }, Global.isLanguageChanged?0:500);
+        }, Global.isLanguageChanged?0:2000);
 
 
 
@@ -711,6 +734,8 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
     public void saveUserToRemember(LoginDetails loginDetails) {
         PreferenceManager.getDefaultSharedPreferences(this
         ).edit().putString(AppConstants.USER_LOGIN_DETAILS, gson.toJson(loginDetails)).apply();
+
+
     }
 
     @Override

@@ -1,5 +1,6 @@
 package dm.sime.com.kharetati.view.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -164,6 +165,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         Global.isBookmarks =false;
         Global.isSaveAsBookmark =false;
         Global.isDeliveryByCourier= false;
+        Global.isDashboard=false;
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         binding.setFragmentHomeVM(model);
         mRootView = binding.getRoot();
@@ -234,7 +236,12 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
         if(model.getSelectedApplication().getSearchForm() != null && model.getSelectedApplication().getSearchForm().size() > 1){
             lstSearchForm = app.getSearchForm();
+
             binding.tabRuntimeLayout.setVisibility(View.VISIBLE);
+            if(CURRENT_LOCALE.equals("en")) binding.tabRuntimeLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.tabRuntimeLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            if(CURRENT_LOCALE.equals("en")) binding.layoutControlHeader.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.layoutControlHeader.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            if(CURRENT_LOCALE.equals("en"))  binding.layoutRuntimeContainer.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else  binding.layoutRuntimeContainer.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            if(CURRENT_LOCALE.equals("en"))  binding.layoutHeader.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else  binding.layoutHeader.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
             binding.layoutControlHeader.setVisibility(View.GONE);
             binding.layoutRuntimeContainer.setVisibility(View.VISIBLE);
             binding.tabRuntimeLayout.removeAllTabs();
@@ -305,7 +312,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             binding.layoutRuntimeContainer.setVisibility(View.GONE);
             if(!model.getSelectedApplication().getIsNative()){
                 ArrayList param = new ArrayList<>();
-                param.add( constructUrl(model.getSelectedApplication().getSearchUrl()));
+                param.add( constructUrl(model.getSelectedApplication().getSearchUrl(),getActivity()));
                 param.add( model.getSelectedApplication().getNameEn());
                 model.navigateWithParam(getActivity(), FR_WEBVIEW, param);
             }
@@ -316,33 +323,42 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         Global.isFirstLoad = false;
     }
 
-    private String constructUrl(String url){
+    public static String constructUrl(String url,Activity context){
         StringBuilder builder = new StringBuilder();
         builder.append(url);
         if(!url.endsWith("?")) {
             builder.append("?");
         }
-        builder.append("token=" + Global.accessToken + "&");
+
         builder.append("remarks=" + Global.getPlatformRemark() + "&");
         String lang = Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0 ? "en" : "ar";
-        builder.append("lang=" + lang + "&");
+        builder.append("lng=" + lang + "&");
+        builder.append("appsrc=kharetati&");
         if(!Global.isUserLoggedIn){
+            //Guest
             builder.append("userType=GUEST&");
             builder.append("user_id="+ Global.sime_userid +"&");
+            builder.append("token="+ Global.app_session_token+"&");
             builder.append("user_name=GUEST");
+            builder.append("access_token=" + Global.accessToken + "&");
         } else {
             if(Global.isUAE){
                 builder.append("userType=UAEPASS&");
                 builder.append("user_id=" + Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getUuid() + "&");
+                builder.append("token="+ Global.app_session_token +"&");
+                builder.append("access_token=" + Global.uae_access_token  + "&");
                 if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0) {
                     builder.append("user_name=" + Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN() + "&");
                 } else {
                     builder.append("user_name=" + Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameAR() + "&");
                 }
             } else {
+                //My Id
                 builder.append("userType=MYID&");
-                builder.append("user_id=" + Global.username + "&");
-                builder.append("user_name=" + Global.getUser(getActivity()).getFullname());
+                builder.append("user_id=" + Global.sime_userid + "&");
+                builder.append("user_name=" + Global.getUser(context).getFullname());
+                builder.append("access_token=" + Global.accessToken + "&");
+                builder.append("token="+ Global.app_session_token +"&");
             }
 
         }

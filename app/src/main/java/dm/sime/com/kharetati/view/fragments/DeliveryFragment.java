@@ -1,6 +1,7 @@
 package dm.sime.com.kharetati.view.fragments;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -41,6 +42,7 @@ import dm.sime.com.kharetati.view.viewModels.DeliveryDetailViewModel;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 
 import static android.content.Context.MODE_PRIVATE;
+import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
 import static dm.sime.com.kharetati.utility.Global.makani;
 
 public class DeliveryFragment extends Fragment implements ParentSiteplanFragment.onNextListner{
@@ -84,13 +86,14 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
         binding = DataBindingUtil.inflate(inflater, R.layout.activity_delivery_deatails, container, false);
         binding.setDeliveryDetailVM(model);
         mRootView = binding.getRoot();
+        if(CURRENT_LOCALE.equals("en")) binding.linearLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.linearLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         isDeliveryFragment =true;
         ParentSiteplanFragment.listner = this;
         initializePage();
         final String spinnerItems[]=getActivity().getResources().getStringArray(R.array.emirates);
         userid=Global.getUser(getActivity()).getEmail();
 
-//        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         Global.hideSoftKeyboard(getActivity());
 
         setRetainInstance(true);
@@ -215,6 +218,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
                     binding.linearLayout.getChildAt(i).setAlpha(.5f);
             }
         }
+        binding.deliveryByCourier.setTextColor(Color.parseColor("#333333"));
 
         /**/
         /*binding.etRecievername.setOnEditorActionListener(new TextView.OnEditorActionListener() {

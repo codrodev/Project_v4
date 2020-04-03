@@ -102,6 +102,7 @@ import dm.sime.com.kharetati.view.viewModels.AttachmentViewModel;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 import dm.sime.com.kharetati.view.viewmodelfactories.AttachmentViewModelFactory;
 
+import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
 import static dm.sime.com.kharetati.utility.Global.licenseData;
 
 
@@ -201,6 +202,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         mRootView = binding.getRoot();
         initializePage();
         setRetainInstance(true);
+        if(CURRENT_LOCALE.equals("en")) binding.rootView.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.rootView.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 
         return binding.getRoot();
     }

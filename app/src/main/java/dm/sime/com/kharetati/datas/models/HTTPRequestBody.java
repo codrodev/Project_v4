@@ -60,7 +60,7 @@ public class HTTPRequestBody {
     }
 
     public static class GuestBody{
-        String username ="guest";
+        String Username ="guest";
         String DeviceID =(Global.deviceId!=null)? Global.deviceId:"";
         String DeviceType ="Android";
         String UserType ="GUEST";

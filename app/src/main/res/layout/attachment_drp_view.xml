@@ -14,7 +14,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
         android:textColor="@color/gray_text_color"
-        style="@style/font_large_bold"
+        style="@style/font_medium_bold"
         android:fontFamily="@font/dubai_font"
         android:textStyle="bold" />
 </RelativeLayout>

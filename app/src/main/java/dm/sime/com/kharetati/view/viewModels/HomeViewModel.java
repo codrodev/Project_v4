@@ -471,12 +471,15 @@ public class HomeViewModel extends ViewModel {
         inputModel.setSearchValue(searchText);
         inputModel.setTabId(getSelectedTab().getId());
         if(Global.isUAE){
+            Global.app_session_token=Global.uaeSessionResponse.getService_response().getToken();
+
             inputModel.setTOKEN(Global.uaeSessionResponse == null ? "" : Global.uaeSessionResponse.getService_response().getToken());
         } else {
             inputModel.setTOKEN(Global.app_session_token == null ? "" : Global.app_session_token);
         }
         inputModel.setREMARKS(Global.getPlatformRemark());
         inputModel.setGuest(!Global.isUserLoggedIn);
+        //inputModel.setLanguage(Global.CURRENT_LOCALE);//Change
 
         searchModel.setInputJson(inputModel);
 
@@ -582,11 +585,11 @@ public class HomeViewModel extends ViewModel {
     }
 
     public void getWebBasedSearchResult(WebSearchResult result){
-        if (result != null) {
+        if (result != null && !Boolean.valueOf(result.getIs_exception())) {
             homeNavigator.onSuccess();
             if (result != null && result.getService_response() != null) {
                 ArrayList param = new ArrayList<>();
-                param.add(result.getService_response().getDisplayInWebViewPage());
+                param.add(HomeFragment.constructUrl(result.getService_response().getDisplayInWebViewPage(),activity));
                 navigateWithParam(activity, FragmentTAGS.FR_WEBVIEW, param);
             } else {
                 homeNavigator.onFailure(activity.getResources().getString(R.string.community_error));

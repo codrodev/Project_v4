@@ -15,6 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layoutDirection="locale"
             android:orientation="vertical">
             <LinearLayout
                 android:id="@+id/layoutProfile"
@@ -36,8 +37,8 @@
                     android:layout_marginTop="10dp" />
                 <ImageView
                     android:id="@+id/imgHelp"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_alignParentRight="true"
                     android:src="@drawable/ic_help"
                     android:layout_marginTop="10dp"
@@ -50,6 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+
                 android:id="@+id/profileUsername"
                 android:background="@drawable/maroon_overlay_bg"
                 android:gravity="center_vertical">
@@ -76,7 +78,6 @@
                         android:layout_marginHorizontal="10dp"
                         android:fontFamily="@font/dubai_font"
                         android:gravity="center_vertical"
-                        android:text="Muhammad"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -95,6 +96,10 @@
                 </LinearLayout>
 
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@drawable/maroon_overlay_bg"/>
             <FrameLayout
                 android:id="@+id/ui_container"
                 android:layout_width="match_parent"

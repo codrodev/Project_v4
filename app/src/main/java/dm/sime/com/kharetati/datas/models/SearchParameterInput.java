@@ -18,6 +18,17 @@ public class SearchParameterInput {
     @SerializedName("REMARKS")
     private String REMARKS;
 
+    @SerializedName("lng")
+    private String lng;
+
+    public String getLanguage() {
+        return lng;
+    }
+
+    public void setLanguage(String language) {
+        this.lng = language;
+    }
+
     @SerializedName("IsGuest")
     private boolean IsGuest;
 

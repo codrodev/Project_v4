@@ -205,6 +205,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         mRootView = binding.getRoot();
         binding.imgHelp.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
         binding.imgBack.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
+        if(CURRENT_LOCALE.equals("en")) binding.toolBarLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.toolBarLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         mapView = mRootView.findViewById(R.id.mapView);
         bottomSheetDialogFragment = MapFunctionBottomsheetDialogFragment.newInstance(this);
         LinearLayout layoutBottomSheet = (LinearLayout)mRootView.findViewById(R.id.bottomSheet);
@@ -689,19 +690,19 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                 if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0){
                     ArrayList al = new ArrayList();
                     if(Global.map_en_url != null && Global.map_en_url.length() > 0){
-                        al.add(Global.map_en_url);
+                        al.add(HomeFragment.constructUrl(Global.map_en_url,getActivity()));
                         ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
                     } else {
-                        al.add(Global.helpUrlEn);
+                        al.add(HomeFragment.constructUrl(Global.helpUrlEn,getActivity()));
                         ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
                     }
                 } else {
                     ArrayList al = new ArrayList();
                     if(Global.map_ar_url != null && Global.map_ar_url.length() > 0){
-                        al.add(Global.map_ar_url);
+                        al.add(HomeFragment.constructUrl(Global.map_ar_url,getActivity()));
                         ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
                     } else {
-                        al.add(Global.helpUrlEn);
+                        al.add(HomeFragment.constructUrl(Global.helpUrlEn,getActivity()));
                         ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
                     }
                 }
@@ -875,17 +876,21 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             if(!fun.getLaunchUrl().endsWith("?")) {
                 builder.append("?");
             }
-            builder.append("token=" + Global.accessToken + "&");
+
             builder.append("remarks=" + Global.getPlatformRemark() + "&");
+            builder.append("appsrc=kharetati&");
             String lang = Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0 ? "en" : "ar";
-            builder.append("lang=" + lang + "&");
+            builder.append("lng=" + lang + "&");
             if(!Global.isUserLoggedIn){
+                builder.append("access_token=" + Global.accessToken + "&");
                 builder.append("userType=GUEST&");
                 builder.append("user_id="+ Global.sime_userid +"&");
                 builder.append("user_name=GUEST&");
             } else {
                 if(Global.isUAE){
                     builder.append("userType=UAEPASS&");
+                    builder.append("access_token=" + Global.uae_access_token + "&");
+                    builder.append("token="+Global.app_session_token+"&");
                     builder.append("user_id=" + Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getUuid() + "&");
                     if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0) {
                         builder.append("user_name=" + Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN() + "&");
@@ -893,8 +898,9 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                         builder.append("user_name=" + Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameAR() + "&");
                     }
                 } else {
+                    builder.append("access_token=" + Global.accessToken + "&");
                     builder.append("userType=MYID&");
-                    builder.append("user_id=" + Global.username + "&");
+                    builder.append("user_id=" + Global.sime_userid + "&");
                     builder.append("user_name=" + Global.getUser(getActivity()).getFullname() + "&");
                 }
 
@@ -1403,6 +1409,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
 
     private void createExportParams(){
         DisplayMetrics displaymetrics = new DisplayMetrics();
+        if(getActivity()!=null)
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         int height2 = displaymetrics.heightPixels;
         int width2 = displaymetrics.widthPixels;

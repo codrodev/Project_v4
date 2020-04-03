@@ -138,8 +138,10 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
     @Override
     public void onFailure(String Msg) {
         binding.textHeading.setVisibility(View.GONE);
+        if(getActivity()!=null){
         AlertDialogUtil.showProgressBar(getActivity(),false);
-        AlertDialogUtil.errorAlertDialog("",Msg,getActivity().getResources().getString(R.string.ok),getActivity());
+
+        AlertDialogUtil.errorAlertDialog("",Msg,getActivity().getResources().getString(R.string.ok),getActivity());}
 
     }
 

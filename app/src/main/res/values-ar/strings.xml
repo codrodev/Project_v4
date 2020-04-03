@@ -194,6 +194,7 @@
     <string name="bookmark">إشارة مرجعية</string>
     <string name="mymaps">خرائطي</string>
     <string name="area">منطقة : </string>
+    <string name="timeout">انقضت مهلة جلستك</string>
 
 
 
@@ -220,6 +221,14 @@
         <item>6</item>
         <item>7</item>
     </string-array>
+    <string-array name="request_site_plan">
+        <item>مالك الأرض</item>
+        <item>مرفق إثبات</item>
+        <item>تفاصيل التسليم</item>
+        <item>دفع</item>
+    </string-array>
     <string name="enter_favourite_name">يرجى إدخال اسم المفضلة</string>
     <string name="enter_valid_password">الرجاء إدخال كلمة مرور صالحة</string>
+    <string name="previous">السابق</string>
+    <string name="next">التالى</string>
 </resources>

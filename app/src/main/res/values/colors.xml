@@ -16,7 +16,7 @@
     <color name="yellow_light">#cce3e330</color>
     <color name="light_blue">#5057FF</color>
     <color name="light_gray">#8e8e93</color>
-    <color name="gray_text_color">#F2F2F2</color>
+    <color name="gray_text_color">#333333</color>
     <color name="colorHeader">#008577</color>
     <color name="textColorPrimary">#FFFFFF</color>
 

@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         model.mainNavigator =this;
         model.initialize();
         binding.setActivityMainVM(model);
+        if(CURRENT_LOCALE.equals("en")) binding.customBottomBar.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.customBottomBar.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         final BottomNavigationFragmentSheet myBottomSheet = BottomNavigationFragmentSheet.newInstance(this);
         binding.customBottomBar.add(new MeowBottomNavigation.Model(1, R.drawable.ic_dashboard));
         binding.customBottomBar.add(new MeowBottomNavigation.Model(2, R.drawable.ic_happiness));
@@ -152,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             @Override
             public Unit invoke(MeowBottomNavigation.Model model) {
                 // YOUR CODES
+
                sharedpreferences.edit().putInt("position",model.getId()).apply();
                 return null;
             }
@@ -168,22 +170,23 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                     } else {
 
                     }*/
-                    if(Global.home_en_url != null || Global.home_en_url != null) {
-                        al.add(Global.CURRENT_LOCALE.equals("en") ? Global.home_en_url : Global.home_en_url);
+                    if(Global.home_en_url != null || Global.home_ar_url != null) {
+                        al.add(HomeFragment.constructUrl((Global.CURRENT_LOCALE.equals("en") ? Global.home_en_url : Global.home_ar_url),MainActivity.this));
                     }
                 } else if(Global.FragmentTagForHelpUrl.equals(FragmentTAGS.FR_DASHBOARD)){
+                    Global.isDashboard =true;
                     if(Global.FragmentTagForDashboardHelpUrl == 0) {
-                        al.add(Global.CURRENT_LOCALE.equals("en")? Global.mymaps_en_url:Global.mymaps_ar_url);
+                        al.add(HomeFragment.constructUrl((Global.CURRENT_LOCALE.equals("en")? Global.mymaps_en_url:Global.mymaps_ar_url),MainActivity.this));
 
                     } else {
-                        al.add(Global.CURRENT_LOCALE.equals("en")? Global.bookmarks_en_url:Global.bookmarks_ar_url);
+                        al.add(HomeFragment.constructUrl((Global.CURRENT_LOCALE.equals("en")? Global.bookmarks_en_url:Global.bookmarks_ar_url),MainActivity.this));
                     }
                 }
                 if(al != null & al.size() > 0) {
                     loadFragment(FragmentTAGS.FR_WEBVIEW, true, al);
                 } else {
-                    if(Global.home_en_url != null || Global.home_en_url != null) {
-                        al.add(Global.CURRENT_LOCALE.equals("en") ? Global.home_en_url : Global.home_en_url);
+                    if(Global.home_en_url != null || Global.home_ar_url != null) {
+                        al.add(HomeFragment.constructUrl((Global.CURRENT_LOCALE.equals("en") ? Global.home_en_url : Global.home_ar_url),MainActivity.this));
                     }
                     loadFragment(FragmentTAGS.FR_WEBVIEW, true, al);
                 }
@@ -253,13 +256,15 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         int position = sharedpreferences.getInt("position",3);
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             Global.isLandScape = true;
+            //createConfigurationContext(newConfig);
 
             if(CURRENT_LOCALE.equals("ar")){
 
+                //createConfigurationContext(newConfig);
 
             binding.customBottomBar.show(position+1,false);
             loadFragment(model.bottomNavigationTAG(position+1), true, null);
-            //binding.customBottomBar.getCellById(position+1).disableCell();
+            //binding.customBottomBar.getCellById(position+1).setEnabledCell(false);
             binding.customBottomBar.show(position,true);
             loadFragment(model.bottomNavigationTAG(position), true, null);
 
@@ -533,7 +538,13 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     @Override
     public void onWebViewBack() {
         getSupportFragmentManager().popBackStackImmediate();
-        binding.customBottomBar.show(3, true);
+        if(Global.isDashboard) {
+            Global.FragmentTagForHelpUrl = FragmentTAGS.FR_DASHBOARD;
+            binding.customBottomBar.show(1, true);
+            Global.lastSelectedBottomTab = 1;
+        }
+        else
+            binding.customBottomBar.show(3, true);
         //if(Global.current_fragment_id.equals(FragmentTAGS.FR_))
 
     }
@@ -616,10 +627,14 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         @Override
         public void onFinish() {
 
-            if(MainActivity.this!=null)
-            AlertDialogUtil.timeoutAlertDialog("", CURRENT_LOCALE.equals("en") ? Global.appMsg.getSessionTimeoutEn(): Global.appMsg.getSessionTimeoutAr(), getResources().getString(R.string.ok), MainActivity.this);
+            if(MainActivity.this!=null) {
 
 
+                if(Global.appMsg!=null)
+                    AlertDialogUtil.timeoutAlertDialog("", CURRENT_LOCALE.equals("en") ? Global.appMsg.getSessionTimeoutEn() : Global.appMsg.getSessionTimeoutAr(), getResources().getString(R.string.ok), MainActivity.this);
+                else
+                    AlertDialogUtil.timeoutAlertDialog("", getResources().getString(R.string.timeout), getResources().getString(R.string.ok), MainActivity.this);
+            }
         }
 
         @Override

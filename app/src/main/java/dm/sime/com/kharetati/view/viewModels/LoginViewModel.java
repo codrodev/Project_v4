@@ -171,6 +171,9 @@ public class LoginViewModel extends ViewModel {
             guestName=user.getUsername();
             guestPassword="Guest";
 
+            if(Global.loginDetails!=null)
+                LoginActivity.loginVM.authListener.saveUserToRemember(Global.loginDetails);
+
             Global.aboutus_en_url = kharetatiUser.getAboutus_en_url();
             Global.aboutus_ar_url = kharetatiUser.getAboutus_ar_url();
             Global.terms_en_url = kharetatiUser.getTerms_en_url();
@@ -189,7 +192,9 @@ public class LoginViewModel extends ViewModel {
 
             authListener.saveUser(user);
             Global.isUserLoggedIn = false;
-
+            loginDetails.username =getDataEmail()!=null?getDataEmail():"";
+            loginDetails.pwd =getDataPassword()!=null?getDataPassword():"";
+            authListener.saveUserToRemember(loginDetails);
             authListener.onSuccess();
 
         }
@@ -370,7 +375,7 @@ public class LoginViewModel extends ViewModel {
                     compositeDisposable.add(disposable);
 
                 }
-            } else {
+            }else {
                 if(Global.appMsg!=null){
                     authListener.onFailure(Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInvalidUserNamePwdEn():Global.appMsg.getInvalidUserNamePwdAr());
                 }
@@ -378,7 +383,12 @@ public class LoginViewModel extends ViewModel {
                     authListener.onFailure(activity.getResources().getString(R.string.wrong_username_password));
             }
         } else {
-            showErrorMessage();
+            //showErrorMessage();
+            if(Global.appMsg!=null){
+                authListener.onFailure(Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInvalidUserNamePwdEn():Global.appMsg.getInvalidUserNamePwdAr());
+            }
+            else
+                authListener.onFailure(activity.getResources().getString(R.string.wrong_username_password));
         }
     }
 
