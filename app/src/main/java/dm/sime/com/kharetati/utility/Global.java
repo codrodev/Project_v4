@@ -75,6 +75,7 @@ import static dm.sime.com.kharetati.utility.constants.AppConstants.USER_LANGUAGE
 import static dm.sime.com.kharetati.utility.constants.AppConstants.USER_OBJECT;
 
 public class Global {
+    public static final String MYPREFERENCES = "MyPreferences";
     private static final String GUEST_OBJECT = "Guest";
     private static final String USER_LANGUAGE = "UserLaunguage";
     public static String CURRENT_LOCALE = "en";
@@ -240,7 +241,8 @@ public class Global {
     }
 
     public static LoginDetails getUserLoginDeatils(Activity activity) {
-        String userJson = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext()).getString(AppConstants.USER_LOGIN_DETAILS, "NOT_AVAILABLE");
+        //String userJson = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext()).getString(AppConstants.USER_LOGIN_DETAILS, "NOT_AVAILABLE");
+        String userJson = activity.getSharedPreferences(MYPREFERENCES,Context.MODE_PRIVATE).getString(AppConstants.USER_LOGIN_DETAILS, "NOT_AVAILABLE");
         if (userJson.compareToIgnoreCase("NOT_AVAILABLE") == 0) return null;
         Gson gson = new Gson();
         LoginDetails user = gson.fromJson(userJson, LoginDetails.class);
@@ -512,9 +514,11 @@ public class Global {
                         return true;
                     }
                     if (editText.getCompoundDrawables()[DRAWABLE_LEFT] != null && event.getRawX() >= (editText.getLeft() - editText.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())) {
+
                         editText.setText("");
                         if(editText.isCursorVisible())
                             editText.setCursorVisible(false);
+
                         return true;
                     }
                 }
@@ -677,6 +681,7 @@ public class Global {
 
     public static void logout(Context context) {
         Global.session = null;
+
         Global.app_session_token = null;
         Global.current_fragment_id = null;
 //        AttachmentFragment.deliveryByCourier=false;
@@ -691,6 +696,7 @@ public class Global {
         //Global.loginDetails.showFormPrefilledOnRememberMe=true;
         if(Global.loginDetails!=null)
             LoginActivity.loginVM.authListener.saveUserToRemember(Global.loginDetails);
+
         Gson gson = new GsonBuilder().serializeNulls().create();
         PreferenceManager.getDefaultSharedPreferences(context).edit().putString(AppConstants.USER_LOGIN_DETAILS, gson.toJson(Global.loginDetails)).apply();
         Intent intent = new Intent(context, LoginActivity.class);

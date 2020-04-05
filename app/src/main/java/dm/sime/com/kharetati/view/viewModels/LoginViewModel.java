@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -41,6 +42,7 @@ import dm.sime.com.kharetati.utility.AES;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.Encryptions;
 import dm.sime.com.kharetati.utility.Global;
+import dm.sime.com.kharetati.utility.constants.AppConstants;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.datas.models.AccessTokenResponse;
 import dm.sime.com.kharetati.datas.models.AttachmentBitmap;
@@ -61,6 +63,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
+import static dm.sime.com.kharetati.utility.Global.MYPREFERENCES;
 import static dm.sime.com.kharetati.utility.Global.loginDetails;
 
 public class LoginViewModel extends ViewModel {
@@ -192,8 +195,10 @@ public class LoginViewModel extends ViewModel {
 
             authListener.saveUser(user);
             Global.isUserLoggedIn = false;
-            loginDetails.username =getDataEmail()!=null?getDataEmail():"";
-            loginDetails.pwd =getDataPassword()!=null?getDataPassword():"";
+
+
+            Gson gson = new GsonBuilder().serializeNulls().create();
+            activity.getSharedPreferences(MYPREFERENCES,Context.MODE_PRIVATE).edit().putString(AppConstants.USER_LOGIN_DETAILS, gson.toJson(Global.loginDetails)).apply();
             authListener.saveUserToRemember(loginDetails);
             authListener.onSuccess();
 

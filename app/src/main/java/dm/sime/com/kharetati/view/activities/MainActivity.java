@@ -247,7 +247,6 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             super.attachBaseContext(newBase);
         }
     }
-
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -262,9 +261,12 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
                 //createConfigurationContext(newConfig);
 
+                binding.customBottomBar.clearCount(position);
+                binding.customBottomBar.show(position,true);
+
             binding.customBottomBar.show(position+1,false);
             loadFragment(model.bottomNavigationTAG(position+1), true, null);
-            //binding.customBottomBar.getCellById(position+1).setEnabledCell(false);
+            binding.customBottomBar.clearAllCounts();
             binding.customBottomBar.show(position,true);
             loadFragment(model.bottomNavigationTAG(position), true, null);
 
@@ -278,6 +280,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             if(CURRENT_LOCALE.equals("ar")){
                 binding.customBottomBar.show(position-1,false);
                 loadFragment(model.bottomNavigationTAG(position-1), true, null);
+                binding.customBottomBar.clearAllCounts();
                 //binding.customBottomBar.getCellById(position-1).disableCell();
                 binding.customBottomBar.show(position,true);
                 loadFragment(model.bottomNavigationTAG(position), true, null);

@@ -166,7 +166,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
                     sharedpreferences.edit().putInt("stepperPosition",currentIndex);
                     ArrayList al = new ArrayList();
                     if(Global.helpUrlEn!=null||Global.helpUrlAr!=null)
-                    al.add(HomeFragment.constructUrl((Global.CURRENT_LOCALE.equals("en")? Global.helpUrlEn:Global.helpUrlAr),getActivity()));
+                    al.add(HomeFragment.constructUrl((Global.CURRENT_LOCALE.equals("en")? Global.helpUrlEn:Global.helpUrlEn),getActivity()));
                     ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
                 } else {
 

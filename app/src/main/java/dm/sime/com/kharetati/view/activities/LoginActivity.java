@@ -67,6 +67,7 @@ import dm.sime.com.kharetati.view.viewmodelfactories.AuthViewModelFactory;
 import dm.sime.com.kharetati.view.viewModels.LoginViewModel;
 
 import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
+import static dm.sime.com.kharetati.utility.Global.MYPREFERENCES;
 import static dm.sime.com.kharetati.utility.Global.forceUserToUpdateBuild;
 import static dm.sime.com.kharetati.utility.Global.generateRandomID;
 import static dm.sime.com.kharetati.utility.constants.AppConstants.USER_LANGUAGE;
@@ -88,6 +89,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
     public static LoginViewModel loginVM;
     ActivityLoginBinding binding;
     private ProgressBar progressBar;
+    private SharedPreferences sharedpreferences;
 
     public LoginActivity(){
 
@@ -96,15 +98,17 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Global.uae_code = "";
+        /*Global.uae_code = "";
         Global.isUAEaccessWeburl = false;
-        Global.isLoginActivity = true;
+
+
         Global.uaePassConfig = null;
         Global.uaeSessionResponse = null;
         Global.isUAE = false;
         Global.isUAEAccessToken = false;
         Global.clientID = "";
-        Global.state = "";
+        Global.state = "";*/
+        Global.isLoginActivity = true;
 
         binding = DataBindingUtil.setContentView(LoginActivity.this, R.layout.activity_login);
 
@@ -147,14 +151,18 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         viewModel.authListener = this;
         loginVM = viewModel;
 
+
+
         //getting saved locale
-        SharedPreferences sharedpreferences = getSharedPreferences(USER_LANGUAGE, Context.MODE_PRIVATE);
+        sharedpreferences = getSharedPreferences(Global.MYPREFERENCES, Context.MODE_PRIVATE);
         String locale = sharedpreferences.getString(USER_LANGUAGE, "defaultStringIfNothingFound");
         //String locale = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(USER_LANGUAGE, "defaultStringIfNothingFound");
         if(!locale.equals("defaultStringIfNothingFound"))
             CURRENT_LOCALE =locale;
 
         //getting remembered user credentials if any
+
+        if(CURRENT_LOCALE.equals("en"))binding.cardLogin.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.cardLogin.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, Global.getUsernamesFromHistory(this));
         binding.editUserName.setAdapter(adapter);
@@ -167,8 +175,8 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
         LoginDetails loginDetails = Global.getUserLoginDeatils(this);
         if (loginDetails != null && loginDetails.username != null && loginDetails.pwd != null && Global.isRememberLogin(this)) {
-            binding.editUserName.setText(loginDetails.username);
-            binding.editPassword.setText(loginDetails.pwd);
+            if(!loginDetails.username.equals(""))binding.editUserName.setText(loginDetails.username);
+            if(!loginDetails.pwd.equals(""))binding.editPassword.setText(loginDetails.pwd);
             binding.editUserName.dismissDropDown();
 
         }
@@ -253,6 +261,10 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
             @Override
             public void onClick(View view) {
 
+
+                Gson gson = new GsonBuilder().serializeNulls().create();
+                if(Global.loginDetails!=null)
+                sharedpreferences.edit().putString(AppConstants.USER_LOGIN_DETAILS, gson.toJson(Global.loginDetails)).apply();
                 viewModel.onGuestLoginButtonClick();
             }
         });
@@ -732,8 +744,9 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
     @Override
     public void saveUserToRemember(LoginDetails loginDetails) {
-        PreferenceManager.getDefaultSharedPreferences(this
-        ).edit().putString(AppConstants.USER_LOGIN_DETAILS, gson.toJson(loginDetails)).apply();
+       /* PreferenceManager.getDefaultSharedPreferences(this
+        ).edit().putString(AppConstants.USER_LOGIN_DETAILS, gson.toJson(loginDetails)).apply();*/
+        sharedpreferences.edit().putString(AppConstants.USER_LOGIN_DETAILS, gson.toJson(loginDetails)).apply();
 
 
     }

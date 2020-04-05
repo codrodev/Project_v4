@@ -301,7 +301,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             binding.tabRuntimeLayout.setVisibility(View.GONE);
             binding.layoutControlHeader.setVisibility(View.VISIBLE);
             binding.layoutRuntimeContainer.setVisibility(View.VISIBLE);
-            binding.txtHeader.setText(app.getSearchForm().get(0).getTabs().getNameEn());
+            binding.txtHeader.setText((CURRENT_LOCALE.equals("en"))?app.getSearchForm().get(0).getTabs().getNameEn():app.getSearchForm().get(0).getTabs().getNameAr());
             binding.txtHeader.setTextColor(getResources().getColor(R.color.white));
             model.setSelectedTab(app.getSearchForm().get(0).getTabs());
 
@@ -325,9 +325,11 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
     public static String constructUrl(String url,Activity context){
         StringBuilder builder = new StringBuilder();
-        builder.append(url);
-        if(!url.endsWith("?")) {
-            builder.append("?");
+        if(url!=null||url!=""){
+            builder.append(url);
+            if (!url.endsWith("?")) {
+                builder.append("?");
+            }
         }
 
         builder.append("remarks=" + Global.getPlatformRemark() + "&");

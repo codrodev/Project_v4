@@ -64,37 +64,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:id="@+id/layoutLanguage"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:visibility="invisible"
-                    android:orientation="vertical">
-                    <RelativeLayout
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:background="@drawable/circular_menu_bg"
-                        android:layout_margin="5dp">
-                        <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:id= "@+id/imgLanguage"
-                            android:src="@drawable/ic_like"
-                            android:layout_centerInParent="true"/>
-                    </RelativeLayout>
-                    <TextView
-                        style="@style/font_medium_regular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id= "@+id/txtLanguage"
-                        android:textAlignment="center"
-                        android:text="@string/RATEUS"
-                        android:layout_gravity="center"
-                        android:textColor="@color/white"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:id="@+id/logout"
                     android:layout_gravity="center"
                     android:gravity="center"
@@ -121,18 +90,6 @@
                         android:layout_gravity="center"
                         android:textColor="@color/white"/>
                 </LinearLayout>
-
-
-
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/bottomMenuLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:weightSum="3"
-                android:orientation="horizontal"
-                android:layout_below="@+id/topMenuLayout">
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -163,6 +120,19 @@
                         android:layout_gravity="center"
                         android:textColor="@color/white"/>
                 </LinearLayout>
+
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/bottomMenuLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:weightSum="3"
+                android:orientation="horizontal"
+                android:layout_below="@+id/topMenuLayout">
+
 
 
                 <LinearLayout
@@ -231,15 +201,6 @@
                         android:layout_gravity="center"
                         android:textColor="@color/white"/>
                 </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/thirdMenuLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:weightSum="3"
-                android:orientation="horizontal"
-                android:layout_below="@+id/bottomMenuLayout">
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -275,6 +236,16 @@
                         android:text="@string/TERMSANDCONDITIONS"
                         android:textColor="@color/white" />
                 </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/thirdMenuLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:weightSum="3"
+                android:orientation="horizontal"
+                android:layout_below="@+id/bottomMenuLayout">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -340,6 +311,38 @@
                         android:layout_gravity="center"
                         android:textColor="@color/white"/>
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/layoutLanguage"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:visibility="invisible"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/circular_menu_bg"
+                        android:layout_margin="5dp">
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:id= "@+id/imgLanguage"
+                            android:src="@drawable/ic_like"
+                            android:layout_centerInParent="true"/>
+                    </RelativeLayout>
+                    <TextView
+                        style="@style/font_medium_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id= "@+id/txtLanguage"
+                        android:textAlignment="center"
+                        android:text="@string/RATEUS"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
                <!-- <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
