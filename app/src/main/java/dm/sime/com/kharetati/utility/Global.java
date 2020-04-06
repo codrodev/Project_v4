@@ -456,7 +456,9 @@ public class Global {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static void changeLang(String lang, Context context) {
         Locale locale;
-        PreferenceManager.getDefaultSharedPreferences(context).edit().putString(USER_LANGUAGE, lang).apply();
+        context.getSharedPreferences(MYPREFERENCES,Context.MODE_PRIVATE).edit().putString(USER_LANGUAGE, lang).apply();
+        //PreferenceManager.getDefaultSharedPreferences(context).edit().putString(USER_LANGUAGE, lang).apply();
+
         Global.current_fragment = null;
         Global.current_fragment_id = "-NONE-";
         locale = new Locale(lang);

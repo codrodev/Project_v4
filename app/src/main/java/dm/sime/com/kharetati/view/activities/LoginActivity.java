@@ -263,6 +263,8 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
 
                 Gson gson = new GsonBuilder().serializeNulls().create();
+                Global.loginDetails.username = binding.editUserName.getText().toString().trim()!=""?binding.editUserName.getText().toString().trim():"";
+                Global.loginDetails.pwd = binding.editPassword.getText().toString().trim()!=""?binding.editPassword.getText().toString().trim():"";
                 if(Global.loginDetails!=null)
                 sharedpreferences.edit().putString(AppConstants.USER_LOGIN_DETAILS, gson.toJson(Global.loginDetails)).apply();
                 viewModel.onGuestLoginButtonClick();
@@ -676,7 +678,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
     @Override
     protected void attachBaseContext(Context newBase) {
 
-            SharedPreferences sharedpreferences = newBase.getSharedPreferences(USER_LANGUAGE, Context.MODE_PRIVATE);
+            SharedPreferences sharedpreferences = newBase.getSharedPreferences(MYPREFERENCES, Context.MODE_PRIVATE);
             String locale = sharedpreferences.getString(USER_LANGUAGE, "defaultStringIfNothingFound");
             if(!locale.equals("defaultStringIfNothingFound"))
                 CURRENT_LOCALE =locale;

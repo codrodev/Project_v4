@@ -117,6 +117,7 @@ import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 import dm.sime.com.kharetati.view.viewmodelfactories.MapViewModelFactory;
 
 import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
+import static dm.sime.com.kharetati.utility.Global.MYPREFERENCES;
 
 public class MapFragment extends Fragment implements MapNavigator, EditText.OnEditorActionListener,MapFunctionBottomsheetDialogFragment.OnFunctionMenuSelectedListener {
 
@@ -200,6 +201,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Global.current_fragment_id = FragmentTAGS.FR_MAP;
+        getActivity().getSharedPreferences(MYPREFERENCES,Context.MODE_PRIVATE).edit().putString("currentFragment",Global.current_fragment_id).apply();
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_map, container, false);
         binding.setFragmentMapVM(model);
         mRootView = binding.getRoot();
@@ -446,6 +448,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             ViewAnimationUtils.blinkAnimationView(binding.imgBack);
 
         }
+
 
         binding.imgLayer.setTag("layer");
         //Button Layer Click event

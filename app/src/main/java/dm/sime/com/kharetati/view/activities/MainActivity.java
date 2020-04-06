@@ -65,6 +65,7 @@ import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
 import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
+import static dm.sime.com.kharetati.utility.Global.MYPREFERENCES;
 import static dm.sime.com.kharetati.utility.constants.AppConstants.USER_LANGUAGE;
 
 public class MainActivity extends AppCompatActivity implements FragmentNavigator, MainNavigator, DataCallback, BottomNavigationFragmentSheet.OnActionListener {
@@ -236,12 +237,12 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     @Override
     protected void attachBaseContext(Context newBase) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            sharedpreferences = newBase.getSharedPreferences(USER_LANGUAGE, Context.MODE_PRIVATE);
+            sharedpreferences = newBase.getSharedPreferences(MYPREFERENCES, Context.MODE_PRIVATE);
             String locale = sharedpreferences.getString(USER_LANGUAGE, "defaultStringIfNothingFound");
             if(!locale.equals("defaultStringIfNothingFound"))
                 CURRENT_LOCALE =locale;
             else
-                CURRENT_LOCALE="en";
+                CURRENT_LOCALE ="en";
             super.attachBaseContext(CustomContextWrapper.wrap(newBase, CURRENT_LOCALE));
         } else {
             super.attachBaseContext(newBase);
@@ -516,6 +517,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             Global.alertDialog.cancel();
             Global.alertDialog =null;
         }
+
     }
 
     @Override

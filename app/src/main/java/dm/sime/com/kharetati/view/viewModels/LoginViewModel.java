@@ -197,9 +197,9 @@ public class LoginViewModel extends ViewModel {
             Global.isUserLoggedIn = false;
 
 
-            Gson gson = new GsonBuilder().serializeNulls().create();
-            activity.getSharedPreferences(MYPREFERENCES,Context.MODE_PRIVATE).edit().putString(AppConstants.USER_LOGIN_DETAILS, gson.toJson(Global.loginDetails)).apply();
-            authListener.saveUserToRemember(loginDetails);
+            //Gson gson = new GsonBuilder().serializeNulls().create();
+            //activity.getSharedPreferences(MYPREFERENCES,Context.MODE_PRIVATE).edit().putString(AppConstants.USER_LOGIN_DETAILS, gson.toJson(Global.loginDetails)).apply();
+            //authListener.saveUserToRemember(loginDetails);
             authListener.onSuccess();
 
         }
@@ -294,8 +294,8 @@ public class LoginViewModel extends ViewModel {
                     loginDetails.username = email;
                     loginDetails.pwd = password;
                 } else {
-                    loginDetails.username = Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getEmail();
-                    loginDetails.pwd = "";
+                    //loginDetails.username = Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getEmail();
+                    //loginDetails.pwd = "";
                 }
                 //Global.loginDetails.showFormPrefilledOnRememberMe=false;
                 Global.forceUserToUpdateBuild_msg_en = accessTokenResponse.getForceUserToUpdateBuildMsgEn();
