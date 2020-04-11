@@ -66,6 +66,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.FragmentAttachmentBinding;
 import dm.sime.com.kharetati.datas.models.AttachedDoc;
@@ -119,7 +120,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
     private FilePickerDialog filePickerDialog;
     final DialogProperties properties=new DialogProperties();
     private int GALLERY = 1, CAMERA = 2, VIEW = 3, CHOOSER = 4;
-    private String currentSelection = "";
+    public static String currentSelection = "";
     public static final String LAND_OWNER_CERTIFICATE = "LAND_OWNER_CERTIFICATE";
     public static final String VISA_PASSPORT = "VISA_PASSPORT";
     public static final String COMPANY_LICENCE = "COMPANY_LICENSE";
@@ -210,6 +211,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
     private void initializePage() {
 
         ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
+
 
         //clearBitMap();
 
@@ -567,8 +569,8 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
     public Boolean getBitmapFromView(ImageView imageView){
 
         Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
-        if(getActivity()!=null)
-        return (bitmap!=null && bitmap!=((BitmapDrawable)getActivity().getResources().getDrawable(R.drawable.photo)).getBitmap());
+        if(KharetatiApp.getInstance().getApplicationContext() !=null)
+        return (bitmap!=null && bitmap!=((BitmapDrawable)KharetatiApp.getInstance().getApplicationContext().getResources().getDrawable(R.drawable.photo)).getBitmap());
         else
             return false;
 
@@ -953,6 +955,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
     public void nextButtonStatus(){
 
         if(ParentSiteplanViewModel.status==501){
+
             if(getBitmapFromView(binding.imgPassport) && getBitmapFromView(binding.imgVisaPassport))
                 ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
             else
@@ -1018,6 +1021,11 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
     @Override
     public void navigateToPay() throws JSONException {
         prepareDoc();
+    }
+
+    @Override
+    public void nextButtonStatusForAttachment() {
+       nextButtonStatus();
     }
 
     @Override
@@ -1818,30 +1826,40 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
             //Global.deliveryDetails.setEmID(DeliveryFragment.emId);
         }
+        if (Global.isPerson && Global.rbIsOwner || Global.isPerson && !Global.rbIsOwner)
+        {
+            Global.passportData = new ArrayList<>();
+            for (int i = 0; i < lstAttachedDoc.size(); i++) {
+                if (lstAttachedDoc.get(i).getDoc_type().equals("passport")) {
+                    PassportDocs obj = new PassportDocs();
+                    String file = lstAttachedDoc.get(i).getDoc();
+                    if (!(lstAttachedDoc.get(i).getDoc_format().equals("pdf")
+                            || lstAttachedDoc.get(i).getDoc_format().equals("application/pdf")
+                            || lstAttachedDoc.get(i).getDoc_format().equals("jpg")
+                            || lstAttachedDoc.get(i).getDoc_format().equals("png")
+                            || lstAttachedDoc.get(i).getDoc_format().equals("image/png")
+                            || lstAttachedDoc.get(i).getDoc_format().equals("image/jpg")
+                            || lstAttachedDoc.get(i).getDoc_format().equals("image/jpeg")
+                            || lstAttachedDoc.get(i).getDoc_format().equals("jpeg")))
+                        file = encodeImage(((BitmapDrawable) getActivity().getResources().getDrawable(R.drawable.unsupported)).getBitmap());
+                    obj.setDoc_desc_en(lstAttachedDoc.get(i).getDoc_desc_en());
+                    obj.setDoc_type(lstAttachedDoc.get(i).getDoc_type());
+                    obj.setDoc_format(lstAttachedDoc.get(i).getDoc_format());
+                    obj.setDoc_id(0);
+                    obj.setDoc_name(lstAttachedDoc.get(i).getDoc_name());
+                    obj.setDoc(file);
 
-        Global.passportData = new ArrayList<>();
-        for (int i = 0; i < lstAttachedDoc.size(); i++) {
-            if (lstAttachedDoc.get(i).getDoc_type().equals("passport")) {
-                PassportDocs obj = new PassportDocs();
-                String file = lstAttachedDoc.get(i).getDoc();
-                if (!(lstAttachedDoc.get(i).getDoc_format().equals("pdf")
-                        || lstAttachedDoc.get(i).getDoc_format().equals("application/pdf")
-                        || lstAttachedDoc.get(i).getDoc_format().equals("jpg")
-                        || lstAttachedDoc.get(i).getDoc_format().equals("png")
-                        || lstAttachedDoc.get(i).getDoc_format().equals("image/png")
-                        || lstAttachedDoc.get(i).getDoc_format().equals("image/jpg")
-                        || lstAttachedDoc.get(i).getDoc_format().equals("image/jpeg")
-                        || lstAttachedDoc.get(i).getDoc_format().equals("jpeg")))
-                    file = encodeImage(((BitmapDrawable) getActivity().getResources().getDrawable(R.drawable.unsupported)).getBitmap());
-                obj.setDoc_desc_en(lstAttachedDoc.get(i).getDoc_desc_en());
-                obj.setDoc_type(lstAttachedDoc.get(i).getDoc_type());
-                obj.setDoc_format(lstAttachedDoc.get(i).getDoc_format());
-                obj.setDoc_id(0);
-                obj.setDoc_name(lstAttachedDoc.get(i).getDoc_name());
-                obj.setDoc(file);
 
-
-                Global.passportData.add(obj);
+                    Global.passportData.add(obj);
+                }
+            }
+        }
+        if (Global.isCompany)
+        {
+            if(getBitmapFromView(binding.imgLetterFromOwner)){
+                AttachmentBitmap.company_license=((BitmapDrawable) binding.imgCompanyLicense.getDrawable()).getBitmap();
+                createAttachedDoc(encodeImage(AttachmentBitmap.company_license), "image/jpg",
+                        "license",COMPANY_LICENCE+".jpg", getDocId(currentSelection), COMPANY_LICENCE);
             }
 
             licenseData = new ArrayList<>();
@@ -1867,7 +1885,14 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                     licenseData.add(obj);
                 }
             }
-
+        }
+        if (Global.isCompany || Global.isPerson && !Global.rbIsOwner)
+        {
+            if(getBitmapFromView(binding.imgLetterFromOwner)){
+                AttachmentBitmap.letter_from_owner=((BitmapDrawable) binding.imgLetterFromOwner.getDrawable()).getBitmap();
+                createAttachedDoc(encodeImage(AttachmentBitmap.letter_from_owner), "image/jpg",
+                        "noc",COMPANY_LICENCE+".jpg", getDocId(currentSelection), COMPANY_LICENCE);
+            }
             Global.nocData = new ArrayList<>();
             for (int j = 0; j < lstAttachedDoc.size(); j++) {
                 if (lstAttachedDoc.get(j).getDoc_type().toLowerCase().equals("noc")) {
@@ -1891,10 +1916,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                     Global.nocData.add(obj);
                 }
             }
-
-
         }
-
     }
     private void populateLstDoc(){
         if(ParentSiteplanViewModel.getDownloadedDoc() != null && ParentSiteplanViewModel.getDownloadedDoc().size() > 0) {

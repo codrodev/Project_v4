@@ -49,7 +49,7 @@
                 android:id="@+id/rb_isOwner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:buttonTint="@android:color/holo_blue_dark"
+                android:buttonTint="@color/maroon_light"
                 android:checked="false"
                 android:textAlignment="viewStart"
                 android:text="@string/iamowner"
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="viewStart"
                 android:layout_marginBottom="30dp"
-                android:buttonTint="@android:color/holo_blue_dark"
+                android:buttonTint="@color/maroon_light"
                 android:text="@string/iamnotowner"
                 android:textStyle="bold"
                 />

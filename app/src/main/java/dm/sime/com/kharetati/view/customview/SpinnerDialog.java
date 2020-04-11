@@ -87,6 +87,7 @@ public class SpinnerDialog {
         TextView rippleViewClose = (TextView) v.findViewById(R.id.close);
         TextView title = (TextView) v.findViewById(R.id.spinerTitle);
         ImageView searchIcon=(ImageView) v.findViewById(R.id.searchIcon);
+        ImageView close=(ImageView) v.findViewById(R.id.imgClose);
         rippleViewClose.setText(closeTitle);
         title.setText(dTitle);
         final ListView listView = (ListView) v.findViewById(R.id.list);
@@ -158,6 +159,12 @@ public class SpinnerDialog {
         });
 
         rippleViewClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeSpinerDialog();
+            }
+        });
+        close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 closeSpinerDialog();

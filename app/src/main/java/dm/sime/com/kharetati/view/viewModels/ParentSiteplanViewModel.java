@@ -7,6 +7,8 @@ import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
+import com.google.gson.JsonSyntaxException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,6 +27,7 @@ import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.activities.MainActivity;
+import dm.sime.com.kharetati.view.fragments.AttachmentFragment;
 import dm.sime.com.kharetati.view.fragments.DeliveryFragment;
 import dm.sime.com.kharetati.view.fragments.ParentSiteplanFragment;
 import dm.sime.com.kharetati.view.fragments.PayFragment;
@@ -122,7 +125,13 @@ public class ParentSiteplanViewModel extends ViewModel {
                         }
                     }, new Consumer<Throwable>() {
                         @Override public void accept(Throwable throwable) throws Exception {
-                            showErrorMessage(throwable.getMessage());
+                                if(throwable instanceof JsonSyntaxException){
+                                    AlertDialogUtil.showProgressBar(activity,false);
+                                    AttachmentFragment.attachmentModel.attachmentNavigator.nextButtonStatusForAttachment();
+                                }
+                                else
+                                    showErrorMessage(throwable.getMessage());
+
                         }
                     });
             compositeDisposable.add(disposable);
@@ -133,7 +142,8 @@ public class ParentSiteplanViewModel extends ViewModel {
     }
 
     private void getProfileDoc(RetrieveProfileDocsResponse retrieveProfileDocsResponse) {
-
+        //cahnge it after testing
+        //deliveryDetails.setEmirate("2");
         parentSitePlanNavigator.onSuccess();
         if(retrieveProfileDocsResponse!=null){
 

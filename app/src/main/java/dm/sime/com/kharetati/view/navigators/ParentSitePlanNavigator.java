@@ -6,5 +6,6 @@ public interface ParentSitePlanNavigator {
     public void onSuccess();
     public void onFailure(String Msg);
 
+
     public void navigateToFragment(int position);
 }

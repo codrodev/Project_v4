@@ -15,6 +15,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -87,6 +88,30 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
         binding.setDeliveryDetailVM(model);
         mRootView = binding.getRoot();
         if(CURRENT_LOCALE.equals("en")) binding.linearLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.linearLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.etAdress.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.etAdress.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.etRecievername.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.etRecievername.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.etEmailaddress.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.etEmailaddress.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.etEmirates.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.etEmirates.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.etMobile.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.etMobile.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.etMakani.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.etMakani.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.etAdress.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.etAdress.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.etBuildingName.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.etBuildingName.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.etVillaBuildingNumber.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.etVillaBuildingNumber.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.etLandmark.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.etLandmark.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.etStreetAddress.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.etStreetAddress.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);if(CURRENT_LOCALE.equals("en")) binding.etAdress.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.etAdress.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.txtRecieverName.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.txtRecieverName.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.txtemail.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.txtemail.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.txtEmirate.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.txtEmirate.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.txtmobile.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.txtmobile.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.txtmakani.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.txtmakani.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.txtMaailingAddrress.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.txtMaailingAddrress.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.txtBuildingName.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.txtBuildingName.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.txtBuildingNo.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.txtBuildingNo.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.txtnearestLandmark.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.txtnearestLandmark.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.txtStreetAddress.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.txtStreetAddress.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+
+
+
         isDeliveryFragment =true;
         ParentSiteplanFragment.listner = this;
         initializePage();
@@ -104,12 +129,14 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
             al.add(spinnerItems[i]);
         }
 
-        ArrayAdapter<String> aa =new ArrayAdapter(getActivity(),R.layout.attachment_drp_view,R.id.txtLandOwner,al);
-        /*if (Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0) {
-            aa= new ArrayAdapter(getActivity(),R.layout.attachment_drp_view,R.id.txtLandOwner,arrayList);
+        //ArrayAdapter<String> aa =new ArrayAdapter(getActivity(),R.layout.attachment_drp_view,R.id.txtLandOwner,al);
+        ArrayAdapter<String> aa;
+        if (Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0) {
+            aa= new ArrayAdapter(getActivity(),R.layout.attachment_drp_view,R.id.txtLandOwner,al);
         } else {
-            adapter= new ArrayAdapter(getActivity(),R.layout.attachment_drp_ar,R.id.txtLandOwner,arrayList);
-        }*/
+            aa= new ArrayAdapter(getActivity(),R.layout.attachment_drp_view_ar,R.id.txtLandOwner,al);
+        }
+
         binding.etEmirates.setAdapter(aa);
         binding.etEmirates.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -151,6 +178,8 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
                 } else {
                     spinner_position = 0;
                     ParentSiteplanViewModel.deliveryDetails.setEmirate("0");
+                    if(Global.isDeliveryByCourier)
+                        setNextEnabledStatus(false);
                 }
 
             }
@@ -181,12 +210,11 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
 
             String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-            if (TextUtils.isEmpty(name) ||
-                    TextUtils.isEmpty(emirates)||TextUtils.isEmpty(email)) {
-                if(Global.appMsg!=null)
+            if (TextUtils.isEmpty(name) || TextUtils.isEmpty(emirates)||TextUtils.isEmpty(email)) {
+                /*if(Global.appMsg!=null)
                     AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getAllFieldsRequiredEn():Global.appMsg.getAllFieldsRequiredAr(), getResources().getString(R.string.ok), getActivity());
                 else
-                    AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.fields_are_required), getResources().getString(R.string.ok), getActivity());
+                    AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.fields_are_required), getResources().getString(R.string.ok), getActivity());*/
                 //Global.isDeliveryByCourier=false;
             }else if(!email.contains("@")||!email.contains("."))
             {

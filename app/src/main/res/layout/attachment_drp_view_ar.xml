@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:id="@+id/rl"
-    android:layoutDirection="ltr"
+    android:layoutDirection="rtl"
     android:orientation="horizontal">
     <TextView
         android:id="@+id/txtLandOwner"
@@ -13,7 +13,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
-        android:layoutDirection="locale"
+        android:layoutDirection="rtl"
         android:textAlignment="viewStart"
         android:layout_marginTop="10dp"
         android:gravity="start"

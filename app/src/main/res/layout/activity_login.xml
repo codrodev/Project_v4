@@ -27,6 +27,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
+        <ImageView
+            android:layout_width="@dimen/splash_logo_width"
+            android:layout_height="@dimen/splash_logo_height"
+            android:id="@+id/logoSplash"
+            android:scaleType="centerCrop"
+            android:layout_gravity="bottom|right"
+            android:layout_marginTop="@dimen/splash_logo_margin_top"
+            android:layout_marginBottom="@dimen/splash_logo_margin_bottom"
+            android:layout_marginRight="@dimen/splash_logo_margin_right"
+            android:src="@drawable/logo_splash"/>
 
         <dm.sime.com.kharetati.view.customview.SlantView
             android:id="@+id/slantViewLoginHeader"

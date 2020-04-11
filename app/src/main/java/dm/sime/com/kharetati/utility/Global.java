@@ -56,6 +56,7 @@ import dm.sime.com.kharetati.datas.models.NocDocs;
 import dm.sime.com.kharetati.datas.models.PassportDocs;
 import dm.sime.com.kharetati.datas.models.SearchResult;
 import dm.sime.com.kharetati.datas.models.SessionUaePassResponse;
+import dm.sime.com.kharetati.datas.models.Tabs;
 import dm.sime.com.kharetati.datas.models.UaePassConfig;
 import dm.sime.com.kharetati.utility.constants.AppConstants;
 import dm.sime.com.kharetati.datas.models.AppMsg;
@@ -146,6 +147,8 @@ public class Global {
     public static boolean isLandScape;
     public static boolean isLogout;
     public static boolean isDashboard;
+    public static boolean isHome;
+    public static int selectedTab;
     private static Context context;
     public static boolean isLanguageChanged = false;
     public static String noctemplateUrl;
@@ -304,13 +307,14 @@ public class Global {
 
     }
     public static void showNoInternetAlert(Context activity,String msg){
-        AlertDialogUtil.showProgressBar((Activity) activity,false);
+
         if(msg!=null||msg!="")
             AlertDialogUtil.errorAlertDialog("",msg,activity.getResources().getString(R.string.ok),activity);
         else if(Global.appMsg!=null)
             AlertDialogUtil.errorAlertDialog("",Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr(),activity.getResources().getString(R.string.ok),activity);
         else
             AlertDialogUtil.errorAlertDialog("",activity.getResources().getString(R.string.internet_connection_problem1),activity.getResources().getString(R.string.ok),activity);
+        AlertDialogUtil.showProgressBar((Activity) activity,false);
         return;
     }
 
@@ -530,9 +534,20 @@ public class Global {
             }
         });
 
+
+
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                x_editTextUserName.setVisible(charSequence.length() != 0, true);
+                if (charSequence.length() != 0){
+                    if(CURRENT_LOCALE.equals("en"))
+                        editText.setCompoundDrawables(null, null, x_editTextUserName, null);
+                    else
+                        editText.setCompoundDrawables(x_editTextUserName, null,null , null);
+                }
+                else
+                    editText.setCompoundDrawables(null, null, null, null);
 
             }
 
@@ -689,18 +704,26 @@ public class Global {
 //        AttachmentFragment.deliveryByCourier=false;
         Global.requestId = null;
         Global.isBookmarks = false;
-        Global.alertDialog = null;
         isLanguageChanged =true;
+        Global.alertDialog = null;
         Global.isDeliveryByCourier= false;
         Global.isLogout =true;
+        Global.selectedTab =0;
+        /*if(Global.alertDialog!=null){
+            Global.alertDialog.cancel();
+            Global.alertDialog = null;
+
+        }*/
 //        AttachmentFragment.isDeliveryDetails=false;
 
-        //Global.loginDetails.showFormPrefilledOnRememberMe=true;
-        if(Global.loginDetails!=null)
-            LoginActivity.loginVM.authListener.saveUserToRemember(Global.loginDetails);
+        /*//Global.loginDetails.showFormPrefilledOnRememberMe=true;
+        if(Global.loginDetails!=null && LoginActivity.loginVM.authListener!=null)
+            LoginActivity.loginVM.authListener.saveUserToRemember(Global.loginDetails);*/
 
         Gson gson = new GsonBuilder().serializeNulls().create();
-        PreferenceManager.getDefaultSharedPreferences(context).edit().putString(AppConstants.USER_LOGIN_DETAILS, gson.toJson(Global.loginDetails)).apply();
+        /*if(loginDetails!=null)
+            context.getSharedPreferences(MYPREFERENCES,Context.MODE_PRIVATE).edit().putString(AppConstants.USER_LOGIN_DETAILS, gson.toJson(loginDetails)).apply();*/
+        //PreferenceManager.getDefaultSharedPreferences(context).edit().putString(AppConstants.USER_LOGIN_DETAILS, gson.toJson(Global.loginDetails)).apply();
         Intent intent = new Intent(context, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         context.startActivity(intent);

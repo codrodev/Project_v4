@@ -150,9 +150,10 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
         AlertDialogUtil.showProgressBar(getActivity(),false);
         //model.getBookmarkAdapter().notifyDataSetChanged();
 
+
         model.getBookmarkAdapter().notifyDataSetChanged();
-        if(lstBookmark.size()==0)
-            onFailure(getActivity().getResources().getString(R.string.NO_FAVOURITE_PLOTS_FOUND));
+        /*if(lstBookmark.size()==0)
+            onFailure(getActivity().getResources().getString(R.string.NO_FAVOURITE_PLOTS_FOUND));*/
 
     }
 

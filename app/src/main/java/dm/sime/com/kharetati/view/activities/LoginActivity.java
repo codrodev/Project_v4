@@ -48,6 +48,7 @@ import java.security.NoSuchAlgorithmException;
 
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.ActivityLoginBinding;
+import dm.sime.com.kharetati.datas.models.UaePassConfig;
 import dm.sime.com.kharetati.datas.network.ApiFactory;
 import dm.sime.com.kharetati.datas.network.MyApiService;
 import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
@@ -178,6 +179,8 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
             if(!loginDetails.username.equals(""))binding.editUserName.setText(loginDetails.username);
             if(!loginDetails.pwd.equals(""))binding.editPassword.setText(loginDetails.pwd);
             binding.editUserName.dismissDropDown();
+            Global.enableClearTextInEditBox(binding.editUserName,LoginActivity.this);
+            Global.enableClearTextInEditBox(binding.editPassword,LoginActivity.this);
 
         }
 
@@ -238,14 +241,31 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(Global.isConnected(LoginActivity.this)){
                 viewModel.setCredentials(binding.editUserName.getText().toString().trim(), binding.editPassword.getText().toString().trim());
                 viewModel.onLoginButtonClick();
+                }
+                else{
+                    if(Global.appMsg!=null)
+                        AlertDialogUtil.errorAlertDialog("",Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr(),getResources().getString(R.string.ok),LoginActivity.this);
+                    else
+                        AlertDialogUtil.errorAlertDialog("",getResources().getString(R.string.internet_connection_problem1),getResources().getString(R.string.ok),LoginActivity.this);
+                }
+
             }
         });
         binding.btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialogUtil.registerAlert(getString(R.string.register),getString(R.string.ok),getString(R.string.cancel),LoginActivity.this);
+                if(Global.isConnected(LoginActivity.this))
+                    AlertDialogUtil.registerAlert(getString(R.string.register),getString(R.string.ok),getString(R.string.cancel),LoginActivity.this);
+                else{
+                    if(Global.appMsg!=null)
+                        AlertDialogUtil.errorAlertDialog("",Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr(),getResources().getString(R.string.ok),LoginActivity.this);
+                    else
+                        AlertDialogUtil.errorAlertDialog("",getResources().getString(R.string.internet_connection_problem1),getResources().getString(R.string.ok),LoginActivity.this);
+                }
+
             }
         });
 
@@ -262,26 +282,51 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
             public void onClick(View view) {
 
 
-                Gson gson = new GsonBuilder().serializeNulls().create();
-                Global.loginDetails.username = binding.editUserName.getText().toString().trim()!=""?binding.editUserName.getText().toString().trim():"";
-                Global.loginDetails.pwd = binding.editPassword.getText().toString().trim()!=""?binding.editPassword.getText().toString().trim():"";
-                if(Global.loginDetails!=null)
-                sharedpreferences.edit().putString(AppConstants.USER_LOGIN_DETAILS, gson.toJson(Global.loginDetails)).apply();
-                viewModel.onGuestLoginButtonClick();
+
+                if(Global.isConnected(LoginActivity.this)){
+                    Gson gson = new GsonBuilder().serializeNulls().create();
+                    Global.loginDetails.username = binding.editUserName.getText().toString().trim()!=""?binding.editUserName.getText().toString().trim():"";
+                    Global.loginDetails.pwd = binding.editPassword.getText().toString().trim()!=""?binding.editPassword.getText().toString().trim():"";
+                    if(Global.loginDetails!=null)
+                        sharedpreferences.edit().putString(AppConstants.USER_LOGIN_DETAILS, gson.toJson(Global.loginDetails)).apply();
+                    viewModel.onGuestLoginButtonClick();
+                }
+                else{
+                    if(Global.appMsg!=null)
+                        AlertDialogUtil.errorAlertDialog("",Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr(),getResources().getString(R.string.ok),LoginActivity.this);
+                    else
+                        AlertDialogUtil.errorAlertDialog("",getResources().getString(R.string.internet_connection_problem1),getResources().getString(R.string.ok),LoginActivity.this);
+                }
             }
         });
 
         binding.imgUAEPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewModel.login();
+                if(Global.isConnected(LoginActivity.this)){
+                    viewModel.login();
+                }
+                else{
+                    if(Global.appMsg!=null)
+                        AlertDialogUtil.errorAlertDialog("",Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr(),getResources().getString(R.string.ok),LoginActivity.this);
+                    else
+                        AlertDialogUtil.errorAlertDialog("",getResources().getString(R.string.internet_connection_problem1),getResources().getString(R.string.ok),LoginActivity.this);
+                }
             }
         });
 
         binding.txtUAEPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewModel.login();
+                if(Global.isConnected(LoginActivity.this)){
+                    viewModel.login();
+                }
+                else{
+                    if(Global.appMsg!=null)
+                        AlertDialogUtil.errorAlertDialog("",Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr(),getResources().getString(R.string.ok),LoginActivity.this);
+                    else
+                        AlertDialogUtil.errorAlertDialog("",getResources().getString(R.string.internet_connection_problem1),getResources().getString(R.string.ok),LoginActivity.this);
+                }
             }
         });
 
@@ -301,7 +346,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                             binding.editUserName.requestFocus();
                         }
                         else
-                        binding.editPassword.requestFocus();
+                            binding.editPassword.requestFocus();
 
                     }
                     return true;
@@ -434,6 +479,8 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
             viewModel.uaePassConfigAPI();
         else
             displayContent();
+        //viewModel.uaePassConfigAPI();
+
     }
 
     private void displayContent(){
@@ -557,27 +604,58 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
                 // Guest Text
 
-                LinearLayout.LayoutParams guestLoginParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,elementHeight);
-                guestLoginParams.gravity = Gravity.CENTER_VERTICAL;
-                guestLoginParams.setMargins(leftMargin,topMargin,rightMargin,bottomMargin-5);
-                binding.txtGuest.setLayoutParams(guestLoginParams);
-                binding.txtGuest.setGravity(Gravity.CENTER_VERTICAL);
+                if (!Global.uaePassConfig.disableMyId) {
+                    LinearLayout.LayoutParams guestLoginParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, elementHeight);
+                    guestLoginParams.gravity = Gravity.CENTER_VERTICAL;
+                    guestLoginParams.setMargins(leftMargin, topMargin, rightMargin, bottomMargin - 5);
+                    binding.txtGuest.setLayoutParams(guestLoginParams);
+                    binding.txtGuest.setGravity(Gravity.CENTER_VERTICAL);
+                }else{
+                    LinearLayout.LayoutParams guestLoginParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, elementHeight);
+                    guestLoginParams.gravity = Gravity.CENTER_VERTICAL;
+                    guestLoginParams.setMargins(leftMargin, topMargin+24, rightMargin, bottomMargin - 5);
+                    binding.txtGuest.setLayoutParams(guestLoginParams);
+                    binding.txtGuest.setGravity(Gravity.CENTER_VERTICAL);
+                    binding.txtGuest.setTextSize(20f);
+
+                }
 
                 //UAE Pass Text
 
-                LinearLayout.LayoutParams uaePassTextParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                uaePassTextParams.gravity = Gravity.CENTER_VERTICAL;
-                uaePassTextParams.setMargins(leftMargin,topMargin,rightMargin,bottomMargin);
-                binding.txtUAEPass.setLayoutParams(uaePassTextParams);
-                binding.txtUAEPass.setGravity(Gravity.CENTER_VERTICAL);
+                if (!Global.uaePassConfig.disableMyId) {
+                    LinearLayout.LayoutParams uaePassTextParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    uaePassTextParams.gravity = Gravity.CENTER_VERTICAL;
+                    uaePassTextParams.setMargins(leftMargin, topMargin, rightMargin, bottomMargin);
+                    binding.txtUAEPass.setLayoutParams(uaePassTextParams);
+                    binding.txtUAEPass.setGravity(Gravity.CENTER_VERTICAL);
+                }
+                else{
+                    LinearLayout.LayoutParams uaePassTextParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    uaePassTextParams.gravity = Gravity.CENTER_VERTICAL;
+                    uaePassTextParams.setMargins(leftMargin, topMargin, rightMargin, bottomMargin);
+                    binding.txtUAEPass.setLayoutParams(uaePassTextParams);
+                    binding.txtUAEPass.setGravity(Gravity.CENTER_VERTICAL);
+                    binding.txtUAEPass.setTextSize(20f);
+
+                }
 
                 //UAE Pass Image
 
-                LinearLayout.LayoutParams uaePassImageParams = new LinearLayout.LayoutParams(175,80);
-                uaePassImageParams.gravity = Gravity.CENTER;
-                uaePassImageParams.setMargins(leftMargin,topMargin-4,rightMargin,bottomMargin);
-                binding.imgUAEPass.setLayoutParams(uaePassImageParams);
-                binding.imgUAEPass.setScaleType(ImageView.ScaleType.FIT_XY);
+                if (!Global.uaePassConfig.disableMyId) {
+                    LinearLayout.LayoutParams uaePassImageParams = new LinearLayout.LayoutParams(175,80);
+                    uaePassImageParams.gravity = Gravity.CENTER;
+                    uaePassImageParams.setMargins(leftMargin,topMargin-4,rightMargin,bottomMargin);
+                    binding.imgUAEPass.setLayoutParams(uaePassImageParams);
+                    binding.imgUAEPass.setScaleType(ImageView.ScaleType.FIT_XY);}
+                else{
+                    LinearLayout.LayoutParams uaePassImageParams = new LinearLayout.LayoutParams(275,180);
+                    uaePassImageParams.gravity = Gravity.CENTER;
+                    uaePassImageParams.setMargins(leftMargin,topMargin-4,rightMargin,bottomMargin);
+                    binding.imgUAEPass.setLayoutParams(uaePassImageParams);
+                    binding.imgUAEPass.setScaleType(ImageView.ScaleType.FIT_XY);
+
+
+                }
 
                 Animation anim = new ScaleAnimation(1f, 1.4f, 1f, 1.4f, Animation.RELATIVE_TO_PARENT,.5f, Animation.RELATIVE_TO_PARENT,.5f);
                 anim.setStartOffset(1000);
@@ -594,6 +672,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
                 if(!Global.isLanguageChanged){
                     binding.imgBackground.startAnimation(anim);
+                    //binding.logoSplash.startAnimation(anim);
 
                     binding.imgBackground.postDelayed(new Runnable() {
                         @Override
@@ -609,6 +688,9 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
                 }
                 else{
+
+                   // onConfig(Global.uaePassConfig.disableMyId);
+                    onMyIDDisabled(Global.uaePassConfig.disableMyId);
                     binding.imgBackground.setVisibility( View.GONE);
                     binding.switchLanguage.setVisibility(View.VISIBLE);
                     binding.cardLogin.setVisibility(View.VISIBLE);
@@ -678,8 +760,10 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
     @Override
     protected void attachBaseContext(Context newBase) {
 
-            SharedPreferences sharedpreferences = newBase.getSharedPreferences(MYPREFERENCES, Context.MODE_PRIVATE);
+            sharedpreferences = newBase.getSharedPreferences(MYPREFERENCES, Context.MODE_PRIVATE);
             String locale = sharedpreferences.getString(USER_LANGUAGE, "defaultStringIfNothingFound");
+            Global.uaePassConfig =Global.uaePassConfig == null? new UaePassConfig():Global.uaePassConfig;
+            Global.uaePassConfig.disableMyId = sharedpreferences.getBoolean("isDisableMyId",false);
             if(!locale.equals("defaultStringIfNothingFound"))
                 CURRENT_LOCALE =locale;
             else
@@ -706,7 +790,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
         //progressBar.setVisibility(View.VISIBLE);
 
-        AlertDialogUtil.showProgressBar(this,true);
+        AlertDialogUtil.showProgressBar(LoginActivity.this,true);
         //binding.txtOR.setVisibility(View.GONE);
 
     }
@@ -716,7 +800,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         //progressBar.setVisibility(View.GONE);
 
         binding.txtOR.setVisibility(View.VISIBLE);
-        AlertDialogUtil.showProgressBar(this,false);
+        AlertDialogUtil.showProgressBar(LoginActivity.this,false);
         finish();
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -728,7 +812,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
     public void onFailure(String message) {
         //progressBar.setVisibility(View.GONE);
         //binding.txtOR.setVisibility(View.VISIBLE);
-        AlertDialogUtil.showProgressBar(this,false);
+        AlertDialogUtil.showProgressBar(LoginActivity.this,false);
         //Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
         AlertDialogUtil.errorAlertDialog("",message,getResources().getString(R.string.ok),this);
 
@@ -799,11 +883,32 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
     public void onConfig(boolean status) {
         progressBar.setVisibility(View.GONE);
         AlertDialogUtil.showProgressBar(this,false);
+        onMyIDDisabled(status);
+        displayContent();
+    }
+    public void onMyIDDisabled(boolean status){
+        sharedpreferences.edit().putBoolean("isDisableMyId",status).apply();
         if(status){
             binding.loginContainer.setVisibility(View.GONE);
+            binding.imageDubaiID.setVisibility(View.GONE);
+            LinearLayout.LayoutParams uaePassImageParams = new LinearLayout.LayoutParams(275,180);
+            uaePassImageParams.gravity = Gravity.CENTER;
+            uaePassImageParams.setMargins(leftMargin,topMargin-4,rightMargin,bottomMargin);
+            binding.imgUAEPass.setLayoutParams(uaePassImageParams);
+            binding.imgUAEPass.setScaleType(ImageView.ScaleType.FIT_XY);
+            binding.txtGuest.setTextSize(20f);
+            binding.txtUAEPass.setTextSize(20f);
+
         } else {
             binding.loginContainer.setVisibility(View.VISIBLE);
+            binding.imageDubaiID.setVisibility(View.VISIBLE);
+
+            LinearLayout.LayoutParams uaePassImageParams = new LinearLayout.LayoutParams(175,80);
+            uaePassImageParams.gravity = Gravity.CENTER;
+            uaePassImageParams.setMargins(leftMargin,topMargin-4,rightMargin,bottomMargin);
+            binding.imgUAEPass.setLayoutParams(uaePassImageParams);
+            binding.imgUAEPass.setScaleType(ImageView.ScaleType.FIT_XY);
+
         }
-        displayContent();
     }
 }

@@ -251,8 +251,7 @@ public class LoginViewModel extends ViewModel {
 
         }
         else {
-            Disposable disposable = repository.getAccessToken(isUAE ? "" : getDataEmail(),
-                    isUAE ? "" : getDataPassword(), isUAE, isUAE ? Global.uae_access_token : "")
+            Disposable disposable = repository.getAccessToken(isUAE ? "" : getDataEmail(), isUAE ? "" : getDataPassword(), isUAE, isUAE ? Global.uae_access_token : "")
                     .subscribeOn(kharetatiApp.subscribeScheduler())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<AccessTokenResponse>() {
@@ -347,9 +346,10 @@ public class LoginViewModel extends ViewModel {
                 Global.plotImgLayerId = (accessTokenResponse.getPlotImgLayerId() != null && accessTokenResponse.getPlotImgLayerId() != "") ? accessTokenResponse.getPlotImgLayerId():"";
                 Global.plotLayerParcelAttrName = (accessTokenResponse.getPlotLayerParcelAttrName() != null && accessTokenResponse.getPlotLayerParcelAttrName() != "") ? accessTokenResponse.getPlotLayerParcelAttrName():"";
                 Global.plotDimLayerParcelAttrName = (accessTokenResponse.getPlotDimLayerParcelAttrName() != null && accessTokenResponse.getPlotDimLayerParcelAttrName() != "") ? accessTokenResponse.getPlotDimLayerParcelAttrName():"";
-
-                authListener.addUserToHistory(loginDetails.username);
-                authListener.saveUserToRemember(loginDetails);
+                if(!isUAE){
+                    authListener.addUserToHistory(loginDetails.username);
+                    authListener.saveUserToRemember(loginDetails);
+                }
                 if (!Global.isConnected(activity)) {
                     if(Global.appMsg!=null)
                         AlertDialogUtil.errorAlertDialog(activity.getResources().getString(R.string.lbl_warning),Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr() , activity.getResources().getString(R.string.ok), activity);
@@ -661,6 +661,8 @@ public class LoginViewModel extends ViewModel {
         if(configResponse != null){
             authListener.onConfig(configResponse.disableMyId);
             Global.uaePassConfig =  configResponse;
+
+
             //login();
         }
 
@@ -671,6 +673,7 @@ public class LoginViewModel extends ViewModel {
 
     public void login() {
         if (!Global.isConnected(activity)) {
+            AlertDialogUtil.showProgressBar(activity,false);
             if(Global.appMsg!=null)
                 AlertDialogUtil.errorAlertDialog(activity.getResources().getString(R.string.lbl_warning),Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr() , activity.getResources().getString(R.string.ok), activity);
             else
@@ -697,7 +700,7 @@ public class LoginViewModel extends ViewModel {
                         public void getToken(String accessToken, String error) {
                             if (error != null) {
                                 Log.v(TAG, "UAE Pass App: error received:" + error);
-                                Toast.makeText(activity, "Error while getting access token", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(activity, "Error while getting access token", Toast.LENGTH_SHORT).show();
                             } else {
                                 Global.accessToken = accessToken;
                                 Global.uae_access_token = accessToken;

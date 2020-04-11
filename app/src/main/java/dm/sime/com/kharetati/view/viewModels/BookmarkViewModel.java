@@ -136,6 +136,7 @@ public class BookmarkViewModel extends ViewModel {
                 addSqMt();
                 mutableBookmark.setValue(Arrays.asList(bookmarksResponse.getBookmarklist()));
                 adapter = new BookmarkAdapter(R.layout.adapter_bookmark, this, activity);
+                BookmarkAdapter.BmAdapter = adapter;
                 setBookmarkAdapter(Arrays.asList(bookmarksResponse.getBookmarklist()));      //bookMarksNavigator.updateUI();
                 bookMarksNavigator.onSuccess();
             } else if(bookmarksResponse.bookmarklist == null || bookmarksResponse.bookmarklist.length == 0){
@@ -151,7 +152,8 @@ public class BookmarkViewModel extends ViewModel {
         if(listData != null && listData.size() > 0) {
             for (Bookmark bm : listData) {
                 //bm.Area = null;
-                bm.Area = " " + bm.Area + " Sq Mt";
+                String sqmt = Global.CURRENT_LOCALE.equals("en")? " Sq mts." : " ²م";
+                bm.Area = " " + bm.Area + sqmt;
 //                bm.ParcelNumber = null;
                 bm.ParcelNumber = " " + bm.ParcelNumber;
             }
@@ -228,12 +230,17 @@ public class BookmarkViewModel extends ViewModel {
                         //BookmarksAdapter.this.data.remove(data);
 
                         //bookMarksNavigator.removeData(data);
-                        new BookmarkAdapter(R.layout.adapter_bookmark, this, activity).remove(data);
+                        BookmarkAdapter adapter = new BookmarkAdapter(R.layout.adapter_bookmark, this, activity);
+                        adapter.remove(data);
+
+                        //adapter.remove(data);
+                        //BookmarkAdapter.BmAdapter.remove(data);
 
                         //BookmarkAdapter.notifyDataSetChanged();
-                        getAllBookMarks();
-                        bookMarksNavigator.updateAdapter();
+
+                        //bookMarksNavigator.updateAdapter();
                         bookMarksNavigator.onDeleteSuccess(BookmarkAdapter.lstBookmark);
+                        getAllBookMarks();
 
 
                         AlertDialogUtil.errorAlertDialog("", activity.getString(R.string.favourite_deleted), activity.getString(R.string.ok), activity);
@@ -266,6 +273,6 @@ public class BookmarkViewModel extends ViewModel {
         else
             bookMarksNavigator.onFailure(activity.getResources().getString(R.string.error_response));
 
-        Log.d(activity.getClass().getSimpleName(),exception);
+        Log.e(activity.getClass().getSimpleName(),exception);
     }
 }

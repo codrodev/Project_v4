@@ -1,6 +1,16 @@
 package dm.sime.com.kharetati.datas.models;
 
+import android.annotation.SuppressLint;
+
 import androidx.databinding.BaseObservable;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import dm.sime.com.kharetati.utility.Global;
 
 public class MyMapResults extends BaseObservable {
     private String request_status;
@@ -78,7 +88,18 @@ public class MyMapResults extends BaseObservable {
     }
 
     public String getReq_created_date() {
-        return req_created_date_time;
+
+        @SuppressLint("SimpleDateFormat") DateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss",new Locale(Global.CURRENT_LOCALE));
+        @SuppressLint("SimpleDateFormat") DateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aa",new Locale(Global.CURRENT_LOCALE));
+        String resultDate = "";
+        try {
+            resultDate=outputFormat.format(inputFormat.parse(req_created_date_time));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        return resultDate;
     }
 
     public String getCallback_url() {

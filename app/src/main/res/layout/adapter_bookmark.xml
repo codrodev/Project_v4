@@ -77,7 +77,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/gotomap"
-                    android:src="@drawable/ic_pin_drop_24dp"
+                    android:src="@drawable/gotomap"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"/>
                 <ImageView
@@ -91,12 +91,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/delete"
-                    android:src="@drawable/ic_close_24dp"
+                    android:src="@drawable/delete"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"/>
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/gotomakani"
                     android:src="@drawable/makani"
                     android:layout_gravity="center_vertical"

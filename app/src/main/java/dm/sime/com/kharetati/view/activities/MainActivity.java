@@ -42,6 +42,7 @@ import dm.sime.com.kharetati.datas.repositories.MainRepository;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.CustomContextWrapper;
 import dm.sime.com.kharetati.utility.Global;
+import dm.sime.com.kharetati.utility.SensorOrientationChangeNotifier;
 import dm.sime.com.kharetati.utility.constants.AppConstants;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.customview.DataCallback;
@@ -90,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         return intent;
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         countDownTimer = new MyCountDownTimer(startTime, interval);
 
         binding.imgHelp.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
+
 
         if(Global.isUAE){
             if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0) {
@@ -194,6 +197,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             }
         });
 
+
         openHomePage();
         initializeActivity();
     }
@@ -251,6 +255,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+        sharedpreferences.edit().putString("currentFragment",Global.current_fragment_id).apply();
 
         newConfig.setLocale(new Locale(Global.getCurrentLanguage(this)));
         int position = sharedpreferences.getInt("position",3);
@@ -262,14 +267,19 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
                 //createConfigurationContext(newConfig);
 
-                binding.customBottomBar.clearCount(position);
-                binding.customBottomBar.show(position,true);
+                if(!Global.current_fragment_id.equals(FragmentTAGS.FR_MAP)||!Global.current_fragment_id.equals(FragmentTAGS.FR_PARENT_SITEPLAN)||!Global.current_fragment_id.equals(FragmentTAGS.FR_LANDOWNER_SELECTION)
+                        ||!Global.current_fragment_id.equals(FragmentTAGS.FR_ATTACHMENT)||!Global.current_fragment_id.equals(FragmentTAGS.FR_PAY)||!Global.current_fragment_id.equals(FragmentTAGS.FR_REQUEST_DETAILS)||!Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW)||!Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW_PAYMENT)) {
 
-            binding.customBottomBar.show(position+1,false);
-            loadFragment(model.bottomNavigationTAG(position+1), true, null);
-            binding.customBottomBar.clearAllCounts();
-            binding.customBottomBar.show(position,true);
-            loadFragment(model.bottomNavigationTAG(position), true, null);
+                    binding.customBottomBar.clearCount(position);
+                    binding.customBottomBar.show(position, true);
+
+                    binding.customBottomBar.show(position + 1, false);
+                    loadFragment(model.bottomNavigationTAG(position + 1), true, null);
+                    binding.customBottomBar.clearAllCounts();
+                    binding.customBottomBar.show(position, true);
+                    loadFragment(model.bottomNavigationTAG(position), true, null);
+                }
+            loadFragment(sharedpreferences.getString("currentFragment",Global.current_fragment_id),true,null);
 
 
 
@@ -285,9 +295,11 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 //binding.customBottomBar.getCellById(position-1).disableCell();
                 binding.customBottomBar.show(position,true);
                 loadFragment(model.bottomNavigationTAG(position), true, null);
+                loadFragment(sharedpreferences.getString("currentFragment",Global.current_fragment_id),true,null);
             }
         }
     }
+
 
     private void openHomePage(){
         Intent intent = getIntent();
@@ -310,6 +322,11 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         Global.FragmentTagForHelpUrl = "";
         tx = fragmentManager.beginTransaction();
         Fragment fragment = null;
+        if(fragment_tag.equals(FragmentTAGS.FR_CONTACT_US)||fragment_tag.equals(FragmentTAGS.FR_HAPPINESS))
+            binding.imgHelp.setVisibility(View.INVISIBLE);
+        else
+            binding.imgHelp.setVisibility(View.VISIBLE);
+
         switch (fragment_tag) {
             case FragmentTAGS.FR_HOME:
                 Global.FragmentTagForHelpUrl = FragmentTAGS.FR_HOME;
@@ -513,7 +530,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(Global.alertDialog!=null){
+        if(Global.alertDialog!=null ){
             Global.alertDialog.cancel();
             Global.alertDialog =null;
         }
@@ -623,6 +640,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     public void onDownloadFinish(Object data) {
 
     }
+
+
 
     public class MyCountDownTimer extends CountDownTimer {
         public MyCountDownTimer(long startTime, long interval) {

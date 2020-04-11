@@ -6,7 +6,7 @@
     <string name="internet_connection_problem1">لا يوجد اتصال إنترنت، الرجاء التحقق من الاتصال وحاول مرة أخرى</string>
     <string name="lbl_warning">مسح البيانات المسجله مسبقا</string>
     <string name="ok"> موافق </string>
-    <string name="forgot_username_password"><a href="https://myid.dubai.gov.ae/ForgotPassword.aspx">نسيت اسم المستخدم أو كلمة المرور؟</a></string>
+    <string name="forgot_username_password">نسيت اسم المستخدم أو كلمة المرور؟</string>
     <string name="rememberme">تذكرني</string>
     <string name="open_makani_confirm">هل أنت متأكد من أنك تريد الانتقال إلى مكاني</string>
     <string name="or">أو</string>
@@ -191,7 +191,7 @@
     <string name="iamowner">أنا صاحب قطعة الأرض</string>
     <string name="iamnotowner">أنا لست صاحب الأرض</string>
     <string name="INTROHELP">مساعدة</string>
-    <string name="bookmark">إشارة مرجعية</string>
+    <string name="bookmark">المفضلة</string>
     <string name="mymaps">خرائطي</string>
     <string name="area">منطقة : </string>
     <string name="timeout">انقضت مهلة جلستك</string>

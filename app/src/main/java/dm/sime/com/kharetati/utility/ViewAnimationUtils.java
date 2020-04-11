@@ -33,7 +33,7 @@ public final class ViewAnimationUtils {
 
     public static void scaleAnimateViewPopFirstLoad(View view) {
         ScaleAnimation animation = new ScaleAnimation(0f, 1f, 0f, 1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        animation.setDuration(2500);
+        animation.setDuration(1500);
         animation.setFillAfter(true);
         view.setAnimation(animation);
         animation.start();

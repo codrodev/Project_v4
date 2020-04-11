@@ -48,6 +48,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.regex.Pattern;
 
@@ -98,6 +99,7 @@ import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
 import static dm.sime.com.kharetati.utility.Global.isLand;
 import static dm.sime.com.kharetati.utility.Global.isMakani;
 import static dm.sime.com.kharetati.utility.Global.isPlotSearch;
+import static dm.sime.com.kharetati.utility.Global.searchText;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_WEBVIEW;
 
 public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSelectedListener, EditText.OnEditorActionListener, ViewPager.OnPageChangeListener, HomeNavigator {
@@ -142,6 +144,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         try {
             repository = new HomeRepository(ApiFactory.getClient(new NetworkConnectionInterceptor(getActivity())));
         } catch (NoSuchAlgorithmException e) {
@@ -169,6 +172,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         binding.setFragmentHomeVM(model);
         mRootView = binding.getRoot();
+
         model.initializeHomeVM(getContext());
         initializePage();
         setRetainInstance(true);
@@ -279,6 +283,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                     if (app.getSearchForm().get(tab.getPosition()).getTabs().getControls() != null &&
                             app.getSearchForm().get(tab.getPosition()).getTabs().getControls().size() > 0) {
                         model.setSelectedTab(app.getSearchForm().get(tab.getPosition()).getTabs());
+                        Global.selectedTab = tab.getPosition();
                         runtimeControlRenderer(app.getSearchForm().get(tab.getPosition()).getTabs().getControls());
 
                         Global.hideSoftKeyboard(getActivity());
@@ -420,6 +425,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         if(control.getRegexExp() != null && control.getRegexExp().length() > 0){
             x.setRegXPattern(control.getRegexExp());
         }
+
         x.setTextSize(16f);
         //x.setFilters(FilterArray);
         x.setTypeface(typeface);
@@ -433,10 +439,24 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         if(Global.hashSearchFieldValue != null && Global.hashSearchFieldValue.size() > 0){
             String val = Global.hashSearchFieldValue.get(control.getType()) == null ? "" : Global.hashSearchFieldValue.get(control.getType());
             x.setText(val);
+
         }
 
         layout.addView(x);
         lstRuntimeCleanableText.add(x);
+        if(control.getParam().equals("land_no")){
+            isLand =true;
+            if(!Objects.requireNonNull(x.getText()).toString().trim().equals(""))
+            Global.LandNo = x.getText().toString().trim();
+            x.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+
+
+        }
+        if(control.getParam().equals("sub_no")){
+            isLand =true;
+            Global.subNo = x.getText().toString().trim();
+        }
         return layout;
     }
 
@@ -529,6 +549,13 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                     AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
             } else {
                 Global.hideSoftKeyboard(getActivity());
+               /* if(isLand){
+                        if(communityId!=null && Global.LandNo!=null && !Global.LandNo.equals("")){
+                            Global.subNo=Global.subNo.equals("")?"0":Global.subNo;
+                            String text =communityId+"|"+Global.LandNo+"|"+Global.subNo;
+                            model.getAppsSearchResult(text);
+                        }
+                    }*/
                 if (!isSearchBoxEmpty()) {
 
                     model.getAppsSearchResult(populateSearchText());
@@ -551,6 +578,27 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         boolean isEmpty = false;
         if(lstRuntimeCleanableText != null && lstRuntimeCleanableText.size() > 0) {
             for (int i = 0; i < lstRuntimeCleanableText.size(); i++){
+
+                if(Global.selectedTab==2){
+                    CleanableEditText txt = (CleanableEditText)lstRuntimeCleanableText.get(0);
+                   // CleanableEditText txt1 = (CleanableEditText)lstRuntimeCleanableText.get(1);
+                    if(txt.getText().toString().equals(""))
+                        isEmpty =true;
+                    else{
+                        isEmpty =false;
+                        Global.LandNo = txt.getText().toString().trim();
+                    }
+                    /*if(txt1.getText().toString().equals("")){
+                        isEmpty =false;
+
+                    }
+                    else{
+                        isEmpty =false;
+                        Global.subNo = txt1.getText().toString().trim();
+                    }*/
+                    break;
+                }
+                else{
                 CleanableEditText txt = (CleanableEditText)lstRuntimeCleanableText.get(i);
                 //if(isValid(txt.toString(), txt.getRegXPattern())){
                     if(txt.getText().toString() == null || txt.getText().toString().equals("")){
@@ -561,17 +609,32 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                     isEmpty = true;
                     break;
                 }*/
-            }
+            }}
         }
         return isEmpty;
     }
 
     private String populateSearchText(){
         StringBuilder builder = new StringBuilder();
-        if (communityId != null && communityId.length() > 0){
+        if (Global.selectedTab ==2) {
+            if (communityId != null && Global.LandNo != null && !Global.LandNo.equals("")) {
+                CleanableEditText txt = (CleanableEditText) lstRuntimeCleanableText.get(1);
+                Global.subNo = txt.getText().toString().trim().equals("") ? "0" : txt.getText().toString().trim();
+                if((txt.getText().toString().trim().equals("")))txt.setText("0");else txt.setText(txt.getText().toString().trim());
+            /*String text =communityId+"|"+Global.LandNo+"|"+Global.subNo;
+            searchText = text;*/
+                builder.append(communityId);
+                builder.append("|");
+                builder.append(Global.LandNo);
+                builder.append("|");
+                builder.append(Global.subNo);
+
+            }
+        }
+        /*if (communityId != null && communityId.length() > 0){
             builder.append(communityId);
             builder.append("|");
-        }
+        }*/
         if(lstRuntimeCleanableText != null && lstRuntimeCleanableText.size() > 0) {
             for (int i = 0; i < lstRuntimeCleanableText.size(); i++) {
                 CleanableEditText txt = (CleanableEditText) lstRuntimeCleanableText.get(i);
@@ -583,15 +646,17 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                     builder.append(s1 + " " + s2);
                     }
                 } else {
+                    if (Global.selectedTab != 2)
                     builder.append(txt.getText().toString());
                 }
-                if(i < lstRuntimeCleanableText.size() - 1) {
+                /*if(i < lstRuntimeCleanableText.size() - 1) {
                     builder.append("|");
-                }
+                }*/
             }
         }
         return builder.toString();
     }
+
 
     private boolean isMakani(CleanableEditText txt){
         boolean isMakani = false;
@@ -764,9 +829,32 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                     public void onClick(String item, int position) {
                         //Toast.makeText(MainActivity.this, item + "  " + position + "", Toast.LENGTH_SHORT).show();
                         //spinArea.setText(item + " Position: " + position);
+                        Global.hideSoftKeyboard(getActivity());
                         if(!TextUtils.isEmpty(item)) {
                             communityId = Global.lookupResponse.getLkp().get(position).getId().toString();
                             spinnerView.setText(item);
+                            if(Global.selectedTab == 2){
+                                CleanableEditText txt = (CleanableEditText)lstRuntimeCleanableText.get(0);
+                                CleanableEditText txt1 = (CleanableEditText)lstRuntimeCleanableText.get(1);
+                                Global.LandNo = txt.getText().toString().trim().equals("")?"":txt.getText().toString().trim();
+                                Global.subNo = txt1.getText().toString().trim().equals("")?"":txt1.getText().toString().trim();
+
+                            }
+
+                            if (communityId != null && Global.LandNo != null && !Global.LandNo.equals("")) {
+                                StringBuilder builder = new StringBuilder();
+                                Global.subNo = Global.subNo.equals("") ? "0" : Global.subNo;
+                                builder.append(communityId);
+                                builder.append("|");
+                                builder.append(Global.LandNo);
+                                builder.append("|");
+                                builder.append(Global.subNo);
+
+                                model.getAppsSearchResult(builder.toString());
+
+
+                            }
+
                         }
 
                     }

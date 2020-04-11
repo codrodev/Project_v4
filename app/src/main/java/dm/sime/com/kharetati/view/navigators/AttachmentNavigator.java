@@ -11,6 +11,7 @@ public interface AttachmentNavigator {
     public void onSuccess();
     public void onFailure(String Msg);
     public void navigateToPay() throws JSONException;
+    public void nextButtonStatusForAttachment();
 
     public void updateUI(RetrieveDocStreamResponse retrieveDocStreamResponse, int docId);
 }

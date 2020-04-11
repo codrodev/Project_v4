@@ -192,7 +192,7 @@
     <string name="INTROHELP">Help</string>
     <string name="iamowner">I am the owner of the plot</string>
     <string name="iamnotowner">I am not the owner of the plot</string>
-    <string name="bookmark">Bookmarks</string>
+    <string name="bookmark">Favourites</string>
     <string name="mymaps">My Maps</string>
     <string name="timeout">Your session has timed out</string>
 

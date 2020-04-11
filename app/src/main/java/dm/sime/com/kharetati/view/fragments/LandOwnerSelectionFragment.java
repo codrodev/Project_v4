@@ -33,6 +33,8 @@ public class LandOwnerSelectionFragment extends Fragment {
     private View mRootView;
     private String[] landOwnedType;
 
+
+
     public static LandOwnerSelectionFragment newInstance(){
         LandOwnerSelectionFragment fragment = new LandOwnerSelectionFragment();
         return fragment;
@@ -62,7 +64,11 @@ public class LandOwnerSelectionFragment extends Fragment {
 
         setRetainInstance(true);
 
-
+        Global.passportData =null;
+        Global.licenseData =null;
+        Global.nocData =null;
+        Global.isDeliveryByCourier = false;
+        AttachmentFragment.currentSelection= "";
         ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
         landOwnedType = new String[] {getResources().getString(R.string.land_owned_By_person),getResources().getString(R.string.land_owned_By_company)};
 
@@ -83,6 +89,7 @@ public class LandOwnerSelectionFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                ParentSiteplanViewModel.status =0;
                 Global.spinPosition=position;
                 switch (position){
                     case 0: {
@@ -104,25 +111,33 @@ public class LandOwnerSelectionFragment extends Fragment {
                     case 1:{
                         Global.isCompany=true;
                         Global.isPerson=false;
+                        Global.rbIsOwner = false;
+                        Global.rbNotOwner = false;
                         binding.rg.setVisibility(View.GONE);
                         ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
                     }
                     break;
+
 
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                ParentSiteplanViewModel.status =0;
             }
         });
 
         binding.rbIsOwner.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                ParentSiteplanViewModel.status =0;
+                if(isChecked){
+                    Global.rbIsOwner = true;
+                    Global.rbNotOwner = false;
+                    Global.isPerson = true;
+                }
 
-                Global.rbIsOwner = isChecked;
 
                 if (Global.spinPosition == 0){
 
@@ -132,6 +147,7 @@ public class LandOwnerSelectionFragment extends Fragment {
                     ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
                     binding.rbIsOwner.setChecked(false);
                     binding.rbNotOwner.setChecked(false);
+
                 }
                 /*else if(Global.spinPosition==2){
                     ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
@@ -145,14 +161,19 @@ public class LandOwnerSelectionFragment extends Fragment {
         binding.rbNotOwner.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                ParentSiteplanViewModel.status =0;
+               if(isChecked) {
+                    Global.rbIsOwner = false;
+                    Global.rbNotOwner = true;
+               }
 
-                Global.rbNotOwner = isChecked;
                 if (Global.spinPosition == 0)
                     ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
                 else if(Global.spinPosition==1) {
                     ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
                     binding.rbIsOwner.setChecked(false);
                     binding.rbNotOwner.setChecked(false);
+
                 }
                /* else if(Global.spinPosition==2){
                     ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);

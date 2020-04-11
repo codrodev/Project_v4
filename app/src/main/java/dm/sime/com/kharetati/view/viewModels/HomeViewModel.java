@@ -354,6 +354,9 @@ public class HomeViewModel extends ViewModel {
                     }
                 }, new Consumer<Throwable>() {
                     @Override public void accept(Throwable throwable) throws Exception {
+                        if(throwable instanceof Exception)
+                            Global.logout(activity);
+                        else
                             showErrorMessage(throwable.getMessage());
                     }
                 });
@@ -406,8 +409,10 @@ public class HomeViewModel extends ViewModel {
                     }
                 }, new Consumer<Throwable>() {
                     @Override public void accept(Throwable throwable) throws Exception {
-
-                        showErrorMessage(throwable.getMessage());
+                        if(throwable instanceof Exception)
+                            Global.logout(activity);
+                        else
+                            showErrorMessage(throwable.getMessage());
                     }
                 });
 
@@ -424,7 +429,11 @@ public class HomeViewModel extends ViewModel {
                 homeNavigator.populateGridMenu();
             } else {
                 if(appResponse.getMessage() != null){
-                    homeNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")?appResponse.getMessage():appResponse.getMessage_ar());
+                    if(appResponse.getMessage().equals("You are not authorized to access this feature"))
+                        Global.logout(activity);
+                    else
+                        homeNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")?appResponse.getMessage():appResponse.getMessage_ar());
+
                 } else {
                     homeNavigator.onFailure(activity.getResources().getString(R.string.community_error));
                 }

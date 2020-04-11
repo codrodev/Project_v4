@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <dimen name="splash_logo_width">300dp</dimen>
+    <dimen name="splash_logo_height">225dp</dimen>
+    <dimen name="splash_logo_margin_top" >-261dp</dimen>
+    <dimen name="splash_logo_margin_bottom" >36dp</dimen>
+    <dimen name="splash_logo_margin_right" >24dp</dimen>
+</resources>

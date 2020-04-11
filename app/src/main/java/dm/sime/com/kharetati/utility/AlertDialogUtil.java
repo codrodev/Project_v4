@@ -313,7 +313,7 @@ public class AlertDialogUtil {
         textView.setPadding(25, 25, 25, 10);
 
     }
-    public static void timeoutAlertDialog(String title, String message, String btnTxt, final Context context) {
+    public static void timeoutAlertDialog(String title, String message, String btnTxt, Activity context) {
         AlertDialog alertDialog = new AlertDialog.Builder(context)
                 .setMessage(message)
                 .setTitle(title)
@@ -1702,9 +1702,8 @@ public class AlertDialogUtil {
 
         if(isShow){
             Global.alertDialog.setCancelable(false);
-            if(!Global.alertDialog.isShowing())
+            if(Global.alertDialog!=null && !Global.alertDialog.isShowing())
                 Global.alertDialog.show();
-
         }
         else{
             if(Global.alertDialog!=null)

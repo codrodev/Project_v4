@@ -86,6 +86,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Global.current_fragment_id = FragmentTAGS.FR_PARENT_SITEPLAN;
+        ParentSiteplanViewModel.status =0;
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_parent_siteplan, container, false);
         if(CURRENT_LOCALE.equals("en")) binding.container.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.container.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         if(CURRENT_LOCALE.equals("en")) binding.childFragmentContainer.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.childFragmentContainer.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
@@ -329,7 +330,8 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         }
         else {
             binding.btnNext.setEnabled(status);
-            binding.btnNext.setBackground(getActivity().getResources().getDrawable(R.drawable.disabled_gradient_background));
+            if(getActivity()!=null)
+                binding.btnNext.setBackground(getActivity().getResources().getDrawable(R.drawable.disabled_gradient_background));
 
         }
 
