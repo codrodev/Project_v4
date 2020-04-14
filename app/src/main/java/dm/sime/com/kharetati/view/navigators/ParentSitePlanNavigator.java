@@ -7,5 +7,8 @@ public interface ParentSitePlanNavigator {
     public void onFailure(String Msg);
 
 
+
     public void navigateToFragment(int position);
+
+    void onMakaniSuccess();
 }

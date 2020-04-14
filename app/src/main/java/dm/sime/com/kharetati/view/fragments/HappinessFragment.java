@@ -155,7 +155,7 @@ public class HappinessFragment extends Fragment {
         Header header = new Header();
         header.setTimeStamp(timeStamp);
         header.setServiceProvider(serviceProvider);
-        header.setThemeColor("#00ff00");
+        header.setThemeColor("#b71e3e");
         // Set MicroApp details
         if (type == TYPE.WITH_MICROAPP) {
             header.setMicroApp("Kharetati");

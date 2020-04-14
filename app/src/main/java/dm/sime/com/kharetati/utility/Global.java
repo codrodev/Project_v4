@@ -149,6 +149,8 @@ public class Global {
     public static boolean isDashboard;
     public static boolean isHome;
     public static int selectedTab;
+    public static boolean isValidMakani;
+    public static boolean isMakni;
     private static Context context;
     public static boolean isLanguageChanged = false;
     public static String noctemplateUrl;

@@ -7,7 +7,7 @@ public class Docs extends BaseObservable {
 
     private String docId;
 
-    private String docformat;
+    private String doc_format;
 
     public String getDoctype ()
     {
@@ -31,12 +31,12 @@ public class Docs extends BaseObservable {
 
     public String getDocformat ()
     {
-        return docformat;
+        return doc_format;
     }
 
     public void setDocformat (String docformat)
     {
-        this.docformat = docformat;
+        this.doc_format = docformat;
     }
 
 }

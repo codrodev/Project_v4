@@ -24,9 +24,9 @@ public class HomeRepository {
         this.api = apiService;
     }
 
-    public Observable<MakaniToDLTMResponse> getMakaniToDLTM(HTTPRequestBody.MakaniBody makaniBody){
+    /*public Observable<MakaniToDLTMResponse> getMakaniToDLTM(HTTPRequestBody.MakaniBody makaniBody){
         return api.getMakaniToDLTM(makaniBody);
-    }
+    }*/
 
     public Observable<ParcelResponse> getParcelID(HTTPRequestBody.ParcelBody parcelBody) {
         return api.getParcelID(parcelBody);

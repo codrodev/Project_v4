@@ -254,7 +254,7 @@ public class HomeViewModel extends ViewModel {
 
 
 
-    public void getMakaniToDLTM(String makani){
+    /*public void getMakaniToDLTM(String makani){
 
         homeNavigator.onStarted();
 
@@ -269,6 +269,7 @@ public class HomeViewModel extends ViewModel {
                 .subscribe(new Consumer<MakaniToDLTMResponse>() {
                     @Override public void accept(MakaniToDLTMResponse makaniToDLTMResponse) throws Exception {
                         gotoMakani(makaniToDLTMResponse);
+
                     }
                 }, new Consumer<Throwable>() {
                     @Override public void accept(Throwable throwable) throws Exception {
@@ -287,6 +288,7 @@ public class HomeViewModel extends ViewModel {
         if (!Global.isConnected(activity)) {
 
             showInternetError();
+           Global.isValidMakani =false;
         }
         else{
 
@@ -303,23 +305,29 @@ public class HomeViewModel extends ViewModel {
                         Global.area = null;
                         Global.area_ar = null;
                         Global.isMakani =true;
+                        Global.isValidMakani =true;
                         //homeNavigator.onSuccess();
                         if(DeliveryFragment.isDeliveryFragment)
-                            return;
+                            return ;
                         else
                             navigate(activity, FragmentTAGS.FR_MAP);
 
                     } else {
                                 showInvalidMakaniError();
+                                Global.isValidMakani =false;
 
                     }
                 }
-                else
+                else{
                     showInvalidMakaniError();
+                    Global.isValidMakani =false;
+                }
 
             }
-            else
+            else{
                 showErrorMessage("");
+                Global.isValidMakani =false;
+            }
         }
 
     }
@@ -329,7 +337,7 @@ public class HomeViewModel extends ViewModel {
             homeNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getInvalidmakaniEn():Global.appMsg.getInvalidmakaniAr());
         else
             homeNavigator.onFailure(activity.getResources().getString(R.string.invalid_makani));
-    }
+    }*/
 
     private void showInternetError() {
         if(Global.appMsg!=null)

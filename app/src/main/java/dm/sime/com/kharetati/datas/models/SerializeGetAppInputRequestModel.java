@@ -5,10 +5,21 @@ import com.google.gson.annotations.SerializedName;
 public class SerializeGetAppInputRequestModel {
     @SerializedName("TOKEN")
     private String TOKEN;
+    @SerializedName("MAKANI")
+    private String MAKANI;
     @SerializedName("REMARKS")
     private String REMARKS;
     @SerializedName("parcel_id")
     private int parcel_id;
+
+    public String getMAKANI() {
+        return MAKANI;
+    }
+
+    public void setMAKANI(String MAKANI) {
+        this.MAKANI = MAKANI;
+    }
+
     @SerializedName("IsGuest")
     private boolean IsGuest;
 

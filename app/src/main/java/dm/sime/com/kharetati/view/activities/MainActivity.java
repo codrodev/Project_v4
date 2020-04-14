@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         binding.customBottomBar.add(new MeowBottomNavigation.Model(4, R.drawable.ic_comment));
         binding.customBottomBar.add(new MeowBottomNavigation.Model(5, R.drawable.ic_more));
 
-        binding.customBottomBar.show(3, true);
+
         countDownTimer = new MyCountDownTimer(startTime, interval);
 
         binding.imgHelp.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
@@ -198,6 +198,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         });
 
 
+        binding.customBottomBar.show(3, true);
         openHomePage();
         initializeActivity();
     }

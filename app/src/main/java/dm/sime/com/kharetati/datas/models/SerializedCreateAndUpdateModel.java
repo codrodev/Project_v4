@@ -36,8 +36,8 @@ public class SerializedCreateAndUpdateModel {
     private String payment_type;
     @SerializedName("passport_docs")
     public List<PassportDocs> passport_docs;
-    @SerializedName("license")
-    public List<LicenceDocs> license;
+    @SerializedName("license_docs")
+    public List<LicenceDocs> license_docs;
     @SerializedName("noc_docs")
     public List<NocDocs> noc_docs;
     @SerializedName("locale")
@@ -148,11 +148,11 @@ public class SerializedCreateAndUpdateModel {
     }
 
     public List<LicenceDocs> getLicense() {
-        return license;
+        return license_docs;
     }
 
     public void setLicense(List<LicenceDocs> license) {
-        this.license = license;
+        this.license_docs = license;
     }
 
     public List<NocDocs> getNoc_docs() {

@@ -93,8 +93,8 @@ public interface MyApiService {
     Observable<User> getUserDetails(@Url String url);
 
     //to get makani response
-    @POST(AppUrls.MYID_MAKANI_TO_DLTM)
-    Observable<MakaniToDLTMResponse> getMakaniToDLTM(@Body HTTPRequestBody.MakaniBody makaniBody);
+   /* @POST(AppUrls.MYID_MAKANI_TO_DLTM)
+    Observable<MakaniToDLTMResponse> getMakaniToDLTM(@Body HTTPRequestBody.MakaniBody makaniBody);*/
 
     //to get all Siteplans
     /*@POST
@@ -169,4 +169,6 @@ public interface MyApiService {
     //To get the Community details in the BookMark
     @POST
     Observable<SerializableParcelDetails> getParcelDetails(@Url String url, @Body SerializeGetAppRequestModel model);
+    @POST
+    Observable<MakaniToDLTMResponse> getMakaniToDLTM(@Url String url, @Body SerializeGetAppRequestModel model);
 }

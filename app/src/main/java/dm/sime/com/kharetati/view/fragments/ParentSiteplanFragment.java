@@ -37,6 +37,7 @@ import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 import dm.sime.com.kharetati.view.viewmodelfactories.ParentSitePlanViewModelFactory;
 
 import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
+import static dm.sime.com.kharetati.utility.Global.makani;
 
 public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNavigator {
 
@@ -130,6 +131,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
 
                             Global.rbIsOwner=false;
                             Global.rbNotOwner=false;
+                            Global.isPerson =false;
                         }
                         if (!Global.isConnected(getActivity())) {
 
@@ -141,7 +143,24 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
                         else
                             model.retrieveProfileDocs();
                     }
-                    currentIndex++;
+                    if (currentIndex == 2) {
+                        if (Global.isDeliveryByCourier) {
+                            if (Global.isMakani) {
+                                if (makani.trim().length() != 0 && makani.trim().length() <= 10)
+                                    model.getMakaniToDLTM(makani);
+                                else if (makani.trim().length() != 0)
+                                    model.showInvalidMakaniError();
+                            }
+                            else
+                                currentIndex++;
+
+
+                        }
+                        else
+                            currentIndex++;
+                    }
+                    else
+                        currentIndex++;
                     loadFragment(currentIndex);
                     binding.txtHeader.setText(pagerArray[currentIndex]);
                     if(currentIndex == 0 ){
@@ -307,8 +326,8 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
                 fragment = DeliveryFragment.newInstance();
                 break;
             case 3:
-                listner.onNextClicked();
-                fragment = PayFragment.newInstance();
+                    fragment = PayFragment.newInstance();
+
                 break;
         }
 
@@ -324,6 +343,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
     public void setNextEnabledStatus(Boolean status) {
         if(status){
             binding.btnNext.setEnabled(status);
+
             binding.btnNext.setBackground(getActivity().getResources().getDrawable(R.drawable.gradient_background));
 
 
@@ -356,12 +376,38 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
 
     }
 
+
+
     @Override
     public void navigateToFragment(int position) {
         loadFragment(position);
     }
 
+    @Override
+    public void onMakaniSuccess() {
+        onSuccess();
+        Global.isValidMakani = true;
+        currentIndex++;
+        loadFragment(currentIndex);
+        binding.txtHeader.setText(pagerArray[currentIndex]);
+        binding.txtStepperOne.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
+        binding.txtStepperTwo.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
+        binding.txtStepperThree.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
+        binding.stepperThreeText.setText("");
+        binding.stepperTwoText.setText("");
+        binding.stepperOneText.setText("");
+        binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.green_ring_background));
+        binding.stepperFourText.setText("4");
+
+
+        binding.stepperFourText.setTextColor(getResources().getColor(R.color.green));
+        binding.view1.setBackgroundColor(getResources().getColor(R.color.green));
+        binding.view2.setBackgroundColor(getResources().getColor(R.color.green));
+        binding.view3.setBackgroundColor(getResources().getColor(R.color.green));
+        binding.btnNext.setVisibility(View.INVISIBLE);
+    }
+
     public interface onNextListner{
-        public void onNextClicked();
+        public boolean onNextClicked();
     }
 }

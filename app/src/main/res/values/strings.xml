@@ -198,9 +198,9 @@
 
 
     <string-array name="request_site_plan">
-        <item>Land owner</item>
-        <item>Proof attachment</item>
-        <item>Delivery detail</item>
+        <item>Land Ownership</item>
+        <item>Upload Documents</item>
+        <item>Delivery Details</item>
         <item>Payment</item>
     </string-array>
 

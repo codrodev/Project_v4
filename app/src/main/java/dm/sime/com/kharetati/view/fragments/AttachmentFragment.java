@@ -1845,7 +1845,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                     obj.setDoc_desc_en(lstAttachedDoc.get(i).getDoc_desc_en());
                     obj.setDoc_type(lstAttachedDoc.get(i).getDoc_type());
                     obj.setDoc_format(lstAttachedDoc.get(i).getDoc_format());
-                    obj.setDoc_id(0);
+                    obj.setDoc_id(lstAttachedDoc.get(i).getDoc_id());
                     obj.setDoc_name(lstAttachedDoc.get(i).getDoc_name());
                     obj.setDoc(file);
 
@@ -1856,11 +1856,11 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         }
         if (Global.isCompany)
         {
-            if(getBitmapFromView(binding.imgLetterFromOwner)){
+            /*if(getBitmapFromView(binding.imgLetterFromOwner)){
                 AttachmentBitmap.company_license=((BitmapDrawable) binding.imgCompanyLicense.getDrawable()).getBitmap();
                 createAttachedDoc(encodeImage(AttachmentBitmap.company_license), "image/jpg",
                         "license",COMPANY_LICENCE+".jpg", getDocId(currentSelection), COMPANY_LICENCE);
-            }
+            }*/
 
             licenseData = new ArrayList<>();
             for (int k = 0; k < lstAttachedDoc.size(); k++) {
@@ -1879,7 +1879,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                     obj.setDoc_desc_en(lstAttachedDoc.get(k).getDoc_desc_en());
                     obj.setDoc_type(lstAttachedDoc.get(k).getDoc_type());
                     obj.setDoc_format(lstAttachedDoc.get(k).getDoc_format());
-                    obj.setDoc_id(0);
+                    obj.setDoc_id(lstAttachedDoc.get(k).getDoc_id());
                     obj.setDoc_name(lstAttachedDoc.get(k).getDoc_name());
                     obj.setDoc(file);
                     licenseData.add(obj);
@@ -1888,11 +1888,11 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         }
         if (Global.isCompany || Global.isPerson && !Global.rbIsOwner)
         {
-            if(getBitmapFromView(binding.imgLetterFromOwner)){
+            /*if(getBitmapFromView(binding.imgLetterFromOwner)){
                 AttachmentBitmap.letter_from_owner=((BitmapDrawable) binding.imgLetterFromOwner.getDrawable()).getBitmap();
                 createAttachedDoc(encodeImage(AttachmentBitmap.letter_from_owner), "image/jpg",
                         "noc",COMPANY_LICENCE+".jpg", getDocId(currentSelection), COMPANY_LICENCE);
-            }
+            }*/
             Global.nocData = new ArrayList<>();
             for (int j = 0; j < lstAttachedDoc.size(); j++) {
                 if (lstAttachedDoc.get(j).getDoc_type().toLowerCase().equals("noc")) {
@@ -1910,7 +1910,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                     obj.setDoc_desc_en(lstAttachedDoc.get(j).getDoc_desc_en());
                     obj.setDoc_type(lstAttachedDoc.get(j).getDoc_type());
                     obj.setDoc_format(lstAttachedDoc.get(j).getDoc_format());
-                    obj.setDoc_id(0);
+                    obj.setDoc_id(lstAttachedDoc.get(j).getDoc_id());
                     obj.setDoc_name(lstAttachedDoc.get(j).getDoc_name());
                     obj.setDoc(file);
                     Global.nocData.add(obj);
@@ -1931,7 +1931,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                     {
                         AttachedDoc doc = new AttachedDoc();
                         doc.setDoc(ParentSiteplanViewModel.getDownloadedDoc().get(i).getDocDta());
-                        doc.setDoc_id(0);
+                        doc.setDoc_id(ParentSiteplanViewModel.getDownloadedDoc().get(i).getDocId());
                         doc.setDoc_name(ParentSiteplanViewModel.getDownloadedDoc().get(i).getDocName());
                         doc.setDoc_desc_en("TestNameEn");
                         doc.setDoc_format(ParentSiteplanViewModel.getDownloadedDoc().get(i).getDocFormat());

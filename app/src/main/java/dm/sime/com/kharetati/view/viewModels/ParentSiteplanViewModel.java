@@ -7,6 +7,7 @@ import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONException;
@@ -18,8 +19,13 @@ import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.datas.models.DeliveryDetails;
 import dm.sime.com.kharetati.datas.models.DocArr;
+import dm.sime.com.kharetati.datas.models.HTTPRequestBody;
+import dm.sime.com.kharetati.datas.models.MakaniToDLTMResponse;
+import dm.sime.com.kharetati.datas.models.PlotDetails;
 import dm.sime.com.kharetati.datas.models.RetrieveProfileDocsResponse;
 import dm.sime.com.kharetati.datas.models.RetrievedDeliveryDetails;
+import dm.sime.com.kharetati.datas.models.SerializeGetAppInputRequestModel;
+import dm.sime.com.kharetati.datas.models.SerializeGetAppRequestModel;
 import dm.sime.com.kharetati.datas.models.SerializedModel;
 import dm.sime.com.kharetati.datas.repositories.ParentSitePlanRepository;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
@@ -114,6 +120,7 @@ public class ParentSiteplanViewModel extends ViewModel {
         }
         model.setIs_owner(Global.rbIsOwner);
         model.setIs_owned_by_person(Global.isPerson);
+        String x =new Gson().toJson(model);
         try {
             Disposable disposable = repository.retrieveProfileDocs(url,model)
                     .subscribeOn(kharetatiApp.subscribeScheduler())
@@ -139,6 +146,118 @@ public class ParentSiteplanViewModel extends ViewModel {
             showErrorMessage(ex.getMessage());
         }
 
+    }
+    public void getMakaniToDLTM(String makani){
+
+        parentSitePlanNavigator.onStarted();
+
+        //Global.makani ="3003295320";
+
+        HTTPRequestBody.MakaniBody makaniBody = new HTTPRequestBody.MakaniBody();
+        makaniBody.MAKANI =makani;
+        String url = AppUrls.BASE_AUXULARY_URL + "/makanitodltm";
+
+        SerializeGetAppRequestModel model = new SerializeGetAppRequestModel();
+
+        SerializeGetAppInputRequestModel inputModel = new SerializeGetAppInputRequestModel();
+        inputModel.setMAKANI(makani);
+        if(Global.isUAE){
+            inputModel.setTOKEN(Global.uaeSessionResponse == null ? "" : Global.uaeSessionResponse.getService_response().getToken());
+        } else {
+            inputModel.setTOKEN(Global.app_session_token == null ? "" : Global.app_session_token);
+        }
+        inputModel.setREMARKS(Global.getPlatformRemark());
+        model.setInputJson(inputModel);
+
+        Disposable disposable = repository.getMakaniToDLTM(url,model)
+                .subscribeOn(kharetatiApp.subscribeScheduler())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<MakaniToDLTMResponse>() {
+                    @Override public void accept(MakaniToDLTMResponse makaniToDLTMResponse) throws Exception {
+                        gotoMakani(makaniToDLTMResponse);
+                        parentSitePlanNavigator.setNextEnabledStatus(true);
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override public void accept(Throwable throwable) throws Exception {
+                        showErrorMessage(throwable.getMessage());
+                    }
+                });
+
+        compositeDisposable.add(disposable);
+
+    }
+
+    private void gotoMakani(MakaniToDLTMResponse makaniToDLTMResponse) {
+
+        //Global.makani = getMakaniNumber();
+
+        if (!Global.isConnected(activity)) {
+
+            showInternetError();
+            Global.isValidMakani =false;
+        }
+        else{
+
+            if(makaniToDLTMResponse!=null){
+
+                if (makaniToDLTMResponse != null && !Boolean.valueOf(makaniToDLTMResponse.getIs_exception())) {
+                    Global.dltm = makaniToDLTMResponse.getDLTMContainer().getDLTM();
+                    String parcelId = makaniToDLTMResponse.getDLTMContainer().getPARCEL_ID();
+                    PlotDetails.parcelNo=parcelId;
+
+
+                    if(Global.isValidTrimedString(Global.dltm)){
+                        Global.landNumber = null;
+                        Global.area = null;
+                        Global.area_ar = null;
+                        Global.isMakani =true;
+                        Global.isValidMakani =true;
+                        //homeNavigator.onSuccess();
+
+
+                        parentSitePlanNavigator.onMakaniSuccess();
+
+
+                        /*if(DeliveryFragment.isDeliveryFragment)
+                            return ;
+                        else
+                            navigate(activity, FragmentTAGS.FR_MAP);*/
+
+                    } else {
+                        showInvalidMakaniError();
+                        Global.isValidMakani =false;
+
+                    }
+                }
+                else{
+                    showInvalidMakaniError();
+                    Global.isValidMakani =false;
+                }
+
+            }
+            else{
+                showErrorMessage("");
+                Global.isValidMakani =false;
+            }
+        }
+
+    }
+
+
+
+    public void showInvalidMakaniError() {
+        if(Global.appMsg!=null)
+            parentSitePlanNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getInvalidmakaniEn():Global.appMsg.getInvalidmakaniAr());
+        else
+            parentSitePlanNavigator.onFailure(activity.getResources().getString(R.string.invalid_makani));
+    }
+    private void showInternetError() {
+        if(Global.appMsg!=null)
+            parentSitePlanNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr());
+        else
+            parentSitePlanNavigator.onFailure(activity.getResources().getString(R.string.internet_connection_problem1));
+        return;
     }
 
     private void getProfileDoc(RetrieveProfileDocsResponse retrieveProfileDocsResponse) {

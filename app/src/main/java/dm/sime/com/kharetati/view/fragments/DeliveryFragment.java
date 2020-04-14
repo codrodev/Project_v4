@@ -30,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.ActivityDeliveryDeatailsBinding;
@@ -159,8 +160,8 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
                     else {
                         binding.etMakani.setEnabled(true);
                         if(position!=convertEmirateId(ParentSiteplanViewModel.deliveryDetails.getEmirate())){
-                            binding.etMakani.setText("");
-                            makani="";
+                            //binding.etMakani.setText("");
+                            //makani="";
                         }
                     }
                     binding.etEmirates.setSelection(emId);
@@ -227,7 +228,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
             if(makani.length() > 0)
             {
                 if(isValidEmailId() == true && isValidMobile() == true && isValidEmirate() == true) {
-                    HomeFragment.homeVM.getMakaniToDLTM(makani);
+                    Global.isMakani =true;
                 }
             } else {
                 if(isValidEmailId() == true && isValidMobile() == true && isValidEmirate() == true) {
@@ -352,6 +353,48 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
 
             }
         });
+        binding.etMakani.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                if (Global.isDeliveryByCourier) {
+                        if(charSequence.length()==0){
+                            Global.isMakani =false;
+                            makani = charSequence.toString();
+                            ParentSiteplanViewModel.deliveryDetails.setMakaniNo(makani);
+                        }
+                        else if (charSequence.length() > 0 ){
+                            makani = charSequence.toString();
+                            ParentSiteplanViewModel.deliveryDetails.setMakaniNo(makani);
+                            Global.isMakani =true;
+                            //binding.etMakani.setText(makani);
+
+
+                                //model.getMakaniToDLTM(makani);
+                            /*if (binding.etMakani.getText().length() >=10 )
+                                ParentSiteplanFragment.parentModel.getMakaniToDLTM(binding.etMakani.getText().toString().trim());*/
+
+
+
+                        }
+
+
+                }
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         /*binding.etMobile.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -395,6 +438,12 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
             }
         });*/
         return binding.getRoot();
+    }
+    public void showInvalidMakaniError() {
+        if(Global.appMsg!=null)
+            ParentSiteplanFragment.parentModel.parentSitePlanNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getInvalidmakaniEn():Global.appMsg.getInvalidmakaniAr());
+        else
+            ParentSiteplanFragment.parentModel.parentSitePlanNavigator.onFailure(getActivity().getResources().getString(R.string.invalid_makani));
     }
 
 
@@ -446,10 +495,14 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
                         //AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.enter_valid_email), getResources().getString(R.string.ok), getActivity());
 
                     }
-                    if(!binding.etMakani.getText().toString().equals(""))
+                    if(!binding.etMakani.getText().toString().trim().equals("") && binding.etMakani.getText().toString().trim().length()>0)
                     {
+                            Global.isMakani =true;
+                            makani =binding.etMakani.getText().toString().trim();
+
+
                         if(isValidEmailId() == true && isValidMobile() == true && isValidEmirate() == true) {
-                            HomeFragment.homeVM.getMakaniToDLTM(makani);
+
                         }
                     } else {
                         if(isValidEmailId() == true && isValidMobile() == true && isValidEmirate() == true && binding.etRecievername.getText().length()>0) {
@@ -582,7 +635,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
         ParentSiteplanViewModel.deliveryDetails.setNearestLandmark(binding.etLandmark.getText().toString());
         ParentSiteplanViewModel.deliveryDetails.setStreetAddress(binding.etStreetAddress.getText().toString());
         ParentSiteplanViewModel.deliveryDetails.setMainAddress(binding.etAdress.getText().toString());
-        ParentSiteplanViewModel.deliveryDetails.setMakaniNo(binding.etMakani.getText().toString());
+        ParentSiteplanViewModel.deliveryDetails.setMakaniNo(makani);
 
         editor.apply();
         editor.commit();
@@ -606,6 +659,9 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
                 Global.deliveryDetails.setMainAddress(ParentSiteplanViewModel.deliveryDetails.getMainAddress());
                 Global.deliveryDetails.setEmirate(Integer.parseInt(ParentSiteplanViewModel.deliveryDetails.getEmirate()));
                 Global.deliveryDetails.setMakaniNo( ParentSiteplanViewModel.deliveryDetails.getMakaniNo());
+
+
+
             }
 
             //Global.deliveryDetails.setEmID(DeliveryFragment.emId);
@@ -790,16 +846,37 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
             } catch (JSONException e) {
                 e.printStackTrace();
             }*/
+
         }
         ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(enabledStatus);
     }
 
     @Override
-    public void onNextClicked() {
+    public boolean onNextClicked() {
         try {
+
+
+            if(binding.etMakani.getText().toString().trim().length()>0 && !binding.etMakani.getText().toString().trim().equals("")){
+                //HomeFragment.homeVM.getMakaniToDLTM(binding.etMakani.getText().toString().trim());
+
+                if(Global.isValidMakani) {
+                    save(userid);
+                    return true;
+                }
+                else{
+                    //setNextEnabledStatus(false);
+
+                    return false;
+                }
+
+            }
+            else{
             save(userid);
+            return true;
+            }
         } catch (JSONException e) {
             e.printStackTrace();
+            return false;
         }
     }
 }
