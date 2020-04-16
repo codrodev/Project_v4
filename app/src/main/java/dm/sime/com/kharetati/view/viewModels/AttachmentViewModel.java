@@ -65,7 +65,7 @@ public class AttachmentViewModel extends ViewModel {
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void retrieveDoc(int docId, int position) {
+    public void retrieveDoc(int docId) {
         int permission = ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.READ_EXTERNAL_STORAGE);
 
         if (permission != PackageManager.PERMISSION_GRANTED) {
@@ -91,6 +91,7 @@ public class AttachmentViewModel extends ViewModel {
                         @Override public void accept(RetrieveDocStreamResponse retrieveDocStreamResponse) throws Exception {
                             retriveDocs(retrieveDocStreamResponse,docId);
 
+
                         }
                     }, new Consumer<Throwable>() {
                         @Override public void accept(Throwable throwable) throws Exception {
@@ -105,7 +106,7 @@ public class AttachmentViewModel extends ViewModel {
     }
 
     private void retriveDocs(RetrieveDocStreamResponse retrieveDocStreamResponse,int docId) {
-
+        Log.d(getClass().getSimpleName(),"RetrieveDocStream:"+retrieveDocStreamResponse.getStatus()+"with DocId"+docId);
         if(retrieveDocStreamResponse!=null){
             boolean isError=false;
             String resStatus=retrieveDocStreamResponse.getStatus();

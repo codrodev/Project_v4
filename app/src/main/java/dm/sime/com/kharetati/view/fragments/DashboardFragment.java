@@ -11,17 +11,25 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
+import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.FragmentDashboardBinding;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.viewModels.DashboardViewModel;
 
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_DASHBOARD;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_DELIVERY;
+
 public class DashboardFragment extends Fragment implements ViewPager.OnPageChangeListener{
 
     DashboardViewModel model;
     FragmentDashboardBinding binding;
     private View mRootView;
+    private Tracker mTracker;
 
     public static DashboardFragment newInstance(){
         DashboardFragment fragment = new DashboardFragment();
@@ -40,6 +48,9 @@ public class DashboardFragment extends Fragment implements ViewPager.OnPageChang
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dashboard, container, false);
         binding.setFragmentDashboardVM(model);
         mRootView = binding.getRoot();
+        mTracker = KharetatiApp.getInstance().getDefaultTracker();
+        mTracker.setScreenName(FR_DASHBOARD);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         initializePage();
         setRetainInstance(true);
         return binding.getRoot();

@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigationCell;
+import com.google.android.gms.analytics.Tracker;
 
 import org.json.JSONObject;
 
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.ActivityMainBinding;
 import dm.sime.com.kharetati.datas.models.PlotDetails;
@@ -85,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     private Fragment fragmentAfterBackPress;
     private MyCountDownTimer countDownTimer;
     private SharedPreferences sharedpreferences;
+    private Tracker mTracker;
 
     public static Intent newIntent(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -97,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         Global.isLoginActivity = false;
+        mTracker = KharetatiApp.getInstance().getDefaultTracker();
 
         try {
             repository = new MainRepository(ApiFactory.getClient(new NetworkConnectionInterceptor(this)));

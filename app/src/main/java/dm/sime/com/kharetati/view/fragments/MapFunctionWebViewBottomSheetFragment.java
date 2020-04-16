@@ -11,10 +11,16 @@ import android.webkit.WebView;
 
 import androidx.annotation.Nullable;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
+import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_BOTTOMSHEET;
 
 public class MapFunctionWebViewBottomSheetFragment extends BottomSheetDialogFragment {
 
@@ -23,6 +29,7 @@ public class MapFunctionWebViewBottomSheetFragment extends BottomSheetDialogFrag
     WebView webView;
     private static String launchUrl;
     private View mRootView;
+    private Tracker mTracker;
 
     public MapFunctionWebViewBottomSheetFragment(String url) {
         Bundle args = new Bundle();
@@ -44,6 +51,9 @@ public class MapFunctionWebViewBottomSheetFragment extends BottomSheetDialogFrag
         View view = inflater.inflate(R.layout.fragment_webview, container, false);
 
         webView = view.findViewById(R.id.webView);
+        mTracker = KharetatiApp.getInstance().getDefaultTracker();
+        mTracker.setScreenName(FragmentTAGS.FR_BOTTOMSHEET_WEBVIEW);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new MapFunctionWebViewBottomSheetFragment.MyWebViewClient());
         webView.loadUrl(launchUrl);

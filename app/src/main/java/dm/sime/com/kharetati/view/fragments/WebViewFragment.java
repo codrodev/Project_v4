@@ -26,12 +26,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.FontChangeCrawler;
@@ -41,6 +45,9 @@ import dm.sime.com.kharetati.view.navigators.FragmentNavigator;
 import dm.sime.com.kharetati.view.viewModels.LoginViewModel;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 import dm.sime.com.kharetati.view.viewModels.PayViewModel;
+
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_BOOKMARK;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_WEBVIEW;
 
 public class WebViewFragment extends Fragment {
 
@@ -58,6 +65,7 @@ public class WebViewFragment extends Fragment {
     private String mCameraPhotoPath;
     private static final int INPUT_FILE_REQUEST_CODE = 1;
     private static final int FILECHOOSER_RESULTCODE = 1;
+    private Tracker mTracker;
 
     public static WebViewFragment newInstance(String url, String appName){
         WebViewFragment fragment = new WebViewFragment();
@@ -91,6 +99,9 @@ public class WebViewFragment extends Fragment {
         Global.current_fragment_id = FragmentTAGS.FR_WEBVIEW;
         ParentSiteplanFragment.currentIndex = getActivity().getSharedPreferences(ParentSiteplanFragment.POSITION,Context.MODE_PRIVATE).getInt("stepperPosition",0);
         View view = inflater.inflate(R.layout.fragment_webview, container, false);
+        mTracker = KharetatiApp.getInstance().getDefaultTracker();
+        mTracker.setScreenName(FR_WEBVIEW);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         //txtUsername = view.findViewById(R.id.txtUsername);
         //txtWelcome = view.findViewById(R.id.txtWelcome);
         imgBack = view.findViewById(R.id.imgBack);

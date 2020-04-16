@@ -16,14 +16,19 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.FragmentParentSiteplanBinding;
+import dm.sime.com.kharetati.datas.models.DocArr;
 import dm.sime.com.kharetati.datas.network.ApiFactory;
 import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
 import dm.sime.com.kharetati.datas.repositories.ParentSitePlanRepository;
@@ -38,6 +43,8 @@ import dm.sime.com.kharetati.view.viewmodelfactories.ParentSitePlanViewModelFact
 
 import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
 import static dm.sime.com.kharetati.utility.Global.makani;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_ATTACHMENT;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_PARENT_SITEPLAN;
 
 public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNavigator {
 
@@ -50,9 +57,11 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
     String[] pagerArray;
     public static int currentIndex = 0;
     public static ParentSiteplanViewModel parentModel;
+
     private ParentSitePlanViewModelFactory factory;
     private ParentSitePlanRepository repository;
     public static onNextListner listner;
+    private Tracker mTracker;
 
     public static ParentSiteplanFragment newInstance(){
         ParentSiteplanFragment fragment = new ParentSiteplanFragment();
@@ -76,6 +85,8 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
 
         parentModel =model;
         model.parentSitePlanNavigator =this;
+
+
     }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -98,6 +109,9 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         binding.setFragmentParentSiteplanVM(model);
         setRetainInstance(true);
         mRootView = binding.getRoot();
+        mTracker = KharetatiApp.getInstance().getDefaultTracker();
+        mTracker.setScreenName(FR_PARENT_SITEPLAN);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         initializePage();
         return binding.getRoot();
     }
@@ -355,6 +369,16 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
 
         }
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(Global.isLandScape){
+            if(CURRENT_LOCALE.equals("ar")){
+
+            }
+        }
     }
 
     @Override

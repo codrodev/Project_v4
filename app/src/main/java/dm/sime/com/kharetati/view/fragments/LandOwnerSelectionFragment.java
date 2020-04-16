@@ -14,10 +14,16 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.util.ArrayList;
 
+import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.FragmentLandOwnershipSelectionBinding;
+import dm.sime.com.kharetati.datas.models.AttachmentBitmap;
+import dm.sime.com.kharetati.datas.models.DocArr;
 import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
@@ -25,6 +31,8 @@ import dm.sime.com.kharetati.view.viewModels.LandOwnerViewModel;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 
 import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_ATTACHMENT;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_LANDOWNER_SELECTION;
 
 public class LandOwnerSelectionFragment extends Fragment {
 
@@ -32,7 +40,7 @@ public class LandOwnerSelectionFragment extends Fragment {
     LandOwnerViewModel model;
     private View mRootView;
     private String[] landOwnedType;
-
+    private Tracker mTracker;
 
 
     public static LandOwnerSelectionFragment newInstance(){
@@ -62,6 +70,10 @@ public class LandOwnerSelectionFragment extends Fragment {
         binding.setFragmentLandOwnerSelectionVM(model);
         mRootView = binding.getRoot();
 
+        mTracker = KharetatiApp.getInstance().getDefaultTracker();
+        mTracker.setScreenName(FR_LANDOWNER_SELECTION);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
         setRetainInstance(true);
 
         Global.passportData =null;
@@ -69,6 +81,13 @@ public class LandOwnerSelectionFragment extends Fragment {
         Global.nocData =null;
         Global.isDeliveryByCourier = false;
         AttachmentFragment.currentSelection= "";
+
+        ParentSiteplanViewModel.getDownloadedDoc().clear();
+        AttachmentBitmap.passport_copy =null;
+        AttachmentBitmap.visa_passport =null;
+        AttachmentBitmap.company_license =null;
+        AttachmentBitmap.letter_from_owner =null;
+        DeliveryFragment.isDeliveryFragment =false;
         ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
         landOwnedType = new String[] {getResources().getString(R.string.land_owned_By_person),getResources().getString(R.string.land_owned_By_company)};
 
@@ -120,6 +139,7 @@ public class LandOwnerSelectionFragment extends Fragment {
 
 
                 }
+                ParentSiteplanViewModel.getDownloadedDoc().clear();
             }
 
             @Override
@@ -154,7 +174,7 @@ public class LandOwnerSelectionFragment extends Fragment {
 
 
                 }*/
-
+                ParentSiteplanViewModel.getDownloadedDoc().clear();
 
             }
         });
@@ -179,12 +199,18 @@ public class LandOwnerSelectionFragment extends Fragment {
                     ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
 
                 }*/
-
+                ParentSiteplanViewModel.getDownloadedDoc().clear();
             }
         });
 
 
         //initializePage();
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ParentSiteplanViewModel.getDownloadedDoc().clear();
     }
 }

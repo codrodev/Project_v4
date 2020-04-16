@@ -13,6 +13,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.FragmentBottomNavigationBinding;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
@@ -30,12 +33,16 @@ import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.viewModels.BottomNavigationViewModel;
 import dm.sime.com.kharetati.view.viewModels.MapViewModel;
 
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_BOOKMARK;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_BOTTOMSHEET;
+
 public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
 
     BottomNavigationViewModel model;
     FragmentBottomNavigationBinding binding;
     private View mRootView;
     private static OnActionListener listener;
+    private Tracker mTracker;
 
     public static BottomNavigationFragmentSheet newInstance(OnActionListener list) {
         BottomNavigationFragmentSheet f = new BottomNavigationFragmentSheet();
@@ -60,7 +67,10 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_bottom_navigation, container, false);
-        Global.current_fragment_id = FragmentTAGS.FR_BOTTOMSHEET;
+        Global.current_fragment_id = FR_BOTTOMSHEET;
+        mTracker = KharetatiApp.getInstance().getDefaultTracker();
+        mTracker.setScreenName(FR_BOTTOMSHEET);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         binding.setFragmentBottomNavigation(model);
        /* BottomSheetBehavior behavior = BottomSheetBehavior.from(binding.bottomSheetMore);
         if(Global.isLandScape)

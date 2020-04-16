@@ -261,8 +261,7 @@ public class ParentSiteplanViewModel extends ViewModel {
     }
 
     private void getProfileDoc(RetrieveProfileDocsResponse retrieveProfileDocsResponse) {
-        //cahnge it after testing
-        //deliveryDetails.setEmirate("2");
+
         parentSitePlanNavigator.onSuccess();
         if(retrieveProfileDocsResponse!=null){
 

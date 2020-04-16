@@ -40,6 +40,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.esri.arcgisruntime.mapping.view.MapView;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.material.tabs.TabLayout;
 
 import java.security.KeyManagementException;
@@ -65,6 +67,7 @@ import com.esri.arcgisruntime.security.Credential;
 import com.esri.arcgisruntime.security.UserCredential;
 
 
+import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.FragmentHomeBinding;
 import dm.sime.com.kharetati.datas.models.Applications;
@@ -100,6 +103,8 @@ import static dm.sime.com.kharetati.utility.Global.isLand;
 import static dm.sime.com.kharetati.utility.Global.isMakani;
 import static dm.sime.com.kharetati.utility.Global.isPlotSearch;
 import static dm.sime.com.kharetati.utility.Global.searchText;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_ATTACHMENT;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_HOME;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_WEBVIEW;
 
 public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSelectedListener, EditText.OnEditorActionListener, ViewPager.OnPageChangeListener, HomeNavigator {
@@ -123,6 +128,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     public static HomeViewModel homeVM;
     public List<CleanableEditText> lstRuntimeCleanableText;
     InAppNotificationAdapter adapterNotification;
+    private Tracker mTracker;
     /*BottomSheetBehavior sheetBehavior;
     LinearLayout layoutBottomSheet;*/
 
@@ -172,6 +178,10 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         binding.setFragmentHomeVM(model);
         mRootView = binding.getRoot();
+
+        mTracker = KharetatiApp.getInstance().getDefaultTracker();
+        mTracker.setScreenName(FR_HOME);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
         model.initializeHomeVM(getContext());
         initializePage();

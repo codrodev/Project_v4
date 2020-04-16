@@ -13,12 +13,16 @@ import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import org.json.JSONException;
 
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 
+import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.FragmentPayBinding;
 import dm.sime.com.kharetati.datas.network.ApiFactory;
@@ -33,6 +37,8 @@ import dm.sime.com.kharetati.view.viewModels.PayViewModel;
 import dm.sime.com.kharetati.view.viewmodelfactories.PayViewModelFactory;
 
 import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_DELIVERY;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_PAY;
 
 public class PayFragment extends Fragment implements PayNavigator {
 
@@ -45,6 +51,7 @@ public class PayFragment extends Fragment implements PayNavigator {
     public static String paymentType = "";
     public static String applicantMobile;
     public static String applicantEmailId;
+    private Tracker mTracker;
 
     public static PayFragment newInstance(){
         PayFragment fragment = new PayFragment();
@@ -76,6 +83,9 @@ public class PayFragment extends Fragment implements PayNavigator {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_pay, container, false);
         binding.setFragmentPayVM(model);
         mRootView = binding.getRoot();
+        mTracker = KharetatiApp.getInstance().getDefaultTracker();
+        mTracker.setScreenName(FR_PAY);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         if(CURRENT_LOCALE.equals("en")) binding.rootView.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.rootView.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         setRetainInstance(true);
         setEmailAndMobileField();

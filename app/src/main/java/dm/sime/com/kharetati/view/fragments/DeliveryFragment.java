@@ -26,12 +26,16 @@ import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
+import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.ActivityDeliveryDeatailsBinding;
 import dm.sime.com.kharetati.datas.models.DeliveryDetails;
@@ -46,6 +50,8 @@ import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 import static android.content.Context.MODE_PRIVATE;
 import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
 import static dm.sime.com.kharetati.utility.Global.makani;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_DELIVERY;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_LANDOWNER_SELECTION;
 
 public class DeliveryFragment extends Fragment implements ParentSiteplanFragment.onNextListner{
 
@@ -62,6 +68,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
     boolean isValid = false;
     private String locale;
     public static Boolean isDeliveryFragment =false;
+    private Tracker mTracker;
 
 
     public static DeliveryFragment newInstance(){
@@ -88,6 +95,10 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
         binding = DataBindingUtil.inflate(inflater, R.layout.activity_delivery_deatails, container, false);
         binding.setDeliveryDetailVM(model);
         mRootView = binding.getRoot();
+
+        mTracker = KharetatiApp.getInstance().getDefaultTracker();
+        mTracker.setScreenName(FR_DELIVERY);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         if(CURRENT_LOCALE.equals("en")) binding.linearLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.linearLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         if(CURRENT_LOCALE.equals("en")) binding.etAdress.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.etAdress.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         if(CURRENT_LOCALE.equals("en")) binding.etRecievername.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.etRecievername.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);

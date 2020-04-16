@@ -13,11 +13,15 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.FragmentBookmarkBinding;
 import dm.sime.com.kharetati.datas.models.Bookmark;
@@ -32,6 +36,9 @@ import dm.sime.com.kharetati.view.navigators.BookMarksNavigator;
 import dm.sime.com.kharetati.view.viewModels.BookmarkViewModel;
 import dm.sime.com.kharetati.view.viewmodelfactories.BookMarkViewModelFactory;
 
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_BOOKMARK;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_DELIVERY;
+
 public class BookmarkFragment extends Fragment implements BookMarksNavigator {
 
     FragmentBookmarkBinding binding;
@@ -40,6 +47,7 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
     private BookMarkRepository repository;
     private BookMarkViewModelFactory factory;
     public static BookmarkViewModel bmModel;
+    private Tracker mTracker;
 
     public static BookmarkFragment newInstance(){
         BookmarkFragment fragment = new BookmarkFragment();
@@ -76,6 +84,9 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_bookmark, container, false);
         binding.setFragmentBookmarkVM(model);
         mRootView = binding.getRoot();
+        mTracker = KharetatiApp.getInstance().getDefaultTracker();
+        mTracker.setScreenName(FR_BOOKMARK);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         initializePage();
         setRetainInstance(true);
         return binding.getRoot();

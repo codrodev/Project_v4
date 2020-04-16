@@ -17,8 +17,12 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.util.Date;
 
+import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.FragmentHappinessBinding;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
@@ -29,10 +33,14 @@ import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.activities.WebViewActivity;
 import dm.sime.com.kharetati.view.viewModels.HappinessViewModel;
 
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_BOTTOMSHEET;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_HAPPINESS;
+
 public class HappinessFragment extends Fragment {
     FragmentHappinessBinding binding;
     HappinessViewModel model;
     private View mRootView;
+    private Tracker mTracker;
 
     enum TYPE{
         TRANSACTION,
@@ -72,6 +80,9 @@ public class HappinessFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_happiness, container, false);
         binding.setFragmentHappinessVM(model);
         mRootView = binding.getRoot();
+        mTracker = KharetatiApp.getInstance().getDefaultTracker();
+        mTracker.setScreenName(FR_HAPPINESS);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         initializePage();
         setRetainInstance(true);
         return binding.getRoot();

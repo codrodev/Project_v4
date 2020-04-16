@@ -73,6 +73,8 @@ import com.esri.arcgisruntime.symbology.SimpleFillSymbol;
 import com.esri.arcgisruntime.symbology.SimpleLineSymbol;
 
 import com.esri.arcgisruntime.symbology.TextSymbol;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.snackbar.Snackbar;
@@ -87,6 +89,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutionException;
 
+import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.FragmentMapBinding;
 import dm.sime.com.kharetati.datas.models.AgsExtent;
@@ -118,6 +121,8 @@ import dm.sime.com.kharetati.view.viewmodelfactories.MapViewModelFactory;
 
 import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
 import static dm.sime.com.kharetati.utility.Global.MYPREFERENCES;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_ATTACHMENT;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_MAP;
 
 public class MapFragment extends Fragment implements MapNavigator, EditText.OnEditorActionListener,MapFunctionBottomsheetDialogFragment.OnFunctionMenuSelectedListener {
 
@@ -148,6 +153,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
     BottomSheetDialogFragment bottomSheetDialogFragment;
     private String parcelId;
     private String lastSelectedWebFunction;
+    private Tracker mTracker;
 
 
     public MapFragment() {
@@ -215,6 +221,10 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         webView = (WebView)layoutBottomSheet.findViewById(R.id.webView);
         webView.getSettings().setJavaScriptEnabled(true);
         setRetainInstance(true);
+
+        mTracker = KharetatiApp.getInstance().getDefaultTracker();
+        mTracker.setScreenName(FR_MAP);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         initializePage();
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
 

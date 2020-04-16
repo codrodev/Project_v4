@@ -10,14 +10,21 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.util.ArrayList;
 
+import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.viewModels.PayViewModel;
+
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_BOOKMARK;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_REQUEST_DETAILS;
 
 public class RequestDetailsFragment extends Fragment {
     private static final String REQUEST_NUMBER = "requestNumber";
@@ -39,6 +46,7 @@ public class RequestDetailsFragment extends Fragment {
 
     private Button payNow;
     private Button done;
+    private Tracker mTracker;
 
     public static RequestDetailsFragment newInstance(String requestNumber, String parcelId, String voucherNo, String voucherAmount,String eradUrl,String callBackUrl,String userName,String mobile,String email) {
         RequestDetailsFragment fragment = new RequestDetailsFragment();
@@ -85,6 +93,9 @@ public class RequestDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         Global.current_fragment_id= FragmentTAGS.FR_REQUEST_DETAILS;
         View view = inflater.inflate(R.layout.fragment_request_details, container, false);
+        mTracker = KharetatiApp.getInstance().getDefaultTracker();
+        mTracker.setScreenName(FR_REQUEST_DETAILS);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         /*communicator = (Communicator) getActivity();
         communicator.hideMainMenuBar();
         communicator.hideAppBar();

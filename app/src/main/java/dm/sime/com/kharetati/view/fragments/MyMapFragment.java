@@ -13,6 +13,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import org.json.JSONException;
 
 import java.security.KeyManagementException;
@@ -20,6 +23,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.FragmentMymapBinding;
 import dm.sime.com.kharetati.datas.models.MyMapResults;
@@ -34,6 +38,9 @@ import dm.sime.com.kharetati.view.navigators.MyMapNavigator;
 import dm.sime.com.kharetati.view.viewModels.MyMapViewModel;
 import dm.sime.com.kharetati.view.viewmodelfactories.MyMapViewModelFactory;
 
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_BOOKMARK;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_MYMAP;
+
 public class MyMapFragment extends Fragment implements MyMapNavigator {
 
     FragmentMymapBinding binding;
@@ -41,6 +48,7 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
     private View mRootView;
     private MyMapViewModelFactory factory;
     private MyMapRepository repository;
+    private Tracker mTracker;
 
     public static MyMapFragment newInstance(){
         MyMapFragment fragment = new MyMapFragment();
@@ -78,6 +86,9 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_mymap, container, false);
         binding.setFragmentMyMapVM(model);
         mRootView = binding.getRoot();
+        mTracker = KharetatiApp.getInstance().getDefaultTracker();
+        mTracker.setScreenName(FR_MYMAP);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         try {
             initializePage();
             setRetainInstance(true);

@@ -1,12 +1,12 @@
 package dm.sime.com.kharetati.datas.models;
 
 public class DocArr {
-    String docFormat;
-    String docKey;
-    String docPath;
-    String docName;
-    String docDta;
-    int docId;
+    public String docFormat;
+    public String docKey;
+    public String docPath;
+    public String docName;
+    public String docDta;
+    public int docId;
 
     public String getDocName() {
         return docName;

@@ -42,6 +42,8 @@ import com.esri.arcgisruntime.mapping.view.MapView;
 import com.esri.arcgisruntime.security.Credential;
 import com.esri.arcgisruntime.security.UserCredential;
 import com.esri.arcgisruntime.symbology.PictureMarkerSymbol;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
@@ -51,6 +53,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.FragmentContactusBinding;
 import dm.sime.com.kharetati.databinding.FragmentHappinessBinding;
@@ -72,6 +75,8 @@ import dm.sime.com.kharetati.view.viewmodelfactories.AttachmentViewModelFactory;
 import dm.sime.com.kharetati.view.viewmodelfactories.ContactusViewModelFactory;
 
 import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_CONTACT_US;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_DELIVERY;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_WEBVIEW;
 
 public class ContactusFragment extends Fragment implements ContactusNavigator {
@@ -94,6 +99,7 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
     ContactusViewModelFactory factory;
     private ContactusRepository repository;
     private MapView mMapView;
+    private Tracker mTracker;
 
     public static ContactusFragment newInstance(){
         ContactusFragment fragment = new ContactusFragment();
@@ -131,6 +137,9 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_contactus, container, false);
         binding.setFragmentContactusVM(model);
         mRootView = binding.getRoot();
+        mTracker = KharetatiApp.getInstance().getDefaultTracker();
+        mTracker.setScreenName(FR_CONTACT_US);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         initializePage();
         setRetainInstance(true);
         if (!Global.isConnected(getActivity())) {

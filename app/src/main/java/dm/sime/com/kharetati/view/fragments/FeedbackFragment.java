@@ -13,9 +13,13 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.FragmentFeedbackBinding;
 import dm.sime.com.kharetati.datas.models.GuestDetails;
@@ -26,12 +30,16 @@ import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.viewModels.FeedbackViewModel;
 
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_DELIVERY;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_FEEDBACK;
+
 public class FeedbackFragment extends Fragment {
 
     FragmentFeedbackBinding binding;
     FeedbackViewModel model;
     private View mRootView;
     public static String name,email,phone,subject,description;
+    private Tracker mTracker;
 
     public static FeedbackFragment newInstance(){
         FeedbackFragment fragment = new FeedbackFragment();
@@ -57,6 +65,9 @@ public class FeedbackFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_feedback, container, false);
         binding.setFragmentFeedbackVM(model);
         mRootView = binding.getRoot();
+        mTracker = KharetatiApp.getInstance().getDefaultTracker();
+        mTracker.setScreenName(FR_FEEDBACK);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         initializePage();
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         return binding.getRoot();

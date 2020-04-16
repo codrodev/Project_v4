@@ -37,6 +37,8 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
@@ -46,6 +48,7 @@ import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 
+import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.ActivityLoginBinding;
 import dm.sime.com.kharetati.datas.models.UaePassConfig;
@@ -61,6 +64,7 @@ import dm.sime.com.kharetati.utility.constants.AppConstants;
 import dm.sime.com.kharetati.datas.models.LoginDetails;
 import dm.sime.com.kharetati.datas.models.User;
 import dm.sime.com.kharetati.datas.repositories.UserRepository;
+import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.customview.SwitchCompatEx;
 import dm.sime.com.kharetati.view.navigators.AuthListener;
 import dm.sime.com.kharetati.view.viewmodelfactories.AuthViewModelFactory;
@@ -72,6 +76,7 @@ import static dm.sime.com.kharetati.utility.Global.MYPREFERENCES;
 import static dm.sime.com.kharetati.utility.Global.forceUserToUpdateBuild;
 import static dm.sime.com.kharetati.utility.Global.generateRandomID;
 import static dm.sime.com.kharetati.utility.constants.AppConstants.USER_LANGUAGE;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_BOOKMARK;
 
 public class LoginActivity extends AppCompatActivity implements AuthListener {
 
@@ -91,6 +96,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
     ActivityLoginBinding binding;
     private ProgressBar progressBar;
     private SharedPreferences sharedpreferences;
+    private Tracker mTracker;
 
     public LoginActivity(){
 
@@ -112,6 +118,9 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         Global.isLoginActivity = true;
 
         binding = DataBindingUtil.setContentView(LoginActivity.this, R.layout.activity_login);
+        mTracker = KharetatiApp.getInstance().getDefaultTracker();
+        mTracker.setScreenName(FragmentTAGS.FR_LOGIN);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
         gson = new GsonBuilder().serializeNulls().create();
         try {

@@ -15,8 +15,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.util.ArrayList;
 
+import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.FontChangeCrawler;
@@ -26,6 +30,9 @@ import dm.sime.com.kharetati.view.navigators.FragmentNavigator;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 import dm.sime.com.kharetati.view.viewModels.PayViewModel;
 
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_DELIVERY;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_WEBVIEW_PAYMENT;
+
 public class PaymentFragment extends Fragment {
     private static String URL = "url";
     private static String APP_NAME = "app_name";
@@ -34,6 +41,7 @@ public class PaymentFragment extends Fragment {
     ImageView imgBack;
     private static String launchUrl, appName;
     FragmentNavigator frNavigator;
+    private Tracker mTracker;
 
     public static PaymentFragment newInstance(String url, String appName){
         PaymentFragment fragment = new PaymentFragment();
@@ -75,6 +83,9 @@ public class PaymentFragment extends Fragment {
         } else {
             txtWelcome.setText("WELCOME");
         }*/
+        mTracker = KharetatiApp.getInstance().getDefaultTracker();
+        mTracker.setScreenName(FR_WEBVIEW_PAYMENT);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         webView = view.findViewById(R.id.webView);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new MyWebViewClient());

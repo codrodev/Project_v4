@@ -24,6 +24,8 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
@@ -35,12 +37,16 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.CustomContextWrapper;
 import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.view.fragments.AttachmentFragment;
+
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_BOOKMARK;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_IMAGE_CROP;
 
 
 public class ImageCropActivity extends AppCompatActivity {
@@ -63,6 +69,7 @@ public class ImageCropActivity extends AppCompatActivity {
     private String mCurrentPhotoPath;
     private File path;
     private ProgressDialog progressDialog;
+    private Tracker mTracker;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -78,6 +85,9 @@ public class ImageCropActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.crop_image);
+        mTracker = KharetatiApp.getInstance().getDefaultTracker();
+        mTracker.setScreenName(FR_IMAGE_CROP);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         FontChangeCrawler fontChanger = new FontChangeCrawler(getAssets(), "Dubai-Regular.ttf");
         fontChanger.replaceFonts((ViewGroup)this.findViewById(android.R.id.content));
 

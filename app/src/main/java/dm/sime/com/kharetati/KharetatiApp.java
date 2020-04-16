@@ -4,6 +4,9 @@ import android.app.Application;
 import android.content.Context;
 import android.os.StrictMode;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
+
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -20,6 +23,8 @@ public class KharetatiApp extends Application {
     private MyApiService apiService;
     private NetworkConnectionInterceptor networkConnectionInterceptor;
     private Scheduler scheduler;
+    private static GoogleAnalytics sAnalytics;
+    private static Tracker sTracker;
 
 
 
@@ -43,6 +48,7 @@ public class KharetatiApp extends Application {
         kharetatiApp = this;
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
+        sAnalytics = GoogleAnalytics.getInstance(this);
 
         networkConnectionInterceptor = new NetworkConnectionInterceptor(kharetatiApp);
     }
@@ -59,5 +65,17 @@ public class KharetatiApp extends Application {
         }
 
         return scheduler;
+    }
+    /**
+     * Gets the default {@link Tracker} for this {@link Application}.
+     * @return tracker
+     */
+    synchronized public Tracker getDefaultTracker() {
+        // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
+        if (sTracker == null) {
+            sTracker = sAnalytics.newTracker(R.xml.global_tracker);
+        }
+
+        return sTracker;
     }
 }
