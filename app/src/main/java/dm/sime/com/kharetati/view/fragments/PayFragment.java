@@ -110,6 +110,12 @@ public class PayFragment extends Fragment implements PayNavigator {
 
                         try {
                             model.createAndUpdateRequest();
+                            mTracker.send(new HitBuilders.EventBuilder()
+                                    .setCategory("Payment Screen")
+                                    .setAction("Action on Payment")
+                                    .setLabel("Pay Now")
+                                    .setValue(1)
+                                    .build());
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -139,6 +145,12 @@ public class PayFragment extends Fragment implements PayNavigator {
                         applicantEmailId = binding.etEmailaddress.getText().toString().trim();
                         try {
                             model.createAndUpdateRequest();
+                            mTracker.send(new HitBuilders.EventBuilder()
+                                    .setCategory("Payment Screen")
+                                    .setAction("Action on Payment")
+                                    .setLabel("Pay Later")
+                                    .setValue(1)
+                                    .build());
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

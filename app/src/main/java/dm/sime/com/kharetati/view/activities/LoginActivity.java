@@ -253,6 +253,12 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                 if(Global.isConnected(LoginActivity.this)){
                 viewModel.setCredentials(binding.editUserName.getText().toString().trim(), binding.editPassword.getText().toString().trim());
                 viewModel.onLoginButtonClick();
+                    mTracker.send(new HitBuilders.EventBuilder()
+                            .setCategory("Login Screen")
+                            .setAction("Action Login")
+                            .setLabel("Dubai Id User Logged In")
+                            .setValue(1)
+                            .build());
                 }
                 else{
                     if(Global.appMsg!=null)
@@ -266,8 +272,15 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         binding.btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(Global.isConnected(LoginActivity.this))
+                if(Global.isConnected(LoginActivity.this)){
                     AlertDialogUtil.registerAlert(getString(R.string.register),getString(R.string.ok),getString(R.string.cancel),LoginActivity.this);
+                    mTracker.send(new HitBuilders.EventBuilder()
+                            .setCategory("Login Screen")
+                            .setAction("Action Sign Up")
+                            .setLabel("Create New Account")
+                            .setValue(1)
+                            .build());
+                }
                 else{
                     if(Global.appMsg!=null)
                         AlertDialogUtil.errorAlertDialog("",Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr(),getResources().getString(R.string.ok),LoginActivity.this);
@@ -299,6 +312,13 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                     if(Global.loginDetails!=null)
                         sharedpreferences.edit().putString(AppConstants.USER_LOGIN_DETAILS, gson.toJson(Global.loginDetails)).apply();
                     viewModel.onGuestLoginButtonClick();
+                    mTracker.send(new HitBuilders.EventBuilder()
+                            .setCategory("Login Screen")
+                            .setAction("Action Login")
+                            .setLabel("Guest User Logged In")
+                            .setValue(1)
+                            .build());
+
                 }
                 else{
                     if(Global.appMsg!=null)
@@ -314,6 +334,12 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
             public void onClick(View view) {
                 if(Global.isConnected(LoginActivity.this)){
                     viewModel.login();
+                    mTracker.send(new HitBuilders.EventBuilder()
+                            .setCategory("Login Screen")
+                            .setAction("Action Login")
+                            .setLabel("UAEPass User Logged In")
+                            .setValue(1)
+                            .build());
                 }
                 else{
                     if(Global.appMsg!=null)
@@ -329,6 +355,12 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
             public void onClick(View view) {
                 if(Global.isConnected(LoginActivity.this)){
                     viewModel.login();
+                    mTracker.send(new HitBuilders.EventBuilder()
+                            .setCategory("Login Screen")
+                            .setAction("Action Login")
+                            .setLabel("UAEPass User Logged In")
+                            .setValue(1)
+                            .build());
                 }
                 else{
                     if(Global.appMsg!=null)

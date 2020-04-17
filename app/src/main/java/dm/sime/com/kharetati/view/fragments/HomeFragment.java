@@ -236,6 +236,13 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     @Override
     public void onMenuSelected(String appID, boolean isAnimation) {
         initializeRuntimeForm(model.getApplication(appID), isAnimation);
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Home Screen")
+                .setAction("Action Application")
+                .setLabel(model.getSelectedApplication().getNameEn())
+                .setValue(Long.parseLong(appID))
+                .build());
+        Log.d(getClass().getSimpleName(),model.getSelectedApplication().getNameEn());
     }
 
     private void initializeRuntimeForm(Applications app, boolean isAnimation){

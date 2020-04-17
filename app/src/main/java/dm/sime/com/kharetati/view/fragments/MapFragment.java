@@ -629,6 +629,12 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                             Global.isSaveAsBookmark =true;
                             PlotDetails.parcelNo = binding.txtPlotNo.getText().toString().trim();
                             model.getParceldetails();
+                         mTracker.send(new HitBuilders.EventBuilder()
+                                 .setCategory("Map Screen")
+                                 .setAction("Action Favourites")
+                                 .setLabel("Added To Favourites")
+                                 .setValue(1)
+                                 .build());
                         }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -869,12 +875,26 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
     public void onFunctionMenuSelected(int position) {
         Functions fun = Global.mapSearchResult.getService_response().getMap().getFunctions().get(position);
         mapFunctionAction(fun);
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Map Screen")
+                .setAction("Actions on Map")
+                .setLabel(Global.mapSearchResult.getService_response().getMap().getFunctions().get(position).getNameEn())
+                .setValue(position)
+                .build());
+
     }
 
     private void mapFunctionAction(Functions fun){
         if(fun.getInternalFunctions() != null && fun.getInternalFunctions().length() > 0){
             if (fun.getInternalFunctions().equals(FragmentTAGS.FR_REQUEST_SITE_PLAN)){
                 model.validateRequest(FragmentTAGS.FR_REQUEST_SITE_PLAN);
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Map Screen")
+                        .setAction("Action Request SitePlan")
+                        .setLabel("Request SitePlan")
+                        .setValue(1)
+                        .build());
+
                 //validateParcel call required
             }
             setWebSheetPeekHeight(0);

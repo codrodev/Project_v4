@@ -239,8 +239,15 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
 
                 if(Global.isUserLoggedIn)
                     AlertDialogUtil.logoutAlert(getActivity().getResources().getString(R.string.logout_msg),getActivity().getResources().getString(R.string.ok),getActivity().getResources().getString(R.string.cancel),getActivity());
-                else
+                else{
                     Global.logout(getActivity());
+                    mTracker.send(new HitBuilders.EventBuilder()
+                            .setCategory("More Screen")
+                            .setAction("Action Logout")
+                            .setLabel("Logout")
+                            .setValue(1)
+                            .build());
+                }
             }
         });
 
