@@ -297,6 +297,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
 
 
+
                     /*ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) binding.tabRuntimeLayout.getLayoutParams();
                     p.setMargins(15, 15, 15, 15);
                     binding.tabRuntimeLayout.requestLayout();*/
@@ -441,6 +442,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
         final LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lparams.setMargins(35, 0, 35, 0);
+        //binding.tabRuntimeLayout.setLayoutParams(lparams);
         CleanableEditText x = new CleanableEditText(getActivity());
         //x.setHint(form.getPlaceHolderEn());
         x.setHint(Global.CURRENT_LOCALE.equals("en")?control.getPlaceHolderEn():control.getPlaceHolderAr());

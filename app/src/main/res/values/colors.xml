@@ -12,6 +12,7 @@
 
     <!-- dots active colors -->
     <color name="maroon_light">#a31533</color>
+    <color name="maroon_light_transparent">#A6A31533</color>
     <color name="maroon_dark">#940e2a</color>
     <color name="yellow_light">#cce3e330</color>
     <color name="light_blue">#5057FF</color>

@@ -14,6 +14,7 @@
         android:id="@+id/layoutRoot"
         android:orientation="vertical"
         tools:context=".view.activities.LoginActivity">
+
         <ImageView
             android:id="@+id/imgBackground"
             android:layout_width="match_parent"
@@ -27,6 +28,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
+
         <ImageView
             android:layout_width="@dimen/splash_logo_width"
             android:layout_height="@dimen/splash_logo_height"
@@ -37,25 +39,41 @@
             android:layout_marginBottom="@dimen/splash_logo_margin_bottom"
             android:layout_marginRight="@dimen/splash_logo_margin_right"
             android:src="@drawable/logo_splash"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:textSize="14sp"
             android:elevation="20dp"
-            android:id="@+id/copyright"
+            android:id="@+id/copyright_arabic"
+            android:layout_marginTop="-25dp"
+            android:layout_marginBottom="0dp"
+            android:fontFamily="@font/dubai_font"
+            android:textAlignment="center"
+            android:textColor="@color/maroon_light"
+            android:text="@string/copyright"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:textSize="14sp"
+            android:elevation="20dp"
+            android:id="@+id/copyright_english"
             android:layout_marginTop="-48dp"
             android:layout_marginBottom="23dp"
             android:fontFamily="@font/dubai_font"
             android:textAlignment="center"
             android:textColor="@color/maroon_light"
-            android:text="@string/copyright"
+            android:text="حقوق الطبع والنشر © بلدية دبي 2020, جميع الحقوق محفوظة"
             />
 
 
         <dm.sime.com.kharetati.view.customview.SlantView
             android:id="@+id/slantViewLoginHeader"
             android:layout_width="match_parent"
+            android:layout_marginTop="12dp"
             android:layout_height="350dp"
             android:layout_gravity="start|center_horizontal"
 

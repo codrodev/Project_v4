@@ -232,7 +232,7 @@
     <string name="enter_valid_password">الرجاء إدخال كلمة مرور صالحة</string>
     <string name="previous">السابق</string>
     <string name="next">التالى</string>
-    <string name="copyright">حقوق الطبع والنشر © بلدية دبي 2020, جميع الحقوق محفوظة</string>
+    <string name="copyright">Copyright 2020 © Dubai Municipality, All Rights Reserved</string>
     <string name="Saps">رقم المعاملة:</string>
     <string name="ENTERTHEPLOTNUMBER">أدخل رقم قطعة الأرض</string>
     <string name="no_siteplan">لم يتم العثور على خطة الموقع المطلوبة‎</string>

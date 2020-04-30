@@ -618,8 +618,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 if(fragmentManager.getBackStackEntryCount()==1){
                     fragmentManager.popBackStackImmediate();
 
-                    //loadFragment(FragmentTAG, false, null);
-                    //binding.customBottomBar.show(loadPosition, true);
+                    loadFragment(FragmentTAG, false, null);
+                    binding.customBottomBar.show(loadPosition, true);
                 } else {
                     fragmentManager.popBackStackImmediate();
                 }

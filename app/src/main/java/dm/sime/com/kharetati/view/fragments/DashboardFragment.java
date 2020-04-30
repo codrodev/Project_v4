@@ -122,25 +122,25 @@ public class DashboardFragment extends Fragment implements ViewPager.OnPageChang
     }
 
     private void changeBookmarkColor(){
-        binding.txtBookmark.setTextColor(getResources().getColor(R.color.white));
-        binding.layoutBookmark.setBackground(getResources().getDrawable(R.drawable.capsule_bg));
-        binding.imgBookMark.setImageDrawable(getResources().getDrawable(R.drawable.favourites_white));
-
-        binding.txtMyMap.setTextColor(getResources().getColor(R.color.black));
-        binding.layoutMyMap.setBackground(getResources().getDrawable(R.drawable.capsule_white_bg));
-        binding.imgMyMap.setImageDrawable(getResources().getDrawable(R.drawable.map_black));
-        Global.HelpUrl = Global.CURRENT_LOCALE.equals("en")?Global.bookmarks_en_url:Global.bookmarks_ar_url;
-        Global.current_fragment_id = FR_BOOKMARK;
-    }
-
-    private void changeMyMapColor(){
-            binding.txtBookmark.setTextColor(getResources().getColor(R.color.black));
+        binding.txtBookmark.setTextColor(getResources().getColor(R.color.black));
         binding.layoutBookmark.setBackground(getResources().getDrawable(R.drawable.capsule_white_bg));
         binding.imgBookMark.setImageDrawable(getResources().getDrawable(R.drawable.favourites));
 
         binding.txtMyMap.setTextColor(getResources().getColor(R.color.white));
         binding.layoutMyMap.setBackground(getResources().getDrawable(R.drawable.capsule_bg));
         binding.imgMyMap.setImageDrawable(getResources().getDrawable(R.drawable.map_white));
+        Global.HelpUrl = Global.CURRENT_LOCALE.equals("en")?Global.bookmarks_en_url:Global.bookmarks_ar_url;
+        Global.current_fragment_id = FR_BOOKMARK;
+    }
+
+    private void changeMyMapColor(){
+        binding.txtBookmark.setTextColor(getResources().getColor(R.color.white));
+        binding.layoutBookmark.setBackground(getResources().getDrawable(R.drawable.capsule_bg));
+        binding.imgBookMark.setImageDrawable(getResources().getDrawable(R.drawable.favourites_white));
+
+        binding.txtMyMap.setTextColor(getResources().getColor(R.color.black));
+        binding.layoutMyMap.setBackground(getResources().getDrawable(R.drawable.capsule_white_bg));
+        binding.imgMyMap.setImageDrawable(getResources().getDrawable(R.drawable.map));
         Global.HelpUrl = Global.CURRENT_LOCALE.equals("en")?Global.mymaps_en_url:Global.mymaps_ar_url;
         Global.current_fragment_id = FR_MYMAP;
     }

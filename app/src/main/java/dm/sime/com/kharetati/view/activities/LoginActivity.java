@@ -892,7 +892,8 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         if(view == binding.cardLogin){
             binding.cardLogin.setVisibility( View.VISIBLE);
             binding.switchLanguage.setVisibility( View.VISIBLE);
-            binding.copyright.setVisibility(View.GONE);
+            binding.copyrightEnglish.setVisibility(View.GONE);
+            binding.copyrightArabic.setVisibility(View.GONE);
             binding.logoSplash.setVisibility(View.GONE);
 
         }

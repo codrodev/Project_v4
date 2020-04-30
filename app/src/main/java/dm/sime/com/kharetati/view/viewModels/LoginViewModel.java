@@ -292,9 +292,6 @@ public class LoginViewModel extends ViewModel {
                 if(!isUAE) {
                     loginDetails.username = email;
                     loginDetails.pwd = password;
-                } else {
-                    //loginDetails.username = Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getEmail();
-                    //loginDetails.pwd = "";
                 }
                 //Global.loginDetails.showFormPrefilledOnRememberMe=false;
                 Global.forceUserToUpdateBuild_msg_en = accessTokenResponse.getForceUserToUpdateBuildMsgEn();

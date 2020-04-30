@@ -91,7 +91,6 @@ public class AttachmentViewModel extends ViewModel {
                         @Override public void accept(RetrieveDocStreamResponse retrieveDocStreamResponse) throws Exception {
                             retriveDocs(retrieveDocStreamResponse,docId);
 
-
                         }
                     }, new Consumer<Throwable>() {
                         @Override public void accept(Throwable throwable) throws Exception {

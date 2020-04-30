@@ -1424,7 +1424,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
             jsonBody.put("locale", CURRENT_LOCALE);
 
 
-            JsonObjectRequest req = new JsonObjectRequest(AppUrls.RETRIEVE_DOC_STREAM,jsonBody,
+            JsonObjectRequest req = new JsonObjectRequest(Global.base_url_site_plan+"/retrieveDocStream",jsonBody,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
