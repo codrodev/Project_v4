@@ -53,7 +53,8 @@ public class NetworkConnectionInterceptor implements Interceptor {
                 if (!Global.isLoginActivity){
                     if(Global.loginDetails!=null)
                         LoginActivity.loginVM.authListener.saveUserToRemember(Global.loginDetails);
-                    Global.logout(applicationContext);}
+                    Global.logout(applicationContext);
+                }
 
 
             }

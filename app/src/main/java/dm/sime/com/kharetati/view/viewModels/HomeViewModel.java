@@ -202,11 +202,12 @@ public class HomeViewModel extends ViewModel {
     }
 
     public Applications getApplication(String appID){
+        if(mutableHomeGridMenu!=null && mutableHomeGridMenu.getValue()!=null){
         for (Applications app: mutableHomeGridMenu.getValue()) {
             if(app.getId().equals(appID)){
                 return app;
             }
-        }
+        }}
         return null;
     }
 
@@ -544,7 +545,7 @@ public class HomeViewModel extends ViewModel {
         SearchParameterInput inputModel = new SearchParameterInput();
         inputModel.setApplicationId(getSelectedApplication().getId());
         inputModel.setSearchValue(searchText);
-        inputModel.setTabId(getSelectedTab().getId());
+        inputModel.setTabId("1");
         if(Global.isUAE){
             inputModel.setTOKEN(Global.uaeSessionResponse == null ? "" : Global.uaeSessionResponse.getService_response().getToken());
         } else {

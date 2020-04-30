@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,8 +23,10 @@ import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import dm.sime.com.kharetati.BR;
 import dm.sime.com.kharetati.R;
@@ -40,8 +44,11 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
     private int layoutId;
     private BookmarkViewModel viewModel;
     static Activity context;
+    private List<Bookmark> data;
     public static BookmarkAdapter BmAdapter;
     public static List<Bookmark> lstBookmark;
+    private List<Bookmark> filteredData;
+
 
 
     public BookmarkAdapter(@LayoutRes int layoutId, BookmarkViewModel viewModel,Activity context) {
@@ -69,6 +76,13 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
     @Override
     public void onBindViewHolder(@NonNull GenericViewHolder holder, int position) {
         holder.bind(viewModel, position);
+
+        if(lstBookmark.get(position).date!=null){
+        Locale locale;
+        SimpleDateFormat format;
+        format= new SimpleDateFormat("dd/MM/yyyy, hh:mm aa",new Locale(Global.CURRENT_LOCALE));
+        ((TextView)holder.binding.getRoot().findViewById(R.id.dateBookmark)).setText(format.format(lstBookmark.get(position).date));
+        }
         if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0){
             if(lstBookmark.get(position).descriptionEn != null && lstBookmark.get(position).descriptionEn.length() > 0) {
                 holder.txtDescription.setVisibility(View.VISIBLE);
@@ -85,6 +99,37 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
             }
         }
         holder.binding.getRoot().findViewById(R.id.gotomap).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!Global.isConnected(context)) {
+
+                    if(Global.appMsg!=null)
+                        AlertDialogUtil.errorAlertDialog(context.getResources().getString(R.string.lbl_warning),Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr() , context.getResources().getString(R.string.ok), context);
+                    else
+                        AlertDialogUtil.errorAlertDialog(context.getResources().getString(R.string.lbl_warning), context.getResources().getString(R.string.internet_connection_problem1), context.getResources().getString(R.string.ok), context);
+                }
+
+                if(lstBookmark.get(position).ParcelNumber != null && !lstBookmark.get(position).ParcelNumber.isEmpty()) {
+                    PlotDetails.isOwner = false;
+                    PlotDetails.parcelNo=lstBookmark.get(position).ParcelNumber;
+                    Global.isBookmarks =true;
+                    Global.isSaveAsBookmark =false;
+
+                    ArrayList al = new ArrayList();
+                    al.add(PlotDetails.parcelNo.trim());
+                    //al.add("");
+
+                    ((MainActivity) context).loadFragment(FragmentTAGS.FR_MAP, true, al);
+                    //MapFragment.mapVM.mapNavigator.findParcelForBookmarks(PlotDetails.parcelNo);
+
+
+                }
+
+            }
+        });
+
+        holder.binding.getRoot().findViewById(R.id.rowBookmark).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -154,6 +199,8 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
             }
         });
     }
+
+
 
     @Override
     public int getItemViewType(int position) {

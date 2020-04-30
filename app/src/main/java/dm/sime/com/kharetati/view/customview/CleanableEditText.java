@@ -9,6 +9,9 @@ import android.widget.EditText;
 
 import androidx.appcompat.widget.AppCompatEditText;
 
+import dm.sime.com.kharetati.R;
+import dm.sime.com.kharetati.utility.Global;
+
 
 public class CleanableEditText extends AppCompatEditText implements View.OnTouchListener, View.OnFocusChangeListener, TextWatcherAdapter.TextWatcherListener {
 
@@ -92,7 +95,7 @@ public class CleanableEditText extends AppCompatEditText implements View.OnTouch
         this.f = f;
     }
 
-    private Location loc = Location.RIGHT;
+    private Location loc =Global.CURRENT_LOCALE.equals("en")? Location.RIGHT:Location.LEFT;
     private String type;
     private String regXPattern;
 
@@ -173,7 +176,7 @@ public class CleanableEditText extends AppCompatEditText implements View.OnTouch
 
 
 
-    private void init() {
+    public void init() {
         super.setOnTouchListener(this);
         super.setOnFocusChangeListener(this);
         addTextChangedListener(new TextWatcherAdapter(this, this));
@@ -197,7 +200,7 @@ public class CleanableEditText extends AppCompatEditText implements View.OnTouch
 
         if (xD == null) {
 
-            xD = getResources().getDrawable(android.R.drawable.presence_offline);
+            xD = getResources().getDrawable(R.drawable.ic_cancel);
 
         }
 
@@ -234,10 +237,10 @@ public class CleanableEditText extends AppCompatEditText implements View.OnTouch
         if (visible != wasVisible) {
 
             Drawable x = visible ? xD : null;
-
-            super.setCompoundDrawables((loc == Location.LEFT) ? x : cd[0], cd[1], (loc == Location.RIGHT) ? x : cd[2],
-
-                    cd[3]);
+            if(Global.CURRENT_LOCALE.equals("en"))
+                super.setCompoundDrawables( cd[0], cd[1], (loc == Location.RIGHT) ? x : cd[2], cd[3]);
+            else
+                super.setCompoundDrawables((loc == Location.LEFT) ? x : cd[0],cd[1], cd[2],cd[3]);
 
         }
 

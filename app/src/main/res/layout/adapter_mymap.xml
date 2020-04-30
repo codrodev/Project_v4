@@ -12,6 +12,287 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:elevation="5dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:cardCornerRadius="20dp"
+        android:layout_margin="5dp">
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="3dp"
+
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="10dp"
+            android:orientation="horizontal"
+            android:background="#fcfcfc"
+            android:weightSum="1">
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:textAlignment="center"
+                android:layout_weight=".32"
+                android:text="@string/pay_now"
+
+                android:fontFamily="@font/dubai_font"
+                android:id="@+id/siteplan_payButton"
+                android:background="@drawable/capsule_bg"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/font_small_bold"
+                android:layout_gravity="center_vertical|end"
+                android:singleLine="true"
+                android:layout_weight="0.42"
+                android:layout_marginStart="5dp"
+                android:text="@string/LBL_DATE_TIME"
+                android:textAlignment="viewEnd"
+                />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_gravity="center_vertical|start"
+                android:layout_weight=".25"
+                android:id="@+id/dateAndTime"
+                android:fontFamily="@font/dubai_font"
+                android:singleLine="true"
+                android:layout_marginStart="5dp"
+                android:text='@{adapterMyMapVM.getCurrentMyMap(position).req_created_date ?? ""}'
+                android:textAlignment="viewStart"
+                />
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:orientation="horizontal"
+            android:background="#fcfcfc">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="0.22">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    android:paddingHorizontal="10dp"
+                    android:background="#fcfcfc"
+                    android:gravity="center_vertical">
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Saps"
+                        android:id="@+id/saps"
+
+                        android:textAlignment="viewStart"
+                        style="@style/font_small_bold"
+                        android:maxLines="1"
+                        android:layout_marginStart="5dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/sapsNo"
+                        android:ellipsize="none"
+                        style="@style/font_small_bold"
+                        android:textAlignment="viewStart"
+
+                        android:text=""
+                        android:layout_marginStart="5dp"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="5dp"
+                    android:paddingHorizontal="5dp"
+                    android:layout_marginTop="8dp"
+                    >
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/voucher_num_mymaps"
+
+
+                        android:textAlignment="viewStart"
+                        style="@style/font_small_bold"
+                        android:layout_marginStart="5dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:id="@+id/txtVoucher"
+                        android:fontFamily="@font/dubai_font"
+                        android:singleLine="true"
+                        android:layout_marginStart="5dp"
+                        android:text='@{adapterMyMapVM.getCurrentMyMap(position).req_created_date ?? ""}'
+                        android:textAlignment="viewStart"
+                       /></LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.00"
+                    android:paddingHorizontal="10dp"
+
+
+
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="5dp"
+
+                            style="@style/font_small_bold"
+                            android:text="@string/plot_no"/>
+                        <TextView
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/dubai_font"
+                            android:textSize="14sp"
+                            android:id="@+id/plotNo"
+                            android:layout_marginHorizontal="5dp"
+                            android:layout_marginVertical="5dp"
+                            android:text='@{adapterMyMapVM.getCurrentMyMap(position).parcel_id ?? ""}'/>
+                    </LinearLayout>
+
+
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="5dp"
+                    android:paddingHorizontal="10dp"
+                    android:gravity="center_vertical"
+                    >
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/LBL_REQUEST_STATUS"
+                        android:id="@+id/status"
+                        android:textAlignment="viewStart"
+                        style="@style/font_small_bold"
+
+                        android:layout_gravity="center_vertical|start"
+                        android:layout_marginStart="5dp"
+                       />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/reqStatus"
+                        android:textSize="14sp"
+                        android:textAlignment="viewStart"
+                        android:fontFamily="@font/dubai_font"
+                        android:text=""
+                        android:layout_marginStart="5dp"
+                        />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_margin="5dp"
+
+                android:layout_weight=".78">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="48dp"
+                        android:layout_weight=".5"
+                        android:layout_margin="2.5dp"
+                        android:fontFamily="@font/dubai_font"
+                        android:id="@+id/view"
+                        android:src="@drawable/document_icon"/>
+
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/marker"
+                        android:id="@+id/gotomakani"
+                        android:layout_weight=".5"
+                        android:fontFamily="@font/dubai_font"
+                        android:layout_margin="2.5dp"
+                        />
+
+
+
+                </LinearLayout>
+               <!-- <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:textColor="@color/white"
+                    android:drawableStart="@drawable/paymentcards"
+                    android:textAllCaps="false"
+                    android:drawablePadding="8dp"
+                    android:layout_marginTop="2dp"
+                    android:textAlignment="viewStart"
+                    android:paddingStart="16dp"
+                    android:visibility="gone"
+
+
+                    android:fontFamily="@font/dubai_font"
+                    android:id="@+id/siteplan_payButton"
+                    android:background="#13a09a"/>-->
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
+    <!--<androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:elevation="10dp"
         app:cardCornerRadius="10dp">
@@ -43,11 +324,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="5dp"
+                            android:textSize="14sp"
                             android:text="@string/plot_no"/>
                         <TextView
                             style="@style/font_medium_regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textSize="14sp"
                             android:layout_marginHorizontal="5dp"
                             android:layout_marginVertical="5dp"
                             android:text='@{adapterMyMapVM.getCurrentMyMap(position).parcel_id ?? ""}'/>
@@ -68,6 +351,32 @@
                         android:layout_height="match_parent"
                         android:text="@string/LBL_REQUEST_STATUS"
                         android:id="@+id/status"
+                        android:textSize="14sp"
+                        android:maxLines="1"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"/>
+                    <TextView
+                        style="@style/font_medium_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/reqStatus"
+                        android:textSize="14sp"
+
+                        android:text=""
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                        <TextView
+                        style="@style/font_medium_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/Saps"
+                        android:id="@+id/saps"
+                            android:textSize="14sp"
                         android:maxLines="1"
                         android:layout_marginStart="5dp"
                         android:layout_weight="1"/>
@@ -75,15 +384,14 @@
                         style="@style/font_medium_regular"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:id="@+id/reqStatus"
-                        android:maxLines="2"
-                        android:singleLine="false"
+                        android:id="@+id/sapsNo"
                         android:ellipsize="none"
-                        android:inputType="textMultiLine"
+                        android:textSize="14sp"
                         android:text=""
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
                         android:layout_weight="1"/>
+                        </LinearLayout>
                     </LinearLayout>
                     <View
                         android:layout_width="1dp"
@@ -100,6 +408,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/LBL_DATE_TIME"
+                        android:textSize="14sp"
                         android:layout_marginStart="5dp"
                         android:layout_weight="1"/>
                     <TextView
@@ -108,6 +417,7 @@
                         android:layout_height="wrap_content"
                         android:maxLines="2"
                         android:lines="2"
+                        android:textSize="14sp"
                         android:singleLine="false"
                         android:layout_marginTop="5dp"
                         android:text='@{adapterMyMapVM.getCurrentMyMap(position).req_created_date ?? ""}'
@@ -177,5 +487,5 @@
             </LinearLayout>
 
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>-->
 </layout>

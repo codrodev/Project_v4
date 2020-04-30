@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Adapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -12,6 +14,7 @@ import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,9 +36,10 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
-public class BookmarkViewModel extends ViewModel {
+public class BookmarkViewModel extends ViewModel implements Filterable {
     BookmarkAdapter adapter;
     BookmarksResponse model;
+
     MutableLiveData<List<Bookmark>> mutableBookmark = new MutableLiveData<>();
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -46,12 +50,16 @@ public class BookmarkViewModel extends ViewModel {
     @SerializedName("UserID")
     private int userId;
     private List<Bookmark> listData;
+    private ItemFilter filter;
+    private ArrayList<Bookmark> filteredData;
 
 
     public BookmarkViewModel(Activity context, BookMarkRepository repository){
         this.activity = context;
         this.repository = repository;
         kharetatiApp = KharetatiApp.create(activity);
+        filteredData = new ArrayList<Bookmark>();
+        filter=new ItemFilter();
 
     }
 
@@ -83,8 +91,9 @@ public class BookmarkViewModel extends ViewModel {
     }
 
     public void  setBookmarkAdapter(List<Bookmark> lstMyMap) {
-        this.adapter.setBookmark(lstMyMap);
-        this.adapter.notifyDataSetChanged();
+        if(getBookmarkAdapter()!=null){
+        getBookmarkAdapter().setBookmark(lstMyMap);
+        getBookmarkAdapter().notifyDataSetChanged();}
     }
 
     public BookmarkAdapter getBookmarkAdapter() {
@@ -274,5 +283,46 @@ public class BookmarkViewModel extends ViewModel {
             bookMarksNavigator.onFailure(activity.getResources().getString(R.string.error_response));
 
         Log.e(activity.getClass().getSimpleName(),exception);
+    }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+    private class ItemFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            String filterString = constraint.toString().toLowerCase();
+
+            FilterResults results = new FilterResults();
+
+            int count = getBookMarks().size();
+            final ArrayList<Bookmark> nlist = new ArrayList<Bookmark>(count);
+
+            String filterableString ;
+
+            for (int i = 0; i < count; i++) {
+                filterableString = getBookMarks().get(i).ParcelNumber;
+                if (filterableString.toLowerCase().contains(filterString)) {
+                    nlist.add(getBookMarks().get(i));
+                }
+            }
+
+            results.values = nlist;
+            results.count = nlist.size();
+
+            return results;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            filteredData = (ArrayList<Bookmark>) results.values;
+            setBookmarkAdapter(filteredData);
+            if(getBookmarkAdapter()!=null)
+                getBookmarkAdapter().notifyDataSetChanged();
+        }
+
     }
 }

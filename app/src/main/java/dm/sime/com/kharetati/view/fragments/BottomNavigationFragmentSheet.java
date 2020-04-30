@@ -6,6 +6,9 @@ import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -20,6 +23,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import dm.sime.com.kharetati.KharetatiApp;
@@ -35,6 +39,8 @@ import dm.sime.com.kharetati.view.viewModels.MapViewModel;
 
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_BOOKMARK;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_BOTTOMSHEET;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_HOME;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_MYMAP;
 
 public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
 
@@ -43,6 +49,9 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
     private View mRootView;
     private static OnActionListener listener;
     private Tracker mTracker;
+    int images[] = {R.drawable.ic_help_black,R.drawable.ic_logout,R.drawable.ic_share,R.drawable.ic_faq,R.drawable.ic_about_us,R.drawable.ic_terms_condition,R.drawable.ic_like,R.drawable.ic_accessibility};
+    int ids[] = {R.id.imgMoreIcon,R.id.txtMoreName};
+    String keys[]= {"one","two"};
 
     public static BottomNavigationFragmentSheet newInstance(OnActionListener list) {
         BottomNavigationFragmentSheet f = new BottomNavigationFragmentSheet();
@@ -80,11 +89,54 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
 
 
 
-        binding.logoutText.setText(Global.isUserLoggedIn? getActivity().getResources().getText(R.string.logout):getActivity().getResources().getText(R.string.login));
+
+        String names[] = new String[]{getContext().getResources().getString(R.string.INTROHELP),Global.isUserLoggedIn?getContext().getResources().getString(R.string.logout):getContext().getResources().getString(R.string.login),getContext().getResources().getString(R.string.SHAREKHARETATIAPP),getContext().getResources().getString(R.string.FAQMENU),getContext().getResources().getString(R.string.ABOUTUS),getContext().getResources().getString(R.string.TERMSANDCONDITIONS),getContext().getResources().getString(R.string.RATEUS),getContext().getResources().getString(R.string.ACCESSIBILITY)};
+
+        /*binding.logoutText.setText(Global.isUserLoggedIn? getActivity().getResources().getText(R.string.logout):getActivity().getResources().getText(R.string.login));
         binding.txtLanguage.setText(Global.CURRENT_LOCALE.equals("en")?"عربى":"English");
         binding.imgLanguage.setImageResource(Global.CURRENT_LOCALE.equals("en")?R.drawable.arabic:R.drawable.english);
-        binding.iconlayoutHelp.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
-        binding.layoutLanguage.setOnClickListener(new View.OnClickListener() {
+        binding.iconlayoutHelp.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);*/
+        //mRootView.findViewById(binding.gridMore.getAdapter().getItemViewType(0)).setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
+
+
+
+        ArrayList al = new ArrayList();
+
+
+        for(int i=0;i<images.length;i++){
+            HashMap hm = new HashMap();
+            hm.put(keys[0],images[i]);
+            hm.put(keys[1],names[i]);
+            al.add(hm);
+        }
+        SimpleAdapter sa = new SimpleAdapter(getActivity(),al,R.layout.more_layout_item,keys,ids);
+        binding.gridMore.setAdapter(sa);
+
+        binding.gridMore.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 0:onHelpClicked();
+                    break;
+                    case 1:onLogoutClicked();
+                    break;
+                    case 2:onShareClicked();
+                    break;
+                    case 3:onFAQClicked();
+                    break;
+                    case 4:onAboutUsClicked();
+                    break;
+                    case 5:onTermsAndConditionsClicked();
+                    break;
+                    case 6:onRateusClicked();
+                    break;
+                    case 7:onAccessibilityClicked();
+                    break;
+                }
+            }
+        });
+
+       /* binding.layoutLanguage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 List<Fragment> fragments = getActivity().getSupportFragmentManager().getFragments();
@@ -99,11 +151,11 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
 
                 Global.CURRENT_LOCALE = (Global.CURRENT_LOCALE.compareToIgnoreCase("en")==0 ? "ar" : "en");
                 Global.changeLang(Global.CURRENT_LOCALE,getActivity());
-            /*locale = new Locale(CURRENT_LOCALE);
+            *//*locale = new Locale(CURRENT_LOCALE);
             Locale.setDefault(locale);
             android.content.res.Configuration config = new android.content.res.Configuration();
             config.locale = locale;
-            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());*/
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());*//*
                 getActivity().recreate();
                 dismiss();
             }
@@ -132,7 +184,7 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
 
                     Intent sendIntent = new Intent();
                     sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.kharetati_app));
+                    sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Khareatai App");
                     sendIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
                     sendIntent.setType("text/html");
                     startActivity(Intent.createChooser(sendIntent, "Share with"));
@@ -171,7 +223,11 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
             public void onClick(View view) {
                 dismiss();
                 ArrayList al = new ArrayList();
-                al.add(HomeFragment.constructUrl((Global.CURRENT_LOCALE.equals("en")? Global.home_en_url:Global.home_ar_url),getActivity()));
+
+
+                if(Global.HelpUrl!=null && !Global.HelpUrl.equals(""))
+                al.add(HomeFragment.constructUrl((Global.HelpUrl),getActivity()));
+
                 ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
             }
         });
@@ -249,10 +305,121 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
                             .build());
                 }
             }
-        });
+        });*/
 
         return binding.getRoot();
     }
+    public void onHelpClicked(){
+        dismiss();
+        ArrayList al = new ArrayList();
+
+
+        if(Global.HelpUrl!=null && !Global.HelpUrl.equals(""))
+            al.add(HomeFragment.constructUrl((Global.HelpUrl),getActivity()));
+
+        ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+
+    }
+    public void onLogoutClicked(){if(Global.isUserLoggedIn)
+        AlertDialogUtil.logoutAlert(getActivity().getResources().getString(R.string.logout_msg),getActivity().getResources().getString(R.string.yes),getActivity().getResources().getString(R.string.no),getActivity());
+    else{
+        Global.logout(getActivity());
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("More Screen")
+                .setAction("Action Logout")
+                .setLabel("Logout")
+                .setValue(1)
+                .build());
+    }}
+    public void onShareClicked(){
+        if (!Global.isConnected(getActivity())) {
+        if (Global.appMsg != null)
+            AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getInternetConnCheckEn() : Global.appMsg.getInternetConnCheckAr(), getResources().getString(R.string.ok), getActivity());
+        else
+            AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
+    }
+    else{
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(getString(R.string.try_kharetati_app));
+        sb.append('\n');
+        sb.append('\n');
+        sb.append("Play Store: https://play.google.com/store/apps/details?id=dm.sime.com.kharetati");
+        sb.append('\n');
+        sb.append('\n');
+        sb.append("App Store: https://itunes.apple.com/ca/app/kharetati/id1277642590?mt=8");
+        sb.append('\n');
+
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Khareatai App");
+        sendIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
+        sendIntent.setType("text/html");
+        startActivity(Intent.createChooser(sendIntent, "Share with"));
+
+    }
+        dismiss();
+    }
+    public void onFAQClicked(){ ArrayList al = new ArrayList();
+
+        //Global.faq_url =Global.faq_url+"lang="+Global.CURRENT_LOCALE;
+
+        al.add(HomeFragment.constructUrl(Global.faq_url,getActivity()));
+        ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+        dismiss();
+
+    }
+    public void onAboutUsClicked(){
+        if (!Global.isConnected(getActivity())) {
+        if (Global.appMsg != null)
+            AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getInternetConnCheckEn() : Global.appMsg.getInternetConnCheckAr(), getResources().getString(R.string.ok), getActivity());
+        else
+            AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
+    }
+    else{
+        ArrayList al = new ArrayList();
+        al.add(HomeFragment.constructUrl((Global.CURRENT_LOCALE.equals("en")?Global.aboutus_en_url:Global.aboutus_ar_url),getActivity()));
+        ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+    }
+        dismiss();
+
+    }
+    public void onTermsAndConditionsClicked(){
+        if (!Global.isConnected(getActivity())) {
+        if (Global.appMsg != null)
+            AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getInternetConnCheckEn() : Global.appMsg.getInternetConnCheckAr(), getResources().getString(R.string.ok), getActivity());
+        else
+            AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
+    }
+    else{
+        ArrayList al = new ArrayList();
+        al.add(HomeFragment.constructUrl((Global.CURRENT_LOCALE.equals("en")?Global.terms_en_url:Global.terms_ar_url),getActivity()));
+        ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+    }
+        dismiss();
+
+    }
+    public void onRateusClicked(){
+        if (!Global.isConnected(getActivity())) {
+        if (Global.appMsg != null)
+            AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getInternetConnCheckEn() : Global.appMsg.getInternetConnCheckAr(), getResources().getString(R.string.ok), getActivity());
+        else
+            AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
+    }
+    else
+        AlertDialogUtil.ratingAlertDialog(
+                getResources().getString(R.string.menu_rate_us),
+                getResources().getString(R.string.msg_rate_us),
+                getResources().getString(R.string.rate_it),getResources().getString(R.string.remindme),getActivity()
+        );
+    }
+    public void onAccessibilityClicked(){
+        Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+        startActivity(intent);
+
+    }
+
+
 
     @Override
     public void onDestroy() {

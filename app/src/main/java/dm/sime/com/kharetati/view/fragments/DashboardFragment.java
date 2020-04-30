@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -21,8 +22,10 @@ import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.viewModels.DashboardViewModel;
 
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_BOOKMARK;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_DASHBOARD;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_DELIVERY;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_MYMAP;
 
 public class DashboardFragment extends Fragment implements ViewPager.OnPageChangeListener{
 
@@ -30,6 +33,7 @@ public class DashboardFragment extends Fragment implements ViewPager.OnPageChang
     FragmentDashboardBinding binding;
     private View mRootView;
     private Tracker mTracker;
+    public static Boolean sortDescending=true;
 
     public static DashboardFragment newInstance(){
         DashboardFragment fragment = new DashboardFragment();
@@ -73,7 +77,27 @@ public class DashboardFragment extends Fragment implements ViewPager.OnPageChang
         model.manageAppBar(getActivity(), true);
         model.manageAppBottomBAtr(getActivity(), true);
 
+        binding.imgSort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                if(sortDescending)
+                    binding.imgSort.setRotationX(180);
+                else
+                    binding.imgSort.setRotationX(0);
+
+
+                if(Global.current_fragment_id.equals(FragmentTAGS.FR_BOOKMARK)){
+                    BookmarkFragment.bmModel.bookMarksNavigator.sortBookmarks(sortDescending);
+
+                }
+                else if(Global.current_fragment_id.equals(FragmentTAGS.FR_MYMAP)){
+                    MyMapFragment.myMapModel.myMapNavigator.sortSiteplans(sortDescending);
+                }
+
+
+            }
+        });
 
         binding.layoutBookmark.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,27 +118,31 @@ public class DashboardFragment extends Fragment implements ViewPager.OnPageChang
         binding.layoutCardMyMap.setVisibility(View.GONE);
         binding.txtBookmark.setTextColor(getResources().getColor(R.color.white));
         binding.layoutBookmark.setBackgroundColor(getResources().getColor(R.color.maroon_dark));
-        binding.imgBookMark.setImageDrawable(getResources().getDrawable(R.drawable.ic_bookmark_white));
+        binding.imgBookMark.setImageDrawable(getResources().getDrawable(R.drawable.favourites_white));
     }
 
     private void changeBookmarkColor(){
         binding.txtBookmark.setTextColor(getResources().getColor(R.color.white));
-        binding.layoutBookmark.setBackgroundColor(getResources().getColor(R.color.maroon_dark));
-        binding.imgBookMark.setImageDrawable(getResources().getDrawable(R.drawable.ic_bookmark_white));
+        binding.layoutBookmark.setBackground(getResources().getDrawable(R.drawable.capsule_bg));
+        binding.imgBookMark.setImageDrawable(getResources().getDrawable(R.drawable.favourites_white));
 
         binding.txtMyMap.setTextColor(getResources().getColor(R.color.black));
-        binding.layoutMyMap.setBackgroundColor(getResources().getColor(R.color.white));
-        binding.imgMyMap.setImageDrawable(getResources().getDrawable(R.drawable.ic_site_plan));
+        binding.layoutMyMap.setBackground(getResources().getDrawable(R.drawable.capsule_white_bg));
+        binding.imgMyMap.setImageDrawable(getResources().getDrawable(R.drawable.map_black));
+        Global.HelpUrl = Global.CURRENT_LOCALE.equals("en")?Global.bookmarks_en_url:Global.bookmarks_ar_url;
+        Global.current_fragment_id = FR_BOOKMARK;
     }
 
     private void changeMyMapColor(){
-        binding.txtBookmark.setTextColor(getResources().getColor(R.color.black));
-        binding.layoutBookmark.setBackgroundColor(getResources().getColor(R.color.white));
-        binding.imgBookMark.setImageDrawable(getResources().getDrawable(R.drawable.ic_bookmark));
+            binding.txtBookmark.setTextColor(getResources().getColor(R.color.black));
+        binding.layoutBookmark.setBackground(getResources().getDrawable(R.drawable.capsule_white_bg));
+        binding.imgBookMark.setImageDrawable(getResources().getDrawable(R.drawable.favourites));
 
         binding.txtMyMap.setTextColor(getResources().getColor(R.color.white));
-        binding.layoutMyMap.setBackgroundColor(getResources().getColor(R.color.maroon_dark));
-        binding.imgMyMap.setImageDrawable(getResources().getDrawable(R.drawable.ic_site_plan_white));
+        binding.layoutMyMap.setBackground(getResources().getDrawable(R.drawable.capsule_bg));
+        binding.imgMyMap.setImageDrawable(getResources().getDrawable(R.drawable.map_white));
+        Global.HelpUrl = Global.CURRENT_LOCALE.equals("en")?Global.mymaps_en_url:Global.mymaps_ar_url;
+        Global.current_fragment_id = FR_MYMAP;
     }
 
     private int getNext() {

@@ -1,9 +1,15 @@
 package dm.sime.com.kharetati.view.fragments;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,12 +25,16 @@ import com.google.android.gms.analytics.Tracker;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.FragmentBookmarkBinding;
 import dm.sime.com.kharetati.datas.models.Bookmark;
+import dm.sime.com.kharetati.datas.models.PlotDetails;
 import dm.sime.com.kharetati.datas.network.ApiFactory;
 import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
 import dm.sime.com.kharetati.datas.repositories.BookMarkRepository;
@@ -32,10 +42,12 @@ import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.navigators.BookMarksNavigator;
 import dm.sime.com.kharetati.view.viewModels.BookmarkViewModel;
 import dm.sime.com.kharetati.view.viewmodelfactories.BookMarkViewModelFactory;
 
+import static dm.sime.com.kharetati.utility.constants.AppConstants.PARCEL_NUMBER;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_BOOKMARK;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_DELIVERY;
 
@@ -48,6 +60,7 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
     private BookMarkViewModelFactory factory;
     public static BookmarkViewModel bmModel;
     private Tracker mTracker;
+    private boolean isDesending;
 
     public static BookmarkFragment newInstance(){
         BookmarkFragment fragment = new BookmarkFragment();
@@ -84,12 +97,116 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_bookmark, container, false);
         binding.setFragmentBookmarkVM(model);
         mRootView = binding.getRoot();
+        Global.HelpUrl = Global.CURRENT_LOCALE.equals("en")?Global.bookmarks_en_url:Global.bookmarks_ar_url;
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
         mTracker.setScreenName(FR_BOOKMARK);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         initializePage();
         setRetainInstance(true);
+        Global.enableClearTextInEditBox(binding.fragmentBookmarksPlotnumber,getActivity());
+
+        binding.sortDescending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                isDesending = true;
+
+
+               sortBookmarks(isDesending);
+
+            }
+        });
+        binding.sortAscending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                isDesending = false;
+
+
+                sortBookmarks(isDesending);
+
+            }
+        });
+
+        binding.fragmentBookmarksBtnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(binding.fragmentBookmarksPlotnumber.getText().toString().trim().length()==0){
+                    AlertDialogUtil.errorAlertDialog(getString(R.string.lbl_warning), getString(R.string.PLEASE_ENTER_PLOTNUMBER), getString(R.string.ok), getActivity());
+                }
+                else{
+                    search(binding.fragmentBookmarksPlotnumber.getText().toString());
+                }
+
+                Global.hideSoftKeyboard(getActivity());
+            }
+        });
+        binding.fragmentBookmarksPlotnumber.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_DONE) {
+                    search(binding.fragmentBookmarksPlotnumber.getText().toString());
+                    Global.hideSoftKeyboard(getActivity());
+                    return true;
+                }
+                return false;
+            }
+        });
+        binding.fragmentBookmarksPlotnumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if(model.getFilter()!=null) model.getFilter().filter(s.toString());
+            }
+        });
+        binding.fragmentBookmarksPlotnumber.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, Global.getParcelNumbersFromHistory(getActivity()));
+        binding.fragmentBookmarksPlotnumber.setAdapter(adapter);
         return binding.getRoot();
+
+    }
+
+    public void search(String plotno){
+        if(!Global.isConnected(getContext())){
+            AlertDialogUtil.errorAlertDialog(getString(R.string.lbl_warning), getString(R.string.internet_connection_problem1), getString(R.string.ok), getActivity());
+            return;
+        }
+        PlotDetails.isOwner = false;
+        if( Global.isUserLoggedIn){
+            mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("Search Parcel")
+                    .setAction("["+Global.getUser(getActivity()).getUsername() +" ] - "+ PARCEL_NUMBER+"- [ " + plotno +" ]")
+                    .build());
+        }else{
+            mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("Search Parcel")
+                    .setAction("Guest - DeviceID = [" +Global.deviceId+ "] "+ PARCEL_NUMBER+"- [ " + plotno +" ]")
+                    .build());
+        }
+        PlotDetails.clearCommunity();
+        plotno = plotno.replaceAll("\\s+","");
+        plotno = plotno.replaceAll("_","");
+        if(plotno.trim().length()>0){
+            Global.isBookmarks =true;
+        Global.isSaveAsBookmark =false;
+        PlotDetails.parcelNo =plotno;
+
+        ArrayList al = new ArrayList();
+        al.add(PlotDetails.parcelNo.trim());
+        //al.add("");
+
+        ((MainActivity) getActivity()).loadFragment(FragmentTAGS.FR_MAP, true, al);}
+
     }
 
     private void initializePage(){
@@ -178,6 +295,43 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
     public void updateAdapter() {
         intializeAdapter();
         model.getBookmarkAdapter().notifyDataSetChanged();
+    }
+
+    @Override
+    public void sortBookmarks(boolean descending) {
+        if(descending)
+        {
+            Collections.sort(model.getBookMarks(), new Comparator<Bookmark>() {
+                @Override
+                public int compare(Bookmark bookmark1, Bookmark bookmark2) {
+                    if(bookmark1.date==null || bookmark2.date==null) return 0;
+                    return bookmark1.date.compareTo(bookmark2.date);
+                }
+            });
+        }
+        else{
+            //txtHeading.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.asc, 0);
+            Collections.sort(model.getBookMarks(), new Comparator<Bookmark>() {
+                @Override
+                public int compare(Bookmark bookmark1, Bookmark bookmark2) {
+                    if(bookmark1.date==null || bookmark2.date==null) return 0;
+                    return bookmark1.date.compareTo(bookmark2.date)>=0?-1:0;
+                }
+            });
+        }
+        DashboardFragment.sortDescending=!descending;
+
+        if(descending)
+        {
+
+
+        }
+        else{
+
+        }
+        if(model.getBookmarkAdapter()!=null)
+        model.getBookmarkAdapter().notifyDataSetChanged();
+
     }
 
 

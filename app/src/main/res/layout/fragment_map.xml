@@ -107,19 +107,21 @@
 
                     <ImageView
                         android:id="@+id/imgBookmark"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:padding="2dp"
                         android:layout_gravity="start|center_vertical"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_bookmark" />
+                        android:src="@drawable/favourites" />
 
                     <ImageView
                         android:id="@+id/imgRecenter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:padding="2dp"
                         android:layout_gravity="start|center_vertical"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_focus" />
+                        android:src="@drawable/zoom" />
 
                     <ImageView
                         android:id="@+id/imgMakani"

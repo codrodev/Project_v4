@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="locale"
+    android:gravity="center"
+    android:padding="20dp">
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/logo"
+        android:layout_marginBottom="30dp"/>
+    <dm.sime.com.kharetati.view.customview.CleanableEditText
+        android:id="@+id/parcelId"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:fontFamily="@font/dubai_font"
+        android:background="@drawable/control_background"
+        android:hint="@string/enter_plot_number"
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:maxLength="19"
+        android:textSize="16sp"
+        android:textDirection="ltr"
+        android:inputType="number"
+        android:gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="30dp"
+            android:textAlignment="center"
+            android:text="@string/date_from"
+            android:fontFamily="@font/dubai_font"
+            android:textSize="16sp" />
+
+        <dm.sime.com.kharetati.view.customview.CleanableEditText
+            android:id="@+id/datePicker_from"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/control_background"
+            android:elevation="20dp"
+            android:fontFamily="@font/dubai_font"
+            android:focusableInTouchMode="false"
+            android:gravity="center"
+            android:hint="@string/date"
+            android:inputType="none"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
+        android:orientation="vertical"
+        android:layout_marginLeft="50dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/date_to"
+        android:textSize="16sp"
+        android:fontFamily="@font/dubai_font"
+        android:textAlignment="center"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp" />
+   <dm.sime.com.kharetati.view.customview.CleanableEditText
+       android:layout_width="match_parent"
+       android:layout_height="44dp"
+        android:hint ="@string/date"
+       android:focusableInTouchMode="false"
+        android:id="@+id/datePicker_to"
+       android:inputType="none"
+       android:fontFamily="@font/dubai_font"
+        android:layout_marginTop="10dp"
+       android:background="@drawable/control_background"
+        android:elevation="20dp"
+        android:layout_gravity="center"
+        android:textSize="16sp"
+        android:gravity="center"/>
+    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:textAllCaps="false"
+        android:id="@+id/button_findSitePlan"
+        android:layout_marginTop="30dp"
+        android:textStyle="bold"
+        android:text="@string/find_site_plan"
+        android:fontFamily="@font/dubai_font"
+        android:textColor="@color/white"
+        android:background="#13a09a"
+        android:layout_gravity="center"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_marginLeft="50dp" />
+    <!--&lt;!&ndash;<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <Button
+            android:layout_width="160dp"
+            android:layout_height="44dp"
+            android:textSize="16dp"
+            android:layout_margin="8dp"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:id="@+id/findSitePlan"
+            android:textAllCaps="false"
+            android:background="@drawable/button_background"
+            android:drawableStart="@drawable/search_icon"
+            android:drawableLeft="@drawable/search_icon"
+            android:text="@string/find_site_plan"
+            android:textColor="@color/white"
+            android:textFontWeight="800"/>
+        <Button
+            android:layout_width="160dp"
+            android:layout_height="44dp"
+            android:textSize="16dp"
+            android:layout_margin="8dp"
+            android:padding="10dp"
+            android:id="@+id/reset"
+            android:layout_weight="1"
+            android:layout_marginStart="30dp"
+            android:textAllCaps="false"
+            android:drawablePadding="10dp"
+            android:textAlignment="viewStart"
+            android:background="@drawable/button_background"
+            android:drawableStart="@drawable/reset_icon"
+            android:drawableLeft="@drawable/search_24x24"
+            android:text="@string/reset"
+            android:textColor="@color/white"
+            android:textFontWeight="800"
+            android:layout_marginLeft="50dp"
+            android:gravity="start" />
+
+    </LinearLayout>-->
+
+
+</LinearLayout>
+</ScrollView>

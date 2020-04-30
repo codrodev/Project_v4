@@ -131,7 +131,8 @@ public class AlertDialogUtil {
                 .setPositiveButton(btnTxt, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ((MainActivity)context).loadFragment(FR_CONTACT_US,false,null);
+                        //((MainActivity)context).loadFragment(FR_CONTACT_US,true,null);
+                        ((MainActivity)context).onBackPressed();
 
                     }
                 }).show();

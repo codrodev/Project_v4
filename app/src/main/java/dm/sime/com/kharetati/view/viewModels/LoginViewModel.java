@@ -326,6 +326,7 @@ public class LoginViewModel extends ViewModel {
                 Global.map_en_url = accessTokenResponse.getMap_en_url();
                 Global.map_ar_url = accessTokenResponse.getMap_ar_url();
                 Global.faq_url = accessTokenResponse.getFaq_url();
+                Global.mapHiddenLayers =accessTokenResponse.getMapHiddenLayers();
 
                 AttachmentBitmap.letter_from_owner = null;
                 AttachmentBitmap.emirateId_back = null;

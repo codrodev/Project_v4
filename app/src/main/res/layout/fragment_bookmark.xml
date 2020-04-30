@@ -1,21 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:mask="http://schemas.android.com/tools">
     <data>
         <variable
             name="fragmentBookmarkVM"
             type="dm.sime.com.kharetati.view.viewModels.BookmarkViewModel" />
     </data>
-    <androidx.cardview.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        android:elevation="5dp"
-        app:cardCornerRadius="10dp">
+        android:layout_margin="5dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/fragment_map_layoutSearch"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:weightSum="1"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".35"
+                    android:background="@drawable/rounded_corners_bg">
+
+                    <!--<ImageButton-->
+                <!--android:id="@+id/fragment_bookmarks_btnSearch"-->
+                <!--android:layout_width="32dp"-->
+                <!--android:layout_height="32dp"-->
+                <!--android:layout_gravity="center_vertical|center_horizontal"-->
+                <!--android:background="@color/white"-->
+                <!--android:scaleType="centerInside"-->
+                <!--app:srcCompat="@drawable/search_100x100" />-->
+
+                    <TextView
+                        android:id="@+id/textView27"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight=".20"
+                        android:paddingStart="8dp"
+                        android:focusableInTouchMode="false"
+                        android:fontFamily="@font/dubai_font"
+                        android:gravity="center_vertical"
+                        android:text="@string/findPlot"
+                        android:textAlignment="viewStart"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/fragment_bookmarks_plotnumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.20"
+                        android:background="#00000000"
+                        android:digits="0123456789"
+                        android:fontFamily="@font/dubai_font"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:hint="-  -  -  -  -  -  -"
+                        android:inputType="number"
+                        android:maxLength="20"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:textAlignment="center"
+                        android:textDirection="ltr"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                    android:layout_width="32dp"
+                    android:layout_height="40dp"
+                    android:layout_weight=".10"
+                    android:id="@+id/fragment_bookmarks_btnSearch">
+
+                    <ImageView
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_search" />
+
+                </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".65"
+                    android:gravity="end"
+                    android:layout_gravity="end">
+                <LinearLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="end"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/rounded_corners_bg"
+
+                    android:id="@+id/sortDescending">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:padding="8dp"
+                        android:src="@drawable/sort_descending"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="end"
+                    android:background="@drawable/rounded_corners_bg"
+
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:id="@+id/sortAscending">
+                    <ImageView
+
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+
+                        android:padding="8dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/sort_ascending"/>
+
+                </LinearLayout>
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -33,6 +154,6 @@
                 android:id="@+id/recyclerBookMarks"
                 app:setVerticalAdapter="@{fragmentBookmarkVM.getBookmarkAdapter()}"/>
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </LinearLayout>
 
 </layout>

@@ -5,12 +5,23 @@
     <TextView
         style="@style/font_medium_bold"
         android:id="@+id/tab_title"
+        android:textSize="14sp"
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="5dp"
-        android:layout_height="match_parent"
+        android:layout_height="35dp"
         android:gravity="center"
+        android:background="@drawable/tab_color_selector"
         android:textStyle="bold"
         android:textColor="@color/white"/>
+    <ImageView
+        android:id="@+id/image_arrow"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/tab_title"
+        android:layout_gravity="center_horizontal"
+        />
+
     <!-- Tab divider -->
     <View
         android:layout_width="2dp"

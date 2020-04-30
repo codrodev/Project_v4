@@ -2,8 +2,11 @@ package dm.sime.com.kharetati.view.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,8 +22,12 @@ import java.util.Set;
 import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
+import dm.sime.com.kharetati.utility.CustomContextWrapper;
 import dm.sime.com.kharetati.utility.Global;
 
+import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
+import static dm.sime.com.kharetati.utility.Global.MYPREFERENCES;
+import static dm.sime.com.kharetati.utility.constants.AppConstants.USER_LANGUAGE;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_BOOKMARK;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_WEBVIEW_ACTIVITY;
 
@@ -28,6 +35,22 @@ public class WebViewActivity extends AppCompatActivity {
     private static final String TAG = "WebViewActivity";
     private WebView webView;
     private Tracker mTracker;
+    private SharedPreferences sharedpreferences;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            sharedpreferences = newBase.getSharedPreferences(MYPREFERENCES, Context.MODE_PRIVATE);
+            String locale = sharedpreferences.getString(USER_LANGUAGE, "defaultStringIfNothingFound");
+            if(!locale.equals("defaultStringIfNothingFound"))
+                CURRENT_LOCALE =locale;
+            else
+                CURRENT_LOCALE ="en";
+            super.attachBaseContext(CustomContextWrapper.wrap(newBase, CURRENT_LOCALE));
+        } else {
+            super.attachBaseContext(newBase);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

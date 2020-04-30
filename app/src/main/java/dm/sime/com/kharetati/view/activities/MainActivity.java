@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         if(CURRENT_LOCALE.equals("en")) binding.customBottomBar.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.customBottomBar.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         final BottomNavigationFragmentSheet myBottomSheet = BottomNavigationFragmentSheet.newInstance(this);
         binding.customBottomBar.add(new MeowBottomNavigation.Model(1, R.drawable.ic_dashboard));
-        binding.customBottomBar.add(new MeowBottomNavigation.Model(2, R.drawable.ic_happiness));
+        binding.customBottomBar.add(new MeowBottomNavigation.Model(2, R.drawable.happiness_black));
         binding.customBottomBar.add(new MeowBottomNavigation.Model(3, R.drawable.ic_home_run));
         binding.customBottomBar.add(new MeowBottomNavigation.Model(4, R.drawable.ic_comment));
         binding.customBottomBar.add(new MeowBottomNavigation.Model(5, R.drawable.ic_more));
@@ -138,7 +138,15 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 binding.txtUsername.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameAR());
             }
         } else {
-            binding.txtUsername.setText(Global.isUserLoggedIn ? (Global.getUser(this).getFullname()) : LoginViewModel.guestName);
+            if(Global.isUserLoggedIn){
+                if(CURRENT_LOCALE.equals("en"))
+                    binding.txtUsername.setText(Global.getUser(this).getFullname()!=null?Global.getUser(this).getFullname():Global.getUser(this).getFullnameAR());
+                else
+                    binding.txtUsername.setText(Global.getUser(this).getFullnameAR()!=null?Global.getUser(this).getFullnameAR():Global.getUser(this).getFullname());
+
+            }
+            else
+                binding.txtUsername.setText(LoginViewModel.guestName);
         }
         binding.customBottomBar.setOnClickMenuListener(new Function1<MeowBottomNavigation.Model, Unit>() {
             @Override
@@ -205,6 +213,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         binding.customBottomBar.show(3, true);
         openHomePage();
         initializeActivity();
+
     }
 
     private void initializeActivity(){
@@ -282,6 +291,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                     loadFragment(model.bottomNavigationTAG(position + 1), true, null);
                     binding.customBottomBar.clearAllCounts();
                     binding.customBottomBar.show(position, true);
+                    //loadFragment(sharedpreferences.getString("currentFragment",FragmentTAGS.FR_HOME),true, null);
                     loadFragment(model.bottomNavigationTAG(position), true, null);
                 }
             loadFragment(sharedpreferences.getString("currentFragment",Global.current_fragment_id),true,null);
@@ -329,8 +339,16 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         Fragment fragment = null;
         if(fragment_tag.equals(FragmentTAGS.FR_CONTACT_US)||fragment_tag.equals(FragmentTAGS.FR_HAPPINESS))
             binding.imgHelp.setVisibility(View.INVISIBLE);
+        else if(fragment_tag.equals(FragmentTAGS.FR_DASHBOARD)||fragment_tag.equals(FragmentTAGS.FR_MYMAP)||fragment_tag.equals(FragmentTAGS.FR_BOOKMARK))
+            binding.imgHelp.setVisibility(View.INVISIBLE);
         else
-            binding.imgHelp.setVisibility(View.VISIBLE);
+            binding.imgHelp.setVisibility(View.INVISIBLE);
+
+        LinearLayout.LayoutParams headerParams = null;
+       /* if(fragment_tag.equals(FragmentTAGS.FR_HOME)){
+            headerParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            headerParams.setMargins(0,0,0,-48);
+            binding.headerLayout.setLayoutParams(headerParams);}*/
 
         switch (fragment_tag) {
             case FragmentTAGS.FR_HOME:
@@ -540,6 +558,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             Global.alertDialog =null;
         }
 
+
     }
 
     @Override
@@ -572,6 +591,13 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         }
         else
             binding.customBottomBar.show(3, true);
+
+        if(Global.current_fragment_id.equals(FragmentTAGS.FR_CONTACT_US)||Global.current_fragment_id.equals(FragmentTAGS.FR_HAPPINESS))
+            binding.imgHelp.setVisibility(View.INVISIBLE);
+        else if(Global.current_fragment_id.equals(FragmentTAGS.FR_DASHBOARD)||Global.current_fragment_id.equals(FragmentTAGS.FR_MYMAP)||Global.current_fragment_id.equals(FragmentTAGS.FR_BOOKMARK))
+            binding.imgHelp.setVisibility(View.VISIBLE);
+        else
+            binding.imgHelp.setVisibility(View.INVISIBLE);
         //if(Global.current_fragment_id.equals(FragmentTAGS.FR_))
 
     }
@@ -591,8 +617,9 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             while(fragmentManager.getBackStackEntryCount() >=1) {
                 if(fragmentManager.getBackStackEntryCount()==1){
                     fragmentManager.popBackStackImmediate();
-                    loadFragment(FragmentTAG, false, null);
-                    binding.customBottomBar.show(loadPosition, true);
+
+                    //loadFragment(FragmentTAG, false, null);
+                    //binding.customBottomBar.show(loadPosition, true);
                 } else {
                     fragmentManager.popBackStackImmediate();
                 }

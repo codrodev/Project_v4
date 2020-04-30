@@ -197,7 +197,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
             public void onClick(View view) {
                 if(Global.helpUrlEn != null || Global.helpUrlAr != null) {
                     SharedPreferences sharedpreferences = getActivity().getSharedPreferences(POSITION, Context.MODE_PRIVATE);
-                    sharedpreferences.edit().putInt("stepperPosition",currentIndex);
+                    sharedpreferences.edit().putInt("stepperPosition",currentIndex).apply();
                     ArrayList al = new ArrayList();
                     if(Global.helpUrlEn!=null||Global.helpUrlAr!=null)
                     al.add(HomeFragment.constructUrl((Global.CURRENT_LOCALE.equals("en")? Global.helpUrlEn:Global.helpUrlEn),getActivity()));

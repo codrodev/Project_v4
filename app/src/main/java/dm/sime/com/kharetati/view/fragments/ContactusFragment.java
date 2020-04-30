@@ -141,6 +141,8 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
         mTracker.setScreenName(FR_CONTACT_US);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         initializePage();
+        ((MainActivity)getActivity()).manageActionBar(false);
+        ((MainActivity)getActivity()).manageBottomBar(true);
         setRetainInstance(true);
         if (!Global.isConnected(getActivity())) {
 
@@ -387,7 +389,7 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
         map.getOperationalLayers().add(dynamicLayer);
         mMapView.getGraphicsOverlays().add(graphicsLayer);
 
-        //map.setBasemap(Basemap.createImagery());
+        map.setBasemap(Basemap.createImagery());
         mMapView.setMap(map);
 
 
@@ -549,6 +551,11 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MainActivity)getActivity()).manageBottomBar(true);
+    }
 
     @Override
     public void onStarted() {

@@ -11,16 +11,23 @@
         android:background="@color/maroon_dark"
         android:id="@+id/bottomSheetMore"
         android:orientation="vertical">
-        <RelativeLayout
+        <View
+            android:id="@+id/topView"
+            android:layout_margin="20dp"
+            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_width="200dp"
+            android:layout_height="2dp"
+            android:background="@color/white"/>
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="3"
+            android:id="@+id/gridMore"/>
+        <!--<RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <View
-                android:id="@+id/topView"
-                android:layout_margin="20dp"
-                android:layout_centerHorizontal="true"
-                android:layout_width="200dp"
-                android:layout_height="2dp"
-                android:background="@color/white"/>
+
             <LinearLayout
                 android:id="@+id/topMenuLayout"
                 android:layout_width="match_parent"
@@ -56,6 +63,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/INTROHELP"
+                        android:textSize="14sp"
                         android:textAlignment="center"
                         android:layout_gravity="center"
                         android:textColor="@color/white"/>
@@ -64,6 +72,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_marginEnd="-16dp"
                     android:id="@+id/logout"
                     android:layout_gravity="center"
                     android:gravity="center"
@@ -84,6 +93,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Logout"
+                        android:textSize="14sp"
                         android:textAlignment="center"
                         android:id="@+id/logoutText"
                         android:lines="2"
@@ -94,6 +104,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_marginEnd="-8dp"
                     android:id="@+id/layoutShareApp"
                     android:layout_gravity="center"
                     android:gravity="center"
@@ -113,7 +124,8 @@
                     </RelativeLayout>
                     <TextView
                         style="@style/font_medium_regular"
-                        android:layout_width="80dp"
+                        android:layout_width="wrap_content"
+                        android:textSize="14sp"
                         android:layout_height="wrap_content"
                         android:text="@string/SHAREKHARETATIAPP"
                         android:textAlignment="center"
@@ -128,7 +140,6 @@
                 android:id="@+id/bottomMenuLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
                 android:weightSum="3"
                 android:orientation="horizontal"
                 android:layout_below="@+id/topMenuLayout">
@@ -140,6 +151,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:id="@+id/faq"
+                    android:layout_marginRight="-15dp"
+
+
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -158,10 +172,11 @@
                     </RelativeLayout>
                     <TextView
                         style="@style/font_medium_regular"
-                        android:layout_width="80dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/FAQMENU"
                         android:singleLine="false"
+                        android:textSize="14sp"
                         android:maxLines="2"
                         android:textAlignment="center"
                         android:layout_gravity="center"
@@ -174,29 +189,34 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_marginRight="-25dp"
+
                     android:id="@+id/aboutUs"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:orientation="vertical">
+
                     <RelativeLayout
                         android:id="@+id/layout2"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:background="@drawable/circular_menu_bg"
-                        android:layout_margin="5dp">
+                        android:layout_margin="5dp"
+                        android:background="@drawable/circular_menu_bg">
+
                         <ImageView
                             android:id="@+id/icon2"
                             android:layout_width="35dp"
                             android:layout_height="35dp"
-                            android:src="@drawable/ic_about_us"
-                            android:layout_centerInParent="true"/>
-                        <!---->
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/ic_about_us" />
+                        &lt;!&ndash;&ndash;&gt;
                     </RelativeLayout>
                     <TextView
                         style="@style/font_medium_regular"
-                        android:layout_width="80dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/ABOUTUS"
+                        android:textSize="14sp"
                         android:textAlignment="center"
                         android:layout_gravity="center"
                         android:textColor="@color/white"/>
@@ -205,6 +225,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_marginRight="-10dp"
+
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:id="@+id/termsAndConditions"
@@ -228,11 +250,13 @@
                     <TextView
                         android:id="@+id/textTerms"
                         style="@style/font_medium_regular"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:textAlignment="center"
                         android:singleLine="false"
+                        android:lineHeight="16dp"
+                        android:textSize="14sp"
                         android:text="@string/TERMSANDCONDITIONS"
                         android:textColor="@color/white" />
                 </LinearLayout>
@@ -270,17 +294,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/RATEUS"
+                        android:textSize="14sp"
                         android:textAlignment="center"
                         android:layout_gravity="center"
                         android:textColor="@color/white"/>
                 </LinearLayout>
-                <!--<LinearLayout
+                &lt;!&ndash;<LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:orientation="vertical"/>-->
+                    android:orientation="vertical"/>&ndash;&gt;
                 <LinearLayout
                     android:id="@+id/layoutAccessibility"
                     android:layout_width="wrap_content"
@@ -307,6 +332,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/ACCESSIBILITY"
+                        android:textSize="14sp"
                         android:textAlignment="center"
                         android:layout_gravity="center"
                         android:textColor="@color/white"/>
@@ -343,7 +369,7 @@
                         android:textColor="@color/white"/>
                 </LinearLayout>
 
-               <!-- <LinearLayout
+               &lt;!&ndash; <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -371,10 +397,10 @@
                         android:text="Register Land"
                         android:layout_gravity="center"
                         android:textColor="@color/white"/>
-                </LinearLayout>-->
+                </LinearLayout>&ndash;&gt;
 
 
-                <!--<LinearLayout
+                &lt;!&ndash;<LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -400,8 +426,8 @@
                         android:lines="2"
                         android:layout_gravity="center"
                         android:textColor="@color/white"/>
-                </LinearLayout>-->
+                </LinearLayout>&ndash;&gt;
             </LinearLayout>
-        </RelativeLayout>
+        </RelativeLayout>-->
     </LinearLayout>
 </layout>

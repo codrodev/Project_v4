@@ -107,6 +107,7 @@
                         android:inputType="text"
                         android:textAlignment="viewStart"
                         android:singleLine="true"
+                        android:fontFamily="@font/dubai_font"
                         android:hint="@string/subject"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -125,6 +126,8 @@
                         android:fontFamily="@font/dubai_font"
                         android:inputType="textMultiLine"
                         android:lines="3"
+                        android:maxLines="5"
+                        android:nestedScrollingEnabled="true"
                         android:textAlignment="viewStart"
                         android:textDirection="locale" />
                 </com.google.android.material.textfield.TextInputLayout>

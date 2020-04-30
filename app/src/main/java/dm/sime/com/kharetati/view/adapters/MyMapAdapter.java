@@ -2,11 +2,13 @@ package dm.sime.com.kharetati.view.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.LayoutRes;
@@ -57,26 +59,50 @@ public class MyMapAdapter  extends RecyclerView.Adapter<MyMapAdapter.GenericView
     public void onBindViewHolder(@NonNull GenericViewHolder holder, int position) {
         holder.bind(viewModel, position);
 
+        ((TextView)holder.binding.getRoot().findViewById(R.id.plotNo)).setText(lstMyMap.get(position).getParcelId());
+        ((TextView)holder.binding.getRoot().findViewById(R.id.dateAndTime)).setText(lstMyMap.get(position).getReq_created_date());
+        ((TextView)holder.binding.getRoot().findViewById(R.id.txtVoucher)).setText(lstMyMap.get(position).getVoucher_no());
+
         if(Global.CURRENT_LOCALE.compareToIgnoreCase("en")==0){
             ((TextView)holder.binding.getRoot().findViewById(R.id.reqStatus)).setText(lstMyMap.get(position).getRequestStatus());
         } else {
             ((TextView)holder.binding.getRoot().findViewById(R.id.reqStatus)).setText(lstMyMap.get(position).getRequestStatusAr());
         }
+        if(Global.CURRENT_LOCALE.compareToIgnoreCase("en")==0){
+            ((TextView)holder.binding.getRoot().findViewById(R.id.sapsNo)).setText(lstMyMap.get(position).getRequestId());
+        } else {
+            ((TextView)holder.binding.getRoot().findViewById(R.id.sapsNo)).setText(lstMyMap.get(position).getRequestId());
+        }
 
-        if(Boolean.parseBoolean(lstMyMap.get(position).getIsPaymentPending()) == true){
+        if(Boolean.parseBoolean(lstMyMap.get(position).getIsPaymentPending())){
             ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setEnabled(true);
             ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setText(R.string.pay);
-            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setBackground(context.getResources().getDrawable(R.drawable.gradient_background));
+            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setVisibility(View.VISIBLE);
+            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setBackground(context.getResources().getDrawable(R.drawable.capsule_bg));
+            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setAlpha(1f);
         }
         else {
             ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setEnabled(false);
+            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setVisibility(View.VISIBLE);
+
             ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setText(R.string.paid);
-            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setBackground(context.getResources().getDrawable(R.drawable.disabled_gradient_background));
+            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setBackground(context.getResources().getDrawable(R.drawable.capsule_bg));
+            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setAlpha(.5f);
         }
 
-        if(lstMyMap.get(position).getRequestStatus().toLowerCase().equals("cancelled")){
+        if(lstMyMap.get(position).getRequestStatus().toLowerCase().equals("cancelled")||lstMyMap.get(position).getRequestStatus().toLowerCase().equals("Rejected")){
             ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setEnabled(false);
-            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setBackground(context.getResources().getDrawable(R.drawable.disabled_gradient_background));
+            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setVisibility(View.INVISIBLE);
+
+            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setText(R.string.pay);
+            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setBackground(context.getResources().getDrawable(R.drawable.capsule_bg));
+            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setAlpha(.5f);
+        }
+        else if(lstMyMap.get(position).getRequestStatus().toLowerCase().equals("in progress")){
+            /*((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setEnabled(true);
+            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setText(R.string.pay);
+            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setVisibility(View.VISIBLE);
+            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setBackground(context.getResources().getDrawable(R.drawable.pay_button_background));*/
         }
 
         /*if(lstMyMap.get(position).getReqCreatedDate()!=null){
@@ -85,12 +111,14 @@ public class MyMapAdapter  extends RecyclerView.Adapter<MyMapAdapter.GenericView
         }*/
 
 
-        if(Boolean.parseBoolean(lstMyMap.get(position).getIsPlanReady()) == true){
-            ((ImageView)holder.binding.getRoot().findViewById(R.id.view)).setAlpha(1f);
+        if(Boolean.parseBoolean(lstMyMap.get(position).getIsPlanReady())){
+            //((LinearLayout)holder.binding.getRoot().findViewById(R.id.viewIconBackgrund)).setBackgroundColor(Color.parseColor("#1b87e2"));
             ((ImageView)holder.binding.getRoot().findViewById(R.id.view)).setEnabled(true);
+            //((ImageView)holder.binding.getRoot().findViewById(R.id.view)).setAlpha(1f);
         } else {
-            ((ImageView)holder.binding.getRoot().findViewById(R.id.view)).setAlpha(.5f);
+            //((LinearLayout)holder.binding.getRoot().findViewById(R.id.viewIconBackgrund)).setBackgroundColor(Color.parseColor("#2a2a2a"));
             ((ImageView)holder.binding.getRoot().findViewById(R.id.view)).setEnabled(false);
+           // ((ImageView)holder.binding.getRoot().findViewById(R.id.view)).setAlpha(.5f);
         }
 
 
@@ -180,6 +208,9 @@ public class MyMapAdapter  extends RecyclerView.Adapter<MyMapAdapter.GenericView
 
     public void setMyMap(List<MyMapResults> lstMyMap) {
         this.lstMyMap = lstMyMap;
+    }
+    public List<MyMapResults> getMyMap(){
+        return this.lstMyMap;
     }
 
     public static class GenericViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

@@ -15,6 +15,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.StateSet;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -129,6 +130,9 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     public List<CleanableEditText> lstRuntimeCleanableText;
     InAppNotificationAdapter adapterNotification;
     private Tracker mTracker;
+    private RelativeLayout relativeLayout;
+    private ImageView imageView;
+    private TextView tabTextView;
     /*BottomSheetBehavior sheetBehavior;
     LinearLayout layoutBottomSheet;*/
 
@@ -229,6 +233,8 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         super.onResume();
         model.manageAppBar(getActivity(), true);
         model.manageAppBottomBAtr(getActivity(), true);
+        if(Global.appId!=null && model.getApplication( Global.appId)!=null)
+        Global.HelpUrl = CURRENT_LOCALE.equals("en")?model.getApplication( Global.appId).getHelpUrlEn():model.getApplication( Global.appId).getHelpUrlAr();
 
         //initializeInAppNotification();
     }
@@ -236,6 +242,8 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     @Override
     public void onMenuSelected(String appID, boolean isAnimation) {
         initializeRuntimeForm(model.getApplication(appID), isAnimation);
+        Global.appId = appID;
+        Global.HelpUrl = CURRENT_LOCALE.equals("en")?model.getApplication( Global.appId).getHelpUrlEn():model.getApplication( Global.appId).getHelpUrlAr();
         mTracker.send(new HitBuilders.EventBuilder()
                 .setCategory("Home Screen")
                 .setAction("Action Application")
@@ -272,17 +280,21 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                 if (form.getTabs() != null) {
                     //binding.tabRuntimeLayout.addTab(binding.tabRuntimeLayout.newTab().setText(CURRENT_LOCALE.equals("en")?form.getTabs().getNameEn():form.getTabs().getNameAr()));
                     TabLayout.Tab tab = binding.tabRuntimeLayout.newTab();
-                    RelativeLayout relativeLayout = (RelativeLayout)
+                    relativeLayout = (RelativeLayout)
                             LayoutInflater.from(getActivity()).inflate(R.layout.tab_custom_view, binding.tabRuntimeLayout, false);
 
-                    TextView tabTextView = (TextView) relativeLayout.findViewById(R.id.tab_title);
+                    tabTextView = (TextView) relativeLayout.findViewById(R.id.tab_title);
+                    imageView = (ImageView) relativeLayout.findViewById(R.id.image_arrow);
+
                     tabTextView.setText(CURRENT_LOCALE.equals("en")?form.getTabs().getNameEn():form.getTabs().getNameAr());
                     tab.setCustomView(relativeLayout);
                     //tab.select();
 
                     binding.tabRuntimeLayout.addTab(tab);
+
                     binding.tabRuntimeLayout.setTabGravity(TabLayout.GRAVITY_FILL);
                     binding.tabRuntimeLayout.setTabMode(TabLayout.MODE_FIXED);
+
 
 
                     /*ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) binding.tabRuntimeLayout.getLayoutParams();
@@ -303,15 +315,17 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                         Global.selectedTab = tab.getPosition();
                         runtimeControlRenderer(app.getSearchForm().get(tab.getPosition()).getTabs().getControls());
 
+
+
                         Global.hideSoftKeyboard(getActivity());
                     }
                    // renderControl(tab.getPosition());
-
+                    imageView.setVisibility(View.VISIBLE);
                 }
 
                 @Override
                 public void onTabUnselected(TabLayout.Tab tab) {
-
+                    imageView.setVisibility(View.GONE);
                 }
 
                 @Override
@@ -438,6 +452,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         x.setEms(10);
         x.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         x.setMaxLines(1);
+        x.setTextSize(14f);
         x.setType(control.getType());
         if(control.getRegexExp() != null && control.getRegexExp().length() > 0){
             x.setRegXPattern(control.getRegexExp());
@@ -486,14 +501,17 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         //dynamiclayout.setBackgroundColor(Color.RED);
         dynamiclayout.setLayoutDirection(View.LAYOUT_DIRECTION_LOCALE);
         LinearLayout.LayoutParams dynamcLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dynamcLayoutParams.setMargins(0,8,0,8);
+        if(CURRENT_LOCALE.equals("en"))
+            dynamcLayoutParams.setMargins(65,8,-85,8);
+        else
+            dynamcLayoutParams.setMargins(-85,8,65,8);
 
 
         LinearLayout spinnerLayout = new LinearLayout(getActivity());
         spinnerLayout.setOrientation(LinearLayout.HORIZONTAL);
         spinnerLayout.setBackgroundColor(getActivity().getResources().getColor(R.color.white));
         LinearLayout.LayoutParams spinnerlayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        spinnerlayoutParams.setMargins(30,8,30,8);
+        spinnerlayoutParams.setMargins(35,8,35,8);
         spinnerLayout.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);
         spinnerLayout.setBackground(getActivity().getResources().getDrawable(R.drawable.control_background));
         spinnerLayout.setLayoutParams(spinnerlayoutParams);
@@ -516,6 +534,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         spinnerView = new TextView(getActivity());
         spinnerView.setTextSize(16f);
         spinnerView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
         spinnerView.setText(Global.CURRENT_LOCALE.equals("en")?control.getPlaceHolderEn():control.getPlaceHolderAr());
         spinnerView.setTypeface(typeface);
         spinnerLayout.addView(spinnerView,dynamcLayoutParams);

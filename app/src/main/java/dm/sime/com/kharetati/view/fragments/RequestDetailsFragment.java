@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -47,6 +48,7 @@ public class RequestDetailsFragment extends Fragment {
     private Button payNow;
     private Button done;
     private Tracker mTracker;
+    private ImageView back;
 
     public static RequestDetailsFragment newInstance(String requestNumber, String parcelId, String voucherNo, String voucherAmount,String eradUrl,String callBackUrl,String userName,String mobile,String email) {
         RequestDetailsFragment fragment = new RequestDetailsFragment();
@@ -107,6 +109,9 @@ public class RequestDetailsFragment extends Fragment {
         tvAmount=(TextView) view.findViewById(R.id.tvAmount);
         payNow=(Button) view.findViewById(R.id.payNow);
         done=(Button) view.findViewById(R.id.done);
+        back = (ImageView)view.findViewById(R.id.back);
+        if(Global.CURRENT_LOCALE.equals("ar"))
+            back.setRotationY(180);
 
         tvRequestNumber.setText(requestNumber);
         tvParcelId.setText(parcelId);
@@ -115,6 +120,13 @@ public class RequestDetailsFragment extends Fragment {
         ((MainActivity)getActivity()).manageActionBar(false);
         ((MainActivity)getActivity()).manageBottomBar(false);
         Global.hideSoftKeyboard(getActivity());
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).onBackPressed();
+            }
+        });
 
         payNow.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -17,6 +17,11 @@ public class AccessTokenResponse {
   @SerializedName("community_layerid")
   @Expose
   private String communityLayerid;
+  @SerializedName("map_hidden_layers")
+  @Expose
+  private String[] mapHiddenLayers;
+
+
 
   @SerializedName("plot_layerid")
   @Expose
@@ -170,6 +175,14 @@ public class AccessTokenResponse {
   @SerializedName("faq_url")
   @Expose
   private String faq_url;
+
+  public String[] getMapHiddenLayers() {
+    return mapHiddenLayers;
+  }
+
+  public void setMapHiddenLayers(String[] mapHiddenLayers) {
+    this.mapHiddenLayers = mapHiddenLayers;
+  }
 
   public String getFaq_url() {
     return faq_url;

@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">خريطتي  </string>
-    <string name="title_welcome">مرحبا بك في</string>
+    <string name="title_welcome">مرحبا</string>
     <string name="login"> الدخول </string>
     <string name="internet_connection_problem1">لا يوجد اتصال إنترنت، الرجاء التحقق من الاتصال وحاول مرة أخرى</string>
     <string name="lbl_warning">مسح البيانات المسجله مسبقا</string>
     <string name="ok"> موافق </string>
-    <string name="forgot_username_password">نسيت اسم المستخدم أو كلمة المرور؟</string>
+    <string name="forgot_username_password">نسيت كلمة المرور ؟</string>
     <string name="rememberme">تذكرني</string>
     <string name="open_makani_confirm">هل أنت متأكد من أنك تريد الانتقال إلى مكاني</string>
     <string name="or">أو</string>
     <string name="cancel">الغاء</string>
-    <string name="createAccount">انشئ حساب</string>
+    <string name="createAccount"> إنشاء حساب جديد</string>
     <string name="signin_as_guest">تسجيل الدخول كضيف</string>
-    <string name="login_uaepass">تسجيل الدخول مع البشري الإمارات العربية المتحدة</string>
-    <string name="username">اسم المستخدم</string>
-    <string name="password">كلمه السر</string>
+    <string name="login_uaepass">تسجيل الدخول بالهوية الرقمية</string>
+    <string name="username">ادخل اسم المستخدم أو البريد الإلكتروني</string>
+    <string name="password">ادخل كلمة المرور</string>
     <string name="textOn">English</string>
     <string name="textOff">عربى</string>
     <string name="PLEASE_ENTER_PLOTNUMBER">الرجاء إدخال رقم قطعة الأرض</string>
@@ -32,8 +32,8 @@
     <string name="community_error">حدث خطا اثناء إحضار المجتمع</string>
     <string name="please_enter_land">يرجى إدخال رقم الملكية</string>
     <string name="username_and_password">الرجاء إدخال اسم المستخدم وكلمة المرور الخاصة بك</string>
-    <string name="enter_username">الرجاء إدخال اسم المستخدم</string>
-    <string name="enter_password">من فضلك أدخل رقمك السري</string>
+    <string name="enter_username">الرجاء إدخال اسم المستخدم أو البريد الإلكتروني الخاص بك </string>
+    <string name="enter_password">الرجاء إدخال كلمة المرور الخاصة بك</string>
     <string name="wrong_username_password">اسم المستخدم أو كلمة المرور خاطئة</string>
     <string name="server_connect_error">الرجاء المحاولة لاحقاً</string>
     <string name="error_response">الرجاء التحقق من الاتصال وحاول مرة أخرى</string>
@@ -45,6 +45,7 @@
     <string name="LBL_DATE_TIME">التاريخ :</string>
     <string name="parcelid">رقم قطعة الأرض</string>
     <string name="voucher_num">رقم أذن الدفع</string>
+    <string name="voucher_num_mymaps">رقم أذن الدفع:</string>
     <string name="amount">المبلغ</string>
     <string name="payment_channels">قنوات الدفع</string>
     <string name="pay_now">الدفع الان</string>
@@ -52,7 +53,7 @@
     <string name="done">تم الانتهاء</string>
     <string name="request_num">رقم الطلب</string>
     <string name="request_details">تفاصيل الطلب</string>
-    <string name="plot_no">عدد مؤامرة : </string>
+    <string name="plot_no">رقم قطعة الأرض : </string>
     <string name="favourite_deleted">تم حذف المفضلة بنجاح</string>
     <string name="NO_FAVOURITE_PLOTS_FOUND">لا تتوفر إشارات مرجعية</string>
     <string name="confirmation_delete">هل أنت متأكد أنك تريد الحذف؟</string>
@@ -231,4 +232,27 @@
     <string name="enter_valid_password">الرجاء إدخال كلمة مرور صالحة</string>
     <string name="previous">السابق</string>
     <string name="next">التالى</string>
+    <string name="copyright">حقوق الطبع والنشر © بلدية دبي 2020, جميع الحقوق محفوظة</string>
+    <string name="Saps">رقم المعاملة:</string>
+    <string name="ENTERTHEPLOTNUMBER">أدخل رقم قطعة الأرض</string>
+    <string name="no_siteplan">لم يتم العثور على خطة الموقع المطلوبة‎</string>
+    <string name="plc_mobileNumber">الرجاء إدخال رقم الهاتف المتحرك</string>
+    <string name="find_site_plan">بحث</string>
+    <string name="plc_plotNumber">الرجاء إدخال رقم قطعة الأرض</string>
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
+    <string name="reset">تحديث</string>
+    <string name="findPlot">البحث عن قطعة الأرض</string>
+    <string name="enter_plot_number">ادخل رقم قطعة الأرض</string>
+    <string name="date_from">التاريخ - من:</string>
+    <string name="date">DD/MM/YYYY</string>
+    <string name="date_to">التاريخ - إلى:</string>
+    <string name="no_record">لا توجد سجلات</string>
+    <string name="valid_from_date">الرجاء إدخال صالح من تاريخ</string>
+    <string name="valid_to_date">الرجاء إدخال التاريخ الصحيح</string>
+    <string name="older_to_date">حتى الآن لا يمكن ان يكون أقدم من من تاريخ</string>
+    <string name="future_to_date">حتى الآن لا يمكن ان يكون تاريخا في المستقبل</string>
+    <string name="valid_date">يرجى تحديد تواريخ صالحة</string>
+    <string name="enter_plot_or_date">الرجاء إدخال رقم قطعة الارض أو إختر نطاق تاريخ الصلاحية</string>
+    <string name="refresh">Refresh</string>
 </resources>

@@ -639,7 +639,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
         if(KharetatiApp.getInstance().getApplicationContext() !=null)
 
-            return (bitmap!=null && !(bitmap==((BitmapDrawable) getResources().getDrawable(R.drawable.photo)).getBitmap()));
+            return (bitmap!=null && !(bitmap==((BitmapDrawable) KharetatiApp.getInstance().getApplicationContext().getResources().getDrawable(R.drawable.photo)).getBitmap()));
         else
             return false;
 

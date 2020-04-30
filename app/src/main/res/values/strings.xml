@@ -13,8 +13,8 @@
     <string name="createAccount">Create an Account</string>
     <string name="signin_as_guest">Sign in as Guest</string>
     <string name="login_uaepass">Login with UAE PASS</string>
-    <string name="username">Enter Your Dubai Id</string>
-    <string name="password">Enter Password</string>
+    <string name="username">Enter username or email</string>
+    <string name="password">Enter password</string>
     <string name="textOff">English</string>
     <string name="textOn">عربى</string>
     <string name="PLEASE_ENTER_PLOTNUMBER">Please enter plot number</string>
@@ -31,7 +31,7 @@
     <string name="community_error">Error while fetching community</string>
     <string name="please_enter_land">Please enter the title deed number</string>
     <string name="username_and_password">Please enter your username and password</string>
-    <string name="enter_username">Please enter your username</string>
+    <string name="enter_username">Please enter your username or email</string>
     <string name="enter_password">Please enter your password</string>
 
     <string name="wrong_username_password">Wrong username or password</string>
@@ -45,6 +45,7 @@
     <string name="LBL_DATE_TIME">Date:</string>
     <string name="parcelid">Parcel ID</string>
     <string name="voucher_num">Voucher Number</string>
+    <string name="voucher_num_mymaps">Voucher Number:</string>
     <string name="amount">Amount</string>
     <string name="payment_channels">Payment Channels</string>
     <string name="pay_now">Pay Now</string>
@@ -195,6 +196,23 @@
     <string name="bookmark">Favourites</string>
     <string name="mymaps">My Maps</string>
     <string name="timeout">Your session has timed out</string>
+    <string name="ENTERTHEPLOTNUMBER">Please enter the plot number</string>
+    <string name="no_siteplan">Requested Site Plan Not Found</string>
+    <string name="plc_mobileNumber">Enter Mobile Number</string>
+    <string name="find_site_plan">Find Site Plan</string>
+    <string name="plc_plotNumber">Enter your plot number</string>
+    <string name="reset">Reset</string>
+    <string name="findPlot">Find Plot</string>
+    <string name="enter_plot_number">Enter Plot Number</string>
+    <string name="date_from">Date - From:</string>
+    <string name="date">DD/MM/YYYY</string>
+    <string name="date_to">Date - To:</string>
+    <string name="no_record">No records found</string>
+    <string name="valid_from_date">Please enter a valid from date</string>
+    <string name="valid_to_date">Please enter a valid to date</string>
+    <string name="older_to_date">To Date can not be older than from date</string>
+    <string name="future_to_date">To Date can not be a future date</string>
+    <string name="valid_date">please select a valid dates</string>
 
 
     <string-array name="request_site_plan">
@@ -228,4 +246,11 @@
     <string name="enter_valid_password">Please enter a valid password</string>
     <string name="previous">Previous</string>
     <string name="next">Next</string>
+    <string name="copyright">Copyright 2020 © Dubai Municipality, All Rights Reserved</string>
+    <string name="Saps">SPS#:</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="enter_plot_or_date">Please enter plot number or select valid date range</string>
+    <string name="refresh">Refresh</string>
+
 </resources>

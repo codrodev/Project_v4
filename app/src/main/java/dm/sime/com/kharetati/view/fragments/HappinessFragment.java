@@ -1,6 +1,7 @@
 package dm.sime.com.kharetati.view.fragments;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.activities.WebViewActivity;
 import dm.sime.com.kharetati.view.viewModels.HappinessViewModel;
 
@@ -83,6 +85,8 @@ public class HappinessFragment extends Fragment {
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
         mTracker.setScreenName(FR_HAPPINESS);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        ((MainActivity)getActivity()).manageActionBar(false);
+        ((MainActivity)getActivity()).manageBottomBar(true);
         initializePage();
         setRetainInstance(true);
         return binding.getRoot();
@@ -103,6 +107,13 @@ public class HappinessFragment extends Fragment {
             load(currentType);
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MainActivity)getActivity()).manageBottomBar(true);
+    }
+
     public class HappinessWebViewClient extends android.webkit.WebViewClient{
 
         @Override
@@ -166,7 +177,7 @@ public class HappinessFragment extends Fragment {
         Header header = new Header();
         header.setTimeStamp(timeStamp);
         header.setServiceProvider(serviceProvider);
-        header.setThemeColor("#b71e3e");
+        header.setThemeColor("#a31533");
         // Set MicroApp details
         if (type == TYPE.WITH_MICROAPP) {
             header.setMicroApp("Kharetati");

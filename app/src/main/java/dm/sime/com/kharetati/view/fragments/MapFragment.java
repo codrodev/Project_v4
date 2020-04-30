@@ -59,6 +59,7 @@ import com.esri.arcgisruntime.layers.ArcGISMapImageSublayer;
 import com.esri.arcgisruntime.layers.ArcGISSublayer;
 import com.esri.arcgisruntime.loadable.LoadStatus;
 import com.esri.arcgisruntime.mapping.ArcGISMap;
+import com.esri.arcgisruntime.mapping.Basemap;
 import com.esri.arcgisruntime.mapping.Viewpoint;
 import com.esri.arcgisruntime.mapping.view.DefaultMapViewOnTouchListener;
 import com.esri.arcgisruntime.mapping.view.Graphic;
@@ -154,6 +155,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
     private String parcelId;
     private String lastSelectedWebFunction;
     private Tracker mTracker;
+    private LayerDefinition retriveLayer;
 
 
     public MapFragment() {
@@ -342,7 +344,8 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             //fromBookmarks(parcelId);
         }
         else{
-            binding.txtPlotNo.setText(Global.mapSearchResult.getService_response().getParcelId());
+            //binding.txtPlotNo.setText(Global.mapSearchResult.getService_response().getParcelId());
+            binding.txtPlotNo.setText("");
             onStarted();
         }
 
@@ -370,6 +373,8 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         binding.txtPlotNo.setEms(10);
         binding.txtPlotNo.setOnEditorActionListener(this);
 
+
+
         //ArcGISMap map = new ArcGISMap(Global.mapSearchResult.getService_response().getMap().getDetails().getServiceUrl());
         ArcGISMap map = new ArcGISMap();
         mapView.setMap(map);
@@ -382,7 +387,9 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
 
         if(!Global.isBookmarks)
         {
+
             dynamicLayer = new ArcGISMapImageLayer(Global.mapSearchResult.getService_response().getMap().getDetails().getServiceUrl());
+            if(retriveLayer!=null)retriveLayer =null;
             Credential credential = new UserCredential(Global.mapSearchResult.getService_response().getMap().getDetails().getServiceTokenUserName(),
                     Global.mapSearchResult.getService_response().getMap().getDetails().getServiceTokenPassword());
             dynamicLayer.setCredential(credential);
@@ -397,7 +404,29 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                     ArcGISMapServiceInfo mapServiceInfo = dynamicLayer.getMapServiceInfo();
                     //only show dimensions for this plot
 
-                    LayerDefinition retriveLayer = getLayerDefination(Global.mapSearchResult.getService_response().getMap().getDetails().getSearch().getLayerId());
+                    LayerDefinition retriveLayer = getLayerDefination(Global.mapSearchResult.getService_response().getMap().getDetails().getId());
+
+                    List<ArcGISSublayer> layers=dynamicLayer.getSublayers();
+                    for(int i=0;i<layers.size();i++){
+
+                        for(int j= 0; j < Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().size(); j++){
+                            if(layers.get(i).getId()==Integer.parseInt(Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(j).getId())){
+
+                                if(Boolean.parseBoolean(Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(j).getShow())){
+                                    //retriveLayer = Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(j) ;
+                                    ((ArcGISMapImageSublayer)layers.get(i)).setDefinitionExpression(Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(j).getQueryClause());
+
+                                }
+                                else
+                                    layers.get(i).setVisible(false);
+                                
+                            }
+                        }
+                    }
+
+
+//                    LayerDefinition retriveLayer = getLayerDefination();
+
 
                     ArcGISMapImageSublayer sublayer = (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(retriveLayer.getId()));
                     sublayer.setDefinitionExpression(retriveLayer.getQueryClause());
@@ -438,6 +467,24 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                     //only show dimensions for this plot
 
                     //LayerDefinition retriveLayer = getLayerDefination(Global.mapSearchResult.getService_response().getMap().getDetails().getSearch().getLayerId());
+
+                    List<ArcGISSublayer> layers=dynamicLayer.getSublayers();
+                    for(int i=0;i<layers.size();i++){
+
+                        for(int j= 0; j < Global.mapHiddenLayers.length; j++){
+                            if(layers.get(i).getId()==Long.parseLong(Global.mapHiddenLayers[j])){
+
+                                /*if(Boolean.parseBoolean(Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(j).getShow())){
+                                    //retriveLayer = Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(j) ;
+                                    ((ArcGISMapImageSublayer)layers.get(i)).setDefinitionExpression(Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(j).getQueryClause());
+
+                                }
+                                else*/
+                                    layers.get(i).setVisible(false);
+
+                            }
+                        }
+                    }
 
                     ArcGISMapImageSublayer sublayer = (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(2);
                     sublayer.setDefinitionExpression("PARCEL_ID ='" + parcelId + "'");
@@ -485,6 +532,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                                 ArcGISSublayer ortho = getOrthoLayer();
                                 ortho.setVisible(true);
                                 mapView.setViewpointScaleAsync(ortho.getMaxScale() + 1);
+
                             }
                         } else {
                             //((ImageView) view).setImageAlpha(50);
@@ -1049,7 +1097,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         List<ArcGISSublayer> layers=dynamicLayer.getSublayers();
         for(int i=0;i<layers.size();i++){
             ArcGISSublayer layer=layers.get(i);
-            if(layer.getId()==6)
+            if(layer.getName().equals("Imagery"))
                 return layer;
         }
 
@@ -1184,8 +1232,19 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
     private LayerDefinition getLayerDefination(String id){
         for(int i = 0; i < Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().size(); i++){
             if(id.equals(Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(i).getId())){
-                return Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(i);
+                    return Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(i);
+
             }
+        }
+        return null;
+    }
+    private LayerDefinition getLayerDefination(){
+        for(int i = 0; i < Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().size(); i++){
+                    if(Boolean.parseBoolean(Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(i).getShow())){
+                        return Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(i);}
+                    else
+                        dynamicLayer.getSublayers().get(i).setVisible(false);
+
         }
         return null;
     }
@@ -1322,12 +1381,36 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
 
     public void findParcel(){
 
+
+
         if(PlotDetails.currentState.graphic!=null){
             graphicsLayer.getGraphics().remove(PlotDetails.currentState.graphic);
             graphicsLayer.getGraphics().remove(PlotDetails.currentState.textLabel);
         }
 
+        List<ArcGISSublayer> layers=dynamicLayer.getSublayers();
+
+        for(int i=0;i<layers.size();i++){
+           if(((ArcGISMapImageSublayer)layers.get(i)).getDefinitionExpression()!=null)
+               ((ArcGISMapImageSublayer)layers.get(i)).setDefinitionExpression("");
+
+            for(int j= 0; j < Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().size(); j++){
+                if(layers.get(i).getId()==Integer.parseInt(Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(j).getId())){
+
+                    if(Boolean.parseBoolean(Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(j).getShow())){
+                        retriveLayer = Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(j) ;
+                        ((ArcGISMapImageSublayer)layers.get(i)).setDefinitionExpression(Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(j).getQueryClause());
+                        //retriveLayer.setQueryClause(Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(j).getQueryClause());
+                    }
+                    else
+                        layers.get(i).setVisible(false);
+
+                }
+            }
+        }
+
         LayerDefinition retriveLayer = getLayerDefination(Global.mapSearchResult.getService_response().getMap().getDetails().getSearch().getLayerId());
+//        LayerDefinition retriveLayer = getLayerDefination();
 
         if(retriveLayer != null){
             HashMap<Integer, String> layerDefs = new HashMap<Integer, String>();
@@ -1337,6 +1420,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
 
         if(dynamicLayer.getSublayers().size()>0){
             ArcGISMapImageSublayer sublayerComm= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(retriveLayer.getId()));
+            sublayerComm.setDefinitionExpression("");
             sublayerComm.setDefinitionExpression(retriveLayer.getQueryClause());
 
             ArcGISMapImageSublayer sublayer= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(retriveLayer.getId()));

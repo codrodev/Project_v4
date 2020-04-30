@@ -3,6 +3,7 @@ package dm.sime.com.kharetati.view.fragments;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -105,6 +106,21 @@ public class FeedbackFragment extends Fragment {
                 binding.phone.setText(user.getMobile());
             }
         }
+
+        binding.desc.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (v.getId() == R.id.desc) {
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                        case MotionEvent.ACTION_UP:
+                            v.getParent().requestDisallowInterceptTouchEvent(false);
+                            break;
+                    }
+                }
+                return false;
+            }
+        });
 
         binding.btnSubmitFeedback.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -20,8 +20,10 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -49,6 +51,7 @@ public class MyMapViewModel extends ViewModel {
     private static String currentRequestedSitePlanIdForViewing;
     MyMapAdapter adapter;
     RetrieveMyMapResponse model;
+    public List<MyMapResults> lstMyMap = new ArrayList<>();
     MutableLiveData<List<MyMapResults>> mutableMyMap = new MutableLiveData<>();
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private MyApiService apiService;
@@ -90,13 +93,20 @@ public class MyMapViewModel extends ViewModel {
     }
 
     public void  setMyMapAdapter(List<MyMapResults> lstMyMap) {
-        this.adapter.setMyMap(lstMyMap);
+        this.lstMyMap =  lstMyMap;
+        this.adapter.setMyMap(this.lstMyMap);
         this.adapter.notifyDataSetChanged();
+
+
 
     }
 
     public MyMapAdapter getMyMapAdapter() {
         return adapter;
+    }
+    public void clearData(){
+        getMutableMyMap().getValue().clear();
+        lstMyMap.clear();
     }
 
 
@@ -154,9 +164,9 @@ public class MyMapViewModel extends ViewModel {
     private void getSitePlans(RetrieveMyMapResponse retrieveMyMapResponse, Context context) {
         if(retrieveMyMapResponse.getMyMapResults() != null && retrieveMyMapResponse.getMyMapResults().length > 0) {
             mutableMyMap = new MutableLiveData<>();
-            mutableMyMap.setValue(Arrays.asList(retrieveMyMapResponse.getMyMapResults()));
+            mutableMyMap.setValue(new ArrayList<>(Arrays.asList(retrieveMyMapResponse.getMyMapResults())));
             adapter = new MyMapAdapter(R.layout.adapter_mymap, this, context);
-            setMyMapAdapter(Arrays.asList(retrieveMyMapResponse.getMyMapResults()));
+            setMyMapAdapter(new ArrayList<>(Arrays.asList(retrieveMyMapResponse.getMyMapResults())));
             myMapNavigator.onSuccess();
         } else if(retrieveMyMapResponse.getMyMapResults() == null || retrieveMyMapResponse.getMyMapResults().length == 0){
             myMapNavigator.onEmpty(Global.CURRENT_LOCALE.equals("en")? Global.appMsg.getMymaps_not_found_en():Global.appMsg.getMymaps_not_found_ar());

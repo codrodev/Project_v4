@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.Spannable;
@@ -68,6 +69,7 @@ import dm.sime.com.kharetati.datas.models.MyMapResults;
 import dm.sime.com.kharetati.datas.models.User;
 import dm.sime.com.kharetati.view.activities.LoginActivity;
 import dm.sime.com.kharetati.view.activities.MainActivity;
+import dm.sime.com.kharetati.view.customview.CleanableEditText;
 import dm.sime.com.kharetati.view.navigators.AuthListener;
 import retrofit2.http.Url;
 
@@ -151,6 +153,8 @@ public class Global {
     public static int selectedTab;
     public static boolean isValidMakani;
     public static boolean isMakni;
+    public static String HelpUrl;
+    public static String appId;
     private static Context context;
     public static boolean isLanguageChanged = false;
     public static String noctemplateUrl;
@@ -183,6 +187,7 @@ public class Global {
     public static boolean isLandRegMessageDisplayed = false;
     public static boolean isFromDelivery = false;
     public static Docs[] docArr;
+    public static String[] mapHiddenLayers;
     public static String paymentStatus;
     public static String tempStatus;
     public static float height;
@@ -321,10 +326,16 @@ public class Global {
     }
 
     public static void hideSoftKeyboard(Activity activity) {
-        if (activity.getCurrentFocus() != null) {
+
+
+            View view = activity.getCurrentFocus();
+            //If no view currently has focus, create a new one, just so we can grab a window token from it
+            if (view == null) {
+                view = new View(activity);
+            }
             InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
-        }
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
     }
 
     public static void showSoftKeyboard(View view, Activity activity) {
@@ -498,9 +509,11 @@ public class Global {
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
-
+    public static void clenEditText(EditText editText, Context context){
+        editText= new CleanableEditText(context);
+    }
     public static void enableClearTextInEditBox(final EditText editText, Context context) {
-        final Drawable x_editTextUserName = ContextCompat.getDrawable(context, R.drawable.clear_text_24x24);
+        final Drawable x_editTextUserName = ContextCompat.getDrawable(context, R.drawable.ic_cancel);
         x_editTextUserName.setBounds(-5, 0, x_editTextUserName.getIntrinsicWidth() - 5, x_editTextUserName.getIntrinsicHeight());
 
 
@@ -512,7 +525,15 @@ public class Global {
                 final int DRAWABLE_RIGHT = 2;
                 final int DRAWABLE_BOTTOM = 3;
 
-
+                x_editTextUserName.setVisible(editText.getText().length() != 0, true);
+                /*if (editText.getText().length() != 0){
+                    if(CURRENT_LOCALE.equals("en"))
+                        editText.setCompoundDrawables(null, null, x_editTextUserName, null);
+                    else
+                        editText.setCompoundDrawables(x_editTextUserName, null,null , null);
+                }
+                else
+                    editText.setCompoundDrawables(null, null, null, null);*/
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     if (editText.getCompoundDrawables()[DRAWABLE_RIGHT] != null && event.getRawX() >= (editText.getRight() - editText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
                         editText.setText("");
@@ -707,15 +728,15 @@ public class Global {
         Global.requestId = null;
         Global.isBookmarks = false;
         isLanguageChanged =true;
-        Global.alertDialog = null;
+        //Global.alertDialog = null;
         Global.isDeliveryByCourier= false;
         Global.isLogout =true;
         Global.selectedTab =0;
-        /*if(Global.alertDialog!=null){
+        if(Global.alertDialog!=null){
             Global.alertDialog.cancel();
             Global.alertDialog = null;
 
-        }*/
+        }
 //        AttachmentFragment.isDeliveryDetails=false;
 
         /*//Global.loginDetails.showFormPrefilledOnRememberMe=true;
@@ -849,7 +870,9 @@ public class Global {
     }
 
 
-
-
+    public static void hideSoftKeyboard(Activity activity,IBinder view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view, 0);
+    }
 }
 

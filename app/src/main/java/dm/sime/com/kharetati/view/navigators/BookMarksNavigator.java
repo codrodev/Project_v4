@@ -18,4 +18,5 @@ public interface BookMarksNavigator {
    public void removeData(Bookmark data);
 
    public void updateAdapter();
+   public void sortBookmarks(boolean descending);
 }

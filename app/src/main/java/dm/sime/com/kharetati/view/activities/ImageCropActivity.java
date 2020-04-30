@@ -3,6 +3,7 @@ package dm.sime.com.kharetati.view.activities;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -45,6 +46,9 @@ import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.view.fragments.AttachmentFragment;
 
+import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
+import static dm.sime.com.kharetati.utility.Global.MYPREFERENCES;
+import static dm.sime.com.kharetati.utility.constants.AppConstants.USER_LANGUAGE;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_BOOKMARK;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_IMAGE_CROP;
 
@@ -70,13 +74,19 @@ public class ImageCropActivity extends AppCompatActivity {
     private File path;
     private ProgressDialog progressDialog;
     private Tracker mTracker;
+    private SharedPreferences sharedpreferences;
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            super.attachBaseContext(CustomContextWrapper.wrap(newBase, Global.CURRENT_LOCALE));
-        }
-        else {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            sharedpreferences = newBase.getSharedPreferences(MYPREFERENCES, Context.MODE_PRIVATE);
+            String locale = sharedpreferences.getString(USER_LANGUAGE, "defaultStringIfNothingFound");
+            if(!locale.equals("defaultStringIfNothingFound"))
+                CURRENT_LOCALE =locale;
+            else
+                CURRENT_LOCALE ="en";
+            super.attachBaseContext(CustomContextWrapper.wrap(newBase, CURRENT_LOCALE));
+        } else {
             super.attachBaseContext(newBase);
         }
     }

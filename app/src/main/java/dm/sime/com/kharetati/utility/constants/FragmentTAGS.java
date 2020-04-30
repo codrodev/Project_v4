@@ -27,4 +27,5 @@ public class FragmentTAGS {
     public static final String FR_VIEW = "VIEW_IMAGE_SCREEN";
     public static final String FR_IMAGE_CROP = "IMAGE_CROP_SCREEN";
     public static final String FR_BOTTOMSHEET_WEBVIEW ="BOTTOMSHEET_WEBVIEW_SCREEN" ;
+    public static final String FR_SEARCH_SITEPLAN = "SEARCH_SITEPLAN_SCREEN" ;
 }

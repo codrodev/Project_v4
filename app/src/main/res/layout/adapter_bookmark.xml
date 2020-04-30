@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="position"
@@ -8,10 +9,256 @@
             name="adapterBookmarkVM"
             type="dm.sime.com.kharetati.view.viewModels.BookmarkViewModel" />
     </data>
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:elevation="5dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:cardCornerRadius="10dp"
+        android:layout_margin="5dp">
+        <LinearLayout
+            android:orientation="vertical" android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="3dp"
+            android:id="@+id/rowBookmark"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.00"
+                android:paddingHorizontal="10dp"
+
+
+                android:background="#efeeee"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="5dp"
+
+                        style="@style/font_small_bold"
+                        android:text="@string/plot_no"/>
+                    <TextView
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/font_small_bold"
+                        android:id="@+id/plotNo"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_marginVertical="5dp"
+                        android:text='@{adapterBookmarkVM.getCurrentBookmark(position).ParcelNumber ?? ""}'/>
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1"
+                android:orientation="horizontal"
+                android:background="#fcfcfc">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.30">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="10dp"
+                        android:layout_marginTop="8dp"
+                        >
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/area"
+                            android:textSize="14sp"
+                            android:textAlignment="viewStart"
+                            android:fontFamily="@font/dubai_font"
+                            android:layout_marginStart="5dp"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/dubai_font"
+                            android:singleLine="true"
+                            android:layout_marginStart="5dp"
+                            android:text='@{adapterBookmarkVM.getCurrentBookmark(position).Area ??  ""}'
+                            android:textAlignment="viewStart"
+                            /></LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="10dp"
+                        android:layout_marginTop="8dp"
+                        >
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/LBL_DATE_TIME"
+
+                            android:textSize="14sp"
+                            android:textAlignment="viewStart"
+                            android:fontFamily="@font/dubai_font"
+                            android:layout_marginStart="5dp"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:textSize="14sp"
+                            android:id="@+id/dateBookmark"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="@font/dubai_font"
+                            android:layout_height="wrap_content"
+                            android:text=""/>
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/txtDescriptionEn"
+                        android:fontFamily="@font/dubai_font"
+                        android:textSize="14sp"
+                        android:text="desc"
+                        android:layout_marginStart="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"/>
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp"
+
+                    android:layout_weight=".70">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5"
+                            android:id="@+id/gotomap"
+                            android:background="#629f13">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight=".5"
+                                android:layout_margin="2.5dp"
+                                android:fontFamily="@font/dubai_font"
+                                android:padding="5dp"
+                                android:id="@+id/view"
+                                android:src="@drawable/map"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5"
+                            android:id="@+id/gotomakani"
+                            android:layout_marginStart="2dp"
+                            android:background="#dfdfdf">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/makani"
+                                android:fontFamily="@font/dubai_font"
+                                android:padding="5dp"
+                                android:layout_margin="2.5dp"
+                                />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="2dp"
+                        android:weightSum="1">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5"
+                            android:id="@+id/edit"
+                            android:background="#13809f">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight=".5"
+                                android:layout_margin="2.5dp"
+                                android:fontFamily="@font/dubai_font"
+                                android:padding="5dp"
+                                android:src="@drawable/edit"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5"
+                            android:id="@+id/delete"
+                            android:layout_marginStart="2dp"
+                            android:background="#d90707">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/delete"
+                                android:fontFamily="@font/dubai_font"
+                                android:padding="5dp"
+                                android:layout_margin="2.5dp"
+                                />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+
+                        android:textColor="@color/white"
+                        android:drawableStart="@drawable/paymentcards"
+                        android:textAllCaps="false"
+                        android:drawablePadding="8dp"
+                        android:layout_marginTop="2dp"
+                        android:textAlignment="viewStart"
+                        android:paddingStart="16dp"
+                        android:visibility="gone"
+
+
+                        android:fontFamily="@font/dubai_font"
+                        android:id="@+id/siteplan_payButton"
+                        android:background="#13a09a"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/rowBookmark"
+        android:background="#fcfcfc">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,47 +269,74 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+
                 android:gravity="center_vertical"
                 android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_margin="5dp"
+                    >
+
                     <TextView
-                        style="@style/font_medium_bold"
+                        style="@style/font_small_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/dubai_font"
+                        android:text="@string/plot_no"
+                        />
+                    <TextView
+                        android:textSize="14sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:textFontWeight="1000"
-                        android:text="@string/plot_no"/>
-                    <TextView
-                        style="@style/font_medium_bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/dubai_font"
                         android:text='@{adapterBookmarkVM.getCurrentBookmark(position).ParcelNumber ?? ""}'/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
+                    android:layout_margin="5dp"
 
                     android:orientation="horizontal">
                 <TextView
-                    style="@style/font_medium_bold"
                     android:layout_width="wrap_content"
-                    android:textStyle="bold"
-                    android:textFontWeight="1000"
+                    style="@style/font_small_bold"
+                    android:fontFamily="@font/dubai_font"
                     android:layout_height="wrap_content"
                     android:text="@string/area"/>
                 <TextView
-                    style="@style/font_medium_regular"
                     android:layout_width="wrap_content"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/dubai_font"
                     android:layout_height="wrap_content"
                     android:text='@{adapterBookmarkVM.getCurrentBookmark(position).Area ??  ""}'/>
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+
+                    android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    style="@style/font_small_bold"
+                    android:fontFamily="@font/dubai_font"
+                    android:layout_height="wrap_content"
+                    android:text="@string/LBL_DATE_TIME"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="14sp"
+                    android:id="@+id/dateBookmark"
+                    android:fontFamily="@font/dubai_font"
+                    android:layout_height="wrap_content"
+                    android:text=""/>
+                </LinearLayout>
                 <TextView
                     android:id="@+id/txtDescriptionEn"
-                    style="@style/font_medium_regular"
+                    android:fontFamily="@font/dubai_font"
+                    android:textSize="14sp"
+                    android:layout_marginStart="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"/>
@@ -71,32 +345,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+
                 android:orientation="horizontal"
-                android:weightSum="3">
+                android:weightSum="4">
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:id="@+id/gotomap"
                     android:src="@drawable/gotomap"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"/>
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:id="@+id/edit"
                     android:src="@drawable/ic_edit_24dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"/>
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:id="@+id/delete"
                     android:src="@drawable/delete"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"/>
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:id="@+id/gotomakani"
                     android:src="@drawable/makani"
                     android:layout_gravity="center_vertical"
@@ -109,5 +384,5 @@
             android:layout_marginVertical="2dp"
             android:layout_marginHorizontal="5dp"
             android:background="@color/common_google_signin_btn_text_light_default"/>
-    </LinearLayout>
+    </LinearLayout>-->
 </layout>
