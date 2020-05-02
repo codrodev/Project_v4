@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     private MyCountDownTimer countDownTimer;
     private SharedPreferences sharedpreferences;
     private Tracker mTracker;
+    public static onPermissionResult listner;
 
     public static Intent newIntent(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -214,6 +216,32 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         openHomePage();
         initializeActivity();
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == AppConstants.REQUEST_READ_EXTERNAL_STORAGE) {
+            if (listner != null) {
+                if (permissions != null && permissions.length > 0 && grantResults != null && grantResults.length > 0) {
+                    if(isPermissionGranted(permissions, grantResults)){
+                        listner.OnPermissionAccepted();
+                    }
+                }
+            }
+        }
+
+    }
+
+    private boolean isPermissionGranted(String[] permissions, int[] grantResults){
+        boolean isGranted = true;
+        for (int i =0 ; i < grantResults.length; i++){
+            if(grantResults[i] != PackageManager.PERMISSION_GRANTED){
+                isGranted = false;
+                break;
+            }
+        }
+        return isGranted;
     }
 
     private void initializeActivity(){
@@ -698,5 +726,9 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             //Toast.makeText(MainActivity.this, "seconds remaining: " + millisUntilFinished / 1000, Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    public interface onPermissionResult{
+        void OnPermissionAccepted();
     }
 }

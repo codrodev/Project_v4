@@ -128,7 +128,7 @@ import static dm.sime.com.kharetati.utility.Global.licenseData;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_ATTACHMENT;
 
 
-public class AttachmentFragment extends Fragment implements AttachmentNavigator, CameraPermissionInterface {
+public class AttachmentFragment extends Fragment implements AttachmentNavigator, CameraPermissionInterface, MainActivity.onPermissionResult {
 
     private static final String TAG = "AttachmentFragment";
     public static String paymentUrl;
@@ -239,7 +239,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void initializePage() {
-
+        MainActivity.listner = this;
         clearAttachments();
         if(!DeliveryFragment.isDeliveryFragment)
         ParentSiteplanViewModel.getDownloadedDoc().clear();
@@ -686,6 +686,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
 
     }
+
 
 
 
@@ -1627,6 +1628,30 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    public void OnPermissionAccepted() {
+        //System.console().printf("permission");
+        if (Global.docArr != null && Global.docArr.length > 0) {
+            if(ParentSiteplanViewModel.getDownloadedDoc() == null || ParentSiteplanViewModel.getDownloadedDoc().size() == 0){
+                if (Global.isPerson && Global.rbIsOwner  ) {
+                    //if (!getBitmapFromView(binding.imgPassport) || !getBitmapFromView(binding.imgVisaPassport))
+                    downloadDocs(Global.docArr);
+                }
+                else if(Global.isPerson && !Global.rbIsOwner ){
+                    //if(!getBitmapFromView(binding.imgPassport) || !getBitmapFromView(binding.imgVisaPassport) ||!getBitmapFromView(binding.imgLetterFromOwner))
+                    downloadDocs(Global.docArr);
+                }
+                else if(!Global.isPerson && !Global.rbIsOwner ){
+                    //if(!getBitmapFromView(binding.imgCompanyLicense) ||!getBitmapFromView(binding.imgLetterFromOwner))
+                    downloadDocs(Global.docArr);
+                }
+            }
+        }
+        else
+            imageAlignment();
+    }
+
 
     public static class DownloadFile extends AsyncTask<String, Void, Void> {
 
@@ -1726,48 +1751,14 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         }
         return 0;
     }
+
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case AppConstants.REQUEST_READ_EXTERNAL_STORAGE: {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-                    // permission was granted, yay! do the
-                    // calendar task you need to do.
-                    if (Global.docArr != null && Global.docArr.length > 0)
-                    {
-                        if(ParentSiteplanViewModel.getDownloadedDoc() == null || ParentSiteplanViewModel.getDownloadedDoc().size() == 0)
-                        {
-                            if (Global.isPerson && Global.rbIsOwner && Global.docArr.length<=2 ) {
-                                if (!getBitmapFromView(binding.imgPassport) || !getBitmapFromView(binding.imgVisaPassport))
-                                    downloadDocs(Global.docArr);
-                            }
-                            else if(Global.isPerson && !Global.rbIsOwner && Global.docArr.length<=3 ){
-                                if(!getBitmapFromView(binding.imgPassport) || !getBitmapFromView(binding.imgVisaPassport) ||!getBitmapFromView(binding.imgLetterFromOwner))
-                                    downloadDocs(Global.docArr);
-                            }
-                            else if(!Global.isPerson && !Global.rbIsOwner && Global.docArr.length<=2 ){
-                                if(!getBitmapFromView(binding.imgCompanyLicense) ||!getBitmapFromView(binding.imgLetterFromOwner))
-                                    downloadDocs(Global.docArr);
-                            }
-                        }
-                    }
-                    else
-                        imageAlignment();
-
-                } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                }
-                return;
-            }
-
-            // other 'switch' lines to check for other
-            // permissions this app might request
-        }
     }
 
     @Override
@@ -1950,6 +1941,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
         }
     }
+
 
     private void AddDoc(String key, String path, String name, String format, int docID){
         boolean isAdded = false;
@@ -2398,6 +2390,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
             }
         }
     }
+
     private void populateLstDoc(){
         if(ParentSiteplanViewModel.getDownloadedDoc() != null && ParentSiteplanViewModel.getDownloadedDoc().size() > 0) {
             for (int i = 0; i < ParentSiteplanViewModel.getDownloadedDoc().size(); i++) {
@@ -2468,6 +2461,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
             binding.nocView.setAlpha(1f);
         }
     }
+
     private void ActivateViewAndChange(String key){
         if(key != null){
             if(key.equals(COMPANY_LICENCE)){
