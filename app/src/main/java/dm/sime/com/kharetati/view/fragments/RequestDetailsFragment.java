@@ -168,7 +168,8 @@ public class RequestDetailsFragment extends Fragment {
 
                             }
                         }*/
-                    ((MainActivity)getActivity()).clearStack(FragmentTAGS.FR_DASHBOARD,1);
+                    //((MainActivity)getActivity()).clearStack(FragmentTAGS.FR_DASHBOARD,1);
+                    ((MainActivity)getActivity()).onBackPressed();
                 }
                 else if(fragment.getTag().compareToIgnoreCase(FragmentTAGS.FR_REQUEST_DETAILS)==0){
                     ((MainActivity)getActivity()).clearStack(FragmentTAGS.FR_HOME,3);
