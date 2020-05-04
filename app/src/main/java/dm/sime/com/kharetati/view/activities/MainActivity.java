@@ -504,8 +504,9 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 }
 
             }
-            if(Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW))
-                onWebViewBack();
+            /*if(Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW)){
+                //onWebViewBack();
+                }*/
             else{
                 Fragment fragmentBeforeBackPress = getCurrentFragment();
                 // Perform the usual back action

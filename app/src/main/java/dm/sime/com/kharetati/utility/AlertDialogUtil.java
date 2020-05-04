@@ -85,7 +85,15 @@ public class AlertDialogUtil {
         AlertDialog alertDialog = new AlertDialog.Builder(context)
                 .setMessage(message)
                 .setCancelable(false)
-                .setPositiveButton(btnTxt, new DialogInterface.OnClickListener() {
+                .setPositiveButton(btnTxt2, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.cancel();
+
+                    }
+                })
+                .setNegativeButton(btnTxt, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent();
@@ -98,13 +106,6 @@ public class AlertDialogUtil {
                         }
                         context.startActivity(intent);
 
-
-                    }
-                })
-                .setNegativeButton(btnTxt2, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
                     }
                 }).show();
 
@@ -153,16 +154,23 @@ public class AlertDialogUtil {
         textView.setPadding(80, 25, 25, 10);
 
     }
-    public static void callAlert(String message, String btnTxt, String btnTxt2, final Context context) {
+    public static void callAlert(String message, String btnTxt2, String btnTxt, final Context context) {
 
 
         AlertDialog alertDialog = new AlertDialog.Builder(context)
                 .setMessage(message)
                 .setCancelable(false)
-                .setPositiveButton(btnTxt, new DialogInterface.OnClickListener() {
+                .setPositiveButton(btnTxt2, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
 
+
+                    }
+
+                }).setNegativeButton(btnTxt, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(Intent.ACTION_CALL);
                         intent.setData(Uri.parse("tel:" + DM_PHONE_NUMBER));
                         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
@@ -176,13 +184,6 @@ public class AlertDialogUtil {
                             return;
                         }
                         context.startActivity(intent);
-
-                    }
-
-                }).setNegativeButton(btnTxt2, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
                     }
                 }).show();
 
@@ -201,24 +202,25 @@ public class AlertDialogUtil {
 
         textView.setPadding(80, 25, 25, 10);
 
-    }public static void logoutAlert(String message, String btnTxt, String btnTxt2, final Context context) {
+    }public static void logoutAlert(String message, String btnTxt2, String btnTxt, final Context context) {
 
 
         AlertDialog alertDialog = new AlertDialog.Builder(context)
                 .setMessage(message)
                 .setCancelable(false)
-                .setPositiveButton(btnTxt, new DialogInterface.OnClickListener() {
+                .setPositiveButton(btnTxt2, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                       Global.logout(context);
+                        dialog.cancel();
 
                     }
 
-                }).setNegativeButton(btnTxt2, new DialogInterface.OnClickListener() {
+                }).setNegativeButton(btnTxt, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
+
+                        Global.logout(context);
                     }
                 }).show();
 

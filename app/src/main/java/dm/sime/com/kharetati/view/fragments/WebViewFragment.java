@@ -49,7 +49,7 @@ import dm.sime.com.kharetati.view.viewModels.PayViewModel;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_BOOKMARK;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_WEBVIEW;
 
-public class WebViewFragment extends Fragment {
+public class  WebViewFragment extends Fragment {
 
     private static String URL = "url";
     private static String APP_NAME = "app_name";
