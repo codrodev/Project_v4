@@ -154,7 +154,7 @@ public class AlertDialogUtil {
         textView.setPadding(80, 25, 25, 10);
 
     }
-    public static void callAlert(String message, String btnTxt2, String btnTxt, final Context context) {
+    public static void callAlert(String message, String btnTxt, String btnTxt2, final Context context) {
 
 
         AlertDialog alertDialog = new AlertDialog.Builder(context)
@@ -202,7 +202,7 @@ public class AlertDialogUtil {
 
         textView.setPadding(80, 25, 25, 10);
 
-    }public static void logoutAlert(String message, String btnTxt2, String btnTxt, final Context context) {
+    }public static void logoutAlert(String message, String btnTxt, String btnTxt2, final Context context) {
 
 
         AlertDialog alertDialog = new AlertDialog.Builder(context)
@@ -257,10 +257,10 @@ public class AlertDialogUtil {
         final AlertDialog alertDialog = new AlertDialog.Builder(context)
                 .setMessage(message)
                 .setCancelable(false)
-                .setPositiveButton(btnTxt, new DialogInterface.OnClickListener() {
+                .setPositiveButton(btnTxt2, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        dialog.cancel();
                         /*AlertDialog.Builder alert = new AlertDialog.Builder(context);
                         alert.setMessage(context.getResources().getString(R.string.please_enter_phone));
 
@@ -268,6 +268,12 @@ public class AlertDialogUtil {
 
 */
 
+
+                    }
+
+                }).setNegativeButton(btnTxt, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
                         String chatURL="";
                         if (Global.CURRENT_LOCALE=="ar") {
                             chatURL = DM_CHAT_URL_AR;
@@ -289,12 +295,6 @@ public class AlertDialogUtil {
                             }
                         });*/
                         }
-                    }
-
-                }).setNegativeButton(btnTxt2, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
                     }
                 }).setView(input).show();
 
@@ -363,10 +363,17 @@ public class AlertDialogUtil {
         AlertDialog alertDialog = new AlertDialog.Builder(context)
                 .setMessage(message)
                 .setCancelable(false)
-                .setPositiveButton(btnTxt, new DialogInterface.OnClickListener() {
+                .setPositiveButton(btnTxt2, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
+                        dialog.cancel();
+
+                    }
+
+                }).setNegativeButton(btnTxt, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
                         Intent intentOpenBrowser = new Intent(Intent.ACTION_VIEW);
                         //intentOpenBrowser.addCategory(Intent.CATEGORY_BROWSABLE);
@@ -388,12 +395,6 @@ public class AlertDialogUtil {
                             ((MainActivity)context).loadFragment(FR_WEBVIEW,true,al);
                         }
 
-                    }
-
-                }).setNegativeButton(btnTxt2, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
                     }
                 }).show();
 
@@ -418,7 +419,15 @@ public class AlertDialogUtil {
                 .setMessage(message)
                 .setTitle(title)
                 .setCancelable(false)
-                .setPositiveButton(btnTxt, new DialogInterface.OnClickListener() {
+                .setPositiveButton(btnTxt2, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.cancel();
+
+                    }
+                })
+                .setNegativeButton(btnTxt, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -426,13 +435,6 @@ public class AlertDialogUtil {
                             ((Activity) context).onBackPressed();
                         else
                             ((Activity) context).finish();
-
-                    }
-                })
-                .setNegativeButton(btnTxt2, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
                     }
                 }).show();
 
@@ -459,21 +461,22 @@ public class AlertDialogUtil {
                 .setTitle(title)
                 .setMessage(message)
                 .setCancelable(false)
-                .setPositiveButton(btnTxt, new DialogInterface.OnClickListener() {
+                .setPositiveButton(btnTxt2, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //(((MainActivity)context)).getSupportFragmentManager().popBackStackImmediate();
-                        ((MainActivity)context).changeActionBarStatus(true);
-                        (((MainActivity)context)).clearBackStack();
-                        (((MainActivity)context)).getSupportFragmentManager().beginTransaction().remove(new WebViewFragment()).commit();
 
+                        dialog.cancel();
 
                     }
 
-                }).setNegativeButton(btnTxt2, new DialogInterface.OnClickListener() {
+                }).setNegativeButton(btnTxt, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
+
+                        ((MainActivity)context).changeActionBarStatus(true);
+                        (((MainActivity)context)).clearBackStack();
+                        (((MainActivity)context)).getSupportFragmentManager().beginTransaction().remove(new WebViewFragment()).commit();
                     }
                 }).show();
 
@@ -1379,11 +1382,17 @@ public class AlertDialogUtil {
         AlertDialog alertDialog = new AlertDialog.Builder(context)
                 .setMessage(message)
                 .setCancelable(false)
-                .setPositiveButton(btnTxt, new DialogInterface.OnClickListener() {
+                .setPositiveButton(btnTxt2, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
+                        dialog.cancel();
 
+                    }
+
+                }).setNegativeButton(btnTxt, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
                         int permission = ActivityCompat.checkSelfPermission(context, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
                         if (permission != PackageManager.PERMISSION_GRANTED) {
@@ -1395,16 +1404,6 @@ public class AlertDialogUtil {
                             return;
                         }
                         new AttachmentFragment.DownloadFile(context).execute(Global.noctemplateUrl, "NocTemplate.pdf");
-
-
-
-
-                    }
-
-                }).setNegativeButton(btnTxt2, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
                     }
                 }).show();
 
@@ -1431,7 +1430,16 @@ public class AlertDialogUtil {
         AlertDialog alertDialog = new AlertDialog.Builder(context)
                 .setMessage(message)
                 .setCancelable(false)
-                .setPositiveButton(btnTxt, new DialogInterface.OnClickListener() {
+                .setPositiveButton(btnTxt2, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+
+                    }
+
+
+                }).setNegativeButton(btnTxt, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -1440,14 +1448,6 @@ public class AlertDialogUtil {
                         Intent intent = new Intent(context, WebViewActivity.class);
                         intent.setData(Uri.parse(Global.webViewUrl));
                         context.startActivity(intent);
-
-                    }
-
-
-                }).setNegativeButton(btnTxt2, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
 
                     }
                 }).show();
@@ -1474,7 +1474,16 @@ public class AlertDialogUtil {
         AlertDialog alertDialog = new AlertDialog.Builder(context)
                 .setMessage(message)
                 .setCancelable(false)
-                .setPositiveButton(btnTxt, new DialogInterface.OnClickListener() {
+                .setPositiveButton(btnTxt2, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+
+                    }
+
+
+                }).setNegativeButton(btnTxt, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -1483,14 +1492,6 @@ public class AlertDialogUtil {
                         Intent intent = new Intent(context, WebViewActivity.class);
                         intent.setData(Uri.parse(Global.webViewUrl));
                         context.startActivity(intent);
-
-                    }
-
-
-                }).setNegativeButton(btnTxt2, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
 
                     }
                 }).show();
@@ -1560,19 +1561,20 @@ public class AlertDialogUtil {
                 .setTitle(title)
                 .setMessage(message)
                 .setCancelable(false)
-                .setPositiveButton(btnTxt, new DialogInterface.OnClickListener() {
+                .setPositiveButton(btnTxt2, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
 
-                        BookmarkFragment.bmModel.deleteBookMark(data);
+                        dialog.cancel();
 
                     }
 
-                }).setNegativeButton(btnTxt2, new DialogInterface.OnClickListener() {
+                }).setNegativeButton(btnTxt, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
+
+                        BookmarkFragment.bmModel.deleteBookMark(data);
                     }
                 }).show();
 
@@ -1637,16 +1639,16 @@ public class AlertDialogUtil {
         builder.setView(viewInflated);
 
         // Set up the buttons
-        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
+            }
+        });
+        builder.setNegativeButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
             }
         });
 
@@ -1664,7 +1666,7 @@ public class AlertDialogUtil {
         positiveButton.setTypeface(face);
         negativeButton.setTypeface(face);
 
-        positiveButton.setOnClickListener(new View.OnClickListener()
+        negativeButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v) {
