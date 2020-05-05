@@ -526,6 +526,12 @@ public class Global {
                 final int DRAWABLE_BOTTOM = 3;
 
                 x_editTextUserName.setVisible(editText.getText().length() != 0, true);
+                if (editText.getText().length() != 0){
+                    if(CURRENT_LOCALE.equals("en"))
+                        editText.setCompoundDrawables(null, null, x_editTextUserName, null);
+                    else
+                        editText.setCompoundDrawables(x_editTextUserName, null,null , null);
+                }
                 /*if (editText.getText().length() != 0){
                     if(CURRENT_LOCALE.equals("en"))
                         editText.setCompoundDrawables(null, null, x_editTextUserName, null);
@@ -535,9 +541,10 @@ public class Global {
                 else
                     editText.setCompoundDrawables(null, null, null, null);*/
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (editText.getCompoundDrawables()[DRAWABLE_RIGHT] != null && event.getRawX() >= (editText.getRight() - editText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                    if (editText.getCompoundDrawables()[DRAWABLE_RIGHT] != null && event.getRawX() >= ((editText.getRight() - editText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())+50))
+                    {
                         editText.setText("");
-                        if(editText.isCursorVisible())
+                        if (editText.isCursorVisible())
                             editText.setCursorVisible(false);
 
                         return true;
