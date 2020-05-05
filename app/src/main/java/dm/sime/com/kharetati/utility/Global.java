@@ -541,22 +541,27 @@ public class Global {
                 else
                     editText.setCompoundDrawables(null, null, null, null);*/
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (editText.getCompoundDrawables()[DRAWABLE_RIGHT] != null && event.getRawX() >= ((editText.getRight() - editText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())+50))
-                    {
-                        editText.setText("");
-                        if (editText.isCursorVisible())
-                            editText.setCursorVisible(false);
+                    if(CURRENT_LOCALE.equals("en")){
+                        if (editText.getCompoundDrawables()[DRAWABLE_RIGHT] != null && event.getRawX() >= ((editText.getRight() - editText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())+50))
+                        {
+                            editText.setText("");
+                            if (editText.isCursorVisible())
+                                editText.setCursorVisible(false);
 
-                        return true;
+                            return true;
+                        }
+                    } else {
+                        if (editText.getCompoundDrawables()[DRAWABLE_LEFT] != null && event.getRawX() < 300) {
+                           // (editText.getLeft() - editText.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())
+                            editText.setText("");
+                            if(editText.isCursorVisible())
+                                editText.setCursorVisible(false);
+
+                            return true;
+                        }
                     }
-                    if (editText.getCompoundDrawables()[DRAWABLE_LEFT] != null && event.getRawX() >= (editText.getLeft() - editText.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())) {
 
-                        editText.setText("");
-                        if(editText.isCursorVisible())
-                            editText.setCursorVisible(false);
 
-                        return true;
-                    }
                 }
                 if(!editText.isCursorVisible())
                     editText.setCursorVisible(true);
