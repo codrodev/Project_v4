@@ -254,5 +254,14 @@
     <string name="future_to_date">حتى الآن لا يمكن ان يكون تاريخا في المستقبل</string>
     <string name="valid_date">يرجى تحديد تواريخ صالحة</string>
     <string name="enter_plot_or_date">الرجاء إدخال رقم قطعة الارض أو إختر نطاق تاريخ الصلاحية</string>
+    <string name="uaeloginfail">فشل في تسجيل الدخول بالهوية الرقمية، الرجاء المحاولة مرة أخرى</string>
     <string name="refresh">Refresh</string>
+    <string name="title_settings">Settings</string>
+    <string name="language">Language</string>
+    <string name="english">English</string>
+    <string name="arabic">العربية</string>
+    <string name="talkback">Talk Back</string>
+    <string name="fontsize">Font Size</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
 </resources>

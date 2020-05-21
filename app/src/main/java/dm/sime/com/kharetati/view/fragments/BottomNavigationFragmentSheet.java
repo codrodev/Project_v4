@@ -42,14 +42,14 @@ import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_BOTTOMSHEE
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_HOME;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_MYMAP;
 
-public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
+public class BottomNavigationFragmentSheet extends Fragment {
 
     BottomNavigationViewModel model;
     FragmentBottomNavigationBinding binding;
     private View mRootView;
     private static OnActionListener listener;
     private Tracker mTracker;
-    int images[] = {R.drawable.ic_help_black,R.drawable.ic_logout,R.drawable.ic_share,R.drawable.ic_faq,R.drawable.ic_about_us,R.drawable.ic_terms_condition,R.drawable.ic_like,R.drawable.ic_accessibility};
+    int images[] = {R.drawable.ic_help_black,R.drawable.ic_logout,R.drawable.ic_share,R.drawable.ic_faq,R.drawable.ic_about_us,R.drawable.ic_terms_condition,R.drawable.ic_like,R.drawable.ic_accessibility,R.drawable.ic_settings_outline};
     int ids[] = {R.id.imgMoreIcon,R.id.txtMoreName};
     String keys[]= {"one","two"};
 
@@ -81,6 +81,7 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
         mTracker.setScreenName(FR_BOTTOMSHEET);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         binding.setFragmentBottomNavigation(model);
+        ((MainActivity)getActivity()).manageActionBar(false);
        /* BottomSheetBehavior behavior = BottomSheetBehavior.from(binding.bottomSheetMore);
         if(Global.isLandScape)
         behavior.setPeekHeight((int) Global.height);*/
@@ -90,7 +91,7 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
 
 
 
-        String names[] = new String[]{getContext().getResources().getString(R.string.INTROHELP),Global.isUserLoggedIn?getContext().getResources().getString(R.string.logout):getContext().getResources().getString(R.string.login),getContext().getResources().getString(R.string.SHAREKHARETATIAPP),getContext().getResources().getString(R.string.FAQMENU),getContext().getResources().getString(R.string.ABOUTUS),getContext().getResources().getString(R.string.TERMSANDCONDITIONS),getContext().getResources().getString(R.string.RATEUS),getContext().getResources().getString(R.string.ACCESSIBILITY)};
+        String names[] = new String[]{getContext().getResources().getString(R.string.INTROHELP),Global.isUserLoggedIn?getContext().getResources().getString(R.string.logout):getContext().getResources().getString(R.string.login),getContext().getResources().getString(R.string.SHAREKHARETATIAPP),getContext().getResources().getString(R.string.FAQMENU),getContext().getResources().getString(R.string.ABOUTUS),getContext().getResources().getString(R.string.TERMSANDCONDITIONS),getContext().getResources().getString(R.string.RATEUS),getContext().getResources().getString(R.string.ACCESSIBILITY),getContext().getResources().getString(R.string.title_settings)};
 
         /*binding.logoutText.setText(Global.isUserLoggedIn? getActivity().getResources().getText(R.string.logout):getActivity().getResources().getText(R.string.login));
         binding.txtLanguage.setText(Global.CURRENT_LOCALE.equals("en")?"عربى":"English");
@@ -132,6 +133,8 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
                     break;
                     case 7:onAccessibilityClicked();
                     break;
+                    case 8:onSettingsClicked();
+                        break;
                 }
             }
         });
@@ -309,8 +312,13 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
 
         return binding.getRoot();
     }
+
+    private void onSettingsClicked() {
+        ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_SETTINGS,true,null);
+    }
+
     public void onHelpClicked(){
-        dismiss();
+
         ArrayList al = new ArrayList();
 
 
@@ -358,7 +366,7 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
         startActivity(Intent.createChooser(sendIntent, "Share with"));
 
     }
-        dismiss();
+
     }
     public void onFAQClicked(){ ArrayList al = new ArrayList();
 
@@ -366,7 +374,7 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
 
         al.add(HomeFragment.constructUrl(Global.faq_url,getActivity()));
         ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
-        dismiss();
+
 
     }
     public void onAboutUsClicked(){
@@ -381,7 +389,7 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
         al.add(HomeFragment.constructUrl((Global.CURRENT_LOCALE.equals("en")?Global.aboutus_en_url:Global.aboutus_ar_url),getActivity()));
         ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
     }
-        dismiss();
+
 
     }
     public void onTermsAndConditionsClicked(){
@@ -396,7 +404,7 @@ public class BottomNavigationFragmentSheet extends BottomSheetDialogFragment {
         al.add(HomeFragment.constructUrl((Global.CURRENT_LOCALE.equals("en")?Global.terms_en_url:Global.terms_ar_url),getActivity()));
         ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
     }
-        dismiss();
+
 
     }
     public void onRateusClicked(){

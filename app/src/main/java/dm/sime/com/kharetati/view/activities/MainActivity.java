@@ -51,6 +51,7 @@ import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.customview.DataCallback;
 import dm.sime.com.kharetati.view.fragments.FeedbackFragment;
 import dm.sime.com.kharetati.view.fragments.RequestDetailsFragment;
+import dm.sime.com.kharetati.view.fragments.SettingsFragment;
 import dm.sime.com.kharetati.view.fragments.WebViewFragment;
 import dm.sime.com.kharetati.view.fragments.BottomNavigationFragmentSheet;
 import dm.sime.com.kharetati.view.fragments.ContactusFragment;
@@ -155,15 +156,12 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             public Unit invoke(MeowBottomNavigation.Model bottomModel) {
                 // YOUR CODES
                 myBottomModel = bottomModel;
-                if(bottomModel.getId() == 5){
-                    myBottomSheet.show(getSupportFragmentManager(), myBottomSheet.getTag());
 
-                } else {
                     Global.lastSelectedBottomTab = bottomModel.getId();
                     loadFragment(model.bottomNavigationTAG(bottomModel.getId()), true, null);
                     /*if(savedInstanceState=null)
                     savedInstanceState.putInt("loadPosition",myBottomModel.getId());*/
-                }
+
                 return null;
             }
         });
@@ -403,6 +401,9 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             case FragmentTAGS.FR_FEEDBACK:
                 fragment = FeedbackFragment.newInstance();
                 break;
+            case FragmentTAGS.FR_BOTTOMSHEET:
+                fragment = BottomNavigationFragmentSheet.newInstance(this);
+                break;
             case FragmentTAGS.FR_WEBVIEW:
                 String appName = "";
                 if(params!=null) {
@@ -412,6 +413,9 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                     }
                 }
                 fragment = WebViewFragment.newInstance(Global.webViewUrl, appName);
+                break;
+            case FragmentTAGS.FR_SETTINGS:
+                fragment = SettingsFragment.newInstance();
                 break;
             case FragmentTAGS.FR_WEBVIEW_PAYMENT:
                 String appName1 = "";

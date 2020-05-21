@@ -11,6 +11,14 @@ public class UaePassConfig {
     public String UAE_PASS_SCOPE;
     public String UAE_PASS_ACR_VALUES_WEBVIEW;
     public String UAE_PASS_ACR_VALUES_MOBILE;
+    public String auxiliaryServiceUrl;
+    public String getAuxiliaryServiceUrl() {
+        return auxiliaryServiceUrl;
+    }
+
+    public void setAuxiliaryServiceUrl(String auxiliaryServiceUrl) {
+        this.auxiliaryServiceUrl = auxiliaryServiceUrl;
+    }
 
 
     public String getUAE_PASS_SCOPE() {

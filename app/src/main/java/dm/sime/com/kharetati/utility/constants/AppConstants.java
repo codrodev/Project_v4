@@ -33,6 +33,8 @@ public final class AppConstants {
     public static String ESRI_SDK_CLIENTID = "B0C5oLxjWJ9f5sgb";
 
     public static String USER_LANGUAGE = "USER_LANGUAGE";
+    public static String TALK_BACK = "TALK_BACK";
+    public static String FONT_SIZE = "FONT_SIZE";
     public static String USER_OBJECT = "USER";
     public static String EMAIL_HISTORY = "EMAIL_HISTORY";
     public static String USERNAMES_HISTORY = "USERNAMES_HISTORY";

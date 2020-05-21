@@ -56,6 +56,8 @@ public class MainViewModel extends ViewModel {
                 return FragmentTAGS.FR_HOME;
             case 4:
                 return FragmentTAGS.FR_CONTACT_US;
+                case 5:
+                return FragmentTAGS.FR_BOTTOMSHEET;
             default:
                 return "";
         }

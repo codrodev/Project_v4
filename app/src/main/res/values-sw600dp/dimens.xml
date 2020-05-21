@@ -5,4 +5,5 @@
     <dimen name="splash_logo_margin_top" >-186dp</dimen>
     <dimen name="splash_logo_margin_bottom" >36dp</dimen>
     <dimen name="splash_logo_margin_right" >24dp</dimen>
+    <dimen name="settngs_switch_margin" >275dp</dimen>
 </resources>

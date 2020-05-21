@@ -8,8 +8,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/maroon_dark"
+        android:background="@color/maroon_light"
         android:id="@+id/bottomSheetMore"
+        android:layout_marginBottom="-24dp"
         android:orientation="vertical">
         <View
             android:id="@+id/topView"
@@ -18,10 +19,12 @@
             android:layout_centerHorizontal="true"
             android:layout_width="200dp"
             android:layout_height="2dp"
+            android:visibility="gone"
             android:background="@color/white"/>
         <GridView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:numColumns="3"
             android:id="@+id/gridMore"/>
         <!--<RelativeLayout

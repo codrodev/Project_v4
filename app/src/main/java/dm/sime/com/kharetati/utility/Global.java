@@ -155,6 +155,9 @@ public class Global {
     public static boolean isMakni;
     public static String HelpUrl;
     public static String appId;
+    public static boolean isfromWebViewCancel;
+    public static String sessionErrorMsg;
+    public static float fontScale;
     private static Context context;
     public static boolean isLanguageChanged = false;
     public static String noctemplateUrl;

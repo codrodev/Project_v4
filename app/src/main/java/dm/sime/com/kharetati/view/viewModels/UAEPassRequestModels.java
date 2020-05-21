@@ -38,7 +38,7 @@ public class UAEPassRequestModels {
 
     public static UAEPassAccessTokenRequestModel getAuthenticationRequestModel(Context context, String clientID,
                                                                                String secretID, String redirectUrl, String environment,
-                                                                               String UAE_PASS_SCOPE, String UAE_ACR_VALUES_MOBILE, String UAE_ACR_VALUES_WEB) {
+                                                                               String UAE_PASS_SCOPE, String UAE_ACR_VALUES_MOBILE, String UAE_ACR_VALUES_WEB,String locale) {
         final UAEPassAccessTokenRequestModel requestModel = new UAEPassAccessTokenRequestModel();
         if (isPackageInstalled(UAE_PASS_PACKAGE_ID, context.getPackageManager())) {
             requestModel.setAcrValues(UAE_ACR_VALUES_MOBILE);
@@ -51,6 +51,7 @@ public class UAEPassRequestModels {
         requestModel.setRedirectUrl(redirectUrl);
         requestModel.setScope(UAE_PASS_SCOPE);
         requestModel.setResponseType(RESPONSE_TYPE);
+        requestModel.setUiLocale(locale);
         if(environment.equals("PRODUCTION")) {
             requestModel.setEnvironment(Environment.PRODUCTION);
         } else {

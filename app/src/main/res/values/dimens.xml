@@ -29,4 +29,5 @@
   <dimen name="splash_logo_margin_top" >-184dp</dimen>
   <dimen name="splash_logo_margin_bottom" >24dp</dimen>
   <dimen name="splash_logo_margin_right" >16dp</dimen>
+  <dimen name="settngs_switch_margin" >100dp</dimen>
 </resources>

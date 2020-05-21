@@ -67,6 +67,7 @@ import dm.sime.com.kharetati.datas.repositories.UserRepository;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.customview.SwitchCompatEx;
 import dm.sime.com.kharetati.view.navigators.AuthListener;
+import dm.sime.com.kharetati.view.viewModels.UAEPassRequestModels;
 import dm.sime.com.kharetati.view.viewmodelfactories.AuthViewModelFactory;
 
 import dm.sime.com.kharetati.view.viewModels.LoginViewModel;
@@ -938,6 +939,14 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         if(Global.isUAEaccessWeburl && Global.uae_code != null && Global.uae_code.length() > 0){
             //viewModel.getUAESessionToken(Global.uae_access_token);
             viewModel.getUAEAccessToken(Global.uae_code);
+        }
+        if(Global.isfromWebViewCancel && !UAEPassRequestModels.isPackageInstalled(UAEPassRequestModels.UAE_PASS_PACKAGE_ID, getPackageManager())){
+            AlertDialogUtil.errorAlertDialog("",getString(R.string.uaeloginfail),getString(R.string.ok),LoginActivity.this);
+            Global.isfromWebViewCancel=false;
+        }
+        else if(Global.sessionErrorMsg!=null && !UAEPassRequestModels.isPackageInstalled(UAEPassRequestModels.UAE_PASS_PACKAGE_ID, getPackageManager())){
+            AlertDialogUtil.errorAlertDialog("",Global.sessionErrorMsg,getString(R.string.ok),LoginActivity.this);
+            Global.sessionErrorMsg =null;
         }
     }
 

@@ -7,21 +7,33 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.widget.Toast;
 
 import androidx.databinding.Bindable;
 import androidx.lifecycle.ViewModel;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
+import java.util.concurrent.TimeUnit;
 
 import ae.sdg.libraryuaepass.UAEPassAccessTokenCallback;
 import ae.sdg.libraryuaepass.UAEPassController;
@@ -61,8 +73,8 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Response;
 
+import static com.android.volley.Request.Method.POST;
 import static dm.sime.com.kharetati.utility.Global.MYPREFERENCES;
 import static dm.sime.com.kharetati.utility.Global.loginDetails;
 
@@ -659,6 +671,7 @@ public class LoginViewModel extends ViewModel {
         if(configResponse != null){
             authListener.onConfig(configResponse.disableMyId);
             Global.uaePassConfig =  configResponse;
+            AppUrls.BASE_AUXULARY_URL_UAE_SESSION =Global.uaePassConfig.getAuxiliaryServiceUrl();
 
 
             //login();
@@ -670,6 +683,9 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void login() {
+        CookieSyncManager.createInstance(activity);
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.removeAllCookie();
         if (!Global.isConnected(activity)) {
             AlertDialogUtil.showProgressBar(activity,false);
             if(Global.appMsg!=null)
@@ -679,6 +695,7 @@ public class LoginViewModel extends ViewModel {
 
         }
         else {
+
             if (Global.uaePassConfig != null) {
                 Log.v(TAG, "login``(): calling");
                 String clientId = Encryptions.decrypt(Global.uaePassConfig.UAEID_clientid);
@@ -687,17 +704,20 @@ public class LoginViewModel extends ViewModel {
                 Log.v(TAG, "secretId:" + secretId);
                 String callbackUrl = Encryptions.decrypt(Global.uaePassConfig.UAEID_callback_url);
                 Log.v(TAG, "callbackUrl:" + callbackUrl);
-                if (UAEPassRequestModels.isPackageInstalled(UAEPassRequestModels.UAE_PASS_PACKAGE_ID, activity.getPackageManager())) {
+                /*if (UAEPassRequestModels.isPackageInstalled(UAEPassRequestModels.UAE_PASS_PACKAGE_ID, activity.getPackageManager())) {
                     Log.v(TAG, "UAE Pass App: app installed");
                     UAEPassAccessTokenRequestModel requestModel =
                             UAEPassRequestModels.getAuthenticationRequestModel(activity,
                                     clientId, secretId, callbackUrl, Global.uaePassConfig.getUAE_PASS_ENVIRONMENT(),
-                                    Global.uaePassConfig.UAE_PASS_SCOPE, Global.uaePassConfig.UAE_PASS_ACR_VALUES_MOBILE, Global.uaePassConfig.UAE_PASS_ACR_VALUES_WEBVIEW);
+                                    Global.uaePassConfig.UAE_PASS_SCOPE, Global.uaePassConfig.UAE_PASS_ACR_VALUES_MOBILE, Global.uaePassConfig.UAE_PASS_ACR_VALUES_WEBVIEW,Global.CURRENT_LOCALE);
                     UAEPassController.getInstance().getAccessToken(activity, requestModel, new UAEPassAccessTokenCallback() {
                         @Override
                         public void getToken(String accessToken, String error) {
                             if (error != null) {
                                 Log.v(TAG, "UAE Pass App: error received:" + error);
+
+                                    AlertDialogUtil.errorAlertDialog("",activity.getString(R.string.uaeloginfail),activity.getString(R.string.ok),activity);
+
                                 //Toast.makeText(activity, "Error while getting access token", Toast.LENGTH_SHORT).show();
                             } else {
                                 Global.accessToken = accessToken;
@@ -709,7 +729,7 @@ public class LoginViewModel extends ViewModel {
                             }
                         }
                     });
-                } else {
+                } else {*/
                     Log.v(TAG, "UAE Pass App: app is not installed");
                     String language = Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0 ? "en" : "ar";
                     String authUrl = Global.uaePassConfig.getAuthCodeUAEID_url.endsWith("?") ? Global.uaePassConfig.getAuthCodeUAEID_url : Global.uaePassConfig.getAuthCodeUAEID_url + "?";
@@ -720,13 +740,93 @@ public class LoginViewModel extends ViewModel {
                     intent.setData(Uri.parse(url));
                     //intent.setData(Uri.parse("http://www.google.com"));
                     activity.startActivity(intent);
-                }
+                /*}*/
             }
 
         }
     }
-
     public void getUAEAccessToken(String code){
+        if(!Global.isConnected(activity)){
+            AlertDialogUtil.errorAlertDialog(activity.getString(R.string.lbl_warning), activity.getString(R.string.internet_connection_problem1), activity.getString(R.string.ok), activity);
+            return;
+        } else {
+            Global.isUAEAccessToken = true;
+            String clientId = Encryptions.decrypt(Global.uaePassConfig.UAEID_clientid);
+            String secretId = Encryptions.decrypt(Global.uaePassConfig.UAEID_secret);
+            Global.clientID = clientId;
+            Global.state = secretId;
+            if (Global.uaePassConfig != null) {
+
+                String callbackUrl = Encryptions.decrypt(Global.uaePassConfig.UAEID_callback_url);
+                String language = Global.getCurrentLanguage(activity).compareToIgnoreCase("en") == 0 ? "en" : "ar";
+                String accessTokenUrl = Global.uaePassConfig.getGetAccessTokenUAEID_url().endsWith("?") ? Global.uaePassConfig.getGetAccessTokenUAEID_url() : Global.uaePassConfig.getGetAccessTokenUAEID_url() + "?";
+                String url = accessTokenUrl + "grand_type=authorization_code&redirect_uri=" + callbackUrl + "&code=" + code /*+ "ui_locales=" + language*/;
+                Global.uae_code = "";
+                Global.isUAEaccessWeburl = false;
+
+                //JsonObjectRequest req2=new JsonObjectRequest()
+
+                JsonObjectRequest req = new JsonObjectRequest(POST,url, null,
+                        new com.android.volley.Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    AlertDialogUtil.showProgressBar(activity,false);
+                                    if (response != null) {
+                                        Gson gson = new GsonBuilder().serializeNulls().create();
+                                        UAEAccessTokenResponse uaeAccessTokenResponse = gson.fromJson(response.toString(), UAEAccessTokenResponse.class);
+                                        if (uaeAccessTokenResponse != null) {
+                                            Global.uae_code = "";
+                                            Global.isUAEaccessWeburl =false;
+                                            Global.uae_access_token = uaeAccessTokenResponse.getAccess_token();
+                                            Global.isUAEAccessToken = false;
+                                            Global.clientID = "";
+                                            Global.state = "";
+                                            Global.accessToken = uaeAccessTokenResponse.getAccess_token();
+                                            getUAESessionToken(uaeAccessTokenResponse.getAccess_token());
+                                        } else {
+                                            AlertDialogUtil.showProgressBar(activity,false);
+                                            AlertDialogUtil.errorAlertDialog(activity.getString(R.string.lbl_warning), activity.getString(R.string.error_response), activity.getString(R.string.ok), activity);
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (error instanceof AuthFailureError)
+                            Global.logout(activity);
+
+                        VolleyLog.e("Error: ", error.getMessage());
+                        AlertDialogUtil.errorAlertDialog(activity.getString(R.string.lbl_warning), activity.getString(R.string.error_response), activity.getString(R.string.ok), activity);
+                    }
+                }) {    //this is the part, that adds the header to the request
+                    @Override
+                    public Map<String, String> getHeaders() {
+                        Map<String, String> params = new HashMap<>();
+                        //params.put("token", Global.accessToken);
+                        String auth1=Global.clientID+":"+Global.state;
+                        String auth = "Basic " + android.util.Base64.encodeToString(auth1.getBytes(), Base64.NO_WRAP);
+                        params.put("Accept", "application/json");
+                        params.put("Content-Type", "application/x-www-form-urlencoded");
+                        params.put("Authorization", auth);
+                        return params;
+                    }
+                };
+               AlertDialogUtil.showProgressBar(activity,true);
+               Volley.newRequestQueue(activity).add(req);
+                req.setRetryPolicy(new DefaultRetryPolicy(
+                        (int) TimeUnit.SECONDS.toMillis(500),0,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            }
+        }
+        Global.isUAEAccessToken = false;
+        // Global.clientID = "";
+        // Global.state = "";
+    }
+    /*public void getUAEAccessToken(String code){
         Global.isUAEAccessToken = true;
         String clientId = Encryptions.decrypt(Global.uaePassConfig.UAEID_clientid);
         String secretId = Encryptions.decrypt(Global.uaePassConfig.UAEID_secret);
@@ -741,7 +841,7 @@ public class LoginViewModel extends ViewModel {
             String callbackUrl = Encryptions.decrypt(Global.uaePassConfig.UAEID_callback_url);
             String language = Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0 ? "en" : "ar";
             String accessTokenUrl = Global.uaePassConfig.getGetAccessTokenUAEID_url().endsWith("?") ? Global.uaePassConfig.getGetAccessTokenUAEID_url() : Global.uaePassConfig.getGetAccessTokenUAEID_url() + "?";
-            String url = accessTokenUrl + "grand_type=authorization_code&redirect_uri="+callbackUrl+"&code="+ code+ "ui_locales=" + language;
+            String url = accessTokenUrl + "grand_type=authorization_code&redirect_uri="+callbackUrl+"&code="+ code*//*+ "ui_locales=" + language*//*;
             Global.uae_code = "";
             Global.isUAEaccessWeburl = false;
 
@@ -773,7 +873,7 @@ public class LoginViewModel extends ViewModel {
         Global.isUAEAccessToken = false;
         Global.clientID = "";
         Global.state = "";
-    }
+    }*/
 
     public void getUAESessionToken(String code){
         Global.isUAEAccessToken = false;
@@ -801,8 +901,16 @@ public class LoginViewModel extends ViewModel {
                             Log.v(TAG, "UAE Pass App: getUAESessionToken(): success");
                             Global.uaeSessionResponse = uaeSessionResponse;
                             Log.v(TAG, "UAE Pass App: getUAESessionToken(): sessionToken:" + uaeSessionResponse.getService_response().getUAEPASSDetails().getUuid());
-                            getAccessTokenAPI(true);
+
+                            if(!Boolean.valueOf(uaeSessionResponse.getIs_exception()))
+                                getAccessTokenAPI(true);
+                            else{
+                                AlertDialogUtil.showProgressBar(activity,false);
+                                Global.accessToken=null;
+                                Global.sessionErrorMsg = Global.getCurrentLanguage(activity).equals("en")?uaeSessionResponse.getMessage():uaeSessionResponse.getMessage_ar();
+                                AlertDialogUtil.errorAlertDialog("",Global.sessionErrorMsg,activity.getString(R.string.ok),activity);}
                         }
+
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
