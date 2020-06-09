@@ -11,33 +11,36 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:orientation="vertical">
+
             <LinearLayout
                 android:id="@+id/fragment_map_layoutSearch"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"
-                android:weightSum="1"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="1">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight=".35"
-                    android:background="@drawable/rounded_corners_bg">
+                    android:background="@drawable/rorounded_corner_theme_bg">
 
                     <!--<ImageButton-->
-                <!--android:id="@+id/fragment_bookmarks_btnSearch"-->
-                <!--android:layout_width="32dp"-->
-                <!--android:layout_height="32dp"-->
-                <!--android:layout_gravity="center_vertical|center_horizontal"-->
-                <!--android:background="@color/white"-->
-                <!--android:scaleType="centerInside"-->
-                <!--app:srcCompat="@drawable/search_100x100" />-->
+                    <!--android:id="@+id/fragment_bookmarks_btnSearch"-->
+                    <!--android:layout_width="32dp"-->
+                    <!--android:layout_height="32dp"-->
+                    <!--android:layout_gravity="center_vertical|center_horizontal"-->
+                    <!--android:background="@color/white"-->
+                    <!--android:scaleType="centerInside"-->
+                    <!--app:srcCompat="@drawable/search_100x100" />-->
 
                     <TextView
                         android:id="@+id/textView27"
@@ -45,10 +48,10 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
                         android:layout_weight=".20"
-                        android:paddingStart="8dp"
                         android:focusableInTouchMode="false"
                         android:fontFamily="@font/dubai_font"
                         android:gravity="center_vertical"
+                        android:paddingStart="8dp"
                         android:text="@string/findPlot"
                         android:textAlignment="viewStart"
                         android:textColor="@android:color/black"
@@ -73,86 +76,91 @@
                         android:textSize="14sp" />
 
                     <LinearLayout
-                    android:layout_width="32dp"
-                    android:layout_height="40dp"
-                    android:layout_weight=".10"
-                    android:id="@+id/fragment_bookmarks_btnSearch">
+                        android:id="@+id/fragment_bookmarks_btnSearch"
+                        android:layout_width="32dp"
+                        android:layout_height="40dp"
+                        android:layout_weight=".10">
 
-                    <ImageView
+                        <ImageView
 
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="10dp"
-                        android:src="@drawable/ic_search" />
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_search" />
 
+                    </LinearLayout>
                 </LinearLayout>
-                </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="end"
                     android:layout_weight=".65"
-                    android:gravity="end"
-                    android:layout_gravity="end">
-                <LinearLayout
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="end"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@drawable/rounded_corners_bg"
+                    android:gravity="end">
 
-                    android:id="@+id/sortDescending">
-                    <ImageView
+                    <LinearLayout
+                        android:id="@+id/sortDescending"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:padding="8dp"
-                        android:src="@drawable/sort_descending"/>
+                        android:layout_gravity="end"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
 
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="end"
-                    android:background="@drawable/rounded_corners_bg"
+                        android:background="@drawable/rounded_corners_bg">
 
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:id="@+id/sortAscending">
-                    <ImageView
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="8dp"
+                            android:src="@drawable/sort_descending" />
 
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/sortAscending"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
+                        android:layout_gravity="end"
 
-                        android:padding="8dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/sort_ascending"/>
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/rounded_corners_bg">
 
+                        <ImageView
+
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+
+                            android:padding="8dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/sort_ascending" />
+
+                    </LinearLayout>
                 </LinearLayout>
-                </LinearLayout>
-
-
 
 
             </LinearLayout>
+
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="2"
-                android:fontFamily="@font/dubai_font"
-                android:textSize="20dp"
-                android:visibility="gone"
-                android:textAlignment="center"
                 android:id="@+id/textHeading"
-                android:textColor="@color/black"
-                android:layout_marginVertical="10dp"/>
-            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:fontFamily="@font/dubai_font"
+                android:maxLines="2"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerBookMarks"
-                app:setVerticalAdapter="@{fragmentBookmarkVM.getBookmarkAdapter()}"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:setVerticalAdapter="@{fragmentBookmarkVM.getBookmarkAdapter()}" />
         </LinearLayout>
     </LinearLayout>
 

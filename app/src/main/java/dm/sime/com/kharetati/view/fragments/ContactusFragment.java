@@ -141,7 +141,7 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
         mTracker.setScreenName(FR_CONTACT_US);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         initializePage();
-        ((MainActivity)getActivity()).manageActionBar(false);
+        ((MainActivity)getActivity()).manageActionBar(true);
         ((MainActivity)getActivity()).manageBottomBar(true);
         setRetainInstance(true);
         if (!Global.isConnected(getActivity())) {

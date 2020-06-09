@@ -13,9 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="5dp"
+        android:background="#fcfcfc"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        app:cardCornerRadius="10dp"
+        app:cardCornerRadius="15dp"
         android:layout_margin="5dp">
         <LinearLayout
             android:orientation="vertical" android:layout_width="match_parent"
@@ -26,12 +27,42 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.00"
+                android:orientation="horizontal"
+                android:gravity="end"
                 android:paddingHorizontal="10dp"
+                android:layout_marginTop="8dp"
+                android:background="#fcfcfc"
+                >
+                <TextView
 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/LBL_DATE_TIME"
 
-                android:background="#efeeee"
+                    android:textSize="14sp"
+                    android:textAlignment="viewStart"
+                    android:fontFamily="@font/dubai_font"
+                    android:layout_marginStart="5dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="14sp"
+                    android:id="@+id/dateBookmark"
+
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/dubai_font"
+                    android:layout_height="wrap_content"
+                    android:text="Date here"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.00"
+                android:background="#fcfcfc"
+                android:paddingHorizontal="10dp"
                 android:orientation="horizontal">
+
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -101,34 +132,7 @@
                             android:text='@{adapterBookmarkVM.getCurrentBookmark(position).Area ??  ""}'
                             android:textAlignment="viewStart"
                             /></LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:paddingHorizontal="10dp"
-                        android:layout_marginTop="8dp"
-                        >
-                        <TextView
 
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/LBL_DATE_TIME"
-
-                            android:textSize="14sp"
-                            android:textAlignment="viewStart"
-                            android:fontFamily="@font/dubai_font"
-                            android:layout_marginStart="5dp"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:textSize="14sp"
-                            android:id="@+id/dateBookmark"
-                            android:layout_marginStart="5dp"
-                            android:fontFamily="@font/dubai_font"
-                            android:layout_height="wrap_content"
-                            android:text=""/>
-                    </LinearLayout>
                     <TextView
                         android:id="@+id/txtDescriptionEn"
                         android:fontFamily="@font/dubai_font"
@@ -175,6 +179,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:layout_marginStart="5dp"
                             android:id="@+id/edit">
                             <ImageView
                                 android:layout_width="42dp"
@@ -188,7 +193,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:id="@+id/delete"
-                            android:layout_marginStart="2dp">
+                            android:layout_marginStart="5dp">
                             <ImageView
                                 android:layout_width="42dp"
                                 android:layout_height="42dp"
@@ -202,7 +207,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:id="@+id/gotomakani"
-                            android:layout_marginStart="2dp">
+                            android:layout_marginStart="5dp">
                             <ImageView
                                 android:layout_width="42dp"
                                 android:layout_height="42dp"

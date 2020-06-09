@@ -261,5 +261,12 @@
     <string name="fontsize">Font Size</string>
     <string name="on">On</string>
     <string name="off">Off</string>
+    <string name="finddus">find us</string>
+    <string name="alriga" >al rigga 17th st</string>
+    <string name="callus">call us</string>
+    <string name="visitus">visit us</string>
+    <string name="mailus">email us</string>
+    <string name="reachus">reach us</string>
+    <string name="sendus">send us</string>
 
 </resources>

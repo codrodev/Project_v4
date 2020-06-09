@@ -264,4 +264,11 @@
     <string name="fontsize">Font Size</string>
     <string name="on">On</string>
     <string name="off">Off</string>
+    <string name="finddus">Find Us</string>
+    <string name="alriga" />
+    <string name="callus">call us</string>
+    <string name="visitus">visit us</string>
+    <string name="mailus">mail us</string>
+    <string name="reachus">reach us</string>
+    <string name="sendus">send us</string>
 </resources>

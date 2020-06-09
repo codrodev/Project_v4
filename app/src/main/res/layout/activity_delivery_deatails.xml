@@ -20,9 +20,11 @@
             <CheckBox
                 android:id="@+id/deliveryByCourier"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_marginTop = "8dp"
                 android:layout_marginBottom = "8dp"
+
+                android:background="@drawable/rorounded_corner_theme_bg"
                 android:layout_gravity="start|center_vertical"
                 android:gravity="start|center_vertical"
                 android:text="@string/delivery_by_courier"
@@ -31,6 +33,15 @@
                 android:textSize="17sp"
                 android:textStyle="bold" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="16dp"
+                android:background="@drawable/rorounded_corner_theme_bg">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -38,7 +49,6 @@
                 android:paddingLeft="3dp"
                 android:id="@+id/txtRecieverName"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="-7dp"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/gray_text_color"
                 android:textStyle="bold"
@@ -48,15 +58,17 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/edittext_background"
                 app:hintEnabled="false">
 
                 <dm.sime.com.kharetati.view.customview.CleanableEditText
                     android:id="@+id/et_recievername"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="35dp"
                     android:gravity="start"
                     android:inputType="text"
                     android:maxLength="255"
+                    android:background="@color/transparent"
                     android:textAlignment="viewStart"
                     android:textColor="@color/gray_text_color"
                     android:textDirection="locale" />
@@ -66,7 +78,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/email_address"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="-7dp"
                 android:paddingLeft="3dp"
                 android:textAlignment="viewStart"
                 android:id="@+id/txtemail"
@@ -76,7 +87,8 @@
                 android:textDirection="locale"/>
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
+                android:background="@drawable/edittext_background"
                 app:hintEnabled="false">
 
                 <dm.sime.com.kharetati.view.customview.CleanableEditText
@@ -85,6 +97,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="start"
                     android:inputType="text"
+                    android:background="@color/transparent"
                     android:textColor="@color/gray_text_color"
                     android:textDirection="locale"
                     android:textAlignment="viewStart"
@@ -96,7 +109,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/mobile_no"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="-7dp"
                 android:paddingLeft="3dp"
                 android:id="@+id/txtmobile"
                 android:textAlignment="viewStart"
@@ -107,7 +119,8 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
+                android:background="@drawable/edittext_background"
                 app:hintEnabled="false">
 
                 <dm.sime.com.kharetati.view.customview.CleanableEditText
@@ -117,6 +130,7 @@
                     android:inputType="number"
                     android:hint="@string/mobile_number_9715xxxxxxxx"
                     android:maxLength="12"
+                    android:background="@color/transparent"
                     android:textDirection="locale"
                     android:textColor="@color/gray_text_color"
                     android:textAlignment="viewStart"
@@ -131,7 +145,7 @@
                 android:id="@+id/txtmakani"
                 android:layout_marginTop="10dp"
                 android:textAlignment="viewStart"
-                android:layout_marginBottom="-7dp"
+
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/gray_text_color"
                 android:textStyle="bold"
@@ -139,7 +153,8 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
+                android:background="@drawable/edittext_background"
                 app:hintEnabled="false">
 
                 <dm.sime.com.kharetati.view.customview.CleanableEditText
@@ -148,6 +163,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="start"
                     android:maxLength="10"
+                    android:background="@color/transparent"
                     android:textColor="@color/gray_text_color"
                     android:inputType="number"
                     android:textDirection="locale"
@@ -161,13 +177,15 @@
                 android:id="@+id/txtEmirate"
                 android:paddingLeft="3dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="-7dp"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/gray_text_color"
                 android:textStyle="bold"
                 android:textAlignment="viewStart"
                 android:textDirection="locale" />
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@drawable/edittext_background">
             <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -178,13 +196,14 @@
                     android:textColor="@color/gray_text_color"
                     android:textAlignment="viewStart"
                     android:textDirection="locale" >
+
             </Spinner>
+            </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/villa_flat_building_no"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="-7dp"
                 android:paddingLeft="3dp"
                 android:textAlignment="viewStart"
                 android:id="@+id/txtBuildingNo"
@@ -194,7 +213,8 @@
                 android:textDirection="locale"/>
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
+                android:background="@drawable/edittext_background"
                 app:hintEnabled="false">
 
                 <dm.sime.com.kharetati.view.customview.CleanableEditText
@@ -203,6 +223,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="start"
                     android:inputType="text"
+                    android:background="@color/transparent"
                     android:textColor="@color/gray_text_color"
                     android:textAlignment="viewStart"
                     android:textDirection="locale"/>
@@ -212,7 +233,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/building_name"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="-7dp"
                 android:paddingLeft="3dp"
                 android:id="@+id/txtBuildingName"
                 android:textAlignment="viewStart"
@@ -223,7 +243,8 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
+                android:background="@drawable/edittext_background"
                 app:hintEnabled="false">
 
                 <dm.sime.com.kharetati.view.customview.CleanableEditText
@@ -232,6 +253,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="start"
                     android:inputType="text"
+                    android:background="@color/transparent"
                     android:textColor="@color/gray_text_color"
                     android:textAlignment="viewStart"
                     android:textDirection="locale" />
@@ -242,7 +264,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/street_adress"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="-7dp"
+
                 android:paddingLeft="3dp"
                 android:id="@+id/txtStreetAddress"
                 android:textAlignment="viewStart"
@@ -252,7 +274,8 @@
                 android:textDirection="locale"/>
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
+                android:background="@drawable/edittext_background"
                 app:hintEnabled="false"
                 >
 
@@ -262,6 +285,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="start"
                     android:singleLine="true"
+                    android:background="@color/transparent"
                     android:textColor="@color/gray_text_color"
                     android:textAlignment="viewStart"
                     android:textDirection="locale" />
@@ -271,7 +295,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/mailing_address"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="-7dp"
+
                 android:paddingLeft="3dp"
                 android:singleLine="true"
                 android:id="@+id/txtMaailingAddrress"
@@ -282,7 +306,8 @@
                 android:textDirection="locale"/>
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
+                android:background="@drawable/edittext_background"
                 app:hintEnabled="false">
 
                 <dm.sime.com.kharetati.view.customview.CleanableEditText
@@ -290,6 +315,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
+                    android:background="@color/transparent"
                     android:textColor="@color/gray_text_color"
                     android:textAlignment="viewStart"
                     android:inputType="textPostalAddress"
@@ -303,7 +329,7 @@
                 android:text="@string/nearest_landmark"
                 android:layout_marginTop="10dp"
                 android:singleLine="true"
-                android:layout_marginBottom="-7dp"
+
                 android:paddingLeft="3dp"
                 android:textAlignment="viewStart"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
@@ -313,7 +339,8 @@
                 android:textDirection="locale"/>
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
+                android:background="@drawable/edittext_background"
                 app:hintEnabled="false">
 
                 <dm.sime.com.kharetati.view.customview.CleanableEditText
@@ -323,6 +350,7 @@
                     android:gravity="start"
                     android:inputType="text"
                     android:singleLine="true"
+                    android:background="@color/transparent"
                     android:textColor="@color/gray_text_color"
                     android:textAlignment="viewStart"
                     android:textDirection="locale" />
@@ -346,7 +374,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white" />
 -->
-
+            </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>
