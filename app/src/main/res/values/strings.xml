@@ -157,7 +157,7 @@
     <string name="you_are_about_to_call">Call </string>
     <string name="phone">Phone</string>
     <string name="Website">Website</string>
-    <string name="Chat">Chat</string>
+    <string name="Chat">live chat</string>
     <string name="Live_chat_with_our_call_center">Live chat with our call center</string>
     <string name="please_enter_phone">Please enter your phone number</string>
     <string name="social_network">Social Media</string>
@@ -187,8 +187,8 @@
     <string name="SHAREKHARETATIAPP">Share App</string>
     <string name="RATEUS">Rate Us</string>
     <string name="ABOUTUS">About Us</string>
-    <string name="FAQMENU">FAQs</string>
-    <string name="TERMSANDCONDITIONS">Terms and\n Conditions</string>
+    <string name="FAQMENU">FAQ</string>
+    <string name="TERMSANDCONDITIONS">Terms of Use</string>
     <string name="ACCESSIBILITY">Accessibility</string>
     <string name="INTROHELP">Help</string>
     <string name="iamowner">I am the owner of the plot</string>

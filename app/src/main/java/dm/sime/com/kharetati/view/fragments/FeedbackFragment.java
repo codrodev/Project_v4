@@ -29,6 +29,7 @@ import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.viewModels.FeedbackViewModel;
 
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_DELIVERY;
@@ -69,6 +70,8 @@ public class FeedbackFragment extends Fragment {
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
         mTracker.setScreenName(FR_FEEDBACK);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        ((MainActivity)getActivity()).manageActionBar(true);
+        ((MainActivity)getActivity()).manageBottomBar(true);
         initializePage();
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         return binding.getRoot();

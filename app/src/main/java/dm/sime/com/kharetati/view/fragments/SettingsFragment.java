@@ -82,8 +82,8 @@ public class SettingsFragment extends Fragment {
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
         mTracker.setScreenName(FR_SETTINGS);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-        ((MainActivity)getActivity()).manageBottomBar(false);
-        ((MainActivity)getActivity()).manageActionBar(false);
+        ((MainActivity)getActivity()).manageBottomBar(true);
+        ((MainActivity)getActivity()).manageActionBar(true);
         sharedpreferences = getActivity().getSharedPreferences(MYPREFERENCES, Context.MODE_PRIVATE);
         String locale = sharedpreferences.getString(USER_LANGUAGE, "defaultStringIfNothingFound");
         if(!locale.equals("defaultStringIfNothingFound"))

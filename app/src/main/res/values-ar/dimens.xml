@@ -2,4 +2,5 @@
   <!-- Default screen margins, per the Android Design guidelines. -->
 
     <dimen name="edit_drawable_height">24dp</dimen>
+
 </resources>

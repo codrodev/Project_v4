@@ -61,7 +61,7 @@
                     android:id="@+id/LLcontact_us"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+
                     android:background="@color/white"
                     android:orientation="vertical">
 
@@ -90,7 +90,7 @@
                                 android:layout_marginStart="16dp"
                                 android:layout_marginRight="16dp"
                                 android:contentDescription="@string/you_are_about_to_call"
-                                android:src="@drawable/ic_phone_black_24dp" />
+                                android:src="@drawable/address_512" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -140,7 +140,7 @@
                                 android:layout_marginStart="16dp"
                                 android:layout_marginRight="16dp"
                                 android:contentDescription="@string/you_are_about_to_call"
-                                android:src="@drawable/ic_phone_black_24dp" />
+                                android:src="@drawable/phone_512" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -151,7 +151,6 @@
 
 
                                 <TextView
-                                    android:id="@+id/TVDMPhoneNumber"
                                     android:text="@string/callus"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -161,6 +160,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/phone"
+                                    android:id="@+id/TVDMPhoneNumber"
                                     android:textAlignment="gravity"
                                     android:textColor="@color/black" />
                             </LinearLayout>
@@ -203,14 +203,14 @@
                                 android:layout_marginEnd="16dp"
                                 android:layout_marginRight="16dp"
                                 android:contentDescription="@string/Website"
-                                android:src="@drawable/website" />
+                                android:src="@drawable/web_512" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
                                 <TextView
-                                    android:id="@+id/TVDMWebsite"
+
                                     android:text="@string/visitus"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -220,6 +220,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/Website"
+                                    android:id="@+id/TVDMWebsite"
                                     android:textColor="@color/black" />
 
 
@@ -249,14 +250,14 @@
                                 android:layout_marginStart="16dp"
                                 android:layout_marginRight="16dp"
                                 android:contentDescription="@string/email"
-                                android:src="@drawable/ic_email_black_24dp" />
+                                android:src="@drawable/email_512" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
                                 <TextView
-                                    android:id="@+id/TVDMEmail"
+
                                     android:text="@string/mailus"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -266,6 +267,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/email2"
+                                    android:id="@+id/TVDMEmail"
                                     android:textColor="@color/black" />
 
 
@@ -350,7 +352,7 @@
                                 android:layout_marginEnd="16dp"
                                 android:layout_marginRight="16dp"
                                 android:contentDescription="@string/Live_chat_with_our_call_center"
-                                android:src="@drawable/ic_chat_black_24dp" />
+                                android:src="@drawable/chat_512" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -395,7 +397,7 @@
                                 android:layout_marginStart="16dp"
                                 android:layout_marginRight="16dp"
                                 android:contentDescription="@string/send_your_feedback_about_the_app"
-                                android:src="@drawable/ic_feedback_black_24dp" />
+                                android:src="@drawable/feedback_512" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -451,7 +453,7 @@
                                 android:layout_height="48dp"
                                 android:layout_weight="1"
                                 android:contentDescription="@string/facebook"
-                                app:srcCompat="@drawable/facebook" />
+                                app:srcCompat="@drawable/facebook_512" />
 
                             <ImageView
                                 android:id="@+id/imgTwitter"
@@ -459,7 +461,7 @@
                                 android:layout_height="48dp"
                                 android:layout_weight="1"
                                 android:contentDescription="@string/twitter"
-                                app:srcCompat="@drawable/twitter" />
+                                app:srcCompat="@drawable/twitter_512" />
 
                             <ImageView
                                 android:id="@+id/imgInstagram"
@@ -467,7 +469,7 @@
                                 android:layout_height="48dp"
                                 android:layout_weight="1"
                                 android:contentDescription="@string/instagram"
-                                app:srcCompat="@drawable/instagram" />
+                                app:srcCompat="@drawable/insta_512" />
 
                             <ImageView
                                 android:id="@+id/imgYoutube"
@@ -475,7 +477,7 @@
                                 android:layout_height="48dp"
                                 android:layout_weight="1"
                                 android:contentDescription="@string/youtube"
-                                app:srcCompat="@drawable/youtube" />
+                                app:srcCompat="@drawable/youtube_512" />
                         </LinearLayout>
 
                     </LinearLayout>

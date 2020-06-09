@@ -49,7 +49,7 @@ public class BottomNavigationFragmentSheet extends Fragment {
     private View mRootView;
     private static OnActionListener listener;
     private Tracker mTracker;
-    int images[] = {R.drawable.ic_help_black,R.drawable.ic_logout,R.drawable.ic_share,R.drawable.ic_faq,R.drawable.ic_about_us,R.drawable.ic_terms_condition,R.drawable.ic_like,R.drawable.ic_accessibility,R.drawable.ic_settings_outline};
+    int images[] = {R.drawable.more_help_512,R.drawable.logout_512,R.drawable.share_512,R.drawable.faq_512,R.drawable.about_512,R.drawable.terms_512,R.drawable.rating_512,R.drawable.accessibility_512,R.drawable.settings_512};
     int ids[] = {R.id.imgMoreIcon,R.id.txtMoreName};
     String keys[]= {"one","two"};
 
@@ -81,7 +81,7 @@ public class BottomNavigationFragmentSheet extends Fragment {
         mTracker.setScreenName(FR_BOTTOMSHEET);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         binding.setFragmentBottomNavigation(model);
-        ((MainActivity)getActivity()).manageActionBar(false);
+        ((MainActivity)getActivity()).manageActionBar(true);
         ((MainActivity)getActivity()).manageBottomBar(true);
 
        /* BottomSheetBehavior behavior = BottomSheetBehavior.from(binding.bottomSheetMore);
@@ -432,7 +432,7 @@ public class BottomNavigationFragmentSheet extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((MainActivity)getActivity()).manageActionBar(false);
+        ((MainActivity)getActivity()).manageActionBar(true);
         ((MainActivity)getActivity()).manageBottomBar(true);
     }
 

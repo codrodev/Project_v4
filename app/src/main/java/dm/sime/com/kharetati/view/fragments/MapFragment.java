@@ -80,6 +80,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.security.KeyManagementException;
@@ -235,6 +236,8 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             public void onClick(View v) {
                 if(binding.mapFunctionLayout.getVisibility() == View.GONE){
                     binding.mapFunctionLayout.setVisibility(View.VISIBLE);
+                    binding.floatingButtton.setImageResource(R.drawable.close_512);
+
                     if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null){
                         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(4, LinearLayoutManager.VERTICAL);
 
@@ -245,8 +248,12 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
 
                     }
                 }
-                else if(binding.mapFunctionLayout.getVisibility() == View.VISIBLE)
+                else if(binding.mapFunctionLayout.getVisibility() == View.VISIBLE){
                     binding.mapFunctionLayout.setVisibility(View.GONE);
+                    binding.floatingButtton.setImageResource(R.drawable.menu_512);
+
+
+                }
             }
         });
 

@@ -63,7 +63,7 @@
                         android:layout_gravity="start|center_vertical"
                         android:layout_marginStart="8dp"
                         android:layout_marginLeft="8dp"
-                        android:src="@drawable/ic_arrow" />
+                        app:srcCompat="@drawable/ic_arrow" />
 
 
 
@@ -91,19 +91,19 @@
 
                     <ImageView
                         android:id="@+id/imgSearch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
                         android:layout_gravity="start|center_vertical"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_search" />
+                        android:src="@drawable/search_512" />
 
                     <ImageView
                         android:id="@+id/imgLayer"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
                         android:layout_gravity="start|center_vertical"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_layers" />
+                        android:src="@drawable/layers_512" />
 
                     <ImageView
                         android:id="@+id/imgBookmark"
@@ -112,7 +112,7 @@
                         android:padding="2dp"
                         android:layout_gravity="start|center_vertical"
                         android:layout_weight="1"
-                        android:src="@drawable/favourites" />
+                        android:src="@drawable/add_512" />
 
                     <ImageView
                         android:id="@+id/imgRecenter"
@@ -121,7 +121,7 @@
                         android:padding="2dp"
                         android:layout_gravity="start|center_vertical"
                         android:layout_weight="1"
-                        android:src="@drawable/zoom" />
+                        android:src="@drawable/location_512" />
 
                     <ImageView
                         android:id="@+id/imgMakani"
@@ -129,7 +129,7 @@
                         android:layout_height="30dp"
                         android:layout_gravity="start|center_vertical"
                         android:layout_weight="1"
-                        android:src="@drawable/makani" />
+                        android:src="@drawable/makani_512" />
 
                     <ImageView
                         android:id="@+id/imgHelp"
@@ -137,7 +137,7 @@
                         android:layout_height="24dp"
                         android:layout_gravity="start|center_vertical"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_help_black" />
+                        app:srcCompat="@drawable/ic_help_black" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -161,10 +161,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolBarLayout" />
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            app:fabCustomSize="48dp"
             android:id="@+id/floatingButtton"
+            app:srcCompat="@drawable/menu_512"
+            android:scaleType="fitCenter"
+            app:maxImageSize="32dp"
+            android:foregroundGravity="center"
+            app:backgroundTint="@color/white"
             android:layout_marginBottom="150dp"
             android:layout_gravity="bottom|end"/>
         <FrameLayout

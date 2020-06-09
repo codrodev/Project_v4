@@ -24,7 +24,7 @@
                 android:layout_marginTop = "8dp"
                 android:layout_marginBottom = "8dp"
 
-                android:background="@drawable/rorounded_corner_theme_bg"
+                android:background="@drawable/rounded_corner_theme_bg"
                 android:layout_gravity="start|center_vertical"
                 android:gravity="start|center_vertical"
                 android:text="@string/delivery_by_courier"
@@ -40,7 +40,7 @@
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:paddingBottom="16dp"
-                android:background="@drawable/rorounded_corner_theme_bg">
+                android:background="@drawable/rounded_corner_theme_bg">
 
             <TextView
                 android:layout_width="match_parent"

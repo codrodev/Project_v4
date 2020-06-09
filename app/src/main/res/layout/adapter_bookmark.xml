@@ -172,7 +172,7 @@
                                 android:padding="5dp"
                                 android:layout_gravity="start"
                                 android:id="@+id/view"
-                                android:src="@drawable/map"/>
+                                android:src="@drawable/map_512"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -186,7 +186,7 @@
                                 android:layout_height="42dp"
                                 android:fontFamily="@font/dubai_font"
                                 android:padding="5dp"
-                                android:src="@drawable/edit"/>
+                                android:src="@drawable/edit_512"/>
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -197,7 +197,7 @@
                             <ImageView
                                 android:layout_width="42dp"
                                 android:layout_height="42dp"
-                                android:src="@drawable/delete"
+                                android:src="@drawable/delete_512"
                                 android:fontFamily="@font/dubai_font"
                                 android:padding="5dp"
                                 />
@@ -211,7 +211,7 @@
                             <ImageView
                                 android:layout_width="42dp"
                                 android:layout_height="42dp"
-                                android:src="@drawable/marker"
+                                android:src="@drawable/makani_512"
                                 android:fontFamily="@font/dubai_font"
                                 android:padding="5dp"
 

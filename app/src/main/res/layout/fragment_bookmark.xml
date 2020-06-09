@@ -31,7 +31,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight=".35"
-                    android:background="@drawable/rorounded_corner_theme_bg">
+                    android:background="@drawable/rounded_corner_theme_bg">
 
                     <!--<ImageButton-->
                     <!--android:id="@+id/fragment_bookmarks_btnSearch"-->
