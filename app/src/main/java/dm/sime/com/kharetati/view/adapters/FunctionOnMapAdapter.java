@@ -26,14 +26,15 @@ import dm.sime.com.kharetati.datas.models.Applications;
 import dm.sime.com.kharetati.datas.models.Functions;
 import dm.sime.com.kharetati.datas.models.FunctionsOnMap;
 import dm.sime.com.kharetati.view.viewModels.MapFunctionBottomSheetViewModel;
+import dm.sime.com.kharetati.view.viewModels.MapViewModel;
 
 public class FunctionOnMapAdapter extends RecyclerView.Adapter<FunctionOnMapAdapter.GenericViewHolder> {
     private List<Functions> lstFunctionsOnMap;
-    private MapFunctionBottomSheetViewModel viewModel;
+    private MapViewModel viewModel;
     static Context context;
     static OnMenuSelectedListener listener;
 
-    public FunctionOnMapAdapter(MapFunctionBottomSheetViewModel viewModel, Context context, OnMenuSelectedListener listener,
+    public FunctionOnMapAdapter(MapViewModel viewModel, Context context, OnMenuSelectedListener listener,
                                 List<Functions> lstFunctions) {
         this.viewModel = viewModel;
         lstFunctionsOnMap = lstFunctions;

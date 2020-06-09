@@ -433,8 +433,10 @@ public class AlertDialogUtil {
 
                         if(Global.current_fragment_id.equals(FR_WEBVIEW))
                             ((Activity) context).onBackPressed();
-                        else
+                        else{
                             ((Activity) context).finish();
+                            Global.isRecreate = false;
+                        }
                     }
                 }).show();
 

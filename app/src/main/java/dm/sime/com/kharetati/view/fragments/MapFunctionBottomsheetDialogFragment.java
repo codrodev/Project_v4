@@ -3,9 +3,11 @@ package dm.sime.com.kharetati.view.fragments;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -50,6 +52,7 @@ public class MapFunctionBottomsheetDialogFragment extends BottomSheetDialogFragm
                 dismiss();
             }
 
+
         }
 
         @Override
@@ -85,17 +88,17 @@ public class MapFunctionBottomsheetDialogFragment extends BottomSheetDialogFragm
 
         View contentView = View.inflate(getContext(), R.layout.fragment_bottomsheet_map_function, null);
         recycleMapFunction = (RecyclerView)contentView.findViewById(R.id.recycleMapFunction);
-
         dialog.setContentView(contentView);
         //model.initializeViewModel(getActivity());
-        if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null){
+       /* if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null){
             StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL);
 
             adapter = new FunctionOnMapAdapter(model, getActivity(),this, Global.mapSearchResult.getService_response().getMap().getFunctions());
             recycleMapFunction.setAdapter(adapter);
             recycleMapFunction.setLayoutManager(layoutManager);
             adapter.notifyDataSetChanged();
-        }
+            
+        }*/
 
 
 

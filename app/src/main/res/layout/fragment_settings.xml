@@ -9,7 +9,13 @@
     </data>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layoutDirection="locale">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="48dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,6 +35,8 @@
                     android:text="@string/title_settings"
                     style="@style/font_medium_bold"
                     android:textStyle="bold"
+                    android:textDirection="locale"
+                    android:textAlignment="viewStart"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     android:layout_marginEnd="10dp"
@@ -88,17 +96,9 @@
                 </LinearLayout>
 
             </LinearLayout>
-            <TextView
-                android:id="@+id/txtLastLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/dubai_font"
-                android:text="@string/title_settings"
-                style="@style/font_small_bold"
-                android:textColor="@color/white"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="5dp" />
+
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -123,7 +123,7 @@
                         android:textColor="@color/black"
                         android:text="@string/language"/>
                     <LinearLayout
-                        android:layout_width="120dp"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/settngs_switch_margin"
                         android:layout_marginVertical="12dp"
@@ -185,7 +185,7 @@
                         android:textColor="@color/black"
                         android:text="@string/talkback"/>
                     <LinearLayout
-                        android:layout_width="120dp"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/settngs_switch_margin"
                         android:layout_marginVertical="12dp"
@@ -316,6 +316,7 @@
 
 
         </LinearLayout>
+        </ScrollView>
 
 
     </LinearLayout>

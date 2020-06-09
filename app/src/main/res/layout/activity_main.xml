@@ -106,6 +106,19 @@
                     </LinearLayout>
 
                 </LinearLayout>
+                <TextView
+                    android:id="@+id/txtLastLogin"
+                    style="@style/font_small_bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layoutDirection="locale"
+                    android:textAlignment="viewStart"
+                    android:fontFamily="@font/dubai_font"
+                    android:text="@string/title_settings"
+                    android:textColor="@color/white" />
 
             </LinearLayout>
 
@@ -123,10 +136,18 @@
 
 
         </LinearLayout>
-        <com.etebarian.meowbottomnavigation.MeowBottomNavigation
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/customBottomBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+        <dm.sime.com.kharetati.view.customview.meowbottomnavigation.MeowBottomNavigation
             android:id="@+id/customBottomBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="72dp"
             android:layoutDirection="locale"
             android:layout_alignParentBottom="true"
             app:mbn_circleColor="@color/maroon_light"

@@ -38,6 +38,8 @@ import androidx.annotation.RequiresApi;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 
 import com.esri.arcgisruntime.ArcGISRuntimeEnvironment;
@@ -115,6 +117,7 @@ import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.adapters.DashboardPagerAdapter;
+import dm.sime.com.kharetati.view.adapters.FunctionOnMapAdapter;
 import dm.sime.com.kharetati.view.navigators.MapNavigator;
 import dm.sime.com.kharetati.view.viewModels.MapViewModel;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
@@ -125,7 +128,7 @@ import static dm.sime.com.kharetati.utility.Global.MYPREFERENCES;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_ATTACHMENT;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_MAP;
 
-public class MapFragment extends Fragment implements MapNavigator, EditText.OnEditorActionListener,MapFunctionBottomsheetDialogFragment.OnFunctionMenuSelectedListener {
+public class MapFragment extends Fragment implements MapNavigator, EditText.OnEditorActionListener, FunctionOnMapAdapter.OnMenuSelectedListener, MapFunctionBottomsheetDialogFragment.OnFunctionMenuSelectedListener {
 
     private static final String ARG_PARAM1 = "param1";
     public static boolean isMakani,isLand;
@@ -156,6 +159,9 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
     private String lastSelectedWebFunction;
     private Tracker mTracker;
     private LayerDefinition retriveLayer;
+    private FunctionOnMapAdapter adapter;
+    //MapFunctionBottomsheetDialogFragment.OnFunctionMenuSelectedListener listener;
+    FunctionOnMapAdapter.OnMenuSelectedListener listener;
 
 
     public MapFragment() {
@@ -219,10 +225,30 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         if(CURRENT_LOCALE.equals("en")) binding.toolBarLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.toolBarLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         mapView = mRootView.findViewById(R.id.mapView);
         bottomSheetDialogFragment = MapFunctionBottomsheetDialogFragment.newInstance(this);
+        listener =this;
         LinearLayout layoutBottomSheet = (LinearLayout)mRootView.findViewById(R.id.bottomSheet);
         webView = (WebView)layoutBottomSheet.findViewById(R.id.webView);
         webView.getSettings().setJavaScriptEnabled(true);
         setRetainInstance(true);
+        binding.floatingButtton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(binding.mapFunctionLayout.getVisibility() == View.GONE){
+                    binding.mapFunctionLayout.setVisibility(View.VISIBLE);
+                    if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null){
+                        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(4, LinearLayoutManager.VERTICAL);
+
+                        adapter = new FunctionOnMapAdapter(model, getActivity(),listener, Global.mapSearchResult.getService_response().getMap().getFunctions());
+                        binding.recycleMapFunction.setAdapter(adapter);
+                        binding.recycleMapFunction.setLayoutManager(layoutManager);
+                        adapter.notifyDataSetChanged();
+
+                    }
+                }
+                else if(binding.mapFunctionLayout.getVisibility() == View.VISIBLE)
+                    binding.mapFunctionLayout.setVisibility(View.GONE);
+            }
+        });
 
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
         mTracker.setScreenName(FR_MAP);
@@ -239,7 +265,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                         binding.frameLayout.setVisibility(View.VISIBLE);
                         if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null &&
                                 Global.mapSearchResult.getService_response().getMap().getFunctions().size() > 1) {
-                            setMapFunctionSheetPeekHeight(60);
+                            setMapFunctionSheetPeekHeight(0);
                         }
                         break;
                     case BottomSheetBehavior.STATE_EXPANDED:
@@ -322,16 +348,21 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         if(Global.isBookmarks){
             setWebSheetPeekHeight(0);;
             setMapFunctionSheetPeekHeight(0);
+            binding.floatingButtton.setVisibility(View.GONE);
 
 
         } else if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null &&
                 Global.mapSearchResult.getService_response().getMap().getFunctions().size() == 1){
             setWebSheetPeekHeight(600);;
             setMapFunctionSheetPeekHeight(0);
+            binding.floatingButtton.setVisibility(View.GONE);
 
         } else {
-            setWebSheetPeekHeight(0);
-            setMapFunctionSheetPeekHeight(60);
+
+            //setMapFunctionSheetPeekHeight(60);
+
+            setMapFunctionSheetPeekHeight(0);
+            binding.floatingButtton.setVisibility(View.VISIBLE);
         }
 
         ArcGISRuntimeEnvironment.setLicense("runtimelite,1000,rud3984007683,none,GB2PMD17J0YJ2J7EZ071");
@@ -357,7 +388,10 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         }
         //sheetBehavior.setPeekHeight(0);
+        if(value==600)
         sheetBehavior.setPeekHeight(value);
+        else
+            sheetBehavior.setPeekHeight(0);
     }
 
     private void setMapFunctionSheetPeekHeight(int value){
@@ -367,7 +401,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
     private  void initializePage(){
         ParentSiteplanViewModel.initializeDocuments();
         model.manageAppBar(getActivity(), false);
-        model.manageAppBottomBAtr(getActivity(), false);
+        model.manageAppBottomBAtr(getActivity(), true);
         binding.txtPlotNo.setInputType(InputType.TYPE_CLASS_NUMBER);
         binding.txtPlotNo.setImeOptions(EditorInfo.IME_ACTION_DONE);
         binding.txtPlotNo.setEms(10);
@@ -1025,6 +1059,12 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         }
     }
 
+    @Override
+    public void onMenuSelected(String menu, int position) {
+        onFunctionMenuSelected(position);
+        binding.mapFunctionLayout.setVisibility(View.GONE);
+    }
+
     class MapViewTouchListener extends DefaultMapViewOnTouchListener {
 
         /**
@@ -1068,7 +1108,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                                     if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null &&
                                             Global.mapSearchResult.getService_response().getMap().getFunctions().size() > 1) {
                                         //myBottomSheet.show(getActivity().getSupportFragmentManager(), myBottomSheet.getTag());
-                                        bottomSheetDialogFragment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+                                        //bottomSheetDialogFragment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
                                     } else {
                                         if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null){
                                             mapFunctionAction(Global.mapSearchResult.getService_response().getMap().getFunctions().get(0));

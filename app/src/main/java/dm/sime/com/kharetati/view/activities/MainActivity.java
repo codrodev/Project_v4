@@ -1,8 +1,10 @@
 package dm.sime.com.kharetati.view.activities;
 
 import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -16,13 +18,15 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.provider.Settings;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
-import com.etebarian.meowbottomnavigation.MeowBottomNavigationCell;
+
 import com.google.android.gms.analytics.Tracker;
 
 import org.json.JSONObject;
@@ -33,6 +37,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
@@ -49,6 +54,7 @@ import dm.sime.com.kharetati.utility.SensorOrientationChangeNotifier;
 import dm.sime.com.kharetati.utility.constants.AppConstants;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.customview.DataCallback;
+import dm.sime.com.kharetati.view.customview.meowbottomnavigation.MeowBottomNavigation;
 import dm.sime.com.kharetati.view.fragments.FeedbackFragment;
 import dm.sime.com.kharetati.view.fragments.RequestDetailsFragment;
 import dm.sime.com.kharetati.view.fragments.SettingsFragment;
@@ -71,6 +77,7 @@ import kotlin.jvm.functions.Function1;
 
 import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
 import static dm.sime.com.kharetati.utility.Global.MYPREFERENCES;
+import static dm.sime.com.kharetati.utility.constants.AppConstants.FONT_SIZE;
 import static dm.sime.com.kharetati.utility.constants.AppConstants.USER_LANGUAGE;
 
 public class MainActivity extends AppCompatActivity implements FragmentNavigator, MainNavigator, DataCallback, BottomNavigationFragmentSheet.OnActionListener {
@@ -91,6 +98,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     private SharedPreferences sharedpreferences;
     private Tracker mTracker;
     public static onPermissionResult listner;
+    private DrawerLayout drawer;
+    private MeowBottomNavigation customBottomBar;
 
     public static Intent newIntent(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -105,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         Global.isLoginActivity = false;
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
 
+
         try {
             repository = new MainRepository(ApiFactory.getClient(new NetworkConnectionInterceptor(this)));
         } catch (NoSuchAlgorithmException e) {
@@ -118,15 +128,20 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         model = ViewModelProviders.of(this,factory).get(MainViewModel.class);
         mainVM = model;
         model.mainNavigator =this;
+        fragmentManager = getSupportFragmentManager();
+        Global.fontScale =sharedpreferences.getFloat(FONT_SIZE,Global.fontScale);
+        adjustFontScale(getResources().getConfiguration(),Global.fontScale);
         model.initialize();
         binding.setActivityMainVM(model);
-        if(CURRENT_LOCALE.equals("en")) binding.customBottomBar.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.customBottomBar.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        customBottomBar = (MeowBottomNavigation)findViewById(R.id.customBottomBar);
+        if(CURRENT_LOCALE.equals("en")) customBottomBar.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else customBottomBar.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         final BottomNavigationFragmentSheet myBottomSheet = BottomNavigationFragmentSheet.newInstance(this);
-        binding.customBottomBar.add(new MeowBottomNavigation.Model(1, R.drawable.ic_dashboard));
-        binding.customBottomBar.add(new MeowBottomNavigation.Model(2, R.drawable.happiness_black));
-        binding.customBottomBar.add(new MeowBottomNavigation.Model(3, R.drawable.ic_home_run));
-        binding.customBottomBar.add(new MeowBottomNavigation.Model(4, R.drawable.ic_comment));
-        binding.customBottomBar.add(new MeowBottomNavigation.Model(5, R.drawable.ic_more));
+        
+        customBottomBar.add(new MeowBottomNavigation.Model(1, R.drawable.ic_dashboard));
+        customBottomBar.add(new MeowBottomNavigation.Model(2, R.drawable.happiness_black));
+        customBottomBar.add(new MeowBottomNavigation.Model(3, R.drawable.ic_home_run));
+        customBottomBar.add(new MeowBottomNavigation.Model(4, R.drawable.ic_comment));
+        customBottomBar.add(new MeowBottomNavigation.Model(5, R.drawable.ic_more));
 
 
         countDownTimer = new MyCountDownTimer(startTime, interval);
@@ -151,7 +166,37 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             else
                 binding.txtUsername.setText(LoginViewModel.guestName);
         }
-        binding.customBottomBar.setOnClickMenuListener(new Function1<MeowBottomNavigation.Model, Unit>() {
+        if(Global.isUAE)
+            binding.txtLastLogin.setText(Global.uaeSessionResponse.getService_response().getLast_login());
+        else
+            binding.txtLastLogin.setText("Just Now Loggedin");
+
+        customBottomBar.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
+            @Override
+            public void onClickItem(MeowBottomNavigation.Model item) {
+                // your codes
+                myBottomModel = item;
+
+                Global.lastSelectedBottomTab = item.getId();
+                loadFragment(model.bottomNavigationTAG(item.getId()), true, null);
+            }
+        });
+
+        customBottomBar.setOnShowListener(new MeowBottomNavigation.ShowListener() {
+            @Override
+            public void onShowItem(MeowBottomNavigation.Model item) {
+                // your codes
+                sharedpreferences.edit().putInt("position",item.getId()).apply();
+
+            }
+        });
+        customBottomBar.setOnReselectListener(new MeowBottomNavigation.ReselectListener() {
+            @Override
+            public void onReselectItem(MeowBottomNavigation.Model item) {
+                // your codes
+            }
+        });
+        /*customBottomBar.setOnClickMenuListener(new Function1<MeowBottomNavigation.Model, Unit>() {
             @Override
             public Unit invoke(MeowBottomNavigation.Model bottomModel) {
                 // YOUR CODES
@@ -159,13 +204,13 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
                     Global.lastSelectedBottomTab = bottomModel.getId();
                     loadFragment(model.bottomNavigationTAG(bottomModel.getId()), true, null);
-                    /*if(savedInstanceState=null)
-                    savedInstanceState.putInt("loadPosition",myBottomModel.getId());*/
+                    *//*if(savedInstanceState=null)
+                    savedInstanceState.putInt("loadPosition",myBottomModel.getId());*//*
 
                 return null;
             }
         });
-        binding.customBottomBar.setOnShowListener(new Function1<MeowBottomNavigation.Model, Unit>() {
+        customBottomBar.setOnShowListener(new Function1<MeowBottomNavigation.Model, Unit>() {
             @Override
             public Unit invoke(MeowBottomNavigation.Model model) {
                 // YOUR CODES
@@ -173,7 +218,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                sharedpreferences.edit().putInt("position",model.getId()).apply();
                 return null;
             }
-        });
+        });*/
 
         binding.imgHelp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -210,7 +255,10 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         });
 
 
-        binding.customBottomBar.show(3, true);
+        customBottomBar.show(3, true);
+        if(Global.isRecreate)
+            loadFragment(sharedpreferences.getString("currentFragment",FragmentTAGS.FR_HOME),true,null);
+        else
         openHomePage();
         initializeActivity();
 
@@ -231,6 +279,16 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
     }
 
+
+    @Override
+    public void recreate() {
+        Global.isRecreate =true;
+
+        startActivity(getIntent());
+        finish();
+        overridePendingTransition(0, 0);
+    }
+
     private boolean isPermissionGranted(String[] permissions, int[] grantResults){
         boolean isGranted = true;
         for (int i =0 ; i < grantResults.length; i++){
@@ -244,7 +302,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
     private void initializeActivity(){
 
-        /*binding.customBottomBar.setOnShowListener(new Function1<MeowBottomNavigation.Model, Unit>() {
+        /*customBottomBar.setOnShowListener(new Function1<MeowBottomNavigation.Model, Unit>() {
             @Override
             public Unit invoke(MeowBottomNavigation.Model model) {
                 // YOUR CODES
@@ -271,7 +329,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     protected void onResume() {
         super.onResume();
         if(CURRENT_LOCALE.equals("ar")){
-           // binding.customBottomBar.show(sharedpreferences.getInt("position",3), true);
+           // customBottomBar.show(sharedpreferences.getInt("position",3), true);
 
         }
 
@@ -287,6 +345,9 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 CURRENT_LOCALE =locale;
             else
                 CURRENT_LOCALE ="en";
+
+
+
             super.attachBaseContext(CustomContextWrapper.wrap(newBase, CURRENT_LOCALE));
         } else {
             super.attachBaseContext(newBase);
@@ -310,13 +371,13 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 if(!Global.current_fragment_id.equals(FragmentTAGS.FR_MAP)||!Global.current_fragment_id.equals(FragmentTAGS.FR_PARENT_SITEPLAN)||!Global.current_fragment_id.equals(FragmentTAGS.FR_LANDOWNER_SELECTION)
                         ||!Global.current_fragment_id.equals(FragmentTAGS.FR_ATTACHMENT)||!Global.current_fragment_id.equals(FragmentTAGS.FR_PAY)||!Global.current_fragment_id.equals(FragmentTAGS.FR_REQUEST_DETAILS)||!Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW)||!Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW_PAYMENT)) {
 
-                    binding.customBottomBar.clearCount(position);
-                    binding.customBottomBar.show(position, true);
+                    customBottomBar.clearCount(position);
+                    customBottomBar.show(position, true);
 
-                    binding.customBottomBar.show(position + 1, false);
+                    customBottomBar.show(position + 1, false);
                     loadFragment(model.bottomNavigationTAG(position + 1), true, null);
-                    binding.customBottomBar.clearAllCounts();
-                    binding.customBottomBar.show(position, true);
+                    customBottomBar.clearAllCounts();
+                    customBottomBar.show(position, true);
                     //loadFragment(sharedpreferences.getString("currentFragment",FragmentTAGS.FR_HOME),true, null);
                     loadFragment(model.bottomNavigationTAG(position), true, null);
                 }
@@ -330,11 +391,11 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
             Global.isLandScape = false;
             if(CURRENT_LOCALE.equals("ar")){
-                binding.customBottomBar.show(position-1,false);
+                customBottomBar.show(position-1,false);
                 loadFragment(model.bottomNavigationTAG(position-1), true, null);
-                binding.customBottomBar.clearAllCounts();
-                //binding.customBottomBar.getCellById(position-1).disableCell();
-                binding.customBottomBar.show(position,true);
+                customBottomBar.clearAllCounts();
+                //customBottomBar.getCellById(position-1).disableCell();
+                customBottomBar.show(position,true);
                 loadFragment(model.bottomNavigationTAG(position), true, null);
                 loadFragment(sharedpreferences.getString("currentFragment",Global.current_fragment_id),true,null);
             }
@@ -359,7 +420,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     }
 
     public Fragment loadFragment(String fragment_tag, Boolean addToBackStack, List<Object> params) {
-        fragmentManager = getSupportFragmentManager();
+
+
         Global.FragmentTagForHelpUrl = "";
         tx = fragmentManager.beginTransaction();
         Fragment fragment = null;
@@ -462,7 +524,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     @Override
     protected void onPause() {
         super.onPause();
-        sharedpreferences.edit().putInt("position",binding.customBottomBar.getId()).apply();
+        sharedpreferences.edit().putInt("position",customBottomBar.getId()).apply();
 
     }
 
@@ -475,14 +537,14 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     @Override
     public void manageBottomBar(boolean key) {
         if(!key) {
-            binding.customBottomBar.setVisibility(View.GONE);
+            customBottomBar.setVisibility(View.GONE);
             LinearLayout.LayoutParams uiContainerParam =
                     new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                             LinearLayout.LayoutParams.MATCH_PARENT);
             uiContainerParam.setMargins(0, 0, 0, 0);
             binding.uiContainer.setLayoutParams(uiContainerParam);
         } else {
-            binding.customBottomBar.setVisibility(View.VISIBLE);
+            customBottomBar.setVisibility(View.VISIBLE);
             LinearLayout.LayoutParams uiContainerParam =
                     new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                             LinearLayout.LayoutParams.MATCH_PARENT);
@@ -495,7 +557,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     @Override
     public void navigateToDashboard() {
 
-        binding.customBottomBar.show(1, true);
+        customBottomBar.show(1, true);
 
     }
 
@@ -536,9 +598,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 }
 
             }
-            /*if(Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW)){
-                //onWebViewBack();
-                }*/
+
             else{
                 Fragment fragmentBeforeBackPress = getCurrentFragment();
                 // Perform the usual back action
@@ -547,27 +607,32 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 fragmentAfterBackPress = getCurrentFragment();
                 if(fragmentAfterBackPress.getTag().equals(FragmentTAGS.FR_DASHBOARD)||fragmentAfterBackPress.getTag().equals(FragmentTAGS.FR_BOOKMARK)||fragmentAfterBackPress.getTag().equals(FragmentTAGS.FR_MYMAP)) {
                     Global.FragmentTagForHelpUrl = FragmentTAGS.FR_DASHBOARD;
-                    binding.customBottomBar.show(1, true);
+                    customBottomBar.show(1, true);
                     Global.lastSelectedBottomTab = 1;
                 }
                 if(Global.current_fragment_id.equals(FragmentTAGS.FR_HAPPINESS)) {
-                    binding.customBottomBar.show(2, true);
+                    customBottomBar.show(2, true);
                     Global.lastSelectedBottomTab = 2;
                 }
                 if(Global.current_fragment_id.equals(FragmentTAGS.FR_HOME)) {
                     Global.FragmentTagForHelpUrl = FragmentTAGS.FR_HOME;
-                    binding.customBottomBar.show(3, true);
+                    customBottomBar.show(3, true);
                     Global.lastSelectedBottomTab = 3;
                 }
                 if(Global.current_fragment_id.equals(FragmentTAGS.FR_CONTACT_US)) {
-                    binding.customBottomBar.show(4, true);
+                    customBottomBar.show(4, true);
                     Global.lastSelectedBottomTab = 4;
                 }
                 if(Global.current_fragment_id.equals(FragmentTAGS.FR_BOTTOMSHEET))
-                    binding.customBottomBar.show(5, true);
+                    customBottomBar.show(5, true);
+                }
+                if(Global.current_fragment_id.equals(FragmentTAGS.FR_SETTINGS)){
+                    //onWebViewBack();
+                    customBottomBar.show(3, true);
+                    openHomePage();
                 }
                 if(count == 1) {
-                    binding.customBottomBar.show(3, true);
+                    customBottomBar.show(3, true);
                     Global.lastSelectedBottomTab = 3;
                 }
             }
@@ -619,11 +684,11 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         getSupportFragmentManager().popBackStackImmediate();
         if(Global.isDashboard) {
             Global.FragmentTagForHelpUrl = FragmentTAGS.FR_DASHBOARD;
-            binding.customBottomBar.show(1, true);
+            customBottomBar.show(1, true);
             Global.lastSelectedBottomTab = 1;
         }
         else
-            binding.customBottomBar.show(3, true);
+            customBottomBar.show(3, true);
 
         if(Global.current_fragment_id.equals(FragmentTAGS.FR_CONTACT_US)||Global.current_fragment_id.equals(FragmentTAGS.FR_HAPPINESS))
             binding.imgHelp.setVisibility(View.INVISIBLE);
@@ -652,7 +717,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                     fragmentManager.popBackStackImmediate();
 
                     loadFragment(FragmentTAG, false, null);
-                    binding.customBottomBar.show(loadPosition, true);
+                    customBottomBar.show(loadPosition, true);
                 } else {
                     fragmentManager.popBackStackImmediate();
                 }
@@ -692,7 +757,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     @Override
     public void onAction(String actionCode) {
         if(actionCode.equals("dismiss")){
-            binding.customBottomBar.show(Global.lastSelectedBottomTab, true);
+            customBottomBar.show(Global.lastSelectedBottomTab, true);
         }
     }
 
@@ -703,6 +768,17 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
     @Override
     public void onDownloadFinish(Object data) {
+
+    }
+
+    public  void adjustFontScale(Configuration configuration, float scale) {
+
+        configuration.fontScale = scale;
+        DisplayMetrics metrics = MainActivity.this.getResources().getDisplayMetrics();
+        WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
+        Objects.requireNonNull(wm).getDefaultDisplay().getMetrics(metrics);
+        metrics.scaledDensity = configuration.fontScale * metrics.density;
+        getResources().updateConfiguration(configuration, metrics);
 
     }
 

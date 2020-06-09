@@ -79,6 +79,7 @@ import static dm.sime.com.kharetati.utility.constants.AppConstants.USER_OBJECT;
 
 public class Global {
     public static final String MYPREFERENCES = "MyPreferences";
+    public static final String APP_SESSION_TOKEN =  "APP_SESSION_TOKEN" ;
     private static final String GUEST_OBJECT = "Guest";
     private static final String USER_LANGUAGE = "UserLaunguage";
     public static String CURRENT_LOCALE = "en";
@@ -158,6 +159,7 @@ public class Global {
     public static boolean isfromWebViewCancel;
     public static String sessionErrorMsg;
     public static float fontScale;
+    public static boolean isRecreate;
     private static Context context;
     public static boolean isLanguageChanged = false;
     public static String noctemplateUrl;
@@ -738,10 +740,12 @@ public class Global {
         Global.session = null;
 
         Global.app_session_token = null;
+        context.getSharedPreferences(Global.MYPREFERENCES,Context.MODE_PRIVATE).edit().putString(Global.APP_SESSION_TOKEN,"").apply();
         Global.current_fragment_id = null;
 //        AttachmentFragment.deliveryByCourier=false;
         Global.requestId = null;
         Global.isBookmarks = false;
+        Global.isRecreate = false;
         isLanguageChanged =true;
         //Global.alertDialog = null;
         Global.isDeliveryByCourier= false;

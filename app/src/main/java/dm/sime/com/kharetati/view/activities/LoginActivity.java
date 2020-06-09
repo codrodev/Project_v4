@@ -840,6 +840,8 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                     binding.switchLanguage.setVisibility(View.VISIBLE);
                     binding.cardLogin.setVisibility(View.VISIBLE);
                     binding.slantViewLoginHeader.setVisibility(View.VISIBLE);
+                    binding.copyrightEnglish.setVisibility(View.GONE);
+                    binding.copyrightArabic.setVisibility(View.GONE);
 
                     LinearLayout.LayoutParams logoLayoutParams1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,((int)(Global.height/2)));
                     logoLayoutParams1.gravity = Gravity.CENTER;

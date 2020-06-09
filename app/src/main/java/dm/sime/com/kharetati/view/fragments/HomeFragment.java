@@ -372,6 +372,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         builder.append("remarks=" + Global.getPlatformRemark() + "&");
         String lang = Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0 ? "en" : "ar";
         builder.append("lng=" + lang + "&");
+        builder.append("fontSize" + Global.fontScale);
         builder.append("appsrc=kharetati&");
         if(!Global.isUserLoggedIn){
             //Guest

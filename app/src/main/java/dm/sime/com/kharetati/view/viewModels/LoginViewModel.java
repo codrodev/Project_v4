@@ -704,7 +704,7 @@ public class LoginViewModel extends ViewModel {
                 Log.v(TAG, "secretId:" + secretId);
                 String callbackUrl = Encryptions.decrypt(Global.uaePassConfig.UAEID_callback_url);
                 Log.v(TAG, "callbackUrl:" + callbackUrl);
-                /*if (UAEPassRequestModels.isPackageInstalled(UAEPassRequestModels.UAE_PASS_PACKAGE_ID, activity.getPackageManager())) {
+                if (UAEPassRequestModels.isPackageInstalled(UAEPassRequestModels.UAE_PASS_PACKAGE_ID, activity.getPackageManager())) {
                     Log.v(TAG, "UAE Pass App: app installed");
                     UAEPassAccessTokenRequestModel requestModel =
                             UAEPassRequestModels.getAuthenticationRequestModel(activity,
@@ -729,7 +729,7 @@ public class LoginViewModel extends ViewModel {
                             }
                         }
                     });
-                } else {*/
+                } else {
                     Log.v(TAG, "UAE Pass App: app is not installed");
                     String language = Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0 ? "en" : "ar";
                     String authUrl = Global.uaePassConfig.getAuthCodeUAEID_url.endsWith("?") ? Global.uaePassConfig.getAuthCodeUAEID_url : Global.uaePassConfig.getAuthCodeUAEID_url + "?";
@@ -740,7 +740,7 @@ public class LoginViewModel extends ViewModel {
                     intent.setData(Uri.parse(url));
                     //intent.setData(Uri.parse("http://www.google.com"));
                     activity.startActivity(intent);
-                /*}*/
+                }
             }
 
         }

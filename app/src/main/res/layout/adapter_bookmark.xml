@@ -64,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="1"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:background="#fcfcfc">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -143,47 +143,73 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="90dp"
+                    android:layout_height="45dp"
                     android:gravity="center_vertical"
                     android:orientation="vertical"
                     android:layout_margin="10dp"
 
-                    android:layout_weight=".70">
+                    >
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:orientation="horizontal"
-                        android:weightSum="1">
+                        android:gravity="start"
+                        android:weightSum="4">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight=".5"
-                            android:id="@+id/gotomap"
-                            android:background="#629f13">
+                            android:layout_weight="1"
+                            android:layout_gravity="start"
+                            android:id="@+id/gotomap">
                             <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight=".5"
-                                android:layout_margin="2.5dp"
+                                android:layout_width="42dp"
+                                android:layout_height="42dp"
                                 android:fontFamily="@font/dubai_font"
                                 android:padding="5dp"
+                                android:layout_gravity="start"
                                 android:id="@+id/view"
                                 android:src="@drawable/map"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:id="@+id/edit">
+                            <ImageView
+                                android:layout_width="42dp"
+                                android:layout_height="42dp"
+                                android:fontFamily="@font/dubai_font"
+                                android:padding="5dp"
+                                android:src="@drawable/edit"/>
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight=".5"
-                            android:id="@+id/gotomakani"
-                            android:layout_marginStart="2dp"
-                            android:background="#dfdfdf">
+                            android:layout_weight="1"
+                            android:id="@+id/delete"
+                            android:layout_marginStart="2dp">
                             <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:src="@drawable/makani"
+                                android:layout_width="42dp"
+                                android:layout_height="42dp"
+                                android:src="@drawable/delete"
                                 android:fontFamily="@font/dubai_font"
                                 android:padding="5dp"
-                                android:layout_margin="2.5dp"
+                                />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:id="@+id/gotomakani"
+                            android:layout_marginStart="2dp">
+                            <ImageView
+                                android:layout_width="42dp"
+                                android:layout_height="42dp"
+                                android:src="@drawable/marker"
+                                android:fontFamily="@font/dubai_font"
+                                android:padding="5dp"
+
                                 />
                         </LinearLayout>
 
@@ -193,39 +219,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:orientation="horizontal"
+                        android:visibility="gone"
                         android:layout_marginTop="2dp"
                         android:weightSum="1">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".5"
-                            android:id="@+id/edit"
-                            android:background="#13809f">
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight=".5"
-                                android:layout_margin="2.5dp"
-                                android:fontFamily="@font/dubai_font"
-                                android:padding="5dp"
-                                android:src="@drawable/edit"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".5"
-                            android:id="@+id/delete"
-                            android:layout_marginStart="2dp"
-                            android:background="#d90707">
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:src="@drawable/delete"
-                                android:fontFamily="@font/dubai_font"
-                                android:padding="5dp"
-                                android:layout_margin="2.5dp"
-                                />
-                        </LinearLayout>
+
 
 
                     </LinearLayout>

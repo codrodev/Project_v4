@@ -82,6 +82,8 @@ public class SettingsFragment extends Fragment {
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
         mTracker.setScreenName(FR_SETTINGS);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        ((MainActivity)getActivity()).manageBottomBar(false);
+        ((MainActivity)getActivity()).manageActionBar(false);
         sharedpreferences = getActivity().getSharedPreferences(MYPREFERENCES, Context.MODE_PRIVATE);
         String locale = sharedpreferences.getString(USER_LANGUAGE, "defaultStringIfNothingFound");
         if(!locale.equals("defaultStringIfNothingFound"))
@@ -115,10 +117,7 @@ public class SettingsFragment extends Fragment {
             else
                 binding.txtUsername.setText(LoginViewModel.guestName);
         }
-        if(Global.isUAE)
-            binding.txtLastLogin.setText(Global.uaeSessionResponse.getService_response().getLast_login());
-        else
-            binding.txtLastLogin.setText("Just Now Loggedin");
+
 
         if(CURRENT_LOCALE.equals("en")){
             binding.txtEnglish.setBackground(getActivity().getResources().getDrawable(R.drawable.capsule_maroon_bg));
@@ -142,9 +141,10 @@ public class SettingsFragment extends Fragment {
                 CURRENT_LOCALE = (CURRENT_LOCALE.equals("en")) ? "ar" : "en";
 
                 sharedpreferences.edit().putString(USER_LANGUAGE,CURRENT_LOCALE).apply();
+                sharedpreferences.edit().putString("currentFragment",Global.current_fragment_id).apply();
 
                 Global.changeLang(CURRENT_LOCALE, getActivity());
-                getActivity().recreate();
+                ((MainActivity)getActivity()).recreate();
 
             }
         });
@@ -169,9 +169,10 @@ public class SettingsFragment extends Fragment {
 
 
                 sharedpreferences.edit().putString(USER_LANGUAGE,CURRENT_LOCALE).apply();
+                sharedpreferences.edit().putString("currentFragment",Global.current_fragment_id).apply();
 
                 Global.changeLang(CURRENT_LOCALE, getActivity());
-                getActivity().recreate();
+                ((MainActivity)getActivity()).recreate();
             }
         });
 
@@ -231,7 +232,8 @@ public class SettingsFragment extends Fragment {
                 if(getActivity()!=null)
                     adjustFontScale(getActivity().getResources().getConfiguration(),Global.fontScale);
                 sharedpreferences.edit().putFloat(FONT_SIZE,Global.fontScale).apply();
-                getActivity().recreate();
+                sharedpreferences.edit().putString("currentFragment",Global.current_fragment_id).apply();
+                ((MainActivity)getActivity()).recreate();
             }
         }); binding.fontSize2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -241,7 +243,8 @@ public class SettingsFragment extends Fragment {
                 if(getActivity()!=null)
                     adjustFontScale(getActivity().getResources().getConfiguration(),Global.fontScale);
                 sharedpreferences.edit().putFloat(FONT_SIZE,Global.fontScale).apply();
-                getActivity().recreate();
+                sharedpreferences.edit().putString("currentFragment",Global.current_fragment_id).apply();
+                ((MainActivity)getActivity()).recreate();
             }
         }); binding.fontSize3.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -251,7 +254,8 @@ public class SettingsFragment extends Fragment {
                 if(getActivity()!=null)
                     adjustFontScale(getActivity().getResources().getConfiguration(),Global.fontScale);
                 sharedpreferences.edit().putFloat(FONT_SIZE,Global.fontScale).apply();
-                getActivity().recreate();
+                sharedpreferences.edit().putString("currentFragment",Global.current_fragment_id).apply();
+                ((MainActivity)getActivity()).recreate();
             }
         }); binding.fontSize4.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -262,7 +266,8 @@ public class SettingsFragment extends Fragment {
                 if(getActivity()!=null)
                     adjustFontScale(getActivity().getResources().getConfiguration(),Global.fontScale);
                 sharedpreferences.edit().putFloat(FONT_SIZE,Global.fontScale).apply();
-                getActivity().recreate();
+                sharedpreferences.edit().putString("currentFragment",Global.current_fragment_id).apply();
+                ((MainActivity)getActivity()).recreate();
             }
         }); binding.fontSize5.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -272,7 +277,8 @@ public class SettingsFragment extends Fragment {
                 if(getActivity()!=null)
                     adjustFontScale(getActivity().getResources().getConfiguration(),Global.fontScale);
                 sharedpreferences.edit().putFloat(FONT_SIZE,Global.fontScale).apply();
-                getActivity().recreate();
+                sharedpreferences.edit().putString("currentFragment",Global.current_fragment_id).apply();
+                ((MainActivity)getActivity()).recreate();
 
             }
         });
@@ -341,7 +347,7 @@ public class SettingsFragment extends Fragment {
     public  void adjustFontScale(Configuration configuration, float scale) {
 
         configuration.fontScale = scale;
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        DisplayMetrics metrics = getActivity().getResources().getDisplayMetrics();
         WindowManager wm = (WindowManager) getActivity().getSystemService(WINDOW_SERVICE);
         wm.getDefaultDisplay().getMetrics(metrics);
         metrics.scaledDensity = configuration.fontScale * metrics.density;

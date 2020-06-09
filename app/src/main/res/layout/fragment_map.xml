@@ -160,6 +160,30 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolBarLayout" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="16dp"
+            android:id="@+id/floatingButtton"
+            android:layout_marginBottom="150dp"
+            android:layout_gravity="bottom|end"/>
+        <FrameLayout
+            android:id="@+id/mapFunctionLayout"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@color/white"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="0dp"
+            android:elevation="20dp"
+            android:visibility="gone"
+            android:layoutDirection="locale"
+            app:layout_constraintTop_toTopOf="parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycleMapFunction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </FrameLayout>
         <include  layout="@layout/bottomsheet_web_view" />
 
         <androidx.core.widget.NestedScrollView

@@ -61,6 +61,7 @@ import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
 import dm.sime.com.kharetati.datas.repositories.HomeRepository;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.Global;
+import dm.sime.com.kharetati.utility.constants.AppConstants;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.adapters.InAppNotificationAdapter;
@@ -378,6 +379,7 @@ public class HomeViewModel extends ViewModel {
             homeNavigator.onSuccess();
             if (appResponse != null && appResponse.getService_response() != null) {
                 Global.app_session_token = appResponse.getService_response().getToken();
+                activity.getSharedPreferences(Global.MYPREFERENCES,Context.MODE_PRIVATE).edit().putString(Global.APP_SESSION_TOKEN,Global.app_session_token).apply();
                 getApps();
             } else {
                 AlertDialogUtil.errorAlertDialog("", activity.getResources().getString(R.string.community_error),
@@ -397,6 +399,8 @@ public class HomeViewModel extends ViewModel {
         String url = AppUrls.BASE_AUXULARY_URL + "/getapps";
 
         SerializeGetAppRequestModel model = new SerializeGetAppRequestModel();
+        if(Global.app_session_token==null)
+            Global.app_session_token = activity.getSharedPreferences(Global.MYPREFERENCES,Context.MODE_PRIVATE).getString(Global.APP_SESSION_TOKEN,Global.app_session_token);
 
         SerializeGetAppInputRequestModel inputModel = new SerializeGetAppInputRequestModel();
         if(Global.isUAE){
@@ -481,6 +485,8 @@ public class HomeViewModel extends ViewModel {
         PlotDetails.parcelNo = searchText;
 
         String url = getSelectedApplication().getSearchUrl();
+        if(Global.app_session_token==null)
+            Global.app_session_token = activity.getSharedPreferences(Global.MYPREFERENCES,Context.MODE_PRIVATE).getString(Global.APP_SESSION_TOKEN,"");
 
         SearchParameterModel searchModel = new SearchParameterModel();
 

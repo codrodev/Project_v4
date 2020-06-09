@@ -82,6 +82,8 @@ public class BottomNavigationFragmentSheet extends Fragment {
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         binding.setFragmentBottomNavigation(model);
         ((MainActivity)getActivity()).manageActionBar(false);
+        ((MainActivity)getActivity()).manageBottomBar(true);
+
        /* BottomSheetBehavior behavior = BottomSheetBehavior.from(binding.bottomSheetMore);
         if(Global.isLandScape)
         behavior.setPeekHeight((int) Global.height);*/
@@ -427,7 +429,12 @@ public class BottomNavigationFragmentSheet extends Fragment {
 
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MainActivity)getActivity()).manageActionBar(false);
+        ((MainActivity)getActivity()).manageBottomBar(true);
+    }
 
     @Override
     public void onDestroy() {
