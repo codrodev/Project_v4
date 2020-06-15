@@ -14,7 +14,7 @@ public interface MainNavigator {
 
     void manageBottomBar(boolean key);
 
-    public void navigateToDashboard();
+    public void navigateToDashboard(int position);
 
     public void onStarted();
 

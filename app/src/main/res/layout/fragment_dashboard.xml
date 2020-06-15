@@ -16,8 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingBottom="5dp"
-            android:background="@color/maroon_light"
+            android:background="@color/maroon_dark"
             android:gravity="center"
             android:weightSum="2">
             <androidx.cardview.widget.CardView
@@ -26,9 +25,11 @@
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="5dp"
                 android:layout_weight="1"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
                 android:background="@drawable/capsule_white_bg"
                 android:layout_gravity="center"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="20dp"
                 android:elevation="10dp">
                 <LinearLayout
                     android:id="@+id/layoutMyMap"
@@ -52,7 +53,7 @@
                         android:fontFamily="@font/dubai_font"
                         android:layout_gravity="center_vertical"
                         android:singleLine="true"
-                        android:layout_marginTop="5dp"
+                        android:gravity="center"
                         android:text="@string/mymaps"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
@@ -63,15 +64,18 @@
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="5dp"
                 android:layout_weight="1"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
                 android:background="@drawable/capsule_white_bg"
                 android:layout_gravity="center"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="20dp"
                 android:elevation="10dp">
                 <LinearLayout
                     android:id="@+id/layoutBookmark"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
+
                     android:background="@drawable/capsule_white_bg"
                     android:layout_gravity="center_vertical"
                     android:gravity="center">
@@ -88,7 +92,7 @@
                         android:textSize="16sp"
                         android:layout_height="match_parent"
                         android:text="@string/bookmark"
-                        android:layout_marginTop="5dp"
+                        android:gravity="center"
                         android:layout_gravity="center_vertical"
                         android:fontFamily="@font/dubai_font"
                         android:singleLine="true"

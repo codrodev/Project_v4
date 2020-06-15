@@ -233,6 +233,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         super.onResume();
         model.manageAppBar(getActivity(), true);
         model.manageAppBottomBAtr(getActivity(), true);
+        ((MainActivity)getActivity()).setScreenName(getActivity().getString(R.string.title_welcome));
         if(Global.appId!=null && model.getApplication( Global.appId)!=null)
         Global.HelpUrl = CURRENT_LOCALE.equals("en")?model.getApplication( Global.appId).getHelpUrlEn():model.getApplication( Global.appId).getHelpUrlAr();
 
@@ -372,14 +373,14 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         builder.append("remarks=" + Global.getPlatformRemark() + "&");
         String lang = Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0 ? "en" : "ar";
         builder.append("lng=" + lang + "&");
-        builder.append("fontSize" + Global.fontScale);
+        builder.append("fontSize=" + Global.fontSize * Global.fontScale+ "&");
         builder.append("appsrc=kharetati&");
         if(!Global.isUserLoggedIn){
             //Guest
             builder.append("userType=GUEST&");
             builder.append("user_id="+ Global.sime_userid +"&");
             builder.append("token="+ Global.app_session_token+"&");
-            builder.append("user_name=GUEST");
+            builder.append("user_name=GUEST&");
             builder.append("access_token=" + Global.accessToken + "&");
         } else {
             if(Global.isUAE){
@@ -396,7 +397,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                 //My Id
                 builder.append("userType=MYID&");
                 builder.append("user_id=" + Global.sime_userid + "&");
-                builder.append("user_name=" + Global.getUser(context).getFullname());
+                builder.append("user_name=" + Global.getUser(context).getFullname()+"&");
                 builder.append("access_token=" + Global.accessToken + "&");
                 builder.append("token="+ Global.app_session_token +"&");
             }

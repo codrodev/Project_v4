@@ -53,6 +53,7 @@
                 style="@style/font_small_bold"
                 android:layout_gravity="center_vertical|end"
                 android:singleLine="true"
+                android:visibility="invisible"
                 android:layout_weight="0.42"
                 android:layout_marginStart="5dp"
                 android:text="@string/LBL_DATE_TIME"
@@ -68,7 +69,8 @@
                 android:layout_weight=".25"
                 android:id="@+id/dateAndTime"
                 android:fontFamily="@font/dubai_font"
-                android:singleLine="true"
+                android:singleLine="false"
+                android:maxLines="2"
                 android:layout_marginStart="5dp"
                 android:text='@{adapterMyMapVM.getCurrentMyMap(position).req_created_date ?? ""}'
                 android:textAlignment="viewStart"
@@ -149,7 +151,8 @@
                         android:textSize="14sp"
                         android:id="@+id/txtVoucher"
                         android:fontFamily="@font/dubai_font"
-                        android:singleLine="true"
+                        android:singleLine="false"
+                        android:maxLines="2"
                         android:layout_marginStart="5dp"
                         android:text='@{adapterMyMapVM.getCurrentMyMap(position).req_created_date ?? ""}'
                         android:textAlignment="viewStart"
@@ -256,7 +259,7 @@
                     <ImageView
                         android:layout_width="32dp"
                         android:layout_height="48dp"
-                        android:src="@drawable/marker"
+                        android:src="@drawable/makani_512"
                         android:id="@+id/gotomakani"
                         android:layout_weight=".5"
                         android:fontFamily="@font/dubai_font"

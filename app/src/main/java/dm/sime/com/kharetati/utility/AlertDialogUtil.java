@@ -1739,7 +1739,7 @@ public class AlertDialogUtil {
 
                         ((MainActivity)context).loadFragment(FragmentTAGS.FR_DASHBOARD,true,null);
                         //MainActivity.mainVM.mainNavigator.onSuccess();
-                        MainActivity.mainVM.mainNavigator.navigateToDashboard();
+                        MainActivity.mainVM.mainNavigator.navigateToDashboard(0);
 
                     }
                 }).show();

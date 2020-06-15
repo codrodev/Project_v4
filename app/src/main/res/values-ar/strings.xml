@@ -242,7 +242,7 @@
     <string name="yes">نعم</string>
     <string name="no">لا</string>
     <string name="reset">تحديث</string>
-    <string name="findPlot">البحث عن قطعة الأرض</string>
+    <string name="findPlot">العثور على مؤامرة</string>
     <string name="enter_plot_number">ادخل رقم قطعة الأرض</string>
     <string name="date_from">التاريخ - من:</string>
     <string name="date">DD/MM/YYYY</string>
@@ -271,4 +271,10 @@
     <string name="mailus">راسلنا</string>
     <string name="reachus">تواصل معنا</string>
     <string name="sendus">أرسل لنا</string>
+    <string name="menu_happiness">مؤشر السعادة</string>
+    <string name="more">خيارات</string>
+    <string name="lastlogin">اخر تسجيل دخول</string>
+    <string name="login_with">الدخول</string>
+    <string name="with_uaepass">بالهوية الرقمية</string>
+    <string name="help">مساعدة</string>
 </resources>

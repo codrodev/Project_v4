@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
@@ -41,6 +43,7 @@ import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.navigators.FragmentNavigator;
 import dm.sime.com.kharetati.view.viewModels.LoginViewModel;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
@@ -106,23 +109,29 @@ public class  WebViewFragment extends Fragment {
         //txtWelcome = view.findViewById(R.id.txtWelcome);
         imgBack = view.findViewById(R.id.imgBack);
         imgBack.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
-        /*txtUsername.setText(Global.isUserLoggedIn?(Global.getUser(getActivity()).getFullname()): LoginViewModel.guestName);
-        if(appName != null && appName != "") {
+        ((MainActivity)getActivity()).setScreenName(Global.isUserLoggedIn?Global.getUser(getActivity()).getFullname(): LoginViewModel.guestName);
+
+        /*if(appName != null && appName != "") {
             txtWelcome.setText(appName);
         } else {
             txtWelcome.setText("WELCOME");
         }*/
         webView = view.findViewById(R.id.webView);
         webSettings = webView.getSettings();
+        //Global.fontSize = getActivity().getResources().getDimension(R.dimen.txtSize);
+        webSettings.setDefaultFontSize((int)Global.fontSize);
         webSettings.setJavaScriptEnabled(true);
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setAllowFileAccess(true);
         webView.getSettings().setJavaScriptEnabled(true);
+        String newUA= "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0";
+        webView.getSettings().setUserAgentString(newUA);
         webView.setWebViewClient(new MyWebViewClient());
         webView.setWebChromeClient(new MyWebChromeClient(getActivity()) );
         webView.loadUrl(launchUrl);
-        manageAppBottomBAtr(false);
-        manageAppBar(false);
+        manageAppBottomBAtr(true);
+        manageAppBar(true);
+        ((MainActivity)getActivity()).setScreenName(appName!=null?appName:getActivity().getResources().getString(R.string.title_welcome));
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -255,6 +264,14 @@ public class  WebViewFragment extends Fragment {
         return;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        manageAppBottomBAtr(true);
+        manageAppBar(true);
+        ((MainActivity)getActivity()).setScreenName(appName!=null?appName:getActivity().getResources().getString(R.string.title_welcome));
+    }
+
     private class MyWebChromeClient extends WebChromeClient {
         Context context;
 
@@ -333,10 +350,15 @@ public class  WebViewFragment extends Fragment {
         public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error){
             AlertDialogUtil.showProgressBar(getActivity(),false);
         }
+        @Override
+        public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+            handler.proceed(); // Ignore SSL certificate errors
+        }
 
         @Override
         public void onPageFinished(WebView view, String url) {
             AlertDialogUtil.showProgressBar(getActivity(),false);
+            Global.hideSoftKeyboard(getActivity());
         }
 
     }

@@ -301,6 +301,7 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
     public void sortBookmarks(boolean descending) {
         if(descending)
         {
+           if(model.getBookMarks()!=null){
             Collections.sort(model.getBookMarks(), new Comparator<Bookmark>() {
                 @Override
                 public int compare(Bookmark bookmark1, Bookmark bookmark2) {
@@ -308,9 +309,11 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
                     return bookmark1.date.compareTo(bookmark2.date);
                 }
             });
+           }
         }
         else{
             //txtHeading.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.asc, 0);
+            if(model.getBookMarks()!=null){
             Collections.sort(model.getBookMarks(), new Comparator<Bookmark>() {
                 @Override
                 public int compare(Bookmark bookmark1, Bookmark bookmark2) {
@@ -318,6 +321,7 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
                     return bookmark1.date.compareTo(bookmark2.date)>=0?-1:0;
                 }
             });
+            }
         }
         DashboardFragment.sortDescending=!descending;
 

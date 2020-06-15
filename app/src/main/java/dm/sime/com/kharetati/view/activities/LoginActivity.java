@@ -196,7 +196,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
         binding.editUserName.requestFocus();
         binding.cardLogin.setVisibility(View.GONE);
-        binding.layoutUAEPass.setVisibility(View.GONE);
+//        //binding.layoutUAEPass.setVisibility(View.GONE);
 
 
         binding.switchLanguage.setVisibility( View.GONE);
@@ -373,7 +373,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                 }
             }
         });
-        binding.txtEnableUAEPass.setOnClickListener(new View.OnClickListener() {
+       /* binding.txtEnableUAEPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(Global.isConnected(LoginActivity.this)){
@@ -413,7 +413,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                         AlertDialogUtil.errorAlertDialog("",getResources().getString(R.string.internet_connection_problem1),getResources().getString(R.string.ok),LoginActivity.this);
                 }
             }
-        });
+        });*/
         /*binding.layoutEnableUAEPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -602,7 +602,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                 binding.imgBackground.setScaleType(ImageView.ScaleType.FIT_XY);
                 binding.slantViewLoginHeader.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,((int)(Global.height/2) +100)));
 
-                LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) ((Global.height / 2) - (Global.height / 14)));
+                LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) ((Global.height / 2) - (Global.height / 4)));
 //                LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 cardParams.setMargins(48,0,48,-32);
                 binding.cardLogin.setLayoutParams(cardParams);
@@ -723,12 +723,12 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                     binding.txtGuest.setGravity(Gravity.CENTER_VERTICAL);
                     binding.txtGuest.setTextSize(16f);
                 }else{
-                    LinearLayout.LayoutParams guestLoginParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, elementHeight);
+                    /*LinearLayout.LayoutParams guestLoginParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, elementHeight);
                     guestLoginParams.gravity = Gravity.CENTER_VERTICAL;
                     guestLoginParams.setMargins(leftMargin, topMargin, rightMargin, bottomMargin-92 );
                     binding.txtGuest.setLayoutParams(guestLoginParams);
                     binding.txtGuest.setGravity(Gravity.CENTER_VERTICAL);
-                    binding.txtGuest.setTextSize(20f);
+                    binding.txtGuest.setTextSize(20f);*/
 
                 }
 
@@ -743,12 +743,12 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                     binding.txtUAEPass.setGravity(Gravity.CENTER_VERTICAL);
                 }
                 else{
-                    LinearLayout.LayoutParams uaePassTextParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    /*LinearLayout.LayoutParams uaePassTextParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     uaePassTextParams.gravity = Gravity.CENTER_VERTICAL;
                     uaePassTextParams.setMargins(leftMargin, topMargin, rightMargin, bottomMargin);
                     binding.txtEnableUAEPass.setLayoutParams(uaePassTextParams);
                     binding.txtEnableUAEPass.setGravity(Gravity.CENTER_VERTICAL);
-                    binding.txtEnableUAEPass.setTextSize(20f);
+                    binding.txtEnableUAEPass.setTextSize(20f);*/
 
                 }
 
@@ -761,11 +761,11 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                     binding.imgUAEPass.setLayoutParams(uaePassImageParams);
                     binding.imgUAEPass.setScaleType(ImageView.ScaleType.FIT_XY);}
                 else{
-                    LinearLayout.LayoutParams uaePassImageParams = new LinearLayout.LayoutParams(300,150);
+                    /*LinearLayout.LayoutParams uaePassImageParams = new LinearLayout.LayoutParams(300,150);
                     uaePassImageParams.gravity = Gravity.CENTER;
                     uaePassImageParams.setMargins(leftMargin,topMargin-4,rightMargin,bottomMargin);
                     binding.imgEnableUAEPass.setLayoutParams(uaePassImageParams);
-                    binding.imgEnableUAEPass.setScaleType(ImageView.ScaleType.FIT_XY);
+                    binding.imgEnableUAEPass.setScaleType(ImageView.ScaleType.FIT_XY);*/
 
 
                 }
@@ -800,28 +800,28 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                             animateView(binding.slantViewLoginHeader,1000L,1000L,true,0f,0f,0f, (-Global.height/4)+100);
                             animateView(binding.cardLogin,1000L,1000L,true,0f,0f,Global.height, (-Global.height/2)+Global.height/3);
 
-                            animateView(binding.layoutUAEPass,1000L,1000L,true,0f,0f,Global.height, (-Global.height/2)+Global.height/3+100);
+                            //animateView(binding.layoutUAEPass,1000L,1000L,true,0f,0f,Global.height, (-Global.height/2)+Global.height/3+100);
 
                             if(!Global.uaePassConfig.disableMyId){
                                 binding.layoutEnableUAEPass.setVisibility(View.GONE);
-                                binding.layoutUAEPass.setVisibility(View.VISIBLE);
+                                //binding.layoutUAEPass.setVisibility(View.VISIBLE);
                                 LinearLayout.LayoutParams layoutUaepassarams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,binding.cardLogin.getHeight()+175);
 //                    LinearLayout.LayoutParams cardViewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                                 layoutUaepassarams.gravity = Gravity.CENTER_HORIZONTAL;
                                 layoutUaepassarams.setMargins(32, 10,32,0);
-                                binding.layoutUAEPass.setLayoutParams(layoutUaepassarams);
+                                //binding.layoutUAEPass.setLayoutParams(layoutUaepassarams);
                             }
                             else{
                                 binding.txtGuest.setVisibility(View.VISIBLE);
                                 binding.layoutEnableUAEPass.setVisibility(View.VISIBLE);
-                                LinearLayout.LayoutParams guestLoginParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, elementHeight);
+                                /*LinearLayout.LayoutParams guestLoginParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, elementHeight);
                                 guestLoginParams.gravity = Gravity.CENTER_VERTICAL;
                                 guestLoginParams.setMargins(leftMargin, topMargin+184, rightMargin, bottomMargin - 5);
                                 binding.txtGuest.setLayoutParams(guestLoginParams);
                                 binding.txtGuest.setGravity(Gravity.CENTER_VERTICAL);
                                 binding.txtGuest.setTextSize(20f);
-                                binding.txtUAEPass.setTextSize(20f);
-                                binding.layoutUAEPass.setVisibility(View.GONE);
+                                binding.txtUAEPass.setTextSize(20f);*/
+                                //binding.layoutUAEPass.setVisibility(View.GONE);
                             }
 
 
@@ -853,7 +853,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                     //slantViewParams.setMargins(0,(-height).toInt(),0,0)
                     binding.slantViewLoginHeader.setLayoutParams(slantViewParams1);
 
-                    LinearLayout.LayoutParams cardViewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)-(Global.height/14)));
+                    LinearLayout.LayoutParams cardViewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)-(Global.height/4)));
 //                    LinearLayout.LayoutParams cardViewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     cardViewParams.gravity = Gravity.CENTER_HORIZONTAL;
                     cardViewParams.setMargins(48, (int) ((-Global.height/4)+150),48,20);
@@ -900,8 +900,8 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
             binding.logoSplash.setVisibility(View.GONE);
 
         }
-        if(view == binding.layoutUAEPass)
-            binding.layoutUAEPass.setVisibility(View.VISIBLE);
+       /* if(view == binding.layoutUAEPass)
+            binding.layoutUAEPass.setVisibility(View.VISIBLE);*/
 
     }
 
@@ -1051,7 +1051,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         progressBar.setVisibility(View.GONE);
         AlertDialogUtil.showProgressBar(this,false);
         onMyIDDisabled(status);
-        binding.layoutUAEPass.setVisibility(View.GONE);
+        //binding.layoutUAEPass.setVisibility(View.GONE);
         displayContent();
     }
     public void onMyIDDisabled(boolean status){
@@ -1060,8 +1060,8 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
             binding.loginContainer.setVisibility(View.GONE);
             binding.imageDubaiID.setVisibility(View.GONE);
             binding.layoutEnableUAEPass.setVisibility(View.VISIBLE);
-            binding.layoutUAEPass.setVisibility(View.GONE);
-            LinearLayout.LayoutParams uaePassImageParams = new LinearLayout.LayoutParams(300,120);
+            //binding.layoutUAEPass.setVisibility(View.GONE);
+            /*LinearLayout.LayoutParams uaePassImageParams = new LinearLayout.LayoutParams(300,120);
             uaePassImageParams.gravity = Gravity.CENTER;
             uaePassImageParams.setMargins(leftMargin,topMargin-4,rightMargin,bottomMargin);
             binding.imgEnableUAEPass.setLayoutParams(uaePassImageParams);
@@ -1072,13 +1072,13 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
             binding.txtGuest.setLayoutParams(guestLoginParams);
             binding.txtGuest.setGravity(Gravity.CENTER_VERTICAL);
             binding.txtGuest.setTextSize(20f);
-            binding.txtUAEPass.setTextSize(20f);
+            binding.txtUAEPass.setTextSize(20f);*/
 
         } else {
             binding.loginContainer.setVisibility(View.VISIBLE);
             binding.imageDubaiID.setVisibility(View.VISIBLE);
             binding.layoutEnableUAEPass.setVisibility(View.GONE);
-            binding.layoutUAEPass.setVisibility(View.VISIBLE);
+           // binding.layoutUAEPass.setVisibility(View.VISIBLE);
             binding.imgUAEPass.setVisibility(View.VISIBLE);
             binding.txtUAEPass.setVisibility(View.VISIBLE);
             LinearLayout.LayoutParams uaePassImageParams = new LinearLayout.LayoutParams(300,120);

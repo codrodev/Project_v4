@@ -72,6 +72,7 @@ public class FeedbackFragment extends Fragment {
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         ((MainActivity)getActivity()).manageActionBar(true);
         ((MainActivity)getActivity()).manageBottomBar(true);
+        ((MainActivity)getActivity()).setScreenName(getActivity().getResources().getString(R.string.feedback));
         initializePage();
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         return binding.getRoot();
@@ -122,6 +123,12 @@ public class FeedbackFragment extends Fragment {
                     }
                 }
                 return false;
+            }
+        });
+        binding.btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).onBackPressed();
             }
         });
 

@@ -12,10 +12,10 @@
 
         android:layout_margin="5dp">
         <androidx.cardview.widget.CardView
-            android:layout_width="105dp"
-            android:layout_height="105dp"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             android:layout_gravity="center"
-            app:cardBackgroundColor="#F5F5F5"
+            app:cardBackgroundColor="#FCFCFC"
             app:cardCornerRadius="16dp"
             android:gravity="center"
             app:cardElevation="3dp"
@@ -26,18 +26,15 @@
             android:layout_height="match_parent"
             android:padding="16dp"
             android:layout_weight="0.6"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/ic_help_black"
-            android:gravity="center_horizontal"
-            android:layout_gravity="center_horizontal" />
+            app:srcCompat="@drawable/ic_help_black"
+            android:gravity="center"
+            android:layout_gravity="center" />
         </androidx.cardview.widget.CardView>
         <TextView
             style="@style/font_small_bold"
             android:id="@+id/txtMoreName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
             android:text="text"
             android:maxLines="2"
             android:lines="2"

@@ -255,7 +255,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
             binding.txtStepperTwo.setBackground(getResources().getDrawable(R.drawable.ring_background));
             binding.txtStepperThree.setBackground(getResources().getDrawable(R.drawable.ring_background));
             binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.ring_background));
-            binding.stepperOneText.setTextColor(getResources().getColor(R.color.green));
+            binding.stepperOneText.setTextColor(getResources().getColor(R.color.white));
             binding.stepperTwoText.setTextColor(getResources().getColor(R.color.stepper_text_color));
             binding.stepperThreeText.setTextColor(getResources().getColor(R.color.stepper_text_color));
             binding.stepperFourText.setTextColor(getResources().getColor(R.color.stepper_text_color));
@@ -282,10 +282,10 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
             binding.stepperThreeText.setText("3");
             binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.ring_background));
             binding.stepperFourText.setText("4");
-            binding.stepperTwoText.setTextColor(getResources().getColor(R.color.green));
+            binding.stepperTwoText.setTextColor(getResources().getColor(R.color.white));
             binding.stepperThreeText.setTextColor(getResources().getColor(R.color.stepper_text_color));
             binding.stepperFourText.setTextColor(getResources().getColor(R.color.stepper_text_color));
-            binding.view1.setBackgroundColor(getResources().getColor(R.color.green));
+            binding.view1.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
             binding.view2.setBackgroundColor(getResources().getColor(R.color.stepper_text_color));
             binding.view3.setBackgroundColor(getResources().getColor(R.color.stepper_text_color));
 
@@ -300,10 +300,10 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
             binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.ring_background));
             binding.stepperFourText.setText("4");
 
-            binding.stepperThreeText.setTextColor(getResources().getColor(R.color.green));
+            binding.stepperThreeText.setTextColor(getResources().getColor(R.color.stepper_text_color));
             binding.stepperFourText.setTextColor(getResources().getColor(R.color.stepper_text_color));
-            binding.view1.setBackgroundColor(getResources().getColor(R.color.green));
-            binding.view2.setBackgroundColor(getResources().getColor(R.color.green));
+            binding.view1.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
+            binding.view2.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
             binding.view3.setBackgroundColor(getResources().getColor(R.color.stepper_text_color));
         } else if(index == 3) {
 
@@ -317,10 +317,10 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
             binding.stepperFourText.setText("4");
 
 
-            binding.stepperFourText.setTextColor(getResources().getColor(R.color.green));
-            binding.view1.setBackgroundColor(getResources().getColor(R.color.green));
-            binding.view2.setBackgroundColor(getResources().getColor(R.color.green));
-            binding.view3.setBackgroundColor(getResources().getColor(R.color.green));
+            binding.stepperFourText.setTextColor(getResources().getColor(R.color.white));
+            binding.view1.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
+            binding.view2.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
+            binding.view3.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
         }
     }
 

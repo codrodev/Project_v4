@@ -251,8 +251,10 @@ public class BookmarkViewModel extends ViewModel implements Filterable {
                         bookMarksNavigator.onDeleteSuccess(BookmarkAdapter.lstBookmark);
                         getAllBookMarks();
 
-
-                        AlertDialogUtil.errorAlertDialog("", activity.getString(R.string.favourite_deleted), activity.getString(R.string.ok), activity);
+                        if(Global.appMsg!=null)
+                            AlertDialogUtil.errorAlertDialog("",Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getBookmarkDeletedEn():Global.appMsg.getBookmarkDeletedAr(), activity.getString(R.string.ok), activity);
+                        else
+                            AlertDialogUtil.errorAlertDialog("", activity.getString(R.string.favourite_deleted), activity.getString(R.string.ok), activity);
 
 
                         /*notifyDataSetChanged();

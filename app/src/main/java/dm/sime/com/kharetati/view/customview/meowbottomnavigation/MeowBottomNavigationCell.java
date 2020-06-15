@@ -405,7 +405,7 @@ final class MeowBottomNavigationCell extends RelativeLayout {
         this.setProgress(this.progress);
     }
 
-    public final void disableCell() {
+    public  void disableCell() {
         if (this.isEnabledCell) {
             animateProgress$default(this, false, false, 2, null);
         }

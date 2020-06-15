@@ -206,6 +206,7 @@ public class HomeViewModel extends ViewModel {
         if(mutableHomeGridMenu!=null && mutableHomeGridMenu.getValue()!=null){
         for (Applications app: mutableHomeGridMenu.getValue()) {
             if(app.getId().equals(appID)){
+                Global.appName = Global.CURRENT_LOCALE.equals("en")?app.getNameEn():app.getNameAr();
                 return app;
             }
         }}

@@ -20,6 +20,7 @@ import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.FragmentDashboardBinding;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.viewModels.DashboardViewModel;
 
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_BOOKMARK;
@@ -29,14 +30,20 @@ import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_MYMAP;
 
 public class DashboardFragment extends Fragment implements ViewPager.OnPageChangeListener{
 
+    private static String ARG_PARAM1;
     DashboardViewModel model;
     FragmentDashboardBinding binding;
+    public static FragmentDashboardBinding dshboardBinding;
     private View mRootView;
     private Tracker mTracker;
     public static Boolean sortDescending=true;
+    private int fragmenntPosition;
 
-    public static DashboardFragment newInstance(){
+    public static DashboardFragment newInstance(int param1){
         DashboardFragment fragment = new DashboardFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_PARAM1, param1);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -51,6 +58,8 @@ public class DashboardFragment extends Fragment implements ViewPager.OnPageChang
         Global.current_fragment_id = FragmentTAGS.FR_DASHBOARD;
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dashboard, container, false);
         binding.setFragmentDashboardVM(model);
+        fragmenntPosition = getArguments().getInt(ARG_PARAM1);
+        dshboardBinding =binding;
         mRootView = binding.getRoot();
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
         mTracker.setScreenName(FR_DASHBOARD);
@@ -69,11 +78,13 @@ public class DashboardFragment extends Fragment implements ViewPager.OnPageChang
             model.setDashboardPagerAdapter(this, 1);
         } else {
             binding.layoutParent.setWeightSum(2);
+            binding.layoutParent.setPaddingRelative(0,5,100,5);
             model.setDashboardPagerAdapter(this, 2);
         }
         binding.viewPagerCreatePackage.addOnPageChangeListener(this);
         binding.viewPagerCreatePackage.setAdapter(model.getDashboardPagerAdapter());
 
+        binding.viewPagerCreatePackage.setCurrentItem(fragmenntPosition, true);
         model.manageAppBar(getActivity(), true);
         model.manageAppBottomBAtr(getActivity(), true);
 
@@ -116,15 +127,18 @@ public class DashboardFragment extends Fragment implements ViewPager.OnPageChang
 
     private void guestUserUI(){
         binding.layoutCardMyMap.setVisibility(View.GONE);
-        binding.txtBookmark.setTextColor(getResources().getColor(R.color.white));
-        binding.layoutBookmark.setBackgroundColor(getResources().getColor(R.color.maroon_dark));
-        binding.imgBookMark.setImageDrawable(getResources().getDrawable(R.drawable.favourites_white));
+        binding.txtBookmark.setTextColor(getResources().getColor(R.color.black));
+        binding.layoutBookmark.setBackgroundColor(getResources().getColor(R.color.white));
+        binding.imgBookMark.setImageDrawable(getResources().getDrawable(R.drawable.favourites));
+        ((MainActivity)getActivity()).setScreenName(getActivity().getResources().getString(R.string.bookmark));
+        binding.layoutParent.setPaddingRelative(0,5,0,5);
     }
 
     private void changeBookmarkColor(){
         binding.txtBookmark.setTextColor(getResources().getColor(R.color.black));
         binding.layoutBookmark.setBackground(getResources().getDrawable(R.drawable.capsule_white_bg));
         binding.imgBookMark.setImageDrawable(getResources().getDrawable(R.drawable.favourites));
+        ((MainActivity)getActivity()).setScreenName(getActivity().getResources().getString(R.string.bookmark));
 
         binding.txtMyMap.setTextColor(getResources().getColor(R.color.white));
         binding.layoutMyMap.setBackground(getResources().getDrawable(R.drawable.capsule_bg));
@@ -141,6 +155,7 @@ public class DashboardFragment extends Fragment implements ViewPager.OnPageChang
         binding.txtMyMap.setTextColor(getResources().getColor(R.color.black));
         binding.layoutMyMap.setBackground(getResources().getDrawable(R.drawable.capsule_white_bg));
         binding.imgMyMap.setImageDrawable(getResources().getDrawable(R.drawable.map));
+        ((MainActivity)getActivity()).setScreenName(getActivity().getResources().getString(R.string.mymaps));
         Global.HelpUrl = Global.CURRENT_LOCALE.equals("en")?Global.mymaps_en_url:Global.mymaps_ar_url;
         Global.current_fragment_id = FR_MYMAP;
     }

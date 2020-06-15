@@ -10,6 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:layout_margin="5dp">
 
         <LinearLayout
@@ -22,7 +23,7 @@
             <LinearLayout
                 android:id="@+id/fragment_map_layoutSearch"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal"
                 android:weightSum="1">
@@ -31,6 +32,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight=".35"
+                    android:layout_gravity="center"
                     android:background="@drawable/rounded_corner_theme_bg">
 
                     <!--<ImageButton-->
@@ -44,14 +46,18 @@
 
                     <TextView
                         android:id="@+id/textView27"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_width="72dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:layout_weight=".20"
+                        android:layout_weight=".10"
+                        android:paddingStart="5dp"
                         android:focusableInTouchMode="false"
                         android:fontFamily="@font/dubai_font"
-                        android:gravity="center_vertical"
-                        android:paddingStart="8dp"
+                        android:gravity="start|center_vertical"
+
+                        android:paddingTop="8dp"
+                        android:singleLine="false"
+                        android:maxLines="2"
                         android:text="@string/findPlot"
                         android:textAlignment="viewStart"
                         android:textColor="@android:color/black"
@@ -59,7 +65,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/fragment_bookmarks_plotnumber"
-                        android:layout_width="wrap_content"
+                        android:layout_width="72dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.20"
                         android:background="#00000000"
@@ -68,17 +74,22 @@
                         android:gravity="center_vertical|center_horizontal"
                         android:hint="-  -  -  -  -  -  -"
                         android:inputType="number"
-                        android:maxLength="20"
+                        android:ems="8"
+
+                        android:maxLength="12"
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
-                        android:textAlignment="center"
+                        android:lineHeight="20dp"
+                        android:textAlignment="viewStart"
                         android:textDirection="ltr"
                         android:textSize="14sp" />
 
                     <LinearLayout
                         android:id="@+id/fragment_bookmarks_btnSearch"
-                        android:layout_width="32dp"
+                        android:layout_width="40dp"
                         android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="5dp"
                         android:layout_weight=".10">
 
                         <ImageView
@@ -86,7 +97,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:padding="10dp"
-                            android:src="@drawable/ic_search" />
+                            android:src="@drawable/search_512" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -94,7 +105,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
+                    android:layout_gravity="end|center"
                     android:layout_weight=".65"
                     android:gravity="end">
 
@@ -102,7 +113,7 @@
                         android:id="@+id/sortDescending"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_gravity="end"
+                        android:layout_gravity="end|center"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
@@ -121,7 +132,7 @@
                         android:id="@+id/sortAscending"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_gravity="end"
+                        android:layout_gravity="end|center"
 
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"

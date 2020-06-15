@@ -285,7 +285,7 @@ public class SettingsFragment extends Fragment {
 
     }
     public void font1Clicked(){
-        binding.fontSize1.setBackground(getActivity().getResources().getDrawable(R.drawable.border_background));
+        binding.fontSize1.setBackground(getActivity().getResources().getDrawable(R.drawable.maroon_border_bg));
         binding.fontSize2.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
         binding.fontSize3.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
         binding.fontSize4.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
@@ -298,7 +298,7 @@ public class SettingsFragment extends Fragment {
     }
     public void font2Clicked(){
         binding.fontSize1.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
-        binding.fontSize2.setBackground(getActivity().getResources().getDrawable(R.drawable.border_background));
+        binding.fontSize2.setBackground(getActivity().getResources().getDrawable(R.drawable.maroon_border_bg));
         binding.fontSize3.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
         binding.fontSize4.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
         binding.fontSize5.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
@@ -311,7 +311,7 @@ public class SettingsFragment extends Fragment {
     }public void font3Clicked(){
         binding.fontSize1.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
         binding.fontSize2.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
-        binding.fontSize3.setBackground(getActivity().getResources().getDrawable(R.drawable.border_background));
+        binding.fontSize3.setBackground(getActivity().getResources().getDrawable(R.drawable.maroon_border_bg));
         binding.fontSize4.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
         binding.fontSize5.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
         binding.fontSize1.setTextColor(getActivity().getResources().getColor(R.color.black));
@@ -323,7 +323,7 @@ public class SettingsFragment extends Fragment {
         binding.fontSize1.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
         binding.fontSize2.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
         binding.fontSize3.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
-        binding.fontSize4.setBackground(getActivity().getResources().getDrawable(R.drawable.border_background));
+        binding.fontSize4.setBackground(getActivity().getResources().getDrawable(R.drawable.maroon_border_bg));
         binding.fontSize5.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
         binding.fontSize1.setTextColor(getActivity().getResources().getColor(R.color.black));
         binding.fontSize2.setTextColor(getActivity().getResources().getColor(R.color.black));
@@ -336,7 +336,7 @@ public class SettingsFragment extends Fragment {
         binding.fontSize2.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
         binding.fontSize3.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
         binding.fontSize4.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
-        binding.fontSize5.setBackground(getActivity().getResources().getDrawable(R.drawable.border_background));
+        binding.fontSize5.setBackground(getActivity().getResources().getDrawable(R.drawable.maroon_border_bg));
         binding.fontSize1.setTextColor(getActivity().getResources().getColor(R.color.black));
         binding.fontSize2.setTextColor(getActivity().getResources().getColor(R.color.black));
         binding.fontSize3.setTextColor(getActivity().getResources().getColor(R.color.black));

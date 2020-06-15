@@ -160,6 +160,8 @@ public class Global {
     public static String sessionErrorMsg;
     public static float fontScale;
     public static boolean isRecreate;
+    public static String appName;
+    public static float fontSize = 14f;
     private static Context context;
     public static boolean isLanguageChanged = false;
     public static String noctemplateUrl;

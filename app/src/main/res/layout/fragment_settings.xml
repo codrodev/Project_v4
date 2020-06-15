@@ -119,6 +119,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAlignment="viewStart"
+                        android:layout_marginEnd="@dimen/settings_language_margin"
                         android:layout_marginStart="12dp"
                         android:layout_marginVertical="12dp"
                         style="@style/font_medium_bold"
@@ -183,6 +184,7 @@
                         android:layout_height="wrap_content"
                         android:textAlignment="viewStart"
                         android:layout_marginStart="12dp"
+                        android:layout_marginEnd="@dimen/settings_talkback_margin"
                         android:layout_marginVertical="12dp"
                         style="@style/font_medium_bold"
                         android:textColor="@color/black"
@@ -262,45 +264,51 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="aA"
-                            android:textSize="10sp"
+                            android:textSize="7dp"
                             android:id="@+id/fontSize1"
                             android:background="@drawable/grey_border_bg"
-                            android:paddingTop="14dp"
+
+                            android:gravity="center"
+                            android:layout_gravity="center"
                             android:textAlignment="center"/>
 
                         <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:text="aA"
-                            android:textSize="12dp"
                             android:id="@+id/fontSize2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
                             android:background="@drawable/grey_border_bg"
-                            android:paddingTop="12dp"
-                            android:textAlignment="center"/>
+                            android:gravity="center"
+                            android:text="aA"
+                            android:textAlignment="center"
+                            android:textSize="10.5dp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="aA"
+                            android:layout_gravity="center"
+                            android:gravity="center"
                             android:id="@+id/fontSize3"
                             android:textColor="@color/white"
                             android:background="@drawable/border_background"
-                            android:paddingTop="10dp"
-                            android:textSize="14sp"
+
+                            android:textSize="14dp"
                             android:textAlignment="center"/>
 
                         <TextView
+                            android:id="@+id/fontSize4"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:text="aA"
-                            android:id="@+id/fontSize4"
                             android:background="@drawable/grey_border_bg"
-                            android:paddingTop="8dp"
-                            android:textSize="16sp"
-                            android:textAlignment="center"/>
+                            android:gravity="center"
+                            android:text="aA"
+                            android:textAlignment="center"
+                            android:textSize="17.5dp" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -308,8 +316,9 @@
                             android:id="@+id/fontSize5"
                             android:background="@drawable/grey_border_bg"
                             android:text="aA"
-                            android:paddingTop="6dp"
-                            android:textSize="18sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textSize="21dp"
                             android:textAlignment="center"/>
                     </LinearLayout>
 

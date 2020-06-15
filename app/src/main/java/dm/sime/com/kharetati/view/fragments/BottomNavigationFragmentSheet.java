@@ -49,7 +49,7 @@ public class BottomNavigationFragmentSheet extends Fragment {
     private View mRootView;
     private static OnActionListener listener;
     private Tracker mTracker;
-    int images[] = {R.drawable.more_help_512,R.drawable.logout_512,R.drawable.share_512,R.drawable.faq_512,R.drawable.about_512,R.drawable.terms_512,R.drawable.rating_512,R.drawable.accessibility_512,R.drawable.settings_512};
+    int images[] = {R.drawable.mymap_512,R.drawable.favorites_512,R.drawable.settings_512,R.drawable.more_help_512,R.drawable.accessibility_512,R.drawable.contact_512,R.drawable.about_512,R.drawable.faq_512,R.drawable.terms_512,R.drawable.share_512,R.drawable.rating_512,R.drawable.logout_512};
     int ids[] = {R.id.imgMoreIcon,R.id.txtMoreName};
     String keys[]= {"one","two"};
 
@@ -83,6 +83,7 @@ public class BottomNavigationFragmentSheet extends Fragment {
         binding.setFragmentBottomNavigation(model);
         ((MainActivity)getActivity()).manageActionBar(true);
         ((MainActivity)getActivity()).manageBottomBar(true);
+        ((MainActivity)getActivity()).setScreenName(getActivity().getResources().getString(R.string.more));
 
        /* BottomSheetBehavior behavior = BottomSheetBehavior.from(binding.bottomSheetMore);
         if(Global.isLandScape)
@@ -93,7 +94,7 @@ public class BottomNavigationFragmentSheet extends Fragment {
 
 
 
-        String names[] = new String[]{getContext().getResources().getString(R.string.INTROHELP),Global.isUserLoggedIn?getContext().getResources().getString(R.string.logout):getContext().getResources().getString(R.string.login),getContext().getResources().getString(R.string.SHAREKHARETATIAPP),getContext().getResources().getString(R.string.FAQMENU),getContext().getResources().getString(R.string.ABOUTUS),getContext().getResources().getString(R.string.TERMSANDCONDITIONS),getContext().getResources().getString(R.string.RATEUS),getContext().getResources().getString(R.string.ACCESSIBILITY),getContext().getResources().getString(R.string.title_settings)};
+        String names[] = new String[]{getContext().getResources().getString(R.string.mymaps),getContext().getResources().getString(R.string.bookmark),getContext().getResources().getString(R.string.title_settings),getContext().getResources().getString(R.string.INTROHELP),getContext().getResources().getString(R.string.ACCESSIBILITY),getContext().getResources().getString(R.string.menu_contact_us),getContext().getResources().getString(R.string.ABOUTUS),getContext().getResources().getString(R.string.FAQMENU),getContext().getResources().getString(R.string.TERMSANDCONDITIONS),getContext().getResources().getString(R.string.SHAREKHARETATIAPP),getContext().getResources().getString(R.string.RATEUS),Global.isUserLoggedIn?getContext().getResources().getString(R.string.logout):getContext().getResources().getString(R.string.login)};
 
         /*binding.logoutText.setText(Global.isUserLoggedIn? getActivity().getResources().getText(R.string.logout):getActivity().getResources().getText(R.string.login));
         binding.txtLanguage.setText(Global.CURRENT_LOCALE.equals("en")?"عربى":"English");
@@ -110,32 +111,60 @@ public class BottomNavigationFragmentSheet extends Fragment {
             HashMap hm = new HashMap();
             hm.put(keys[0],images[i]);
             hm.put(keys[1],names[i]);
+
             al.add(hm);
+
         }
+        if(!Global.isUserLoggedIn)
+            al.remove(0);
         SimpleAdapter sa = new SimpleAdapter(getActivity(),al,R.layout.more_layout_item,keys,ids);
         binding.gridMore.setAdapter(sa);
 
         binding.gridMore.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(Global.isUserLoggedIn)
+                    ((MainActivity)getActivity()).setScreenName(names[position]);
+                else
+                    ((MainActivity)getActivity()).setScreenName(names[position+1]);
+
                 switch (position){
-                    case 0:onHelpClicked();
-                    break;
-                    case 1:onLogoutClicked();
-                    break;
-                    case 2:onShareClicked();
-                    break;
-                    case 3:onFAQClicked();
-                    break;
-                    case 4:onAboutUsClicked();
-                    break;
-                    case 5:onTermsAndConditionsClicked();
-                    break;
-                    case 6:onRateusClicked();
-                    break;
-                    case 7:onAccessibilityClicked();
-                    break;
-                    case 8:onSettingsClicked();
+
+                    case 0:
+                        if(Global.isUserLoggedIn)onMyMapClicked();else onFavouritesClicked();
+                        break;
+                    case 1:
+                        if(Global.isUserLoggedIn)onFavouritesClicked();else onSettingsClicked();
+                        break;
+                    case 2:
+                        if(Global.isUserLoggedIn)onSettingsClicked();else onHelpClicked();
+                        break;
+                    case 3:
+                        if(Global.isUserLoggedIn)onHelpClicked();else onAccessibilityClicked();
+                        break;
+                    case 4:
+                        if(Global.isUserLoggedIn)onAccessibilityClicked();else onContactusClicked();
+                        break;
+                    case 5:
+                        if(Global.isUserLoggedIn)onContactusClicked();else onAboutUsClicked();
+                        break;
+                    case 6:
+                        if(Global.isUserLoggedIn)onAboutUsClicked();else onFAQClicked();
+                        break;
+                    case 7:
+                        if(Global.isUserLoggedIn)onFAQClicked();else onTermsAndConditionsClicked();
+                        break;
+                    case 8:
+                        if(Global.isUserLoggedIn)onTermsAndConditionsClicked();else onShareClicked();
+                        break;
+                    case 9:
+                        if(Global.isUserLoggedIn)onShareClicked();else onRateusClicked();
+                        break;
+                    case 10:
+                        if(Global.isUserLoggedIn)onRateusClicked();else onLogoutClicked();
+                        break;
+                    case 11:
+                        if(Global.isUserLoggedIn)onLogoutClicked();
                         break;
                 }
             }
@@ -315,6 +344,24 @@ public class BottomNavigationFragmentSheet extends Fragment {
         return binding.getRoot();
     }
 
+    private void onContactusClicked() {
+        ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_CONTACT_US,true,null);
+    }
+
+    private void onMyMapClicked(){
+        /*ArrayList al = new ArrayList();
+        al.add(FR_MYMAP);
+        ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_DASHBOARD,true,al);*/
+        ((MainActivity)getActivity()).navigateToDashboard(0);
+
+    }
+    private void onFavouritesClicked(){
+        /*ArrayList al = new ArrayList();
+        al.add(FR_BOOKMARK);
+        ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_DASHBOARD,true,al);*/
+        ((MainActivity)getActivity()).navigateToDashboard(1);
+    }
+
     private void onSettingsClicked() {
         ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_SETTINGS,true,null);
     }
@@ -326,6 +373,7 @@ public class BottomNavigationFragmentSheet extends Fragment {
 
         if(Global.HelpUrl!=null && !Global.HelpUrl.equals(""))
             al.add(HomeFragment.constructUrl((Global.HelpUrl),getActivity()));
+            al.add(getActivity().getResources().getString(R.string.help));
 
         ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
 
@@ -434,6 +482,7 @@ public class BottomNavigationFragmentSheet extends Fragment {
         super.onResume();
         ((MainActivity)getActivity()).manageActionBar(true);
         ((MainActivity)getActivity()).manageBottomBar(true);
+        ((MainActivity)getActivity()).setScreenName(getActivity().getResources().getString(R.string.more));
     }
 
     @Override

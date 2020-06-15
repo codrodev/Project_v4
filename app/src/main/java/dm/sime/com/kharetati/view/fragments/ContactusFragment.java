@@ -143,6 +143,8 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
         initializePage();
         ((MainActivity)getActivity()).manageActionBar(true);
         ((MainActivity)getActivity()).manageBottomBar(true);
+        ((MainActivity)getActivity()).setScreenName(getActivity().getResources().getString(R.string.menu_contact_us));
+
         setRetainInstance(true);
         if (!Global.isConnected(getActivity())) {
 
@@ -160,6 +162,20 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
         binding.TVDMPhoneNumber.setText(DM_PHONE_NUMBER + "");
         binding.TVDMEmail.setText(DM_EMAIL);
         binding.TVDMWebsite.setText(DM_WEB_SITE + "");
+        binding.LLfindus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Global.isConnected(getActivity())){
+                Global.openMakani("1190353",getActivity());
+                }
+                else{
+                    if(Global.appMsg!=null)
+                        AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning),CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr() , getResources().getString(R.string.ok), getActivity());
+                    else
+                        AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
+                }
+            }
+        });
        binding.LLPhoneContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -374,7 +390,7 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
                 List<ArcGISSublayer> layers=dynamicLayer.getSublayers();
                 for(int i=0;i<layers.size();i++){
                     ArcGISSublayer layer=layers.get(i);
-                    if(layer.getId()==6){
+                    if(layer.getName().compareToIgnoreCase("Imagery")==0){
                         layer.setVisible(true);
                         graphicsLayer.getGraphics().add(graphic);
                         AlertDialogUtil.showProgressBar(getActivity(),false);

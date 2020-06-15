@@ -12,7 +12,7 @@
 
     <!-- dots active colors -->
     <color name="maroon_light">#a31533</color>
-    <color name="maroon_light_transparent">#A6A31533</color>
+    <color name="maroon_light_transparent">#80a31533</color>
     <color name="maroon_dark">#940e2a</color>
     <color name="yellow_light">#cce3e330</color>
     <color name="light_blue">#5057FF</color>
@@ -20,6 +20,7 @@
     <color name="gray_text_color">#333333</color>
     <color name="colorHeader">#008577</color>
     <color name="textColorPrimary">#FFFFFF</color>
+    <color name="stepper_completed_color">#DC8A9B</color>
 
 
     <color name="light_green">#c7cc41</color>

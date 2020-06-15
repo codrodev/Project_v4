@@ -18,6 +18,7 @@
             android:background="@drawable/maroon_overlay_bg"
             android:gravity="center_vertical|center_horizontal"
             android:text="@string/feedback"
+            android:visibility="gone"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="@dimen/loginFontSize"/>
@@ -29,6 +30,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/rounded_corner_theme_bg"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
@@ -172,7 +174,7 @@
 
                 <Button
                     android:id="@+id/btn_submitFeedback"
-                    android:layout_width="150dp"
+                    android:layout_width="125dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
@@ -186,7 +188,7 @@
                     android:textColor="@color/white" />
                 <Button
                     android:id="@+id/btn_cancel"
-                    android:layout_width="150dp"
+                    android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"

@@ -36,6 +36,17 @@ public class KharetatiUser extends BaseObservable {
   @SerializedName("faq_url")
   @Expose
   private String faq_url;
+  @SerializedName("map_hidden_layers")
+  @Expose
+  private String[] mapHiddenLayers;
+
+  public String[] getMapHiddenLayers() {
+    return mapHiddenLayers;
+  }
+
+  public void setMapHiddenLayers(String[] mapHiddenLayers) {
+    this.mapHiddenLayers = mapHiddenLayers;
+  }
 
   public String getFaq_url() {
     return faq_url;

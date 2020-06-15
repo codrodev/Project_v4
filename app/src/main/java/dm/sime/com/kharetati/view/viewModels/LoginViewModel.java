@@ -204,6 +204,7 @@ public class LoginViewModel extends ViewModel {
             Global.home_ar_url = kharetatiUser.home_ar_url;
             Global.map_en_url = kharetatiUser.map_en_url;
             Global.map_ar_url = kharetatiUser.map_ar_url;
+            Global.mapHiddenLayers =kharetatiUser.getMapHiddenLayers();
 
             authListener.saveUser(user);
             Global.isUserLoggedIn = false;

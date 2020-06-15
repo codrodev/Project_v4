@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
 
 import dm.sime.com.kharetati.view.adapters.DashboardPagerAdapter;
+import dm.sime.com.kharetati.view.fragments.DashboardFragment;
 import dm.sime.com.kharetati.view.navigators.FragmentNavigator;
 
 public class DashboardViewModel extends ViewModel {
@@ -34,4 +35,5 @@ public class DashboardViewModel extends ViewModel {
         frNavigator = (FragmentNavigator) ctx;
         frNavigator.manageBottomBar(status);
     }
+
 }

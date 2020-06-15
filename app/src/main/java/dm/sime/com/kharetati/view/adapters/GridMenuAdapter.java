@@ -60,6 +60,10 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.Generi
         holder.bind(viewModel, position);
         viewHolder = holder;
         pos=position;
+        if(Global.CURRENT_LOCALE.equals("en"))
+            holder.txtMenuName.setText(lstHomeGridMenuItems.get(position).getNameEn());
+        else
+            holder.txtMenuName.setText(lstHomeGridMenuItems.get(position).getNameAr());
         if(viewModel.getSelectedApplication() != null) {
             if (viewModel.getSelectedApplication().getId().equals(lstHomeGridMenuItems.get(position).getId())) {
                 holder.cardView.setBackground(context.getResources().getDrawable(R.drawable.border_background));

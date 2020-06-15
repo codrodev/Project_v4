@@ -213,7 +213,7 @@
     <string name="older_to_date">To Date can not be older than from date</string>
     <string name="future_to_date">To Date can not be a future date</string>
     <string name="valid_date">please select a valid dates</string>
-
+    <string name="menu_happiness">Happiness Meter</string>
 
     <string-array name="request_site_plan">
         <item>Land Ownership</item>
@@ -268,5 +268,10 @@
     <string name="mailus">email us</string>
     <string name="reachus">reach us</string>
     <string name="sendus">send us</string>
+    <string name="more">Options</string>
+    <string name="lastlogin"><b>Last Login</b> at</string>
+    <string name="login_with">Login with</string>
+    <string name="with_uaepass"> UAE Pass</string>
+    <string name="help">Help</string>
 
 </resources>

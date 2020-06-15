@@ -34,7 +34,9 @@ import org.json.JSONObject;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -166,10 +168,29 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             else
                 binding.txtUsername.setText(LoginViewModel.guestName);
         }
-        if(Global.isUAE)
-            binding.txtLastLogin.setText(Global.uaeSessionResponse.getService_response().getLast_login());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy HH:mm aa",new Locale("en"));
+        String currentDateandTime = sdf.format(new Date());
+
+        if (Global.isUAE){
+            String lastLogin = Global.uaeSessionResponse.getService_response().getLast_login();
+
+        if(lastLogin!=null && !lastLogin.equals("")){
+            if(lastLogin.contains("|")){
+                lastLogin = lastLogin.substring(0,lastLogin.lastIndexOf("|")-1);
+            }
+
+            binding.txtLastLogin.setText(getString(R.string.lastlogin)+" "+lastLogin);
+        }
         else
-            binding.txtLastLogin.setText("Just Now Loggedin");
+            binding.txtLastLogin.setText(getString(R.string.lastlogin)+" "+currentDateandTime);
+        }
+        else{
+
+            String guestlastlogin = getString(R.string.lastlogin)+" "+sharedpreferences.getString("lastLoginTime",currentDateandTime);
+            binding.txtLastLogin.setText(guestlastlogin);
+            sharedpreferences.edit().putString("lastLoginTime",currentDateandTime).apply();
+        }
+
 
         customBottomBar.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
             @Override
@@ -194,6 +215,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             @Override
             public void onReselectItem(MeowBottomNavigation.Model item) {
                 // your codes
+                if(item.getId()==3)
+                    loadFragment(FragmentTAGS.FR_HOME,true,null);
             }
         });
         /*customBottomBar.setOnClickMenuListener(new Function1<MeowBottomNavigation.Model, Unit>() {
@@ -255,12 +278,14 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         });
 
 
-        customBottomBar.show(3, true);
-        if(Global.isRecreate)
+
+        if(Global.isRecreate){
             loadFragment(sharedpreferences.getString("currentFragment",FragmentTAGS.FR_HOME),true,null);
-        else
+            binding.customBottomBar.show(5,true);
+        }
+        else {customBottomBar.show(3, true);
         openHomePage();
-        initializeActivity();
+        initializeActivity();}
 
     }
 
@@ -282,11 +307,14 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
     @Override
     public void recreate() {
-        Global.isRecreate =true;
+
 
         startActivity(getIntent());
         finish();
         overridePendingTransition(0, 0);
+        Global.isRecreate =true;
+
+
     }
 
     private boolean isPermissionGranted(String[] permissions, int[] grantResults){
@@ -332,7 +360,15 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
            // customBottomBar.show(sharedpreferences.getInt("position",3), true);
 
         }
-
+        if(Global.current_fragment_id.equals(FragmentTAGS.FR_HOME)){
+            binding.txtLastLogin.setVisibility(View.VISIBLE);
+            binding.layoutlastlogin.setVisibility(View.VISIBLE);
+        }
+        else{
+            binding.txtLastLogin.setVisibility(View.GONE);
+            binding.layoutlastlogin.setVisibility(View.GONE);
+        }
+        setScreenName(getResources().getString(R.string.title_welcome));
 
     }
 
@@ -432,6 +468,15 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         else
             binding.imgHelp.setVisibility(View.INVISIBLE);
 
+        if(fragment_tag.equals(FragmentTAGS.FR_HOME)){
+            binding.txtLastLogin.setVisibility(View.VISIBLE);
+            binding.layoutlastlogin.setVisibility(View.VISIBLE);
+        }
+        else{
+            binding.txtLastLogin.setVisibility(View.GONE);
+        binding.layoutlastlogin.setVisibility(View.GONE);
+        }
+
         LinearLayout.LayoutParams headerParams = null;
        /* if(fragment_tag.equals(FragmentTAGS.FR_HOME)){
             headerParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -444,8 +489,13 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 fragment = HomeFragment.newInstance();
                 break;
             case FragmentTAGS.FR_DASHBOARD:
-                Global.FragmentTagForHelpUrl = FragmentTAGS.FR_DASHBOARD;
-                fragment = DashboardFragment.newInstance();
+                Global.FragmentTagForHelpUrl = FragmentTAGS.FR_DASHBOARD;{
+                if(params!=null)
+                    fragment = DashboardFragment.newInstance((Integer) params.get(0));
+                else
+                    fragment = DashboardFragment.newInstance(0);
+
+                }
                 break;
             case FragmentTAGS.FR_MAP:
 
@@ -467,8 +517,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 fragment = BottomNavigationFragmentSheet.newInstance(this);
                 break;
             case FragmentTAGS.FR_WEBVIEW:
-                String appName = "";
-                if(params!=null) {
+                String appName = null;
+                if(params!=null && params.size()>0) {
                     Global.webViewUrl = params.get(0).toString();
                     if(params.size() > 1){
                         appName = params.get(1).toString();
@@ -553,11 +603,17 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             binding.uiContainer.setLayoutParams(uiContainerParam);
         }
     }
-
+    public void setScreenName(String screenName){
+        binding.txtWelcome.setText(screenName);
+    }
     @Override
-    public void navigateToDashboard() {
+    public void navigateToDashboard(int fragmentposition) {
+
+        ArrayList al = new ArrayList();
+        al.add(fragmentposition);
 
         customBottomBar.show(1, true);
+        loadFragment(FragmentTAGS.FR_DASHBOARD,true,al);
 
     }
 

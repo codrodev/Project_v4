@@ -85,8 +85,9 @@ public class HappinessFragment extends Fragment {
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
         mTracker.setScreenName(FR_HAPPINESS);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-        ((MainActivity)getActivity()).manageActionBar(false);
+        ((MainActivity)getActivity()).manageActionBar(true);
         ((MainActivity)getActivity()).manageBottomBar(true);
+        ((MainActivity)getActivity()).setScreenName(getActivity().getResources().getString(R.string.menu_happiness));
         initializePage();
         setRetainInstance(true);
         return binding.getRoot();
