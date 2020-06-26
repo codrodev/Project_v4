@@ -48,6 +48,8 @@ import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 
+import ae.sdg.libraryuaepass.UAEPassController;
+import dm.sime.com.kharetati.BuildConfig;
 import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.ActivityLoginBinding;
@@ -1058,6 +1060,22 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
             Global.sessionErrorMsg =null;
         }
     }
+
+    //UAE PASS START -- Callback to handle UAE Pass callback
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+        if (intent != null && intent.getData() != null) {
+            if (BuildConfig.URI_SCHEME.equals(intent.getData().getScheme())) {
+                UAEPassController.INSTANCE.resume(intent.getDataString());
+            }
+        }
+    }
+//UAE PASS END -- Callback to handle UAE Pass callback
 
     @Override
     public void onStarted() {

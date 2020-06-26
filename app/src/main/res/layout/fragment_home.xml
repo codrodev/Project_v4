@@ -107,6 +107,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/search"
+                                android:paddingStart="8dp"
                                 android:textSize="18sp"
                                 android:textAlignment="viewStart"
                                 android:textColor="@color/white"

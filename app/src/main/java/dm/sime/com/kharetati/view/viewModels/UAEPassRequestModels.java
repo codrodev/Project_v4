@@ -131,7 +131,7 @@ public class UAEPassRequestModels {
 
 
     public static boolean isPackageInstalled(PackageManager packageManager) {
-        String packageName = null;
+        String packageName = "";
         if (UAEPassRequestModels.UAE_PASS_ENVIRONMENT == Environment.PRODUCTION) {
             packageName = UAE_PASS_PACKAGE_ID;
         } else if (UAEPassRequestModels.UAE_PASS_ENVIRONMENT == Environment.STAGING) {

@@ -140,7 +140,6 @@
                 android:layout_width="match_parent"
                 android:layoutDirection="locale"
                 android:background="@color/white"
-
                 android:layout_height="match_parent"
                 android:layout_below="@+id/layoutProfile"
                 android:layout_marginBottom="120dp"/>
