@@ -48,6 +48,12 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="${host_success}"
+                    android:scheme="${scheme}" />
+                <data
+                    android:host="${host_failure}"
+                    android:scheme="${scheme}" />
                 <data android:scheme="kharetati"
                     android:host="plot_no"
                     android:pathPrefix="/home"/>

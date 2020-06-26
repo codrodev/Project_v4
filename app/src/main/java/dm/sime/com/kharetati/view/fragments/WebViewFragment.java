@@ -75,6 +75,7 @@ public class  WebViewFragment extends Fragment {
         Bundle args = new Bundle();
         args.putString(URL, url);
         args.putString(APP_NAME, appName);
+        fragment.setArguments(args);
         launchUrl= url;
         return fragment;
     }
@@ -109,7 +110,7 @@ public class  WebViewFragment extends Fragment {
         //txtWelcome = view.findViewById(R.id.txtWelcome);
         imgBack = view.findViewById(R.id.imgBack);
         imgBack.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
-        ((MainActivity)getActivity()).setScreenName(Global.isUserLoggedIn?Global.getUser(getActivity()).getFullname(): LoginViewModel.guestName);
+        //((MainActivity)getActivity()).setScreenName(Global.isUserLoggedIn?Global.getUser(getActivity()).getFullname(): LoginViewModel.guestName);
 
         /*if(appName != null && appName != "") {
             txtWelcome.setText(appName);
@@ -129,9 +130,9 @@ public class  WebViewFragment extends Fragment {
         webView.setWebViewClient(new MyWebViewClient());
         webView.setWebChromeClient(new MyWebChromeClient(getActivity()) );
         webView.loadUrl(launchUrl);
-        manageAppBottomBAtr(true);
+       /* manageAppBottomBAtr(true);
         manageAppBar(true);
-        ((MainActivity)getActivity()).setScreenName(appName!=null?appName:getActivity().getResources().getString(R.string.title_welcome));
+        ((MainActivity)getActivity()).setScreenName(appName!=null?appName:getActivity().getResources().getString(R.string.title_welcome));*/
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

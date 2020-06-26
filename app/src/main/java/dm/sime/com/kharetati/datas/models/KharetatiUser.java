@@ -33,6 +33,62 @@ public class KharetatiUser extends BaseObservable {
   public String aboutus_en_url;
   public String terms_ar_url;
   public String terms_en_url;
+  @SerializedName("happiness_url")
+  @Expose
+  private String happinessUrl;
+  @SerializedName("happiness_secretkey")
+  @Expose
+  private String happinessSecretkey;
+
+  public String getHappinessUrl() {
+    return happinessUrl;
+  }
+
+  public void setHappinessUrl(String happinessUrl) {
+    this.happinessUrl = happinessUrl;
+  }
+
+  public String getHappinessSecretkey() {
+    return happinessSecretkey;
+  }
+
+  public void setHappinessSecretkey(String happinessSecretkey) {
+    this.happinessSecretkey = happinessSecretkey;
+  }
+
+  public String getHappinessServiceprovider() {
+    return happinessServiceprovider;
+  }
+
+  public void setHappinessServiceprovider(String happinessServiceprovider) {
+    this.happinessServiceprovider = happinessServiceprovider;
+  }
+
+  public String getHappinessClientid() {
+    return happinessClientid;
+  }
+
+  public void setHappinessClientid(String happinessClientid) {
+    this.happinessClientid = happinessClientid;
+  }
+
+  public String getHappinessServicecode() {
+    return happinessServicecode;
+  }
+
+  public void setHappinessServicecode(String happinessServicecode) {
+    this.happinessServicecode = happinessServicecode;
+  }
+
+  @SerializedName("happiness_serviceprovider")
+  @Expose
+  private String happinessServiceprovider;
+  @SerializedName("happiness_clientid")
+  @Expose
+  private String happinessClientid;
+  @SerializedName("happiness_servicecode")
+  @Expose
+  private String happinessServicecode;
   @SerializedName("faq_url")
   @Expose
   private String faq_url;

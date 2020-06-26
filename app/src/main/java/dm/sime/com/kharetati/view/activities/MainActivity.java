@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         mainVM = model;
         model.mainNavigator =this;
         fragmentManager = getSupportFragmentManager();
-        Global.fontScale =sharedpreferences.getFloat(FONT_SIZE,Global.fontScale);
+        Global.fontScale =sharedpreferences.getFloat(FONT_SIZE,1f);
         adjustFontScale(getResources().getConfiguration(),Global.fontScale);
         model.initialize();
         binding.setActivityMainVM(model);
@@ -142,8 +142,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         customBottomBar.add(new MeowBottomNavigation.Model(1, R.drawable.ic_dashboard));
         customBottomBar.add(new MeowBottomNavigation.Model(2, R.drawable.happiness_black));
         customBottomBar.add(new MeowBottomNavigation.Model(3, R.drawable.ic_home_run));
-        customBottomBar.add(new MeowBottomNavigation.Model(4, R.drawable.ic_comment));
-        customBottomBar.add(new MeowBottomNavigation.Model(5, R.drawable.ic_more));
+        customBottomBar.add(new MeowBottomNavigation.Model(4, R.drawable.chat_144));
+        customBottomBar.add(new MeowBottomNavigation.Model(5, R.drawable.more_144));
 
 
         countDownTimer = new MyCountDownTimer(startTime, interval);
@@ -760,9 +760,15 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         if(!key) {
             binding.layoutProfile.setVisibility(View.GONE);
             binding.profileUsername.setVisibility(View.GONE);
+            binding.headerLayout.setVisibility(View.GONE);
         } else {
             binding.layoutProfile.setVisibility(View.VISIBLE);
             binding.profileUsername.setVisibility(View.VISIBLE);
+            binding.headerLayout.setVisibility(View.VISIBLE);
+            if(Global.current_fragment_id.equals(FragmentTAGS.FR_HOME))
+                binding.layoutlastlogin.setVisibility(View.VISIBLE);
+            else
+                binding.layoutlastlogin.setVisibility(View.GONE);
         }
     }
     public void clearStack(String FragmentTAG,int loadPosition){

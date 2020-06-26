@@ -371,9 +371,9 @@ public class BottomNavigationFragmentSheet extends Fragment {
         ArrayList al = new ArrayList();
 
 
-        if(Global.HelpUrl!=null && !Global.HelpUrl.equals(""))
+        if(Global.HelpUrl!=null && !Global.HelpUrl.equals("")){
             al.add(HomeFragment.constructUrl((Global.HelpUrl),getActivity()));
-            al.add(getActivity().getResources().getString(R.string.help));
+            al.add(getActivity().getResources().getString(R.string.help));}
 
         ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
 
@@ -423,6 +423,7 @@ public class BottomNavigationFragmentSheet extends Fragment {
         //Global.faq_url =Global.faq_url+"lang="+Global.CURRENT_LOCALE;
 
         al.add(HomeFragment.constructUrl(Global.faq_url,getActivity()));
+        al.add(getActivity().getResources().getString(R.string.FAQMENU));
         ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
 
 
@@ -437,6 +438,7 @@ public class BottomNavigationFragmentSheet extends Fragment {
     else{
         ArrayList al = new ArrayList();
         al.add(HomeFragment.constructUrl((Global.CURRENT_LOCALE.equals("en")?Global.aboutus_en_url:Global.aboutus_ar_url),getActivity()));
+            al.add(getActivity().getResources().getString(R.string.ABOUTUS));
         ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
     }
 
@@ -452,6 +454,7 @@ public class BottomNavigationFragmentSheet extends Fragment {
     else{
         ArrayList al = new ArrayList();
         al.add(HomeFragment.constructUrl((Global.CURRENT_LOCALE.equals("en")?Global.terms_en_url:Global.terms_ar_url),getActivity()));
+            al.add(getActivity().getResources().getString(R.string.TERMSANDCONDITIONS));
         ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
     }
 

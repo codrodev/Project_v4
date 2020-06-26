@@ -360,14 +360,25 @@
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/login_font_size" />-->
             </LinearLayout>
-
-
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="-8dp"
+                    android:id="@+id/txtMyIDGuest"
+                    android:fontFamily="@font/dubai_font"
+                    android:text="@string/signin_as_guest"
+                    android:textAlignment="center"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/login_font_size" />
 
 
             </LinearLayout>
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:id="@+id/layoutUae"
@@ -382,18 +393,20 @@
                     android:background="@drawable/rounded_edittext_boarder_bg"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
-                    android:layout_weight="3"
+
                     android:layout_gravity="center">
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="1.25"
+
                         android:id="@+id/txtLoginwith"
-                        android:paddingTop="8dp"
-                        android:layout_gravity="end|center_vertical"
+
+                        android:gravity="center"
+
+                        android:layout_gravity="center"
                         android:fontFamily="@font/dubai_font"
                         android:text="@string/login_with"
-                        android:textAlignment="viewEnd"
+
                         android:paddingEnd="2dp"
                         android:visibility="visible"
                         android:textColor="@color/black"
@@ -401,22 +414,21 @@
                     <ImageView
                         android:layout_width="48dp"
                         android:layout_height="44dp"
-                        android:padding="4dp"
+                        android:padding="5dp"
                         android:id="@+id/imgUAEPass"
                         android:scaleType="fitXY"
                         android:layout_gravity="center"
                         android:src="@drawable/uaepass" />
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="1.25"
-                        android:paddingTop="8dp"
+
                         android:id="@+id/txtUAEPass"
-                        android:layout_gravity="start|center_horizontal"
+                        android:layout_gravity="center"
+                        android:gravity="center"
                         android:fontFamily="@font/dubai_font"
                         android:text="@string/with_uaepass"
-                        android:paddingStart="2dp"
-                        android:textAlignment="viewStart"
+
                         android:visibility="visible"
                         android:textColor="@color/black"
                         android:textSize="@dimen/loginFontSize" />
@@ -426,7 +438,8 @@
                     android:layout_height="48dp"
                     android:background="@drawable/rounded_edittext_maroon_bg"
                     android:id="@+id/txtGuest"
-                    android:paddingTop="8dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/dubai_font"
                     android:text="@string/signin_as_guest"
@@ -470,7 +483,7 @@
                     android:src="@drawable/uaepass" />
             </LinearLayout>-->
         </androidx.cardview.widget.CardView>
-        <!--<LinearLayout
+        <LinearLayout
             android:id="@+id/layoutUAEPass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -485,7 +498,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="4dp"
-                android:id="@+id/txtUAEPass"
+                android:id="@+id/txtEnabledUAEPass"
                 android:singleLine="false"
                 android:maxLines="2"
                 android:fontFamily="@font/dubai_font"
@@ -497,13 +510,13 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imgUAEPass"
+                android:id="@+id/imgEnabledUAEPass"
                 android:scaleType="fitXY"
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:src="@drawable/uaepass" />
-        </LinearLayout>-->
+        </LinearLayout>
 
         <!--<ProgressBar
             android:id="@+id/progressBar"

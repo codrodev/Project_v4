@@ -162,6 +162,15 @@ public class Global {
     public static boolean isRecreate;
     public static String appName;
     public static float fontSize = 14f;
+    public static String mapFunction;
+    public static String happinessUrl;
+    public static String happinessClientID;
+    public static String happinessSecretKey;
+    public static String happinessServiceCode;
+    public static String happinessServiceProvider;
+    public static String clientId;
+    public static String secretId;
+    public static String callbackUrl;
     private static Context context;
     public static boolean isLanguageChanged = false;
     public static String noctemplateUrl;

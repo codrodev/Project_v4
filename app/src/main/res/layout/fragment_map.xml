@@ -35,9 +35,10 @@
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="15dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
+            android:background="@drawable/edittext_background"
             android:elevation="20dp"
             android:layoutDirection="locale"
             app:layout_constraintTop_toTopOf="parent">
@@ -46,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:id="@+id/toolBarLayout"
-                android:layout_marginHorizontal="5dp"
+
                 android:background="@color/white"
                 android:orientation="horizontal"
                 android:weightSum="1.75">
@@ -62,8 +63,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start|center_vertical"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="4dp"
                         app:srcCompat="@drawable/ic_arrow" />
 
                     <LinearLayout
@@ -93,14 +93,12 @@
 
                     android:orientation="horizontal"
                     android:weightSum="6">
-                    <LinearLayout
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/gray"/>
+
                     <ImageView
                         android:id="@+id/imgSearch"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="8dp"
                         android:layout_gravity="start|center_vertical"
                         android:layout_weight="1"
                         android:src="@drawable/search_512" />
@@ -110,8 +108,10 @@
                         android:background="@color/gray"/>
                     <ImageView
                         android:id="@+id/imgLayer"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+
+                        android:layout_margin="8dp"
                         android:layout_gravity="start|center_vertical"
                         android:layout_weight="1"
                         android:src="@drawable/layers_512" />
@@ -121,9 +121,10 @@
                         android:background="@color/gray"/>
                     <ImageView
                         android:id="@+id/imgBookmark"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:padding="2dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+
+                        android:layout_margin="8dp"
                         android:layout_gravity="start|center_vertical"
                         android:layout_weight="1"
                         android:src="@drawable/add_512" />
@@ -133,9 +134,9 @@
                         android:background="@color/gray"/>
                     <ImageView
                         android:id="@+id/imgRecenter"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:padding="2dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="8dp"
                         android:layout_gravity="start|center_vertical"
                         android:layout_weight="1"
                         android:src="@drawable/location_512" />
@@ -145,8 +146,9 @@
                         android:background="@color/gray"/>
                     <ImageView
                         android:id="@+id/imgMakani"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="8dp"
                         android:layout_gravity="start|center_vertical"
                         android:layout_weight="1"
                         android:src="@drawable/makani_512" />
@@ -156,8 +158,10 @@
                         android:background="@color/gray"/>
                     <ImageView
                         android:id="@+id/imgHelp"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+
+                        android:layout_margin="8dp"
                         android:layout_gravity="start|center_vertical"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/ic_help_black" />

@@ -70,7 +70,7 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.Generi
                 holder.txtMenuName.setTextColor(context.getResources().getColor(R.color.white));
             } else {
                 holder.cardView.setBackground(context.getResources().getDrawable(R.drawable.borderless_background));
-                holder.txtMenuName.setTextColor(context.getResources().getColor(R.color.maroon_dark));
+                holder.txtMenuName.setTextColor(context.getResources().getColor(R.color.black));
             }
         }
 

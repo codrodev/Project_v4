@@ -11,6 +11,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -296,7 +297,7 @@ final class MeowBottomNavigationCell extends RelativeLayout {
 
         this.progress = value;
         FrameLayout var10000 = (FrameLayout) this._$_findCachedViewById(R.id.fl);
-        var10000.setY((1.0F - this.progress) * (float) Utils.dip(this.getContext(), 18) + (float) Utils.dip(this.getContext(), -2));
+        var10000.setY((1.0F - this.progress) * (float) Utils.dip(this.getContext(), 18) + (float) Utils.dip(this.getContext(), 10));//-4
         CellImageView var5 = (CellImageView) this._$_findCachedViewById(R.id.iv);
         var5.setColor(this.progress == 1.0F ? this.selectedIconColor : this.defaultIconColor);
         float scale = (1.0F - this.progress) * -0.2F + 1.0F;
@@ -305,11 +306,18 @@ final class MeowBottomNavigationCell extends RelativeLayout {
         var5 = (CellImageView) this._$_findCachedViewById(R.id.iv);
         var5.setScaleY(scale);
 
+        /*RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.setMargins(0,0,0,16);
+
+        var5.setLayoutParams(params);*/
+
         GradientDrawable d = new GradientDrawable();
         d.setColor(this.circleColor);
         d.setShape(GradientDrawable.RECTANGLE);
-        d.setCornerRadius(35);
+        d.setCornerRadius(40);
         d.setOrientation(GradientDrawable.Orientation.BR_TL);
+
+
 
         ViewCompat.setBackground(this._$_findCachedViewById(R.id.v_circle), d);
         ViewCompat.setElevation(this._$_findCachedViewById(R.id.v_circle), this.progress > 0.7F ? Utils.dipf(this.getContext(), this.progress * 4.0F) : 0.0F);
@@ -321,7 +329,7 @@ final class MeowBottomNavigationCell extends RelativeLayout {
         View var6 = this._$_findCachedViewById(R.id.v_circle);
         var6.setX((1.0F - this.progress) * (float) (this.isFromLeft ? -m : m) + (float) (this.getMeasuredWidth() - Utils.dip(this.getContext(), 48)) / 2.0F);
         var6 = this._$_findCachedViewById(R.id.v_circle);
-        var6.setY((1.0F - this.progress) * (float) this.getMeasuredHeight() + (float) Utils.dip(this.getContext(), 6));
+        var6.setY((1.0F - this.progress) * (float) this.getMeasuredHeight() + (float) Utils.dip(this.getContext(), 5));
     }
 
     public final boolean isEnabledCell() {
@@ -416,6 +424,7 @@ final class MeowBottomNavigationCell extends RelativeLayout {
     public final void enableCell(boolean isAnimate) {
         if (!this.isEnabledCell) {
             this.animateProgress(true, isAnimate);
+
         }
 
         this.setEnabledCell(true);

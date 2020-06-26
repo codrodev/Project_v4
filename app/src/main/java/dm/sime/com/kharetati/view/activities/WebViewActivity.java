@@ -85,7 +85,7 @@ public class WebViewActivity extends AppCompatActivity {
             Log.v(TAG, "UAE Pass App: getAuthorizationUrl web page: shouldOverrideUrlLoading() " + url);
 
             if (url.startsWith("uaepass://")) {
-                if (!UAEPassRequestModels.isPackageInstalled(UAEPassRequestModels.UAE_PASS_PACKAGE_ID, getPackageManager())) {
+                if (!UAEPassRequestModels.isPackageInstalled(getPackageManager())) {
                     view.loadUrl(Global.getCurrentLanguage(WebViewActivity.this).equals("en")?"https://play.google.com/store/apps/details?id=ae.uaepass.mainapp&hl=EN":"https://play.google.com/store/apps/details?id=ae.uaepass.mainapp&hl=AR");
 
                 }

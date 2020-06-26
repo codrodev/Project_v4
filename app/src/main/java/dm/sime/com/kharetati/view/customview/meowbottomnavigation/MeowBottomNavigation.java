@@ -8,9 +8,12 @@ import android.graphics.Typeface;
 import android.os.Build;
 
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
@@ -74,7 +77,7 @@ public final class MeowBottomNavigation extends FrameLayout {
         this.countTextColor = Color.parseColor("#ffffff");
         this.countBackgroundColor = Color.parseColor("#ff0000");
         this.rippleColor = Color.parseColor("#757575");
-        this.heightCell = Utils.dip(this.getContext(), 72);
+        this.heightCell = Utils.dip(this.getContext(), 80);
         this.initializeViews();
     }
 
@@ -91,7 +94,7 @@ public final class MeowBottomNavigation extends FrameLayout {
         this.countTextColor = Color.parseColor("#ffffff");
         this.countBackgroundColor = Color.parseColor("#ff0000");
         this.rippleColor = Color.parseColor("#757575");
-        this.heightCell = Utils.dip(this.getContext(), 72);
+        this.heightCell = Utils.dip(this.getContext(), 80);
         this.setAttributeFromXml(context, attrs);
         this.initializeViews();
     }
@@ -109,7 +112,7 @@ public final class MeowBottomNavigation extends FrameLayout {
         this.countTextColor = Color.parseColor("#ffffff");
         this.countBackgroundColor = Color.parseColor("#ff0000");
         this.rippleColor = Color.parseColor("#757575");
-        this.heightCell = Utils.dip(this.getContext(), 72);
+        this.heightCell = Utils.dip(this.getContext(), 80);
         this.setAttributeFromXml(context, attrs);
         this.initializeViews();
     }
@@ -263,6 +266,7 @@ public final class MeowBottomNavigation extends FrameLayout {
     public void add(MeowBottomNavigation.Model model) {
         final MeowBottomNavigationCell cell = new MeowBottomNavigationCell(this.getContext());
         android.widget.LinearLayout.LayoutParams params = new android.widget.LinearLayout.LayoutParams(-1, this.heightCell, 1.0F);
+        params.setMargins(0,0,0,60);
         cell.setLayoutParams(params);
         cell.setIcon(model.getIcon());
         cell.setCount(model.getCount());
@@ -376,6 +380,9 @@ public final class MeowBottomNavigation extends FrameLayout {
             MeowBottomNavigation.Model model = (MeowBottomNavigation.Model) var10000;
             var10000 = this.cells.get(i);
             MeowBottomNavigationCell cell = (MeowBottomNavigationCell) var10000;
+           /* RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(0,0,0,60);
+            cell.setLayoutParams(params);*/
             if (model.getId() == id) {
                 this.anim(cell, id, enableAnimation);
                 cell.enableCell(enableAnimation);

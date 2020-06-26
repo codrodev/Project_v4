@@ -166,7 +166,7 @@ public class HappinessFragment extends Fragment {
             transaction.setNotes("Kharetati Vote");
             transaction.setServiceDescription("Kharetati");
             transaction.setChannel("SMARTAPP");
-            transaction.setServiceCode("2952");
+            transaction.setServiceCode(Global.happinessServiceCode);
             transaction.setTransactionID("Happiness Vote " + new Date().getTime());
             request.setTransaction(transaction);
         } else {
@@ -191,7 +191,7 @@ public class HappinessFragment extends Fragment {
         /**
          *This is QA URL. Replace it with production once it is ready for production.
          */
-        VotingManager.setHappinessUrl("https://happinessmeterqa.dubai.gov.ae/HappinessMeter2/MobilePostDataService");  //staging
+        VotingManager.setHappinessUrl(Global.happinessUrl);  //staging
         // VotingManager.setHappinessUrl("https://happinessmeter.dubai.gov.ae/HappinessMeter2/MobilePostDataService");//production
 
         //For arabic pass lang "ar"
@@ -201,7 +201,7 @@ public class HappinessFragment extends Fragment {
         } else {
             lang = "en";
         }
-        VotingManager.loadHappiness(webView, request, secret, serviceProvider, clientID, lang);
+        VotingManager.loadHappiness(webView, request, Global.happinessSecretKey, Global.happinessServiceProvider, Global.clientID, lang);
     }
 
     @Override

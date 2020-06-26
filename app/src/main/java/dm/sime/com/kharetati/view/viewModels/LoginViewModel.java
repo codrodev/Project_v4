@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -76,7 +77,10 @@ import io.reactivex.schedulers.Schedulers;
 
 import static com.android.volley.Request.Method.POST;
 import static dm.sime.com.kharetati.utility.Global.MYPREFERENCES;
+import static dm.sime.com.kharetati.utility.Global.callbackUrl;
+import static dm.sime.com.kharetati.utility.Global.clientId;
 import static dm.sime.com.kharetati.utility.Global.loginDetails;
+import static dm.sime.com.kharetati.utility.Global.secretId;
 
 public class LoginViewModel extends ViewModel {
     private static final String TAG = "LoginViewModel";
@@ -180,6 +184,7 @@ public class LoginViewModel extends ViewModel {
             Global.plotImgLayerId = (kharetatiUser.getPlotImgLayerId() != null && kharetatiUser.getPlotImgLayerId() != "") ? kharetatiUser.getPlotImgLayerId():"";
             Global.plotLayerParcelAttrName = (kharetatiUser.getPlotLayerParcelAttrName() != null && kharetatiUser.getPlotLayerParcelAttrName() != "") ? kharetatiUser.getPlotLayerParcelAttrName():"";
             Global.plotDimLayerParcelAttrName = (kharetatiUser.getPlotDimLayerParcelAttrName() != null && kharetatiUser.getPlotDimLayerParcelAttrName() != "") ? kharetatiUser.getPlotDimLayerParcelAttrName():"";
+
             User user = new User();
             Global.accessToken=kharetatiUser.access_token;
             user.setUsername("GUEST");
@@ -196,6 +201,7 @@ public class LoginViewModel extends ViewModel {
             Global.faq_url = kharetatiUser.getFaq_url();
             Global.appMsg = kharetatiUser.getAppMsg();
 
+
             Global.bookmarks_en_url = kharetatiUser.bookmarks_en_url;
             Global.bookmarks_ar_url = kharetatiUser.bookmarks_ar_url;
             Global.mymaps_en_url = kharetatiUser.mymaps_en_url;
@@ -205,6 +211,12 @@ public class LoginViewModel extends ViewModel {
             Global.map_en_url = kharetatiUser.map_en_url;
             Global.map_ar_url = kharetatiUser.map_ar_url;
             Global.mapHiddenLayers =kharetatiUser.getMapHiddenLayers();
+
+            Global.happinessUrl = kharetatiUser.getHappinessUrl();
+            Global.happinessClientID = kharetatiUser.getHappinessClientid();
+            Global.happinessSecretKey = kharetatiUser.getHappinessSecretkey();
+            Global.happinessServiceCode = kharetatiUser.getHappinessServicecode();
+            Global.happinessServiceProvider = kharetatiUser.getHappinessServiceprovider();
 
             authListener.saveUser(user);
             Global.isUserLoggedIn = false;
@@ -337,6 +349,13 @@ public class LoginViewModel extends ViewModel {
                 Global.map_ar_url = accessTokenResponse.getMap_ar_url();
                 Global.faq_url = accessTokenResponse.getFaq_url();
                 Global.mapHiddenLayers =accessTokenResponse.getMapHiddenLayers();
+
+                Global.happinessUrl = accessTokenResponse.getHappinessUrl();
+                Global.happinessClientID = accessTokenResponse.getHappinessClientid();
+                Global.happinessSecretKey = accessTokenResponse.getHappinessSecretkey();
+                Global.happinessServiceCode = accessTokenResponse.getHappinessServicecode();
+                Global.happinessServiceProvider = accessTokenResponse.getHappinessServiceprovider();
+
 
                 AttachmentBitmap.letter_from_owner = null;
                 AttachmentBitmap.emirateId_back = null;
@@ -626,8 +645,8 @@ public class LoginViewModel extends ViewModel {
 
     public void getConfigAPIResponse(GetConfigResponse configResponse){
         if(configResponse != null){
-            authListener.onConfig(false);
-            //authListener.onConfig(configResponse.disableMyId);
+            //authListener.onConfig(false);
+            authListener.onConfig(configResponse.disableMyId);
         }
     }
 
@@ -645,6 +664,7 @@ public class LoginViewModel extends ViewModel {
             Log.v(TAG, "uaePassConfigAPI(): calling");
             Disposable disposable = repository.uaePassConfig(AppUrls.URL_UAE_ID_CONFIG)
                     .subscribeOn(kharetatiApp.subscribeScheduler())
+
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<UaePassConfig>() {
                         @Override
@@ -699,19 +719,17 @@ public class LoginViewModel extends ViewModel {
 
             if (Global.uaePassConfig != null) {
                 Log.v(TAG, "login``(): calling");
-                String clientId = Encryptions.decrypt(Global.uaePassConfig.UAEID_clientid);
+                clientId = Encryptions.decrypt(Global.uaePassConfig.UAEID_clientid);
                 Log.v(TAG, "clientId:" + clientId);
-                String secretId = Encryptions.decrypt(Global.uaePassConfig.UAEID_secret);
+                secretId = Encryptions.decrypt(Global.uaePassConfig.UAEID_secret);
                 Log.v(TAG, "secretId:" + secretId);
-                String callbackUrl = Encryptions.decrypt(Global.uaePassConfig.UAEID_callback_url);
+                 callbackUrl = Encryptions.decrypt(Global.uaePassConfig.UAEID_callback_url);
                 Log.v(TAG, "callbackUrl:" + callbackUrl);
-                if (UAEPassRequestModels.isPackageInstalled(UAEPassRequestModels.UAE_PASS_PACKAGE_ID, activity.getPackageManager())) {
+                if (UAEPassRequestModels.isPackageInstalled( activity.getPackageManager())) {
                     Log.v(TAG, "UAE Pass App: app installed");
                     UAEPassAccessTokenRequestModel requestModel =
-                            UAEPassRequestModels.getAuthenticationRequestModel(activity,
-                                    clientId, secretId, callbackUrl, Global.uaePassConfig.getUAE_PASS_ENVIRONMENT(),
-                                    Global.uaePassConfig.UAE_PASS_SCOPE, Global.uaePassConfig.UAE_PASS_ACR_VALUES_MOBILE, Global.uaePassConfig.UAE_PASS_ACR_VALUES_WEBVIEW,Global.CURRENT_LOCALE);
-                    UAEPassController.getInstance().getAccessToken(activity, requestModel, new UAEPassAccessTokenCallback() {
+                            UAEPassRequestModels.getAuthenticationRequestModel(activity);
+                    UAEPassController.INSTANCE.getAccessToken(activity, requestModel, new UAEPassAccessTokenCallback() {
                         @Override
                         public void getToken(String accessToken, String error) {
                             if (error != null) {

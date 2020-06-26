@@ -19,7 +19,7 @@
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:orientation="vertical"
                 android:id="@+id/headerLayout"
                 android:background="@drawable/maroon_overlay_bg">
@@ -31,22 +31,22 @@
                     <TextView
                         android:id="@+id/txtWelcome"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="35dp"
                         android:fontFamily="@font/dubai_font"
                         android:text="@string/title_welcome"
-                        style="@style/font_medium_bold"
                         android:textStyle="bold"
                         android:textColor="@color/white"
-                        android:textSize="20sp"
+                        android:textSize="26dp"
+                        android:textFontWeight="1000"
                         android:layout_marginEnd="10dp"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="10dp" />
+                        android:layout_marginStart="25dp"
+                        android:layout_marginTop="30dp" />
                     <ImageView
                         android:id="@+id/imgHelp"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_alignParentRight="true"
-                        android:src="@drawable/ic_help"
+                        app:srcCompat="@drawable/ic_help"
                         android:visibility="invisible"
                         android:layout_marginTop="10dp"
                         android:layout_marginStart="-60dp"
@@ -62,13 +62,13 @@
                     android:id="@+id/profileUsername"
                     android:gravity="center_vertical">
                     <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
                         android:id="@+id/imgRound"
-                        android:layout_marginStart="30dp"
+                        android:layout_marginStart="25dp"
                         android:gravity="center_vertical"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="20dp"
                         android:layout_marginEnd="10dp"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/user_profile"/>
@@ -106,27 +106,29 @@
                     </LinearLayout>
 
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:id="@+id/layoutlastlogin"
 
-                    android:background="@color/maroon_dark">
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:id="@+id/layoutlastlogin"
+
+                android:background="#830823">
                 <TextView
                     android:id="@+id/txtLastLogin"
-                    style="@style/font_small_bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:layout_gravity="center_vertical"
-
+                    android:layout_marginStart="25dp"
+                    android:textSize="15sp"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_marginEnd="10dp"
                     android:layoutDirection="locale"
                     android:textAlignment="viewStart"
                     android:fontFamily="@font/dubai_font"
                     android:textColor="@color/white" />
-                </LinearLayout>
-
             </LinearLayout>
 
             <!--<LinearLayout
@@ -138,9 +140,10 @@
                 android:layout_width="match_parent"
                 android:layoutDirection="locale"
                 android:background="@color/white"
+
                 android:layout_height="match_parent"
                 android:layout_below="@+id/layoutProfile"
-                android:layout_marginBottom="60dp"/>
+                android:layout_marginBottom="120dp"/>
 
 
         </LinearLayout>
@@ -155,11 +158,11 @@
         <dm.sime.com.kharetati.view.customview.meowbottomnavigation.MeowBottomNavigation
             android:id="@+id/customBottomBar"
             android:layout_width="match_parent"
-            android:layout_height="72dp"
+            android:layout_height="80dp"
             android:layoutDirection="locale"
-            android:layout_alignParentBottom="true"
-            app:mbn_circleColor="@color/maroon_light"
-            app:mbn_backgroundBottomColor="@color/maroon_light"
+            android:background="#00000000"
+            app:mbn_circleColor="#b71e3e"
+            app:mbn_backgroundBottomColor="#b71e3e"
             app:mbn_rippleColor="#2f424242"
             app:mbn_selectedIconColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"

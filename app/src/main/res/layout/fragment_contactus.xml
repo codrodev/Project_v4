@@ -107,7 +107,8 @@
                                     android:layout_marginTop="3dp" />
 
                                 <TextView
-                                    style="@style/TextAppearance.AppCompat.Medium"
+                                    android:textSize="15sp"
+                                    android:textStyle="bold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/alriga"
@@ -157,7 +158,8 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="3dp" />
                                 <TextView
-                                    style="@style/TextAppearance.AppCompat.Medium"
+                                    android:textSize="15sp"
+                                    android:textStyle="bold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/phone"
@@ -218,7 +220,8 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="3dp" />
                                 <TextView
-                                    style="@style/TextAppearance.AppCompat.Medium"
+                                    android:textSize="15sp"
+                                    android:textStyle="bold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/Website"
@@ -266,7 +269,8 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="3dp" />
                                 <TextView
-                                    style="@style/TextAppearance.AppCompat.Medium"
+                                    android:textSize="15sp"
+                                    android:textStyle="bold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/email2"
@@ -369,7 +373,8 @@
                                     android:layout_marginTop="3dp"
                                     android:text="@string/reachus" />
                                 <TextView
-                                    style="@style/TextAppearance.AppCompat.Medium"
+                                    android:textSize="15sp"
+                                    android:textStyle="bold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/Chat"
@@ -414,7 +419,8 @@
                                     android:text="@string/sendus" />
 
                                 <TextView
-                                    style="@style/TextAppearance.AppCompat.Medium"
+                                    android:textSize="15sp"
+                                    android:textStyle="bold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/feedback"
@@ -427,11 +433,6 @@
 
                     </LinearLayout>
 
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="#b6b6b6" />
 
 
 

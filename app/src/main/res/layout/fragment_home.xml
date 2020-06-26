@@ -12,7 +12,7 @@
         android:layoutDirection="locale"
         android:background="@color/white"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp">
+        android:layout_marginBottom="75dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -100,7 +100,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layoutDirection="locale"
-                            android:background="@color/maroon_dark">
+                            android:background="#b81f40">
                             <TextView
                                 android:id="@+id/txtSearchHeader"
                                 style="@style/font_medium_bold"

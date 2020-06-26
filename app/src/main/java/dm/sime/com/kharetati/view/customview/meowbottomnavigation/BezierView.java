@@ -101,13 +101,13 @@ public final class BezierView extends View {
                 return;
 
 
-            progressArray[1].x = this.bezierX - this.bezierInnerWidth / (float)2;
+            progressArray[1].x = this.bezierX - this.bezierInnerWidth / (float)4;
             progressArray[2].x = this.bezierX - this.bezierInnerWidth / (float)4;
             progressArray[3].x = this.bezierX - this.bezierInnerWidth / (float)4;
             progressArray[4].x = this.bezierX;
             progressArray[5].x = this.bezierX + this.bezierInnerWidth / (float)4;
             progressArray[6].x = this.bezierX + this.bezierInnerWidth / (float)4;
-            progressArray[7].x = this.bezierX + this.bezierInnerWidth / (float)2;
+            progressArray[7].x = this.bezierX + this.bezierInnerWidth / (float)4;
 
             for(int i = 2; i <= 6; ++i) {
                 if (progress <= 1.0F) {
@@ -167,16 +167,16 @@ public final class BezierView extends View {
         float bezierOuterHeight = Utils.dipf(getContext(), 8);
         this.bezierInnerWidth = Utils.dipf(getContext(), 124);
         this.bezierInnerHeight = Utils.dipf(getContext(), 16);*/
-        float bezierOuterWidth = Utils.dipf(getContext(), 24);
-        float bezierOuterHeight = Utils.dipf(getContext(), 4);
-        this.bezierInnerWidth = Utils.dipf(getContext(), 116);
-        this.bezierInnerHeight = Utils.dipf(getContext(), 16);
+        float bezierOuterWidth = Utils.dipf(getContext(), 80);
+        float bezierOuterHeight = Utils.dipf(getContext(), 60);
+        this.bezierInnerWidth = Utils.dipf(getContext(), 72);
+        this.bezierInnerHeight = Utils.dipf(getContext(), 24);
         float extra = this.shadowHeight;
 
         if (outerArray == null)
             return;
 
-        outerArray[0] = new PointF(0.0F, bezierOuterHeight + extra);
+        /*outerArray[0] = new PointF(0.0F, bezierOuterHeight + extra);
         outerArray[1] = new PointF(this.bezierX - bezierOuterWidth / (float)2, bezierOuterHeight + extra);
         outerArray[2] = new PointF(this.bezierX - bezierOuterWidth / (float)4, bezierOuterHeight + extra);
         outerArray[3] = new PointF(this.bezierX - bezierOuterWidth / (float)4, extra);
@@ -186,6 +186,17 @@ public final class BezierView extends View {
         outerArray[7] = new PointF(this.bezierX + bezierOuterWidth / (float)2, bezierOuterHeight + extra);
         outerArray[8] = new PointF(this.width, bezierOuterHeight + extra);
         outerArray[9] = new PointF(this.width, this.height);
+        outerArray[10] = new PointF(0.0F, this.height);*/
+        outerArray[0] = new PointF(0.0F, bezierOuterHeight + extra);
+        outerArray[1] = new PointF(0.0F, bezierOuterHeight + extra);
+        outerArray[2] = new PointF(0.0F, bezierOuterHeight + extra);
+        outerArray[3] = new PointF(this.bezierX - bezierOuterWidth / (float)4, extra);
+        outerArray[4] = new PointF(this.bezierX, extra);
+        outerArray[5] = new PointF(this.bezierX + bezierOuterWidth / (float)4, extra);
+        outerArray[6] = new PointF(this.bezierX + bezierOuterWidth / (float)4, bezierOuterHeight + extra);
+        outerArray[7] = new PointF(this.bezierX + bezierOuterWidth / (float)2, bezierOuterHeight + extra);
+        outerArray[8] = new PointF(0.0F, bezierOuterHeight + extra);
+        outerArray[9] = new PointF(0.0F, this.height);
         outerArray[10] = new PointF(0.0F, this.height);
     }
 
@@ -222,7 +233,7 @@ public final class BezierView extends View {
 
         path.lineTo(innerArray[0].x, innerArray[0].y);
         path.lineTo(innerArray[1].x, innerArray[1].y);
-        path.cubicTo(innerArray[2].x, innerArray[2].y, innerArray[3].x, innerArray[3].y, innerArray[4].x, innerArray[4].y);
+       //path.cubicTo(innerArray[2].x, innerArray[2].y, innerArray[3].x, innerArray[3].y, innerArray[4].x, innerArray[4].y);
         path.cubicTo(innerArray[5].x, innerArray[5].y, innerArray[6].x, innerArray[6].y, innerArray[7].x, innerArray[7].y);
         path.lineTo(innerArray[8].x, innerArray[8].y);
         path.lineTo(innerArray[9].x, innerArray[9].y);
@@ -234,13 +245,24 @@ public final class BezierView extends View {
 
     private void calculateInner() {
         float extra = this.shadowHeight;
-        innerArray[0] = new PointF(0f, bezierInnerHeight + extra);
+        /*innerArray[0] = new PointF(0f, bezierInnerHeight + extra);
         innerArray[1] = new PointF((bezierX - bezierInnerWidth / 2), bezierInnerHeight + extra);
         innerArray[2] = new PointF(bezierX - bezierInnerWidth / 4, bezierInnerHeight + extra);
         innerArray[3] = new PointF(bezierX - bezierInnerWidth / 4, height - extra);
         innerArray[4] = new PointF(bezierX, height - extra);
         innerArray[5] = new PointF(bezierX + bezierInnerWidth / 4, height - extra);
         innerArray[6] = new PointF(bezierX + bezierInnerWidth / 4, bezierInnerHeight + extra);
+        innerArray[7] = new PointF(bezierX + bezierInnerWidth / 2, bezierInnerHeight + extra);
+        innerArray[8] = new PointF(width, bezierInnerHeight + extra);
+        innerArray[9] = new PointF(width, height);
+        innerArray[10] = new PointF(0f, height); */
+        innerArray[0] = new PointF(0f, bezierInnerHeight + extra);
+        innerArray[1] = new PointF((bezierX - bezierInnerWidth / 2), bezierInnerHeight + extra);
+        innerArray[2] = new PointF(bezierX - bezierInnerWidth / 4, bezierInnerHeight + extra);
+        innerArray[3] = new PointF(bezierX - bezierInnerWidth / 4, height - extra);
+        innerArray[4] = new PointF(bezierX, height - extra);
+        innerArray[5] = new PointF(bezierX /*+ bezierInnerWidth / 4*/, height - extra);
+        innerArray[6] = new PointF(bezierX-10 /*+bezierInnerWidth /48*/, 3*bezierInnerHeight + 1*extra-8);
         innerArray[7] = new PointF(bezierX + bezierInnerWidth / 2, bezierInnerHeight + extra);
         innerArray[8] = new PointF(width, bezierInnerHeight + extra);
         innerArray[9] = new PointF(width, height);
@@ -253,7 +275,7 @@ public final class BezierView extends View {
 
         path.lineTo(progressArray[0].x, progressArray[0].y);
         path.lineTo(progressArray[1].x, progressArray[1].y);
-        path.cubicTo(progressArray[2].x, progressArray[2].y, progressArray[3].x, progressArray[3].y, progressArray[4].x, progressArray[4].y);
+        //path.cubicTo(progressArray[2].x, progressArray[2].y, progressArray[3].x, progressArray[3].y, progressArray[4].x, progressArray[4].y);
         path.cubicTo(progressArray[5].x, progressArray[5].y, progressArray[6].x, progressArray[6].y, progressArray[7].x, progressArray[7].y);
         path.lineTo(progressArray[8].x, progressArray[8].y);
         path.lineTo(progressArray[9].x, progressArray[9].y);

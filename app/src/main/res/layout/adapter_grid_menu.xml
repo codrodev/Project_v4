@@ -11,7 +11,7 @@
     </data>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="125dp"
+        android:layout_height="130dp"
         android:id="@+id/cardHomeGrid"
         android:elevation="10dp"
         android:background="@drawable/grid_background_drawable"
@@ -32,10 +32,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginVertical="5dp"
+
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
                 android:layout_weight="0.8"
-                android:gravity="center_horizontal" />
+                android:gravity="center" />
             <TextView
                 style="@style/font_small_bold"
                 android:id="@+id/txtMenuName"
@@ -47,8 +48,12 @@
                 android:maxLines="3"
                 android:lines="2"
                 android:textSize="14sp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:textColor="#333333"
                 android:singleLine="false"
                 android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:textAlignment="center"
                 android:gravity="center"/>
             <androidx.appcompat.widget.AppCompatTextView
