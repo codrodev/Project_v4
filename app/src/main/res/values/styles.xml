@@ -97,5 +97,24 @@
         <attr name="mbn_rippleColor" format="color" />
         <attr name="mbn_shadowColor" format="color" />
     </declare-styleable>
-
+    <style name="font_medium_bold_settings">
+        <item name="android:textSize">16dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:fontFamily">@font/dubai_font</item>
+    </style>
+    <style name="font_medium_settings">
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:fontFamily">@font/dubai_font</item>
+    </style>
+    <style name="font_medium_feedback">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#2a2a2a</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:fontFamily">@font/dubai_font</item>
+    </style>
 </resources>
