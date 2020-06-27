@@ -30,5 +30,5 @@
     <color name="extra_light_gray">#565656</color>
     <color name="stepper_text_color">#FAFAFA</color>
 
-
+    <color name="setting_font_size_bg">#D1D1D1</color>
 </resources>

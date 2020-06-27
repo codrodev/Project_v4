@@ -113,7 +113,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:id="@+id/layoutlastlogin"
-
                 android:background="#830823">
                 <TextView
                     android:id="@+id/txtLastLogin"

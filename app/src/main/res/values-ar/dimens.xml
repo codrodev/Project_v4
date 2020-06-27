@@ -2,7 +2,7 @@
   <!-- Default screen margins, per the Android Design guidelines. -->
 
     <dimen name="edit_drawable_height">24dp</dimen>
-  <dimen name="settngs_switch_margin" >64dp</dimen>
+  <dimen name="settngs_switch_margin" >55dp</dimen>
   <dimen name="settings_language_margin">55dp</dimen>
   <dimen name="settings_talkback_margin">0dp</dimen>
 

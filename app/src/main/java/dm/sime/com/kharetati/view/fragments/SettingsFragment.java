@@ -99,7 +99,7 @@ public class SettingsFragment extends Fragment {
         if(getActivity()!=null)
         adjustFontScale(getActivity().getResources().getConfiguration(),Global.fontScale);
 
-        if(Global.isUAE){
+        /*if(Global.isUAE){
             if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0) {
                 binding.txtUsername.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN());
             } else {
@@ -116,19 +116,19 @@ public class SettingsFragment extends Fragment {
             }
             else
                 binding.txtUsername.setText(LoginViewModel.guestName);
-        }
+        }*/
 
 
         if(CURRENT_LOCALE.equals("en")){
             binding.txtEnglish.setBackground(getActivity().getResources().getDrawable(R.drawable.capsule_maroon_bg));
             binding.txtEnglish.setTextColor(getActivity().getResources().getColor(R.color.white));
-            binding.txtArabic.setBackground(getActivity().getResources().getDrawable(R.drawable.capsule_white_bg));
+            binding.txtArabic.setBackgroundColor(getActivity().getResources().getColor(R.color.white));
             binding.txtArabic.setTextColor(getActivity().getResources().getColor(R.color.black));
         }
         else{
             binding.txtArabic.setBackground(getActivity().getResources().getDrawable(R.drawable.capsule_maroon_bg));
             binding.txtArabic.setTextColor(getActivity().getResources().getColor(R.color.white));
-            binding.txtEnglish.setBackground(getActivity().getResources().getDrawable(R.drawable.capsule_white_bg));
+            binding.txtEnglish.setBackgroundColor(getActivity().getResources().getColor(R.color.white));
             binding.txtEnglish.setTextColor(getActivity().getResources().getColor(R.color.black));
         }
         binding.txtEnglish.setOnClickListener(new View.OnClickListener() {
@@ -136,7 +136,7 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 binding.txtEnglish.setBackground(getActivity().getResources().getDrawable(R.drawable.capsule_maroon_bg));
                 binding.txtEnglish.setTextColor(getActivity().getResources().getColor(R.color.white));
-                binding.txtArabic.setBackground(getActivity().getResources().getDrawable(R.drawable.capsule_white_bg));
+                binding.txtArabic.setBackgroundColor(getActivity().getResources().getColor(R.color.white));
                 binding.txtArabic.setTextColor(getActivity().getResources().getColor(R.color.black));
                 CURRENT_LOCALE = (CURRENT_LOCALE.equals("en")) ? "ar" : "en";
 
@@ -153,7 +153,7 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 binding.txtArabic.setBackground(getActivity().getResources().getDrawable(R.drawable.capsule_maroon_bg));
                 binding.txtArabic.setTextColor(getActivity().getResources().getColor(R.color.white));
-                binding.txtEnglish.setBackground(getActivity().getResources().getDrawable(R.drawable.capsule_white_bg));
+                binding.txtEnglish.setBackgroundColor(getActivity().getResources().getColor(R.color.white));
                 binding.txtEnglish.setTextColor(getActivity().getResources().getColor(R.color.black));
 
                 List<Fragment> fragments = getActivity().getSupportFragmentManager().getFragments();
@@ -223,7 +223,7 @@ public class SettingsFragment extends Fragment {
         else if(Global.fontScale==1.5f)
             font5Clicked();
 
-        binding.fontSize1.setOnClickListener(new View.OnClickListener() {
+        binding.layoutFont1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -235,7 +235,7 @@ public class SettingsFragment extends Fragment {
                 sharedpreferences.edit().putString("currentFragment",Global.current_fragment_id).apply();
                 ((MainActivity)getActivity()).recreate();
             }
-        }); binding.fontSize2.setOnClickListener(new View.OnClickListener() {
+        }); binding.layoutFont2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 font2Clicked();
@@ -246,7 +246,7 @@ public class SettingsFragment extends Fragment {
                 sharedpreferences.edit().putString("currentFragment",Global.current_fragment_id).apply();
                 ((MainActivity)getActivity()).recreate();
             }
-        }); binding.fontSize3.setOnClickListener(new View.OnClickListener() {
+        }); binding.layoutFont3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 font3Clicked();
@@ -257,7 +257,7 @@ public class SettingsFragment extends Fragment {
                 sharedpreferences.edit().putString("currentFragment",Global.current_fragment_id).apply();
                 ((MainActivity)getActivity()).recreate();
             }
-        }); binding.fontSize4.setOnClickListener(new View.OnClickListener() {
+        }); binding.layoutFont4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -269,7 +269,7 @@ public class SettingsFragment extends Fragment {
                 sharedpreferences.edit().putString("currentFragment",Global.current_fragment_id).apply();
                 ((MainActivity)getActivity()).recreate();
             }
-        }); binding.fontSize5.setOnClickListener(new View.OnClickListener() {
+        }); binding.layoutFont5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 font5Clicked();
@@ -285,11 +285,11 @@ public class SettingsFragment extends Fragment {
 
     }
     public void font1Clicked(){
-        binding.fontSize1.setBackground(getActivity().getResources().getDrawable(R.drawable.maroon_border_bg));
-        binding.fontSize2.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
-        binding.fontSize3.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
-        binding.fontSize4.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
-        binding.fontSize5.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
+        binding.layoutFont1.setBackground(getActivity().getResources().getDrawable(R.drawable.maroon_border_bg_left));
+        binding.layoutFont2.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
+        binding.layoutFont3.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
+        binding.layoutFont4.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
+        binding.layoutFont5.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg_right));
         binding.fontSize1.setTextColor(getActivity().getResources().getColor(R.color.white));
         binding.fontSize2.setTextColor(getActivity().getResources().getColor(R.color.black));
         binding.fontSize3.setTextColor(getActivity().getResources().getColor(R.color.black));
@@ -297,11 +297,11 @@ public class SettingsFragment extends Fragment {
         binding.fontSize5.setTextColor(getActivity().getResources().getColor(R.color.black));
     }
     public void font2Clicked(){
-        binding.fontSize1.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
-        binding.fontSize2.setBackground(getActivity().getResources().getDrawable(R.drawable.maroon_border_bg));
-        binding.fontSize3.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
-        binding.fontSize4.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
-        binding.fontSize5.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
+        binding.layoutFont1.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg_left));
+        binding.layoutFont2.setBackground(getActivity().getResources().getDrawable(R.drawable.maroon_border_bg));
+        binding.layoutFont3.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
+        binding.layoutFont4.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
+        binding.layoutFont5.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg_right));
         binding.fontSize1.setTextColor(getActivity().getResources().getColor(R.color.black));
         binding.fontSize2.setTextColor(getActivity().getResources().getColor(R.color.white));
         binding.fontSize3.setTextColor(getActivity().getResources().getColor(R.color.black));
@@ -309,22 +309,22 @@ public class SettingsFragment extends Fragment {
         binding.fontSize5.setTextColor(getActivity().getResources().getColor(R.color.black));
 
     }public void font3Clicked(){
-        binding.fontSize1.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
-        binding.fontSize2.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
-        binding.fontSize3.setBackground(getActivity().getResources().getDrawable(R.drawable.maroon_border_bg));
-        binding.fontSize4.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
-        binding.fontSize5.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
+        binding.layoutFont1.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg_left));
+        binding.layoutFont2.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
+        binding.layoutFont3.setBackground(getActivity().getResources().getDrawable(R.drawable.maroon_border_bg));
+        binding.layoutFont4.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
+        binding.layoutFont5.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg_right));
         binding.fontSize1.setTextColor(getActivity().getResources().getColor(R.color.black));
         binding.fontSize2.setTextColor(getActivity().getResources().getColor(R.color.black));
         binding.fontSize3.setTextColor(getActivity().getResources().getColor(R.color.white));
         binding.fontSize4.setTextColor(getActivity().getResources().getColor(R.color.black));
         binding.fontSize5.setTextColor(getActivity().getResources().getColor(R.color.black));
     }public void font4Clicked(){
-        binding.fontSize1.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
-        binding.fontSize2.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
-        binding.fontSize3.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
-        binding.fontSize4.setBackground(getActivity().getResources().getDrawable(R.drawable.maroon_border_bg));
-        binding.fontSize5.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
+        binding.layoutFont1.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg_left));
+        binding.layoutFont2.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
+        binding.layoutFont3.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
+        binding.layoutFont4.setBackground(getActivity().getResources().getDrawable(R.drawable.maroon_border_bg));
+        binding.layoutFont5.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg_right));
         binding.fontSize1.setTextColor(getActivity().getResources().getColor(R.color.black));
         binding.fontSize2.setTextColor(getActivity().getResources().getColor(R.color.black));
         binding.fontSize3.setTextColor(getActivity().getResources().getColor(R.color.black));
@@ -332,11 +332,11 @@ public class SettingsFragment extends Fragment {
         binding.fontSize5.setTextColor(getActivity().getResources().getColor(R.color.black));
 
     }public void font5Clicked(){
-        binding.fontSize1.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
-        binding.fontSize2.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
-        binding.fontSize3.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
-        binding.fontSize4.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
-        binding.fontSize5.setBackground(getActivity().getResources().getDrawable(R.drawable.maroon_border_bg));
+        binding.layoutFont1.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg_left));
+        binding.layoutFont2.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
+        binding.layoutFont3.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
+        binding.layoutFont4.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
+        binding.layoutFont5.setBackground(getActivity().getResources().getDrawable(R.drawable.maroon_border_bg_right));
         binding.fontSize1.setTextColor(getActivity().getResources().getColor(R.color.black));
         binding.fontSize2.setTextColor(getActivity().getResources().getColor(R.color.black));
         binding.fontSize3.setTextColor(getActivity().getResources().getColor(R.color.black));
