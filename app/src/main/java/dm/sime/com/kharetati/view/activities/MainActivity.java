@@ -19,6 +19,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.provider.Settings;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
@@ -177,17 +179,26 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         if(lastLogin!=null && !lastLogin.equals("")){
             if(lastLogin.contains("|")){
                 lastLogin = lastLogin.substring(0,lastLogin.lastIndexOf("|")-1);
-            }
 
-            binding.txtLastLogin.setText(getString(R.string.lastlogin)+" "+lastLogin);
-        }
-        else
-            binding.txtLastLogin.setText(getString(R.string.lastlogin)+" "+currentDateandTime);
+
+            }
+            SpannableStringBuilder str = new SpannableStringBuilder(" "+lastLogin);
+            //str.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            binding.txtLastLogin.setText(str);
         }
         else{
 
-            String guestlastlogin = getString(R.string.lastlogin)+" "+sharedpreferences.getString("lastLoginTime",currentDateandTime);
-            binding.txtLastLogin.setText(guestlastlogin);
+            SpannableStringBuilder str = new SpannableStringBuilder(" "+currentDateandTime);
+            //str.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            binding.txtLastLogin.setText(str);
+        }
+        }
+        else{
+            //getString(R.string.lastlogin)+" "+sharedpreferences.getString("lastLoginTime",currentDateandTime)
+            SpannableStringBuilder str = new SpannableStringBuilder(" "+sharedpreferences.getString("lastLoginTime",currentDateandTime));
+            //str.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            binding.txtLastLogin.setText(str);
+
             sharedpreferences.edit().putString("lastLoginTime",currentDateandTime).apply();
         }
 

@@ -12,7 +12,8 @@
 
     <!-- dots active colors -->
     <color name="maroon_light">#b71e3e</color>
-    <color name="maroon_light_transparent">#bf556b</color>
+    <color name="contact_text_color">#2a2a2a</color>
+    <color name="maroon_light_transparent">#bc556b</color>
     <color name="maroon_dark">#940e2a</color>
     <color name="yellow_light">#cce3e330</color>
     <color name="light_blue">#5057FF</color>

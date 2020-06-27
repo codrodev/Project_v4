@@ -111,19 +111,34 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="50dp"
                 android:id="@+id/layoutlastlogin"
-
+                android:orientation="horizontal"
                 android:background="#830823">
+
+                <TextView
+                    android:id="@+id/lstLogin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:textSize="15sp"
+                    android:text="@string/lastlogin"
+                    style="@style/font_small_bold"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:layoutDirection="locale"
+                    android:textAlignment="viewStart"
+                    android:fontFamily="@font/dubai_font"
+                    android:textColor="@color/white" />
                 <TextView
                     android:id="@+id/txtLastLogin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="25dp"
-                    android:textSize="15sp"
+                    android:textSize="14sp"
                     android:layout_gravity="start|center_vertical"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
                     android:layout_marginEnd="10dp"
                     android:layoutDirection="locale"
                     android:textAlignment="viewStart"

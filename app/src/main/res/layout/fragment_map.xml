@@ -34,7 +34,7 @@
         <FrameLayout
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginTop="25dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
@@ -45,7 +45,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="match_parent"
                 android:id="@+id/toolBarLayout"
 
                 android:background="@drawable/edittext_background"
@@ -71,17 +71,18 @@
                     <LinearLayout
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        android:background="@color/gray_text_color"/>
+                        android:background="#80333333"/>
 
-                        <dm.sime.com.kharetati.view.customview.CleanableEditText
-                            android:id="@+id/txtPlotNo"
-                            android:layout_width="110dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/white"
-                            android:gravity="center_vertical|center_horizontal"
-                            android:hint="-  -  -  -  -  -  -"
-                            android:maxLength="20"
-                            android:textSize="16sp" />
+                    <dm.sime.com.kharetati.view.customview.CleanableEditText
+                        android:id="@+id/txtPlotNo"
+                        android:layout_width="105dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="2dp"
+                        android:background="@color/white"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:hint="-  -  -  -  -  -  -"
+                        android:maxLength="20"
+                        android:textSize="16sp" />
 
                     <!--android:imeOptions="actionDone"
                     android:inputType="text"-->
@@ -98,7 +99,7 @@
 
                     <ImageView
                         android:id="@+id/imgSearch"
-                        android:layout_width="48dp"
+                        android:layout_width="50dp"
                         android:layout_height="48dp"
                         android:layout_margin="8dp"
                         android:layout_gravity="start|center_vertical"
@@ -107,10 +108,10 @@
                     <LinearLayout
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        android:background="@color/gray_text_color"/>
+                        android:background="#80333333"/>
                     <ImageView
                         android:id="@+id/imgLayer"
-                        android:layout_width="48dp"
+                        android:layout_width="50dp"
                         android:layout_height="48dp"
 
                         android:layout_margin="8dp"
@@ -120,10 +121,10 @@
                     <LinearLayout
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        android:background="@color/gray_text_color"/>
+                        android:background="#80333333"/>
                     <ImageView
                         android:id="@+id/imgBookmark"
-                        android:layout_width="48dp"
+                        android:layout_width="50dp"
                         android:layout_height="48dp"
 
                         android:layout_margin="8dp"
@@ -133,10 +134,10 @@
                     <LinearLayout
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        android:background="@color/gray_text_color"/>
+                        android:background="#80333333"/>
                     <ImageView
                         android:id="@+id/imgRecenter"
-                        android:layout_width="48dp"
+                        android:layout_width="50dp"
                         android:layout_height="48dp"
                         android:layout_margin="8dp"
                         android:layout_gravity="start|center_vertical"
@@ -145,10 +146,10 @@
                     <LinearLayout
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        android:background="@color/gray_text_color"/>
+                        android:background="#80333333"/>
                     <ImageView
                         android:id="@+id/imgMakani"
-                        android:layout_width="48dp"
+                        android:layout_width="50dp"
                         android:layout_height="48dp"
                         android:layout_margin="8dp"
                         android:layout_gravity="start|center_vertical"
@@ -157,10 +158,10 @@
                     <LinearLayout
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        android:background="@color/gray_text_color"/>
+                        android:background="#80333333"/>
                     <ImageView
                         android:id="@+id/imgHelp"
-                        android:layout_width="48dp"
+                        android:layout_width="50dp"
                         android:layout_height="48dp"
 
                         android:layout_margin="8dp"
@@ -198,7 +199,8 @@
             android:id="@+id/floatingButtton"
             app:srcCompat="@drawable/menu_512"
             android:scaleType="fitCenter"
-            app:maxImageSize="32dp"
+            android:padding="8dp"
+            app:maxImageSize="38dp"
             android:foregroundGravity="center"
             app:backgroundTint="@color/white"
             android:layout_marginBottom="54dp"
@@ -213,7 +215,7 @@
             android:elevation="5dp"
             android:background="@drawable/circular_menu_bg"
             android:id="@+id/closefloatingButtton"
-            android:layout_marginBottom="190dp"
+            android:layout_marginBottom="222dp"
             android:layout_gravity="bottom|end">
             <ImageView
                 android:layout_width="32dp"
@@ -225,7 +227,7 @@
         <LinearLayout
             android:id="@+id/mapFunctionLayout"
             android:layout_width="match_parent"
-            android:layout_height="214dp"
+            android:layout_height="246dp"
             android:background="@color/white"
             android:layout_marginTop="16dp"
             android:layout_gravity="bottom"
@@ -236,8 +238,10 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycleMapFunction"
                 android:layout_width="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginTop="48dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="48dp"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
         <include  layout="@layout/bottomsheet_web_view" />

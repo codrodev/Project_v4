@@ -78,7 +78,7 @@ public class DashboardFragment extends Fragment implements ViewPager.OnPageChang
             model.setDashboardPagerAdapter(this, 1);
         } else {
             binding.layoutParent.setWeightSum(2);
-            binding.layoutParent.setPaddingRelative(0,5,100,5);
+            binding.layoutParent.setPaddingRelative(48,8,200,8);
             model.setDashboardPagerAdapter(this, 2);
         }
         binding.viewPagerCreatePackage.addOnPageChangeListener(this);

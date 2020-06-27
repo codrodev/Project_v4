@@ -33,14 +33,17 @@
             android:screenOrientation="portrait"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
             <!-- //UAE PASS START Adding Custom Scheme and Host -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.LAUNCHER" />
+
                 <data
                     android:host="${host_success}"
                     android:scheme="${scheme}" />
@@ -58,7 +61,7 @@
             android:theme="@style/AppTheme"
 
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" >
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -71,7 +74,7 @@
                 <data android:scheme="kharetati"
                     android:host="plot_no"
                     android:pathPrefix="/home"/>
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity android:name=".view.activities.ImageCropActivity"
             android:configChanges="locale|orientation|screenSize"

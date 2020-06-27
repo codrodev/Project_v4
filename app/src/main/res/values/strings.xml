@@ -201,7 +201,7 @@
     <string name="plc_mobileNumber">Enter Mobile Number</string>
     <string name="find_site_plan">Find Site Plan</string>
     <string name="plc_plotNumber">Enter your plot number</string>
-    <string name="reset">Reset</string>
+    <string name="reset">Refresh</string>
     <string name="findPlot">Find Plot</string>
     <string name="enter_plot_number">Enter Plot Number</string>
     <string name="date_from">Date - From:</string>

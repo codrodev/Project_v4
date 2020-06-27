@@ -866,8 +866,8 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                 anim.setFillAfter(true);
                 anim.setInterpolator(new AccelerateDecelerateInterpolator());
 
-
-
+                binding.imgsplash.setVisibility(View.GONE);
+                binding.imgBackground.setVisibility(View.VISIBLE);
                 binding.imgBackground.setPadding(0, (int) ((Global.height/100)*24),0,0);
 
 

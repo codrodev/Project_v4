@@ -9,16 +9,16 @@
     <TextView
         android:id="@+id/txtLandOwner"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="35dp"
         android:layout_alignParentRight="true"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layoutDirection="rtl"
         android:textAlignment="viewStart"
         android:layout_marginTop="10dp"
-        android:gravity="start"
+        android:gravity="start|center_vertical"
         android:textColor="@color/gray_text_color"
-        style="@style/font_medium_bold"
+        android:textSize="14sp"
         android:fontFamily="@font/dubai_font"
         android:textStyle="bold" />
 </RelativeLayout>

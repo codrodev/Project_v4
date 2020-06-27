@@ -358,14 +358,14 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         if(status){
             binding.btnNext.setEnabled(status);
 
-            binding.btnNext.setBackground(getActivity().getResources().getDrawable(R.drawable.gradient_background));
+            binding.btnNext.setBackground(getActivity().getResources().getDrawable(R.drawable.maroon_angle_background));
 
 
         }
         else {
             binding.btnNext.setEnabled(status);
             if(getActivity()!=null)
-                binding.btnNext.setBackground(getActivity().getResources().getDrawable(R.drawable.disabled_gradient_background));
+                binding.btnNext.setBackground(getActivity().getResources().getDrawable(R.drawable.marron_angle_disabled_background));
 
         }
 

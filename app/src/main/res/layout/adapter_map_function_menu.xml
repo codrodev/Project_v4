@@ -13,9 +13,10 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="130dp"
         android:elevation="10dp"
-        android:layout_margin="5dp"
+        app:cardBackgroundColor="#fcfcfc"
+        android:layout_margin="10dp"
         app:cardCornerRadius="5dp">
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,6 +30,7 @@
                 android:id="@+id/imgMenuIcon"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:paddingTop="8dp"
                 android:src="@drawable/bookmark"
                 android:layout_weight="0.6"
 
@@ -38,13 +40,15 @@
                 android:layout_below="@+id/imgMenuIcon"
                 android:layout_width="match_parent"
                 android:textSize="14sp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/dubai_font"
                 android:maxLines="2"
                 android:layout_weight=".4"
                 android:lineHeight="20dp"
                 android:textAlignment="center"
-                android:textColor="@color/black" />
+                android:textColor="#2a3d68" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 <!--
