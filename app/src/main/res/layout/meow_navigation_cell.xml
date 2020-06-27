@@ -7,19 +7,18 @@
         android:id="@+id/v_circle"
         android:layout_width="46dp"
         android:layout_gravity="center"
-        android:layout_marginTop="2dp"
-
-        android:layout_height="46dp" />
+        android:layout_marginTop="7dp"
+        android:layout_height="47dp" />
 
     <FrameLayout
         android:id="@+id/fl"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_centerHorizontal="true"
-
+        android:layout_centerVertical="true"
         android:elevation="15dp"
         android:layout_gravity="center"
-        android:padding="10dp"
+        android:padding="8dp"
         tools:targetApi="lollipop">
 
         <dm.sime.com.kharetati.view.customview.meowbottomnavigation.CellImageView
@@ -27,13 +26,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginEnd="2dp"
-            android:layout_marginStart="2dp"
-            android:padding="10dp"
-            android:layout_marginBottom="0dp"
-            android:layout_marginTop="-12dp"
+            android:padding="11dp"
             app:meow_imageview_fitImage="false"
-            app:meow_imageview_size="40dp" />
+            app:meow_imageview_size="40dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="15dp"/>
 
         <TextView
             android:id="@+id/tv_count"

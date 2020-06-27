@@ -231,6 +231,7 @@ public final class MeowBottomNavigation extends FrameLayout {
         this.ll_cells = new LinearLayout(this.getContext());
 
         LayoutParams params = new LayoutParams(-1, this.heightCell);
+        //params.setMargins();
         params.gravity = 80;
         this.ll_cells.setLayoutParams(params);
         this.ll_cells.setOrientation(LinearLayout.HORIZONTAL);
@@ -266,7 +267,7 @@ public final class MeowBottomNavigation extends FrameLayout {
     public void add(MeowBottomNavigation.Model model) {
         final MeowBottomNavigationCell cell = new MeowBottomNavigationCell(this.getContext());
         android.widget.LinearLayout.LayoutParams params = new android.widget.LinearLayout.LayoutParams(-1, this.heightCell, 1.0F);
-        params.setMargins(0,0,0,60);
+        //params.setMargins(0,0,0,50);
         cell.setLayoutParams(params);
         cell.setIcon(model.getIcon());
         cell.setCount(model.getCount());
@@ -358,6 +359,8 @@ public final class MeowBottomNavigation extends FrameLayout {
 
         for (Object element$iv : $this$forEach$iv) {
             MeowBottomNavigationCell it = (MeowBottomNavigationCell) element$iv;
+           /* CellImageView v = (it.getContainerView()).findViewById(R.id.iv);
+            v.setBottom(20);*/
             it.setDuration(d);
         }
 

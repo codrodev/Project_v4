@@ -100,6 +100,8 @@ final class MeowBottomNavigationCell extends RelativeLayout {
     public final void setSelectedIconColor(int value) {
         this.selectedIconColor = value;
         if (this.allowDraw) {
+
+            //params.setMargins(0,0,0,-10);
             CellImageView var10000 = (CellImageView) this._$_findCachedViewById(R.id.iv);
             var10000.setColor(this.isEnabledCell ? this.selectedIconColor : this.defaultIconColor);
         }
@@ -125,8 +127,11 @@ final class MeowBottomNavigationCell extends RelativeLayout {
     public final void setIcon(int value) {
         this.icon = value;
         if (this.allowDraw) {
+            FrameLayout.LayoutParams params = new android.widget.FrameLayout.LayoutParams(40, 40);
+            //params.setMargins(0,0,0,-10);
             CellImageView var10000 = (CellImageView) this._$_findCachedViewById(R.id.iv);
             var10000.setResource(value);
+            //var10000.setLayoutParams(params);
         }
 
     }
@@ -314,7 +319,7 @@ final class MeowBottomNavigationCell extends RelativeLayout {
         GradientDrawable d = new GradientDrawable();
         d.setColor(this.circleColor);
         d.setShape(GradientDrawable.RECTANGLE);
-        d.setCornerRadius(40);
+        d.setCornerRadius(30);
         d.setOrientation(GradientDrawable.Orientation.BR_TL);
 
 
@@ -365,7 +370,9 @@ final class MeowBottomNavigationCell extends RelativeLayout {
 
     public final void setOnClickListener(MeowBottomNavigation.ClickListener value) {
         this.onClickListener = value;
+
         final CellImageView var10000 = (CellImageView) this._$_findCachedViewById(R.id.iv);
+        //var10000.setPadding(0,0,0,20);
         if (var10000 != null) {
             var10000.setOnClickListener(new OnClickListener() {
                 public final void onClick(View it) {
