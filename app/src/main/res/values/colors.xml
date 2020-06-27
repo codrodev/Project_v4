@@ -31,4 +31,7 @@
     <color name="stepper_text_color">#FAFAFA</color>
 
     <color name="setting_font_size_bg">#D1D1D1</color>
+    <color name="switch_text_color">#7f7f7f</color>
+    <color name="text_color">#333333</color>
+
 </resources>

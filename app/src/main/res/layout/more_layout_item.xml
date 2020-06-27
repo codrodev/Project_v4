@@ -3,44 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-
-        android:layout_margin="5dp">
-        <androidx.cardview.widget.CardView
-            android:layout_width="95dp"
-            android:layout_height="95dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="10dp">
+        <LinearLayout
+            android:layout_width="85dp"
+            android:layout_height="85dp"
             android:layout_gravity="center"
-            app:cardBackgroundColor="#FCFCFC"
-            app:cardCornerRadius="16dp"
             android:gravity="center"
-            app:cardElevation="3dp"
-            >
-        <ImageView
-            android:id="@+id/imgMoreIcon"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="24dp"
-            android:layout_weight="0.6"
-            app:srcCompat="@drawable/ic_help_black"
-            android:gravity="center"
-            android:layout_gravity="center" />
-        </androidx.cardview.widget.CardView>
+            android:background="@drawable/rounded_corner_options_card_bg">
+            <ImageView
+                android:id="@+id/imgMoreIcon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/ic_help_black"
+                android:gravity="center"
+                android:scaleType="fitXY"
+                android:layout_gravity="center"
+                android:layout_margin="15dp"/>
+        </LinearLayout>
         <TextView
-            style="@style/font_small_bold"
+            style="@style/font_medium_settings"
             android:id="@+id/txtMoreName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="text"
-            android:maxLines="2"
-            android:lines="2"
-            android:textColor="@color/black"
-            android:singleLine="false"
-            android:layout_marginTop="5dp"
+            android:textColor="#222222"
+            android:singleLine="true"
+            android:layout_marginTop="7dp"
             android:textAlignment="center"
             android:gravity="center_horizontal|center_vertical"/>
     </LinearLayout>

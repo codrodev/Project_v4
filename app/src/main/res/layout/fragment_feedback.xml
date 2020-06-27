@@ -30,132 +30,131 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/rounded_corner_theme_bg"
+                android:layout_marginTop="26dp"
+                android:background="@drawable/rounded_corner_feedback_bg"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputLayout
+
+                <TextView
+                    style="@style/font_medium_feedback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/feedback_name"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="15px"
+                    android:layout_marginHorizontal="20px"/>
+                <dm.sime.com.kharetati.view.customview.CleanableEditText
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:gravity="start"
+                    android:textDirection="locale"
+                    android:textAlignment="viewStart"
+                    android:singleLine="true"
+                    android:paddingStart="5dp"
+                    android:background="@drawable/edittext_feedback_background"
+                    android:fontFamily="@font/dubai_font"
+                    android:maxLength="255"
+                    android:inputType="textPersonName"
+                    android:layout_marginHorizontal="20px"/>
+
+                <TextView
+                    style="@style/font_medium_feedback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/email_hint"
+                    android:layout_marginVertical="15px"
+                    android:layout_marginHorizontal="20px"/>
+                <dm.sime.com.kharetati.view.customview.CleanableEditText
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:gravity="start"
+                    android:paddingStart="5dp"
+                    android:background="@drawable/edittext_feedback_background"
+                    android:textDirection="locale"
+                    android:singleLine="true"
+                    android:textAlignment="viewStart"
+                    android:maxLength="50"
+                    android:fontFamily="@font/dubai_font"
+                    android:inputType="textEmailAddress"
+                    android:layout_marginHorizontal="20px"/>
+
+                <TextView
+                    style="@style/font_medium_feedback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/feedback_mobile_number"
+                    android:layout_marginVertical="15px"
+                    android:layout_marginHorizontal="20px"/>
+                <dm.sime.com.kharetati.view.customview.CleanableEditText
+                    android:id="@+id/phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:inputType="phone"
+                    android:maxLength="20"
+                    android:paddingStart="5dp"
+                    android:background="@drawable/edittext_feedback_background"
+                    android:textDirection="locale"
+                    android:textAlignment="viewStart"
+                    android:gravity="start"
+                    android:fontFamily="@font/dubai_font"
+                    android:singleLine="true"
+                    android:layout_marginHorizontal="20px"/>
+
+
+                <TextView
+                    style="@style/font_medium_feedback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/subject"
+                    android:layout_marginVertical="15px"
+                    android:layout_marginHorizontal="20px"/>
+                <dm.sime.com.kharetati.view.customview.CleanableEditText
+                    android:id="@+id/subject"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:gravity="start"
+                    android:inputType="text"
+                    android:paddingStart="5dp"
+                    android:background="@drawable/edittext_feedback_background"
+                    android:textAlignment="viewStart"
+                    android:singleLine="true"
+                    android:fontFamily="@font/dubai_font"
+                    android:layout_marginHorizontal="20px"/>
+
+                <TextView
+                    style="@style/font_medium_feedback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/feedback_description"
+                    android:layout_marginVertical="15px"
+                    android:layout_marginHorizontal="20px"/>
+                <dm.sime.com.kharetati.view.customview.CleanableEditText
+                    android:id="@+id/desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/edittext_background"
-                    android:layout_marginTop="10dp">
-
-                    <dm.sime.com.kharetati.view.customview.CleanableEditText
-                        android:id="@+id/name"
-                        android:layout_width="match_parent"
-                        android:layout_height="35dp"
-                        android:gravity="start"
-                        android:textDirection="locale"
-                        android:textAlignment="viewStart"
-                        android:singleLine="true"
-                        android:hint="@string/feedback_name"
-                        android:paddingStart="5dp"
-                        android:background="@color/transparent"
-                        android:fontFamily="@font/dubai_font"
-                        android:maxLength="255"
-                        android:inputType="textPersonName"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edittext_background"
-                    android:layout_marginTop="10dp">
-
-                    <dm.sime.com.kharetati.view.customview.CleanableEditText
-                        android:id="@+id/email"
-                        android:layout_width="match_parent"
-                        android:layout_height="35dp"
-                        android:gravity="start"
-                        android:paddingStart="5dp"
-                        android:background="@color/transparent"
-                        android:textDirection="locale"
-                        android:singleLine="true"
-                        android:textAlignment="viewStart"
-                        android:maxLength="50"
-                        android:fontFamily="@font/dubai_font"
-                        android:hint="@string/email_hint"
-                        android:inputType="textEmailAddress"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edittext_background"
-                    android:layout_marginTop="10dp">
-
-                    <dm.sime.com.kharetati.view.customview.CleanableEditText
-                        android:id="@+id/phone"
-                        android:layout_width="match_parent"
-                        android:layout_height="35dp"
-                        android:inputType="phone"
-                        android:maxLength="20"
-                        android:paddingStart="5dp"
-                        android:background="@color/transparent"
-                        android:textDirection="locale"
-                        android:textAlignment="viewStart"
-                        android:gravity="start"
-                        android:fontFamily="@font/dubai_font"
-                        android:singleLine="true"
-                        android:hint="@string/feedback_mobile_number" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edittext_background"
-                    android:layout_marginTop="10dp">
-
-                    <dm.sime.com.kharetati.view.customview.CleanableEditText
-                        android:id="@+id/subject"
-                        android:layout_width="match_parent"
-                        android:layout_height="35dp"
-                        android:gravity="start"
-                        android:inputType="text"
-                        android:paddingStart="5dp"
-                        android:background="@color/transparent"
-                        android:textAlignment="viewStart"
-                        android:singleLine="true"
-                        android:fontFamily="@font/dubai_font"
-                        android:hint="@string/subject"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edittext_background"
-                    android:layout_marginTop="10dp">
-
-                    <dm.sime.com.kharetati.view.customview.CleanableEditText
-                        android:id="@+id/desc"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:hint="@string/feedback_description"
-                        android:paddingStart="5dp"
-                        android:background="@color/transparent"
-                        android:fontFamily="@font/dubai_font"
-                        android:inputType="textMultiLine"
-                        android:lines="3"
-                        android:maxLines="5"
-                        android:nestedScrollingEnabled="true"
-                        android:textAlignment="viewStart"
-                        android:textDirection="locale" />
-                </com.google.android.material.textfield.TextInputLayout>
+                    android:gravity="start"
+                    android:paddingStart="5dp"
+                    android:background="@drawable/edittext_feedback_background"
+                    android:fontFamily="@font/dubai_font"
+                    android:inputType="textMultiLine"
+                    android:lines="3"
+                    android:maxLines="5"
+                    android:nestedScrollingEnabled="true"
+                    android:textAlignment="viewStart"
+                    android:textDirection="locale"
+                    android:layout_marginHorizontal="20px"/>
 
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
 
 
                     <TextView
@@ -164,43 +163,45 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true" />
 
-
                 </RelativeLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center">
-
-                <Button
-                    android:id="@+id/btn_submitFeedback"
-                    android:layout_width="125dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/capsule_maroon_bg"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
-                    android:text="@string/submit"
-                    android:fontFamily="@font/dubai_font"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white" />
-                <Button
-                    android:id="@+id/btn_cancel"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/capsule_grey_bg"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
-                    android:text="@string/cancel"
-                    android:fontFamily="@font/dubai_font"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white" />
+                    android:layout_marginVertical="30dp"
+                    android:layout_marginHorizontal="20px"
+                    android:gravity="center"
+                    android:weightSum="2">
+                    <TextView
+                        android:id="@+id/btn_submitFeedback"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/capsule_maroon_feedback_submit_bg"
+                        android:paddingHorizontal="@dimen/activity_horizontal_margin"
+                        android:paddingVertical="10px"
+                        android:textAlignment="center"
+                        android:text="@string/submit"
+                        style="@style/font_medium_feedback"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="15dp"/>
+                    <TextView
+                        android:id="@+id/btn_cancel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_gravity="center"
+                        android:textAlignment="center"
+                        android:background="@drawable/capsule_maroon_feedback_cancel_bg"
+                        android:paddingHorizontal="@dimen/activity_horizontal_margin"
+                        android:paddingVertical="10px"
+                        android:text="@string/cancel"
+                        style="@style/font_medium_feedback"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:layout_weight="1"/>
                 </LinearLayout>
 
             </LinearLayout>

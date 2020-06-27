@@ -123,13 +123,13 @@ public class SettingsFragment extends Fragment {
             binding.txtEnglish.setBackground(getActivity().getResources().getDrawable(R.drawable.capsule_maroon_bg));
             binding.txtEnglish.setTextColor(getActivity().getResources().getColor(R.color.white));
             binding.txtArabic.setBackgroundColor(getActivity().getResources().getColor(R.color.white));
-            binding.txtArabic.setTextColor(getActivity().getResources().getColor(R.color.black));
+            binding.txtArabic.setTextColor(getActivity().getResources().getColor(R.color.switch_text_color));
         }
         else{
             binding.txtArabic.setBackground(getActivity().getResources().getDrawable(R.drawable.capsule_maroon_bg));
             binding.txtArabic.setTextColor(getActivity().getResources().getColor(R.color.white));
             binding.txtEnglish.setBackgroundColor(getActivity().getResources().getColor(R.color.white));
-            binding.txtEnglish.setTextColor(getActivity().getResources().getColor(R.color.black));
+            binding.txtEnglish.setTextColor(getActivity().getResources().getColor(R.color.switch_text_color));
         }
         binding.txtEnglish.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,7 +137,7 @@ public class SettingsFragment extends Fragment {
                 binding.txtEnglish.setBackground(getActivity().getResources().getDrawable(R.drawable.capsule_maroon_bg));
                 binding.txtEnglish.setTextColor(getActivity().getResources().getColor(R.color.white));
                 binding.txtArabic.setBackgroundColor(getActivity().getResources().getColor(R.color.white));
-                binding.txtArabic.setTextColor(getActivity().getResources().getColor(R.color.black));
+                binding.txtArabic.setTextColor(getActivity().getResources().getColor(R.color.switch_text_color));
                 CURRENT_LOCALE = (CURRENT_LOCALE.equals("en")) ? "ar" : "en";
 
                 sharedpreferences.edit().putString(USER_LANGUAGE,CURRENT_LOCALE).apply();
@@ -154,7 +154,7 @@ public class SettingsFragment extends Fragment {
                 binding.txtArabic.setBackground(getActivity().getResources().getDrawable(R.drawable.capsule_maroon_bg));
                 binding.txtArabic.setTextColor(getActivity().getResources().getColor(R.color.white));
                 binding.txtEnglish.setBackgroundColor(getActivity().getResources().getColor(R.color.white));
-                binding.txtEnglish.setTextColor(getActivity().getResources().getColor(R.color.black));
+                binding.txtEnglish.setTextColor(getActivity().getResources().getColor(R.color.switch_text_color));
 
                 List<Fragment> fragments = getActivity().getSupportFragmentManager().getFragments();
                 if(fragments!=null){
@@ -180,13 +180,13 @@ public class SettingsFragment extends Fragment {
             binding.txtOn.setBackground(getActivity().getResources().getDrawable(R.drawable.capsule_maroon_bg));
             binding.txtOn.setTextColor(getActivity().getResources().getColor(R.color.white));
             binding.txtOff.setBackground(getActivity().getResources().getDrawable(R.drawable.capsule_white_bg));
-            binding.txtOff.setTextColor(getActivity().getResources().getColor(R.color.black));
+            binding.txtOff.setTextColor(getActivity().getResources().getColor(R.color.switch_text_color));
         }
         else{
             binding.txtOff.setBackground(getActivity().getResources().getDrawable(R.drawable.capsule_maroon_bg));
             binding.txtOff.setTextColor(getActivity().getResources().getColor(R.color.white));
             binding.txtOn.setBackground(getActivity().getResources().getDrawable(R.drawable.capsule_white_bg));
-            binding.txtOn.setTextColor(getActivity().getResources().getColor(R.color.black));
+            binding.txtOn.setTextColor(getActivity().getResources().getColor(R.color.switch_text_color));
         }
         binding.txtOn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,7 +194,7 @@ public class SettingsFragment extends Fragment {
                 binding.txtOn.setBackground(getActivity().getResources().getDrawable(R.drawable.capsule_maroon_bg));
                 binding.txtOn.setTextColor(getActivity().getResources().getColor(R.color.white));
                 binding.txtOff.setBackground(getActivity().getResources().getDrawable(R.drawable.capsule_white_bg));
-                binding.txtOff.setTextColor(getActivity().getResources().getColor(R.color.black));
+                binding.txtOff.setTextColor(getActivity().getResources().getColor(R.color.switch_text_color));
                 Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
                 startActivity(intent);
                 sharedpreferences.edit().putString(TALK_BACK,"on").apply();
@@ -206,7 +206,7 @@ public class SettingsFragment extends Fragment {
                 binding.txtOff.setBackground(getActivity().getResources().getDrawable(R.drawable.capsule_maroon_bg));
                 binding.txtOff.setTextColor(getActivity().getResources().getColor(R.color.white));
                 binding.txtOn.setBackground(getActivity().getResources().getDrawable(R.drawable.capsule_white_bg));
-                binding.txtOn.setTextColor(getActivity().getResources().getColor(R.color.black));
+                binding.txtOn.setTextColor(getActivity().getResources().getColor(R.color.switch_text_color));
                 sharedpreferences.edit().putString(TALK_BACK,"off").apply();
             }
         });

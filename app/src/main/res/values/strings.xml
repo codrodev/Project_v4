@@ -151,7 +151,7 @@
     <string name="thank_you_feedback">Thank you for your feedback!</string>
     <string name="open_in_app_store">Open in App Store</string>
     <string name="email">Email </string>
-    <string name="email_hint">Email(mail@abc.com)*</string>
+    <string name="email_hint">Email*</string>
     <string name="feedback_subject">Kharetati Feedback</string>
     <string name="Contact_us_Call_permission">"Kharetati needs permission to make calls to Dubai Municipality."</string>
     <string name="you_are_about_to_call">Call </string>
