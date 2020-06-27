@@ -31,12 +31,26 @@
             android:name=".view.activities.LoginActivity"
             android:configChanges="locale"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
+            <!-- //UAE PASS START Adding Custom Scheme and Host -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <data
+                    android:host="${host_success}"
+                    android:scheme="${scheme}" />
+
+                <data
+                    android:host="${host_failure}"
+                    android:scheme="${scheme}" />
+
             </intent-filter>
+            <!-- //UAE PASS END Adding Custom Scheme and Host -->
         </activity>
         <activity
             android:name=".view.activities.MainActivity"

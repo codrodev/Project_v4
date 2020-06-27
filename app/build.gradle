@@ -23,14 +23,17 @@ android {
         versionName rootProject.ext.versionName
         vectorDrawables.useSupportLibrary = true
 
-        buildConfigField "String", "URI_SCHEME", "\"//kharetati\""
+        //UAE PASS START -- Adding Custom Scheme Variables
+        buildConfigField "String", "URI_SCHEME", "\"kharetati\""
         buildConfigField "String", "URI_HOST_SUCCESS", "\"success\""
         buildConfigField "String", "URI_HOST_FAILURE", "\"failure\""
+
         manifestPlaceholders = [
                 host_success: "success",
                 host_failure: "failure",
-                scheme : "//kharetati "
+                scheme      : "kharetati"
         ]
+        //UAE PASS END -- Adding Custom Scheme Variables
         //ndk.abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86' ,'x86_64'
         multiDexEnabled true
         /*ndk.abiFilters 'armeabi-v7a', 'arm64-v8a','x86', 'x86_64'*/
