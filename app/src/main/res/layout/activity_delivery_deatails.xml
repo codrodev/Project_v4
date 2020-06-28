@@ -188,7 +188,7 @@
                 android:textDirection="locale" />
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/edittext_background">
             <Spinner
                     android:layout_width="match_parent"
