@@ -71,7 +71,6 @@
                         android:background="#00000000"
                         android:digits="0123456789"
                         android:fontFamily="@font/dubai_font"
-                        android:gravity="bottom"
                         android:hint="-  -  -  -  -  -  -"
                         android:inputType="number"
                         android:ems="8"

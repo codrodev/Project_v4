@@ -15,7 +15,7 @@
         android:textDirection="locale"
         android:textAlignment="viewStart"
         android:textStyle="bold"
-        style="@style/font_medium_bold"
+        android:textSize="14sp"
         android:fontFamily="@font/dubai_font"
         android:layout_toLeftOf="@+id/imgChevron"
         android:textColor="@color/black" />

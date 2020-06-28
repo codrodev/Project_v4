@@ -60,13 +60,15 @@
                     android:layout_weight=".75">
                     <TextView
                         android:id="@+id/txtHeader"
-                        style="@style/font_extra_large_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:text="Sample"
+                        android:textStyle="bold"
                         android:textColor="@color/white"
-                        android:textSize="20sp" />
+                        android:textSize="26dp"
+                        android:textFontWeight="1000"
+                        />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -25,8 +25,8 @@ public class SwitchCompatEx extends SwitchCompat {
     private Paint trackLabelPaint;
     public int TRACK_COLOR = 0xFFFFFFFF;
     public int TRACK_STROKE_WIDTH = dp2Px(2f);
-    public int TRACK_STROKE_COLOR = 0xFFb71e3e;
-    public int TRACK_LABEL_COLOR = 0xFFb71e3e;
+    public int TRACK_STROKE_COLOR = 0xFFa31533;
+    public int TRACK_LABEL_COLOR = 0xFFa31533;
     public int TRACK_LABEL_SIZE = sp2Px(12f);
 
     public int THUMB_COLOR = 0xFFb71e3e;

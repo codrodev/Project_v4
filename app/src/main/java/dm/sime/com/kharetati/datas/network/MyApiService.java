@@ -17,6 +17,7 @@ import dm.sime.com.kharetati.datas.models.KharetatiUser;
 import dm.sime.com.kharetati.datas.models.LookupParameterModel;
 import dm.sime.com.kharetati.datas.models.LookupResponseModel;
 import dm.sime.com.kharetati.datas.models.MakaniToDLTMResponse;
+import dm.sime.com.kharetati.datas.models.NotificationResponse;
 import dm.sime.com.kharetati.datas.models.ParcelResponse;
 import dm.sime.com.kharetati.datas.models.RetrieveDocStreamResponse;
 import dm.sime.com.kharetati.datas.models.RetrieveMyMapResponse;
@@ -171,4 +172,6 @@ public interface MyApiService {
     Observable<SerializableParcelDetails> getParcelDetails(@Url String url, @Body SerializeGetAppRequestModel model);
     @POST
     Observable<MakaniToDLTMResponse> getMakaniToDLTM(@Url String url, @Body SerializeGetAppRequestModel model);
+    @POST
+    Observable<NotificationResponse> getAppNotifications(@Url String url, @Body SerializeGetAppRequestModel model);
 }

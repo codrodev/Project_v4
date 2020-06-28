@@ -34,6 +34,7 @@
             android:layout_height="wrap_content"
             android:textColor="#222222"
             android:singleLine="true"
+
             android:layout_marginTop="7dp"
             android:textAlignment="center"
             android:gravity="center_horizontal|center_vertical"/>

@@ -2,6 +2,7 @@ package dm.sime.com.kharetati.view.activities;
 
 import androidx.annotation.NonNull;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,14 +21,18 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.provider.Settings;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.android.gms.analytics.Tracker;
@@ -46,6 +52,7 @@ import java.util.Objects;
 import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.databinding.ActivityMainBinding;
+import dm.sime.com.kharetati.datas.models.NotificationResponse;
 import dm.sime.com.kharetati.datas.models.PlotDetails;
 import dm.sime.com.kharetati.datas.network.ApiFactory;
 import dm.sime.com.kharetati.datas.network.NetworkConnectionInterceptor;
@@ -57,6 +64,8 @@ import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.SensorOrientationChangeNotifier;
 import dm.sime.com.kharetati.utility.constants.AppConstants;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.adapters.CustPagerTransformer;
+import dm.sime.com.kharetati.view.adapters.PagerContentAdapter;
 import dm.sime.com.kharetati.view.customview.DataCallback;
 import dm.sime.com.kharetati.view.customview.meowbottomnavigation.MeowBottomNavigation;
 import dm.sime.com.kharetati.view.fragments.FeedbackFragment;
@@ -74,6 +83,7 @@ import dm.sime.com.kharetati.view.navigators.FragmentNavigator;
 import dm.sime.com.kharetati.view.navigators.MainNavigator;
 import dm.sime.com.kharetati.view.viewModels.LoginViewModel;
 import dm.sime.com.kharetati.view.viewModels.MainViewModel;
+import dm.sime.com.kharetati.view.viewModels.MyViewModel;
 import dm.sime.com.kharetati.view.viewmodelfactories.HomeViewModelFactory;
 import dm.sime.com.kharetati.view.viewmodelfactories.MainViewModelFactory;
 import kotlin.Unit;
@@ -81,6 +91,7 @@ import kotlin.jvm.functions.Function1;
 
 import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
 import static dm.sime.com.kharetati.utility.Global.MYPREFERENCES;
+import static dm.sime.com.kharetati.utility.Global.alertDialog;
 import static dm.sime.com.kharetati.utility.constants.AppConstants.FONT_SIZE;
 import static dm.sime.com.kharetati.utility.constants.AppConstants.USER_LANGUAGE;
 
@@ -104,6 +115,9 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     public static onPermissionResult listner;
     private DrawerLayout drawer;
     private MeowBottomNavigation customBottomBar;
+    private AlertDialog alertDialogNotifications;
+    private LinearLayout layoutDots;
+    private MyViewModel myViewModel;
 
     public static Intent newIntent(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -151,6 +165,9 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         countDownTimer = new MyCountDownTimer(startTime, interval);
 
         binding.imgHelp.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
+        model.getNotifications();
+
+
 
 
         if(Global.isUAE){
@@ -298,6 +315,67 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         openHomePage();
         initializeActivity();}
 
+    }
+
+    private void checkNotifications() {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.fragment_notifications, null);
+        dialogView.setBackground(getResources().getDrawable(R.drawable.rounded_corner_theme_bg));
+        dialogBuilder.setView(dialogView);
+
+
+        alertDialogNotifications = dialogBuilder.create();
+        alertDialogNotifications.show();
+
+        ViewPager viewPager = (ViewPager) dialogView.findViewById(R.id.viewPager);
+        layoutDots = (LinearLayout) dialogView.findViewById(R.id.layoutDots);
+        myViewModel =  new MyViewModel();
+        myViewModel.initializeMode(this);
+
+        PagerContentAdapter adapter = new PagerContentAdapter(this, model);
+        viewPager.setPageTransformer(false, new CustPagerTransformer(this));
+        viewPager.setOffscreenPageLimit(3);
+        viewPager.setAdapter(adapter);
+        ViewPager.OnPageChangeListener listener = new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                addBottomDots(position, Global.notificationResponse.getServiceResponse().getGeneralNotifications().size());
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        };
+        viewPager.addOnPageChangeListener(listener);
+
+
+        layoutDots.setVisibility(View.VISIBLE);
+        addBottomDots(0, myViewModel.getLstBody().size());
+
+    }
+
+    private void addBottomDots(int currentPage, int length) {
+        TextView[] dots = new TextView[length];
+
+        layoutDots.removeAllViews();
+        for (int i = 0; i < dots.length; i++) {
+            dots[i] = new TextView(this);
+            dots[i].setText(Html.fromHtml("&#8226;"));
+            dots[i].setTextSize(35);
+            dots[i].setTextColor(getResources().getColor(R.color.light_gray));
+            layoutDots.addView(dots[i]);
+        }
+        if (dots.length > 0)
+            dots[currentPage].setTextColor(getResources().getColor(R.color.maroon_light));
     }
 
     @Override
@@ -765,6 +843,26 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             binding.imgHelp.setVisibility(View.INVISIBLE);
         //if(Global.current_fragment_id.equals(FragmentTAGS.FR_))
 
+    }
+
+    @Override
+    public void updateNotificationUI(NotificationResponse response) {
+        if(response.getServiceResponse().getGeneralNotifications().size()>0){
+            checkNotifications();
+            layoutDots.setVisibility(View.VISIBLE);
+            addBottomDots(0, response.getServiceResponse().getGeneralNotifications().size());
+        }
+
+    }
+
+    @Override
+    public void cancelNotification() {
+        if(alertDialogNotifications!=null)alertDialogNotifications.cancel();
+    }
+
+    @Override
+    public void setDot(int position) {
+        //addBottomDots(position, Global.notificationResponse.getServiceResponse().getGeneralNotifications().size());
     }
 
     public void changeActionBarStatus(boolean key){

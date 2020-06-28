@@ -9,13 +9,13 @@
     <TextView
         android:id="@+id/txtLandOwner"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layoutDirection="locale"
         android:textAlignment="viewStart"
-        android:layout_marginTop="10dp"
+
         android:gravity="start|center_vertical"
 
         android:textSize="14sp"

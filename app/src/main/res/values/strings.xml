@@ -274,4 +274,26 @@
     <string name="with_uaepass"> UAE Pass</string>
     <string name="help">Help</string>
 
+    <string-array name="arrHeader">
+        <item>header 1</item>
+        <item>header 2</item>
+        <item>header 3</item>
+        <item>header 4</item>
+        <item>header 5</item>
+    </string-array>
+    <string-array name="arrDate">
+        <item>date 1</item>
+        <item>date 2</item>
+        <item>date 3</item>
+        <item>date 4</item>
+        <item>date 5</item>
+    </string-array>
+    <string-array name="arrBody">
+        <item>body 1</item>
+        <item>body 2</item>
+        <item>body 3</item>
+        <item>body 4</item>
+        <item>body 5</item>
+    </string-array>
+
 </resources>

@@ -2,6 +2,8 @@ package dm.sime.com.kharetati.view.navigators;
 
 import java.util.List;
 
+import dm.sime.com.kharetati.datas.models.NotificationResponse;
+
 public interface MainNavigator {
 
     void handleError(Throwable throwable);
@@ -23,4 +25,10 @@ public interface MainNavigator {
     public void onSuccess();
 
     public void onWebViewBack();
+
+    public void updateNotificationUI(NotificationResponse response);
+
+    public void cancelNotification();
+
+    public void setDot(int position);
 }

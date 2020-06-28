@@ -54,6 +54,7 @@ import dm.sime.com.kharetati.datas.models.LicenceDocs;
 import dm.sime.com.kharetati.datas.models.LookupResponse;
 import dm.sime.com.kharetati.datas.models.LookupValue;
 import dm.sime.com.kharetati.datas.models.NocDocs;
+import dm.sime.com.kharetati.datas.models.NotificationResponse;
 import dm.sime.com.kharetati.datas.models.PassportDocs;
 import dm.sime.com.kharetati.datas.models.SearchResult;
 import dm.sime.com.kharetati.datas.models.SessionUaePassResponse;
@@ -171,6 +172,7 @@ public class Global {
     public static String clientId;
     public static String secretId;
     public static String callbackUrl;
+    public static NotificationResponse notificationResponse;
     private static Context context;
     public static boolean isLanguageChanged = false;
     public static String noctemplateUrl;

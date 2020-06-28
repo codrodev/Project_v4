@@ -11,6 +11,16 @@ public class SerializeGetAppInputRequestModel {
     private String REMARKS;
     @SerializedName("parcel_id")
     private int parcel_id;
+    @SerializedName("UserId")
+    private String UserId;
+
+    public void setUserId(String userId) {
+        UserId = userId;
+    }
+
+    public String getUserId() {
+        return UserId;
+    }
 
     public String getMAKANI() {
         return MAKANI;

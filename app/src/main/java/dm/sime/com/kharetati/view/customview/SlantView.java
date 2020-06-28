@@ -27,7 +27,7 @@ public class SlantView extends View {
         setWillNotDraw(false);
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         //
-        gradient = new LinearGradient(0, 0, 0, getHeight(), 0xFFb71e3e, 0xFFb71e3e, Shader.TileMode.MIRROR);
+        gradient = new LinearGradient(0, 0, 0, getHeight(), 0xFFa31533, 0xFFa31533, Shader.TileMode.MIRROR);
     }
 
     @Override

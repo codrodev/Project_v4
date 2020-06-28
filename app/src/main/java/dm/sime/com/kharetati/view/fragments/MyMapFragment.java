@@ -194,7 +194,7 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
                 binding.txtReset.setTextColor(getResources().getColor(R.color.black));
 
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
-// ...Irrelevant code for customizing the buttons and title
+
                 LayoutInflater inflater = getActivity().getLayoutInflater();
                 View dialogView = inflater.inflate(R.layout.fragment_find_site_plan, null);
                 dialogBuilder.setView(dialogView);

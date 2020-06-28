@@ -85,7 +85,7 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
     private View mRootView;
     private static final String DM_PHONE_NUMBER = "800900";
     private static final String DM_EMAIL = "info@dm.gov.ae";
-    private static final String DM_WEB_SITE = "http://www.dm.gov.ae";
+    private static final String DM_WEB_SITE = "www.dm.gov.ae";
     private static final String DM_FB_EN = "https://www.facebook.com/DubaiMunicipality";
     private static final String DM_FB_AR = "https://www.facebook.com/DubaiMunicipality";
     private static String DM_TWITTER_EN = "";
