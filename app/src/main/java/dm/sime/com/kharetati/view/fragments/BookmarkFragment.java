@@ -110,8 +110,6 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
             public void onClick(View v) {
 
                 isDesending = true;
-
-
                sortBookmarks(isDesending);
 
             }

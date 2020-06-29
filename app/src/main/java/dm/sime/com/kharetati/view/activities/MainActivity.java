@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.LightingColorFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -329,6 +330,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
         alertDialogNotifications = dialogBuilder.create();
         alertDialogNotifications.show();
+        alertDialogNotifications.getWindow().getDecorView().getBackground().setColorFilter(new LightingColorFilter(0x00000000, 0x00000000));
 
         ViewPager viewPager = (ViewPager) dialogView.findViewById(R.id.viewPager);
         layoutDots = (LinearLayout) dialogView.findViewById(R.id.layoutDots);
@@ -848,9 +850,10 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     @Override
     public void updateNotificationUI(NotificationResponse response) {
         if(response.getServiceResponse().getGeneralNotifications().size()>0){
+            if(!Global.isRecreate){
             checkNotifications();
             layoutDots.setVisibility(View.VISIBLE);
-            addBottomDots(0, response.getServiceResponse().getGeneralNotifications().size());
+            addBottomDots(0, response.getServiceResponse().getGeneralNotifications().size());}
         }
 
     }
