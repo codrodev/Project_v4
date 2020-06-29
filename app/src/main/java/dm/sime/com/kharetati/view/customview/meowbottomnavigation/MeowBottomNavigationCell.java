@@ -279,27 +279,8 @@ final class MeowBottomNavigationCell extends RelativeLayout {
         this.duration = var1;
     }
 
-    /*private void setProgress(float value) {
-        *//*this.progress = value;
-        FrameLayout var10000 = (FrameLayout) this._$_findCachedViewById(R.id.fl);
-        var10000.setY((1.0F - this.progress) * (float) Utils.dip(this.getContext(), 18) + (float) Utils.dip(this.getContext(), -2));
-        CellImageView var5 = (CellImageView) this._$_findCachedViewById(R.id.iv);
-        var5.setColor(this.progress == 1.0F ? this.selectedIconColor : this.defaultIconColor);
-        float scale = (1.0F - this.progress) * -0.2F + 1.0F;
-        var5 = (CellImageView) this._$_findCachedViewById(R.id.iv);
-        var5.setScaleX(scale);
-        var5 = (CellImageView) this._$_findCachedViewById(R.id.iv);
-        var5.setScaleY(scale);
-        GradientDrawable d = new GradientDrawable();
-        d.setColor(this.circleColor);
-        d.setShape(GradientDrawable.OVAL);
-        ViewCompat.setBackground(this._$_findCachedViewById(R.id.v_circle), d);
-        ViewCompat.setElevation(this._$_findCachedViewById(R.id.v_circle), this.progress > 0.7F ? Utils.dipf(this.getContext(), this.progress * 4.0F) : 0.0F);
-        int m = Utils.dip(this.getContext(), 24);
-        View var6 = this._$_findCachedViewById(R.id.v_circle);
-        var6.setX((1.0F - this.progress) * (float) (this.isFromLeft ? -m : m) + (float) (this.getMeasuredWidth() - Utils.dip(this.getContext(), 48)) / 2.0F);
-        var6 = this._$_findCachedViewById(R.id.v_circle);
-        var6.setY((1.0F - this.progress) * (float) this.getMeasuredHeight() + (float) Utils.dip(this.getContext(), 6));*//*
+   /* @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    private void setProgress(float value) {
 
 
         this.progress = value;
@@ -313,11 +294,6 @@ final class MeowBottomNavigationCell extends RelativeLayout {
         var5 = (CellImageView) this._$_findCachedViewById(R.id.iv);
         var5.setScaleY(scale);
 
-        *//*RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(0,0,0,16);
-
-        var5.setLayoutParams(params);*//*
-
         GradientDrawable d = new GradientDrawable();
         d.setColor(this.circleColor);
         d.setShape(GradientDrawable.RECTANGLE);
@@ -329,8 +305,6 @@ final class MeowBottomNavigationCell extends RelativeLayout {
         ViewCompat.setBackground(this._$_findCachedViewById(R.id.v_circle), d);
         ViewCompat.setElevation(this._$_findCachedViewById(R.id.v_circle), this.progress > 0.7F ? Utils.dipf(this.getContext(), this.progress * 4.0F) : 0.0F);
         ViewCompat.setRotation(this._$_findCachedViewById(R.id.v_circle), 45);
-   *//* ViewCompat.setPivotX(this._$_findCachedViewById(R.id.v_circle), 40);
-    ViewCompat.setPivotY(this._$_findCachedViewById(R.id.v_circle), 40);*//*
 
         int m = Utils.dip(this.getContext(), 24);
         View var6 = this._$_findCachedViewById(R.id.v_circle);
@@ -352,23 +326,18 @@ final class MeowBottomNavigationCell extends RelativeLayout {
         var5 = (CellImageView) this._$_findCachedViewById(R.id.iv);
         var5.setScaleY(scale);
 
+        /*GradientDrawable d = new GradientDrawable();
+        d.setColor(this.circleColor);
+        d.setShape(GradientDrawable.RECTANGLE);
+        d.setCornerRadius(30);
+        d.setOrientation(GradientDrawable.Orientation.BR_TL);*/
 
 
         Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.square);
 
-
         ViewCompat.setBackground(this._$_findCachedViewById(R.id.v_circle), drawable);
         ViewCompat.setElevation(this._$_findCachedViewById(R.id.v_circle), this.progress > 0.7F ? Utils.dipf(this.getContext(), this.progress * 4.0F) : 0.0F);
         //ViewCompat.setRotation(this._$_findCachedViewById(R.id.v_circle), 45);
-
-
-       /* //satya
-       int m = Utils.dip(this.getContext(), 24);
-        View var6 = this._$_findCachedViewById(R.id.v_circle);
-        var6.setX((1F - this.progress) * (float) (this.isFromLeft ? -m : m) + (float) (this.getMeasuredWidth() - Utils.dip(this.getContext(), 48)) / 2.0F);
-        var6 = this._$_findCachedViewById(R.id.v_circle);
-        var6.setY((1F - this.progress) * (float) this.getMeasuredHeight() + (float) Utils.dip(this.getContext(), 5));
-*/
 
         int m = Utils.dip(this.getContext(), 24);
         View var6 = this._$_findCachedViewById(R.id.v_circle);
