@@ -61,7 +61,7 @@
                     <ImageView
                         android:id="@+id/imgBack"
                         android:layout_width="48dp"
-                        android:layout_height="48dp"
+                        android:layout_height="match_parent"
 
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
@@ -75,7 +75,7 @@
 
                     <dm.sime.com.kharetati.view.customview.CleanableEditText
                         android:id="@+id/txtPlotNo"
-                        android:layout_width="105dp"
+                        android:layout_width="100dp"
                         android:layout_height="match_parent"
                         android:layout_marginVertical="2dp"
                         android:background="@color/white"
@@ -91,7 +91,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight=".65"
 
                     android:orientation="horizontal"
@@ -100,7 +100,7 @@
                     <ImageView
                         android:id="@+id/imgSearch"
                         android:layout_width="50dp"
-                        android:layout_height="48dp"
+                        android:layout_height="match_parent"
                         android:layout_margin="8dp"
                         android:layout_gravity="start|center_vertical"
                         android:layout_weight="1"
@@ -112,7 +112,7 @@
                     <ImageView
                         android:id="@+id/imgLayer"
                         android:layout_width="50dp"
-                        android:layout_height="48dp"
+                        android:layout_height="match_parent"
 
                         android:layout_margin="8dp"
                         android:layout_gravity="start|center_vertical"
@@ -125,7 +125,7 @@
                     <ImageView
                         android:id="@+id/imgBookmark"
                         android:layout_width="50dp"
-                        android:layout_height="48dp"
+                        android:layout_height="match_parent"
 
                         android:layout_margin="8dp"
                         android:layout_gravity="start|center_vertical"
@@ -138,7 +138,7 @@
                     <ImageView
                         android:id="@+id/imgRecenter"
                         android:layout_width="50dp"
-                        android:layout_height="48dp"
+                        android:layout_height="match_parent"
                         android:layout_margin="8dp"
                         android:layout_gravity="start|center_vertical"
                         android:layout_weight="1"
@@ -150,7 +150,7 @@
                     <ImageView
                         android:id="@+id/imgMakani"
                         android:layout_width="50dp"
-                        android:layout_height="48dp"
+                        android:layout_height="match_parent"
                         android:layout_margin="8dp"
                         android:layout_gravity="start|center_vertical"
                         android:layout_weight="1"
@@ -162,7 +162,7 @@
                     <ImageView
                         android:id="@+id/imgHelp"
                         android:layout_width="50dp"
-                        android:layout_height="48dp"
+                        android:layout_height="match_parent"
 
                         android:layout_margin="8dp"
                         android:layout_gravity="start|center_vertical"
@@ -206,8 +206,8 @@
             android:layout_marginBottom="54dp"
             android:layout_gravity="bottom|end"/>
         <FrameLayout
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"
             android:visibility="gone"
@@ -215,7 +215,7 @@
             android:elevation="5dp"
             android:background="@drawable/circular_menu_bg"
             android:id="@+id/closefloatingButtton"
-            android:layout_marginBottom="222dp"
+            android:layout_marginBottom="228dp"
             android:layout_gravity="bottom|end">
             <ImageView
                 android:layout_width="32dp"

@@ -132,6 +132,7 @@ public class ParentSiteplanViewModel extends ViewModel {
                         }
                     }, new Consumer<Throwable>() {
                         @Override public void accept(Throwable throwable) throws Exception {
+                            AttachmentFragment.attachmentModel.attachmentNavigator.nextButtonStatusForAttachment();;
                                 if(throwable instanceof JsonSyntaxException){
                                     AlertDialogUtil.showProgressBar(activity,false);
                                     AttachmentFragment.attachmentModel.attachmentNavigator.nextButtonStatusForAttachment();
@@ -301,6 +302,7 @@ public class ParentSiteplanViewModel extends ViewModel {
                     if(Global.paymentUrl != null && Global.paymentUrl.length() > 0){
                         ArrayList al = new ArrayList<>();
                         al.add(Global.paymentUrl);
+                        al.add(activity.getResources().getString(R.string.payment));
 
                         ((MainActivity)activity).loadFragment(FragmentTAGS.FR_WEBVIEW_PAYMENT,true,al);
                     }

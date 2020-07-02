@@ -295,7 +295,7 @@ public class BookmarkViewModel extends ViewModel implements Filterable {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
 
-            String filterString = constraint.toString().toLowerCase();
+            String filterString = constraint.toString();
 
             FilterResults results = new FilterResults();
 
@@ -306,7 +306,7 @@ public class BookmarkViewModel extends ViewModel implements Filterable {
 
             for (int i = 0; i < count; i++) {
                 filterableString = getBookMarks().get(i).ParcelNumber;
-                if (filterableString.toLowerCase().contains(filterString)) {
+                if (filterableString.contains(filterString)) {
                     nlist.add(getBookMarks().get(i));
                 }
             }

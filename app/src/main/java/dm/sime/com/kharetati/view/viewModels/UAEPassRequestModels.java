@@ -114,7 +114,8 @@ public class UAEPassRequestModels {
     private static final String UAE_PASS_CLIENT_SECRET = Global.secretId;
     private static final String REDIRECT_URL = Global.callbackUrl;
     //    private static final Environment UAE_PASS_ENVIRONMENT = STAGING;
-    private static  Environment UAE_PASS_ENVIRONMENT = Global.uaePassConfig.getUAE_PASS_ENVIRONMENT().equals("PRODUCTION")?Environment.PRODUCTION:Environment.STAGING;
+
+    private static  Environment UAE_PASS_ENVIRONMENT = Global.uaePassConfig.getUAE_PASS_ENVIRONMENT()=="PRODUCTION"?Environment.PRODUCTION:Environment.STAGING;
 
 
     private static final String DOCUMENT_SIGNING_SCOPE = "urn:safelayer:eidas:sign:process:document";
@@ -147,14 +148,16 @@ public class UAEPassRequestModels {
     }
 
     public static UAEPassAccessTokenRequestModel getAuthenticationRequestModel(Context context) {
-
+        UAEPassAccessTokenRequestModel requestModel = null;
+        try{
         String ACR_VALUE = "";
         if (isPackageInstalled(context.getPackageManager())) {
             ACR_VALUE = ACR_VALUES_MOBILE;
         } else {
             ACR_VALUE = ACR_VALUES_WEB;
         }
-        final UAEPassAccessTokenRequestModel requestModel = new UAEPassAccessTokenRequestModel(
+
+        requestModel= new UAEPassAccessTokenRequestModel(
                 UAE_PASS_ENVIRONMENT,
                 UAE_PASS_CLIENT_ID,
                 UAE_PASS_CLIENT_SECRET,
@@ -166,7 +169,12 @@ public class UAEPassRequestModels {
                 RESPONSE_TYPE,
                 ACR_VALUE + "&ui_locales=" + Global.CURRENT_LOCALE
         );
-        return requestModel;
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+       return requestModel;
     }
 
 

@@ -114,8 +114,10 @@ public class MapViewModel extends ViewModel {
                     @Override public void accept(SerializableParcelDetails appResponse) throws Exception {
 
                         //mapNavigator.onSuccess();
+                        if(appResponse!=null){
                         PlotDetails.communityAr = appResponse.getService_response().get(0).getCommNameAr();
                         PlotDetails.communityEn = appResponse.getService_response().get(0).getCommNameEn();
+                        }
 //                        PlotDetails.area = appResponse.getService_response().get(0).getAreaInSqMt();
 
                         if(Global.isSaveAsBookmark && Global.isBookmarks){

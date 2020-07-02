@@ -69,20 +69,22 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.Generi
                 holder.cardView.setBackground(context.getResources().getDrawable(R.drawable.border_background));
                 holder.txtMenuName.setTextColor(context.getResources().getColor(R.color.white));
             } else {
-                holder.cardView.setBackground(context.getResources().getDrawable(R.drawable.borderless_background));
+                holder.cardView.setBackground(context.getResources().getDrawable(R.drawable.theme_background));
                 holder.txtMenuName.setTextColor(context.getResources().getColor(R.color.black));
             }
         }
 
         holder.imgIcon.setImageBitmap(viewModel.getIconImage(position));
-        if(Global.isFirstLoad){
+        if(Global.isFirstLoad||Global.isRecreate){
             if(position == 0) {
                 holder.cardView.setBackground(context.getResources().getDrawable(R.drawable.border_background));
                 holder.txtMenuName.setTextColor(context.getResources().getColor(R.color.white));
+                listener.onMenuSelected(lstHomeGridMenuItems.get(0).getId(), true);
             }
             if(position == lstHomeGridMenuItems.size() - 1){
                 listener.onMenuSelected(lstHomeGridMenuItems.get(0).getId(), true);
             }
+            Global.isRecreate =false;
         }
 
     }

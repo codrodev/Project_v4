@@ -169,6 +169,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
     //MapFunctionBottomsheetDialogFragment.OnFunctionMenuSelectedListener listener;
     FunctionOnMapAdapter.OnMenuSelectedListener listener;
     private LinearLayout layoutBottomSheet;
+    private String functionurl;
 
 
     public MapFragment() {
@@ -235,7 +236,9 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         listener =this;
          layoutBottomSheet = (LinearLayout)mRootView.findViewById(R.id.bottomSheet);
         webView = (WebView)layoutBottomSheet.findViewById(R.id.webView);
+        WebView.setWebContentsDebuggingEnabled(true);
         webView.getSettings().setJavaScriptEnabled(true);
+
         String newUA= "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0";
         webView.getSettings().setUserAgentString(newUA);
         webView.setWebViewClient(new MyWebViewClient());
@@ -251,14 +254,25 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
 
 
                     if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null){
-                        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(4, LinearLayoutManager.VERTICAL);
 
-                        adapter = new FunctionOnMapAdapter(model, getActivity(),listener, Global.mapSearchResult.getService_response().getMap().getFunctions());
-                        binding.recycleMapFunction.setAdapter(adapter);
-                        binding.recycleMapFunction.setLayoutManager(layoutManager);
-                        adapter.notifyDataSetChanged();
-                        binding.closefloatingButtton.setVisibility(View.VISIBLE);
-                        binding.floatingButtton.setVisibility(View.GONE);
+                        if(Global.mapSearchResult.getService_response().getMap().getFunctions().size()>1){
+                            StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(4, LinearLayoutManager.VERTICAL);
+                            binding.mapFunctionLayout.setVisibility(View.VISIBLE);
+                            adapter = new FunctionOnMapAdapter(model, getActivity(),listener, Global.mapSearchResult.getService_response().getMap().getFunctions());
+                            binding.recycleMapFunction.setAdapter(adapter);
+                            binding.recycleMapFunction.setLayoutManager(layoutManager);
+                            adapter.notifyDataSetChanged();
+                            binding.closefloatingButtton.setVisibility(View.VISIBLE);
+                            binding.floatingButtton.setVisibility(View.GONE);
+                        }
+                        else if(Global.mapSearchResult.getService_response().getMap().getFunctions().size()==1){
+                            layoutBottomSheet.setVisibility(View.VISIBLE);
+                            setWebSheetPeekHeight(600);
+                            binding.floatingButtton.setVisibility(View.GONE);
+                            binding.closefloatingButtton.setVisibility(View.GONE);
+                            binding.mapFunctionLayout.setVisibility(View.GONE);
+                        }
+
                     }
                 /*}
                 else if(binding.mapFunctionLayout.getVisibility() == View.VISIBLE){
@@ -294,6 +308,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                     case BottomSheetBehavior.STATE_HIDDEN:
                         binding.frameLayout.setVisibility(View.VISIBLE);
                         view.findViewById(R.id.topView).setVisibility(View.GONE);
+                        binding.floatingButtton.setVisibility(View.VISIBLE);
                         model.manageAppBar(getActivity(), false);
                         model.manageAppBottomBAtr(getActivity(), true);
                         if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null &&
@@ -304,6 +319,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                     case BottomSheetBehavior.STATE_EXPANDED:
                         binding.frameLayout.setVisibility(View.INVISIBLE);
                         view.findViewById(R.id.topView).setVisibility(View.GONE);
+                        binding.floatingButtton.setVisibility(View.GONE);
                         model.manageAppBar(getActivity(), false);
                         model.manageAppBottomBAtr(getActivity(), true);
                         ((MainActivity)getActivity()).setScreenName(Global.mapFunction);
@@ -318,10 +334,8 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                         model.manageAppBottomBAtr(getActivity(), true);
                         binding.frameLayout.setVisibility(View.VISIBLE);
                         view.findViewById(R.id.topView).setVisibility(View.VISIBLE);
-                        if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null &&
-                                Global.mapSearchResult.getService_response().getMap().getFunctions().size() > 1) {
-                           // setMapFunctionSheetPeekHeight(60);
-                        }
+                        binding.floatingButtton.setVisibility(View.GONE);
+
                     }
                     break;
                     case BottomSheetBehavior.STATE_DRAGGING:
@@ -394,7 +408,8 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         } else if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null &&
                 Global.mapSearchResult.getService_response().getMap().getFunctions().size() == 1){
             layoutBottomSheet.setVisibility(View.VISIBLE);
-            setWebSheetPeekHeight(600);;
+            setWebSheetPeekHeight(600);
+            layoutBottomSheet.findViewById(R.id.topView).setVisibility(View.VISIBLE);
             setMapFunctionSheetPeekHeight(0);
             binding.floatingButtton.setVisibility(View.GONE);
 
@@ -754,7 +769,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                         }
                         else{
                             Global.isSaveAsBookmark =true;
-                            PlotDetails.parcelNo = binding.txtPlotNo.getText().toString().trim();
+                            //PlotDetails.parcelNo = binding.txtPlotNo.getText().toString().trim();
                             model.getParceldetails();
                          mTracker.send(new HitBuilders.EventBuilder()
                                  .setCategory("Map Screen")
@@ -816,19 +831,24 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                     ArrayList al = new ArrayList();
                     if(Global.map_en_url != null && Global.map_en_url.length() > 0){
                         al.add(HomeFragment.constructUrl(Global.map_en_url,getActivity()));
+                        al.add(getActivity().getResources().getString(R.string.help));
 
                         ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
                     } else {
                         al.add(HomeFragment.constructUrl(Global.helpUrlEn,getActivity()));
+                        al.add(getActivity().getResources().getString(R.string.help));
                         ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+
                     }
                 } else {
                     ArrayList al = new ArrayList();
                     if(Global.map_ar_url != null && Global.map_ar_url.length() > 0){
                         al.add(HomeFragment.constructUrl(Global.map_ar_url,getActivity()));
+                        al.add(getActivity().getResources().getString(R.string.help));
                         ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
                     } else {
                         al.add(HomeFragment.constructUrl(Global.helpUrlEn,getActivity()));
+                        al.add(getActivity().getResources().getString(R.string.help));
                         ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
                     }
                 }
@@ -1093,8 +1113,10 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             if(lastSelectedWebFunction == null || lastSelectedWebFunction.length() == 0 ||
                     !lastSelectedWebFunction.equals(fun.getNameEn())){
                 //webView.loadUrl("about:blank");
-                if(Global.mapSearchResult.getService_response().getMap().getFunctions().size()==1)
+                if(Global.mapSearchResult.getService_response().getMap().getFunctions().size()==1){
+                    functionurl = builder.toString();
                     webView.loadUrl(builder.toString());
+                }
                 else{
                     ArrayList al = new ArrayList();
                     al.add(builder.toString());
@@ -1129,11 +1151,25 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                 }
                 else{
 
+                    String completeString ="";
+
                     Uri uri = Uri.parse(url);
                     Intent sendIntent = new Intent();
                     sendIntent.setAction(Intent.ACTION_SEND);
                     sendIntent.putExtra(Intent.EXTRA_SUBJECT,uri.getQueryParameter("subject") );
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, uri.getQueryParameter("url"));
+
+                    String urlstring = uri.getQueryParameter("url");
+                    if(urlstring.contains("enc=")){
+                       // String shareUrl = urlstring.substring(urlstring.)
+                        String startString  = urlstring.substring(0,urlstring.lastIndexOf("enc=")+4);
+                       String  encstring =urlstring.substring(urlstring.lastIndexOf("enc=")+4);
+
+
+
+
+                        completeString = startString+encstring.replace("+","%2B").replace("/","%2F").replace(" ","+").replace("=","%3D");
+                    }
+                    sendIntent.putExtra(Intent.EXTRA_TEXT,completeString);
                     sendIntent.setType("text/html");
                     startActivity(Intent.createChooser(sendIntent, "Share with"));
 
@@ -1154,6 +1190,36 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             AlertDialogUtil.showProgressBar(getActivity(),false);
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(Global.mapSearchResult!=null){
+            if (Global.mapSearchResult.getService_response().getMap().getFunctions() != null) {
+
+                if (Global.mapSearchResult.getService_response().getMap().getFunctions().size() > 1) {
+                    StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(4, LinearLayoutManager.VERTICAL);
+                    binding.mapFunctionLayout.setVisibility(View.VISIBLE);
+                    adapter = new FunctionOnMapAdapter(model, getActivity(), listener, Global.mapSearchResult.getService_response().getMap().getFunctions());
+                    binding.recycleMapFunction.setAdapter(adapter);
+                    binding.recycleMapFunction.setLayoutManager(layoutManager);
+                    adapter.notifyDataSetChanged();
+                    binding.closefloatingButtton.setVisibility(View.VISIBLE);
+                    binding.floatingButtton.setVisibility(View.GONE);
+                } else if (Global.mapSearchResult.getService_response().getMap().getFunctions().size() == 1) {
+                    layoutBottomSheet.setVisibility(View.VISIBLE);
+                    setWebSheetPeekHeight(600);
+                    binding.floatingButtton.setVisibility(View.GONE);
+                    binding.closefloatingButtton.setVisibility(View.GONE);
+                    binding.mapFunctionLayout.setVisibility(View.GONE);
+                    if (functionurl != null)
+                        webView.loadUrl(functionurl);
+                }
+
+            }
+        }
+    }
+
     public void toggleBottomSheet() {
         if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
             sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -1222,6 +1288,8 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                                             binding.floatingButtton.setVisibility(View.GONE);
                                         }
                                         if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null){
+                                            if(Global.mapSearchResult.getService_response().getMap().getFunctions().size()>1)
+                                                binding.mapFunctionLayout.setVisibility(View.VISIBLE);
                                             StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(4, LinearLayoutManager.VERTICAL);
 
                                             adapter = new FunctionOnMapAdapter(model, getActivity(),listener, Global.mapSearchResult.getService_response().getMap().getFunctions());

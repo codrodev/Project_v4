@@ -151,7 +151,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
                     android:orientation="vertical"
                     android:layout_margin="10dp"
 
@@ -160,20 +160,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:orientation="horizontal"
-                        android:gravity="start"
+                        android:gravity="center"
                         android:weightSum="4">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_gravity="start"
+                            android:layout_gravity="center"
                             android:id="@+id/gotomap">
                             <ImageView
-                                android:layout_width="40dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:fontFamily="@font/dubai_font"
                                 android:padding="6dp"
-                                android:layout_gravity="start"
+                                android:layout_gravity="center"
                                 android:id="@+id/view"
                                 android:src="@drawable/map_512"/>
                         </LinearLayout>
@@ -185,7 +185,7 @@
                             android:layout_marginStart="5dp"
                             android:id="@+id/edit">
                             <ImageView
-                                android:layout_width="40dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:fontFamily="@font/dubai_font"
                                 android:padding="6dp"
@@ -198,7 +198,7 @@
                             android:id="@+id/delete"
                             android:layout_marginStart="5dp">
                             <ImageView
-                                android:layout_width="40dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:src="@drawable/delete_512"
                                 android:fontFamily="@font/dubai_font"
@@ -212,7 +212,7 @@
                             android:id="@+id/gotomakani"
                             android:layout_marginStart="5dp">
                             <ImageView
-                                android:layout_width="40dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:src="@drawable/makani_512"
                                 android:fontFamily="@font/dubai_font"
@@ -246,7 +246,6 @@
                         android:textAlignment="viewStart"
                         android:paddingStart="16dp"
                         android:visibility="gone"
-
 
                         android:fontFamily="@font/dubai_font"
                         android:id="@+id/siteplan_payButton"

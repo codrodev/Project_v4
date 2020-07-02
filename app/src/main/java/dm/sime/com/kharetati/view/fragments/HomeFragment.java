@@ -236,6 +236,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         ((MainActivity)getActivity()).setScreenName(getActivity().getString(R.string.title_welcome));
         if(Global.appId!=null && model.getApplication( Global.appId)!=null)
         Global.HelpUrl = CURRENT_LOCALE.equals("en")?model.getApplication( Global.appId).getHelpUrlEn():model.getApplication( Global.appId).getHelpUrlAr();
+        ((MainActivity)getActivity()).getLastlogin();
 
         //initializeInAppNotification();
     }

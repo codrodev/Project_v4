@@ -277,4 +277,8 @@
     <string name="login_with">الدخول</string>
     <string name="with_uaepass">بالهوية الرقمية</string>
     <string name="help">مساعدة</string>
+    <string name="viewdetails">عرض التفاصيل</string>
+    <string name="notifications">إشعارات </string>
+    <string name="makani">مكاني</string>
+    <string name="payment">دفع</string>
 </resources>

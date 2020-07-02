@@ -141,6 +141,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
                 //binding.viewPagerCreatePackage.setCurrentItem(getNext(), true);
                 if(currentIndex < 3) {
                     if(currentIndex==0){
+                        setNextEnabledStatus(false);
                         if(Global.spinPosition ==2){
 
                             Global.rbIsOwner=false;
@@ -201,6 +202,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
                     ArrayList al = new ArrayList();
                     if(Global.helpUrlEn!=null||Global.helpUrlAr!=null)
                     al.add(HomeFragment.constructUrl((Global.CURRENT_LOCALE.equals("en")? Global.helpUrlEn:Global.helpUrlEn),getActivity()));
+                    al.add(getActivity().getResources().getString(R.string.help));
                     ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
                 } else {
 
@@ -286,8 +288,8 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
             binding.stepperThreeText.setTextColor(getResources().getColor(R.color.stepper_text_color));
             binding.stepperFourText.setTextColor(getResources().getColor(R.color.stepper_text_color));
             binding.view1.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
-            binding.view2.setBackgroundColor(getResources().getColor(R.color.stepper_text_color));
-            binding.view3.setBackgroundColor(getResources().getColor(R.color.stepper_text_color));
+            binding.view2.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
+            binding.view3.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
 
         } else if(index == 2) {
             binding.stepperTwoText.setText("");
@@ -304,7 +306,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
             binding.stepperFourText.setTextColor(getResources().getColor(R.color.stepper_text_color));
             binding.view1.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
             binding.view2.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
-            binding.view3.setBackgroundColor(getResources().getColor(R.color.stepper_text_color));
+            binding.view3.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
         } else if(index == 3) {
 
             binding.txtStepperOne.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
@@ -357,7 +359,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
     public void setNextEnabledStatus(Boolean status) {
         if(status){
             binding.btnNext.setEnabled(status);
-
+            if(getActivity()!=null)
             binding.btnNext.setBackground(getActivity().getResources().getDrawable(R.drawable.maroon_angle_background));
 
 
@@ -424,10 +426,10 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         binding.stepperFourText.setText("4");
 
 
-        binding.stepperFourText.setTextColor(getResources().getColor(R.color.green));
-        binding.view1.setBackgroundColor(getResources().getColor(R.color.green));
-        binding.view2.setBackgroundColor(getResources().getColor(R.color.green));
-        binding.view3.setBackgroundColor(getResources().getColor(R.color.green));
+        binding.stepperFourText.setTextColor(getResources().getColor(R.color.white));
+        binding.view1.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
+        binding.view2.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
+        binding.view3.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
         binding.btnNext.setVisibility(View.INVISIBLE);
     }
 

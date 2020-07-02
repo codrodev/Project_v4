@@ -123,10 +123,16 @@ public class BottomNavigationFragmentSheet extends Fragment {
         binding.gridMore.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(Global.isUserLoggedIn)
+                if(Global.isUserLoggedIn){
                     ((MainActivity)getActivity()).setScreenName(names[position]);
-                else
+                    if(position==9||position==10)
+                        ((MainActivity)getActivity()).setScreenName(getActivity().getResources().getString(R.string.more));
+                }
+                else{
                     ((MainActivity)getActivity()).setScreenName(names[position+1]);
+                    if(position==8||position==9)
+                        ((MainActivity)getActivity()).setScreenName(getActivity().getResources().getString(R.string.more));
+                }
 
                 switch (position){
 

@@ -637,9 +637,8 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
     public Boolean getBitmapFromView(ImageView imageView){
 
         Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
-        if(KharetatiApp.getInstance().getApplicationContext() !=null)
-
-            return (bitmap!=null && !(bitmap==((BitmapDrawable) KharetatiApp.getInstance().getApplicationContext().getResources().getDrawable(R.drawable.photo)).getBitmap()));
+        if(getActivity() !=null)
+            return (bitmap!=null && !(bitmap==((BitmapDrawable) getActivity().getResources().getDrawable(R.drawable.photo)).getBitmap()));
         else
             return false;
 
@@ -1415,6 +1414,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
             );
             return;
+
         }
 
 
@@ -1630,26 +1630,26 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    public void OnPermissionAccepted() {
+    public void OnPermissionAccepted(Boolean isAccepted) {
         //System.console().printf("permission");
-        if (Global.docArr != null && Global.docArr.length > 0) {
-            if(ParentSiteplanViewModel.getDownloadedDoc() == null || ParentSiteplanViewModel.getDownloadedDoc().size() == 0){
-                if (Global.isPerson && Global.rbIsOwner  ) {
-                    //if (!getBitmapFromView(binding.imgPassport) || !getBitmapFromView(binding.imgVisaPassport))
-                    downloadDocs(Global.docArr);
+        if (isAccepted) {
+            if (Global.docArr != null && Global.docArr.length > 0) {
+                if (ParentSiteplanViewModel.getDownloadedDoc() == null || ParentSiteplanViewModel.getDownloadedDoc().size() == 0) {
+                    if (Global.isPerson && Global.rbIsOwner) {
+                        //if (!getBitmapFromView(binding.imgPassport) || !getBitmapFromView(binding.imgVisaPassport))
+                        downloadDocs(Global.docArr);
+                    } else if (Global.isPerson && !Global.rbIsOwner) {
+                        //if(!getBitmapFromView(binding.imgPassport) || !getBitmapFromView(binding.imgVisaPassport) ||!getBitmapFromView(binding.imgLetterFromOwner))
+                        downloadDocs(Global.docArr);
+                    } else if (!Global.isPerson && !Global.rbIsOwner) {
+                        //if(!getBitmapFromView(binding.imgCompanyLicense) ||!getBitmapFromView(binding.imgLetterFromOwner))
+                        downloadDocs(Global.docArr);
+                    }
                 }
-                else if(Global.isPerson && !Global.rbIsOwner ){
-                    //if(!getBitmapFromView(binding.imgPassport) || !getBitmapFromView(binding.imgVisaPassport) ||!getBitmapFromView(binding.imgLetterFromOwner))
-                    downloadDocs(Global.docArr);
-                }
-                else if(!Global.isPerson && !Global.rbIsOwner ){
-                    //if(!getBitmapFromView(binding.imgCompanyLicense) ||!getBitmapFromView(binding.imgLetterFromOwner))
-                    downloadDocs(Global.docArr);
-                }
-            }
-        }
-        else
-            imageAlignment();
+            } else
+                imageAlignment();
+        } else
+            ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
     }
 
 

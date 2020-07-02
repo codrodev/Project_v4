@@ -344,16 +344,16 @@ public class Global {
     }
 
     public static void hideSoftKeyboard(Activity activity) {
-
-
-            View view = activity.getCurrentFocus();
-            //If no view currently has focus, create a new one, just so we can grab a window token from it
-            if (view == null) {
-                view = new View(activity);
+        View view;
+            if(activity!=null) {
+                view = activity.getCurrentFocus();
+                //If no view currently has focus, create a new one, just so we can grab a window token from it
+                if (view == null) {
+                    view = new View(activity);
+                }
+                InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
-            InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-
     }
 
     public static void showSoftKeyboard(View view, Activity activity) {

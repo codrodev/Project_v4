@@ -187,7 +187,7 @@
     <string name="SHAREKHARETATIAPP">Share App</string>
     <string name="RATEUS">Rate Us</string>
     <string name="ABOUTUS">About Us</string>
-    <string name="FAQMENU">FAQ</string>
+    <string name="FAQMENU">FAQs</string>
     <string name="TERMSANDCONDITIONS">Terms of Use</string>
     <string name="ACCESSIBILITY">Accessibility</string>
     <string name="INTROHELP">Help</string>
@@ -201,7 +201,7 @@
     <string name="plc_mobileNumber">Enter Mobile Number</string>
     <string name="find_site_plan">Find Site Plan</string>
     <string name="plc_plotNumber">Enter your plot number</string>
-    <string name="reset">Refresh</string>
+    <string name="reset">Reset</string>
     <string name="findPlot">Find Plot</string>
     <string name="enter_plot_number">Enter Plot Number</string>
     <string name="date_from">Date - From:</string>
@@ -214,6 +214,7 @@
     <string name="future_to_date">To Date can not be a future date</string>
     <string name="valid_date">please select a valid dates</string>
     <string name="menu_happiness">Happiness Meter</string>
+    <string name="payment">Payment</string>
 
     <string-array name="request_site_plan">
         <item>Land Ownership</item>
@@ -273,6 +274,9 @@
     <string name="login_with">Login with</string>
     <string name="with_uaepass"> UAE Pass</string>
     <string name="help">Help</string>
+    <string name="viewdetails">View Details</string>
+    <string name="notifications">Notifications</string>
+    <string name="makani">Makani</string>
 
     <string-array name="arrHeader">
         <item>header 1</item>

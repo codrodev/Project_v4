@@ -392,6 +392,7 @@ public class AlertDialogUtil {
                         else{
                             ArrayList al = new ArrayList();
                             al.add(Global.webViewUrl);
+                            al.add(context.getResources().getString(R.string.makani));
                             ((MainActivity)context).loadFragment(FR_WEBVIEW,true,al);
                         }
 

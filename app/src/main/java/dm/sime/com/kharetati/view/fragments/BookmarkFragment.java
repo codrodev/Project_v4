@@ -163,8 +163,8 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
 
             @Override
             public void afterTextChanged(Editable s) {
-
                 if(model.getFilter()!=null) model.getFilter().filter(s.toString());
+
             }
         });
         binding.fragmentBookmarksPlotnumber.setImeOptions(EditorInfo.IME_ACTION_DONE);

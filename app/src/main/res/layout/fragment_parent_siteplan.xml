@@ -300,9 +300,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:layout_marginHorizontal="10dp"
-                    android:layout_marginVertical="5dp"
                     android:layout_weight="1.75"
-                    android:layout_gravity="start|center_vertical"
+                    android:layout_gravity="center"
                     android:gravity="center"
                     android:textAllCaps="false"
                     android:background="@drawable/maroon_angle_background"
@@ -320,7 +319,6 @@
 
                     android:layout_gravity="end|center_vertical"
                     android:layout_marginHorizontal="10dp"
-                    android:layout_marginVertical="5dp"
                     android:textAllCaps="false"
                     android:background="@drawable/maroon_angle_background"
                     android:text="@string/next"
