@@ -148,6 +148,14 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
         } else {
             aa= new ArrayAdapter(getActivity(),R.layout.attachment_drp_view_ar,R.id.txtLandOwner,al);
         }
+        if(!Global.isDeliveryByCourier){
+            binding.etEmirates.setEnabled(false);
+            binding.etEmirates.setClickable(false);
+        }
+        else{
+            binding.etEmirates.setEnabled(true);
+            binding.etEmirates.setClickable(true);
+        }
 
         binding.etEmirates.setAdapter(aa);
         binding.etEmirates.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -521,7 +529,8 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
                                 binding.etAdress.setFocusable(false);
                                 binding.etMobile.setFocusable(false);
                                 binding.etEmailaddress.setFocusable(false);
-                                binding.etEmirates.setFocusable(false);
+                                binding.etEmirates.setClickable(false);
+                                binding.etEmirates.setEnabled(false);
                                 binding.linearLayout.getChildAt(i).setEnabled(false);
                                 binding.linearLayout.getChildAt(i).setAlpha(.5f);
                             }
@@ -545,7 +554,8 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
                                 binding.etAdress.setFocusableInTouchMode(true);
                                 binding.etMobile.setFocusableInTouchMode(true);
                                 binding.etEmailaddress.setFocusableInTouchMode(true);
-                                binding.etEmirates.setFocusableInTouchMode(true);
+                                binding.etEmirates.setClickable(true);
+                                binding.etEmirates.setEnabled(true);
                                 binding.linearLayout.getChildAt(i).setEnabled(true);
                                 binding.linearLayout.getChildAt(i).setAlpha(1f);
                             }
@@ -900,6 +910,89 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
             binding.etEmirates.setSelection(saved_position);
         else if(spinner_position!=0)
             binding.etEmirates.setSelection(spinner_position);
+
+        if (!Global.isDeliveryByCourier) {
+
+
+            //Global.isDeliveryByCourier =false;
+
+            ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
+
+            int count= binding.linearLayout.getChildCount();
+            for(int i= 0; i<count;i++){
+                if(binding.linearLayout.getChildAt(i)!=binding.deliveryByCourier)
+                    if(binding.linearLayout.getChildAt(i).isEnabled()) {
+                        binding.linearLayout.getChildAt(i).setEnabled(false);
+                        binding.etRecievername.setFocusable(false);
+                        binding.etMakani.setFocusable(false);
+                        binding.etStreetAddress.setFocusable(false);
+                        binding.etLandmark.setFocusable(false);
+                        binding.etVillaBuildingNumber.setFocusable(false);
+                        binding.etBuildingName.setFocusable(false);
+                        binding.etAdress.setFocusable(false);
+                        binding.etMobile.setFocusable(false);
+                        binding.etEmailaddress.setFocusable(false);
+                        binding.etEmirates.setClickable(false);
+                        binding.etEmirates.setEnabled(false);
+                        binding.linearLayout.getChildAt(i).setEnabled(false);
+                        binding.linearLayout.getChildAt(i).setAlpha(.5f);
+                    }
+            }
+
+        }
+        else{
+            //Global.isDeliveryByCourier =true;
+            ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
+            int count= binding.linearLayout.getChildCount();
+            for(int i= 0; i<count;i++){
+                if(binding.linearLayout.getChildAt(i)!=binding.deliveryByCourier)
+                    if(!binding.linearLayout.getChildAt(i).isEnabled()) {
+                        binding.linearLayout.getChildAt(i).setEnabled(true);
+                        binding.etRecievername.setFocusableInTouchMode(true);
+                        binding.etMakani.setFocusableInTouchMode(true);
+                        binding.etStreetAddress.setFocusableInTouchMode(true);
+                        binding.etLandmark.setFocusableInTouchMode(true);
+                        binding.etVillaBuildingNumber.setFocusableInTouchMode(true);
+                        binding.etBuildingName.setFocusableInTouchMode(true);
+                        binding.etAdress.setFocusableInTouchMode(true);
+                        binding.etMobile.setFocusableInTouchMode(true);
+                        binding.etEmailaddress.setFocusableInTouchMode(true);
+                        binding.etEmirates.setClickable(true);
+                        binding.etEmirates.setEnabled(true);
+                        binding.linearLayout.getChildAt(i).setEnabled(true);
+                        binding.linearLayout.getChildAt(i).setAlpha(1f);
+                    }
+            }
+            if (TextUtils.isEmpty(name) ||
+                    TextUtils.isEmpty(emirates)||TextUtils.isEmpty(email)) {
+
+                //AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.fields_are_required), getResources().getString(R.string.ok), getActivity());
+                //Global.isDeliveryByCourier=false;
+            }else if(!email.contains("@")||!email.contains("."))
+            {
+                //AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.enter_valid_email), getResources().getString(R.string.ok), getActivity());
+
+            }
+            if(!binding.etMakani.getText().toString().trim().equals("") && binding.etMakani.getText().toString().trim().length()>0)
+            {
+                Global.isMakani =true;
+                makani =binding.etMakani.getText().toString().trim();
+
+
+                if(isValidEmailId() == true && isValidMobile() == true && isValidEmirate() == true && Objects.requireNonNull(binding.etRecievername.getText()).toString().trim().length()>0) {
+                    setNextEnabledStatus(true);
+                }
+                else
+                    setNextEnabledStatus(false);
+            } else {
+                if(isValidEmailId() == true && isValidMobile() == true && isValidEmirate() == true && Objects.requireNonNull(binding.etRecievername.getText()).toString().trim().length()>0) {
+                    setNextEnabledStatus(true);
+                }
+                else
+                    setNextEnabledStatus(false);
+            }
+
+        }
 
         /*if(binding.deliveryByCourier.isChecked()){
             Global.isDeliveryByCourier =false;

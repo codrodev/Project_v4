@@ -126,8 +126,9 @@ public class  WebViewFragment extends Fragment {
         webSettings.setAllowFileAccess(true);
         WebView.setWebContentsDebuggingEnabled(true);
         webView.getSettings().setJavaScriptEnabled(true);
-        String newUA= "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0";
-        webView.getSettings().setUserAgentString(newUA);
+        webSettings.setTextZoom(100);
+        /*String newUA= "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0";
+        webView.getSettings().setUserAgentString(newUA);*/
         webView.setWebViewClient(new MyWebViewClient());
         webView.setWebChromeClient(new MyWebChromeClient(getActivity()) );
         webView.loadUrl(launchUrl);

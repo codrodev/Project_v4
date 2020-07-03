@@ -238,9 +238,10 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         webView = (WebView)layoutBottomSheet.findViewById(R.id.webView);
         WebView.setWebContentsDebuggingEnabled(true);
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setTextZoom(100);
 
-        String newUA= "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0";
-        webView.getSettings().setUserAgentString(newUA);
+        /*String newUA= "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0";
+        webView.getSettings().setUserAgentString(newUA);*/
         webView.setWebViewClient(new MyWebViewClient());
         webView.getSettings().setDefaultFontSize(((int)Global.fontSize));
         setRetainInstance(true);
@@ -1194,28 +1195,31 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
     @Override
     public void onResume() {
         super.onResume();
-        if(Global.mapSearchResult!=null){
-            if (Global.mapSearchResult.getService_response().getMap().getFunctions() != null) {
 
-                if (Global.mapSearchResult.getService_response().getMap().getFunctions().size() > 1) {
-                    StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(4, LinearLayoutManager.VERTICAL);
-                    binding.mapFunctionLayout.setVisibility(View.VISIBLE);
-                    adapter = new FunctionOnMapAdapter(model, getActivity(), listener, Global.mapSearchResult.getService_response().getMap().getFunctions());
-                    binding.recycleMapFunction.setAdapter(adapter);
-                    binding.recycleMapFunction.setLayoutManager(layoutManager);
-                    adapter.notifyDataSetChanged();
-                    binding.closefloatingButtton.setVisibility(View.VISIBLE);
-                    binding.floatingButtton.setVisibility(View.GONE);
-                } else if (Global.mapSearchResult.getService_response().getMap().getFunctions().size() == 1) {
-                    layoutBottomSheet.setVisibility(View.VISIBLE);
-                    setWebSheetPeekHeight(600);
-                    binding.floatingButtton.setVisibility(View.GONE);
-                    binding.closefloatingButtton.setVisibility(View.GONE);
-                    binding.mapFunctionLayout.setVisibility(View.GONE);
-                    if (functionurl != null)
-                        webView.loadUrl(functionurl);
+        if (!Global.isBookmarks) {
+            if (Global.mapSearchResult != null) {
+                if (Global.mapSearchResult.getService_response().getMap().getFunctions() != null) {
+
+                    if (Global.mapSearchResult.getService_response().getMap().getFunctions().size() > 1) {
+                        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(4, LinearLayoutManager.VERTICAL);
+                        binding.mapFunctionLayout.setVisibility(View.VISIBLE);
+                        adapter = new FunctionOnMapAdapter(model, getActivity(), listener, Global.mapSearchResult.getService_response().getMap().getFunctions());
+                        binding.recycleMapFunction.setAdapter(adapter);
+                        binding.recycleMapFunction.setLayoutManager(layoutManager);
+                        adapter.notifyDataSetChanged();
+                        binding.closefloatingButtton.setVisibility(View.VISIBLE);
+                        binding.floatingButtton.setVisibility(View.GONE);
+                    } else if (Global.mapSearchResult.getService_response().getMap().getFunctions().size() == 1) {
+                        layoutBottomSheet.setVisibility(View.VISIBLE);
+                        setWebSheetPeekHeight(600);
+                        binding.floatingButtton.setVisibility(View.GONE);
+                        binding.closefloatingButtton.setVisibility(View.GONE);
+                        binding.mapFunctionLayout.setVisibility(View.GONE);
+                        if (functionurl != null)
+                            webView.loadUrl(functionurl);
+                    }
+
                 }
-
             }
         }
     }

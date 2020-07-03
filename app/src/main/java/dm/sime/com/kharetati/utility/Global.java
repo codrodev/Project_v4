@@ -751,7 +751,7 @@ public class Global {
 
     public static void logout(Context context) {
         Global.session = null;
-
+        Global.isUserLoggedIn =false;
         Global.app_session_token = null;
         context.getSharedPreferences(Global.MYPREFERENCES,Context.MODE_PRIVATE).edit().putString(Global.APP_SESSION_TOKEN,"").apply();
         Global.current_fragment_id = null;

@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             app:hintEnabled="false">
 
-            <EditText
+            <dm.sime.com.kharetati.view.customview.CleanableEditText
                 style="@style/font_medium_bold"
                 android:id="@+id/et_emailaddress"
                 android:layout_width="match_parent"
@@ -54,7 +54,7 @@
                 android:textDirection="locale" />
         </com.google.android.material.textfield.TextInputLayout>
         <!--android:digits="0123456789١٢٣٤٥٦٧٨٩١٠"-->
-        <EditText
+        <dm.sime.com.kharetati.view.customview.CleanableEditText
             style="@style/font_medium_bold"
             android:id="@+id/et_mobile"
             android:layout_width="match_parent"

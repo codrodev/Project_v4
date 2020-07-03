@@ -35,21 +35,24 @@
                         android:id="@+id/backButton"
                         android:visibility="invisible"
                         android:src="@drawable/back"/>
+
                     <TextView
                         android:id="@+id/txtWelcome"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:fontFamily="@font/dubai_font"
-                        android:text="@string/title_welcome"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:textSize="26sp"
-                        android:gravity="center_vertical"
-                        android:textAlignment="viewStart"
-                        android:textFontWeight="1000"
+                        android:layout_width="378dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start|center_vertical"
+                        android:layout_marginTop="30dp"
                         android:layout_marginEnd="10dp"
+                        android:fontFamily="@font/dubai_font"
+                        android:gravity="start|center_vertical"
+                        android:paddingBottom="4dp"
+                        android:text="@string/title_welcome"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/white"
+                        android:textFontWeight="1000"
+                        android:textSize="25sp"
 
-                        android:layout_marginTop="30dp" />
+                        android:textStyle="bold" />
                     <ImageView
                         android:id="@+id/imgHelp"
                         android:layout_width="25dp"
@@ -67,7 +70,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="-12dp"
+                    android:layout_marginTop="-8dp"
 
                     android:id="@+id/profileUsername"
                     android:gravity="center_vertical">

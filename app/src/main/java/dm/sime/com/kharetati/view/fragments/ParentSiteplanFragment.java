@@ -62,6 +62,8 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
     private ParentSitePlanRepository repository;
     public static onNextListner listner;
     private Tracker mTracker;
+    private boolean isHelpClicked;
+    private SharedPreferences sharedpreferences;
 
     public static ParentSiteplanFragment newInstance(){
         ParentSiteplanFragment fragment = new ParentSiteplanFragment();
@@ -197,13 +199,14 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
             @Override
             public void onClick(View view) {
                 if(Global.helpUrlEn != null || Global.helpUrlAr != null) {
-                    SharedPreferences sharedpreferences = getActivity().getSharedPreferences(POSITION, Context.MODE_PRIVATE);
+                    sharedpreferences = getActivity().getSharedPreferences(POSITION, Context.MODE_PRIVATE);
                     sharedpreferences.edit().putInt("stepperPosition",currentIndex).apply();
                     ArrayList al = new ArrayList();
                     if(Global.helpUrlEn!=null||Global.helpUrlAr!=null)
                     al.add(HomeFragment.constructUrl((Global.CURRENT_LOCALE.equals("en")? Global.helpUrlEn:Global.helpUrlEn),getActivity()));
                     al.add(getActivity().getResources().getString(R.string.help));
                     ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+                    isHelpClicked =true;
                 } else {
 
                 }
@@ -380,6 +383,9 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
             if(CURRENT_LOCALE.equals("ar")){
 
             }
+        }
+        if(isHelpClicked){
+            loadFragment(sharedpreferences.getInt("stepperPosition",0));
         }
     }
 
