@@ -386,6 +386,10 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         }
         if(isHelpClicked){
             loadFragment(sharedpreferences.getInt("stepperPosition",0));
+            if(sharedpreferences.getInt("stepperPosition",0)==3)
+                binding.btnNext.setVisibility(View.INVISIBLE);
+            else if(sharedpreferences.getInt("stepperPosition",0)==0)
+                binding.btnPrevious.setVisibility(View.INVISIBLE);
         }
     }
 

@@ -6,7 +6,7 @@
     <string name="internet_connection_problem1">لا يوجد اتصال إنترنت، الرجاء التحقق من الاتصال وحاول مرة أخرى</string>
     <string name="lbl_warning">مسح البيانات المسجله مسبقا</string>
     <string name="ok"> موافق </string>
-    <string name="forgot_username_password">نسيت كلمة المرور ؟</string>
+    <string name="forgot_username_password">نسيت كلمة المرور </string>
     <string name="rememberme">تذكرني</string>
     <string name="open_makani_confirm">هل أنت متأكد من أنك تريد الانتقال إلى مكاني</string>
     <string name="or">أو</string>
@@ -14,8 +14,8 @@
     <string name="createAccount"> إنشاء حساب جديد</string>
     <string name="signin_as_guest">تسجيل الدخول كضيف</string>
     <string name="login_uaepass">تسجيل الدخول بالهوية الرقمية</string>
-    <string name="username">ادخل اسم المستخدم أو البريد الإلكتروني</string>
-    <string name="password">ادخل كلمة المرور</string>
+    <string name="username">أدخل اسم المستخدم*</string>
+    <string name="password">ادخل كلمة المرور*</string>
     <string name="textOn">English</string>
     <string name="textOff">عربى</string>
     <string name="PLEASE_ENTER_PLOTNUMBER">الرجاء إدخال رقم قطعة الأرض</string>
@@ -281,4 +281,6 @@
     <string name="notifications">إشعارات </string>
     <string name="makani">مكاني</string>
     <string name="payment">دفع</string>
+    <string name="newuser">مستخدم جديد؟</string>
+    <string name="reg"> أنشأ حساب جديد.</string>
 </resources>

@@ -84,6 +84,7 @@ public class SettingsFragment extends Fragment {
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         ((MainActivity)getActivity()).manageBottomBar(true);
         ((MainActivity)getActivity()).manageActionBar(true);
+        ((MainActivity)getActivity()).setScreenName(getActivity().getResources().getString(R.string.title_settings));
         sharedpreferences = getActivity().getSharedPreferences(MYPREFERENCES, Context.MODE_PRIVATE);
         String locale = sharedpreferences.getString(USER_LANGUAGE, "defaultStringIfNothingFound");
         if(!locale.equals("defaultStringIfNothingFound"))
@@ -93,6 +94,12 @@ public class SettingsFragment extends Fragment {
         initializePage();
         return binding.getRoot();
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MainActivity)getActivity()).setScreenName(getActivity().getResources().getString(R.string.title_settings));
     }
 
     private void initializePage() {

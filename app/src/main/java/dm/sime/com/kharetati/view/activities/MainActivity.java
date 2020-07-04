@@ -345,8 +345,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
         alertDialogNotifications = dialogBuilder.create();
         alertDialogNotifications.show();
-        alertDialogNotifications.getWindow().getDecorView().getBackground().setColorFilter(new LightingColorFilter(0x00000000, 0x00000000));
-
+        alertDialogNotifications.getWindow().getDecorView().getBackground().setColorFilter(new LightingColorFilter(0x00000000, 0xFFFCFCFC));
+        alertDialogNotifications.getWindow().getDecorView().getBackground().setAlpha(0);
         ViewPager viewPager = (ViewPager) dialogView.findViewById(R.id.viewPager);
         layoutDots = (LinearLayout) dialogView.findViewById(R.id.layoutDots);
         myViewModel =  new MyViewModel();

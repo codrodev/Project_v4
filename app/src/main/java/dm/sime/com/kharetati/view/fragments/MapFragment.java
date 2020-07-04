@@ -1072,7 +1072,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             builder.append("appsrc=kharetati&");
             String lang = Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0 ? "en" : "ar";
             builder.append("lng=" + lang + "&");
-            builder.append("fontSize=" + Global.fontSize * Global.fontScale+ "&");
+            builder.append("fontSize=" + (int)(Global.fontSize * Global.fontScale)+ "&");
             if(!Global.isUserLoggedIn){
                 builder.append("access_token=" + Global.accessToken + "&");
                 builder.append("userType=GUEST&");

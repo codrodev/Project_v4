@@ -75,7 +75,7 @@
 
                     <dm.sime.com.kharetati.view.customview.CleanableEditText
                         android:id="@+id/txtPlotNo"
-                        android:layout_width="100dp"
+                        android:layout_width="105dp"
                         android:layout_height="match_parent"
                         android:layout_marginVertical="2dp"
                         android:background="@color/white"
