@@ -94,11 +94,11 @@
                     android:gravity="end|center_vertical"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:layout_gravity="end|center_vertical">
+                    android:layout_gravity="end|center">
                     <LinearLayout
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_gravity="end"
+                        android:layout_gravity="center"
                         android:layout_marginStart="16dp"
                         android:background="@drawable/rounded_corners_bg"
 
@@ -106,14 +106,14 @@
                         <ImageView
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:padding="8dp"
+                            android:padding="11dp"
                             android:src="@drawable/sort_descending"/>
 
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_gravity="end"
+                        android:layout_gravity="center"
                         android:background="@drawable/rounded_corners_bg"
 
                         android:layout_marginEnd="8dp"
@@ -124,7 +124,7 @@
                             android:layout_width="40dp"
                             android:layout_height="40dp"
 
-                            android:padding="8dp"
+                            android:padding="11dp"
                             android:scaleType="fitXY"
                             android:src="@drawable/sort_ascending"/>
 

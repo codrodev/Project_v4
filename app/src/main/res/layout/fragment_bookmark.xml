@@ -33,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".30"
                     android:layout_gravity="center"
-                    android:background="@drawable/rounded_corner_theme_bg">
+                    android:background="@drawable/favourites_search_bg">
 
                     <!--<ImageButton-->
                     <!--android:id="@+id/fragment_bookmarks_btnSearch"-->
@@ -104,7 +104,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end|center"
+                    android:layout_gravity="center"
                     android:layout_weight=".70"
                     android:layout_marginStart="0dp"
                     android:gravity="end">
@@ -113,7 +113,7 @@
                         android:id="@+id/sortDescending"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_gravity="end|center"
+                        android:layout_gravity="center"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
@@ -123,7 +123,7 @@
                         <ImageView
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:padding="8dp"
+                            android:padding="11dp"
                             android:src="@drawable/sort_descending" />
 
                     </LinearLayout>
@@ -132,7 +132,7 @@
                         android:id="@+id/sortAscending"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_gravity="end|center"
+                        android:layout_gravity="center"
 
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
@@ -145,7 +145,7 @@
                             android:layout_width="40dp"
                             android:layout_height="40dp"
 
-                            android:padding="8dp"
+                            android:padding="11dp"
                             android:scaleType="fitXY"
                             android:src="@drawable/sort_ascending" />
 

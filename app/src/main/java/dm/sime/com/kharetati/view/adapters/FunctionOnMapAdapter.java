@@ -3,6 +3,7 @@ package dm.sime.com.kharetati.view.adapters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Base64;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
@@ -60,6 +62,21 @@ public class FunctionOnMapAdapter extends RecyclerView.Adapter<FunctionOnMapAdap
             @Override
             public void onClick(View view) {
                 listener.onMenuSelected(holder.functionName.getText().toString(), position);
+
+                    /*if (holder.functionName.getText().toString().equals(lstFunctionsOnMap.get(position).getNameEn())) {
+                        holder.cardView.setBackgroundColor(context.getResources().getColor(R.color.maroon_light));
+                        holder.functionName.setTextColor(context.getResources().getColor(R.color.white));
+                    } else {
+                        holder.cardView.setBackgroundColor(Color.parseColor("#FCFCFC"));
+                        holder.functionName.setTextColor(context.getResources().getColor(R.color.black));
+                    }*/if (holder.functionName.getText().toString().equals(lstFunctionsOnMap.get(position).getNameEn())) {
+                        holder.cardView.setBackground(context.getResources().getDrawable(R.drawable.map_option_background));
+                        holder.functionName.setTextColor(context.getResources().getColor(R.color.white));
+                    } else {
+                        holder.cardView.setBackground(context.getResources().getDrawable(R.drawable.theme_background));
+                        holder.functionName.setTextColor(context.getResources().getColor(R.color.black));
+                    }
+
             }
         });
     }
@@ -99,12 +116,15 @@ public class FunctionOnMapAdapter extends RecyclerView.Adapter<FunctionOnMapAdap
     public static class GenericViewHolder extends RecyclerView.ViewHolder{
         private final TextView functionName;
         private final ImageView icon;
+        private final CardView cardView;
+
         View container;
         public GenericViewHolder(@NonNull View itemView) {
             super(itemView);
             container = itemView;
             functionName = (TextView) itemView.findViewById(R.id.txtFunctionNAme);
             icon = (ImageView) itemView.findViewById(R.id.imgMenuIcon);
+            cardView = (CardView) itemView.findViewById(R.id.mapcard);
         }
 
 

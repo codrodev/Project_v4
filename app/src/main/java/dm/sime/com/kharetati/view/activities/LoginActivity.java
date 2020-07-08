@@ -12,6 +12,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -184,6 +186,38 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         /*((SwitchCompat)findViewById(R.id.switchLanguage)).setSwitchTypeface(typeface);
         binding.switchLanguage.trackLabel.setTypeface(typeface);
         binding.switchLanguage.thumbLabel.setTypeface(typeface);*/
+        binding.editUserName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                sharedpreferences.edit().putString("username",s.toString()).apply();
+            }
+        });
+        binding.editPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                sharedpreferences.edit().putString("password",s.toString()).apply();
+            }
+        });
 
         LoginDetails loginDetails = Global.getUserLoginDeatils(this);
         if (loginDetails != null && loginDetails.username != null && loginDetails.pwd != null && Global.isRememberLogin(this)) {
@@ -193,6 +227,11 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
             Global.enableClearTextInEditBox(binding.editUserName,LoginActivity.this);
             Global.enableClearTextInEditBox(binding.editPassword,LoginActivity.this);
 
+        }
+        else
+        {
+            binding.editUserName.setText(sharedpreferences.getString("username",""));
+            binding.editPassword.setText(sharedpreferences.getString("password",""));
         }
 
 
@@ -255,6 +294,8 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
             @Override
             public void onClick(View v) {
                 Global.rememberUser(binding.chkRememberMe.isChecked(), LoginActivity.this);
+                sharedpreferences.edit().putString("username",binding.editUserName.getText().toString()).apply();
+                sharedpreferences.edit().putString("password",binding.editPassword.getText().toString()).apply();
             }
         });
 
@@ -1245,6 +1286,16 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    @Override
+    public void finish() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            super.finishAndRemoveTask();
+        }
+        else {
+            super.finish();
+        }
     }
 
     @Override

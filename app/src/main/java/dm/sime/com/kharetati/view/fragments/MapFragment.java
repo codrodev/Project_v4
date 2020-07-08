@@ -131,13 +131,14 @@ import dm.sime.com.kharetati.view.viewmodelfactories.MapViewModelFactory;
 
 import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
 import static dm.sime.com.kharetati.utility.Global.MYPREFERENCES;
+import static dm.sime.com.kharetati.utility.Global.isMakani;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_ATTACHMENT;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_MAP;
 
 public class MapFragment extends Fragment implements MapNavigator, EditText.OnEditorActionListener, FunctionOnMapAdapter.OnMenuSelectedListener, MapFunctionBottomsheetDialogFragment.OnFunctionMenuSelectedListener {
 
     private static final String ARG_PARAM1 = "param1";
-    public static boolean isMakani,isLand;
+
     MapViewModel model;
     FragmentMapBinding binding;
     private View mRootView;
@@ -650,9 +651,13 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
          //myBottomSheet = MapFunctionBottomSheetFragment.newInstance(this);
         if(isMakani){
             binding.imgBookmark.setVisibility(View.GONE);
+            binding.bookmarkview.setVisibility(View.GONE);
+            binding.imgHelp.setPaddingRelative(0,0,30,0);
         }
         else{
             binding.imgBookmark.setVisibility(View.VISIBLE);
+            binding.bookmarkview.setVisibility(View.VISIBLE);
+            binding.imgHelp.setPaddingRelative(0,0,0,0);
         }
 
         adapterHistory = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, Global.getParcelNumbersFromHistory(getActivity()));
@@ -1078,6 +1083,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                 builder.append("userType=GUEST&");
                 builder.append("user_id="+ Global.sime_userid +"&");
                 builder.append("user_name=GUEST&");
+                builder.append("token="+ Global.app_session_token+"&");
             } else {
                 if(Global.isUAE){
                     builder.append("userType=UAEPASS&");
@@ -1094,6 +1100,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                     builder.append("userType=MYID&");
                     builder.append("user_id=" + Global.sime_userid + "&");
                     builder.append("user_name=" + Global.getUser(getActivity()).getFullname() + "&");
+                    builder.append("token="+ Global.app_session_token +"&");
                 }
 
             }
@@ -1238,10 +1245,16 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
     @Override
     public void onMenuSelected(String menu, int position) {
         onFunctionMenuSelected(position);
-        binding.mapFunctionLayout.setVisibility(View.GONE);
-        binding.closefloatingButtton.setVisibility(View.GONE);
-        binding.floatingButtton.setVisibility(View.GONE);
-        layoutBottomSheet.setVisibility(View.VISIBLE);
+        if(position==3){
+            binding.mapFunctionLayout.setVisibility(View.VISIBLE);
+            binding.closefloatingButtton.setVisibility(View.VISIBLE);
+        }
+        else{
+            binding.mapFunctionLayout.setVisibility(View.GONE);
+            binding.closefloatingButtton.setVisibility(View.GONE);
+            binding.floatingButtton.setVisibility(View.GONE);
+            layoutBottomSheet.setVisibility(View.VISIBLE);
+        }
     }
 
     class MapViewTouchListener extends DefaultMapViewOnTouchListener {

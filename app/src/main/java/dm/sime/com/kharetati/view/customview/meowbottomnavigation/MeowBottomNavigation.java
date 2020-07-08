@@ -70,7 +70,7 @@ public final class MeowBottomNavigation extends FrameLayout {
         this.cells = new ArrayList<>();
         this.selectedId = -1;
         this.defaultIconColor = Color.parseColor("#757575");
-        this.selectedIconColor = Color.parseColor("#2196f3");
+        this.selectedIconColor = Color.parseColor("#a31533");
         this.backgroundBottomColor = Color.parseColor("#ffffff");
         this.circleColor = Color.parseColor("#ffffff");
         this.shadowColor = -4539718;

@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
@@ -163,7 +164,7 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(model.getFilter()!=null) model.getFilter().filter(s.toString());
+                 filter(s.toString());
 
             }
         });
@@ -287,6 +288,28 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
     public void removeData(Bookmark data) {
         //model.getBookMarks().remove(data);
         //model.getBookmarkAdapter().notifyDataSetChanged();
+    }
+    private void filter(String text) {
+        //new array list that will hold the filtered data
+        ArrayList<Bookmark> filterdNames = new ArrayList<Bookmark>();
+
+
+        //looping through existing elements
+        if(model.getMutableBookmark().getValue()!=null){
+        for (Bookmark s : (model.getMutableBookmark().getValue())) {
+            //if the existing elements contains the search input
+            if (s.ParcelNumber.toLowerCase().contains(text.toLowerCase())) {
+                //adding the element to filtered list
+                filterdNames.add(s);
+
+            }
+        }
+        model.getBookmarkAdapter().setBookmark(filterdNames);
+        model.getBookmarkAdapter().notifyDataSetChanged();
+        }
+
+        //calling a method of the adapter class and passing the filtered list
+
     }
 
     @Override

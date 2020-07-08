@@ -32,6 +32,7 @@
             android:configChanges="locale"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"
+            android:autoRemoveFromRecents="true"
             android:windowSoftInputMode="adjustPan|stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

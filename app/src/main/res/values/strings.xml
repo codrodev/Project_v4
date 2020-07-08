@@ -11,7 +11,7 @@
     <string name="or">OR</string>
     <string name="cancel">Cancel</string>
     <string name="createAccount">Create an Account</string>
-    <string name="signin_as_guest">Sign in as Guest</string>
+    <string name="signin_as_guest">Login as Guest</string>
     <string name="login_uaepass">Login with UAE PASS</string>
     <string name="username">Enter Username*</string>
     <string name="password">Enter Password*</string>

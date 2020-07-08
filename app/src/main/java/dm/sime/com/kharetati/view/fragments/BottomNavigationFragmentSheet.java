@@ -387,7 +387,9 @@ public class BottomNavigationFragmentSheet extends Fragment {
     public void onLogoutClicked(){if(Global.isUserLoggedIn)
         AlertDialogUtil.logoutAlert(getActivity().getResources().getString(R.string.logout_msg),getActivity().getResources().getString(R.string.yes),getActivity().getResources().getString(R.string.no),getActivity());
     else{
+
         Global.logout(getActivity());
+        ((MainActivity)getActivity()).finish();
         mTracker.send(new HitBuilders.EventBuilder()
                 .setCategory("More Screen")
                 .setAction("Action Logout")

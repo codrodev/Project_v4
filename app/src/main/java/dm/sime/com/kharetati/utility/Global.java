@@ -760,6 +760,7 @@ public class Global {
         Global.isBookmarks = false;
         Global.isRecreate = false;
         isLanguageChanged =true;
+        Global.isUAE =false;
         //Global.alertDialog = null;
         Global.isDeliveryByCourier= false;
         Global.isLogout =true;

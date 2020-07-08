@@ -732,8 +732,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
-        Global.helpUrlEn = "";
-        Global.helpUrlAr = "";
+        /*Global.helpUrlEn = "";
+        Global.helpUrlAr = "";*/
 
         int count = getSupportFragmentManager().getBackStackEntryCount();
         if (count == 0)

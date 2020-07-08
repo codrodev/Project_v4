@@ -54,11 +54,13 @@ public class BookmarkViewModel extends ViewModel implements Filterable {
     private ArrayList<Bookmark> filteredData;
 
 
+
     public BookmarkViewModel(Activity context, BookMarkRepository repository){
         this.activity = context;
         this.repository = repository;
         kharetatiApp = KharetatiApp.create(activity);
         filteredData = new ArrayList<Bookmark>();
+
         filter=new ItemFilter();
 
     }
