@@ -13,8 +13,8 @@
     <string name="createAccount">Create an Account</string>
     <string name="signin_as_guest">Login as Guest</string>
     <string name="login_uaepass">Login with UAE PASS</string>
-    <string name="username">Enter Username*</string>
-    <string name="password">Enter Password*</string>
+    <string name="username">Enter Username<font fgcolor='#a31533'>*</font></string>
+    <string name="password">Enter Password<font fgcolor='#a31533'>*</font></string>
     <string name="textOff">English</string>
     <string name="textOn">عربى</string>
     <string name="PLEASE_ENTER_PLOTNUMBER">Please enter plot number</string>
@@ -247,7 +247,7 @@
     <string name="enter_valid_password">Please enter a valid password</string>
     <string name="previous">Previous</string>
     <string name="next">Next</string>
-    <string name="copyright">Copyright 2020 © Dubai Municipality, All Rights Reserved</string>
+    <string name="copyright">Copyright © Dubai Municipality. All Rights Reserved.</string>
     <string name="Saps">SPS#:</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -279,6 +279,11 @@
     <string name="makani">Makani</string>
     <string name="newuser">NewUser?</string>
     <string name="reg">Register</string>
+    <string name="satilite" >Satelite / Map</string>
+    <string name="addtofav">Add to Favorite</string>
+    <string name="pantoplot">Pan to Plot</string>
+    <string name="openmaknai">Open in Makani</string>
+    <string name="userguide">User Guide</string>
 
     <string-array name="arrHeader">
         <item>header 1</item>

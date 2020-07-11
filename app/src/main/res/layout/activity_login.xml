@@ -29,15 +29,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
+
         <ImageView
             android:id="@+id/imgsplash"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="0dp"
             android:clickable="true"
-            android:layout_marginTop="-120dp"
-            android:visibility="visible"
             android:scaleType="fitXY"
             android:src="@drawable/splash"
+
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -45,54 +47,81 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
-        <ImageView
-            android:layout_width="@dimen/splash_logo_width"
-            android:layout_height="@dimen/splash_logo_height"
-            android:id="@+id/logoSplash"
-            android:scaleType="centerCrop"
-            android:visibility="visible"
-            android:layout_gravity="bottom|right"
-            android:layout_marginTop="@dimen/splash_logo_margin_top"
-            android:layout_marginBottom="@dimen/splash_logo_margin_bottom"
-            android:layout_marginRight="@dimen/splash_logo_margin_right"
-            android:src="@drawable/dm_logo_500"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layoutDirection="ltr"
+            android:weightSum="2"
+            android:layout_marginTop="-75dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight=".60"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:textSize="11sp"
+                    android:elevation="25dp"
+                    android:paddingStart="16dp"
+                    android:background="@color/transparent"
+                    android:textStyle="bold"
+                    android:id="@+id/copyright_english"
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:textSize="12sp"
-            android:elevation="20dp"
-            android:textStyle="bold"
-            android:id="@+id/copyright_arabic"
-            android:layout_marginTop="-25dp"
-            android:layout_marginBottom="0dp"
-            android:fontFamily="@font/dubai_font"
-            android:textAlignment="center"
-            android:textColor="@color/maroon_light"
-            android:text="@string/copyright"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:textSize="12sp"
-            android:elevation="20dp"
-            android:textStyle="bold"
-            android:id="@+id/copyright_english"
-            android:layout_marginTop="-48dp"
-            android:layout_marginBottom="23dp"
-            android:fontFamily="@font/dubai_font"
-            android:textAlignment="center"
-            android:textColor="@color/maroon_light"
-            android:text="حقوق الطبع والنشر © بلدية دبي 2020, جميع الحقوق محفوظة"
-            />
+                    android:layout_marginBottom="0dp"
+                    android:fontFamily="@font/dubai_font"
+                    android:textColor="@color/maroon_light"
+                    android:text="حقوق الطبع والنشر © بلدية دبي, جميع الحقوق محفوظة"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:textSize="11sp"
+                    android:elevation="20dp"
+                    android:paddingStart="16dp"
+                    android:background="@color/transparent"
+                    android:textStyle="bold"
+                    android:id="@+id/copyright_arabic"
+
+                    android:layout_marginBottom="0dp"
+                    android:fontFamily="@font/dubai_font"
+                    android:textColor="@color/maroon_light"
+                    android:text="@string/copyright"
+                    />
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.40"
+                android:layout_gravity="end">
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:id="@+id/logoSplash"
+                android:scaleType="fitXY"
+                android:visibility="visible"
+                android:layout_marginStart="-35dp"
+
+                android:layout_marginBottom="-60dp"
+                android:layout_gravity="bottom|left"
+                android:padding="47dp"
+
+
+                android:src="@drawable/dm_logo_512"/></LinearLayout>
+        </LinearLayout>
 
 
         <dm.sime.com.kharetati.view.customview.SlantView
             android:id="@+id/slantViewLoginHeader"
             android:layout_width="match_parent"
             android:layout_marginTop="12dp"
+            android:layout_marginStart="-1dp"
             android:layout_height="350dp"
             android:layout_gravity="start|center_horizontal"
 
@@ -106,9 +135,10 @@
             android:id="@+id/layoutLogo">
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="107dp"
-                android:layout_height="102dp"
-                android:layout_marginTop="48dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="32dp"
+                android:padding="2dp"
                 android:visibility="visible"
                 android:src="@drawable/kharetati_white"
                 app:layout_constraintBottom_toBottomOf="@+id/imgBackground"
@@ -134,7 +164,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
-
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <LinearLayout
                 android:id="@+id/layoutParentLoginContainer"
                 android:layout_width="match_parent"
@@ -555,6 +587,7 @@
 
 
             </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -682,6 +715,7 @@
 
             </LinearLayout>
 
+
             <!--<LinearLayout
                 android:id="@+id/layoutEnableUAEPass"
                 android:layout_width="match_parent"
@@ -769,4 +803,5 @@
 
 
     </LinearLayout>
+
 </layout>

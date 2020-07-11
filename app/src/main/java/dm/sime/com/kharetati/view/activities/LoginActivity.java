@@ -824,9 +824,9 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
                 //Slant View
 
-                LinearLayout.LayoutParams slantViewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (Global.height / 2));
+                LinearLayout.LayoutParams slantViewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ((int)(Global.height/2) +100));
                 slantViewParams.gravity = Gravity.CENTER_HORIZONTAL;
-                slantViewParams.setMargins(0, (int) -Global.height,0,0);
+                slantViewParams.setMargins(0, (int) -Global.height+100,0,0);
                 binding.slantViewLoginHeader.setLayoutParams(slantViewParams);
 
                 //Kharetati Logo Layout
@@ -1118,7 +1118,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                     logoLayoutParams1.setMargins(leftMargin, (int) (-(Global.height/4)-100),rightMargin,bottomMargin);
                     binding.layoutLogo.setLayoutParams(logoLayoutParams1);
 
-                    LinearLayout.LayoutParams slantViewParams1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/4)+100));
+                    LinearLayout.LayoutParams slantViewParams1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/4)+300));
                     slantViewParams1.gravity = Gravity.CENTER_HORIZONTAL;
                     //slantViewParams.setMargins(0,(-height).toInt(),0,0)
                     binding.slantViewLoginHeader.setLayoutParams(slantViewParams1);

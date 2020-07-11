@@ -56,7 +56,7 @@
                             android:layout_marginEnd="@dimen/settings_language_margin"
                             android:text="@string/language"
                             android:textAlignment="viewStart"
-                            android:textColor="@color/text_color" />
+                            android:textColor="#2A2A2A" />
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -68,6 +68,7 @@
                             android:layout_gravity="end|center_vertical"
                             android:layout_marginVertical="15dp"
                             android:layout_marginEnd="16dp"
+
                             android:layout_marginStart="@dimen/settngs_switch_margin"
                             android:background="@drawable/capsule_white_bg_settings"
                             android:gravity="end"
@@ -76,7 +77,7 @@
                             <TextView
                                 android:id="@+id/txtEnglish"
                                 style="@style/font_small_bold"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="4dp"
                                 android:layout_weight="1"
@@ -90,15 +91,17 @@
                             <TextView
                                 android:id="@+id/txtArabic"
                                 style="@style/font_small_bold"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="4dp"
+                                android:layout_marginTop="4dp"
+                                android:layout_marginBottom="4dp"
                                 android:layout_weight="1"
                                 android:paddingStart="5dp"
                                 android:paddingEnd="5dp"
+                                android:layout_marginEnd="5dp"
                                 android:text="@string/arabic"
                                 android:textAlignment="center"
-                                android:textColor="@color/black" />
+                                android:textColor="#2A2A2A" />
                         </LinearLayout>
                         </LinearLayout>
 
@@ -130,7 +133,7 @@
                         android:layout_marginEnd="@dimen/settings_talkback_margin"
                         android:layout_marginVertical="15dp"
                         style="@style/font_medium_bold_settings"
-                        android:textColor="@color/text_color"
+                        android:textColor="#2A2A2A"
                         android:text="@string/talkback"/>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -168,7 +171,7 @@
                             android:layout_weight="1"
                             android:id="@+id/txtOff"
                             android:layout_margin="4dp"
-                            android:textColor="@color/black"
+                            android:textColor="#2A2A2A"
                             android:text="@string/off"/>
                     </LinearLayout>
                     </LinearLayout>
@@ -197,7 +200,7 @@
                         android:layout_marginStart="12dp"
                         android:layout_marginVertical="15dp"
                         style="@style/font_medium_bold_settings"
-                        android:textColor="@color/text_color"
+                        android:textColor="#2A2A2A"
                         android:text="@string/fontsize"/>
 
                     <LinearLayout
@@ -215,15 +218,18 @@
                             android:layout_height="match_parent"
                             android:gravity="center"
                             android:layout_weight="1">
+
                             <TextView
+                                android:id="@+id/fontSize1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="aA"
-                                android:textSize="7dp"
-                                android:id="@+id/fontSize1"
-                                android:gravity="center"
                                 android:layout_gravity="center"
-                                android:textAlignment="center"/>
+                                android:gravity="center"
+                                android:text="aA"
+                                android:textAlignment="center"
+                                android:fontFamily="@font/dubai_font"
+                                android:textColor="#7F7F7F"
+                                android:textSize="7dp" />
                         </LinearLayout>
                         <View
                             android:layout_width="1dp"
@@ -242,6 +248,8 @@
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 android:text="aA"
+                                android:fontFamily="@font/dubai_font"
+                                android:textColor="#7F7F7F"
                                 android:textAlignment="center"
                                 android:textSize="10.5dp" />
                         </LinearLayout>
@@ -285,6 +293,8 @@
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 android:text="aA"
+                                android:fontFamily="@font/dubai_font"
+                                android:textColor="#7F7F7F"
                                 android:textAlignment="center"
                                 android:textSize="17.5dp" />
                         </LinearLayout>
@@ -305,6 +315,8 @@
                                 android:text="aA"
                                 android:layout_gravity="center"
                                 android:gravity="center"
+                                android:fontFamily="@font/dubai_font"
+                                android:textColor="#7F7F7F"
                                 android:textSize="21dp"
                                 android:textAlignment="center"/>
                         </LinearLayout>

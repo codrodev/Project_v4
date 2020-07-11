@@ -106,6 +106,16 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
         setRetainInstance(true);
         Global.enableClearTextInEditBox(binding.fragmentBookmarksPlotnumber,getActivity());
 
+        binding.mapMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(binding.sortLayout.getVisibility()!=View.VISIBLE)
+                    binding.sortLayout.setVisibility(View.VISIBLE);
+                else
+                    binding.sortLayout.setVisibility(View.GONE);
+            }
+        });
+
         binding.sortDescending.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

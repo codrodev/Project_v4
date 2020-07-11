@@ -78,7 +78,7 @@ public class DashboardFragment extends Fragment implements ViewPager.OnPageChang
             model.setDashboardPagerAdapter(this, 1);
         } else {
             binding.layoutParent.setWeightSum(2);
-            binding.layoutParent.setPaddingRelative(48,8,200,8);
+            binding.layoutParent.setPaddingRelative(100,8,100,8);
             model.setDashboardPagerAdapter(this, 2);
         }
         binding.viewPagerCreatePackage.addOnPageChangeListener(this);
@@ -192,5 +192,15 @@ public class DashboardFragment extends Fragment implements ViewPager.OnPageChang
     @Override
     public void onResume() {
         super.onResume();
+        //Global.FragmentTagForDashboardHelpUrl = position;
+        if(Global.isUserLoggedIn) {
+            if (Global.FragmentTagForDashboardHelpUrl == 1) {
+                changeBookmarkColor();
+            } else {
+                changeMyMapColor();
+            }
+        }
+        else
+            guestUserUI();
     }
 }

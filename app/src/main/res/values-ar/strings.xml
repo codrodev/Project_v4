@@ -14,8 +14,8 @@
     <string name="createAccount"> إنشاء حساب جديد</string>
     <string name="signin_as_guest">تسجيل الدخول كضيف</string>
     <string name="login_uaepass">تسجيل الدخول بالهوية الرقمية</string>
-    <string name="username">أدخل اسم المستخدم*</string>
-    <string name="password">ادخل كلمة المرور*</string>
+    <string name="username">أدخل اسم المستخدم<font fgcolor='#a31533'>*</font></string>
+    <string name="password">ادخل كلمة المرور<font fgcolor='#a31533'>*</font></string>
     <string name="textOn">English</string>
     <string name="textOff">عربى</string>
     <string name="PLEASE_ENTER_PLOTNUMBER">الرجاء إدخال رقم قطعة الأرض</string>
@@ -232,7 +232,7 @@
     <string name="enter_valid_password">الرجاء إدخال كلمة مرور صالحة</string>
     <string name="previous">السابق</string>
     <string name="next">التالى</string>
-    <string name="copyright">Copyright 2020 © Dubai Municipality, All Rights Reserved</string>
+    <string name="copyright">Copyright © Dubai Municipality. All Rights Reserved.</string>
     <string name="Saps">رقم المعاملة:</string>
     <string name="ENTERTHEPLOTNUMBER">أدخل رقم قطعة الأرض</string>
     <string name="no_siteplan">لم يتم العثور على خطة الموقع المطلوبة‎</string>
@@ -283,4 +283,9 @@
     <string name="payment">دفع</string>
     <string name="newuser">مستخدم جديد؟</string>
     <string name="reg"> أنشأ حساب جديد.</string>
+    <string name="satilite" >القمر الاصطناعي/ الخريطة</string>
+    <string name="addtofav">إضافة إلى المفضلة</string>
+    <string name="pantoplot">تكبير للقطعة</string>
+    <string name="openmaknai">افتح في تطبيق مكاني</string>
+    <string name="userguide">دليل المستخدم</string>
 </resources>

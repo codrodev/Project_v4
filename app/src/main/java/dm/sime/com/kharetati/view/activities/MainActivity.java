@@ -27,6 +27,8 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -563,6 +565,19 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     public void fragmentNavigator(String fragmentTag, Boolean addToBackStack, List<Object> params) {
         loadFragment(fragmentTag, addToBackStack, params);
     }
+
+   /* @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //getMenuInflater().inflate(R.menu.map_menu,menu);
+        //MapFragment.mapVM.mapNavigator.onMenCreated(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+       // MapFragment.mapVM.mapNavigator.onMenuSelected(item);
+        return super.onOptionsItemSelected(item);
+    }*/
 
     public Fragment loadFragment(String fragment_tag, Boolean addToBackStack, List<Object> params) {
 

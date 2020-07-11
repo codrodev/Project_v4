@@ -47,7 +47,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="4dp"
                 android:textAlignment="center"
-                android:layout_weight=".32"
+                android:layout_weight=".33"
                 android:text="@string/pay_now"
 
                 android:fontFamily="@font/dubai_font"
@@ -73,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:layout_gravity="center_vertical|start"
-                android:layout_weight=".25"
+                android:layout_weight=".24"
                 android:id="@+id/dateAndTime"
                 android:fontFamily="@font/dubai_font"
                 android:singleLine="false"

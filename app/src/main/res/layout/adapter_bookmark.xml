@@ -57,6 +57,7 @@
                     android:id="@+id/dateBookmark"
 
                     android:layout_marginStart="5dp"
+                    android:textColor="#3b393a"
                     android:fontFamily="@font/dubai_font"
                     android:layout_height="wrap_content"
                     android:text="Date here"/>
@@ -82,13 +83,15 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="5dp"
 
-                        style="@style/font_small_bold"
+                        android:textColor="@color/favoritesTextColor"
+                        android:fontFamily="@font/dubai_font"
                         android:text="@string/plot_no"/>
                     <TextView
 
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/font_small_bold"
+                        android:textColor="@color/favoritesTextColor"
+                        android:fontFamily="@font/dubai_font"
                         android:id="@+id/plotNo"
                         android:layout_marginHorizontal="5dp"
                         android:layout_marginVertical="5dp"
@@ -127,6 +130,7 @@
                             android:text="@string/area"
                             android:textSize="14sp"
                             android:textAlignment="viewStart"
+                            android:textColor="@color/favoritesTextColor"
                             android:fontFamily="@font/dubai_font"
                             android:layout_marginStart="5dp"
                             />
@@ -134,6 +138,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="14sp"
+                            android:textColor="@color/favoritesTextColor"
                             android:fontFamily="@font/dubai_font"
                             android:singleLine="true"
                             android:layout_marginStart="5dp"
@@ -143,6 +148,7 @@
 
                     <TextView
                         android:id="@+id/txtDescriptionEn"
+                        android:textColor="@color/favoritesTextColor"
                         android:fontFamily="@font/dubai_font"
                         android:textSize="14sp"
                         android:text="desc"

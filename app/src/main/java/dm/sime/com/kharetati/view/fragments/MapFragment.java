@@ -1,5 +1,6 @@
 package dm.sime.com.kharetati.view.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -20,6 +21,9 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,12 +37,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -171,6 +177,10 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
     FunctionOnMapAdapter.OnMenuSelectedListener listener;
     private LinearLayout layoutBottomSheet;
     private String functionurl;
+    int images[]= {R.drawable.layers_512,R.drawable.favorite_black_512,R.drawable.location_512,R.drawable.makani_512,R.drawable.help_512};
+    int ids[] = {R.id.menuImage,R.id.menuText};
+    String keys[]= {"one","two"};
+    private ArcGISMap map;
 
 
     public MapFragment() {
@@ -438,7 +448,174 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             onStarted();
         }
 
+        String names[] = new String[]{getContext().getResources().getString(R.string.satilite),getContext().getResources().getString(R.string.addtofav),getContext().getResources().getString(R.string.pantoplot),getContext().getResources().getString(R.string.openmaknai),getContext().getResources().getString(R.string.userguide)};
+
+        ArrayList al = new ArrayList();
+
+        for(int i=0;i<images.length;i++){
+            HashMap hm = new HashMap();
+            hm.put(keys[0],images[i]);
+            hm.put(keys[1],names[i]);
+
+            al.add(hm);
+
+        }
+        if(isMakani)
+            al.remove(1);
+        SimpleAdapter sa = new SimpleAdapter(getActivity(),al,R.layout.map_menu_item,keys,ids);
+        binding.listmapMenu.setAdapter(sa);
+
+        binding.listmapMenu.setVisibility(View.GONE);
+
+        binding.mapMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(binding.listmapMenu.getVisibility()!=View.VISIBLE)
+                    binding.listmapMenu.setVisibility(View.VISIBLE);
+                else
+                    binding.listmapMenu.setVisibility(View.GONE);
+            }
+        });
+
+        binding.listmapMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch(position){
+                    case 0:if(((ImageView) view.findViewById(R.id.menuImage)).getTag()==null)((ImageView) view.findViewById(R.id.menuImage)).setTag("layer");
+                        changeLayer((ImageView) view.findViewById(R.id.menuImage));
+                    break;
+                    case 1:if(!isMakani)addToFav();else recenter();
+                    break;
+                    case 2:if(!isMakani)recenter();else gotomakani();
+                    break;
+                    case 3:if(!isMakani)gotomakani();else helpClicked();
+                    break;
+                    case 4:if(!isMakani)helpClicked();break;
+                }
+                binding.listmapMenu.setVisibility(View.GONE);
+            }
+        });
+
         return binding.getRoot();
+    }
+
+    private void helpClicked() {
+        if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0){
+            ArrayList al = new ArrayList();
+            if(Global.map_en_url != null && Global.map_en_url.length() > 0){
+                al.add(HomeFragment.constructUrl(Global.map_en_url,getActivity()));
+                al.add(getActivity().getResources().getString(R.string.help));
+
+                ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+            } else {
+                al.add(HomeFragment.constructUrl(Global.helpUrlEn,getActivity()));
+                al.add(getActivity().getResources().getString(R.string.help));
+                ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+
+            }
+        } else {
+            ArrayList al = new ArrayList();
+            if(Global.map_ar_url != null && Global.map_ar_url.length() > 0){
+                al.add(HomeFragment.constructUrl(Global.map_ar_url,getActivity()));
+                al.add(getActivity().getResources().getString(R.string.help));
+                ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+            } else {
+                al.add(HomeFragment.constructUrl(Global.helpUrlEn,getActivity()));
+                al.add(getActivity().getResources().getString(R.string.help));
+                ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+            }
+        }
+    }
+
+    private void gotomakani() {
+        try {
+
+            if (!Global.isConnected(getActivity())) {
+
+                if(Global.appMsg!=null)
+                    AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning),Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr() , getResources().getString(R.string.ok), getActivity());
+                else
+                    AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
+
+            }
+            else{
+                if(Global.isBookmarks)
+                    Global.openMakani(parcelId,getActivity());
+                else
+                    Global.openMakani(Global.mapSearchResult.getService_response().getParcelId(), getActivity());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addToFav() {
+        try {
+
+            if (!Global.isConnected(getActivity())) {
+
+                if(Global.appMsg!=null)
+                    AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning),Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr() , getResources().getString(R.string.ok), getActivity());
+                else
+                    AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
+
+            }
+            else{
+                Global.isSaveAsBookmark =true;
+                //PlotDetails.parcelNo = binding.txtPlotNo.getText().toString().trim();
+                model.getParceldetails();
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Map Screen")
+                        .setAction("Action Favourites")
+                        .setLabel("Added To Favourites")
+                        .setValue(1)
+                        .build());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void changeLayer(ImageView view) {
+
+        if (!Global.isConnected(getActivity())) {
+
+            if(Global.appMsg!=null)
+                AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning),Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr() , getResources().getString(R.string.ok), getActivity());
+            else
+                AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
+
+        } else {
+            try {
+                if (view.getTag().toString().equalsIgnoreCase("layer"))
+                {
+                    ((ImageView) view).setImageResource(R.drawable.ic_layers_24dp);
+                    view.setTag("layer_active");
+                    if (getOrthoLayer() != null) {
+                        ArcGISSublayer ortho = getOrthoLayer();
+                        ortho.setVisible(true);
+                        map.setBasemap(Basemap.createImagery());
+                        mapView.setViewpointScaleAsync(ortho.getMaxScale() + 1);
+
+                    }
+                } else if (view.getTag().toString().equalsIgnoreCase("layer_active")){
+                    //((ImageView) view).setImageAlpha(50);
+                    ((ImageView) view).setImageResource(R.drawable.layers_512);
+                    view.setTag("layer");
+                    if (getOrthoLayer() != null) {
+                        ArcGISSublayer ortho = getOrthoLayer();
+
+                        ortho.setVisible(false);
+                        recenter();
+                    }
+
+                }
+                //map.loadAsync();
+                dynamicLayer.retryLoadAsync();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void setWebSheetPeekHeight(int value){
@@ -468,7 +645,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
 
 
         //ArcGISMap map = new ArcGISMap(Global.mapSearchResult.getService_response().getMap().getDetails().getServiceUrl());
-        ArcGISMap map = new ArcGISMap();
+        map = new ArcGISMap();
         mapView.setMap(map);
 
 
@@ -599,6 +776,16 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             ViewAnimationUtils.blinkAnimationView(binding.imgBack);
 
         }
+        binding.mapMenu.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("RestrictedApi")
+            @Override
+            public void onClick(View v) {
+                Menu menu =new MenuBuilder(getActivity());
+                ((MainActivity)getActivity()).onCreateOptionsMenu(menu);
+
+
+            }
+        });
 
 
         binding.imgLayer.setTag("layer");
@@ -608,44 +795,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             public void onClick(View view) {
                 //model.navigate(getActivity(), FragmentTAGS.FR_REQUEST_SITE_PLAN);
 
-                if (!Global.isConnected(getActivity())) {
-
-                    if(Global.appMsg!=null)
-                        AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning),Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr() , getResources().getString(R.string.ok), getActivity());
-                    else
-                        AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
-
-                } else {
-                    try {
-                        if (view.getTag().toString().equalsIgnoreCase("layer"))
-                        {
-                            ((ImageView) view).setImageResource(R.drawable.ic_layers_24dp);
-                            view.setTag("layer_active");
-                            if (getOrthoLayer() != null) {
-                                ArcGISSublayer ortho = getOrthoLayer();
-                                ortho.setVisible(true);
-                                map.setBasemap(Basemap.createImagery());
-                                mapView.setViewpointScaleAsync(ortho.getMaxScale() + 1);
-
-                            }
-                        } else {
-                            //((ImageView) view).setImageAlpha(50);
-                            ((ImageView) view).setImageResource(R.drawable.layers_512);
-                            view.setTag("layer");
-                            if (getOrthoLayer() != null) {
-                                ArcGISSublayer ortho = getOrthoLayer();
-
-                                ortho.setVisible(false);
-                                recenter();
-                            }
-
-                        }
-                        //map.loadAsync();
-                        dynamicLayer.retryLoadAsync();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
+                
             }
         });
          //myBottomSheet = MapFunctionBottomSheetFragment.newInstance(this);
@@ -675,7 +825,6 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             }
         });
 */
-
         searchhistoryListView=(ListView)binding.getRoot().findViewById(R.id.fragment_map_searchhistory);
         searchhistoryListView.setAdapter(adapterHistory);
         searchhistoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -763,30 +912,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         binding.imgBookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-
-                     if (!Global.isConnected(getActivity())) {
-
-                            if(Global.appMsg!=null)
-                                AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning),Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr() , getResources().getString(R.string.ok), getActivity());
-                            else
-                                AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
-
-                        }
-                        else{
-                            Global.isSaveAsBookmark =true;
-                            //PlotDetails.parcelNo = binding.txtPlotNo.getText().toString().trim();
-                            model.getParceldetails();
-                         mTracker.send(new HitBuilders.EventBuilder()
-                                 .setCategory("Map Screen")
-                                 .setAction("Action Favourites")
-                                 .setLabel("Added To Favourites")
-                                 .setValue(1)
-                                 .build());
-                        }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                
             }
         });
 
@@ -808,56 +934,14 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         binding.imgMakani.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-
-                        if (!Global.isConnected(getActivity())) {
-
-                            if(Global.appMsg!=null)
-                                AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning),Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr() , getResources().getString(R.string.ok), getActivity());
-                            else
-                                AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
-
-                        }
-                        else{
-                                if(Global.isBookmarks)
-                                    Global.openMakani(parcelId,getActivity());
-                                else
-                                    Global.openMakani(Global.mapSearchResult.getService_response().getParcelId(), getActivity());
-                        }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                
             }
         });
 
         binding.imgHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0){
-                    ArrayList al = new ArrayList();
-                    if(Global.map_en_url != null && Global.map_en_url.length() > 0){
-                        al.add(HomeFragment.constructUrl(Global.map_en_url,getActivity()));
-                        al.add(getActivity().getResources().getString(R.string.help));
-
-                        ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
-                    } else {
-                        al.add(HomeFragment.constructUrl(Global.helpUrlEn,getActivity()));
-                        al.add(getActivity().getResources().getString(R.string.help));
-                        ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
-
-                    }
-                } else {
-                    ArrayList al = new ArrayList();
-                    if(Global.map_ar_url != null && Global.map_ar_url.length() > 0){
-                        al.add(HomeFragment.constructUrl(Global.map_ar_url,getActivity()));
-                        al.add(getActivity().getResources().getString(R.string.help));
-                        ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
-                    } else {
-                        al.add(HomeFragment.constructUrl(Global.helpUrlEn,getActivity()));
-                        al.add(getActivity().getResources().getString(R.string.help));
-                        ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
-                    }
-                }
+                
             }
         });
     }
@@ -1015,6 +1099,33 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
 
         }
 
+
+    }
+
+    @Override
+    public void onMenuSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.item1:
+                Toast.makeText(getActivity(),"Item 1 Selected",Toast.LENGTH_LONG).show();
+             break;
+            case R.id.item2:
+                Toast.makeText(getActivity(),"Item 2 Selected",Toast.LENGTH_LONG).show();
+              break;
+
+
+        }
+    }
+
+    @Override
+    public void onMenCreated(Menu menu) {
+
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.map_menu,menu);
 
     }
 
