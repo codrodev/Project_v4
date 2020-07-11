@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/layoutRoot"
+        android:background="@color/white"
         android:orientation="vertical"
         tools:context=".view.activities.LoginActivity">
 
@@ -173,6 +174,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
+                android:background="@color/white"
                 android:orientation="vertical">
 
                 <ImageView
@@ -204,6 +206,8 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="4dp"
                         android:fontFamily="@font/dubai_font"
+                        android:textStyle="bold"
+
                         android:textColor="@color/login_text_color"
                         />
                     <TextView
@@ -231,7 +235,9 @@
                         android:layout_marginTop="12dp"
                         android:layoutDirection="locale"
                         android:layout_marginBottom="12dp"
-
+                        android:textStyle="bold"
+                        android:textFontWeight="1000"
+                        android:textColorHint="#6D6D6D"
                         android:clickable="true"
                         android:ems="10"
                         android:hint="@string/username"
@@ -315,6 +321,9 @@
                     android:paddingEnd="8dp"
                     android:paddingTop="8dp"
                     android:singleLine="true"
+                    android:textStyle="bold"
+                    android:textColorHint="#6D6D6D"
+                    android:textFontWeight="1000"
 
                     android:background="@color/transparent"
                     android:textColor="@color/login_text_color"
@@ -413,7 +422,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:text="@string/login"
-                    android:textAllCaps="false"
+                    android:textAllCaps="true"
                     android:textColor="@color/white"
                     android:textSize="@dimen/login_font_size" />
 
@@ -457,7 +466,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="2dp"
+                        android:layout_height="1dp"
                         android:layout_marginTop="4dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
@@ -477,7 +486,7 @@
                         android:textSize="@dimen/login_font_size" />
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="2dp"
+                        android:layout_height="1dp"
                         android:layout_marginTop="4dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
@@ -547,7 +556,7 @@
                     android:layout_marginBottom="4dp"
                     android:textAllCaps="true"
                     android:textStyle="bold"
-                    android:textFontWeight="1000"
+                    android:textFontWeight="800"
                     android:fontFamily="@font/dubai_font"
                     android:text="@string/signin_as_guest"
                     android:textAlignment="center"

@@ -271,13 +271,13 @@
     <string name="sendus">send us</string>
     <string name="more">Options</string>
     <string name="lastlogin"><b>Last Login</b> on</string>
-    <string name="login_with">Login with</string>
+    <string name="login_with">Login With</string>
     <string name="with_uaepass"> UAE PASS</string>
     <string name="help">Help</string>
     <string name="viewdetails">View Details</string>
     <string name="notifications">Notifications</string>
     <string name="makani">Makani</string>
-    <string name="newuser">NewUser?</string>
+    <string name="newuser">New User?</string>
     <string name="reg">Register</string>
     <string name="satilite" >Satelite / Map</string>
     <string name="addtofav">Add to Favorite</string>
