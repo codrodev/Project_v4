@@ -826,7 +826,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
                 LinearLayout.LayoutParams slantViewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Global.height<=800?(Global.height<=480?((int)(Global.height/2))+20:((int)(Global.height/2))):((int)(Global.height/2) +150));
                 slantViewParams.gravity = Gravity.CENTER_HORIZONTAL;
-                slantViewParams.setMargins(0, Global.height<=480?(int) -Global.height:(int) -Global.height+100,0,0);
+                slantViewParams.setMargins(0, Global.width<=480?(int) -Global.height:(int) (-Global.height)+100,0,0);
                 binding.slantViewLoginHeader.setLayoutParams(slantViewParams);
 
                 //Kharetati Logo Layout
@@ -1049,7 +1049,14 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                                     cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)+(Global.height/5)));
 //
                                 cardViewParams.gravity = Gravity.CENTER_HORIZONTAL;
-                                cardViewParams.setMargins(48, Global.height>=2560?(int) ((-Global.height/4)+600):(Global.height<=800?(Global.height<=480?(int)(-Global.height/4)+180:(int) ((-Global.height/4)+250)):(int) ((-Global.height/4)+500)),48,20);
+                                int cardmarginTop;
+                                if(Global.height>=2560){
+                                    cardmarginTop= (int) ((-Global.height/4)+600);
+                                }
+                                else if(Global.height<=800){
+
+                                }
+                                cardViewParams.setMargins(48, Global.height>=2560?(int) ((-Global.height/4)+600):(Global.height<=800?(Global.width<=360?(int)(-Global.height/4)+200:(int) ((-Global.height/4)+250)):(int) ((-Global.height/4)+500)),48,20);
                                 binding.cardLogin.setLayoutParams(cardViewParams);
                                 /*LinearLayout.LayoutParams switchLanguageparams = new LinearLayout.LayoutParams(350, 96);
                                 switchLanguageparams.setMargins((int)(Global.width/2)+300,32,32,32);
