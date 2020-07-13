@@ -824,9 +824,9 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
                 //Slant View
 
-                LinearLayout.LayoutParams slantViewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ((int)(Global.height/2) +100));
+                LinearLayout.LayoutParams slantViewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Global.height<=800?(Global.height<=480?((int)(Global.height/2))+20:((int)(Global.height/2))):((int)(Global.height/2) +150));
                 slantViewParams.gravity = Gravity.CENTER_HORIZONTAL;
-                slantViewParams.setMargins(0, (int) -Global.height+100,0,0);
+                slantViewParams.setMargins(0, Global.height<=480?(int) -Global.height:(int) -Global.height+100,0,0);
                 binding.slantViewLoginHeader.setLayoutParams(slantViewParams);
 
                 //Kharetati Logo Layout
@@ -845,10 +845,10 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
                 //dubai Id Logo
 
-                LinearLayout.LayoutParams dubaiIdParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,elementHeight-24);
+               /* LinearLayout.LayoutParams dubaiIdParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,elementHeight-24);
                 dubaiIdParams.gravity = Gravity.CENTER;
                 dubaiIdParams.setMargins(leftMargin,topMargin+5,rightMargin,bottomMargin);
-                binding.imageDubaiID.setLayoutParams(dubaiIdParams);
+                binding.imageDubaiID.setLayoutParams(dubaiIdParams);*/
 
 /*
                 // username editText
@@ -1035,7 +1035,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                                 binding.layoutEnableUAEPass.setVisibility(View.GONE);
                                 //binding.layoutUAEPass.setVisibility(View.VISIBLE);
                                 binding.layoutUae.setVisibility(View.GONE);
-                                binding.layoutUAEPass.setVisibility(View.VISIBLE);
+                                binding.layoutUAEPass.setVisibility(View.GONE);
                                 //binding.layoutUAEPass.setVisibility(View.VISIBLE);
                                 LinearLayout.LayoutParams layoutUaepassarams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,binding.cardLogin.getHeight()-175);
 //                    LinearLayout.LayoutParams cardViewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -1046,10 +1046,10 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                                 if(Global.uaePassConfig.disableMyId)
                                     cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)-(Global.height/8)));
                                 else
-                                    cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)+(Global.height/6)));
+                                    cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)+(Global.height/5)));
 //
                                 cardViewParams.gravity = Gravity.CENTER_HORIZONTAL;
-                                cardViewParams.setMargins(48, (int) ((-Global.height/4)+500),48,20);
+                                cardViewParams.setMargins(48, Global.height>=2560?(int) ((-Global.height/4)+600):(Global.height<=800?(Global.height<=480?(int)(-Global.height/4)+180:(int) ((-Global.height/4)+250)):(int) ((-Global.height/4)+500)),48,20);
                                 binding.cardLogin.setLayoutParams(cardViewParams);
                                 /*LinearLayout.LayoutParams switchLanguageparams = new LinearLayout.LayoutParams(350, 96);
                                 switchLanguageparams.setMargins((int)(Global.width/2)+300,32,32,32);
@@ -1415,7 +1415,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
         } else {
             binding.layoutUae.setVisibility(View.GONE);
-            binding.layoutUAEPass.setVisibility(View.VISIBLE);
+            binding.layoutUAEPass.setVisibility(View.GONE);
             binding.loginContainer.setVisibility(View.VISIBLE);
             binding.imageDubaiID.setVisibility(View.VISIBLE);
             binding.layoutEnableUAEPass.setVisibility(View.GONE);

@@ -53,7 +53,7 @@ public class HappinessFragment extends Fragment {
     private static final String SECRET = "E4917C5A1CCC0FA3";
     private static final String SERVICE_PROVIDER = "DM";
     private static final String CLIENT_ID = "dmbeatuser";
-    private TYPE currentType = TYPE.TRANSACTION;
+    private TYPE currentType = TYPE.WITH_MICROAPP;
     private WebView webView = null;
 
     public static HappinessFragment newInstance(){
@@ -170,7 +170,7 @@ public class HappinessFragment extends Fragment {
             transaction.setTransactionID("Happiness Vote " + new Date().getTime());
             request.setTransaction(transaction);
         } else {
-            Application application = new Application("Kharetati", AppUrls.URL_RATE_US_EN, "SMART", "ANDROID");
+            Application application = new Application("Kharetati", AppUrls.URL_RATE_US_EN, "SMARTAPP", "ANDROID");
             application.setNotes("Kharetati Vote");
             request.setApplication(application);
         }
@@ -201,7 +201,7 @@ public class HappinessFragment extends Fragment {
         } else {
             lang = "en";
         }
-        VotingManager.loadHappiness(webView, request, Global.happinessSecretKey, Global.happinessServiceProvider, Global.clientID, lang);
+        VotingManager.loadHappiness(webView, request, Global.happinessSecretKey, Global.happinessServiceProvider, Global.happinessClientID, lang);
     }
 
     @Override

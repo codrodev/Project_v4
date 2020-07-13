@@ -211,7 +211,6 @@ public class LoginViewModel extends ViewModel {
             Global.map_en_url = kharetatiUser.map_en_url;
             Global.map_ar_url = kharetatiUser.map_ar_url;
             Global.mapHiddenLayers =kharetatiUser.getMapHiddenLayers();
-
             Global.happinessUrl = kharetatiUser.getHappinessUrl();
             Global.happinessClientID = kharetatiUser.getHappinessClientid();
             Global.happinessSecretKey = kharetatiUser.getHappinessSecretkey();
