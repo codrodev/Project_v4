@@ -32,6 +32,25 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="160dp"
+            android:elevation="1dp"
+            android:background="@color/transparent"
+            android:gravity="bottom"
+            android:layout_marginBottom="-161dp"
+            android:layout_gravity="center_horizontal"
+            >
+            <ImageView
+                android:id="@+id/splashLogo"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:src="@drawable/kharetati_white"
+                android:visibility="visible"
+                 />
+        </LinearLayout>
+
+
 
         <ImageView
             android:id="@+id/imgsplash"
@@ -50,10 +69,11 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-75dp"
+            android:layout_marginTop="-55dp"
             android:layoutDirection="ltr"
             android:orientation="horizontal"
             android:visibility="visible"
@@ -79,7 +99,7 @@
 
                     android:text="حقوق الطبع والنشر © بلدية دبي. جميع الحقوق محفوظة"
                     android:textColor="@color/maroon_light"
-                    android:textSize="9sp"
+                    android:textSize="8.88sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -95,7 +115,7 @@
 
                     android:text="@string/copyright"
                     android:textColor="@color/maroon_light"
-                    android:textSize="9sp"
+                    android:textSize="8.88sp"
                     android:textStyle="bold" />
 
 
@@ -113,7 +133,7 @@
                     android:layout_height="200dp"
                     android:layout_gravity="bottom|left"
                     android:layout_marginStart="-40dp"
-                    android:layout_marginBottom="-60dp"
+                    android:layout_marginBottom="-70dp"
 
                     android:padding="47dp"
                     android:scaleType="fitXY"
@@ -123,6 +143,7 @@
                     android:visibility="visible" />
             </LinearLayout>
         </LinearLayout>
+
 
 
         <dm.sime.com.kharetati.view.customview.SlantView

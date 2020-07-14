@@ -45,6 +45,8 @@ import org.json.JSONObject;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -189,10 +191,13 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
             }
             else
-                binding.txtUsername.setText(LoginViewModel.guestName);
+                binding.txtUsername.setText(getResources().getString(R.string.guest));
         }
-        getLastlogin();
-
+        try {
+            getLastlogin();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
 
         customBottomBar.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
@@ -299,8 +304,9 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
     }
 
-    public void getLastlogin() {
-        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm ",new Locale("en"));
+    public void getLastlogin() throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss ",new Locale("en"));
+        SimpleDateFormat rdf = new SimpleDateFormat("dd-MMM-yyyy HH:mm:s",new Locale("en"));
         String currentDateandTime = sdf.format(new Date());
         binding.txtLastLogin.setVisibility(View.VISIBLE);
 
@@ -315,7 +321,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 }
                 //SpannableStringBuilder str = new SpannableStringBuilder(" "+lastLogin);
                 //str.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                binding.txtLastLogin.setText(" "+lastLogin);
+
+                binding.txtLastLogin.setText(" "+sdf.format(rdf.parse(lastLogin)));
             }
             else{
 
@@ -379,6 +386,15 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
         layoutDots.setVisibility(View.VISIBLE);
         addBottomDots(0, myViewModel.getLstBody().size());
+
+    }
+    private Date stringToDate(String aDate,String aFormat) {
+
+        if(aDate==null) return null;
+        ParsePosition pos = new ParsePosition(0);
+        SimpleDateFormat simpledateformat = new SimpleDateFormat(aFormat,new Locale("en"));
+        Date stringDate = simpledateformat.parse(aDate, pos);
+        return stringDate;
 
     }
 
@@ -473,7 +489,11 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         if(Global.current_fragment_id.equals(FragmentTAGS.FR_HOME)){
             binding.txtLastLogin.setVisibility(View.VISIBLE);
             binding.layoutlastlogin.setVisibility(View.VISIBLE);
-            getLastlogin();
+            try {
+                getLastlogin();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
         else{
             binding.txtLastLogin.setVisibility(View.GONE);

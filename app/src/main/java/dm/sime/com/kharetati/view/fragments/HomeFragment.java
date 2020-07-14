@@ -48,6 +48,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -236,7 +237,11 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         ((MainActivity)getActivity()).setScreenName(getActivity().getString(R.string.title_welcome));
         if(Global.appId!=null && model.getApplication( Global.appId)!=null)
         Global.HelpUrl = CURRENT_LOCALE.equals("en")?model.getApplication( Global.appId).getHelpUrlEn():model.getApplication( Global.appId).getHelpUrlAr();
-        ((MainActivity)getActivity()).getLastlogin();
+        try {
+            ((MainActivity)getActivity()).getLastlogin();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         Global.selectedTab =0;
 
 
@@ -457,6 +462,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         x.setInputType(InputType.TYPE_CLASS_NUMBER);
         x.setLayoutParams(lparams);
         x.setEms(10);
+        x.setTextColor(Color.parseColor("#969696"));
         x.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         x.setMaxLines(1);
         x.setTextSize(14f);
