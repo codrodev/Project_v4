@@ -242,7 +242,7 @@
     <string name="yes">نعم</string>
     <string name="no">لا</string>
     <string name="reset">تحديث</string>
-    <string name="findPlot">العثور على مؤامرة</string>
+    <string name="findPlot">البحث عن قطعة الأرض</string>
     <string name="enter_plot_number">ادخل رقم قطعة الأرض</string>
     <string name="date_from">التاريخ - من:</string>
     <string name="date">DD/MM/YYYY</string>

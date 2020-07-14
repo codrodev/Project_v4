@@ -187,7 +187,7 @@ public class LoginViewModel extends ViewModel {
 
             User user = new User();
             Global.accessToken=kharetatiUser.access_token;
-            user.setUsername("GUEST");
+            user.setUsername(Global.CURRENT_LOCALE.equals("en")?"GUEST":"زائر");
             guestName=user.getUsername();
             guestPassword="Guest";
 
