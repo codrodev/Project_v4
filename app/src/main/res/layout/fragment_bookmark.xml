@@ -35,7 +35,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:weightSum="4"
+                    android:weightSum="5"
                     android:background="@drawable/favourites_search_bg">
 
                     <!--<ImageButton-->
@@ -49,11 +49,11 @@
 
                     <TextView
                         android:id="@+id/textView27"
-                        android:layout_width="100dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
-                        android:layout_weight=".05"
+                        android:layout_weight="0.92"
 
                         android:focusableInTouchMode="false"
                         android:fontFamily="@font/dubai_font"
@@ -68,9 +68,9 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/fragment_bookmarks_plotnumber"
-                        android:layout_width="180dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight=".05"
+                        android:layout_weight="0.635"
                         android:background="#00000000"
                         android:digits="0123456789"
 
@@ -92,10 +92,10 @@
 
                     <LinearLayout
                         android:id="@+id/fragment_bookmarks_btnSearch"
-                        android:layout_width="45dp"
+                        android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:layout_gravity="center"
-                        android:layout_weight="0.01"
+                        android:layout_weight="1.08"
                         android:layout_marginEnd="5dp">
 
                         <ImageView
@@ -109,8 +109,9 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="1dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_weight="1.245"
                         android:background="#80333333" />
 
                     <LinearLayout
@@ -118,7 +119,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="5dp"
-                        android:layout_weight="3.89">
+                        android:layout_weight="1.12">
 
                         <ImageView
                             android:layout_width="match_parent"

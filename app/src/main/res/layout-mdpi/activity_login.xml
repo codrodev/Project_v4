@@ -77,7 +77,7 @@
                     android:fontFamily="@font/dubai_font"
                     android:paddingStart="16dp"
 
-                    android:text="حقوق الطبع والنشر © بلدية دبي, جميع الحقوق محفوظة"
+                    android:text="حقوق الطبع والنشر © بلدية دبي. جميع الحقوق محفوظة"
                     android:textColor="@color/maroon_light"
                     android:textSize="9sp"
                     android:textStyle="bold" />
