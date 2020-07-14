@@ -236,6 +236,9 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         ((MainActivity)getActivity()).setScreenName(getActivity().getString(R.string.title_welcome));
         if(Global.appId!=null && model.getApplication( Global.appId)!=null)
         Global.HelpUrl = CURRENT_LOCALE.equals("en")?model.getApplication( Global.appId).getHelpUrlEn():model.getApplication( Global.appId).getHelpUrlAr();
+        ((MainActivity)getActivity()).getLastlogin();
+        Global.selectedTab =0;
+
 
         //initializeInAppNotification();
     }
@@ -261,7 +264,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             Global.helpUrlEn = model.getSelectedApplication().getHelpUrlEn();
         }
         if(model.getSelectedApplication().getHelpUrlAr() != null && model.getSelectedApplication().getHelpUrlAr().length() > 0){
-            Global.helpUrlEn = model.getSelectedApplication().getHelpUrlAr();
+            Global.helpUrlAr = model.getSelectedApplication().getHelpUrlAr();
         }
 
         if(model.getSelectedApplication().getSearchForm() != null && model.getSelectedApplication().getSearchForm().size() > 1){
@@ -373,7 +376,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         builder.append("remarks=" + Global.getPlatformRemark() + "&");
         String lang = Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0 ? "en" : "ar";
         builder.append("lng=" + lang + "&");
-        builder.append("fontSize=" + Global.fontSize * Global.fontScale+ "&");
+        builder.append("fontSize=" + (int)(Global.fontSize * Global.fontScale)+ "&");
         builder.append("appsrc=kharetati&");
         if(!Global.isUserLoggedIn){
             //Guest
@@ -659,7 +662,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         if (Global.selectedTab ==2) {
             if (communityId != null && Global.LandNo != null && !Global.LandNo.equals("")) {
                 CleanableEditText txt = (CleanableEditText) lstRuntimeCleanableText.get(1);
-                Global.subNo = txt.getText().toString().trim().equals("") ? "0" : txt.getText().toString().trim();
+                Global.subNo = Objects.requireNonNull(txt.getText()).toString().trim().equals("") ? "0" : txt.getText().toString().trim();
                 if((txt.getText().toString().trim().equals("")))txt.setText("0");else txt.setText(txt.getText().toString().trim());
             /*String text =communityId+"|"+Global.LandNo+"|"+Global.subNo;
             searchText = text;*/
@@ -699,7 +702,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
 
     private boolean isMakani(CleanableEditText txt){
-        boolean isMakani = false;
+        Global.isMakani = false;
 
         if(txt.getType().toLowerCase().equals("makani")){
             isMakani = true;

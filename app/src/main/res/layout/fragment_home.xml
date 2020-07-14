@@ -101,9 +101,9 @@
                         <LinearLayout
                             android:id="@+id/layoutHeader"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="50dp"
                             android:layoutDirection="locale"
-                            android:background="#b81f40">
+                            android:background="@color/maroon_light">
                             <TextView
                                 android:id="@+id/txtSearchHeader"
                                 style="@style/font_medium_bold"
@@ -111,7 +111,9 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/search"
                                 android:paddingStart="8dp"
-                                android:textSize="18sp"
+                                android:textSize="17sp"
+                                android:gravity="start|center_vertical"
+                                android:layout_gravity="center_vertical|start"
                                 android:textAlignment="viewStart"
                                 android:textColor="@color/white"
                                 android:layout_marginVertical="10dp"
@@ -132,6 +134,7 @@
                                 android:layout_marginStart="13.5dp"
                                 android:layout_marginEnd="11.5dp"
                                 app:tabMode="fixed"
+                                app:tabRippleColor="@color/transparent"
                                 app:tabTextAppearance="@style/font_medium_bold_tab"
                                 app:tabTextColor="@color/white"
                                 app:tabIndicator="@drawable/corner"
@@ -164,7 +167,7 @@
                                     android:textSize="14sp"
                                     android:gravity="center"
                                     android:layout_gravity="center"
-                                    android:textColor="@color/maroon_dark" />
+                                    android:textColor="@color/maroon_light" />
                             </LinearLayout>
                             <LinearLayout
                                 android:id="@+id/runtimeParent"

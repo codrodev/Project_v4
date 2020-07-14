@@ -19,7 +19,7 @@
             <shape
                 android:shape="rectangle" >
                 <solid
-                    android:color="#b71e3e" />
+                    android:color="@color/maroon_light" />
                 <corners android:bottomRightRadius="10dp"
                     android:bottomLeftRadius="10dp"
                     android:topLeftRadius="10dp"

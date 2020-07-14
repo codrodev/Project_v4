@@ -5,16 +5,16 @@
     <string name="internet_connection_problem1">Please check your internet connection and try again</string>
     <string name="lbl_warning">Warning</string>
     <string name="ok">Ok</string>
-    <string name="forgot_username_password">Forgot Password?</string>
+    <string name="forgot_username_password">Forgot Password</string>
     <string name="rememberme">Remember Me</string>
     <string name="open_makani_confirm">Are you sure you want to navigate to Makani?</string>
     <string name="or">OR</string>
     <string name="cancel">Cancel</string>
     <string name="createAccount">Create an Account</string>
-    <string name="signin_as_guest">Sign in as Guest</string>
+    <string name="signin_as_guest">Login as Guest</string>
     <string name="login_uaepass">Login with UAE PASS</string>
-    <string name="username">Enter username or email</string>
-    <string name="password">Enter password</string>
+    <string name="username">Enter Username<font fgcolor='#a31533'>*</font></string>
+    <string name="password">Enter Password<font fgcolor='#a31533'>*</font></string>
     <string name="textOff">English</string>
     <string name="textOn">عربى</string>
     <string name="PLEASE_ENTER_PLOTNUMBER">Please enter plot number</string>
@@ -187,7 +187,7 @@
     <string name="SHAREKHARETATIAPP">Share App</string>
     <string name="RATEUS">Rate Us</string>
     <string name="ABOUTUS">About Us</string>
-    <string name="FAQMENU">FAQ</string>
+    <string name="FAQMENU">FAQs</string>
     <string name="TERMSANDCONDITIONS">Terms of Use</string>
     <string name="ACCESSIBILITY">Accessibility</string>
     <string name="INTROHELP">Help</string>
@@ -201,7 +201,7 @@
     <string name="plc_mobileNumber">Enter Mobile Number</string>
     <string name="find_site_plan">Find Site Plan</string>
     <string name="plc_plotNumber">Enter your plot number</string>
-    <string name="reset">Refresh</string>
+    <string name="reset">Reset</string>
     <string name="findPlot">Find Plot</string>
     <string name="enter_plot_number">Enter Plot Number</string>
     <string name="date_from">Date - From:</string>
@@ -214,6 +214,7 @@
     <string name="future_to_date">To Date can not be a future date</string>
     <string name="valid_date">please select a valid dates</string>
     <string name="menu_happiness">Happiness Meter</string>
+    <string name="payment">Payment</string>
 
     <string-array name="request_site_plan">
         <item>Land Ownership</item>
@@ -246,7 +247,7 @@
     <string name="enter_valid_password">Please enter a valid password</string>
     <string name="previous">Previous</string>
     <string name="next">Next</string>
-    <string name="copyright">Copyright 2020 © Dubai Municipality, All Rights Reserved</string>
+    <string name="copyright">Copyright © Dubai Municipality. All Rights Reserved.</string>
     <string name="Saps">SPS#:</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -270,9 +271,19 @@
     <string name="sendus">send us</string>
     <string name="more">Options</string>
     <string name="lastlogin"><b>Last Login</b> on</string>
-    <string name="login_with">Login with</string>
-    <string name="with_uaepass"> UAE Pass</string>
+    <string name="login_with">Login With</string>
+    <string name="with_uaepass"> UAE PASS</string>
     <string name="help">Help</string>
+    <string name="viewdetails">View Details</string>
+    <string name="notifications">Notifications</string>
+    <string name="makani">Makani</string>
+    <string name="newuser">New User?</string>
+    <string name="reg">Register</string>
+    <string name="satilite" >Satelite / Map</string>
+    <string name="addtofav">Add to Favorite</string>
+    <string name="pantoplot">Pan to Plot</string>
+    <string name="openmaknai">Open in Makani</string>
+    <string name="userguide">User Guide</string>
 
     <string-array name="arrHeader">
         <item>header 1</item>

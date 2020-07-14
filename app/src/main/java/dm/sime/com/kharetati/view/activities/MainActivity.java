@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.LightingColorFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -26,6 +27,8 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -165,6 +168,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         countDownTimer = new MyCountDownTimer(startTime, interval);
 
         binding.imgHelp.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
+        binding.backButton.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
         model.getNotifications();
 
 
@@ -187,37 +191,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             else
                 binding.txtUsername.setText(LoginViewModel.guestName);
         }
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy HH:mm aa",new Locale("en"));
-        String currentDateandTime = sdf.format(new Date());
+        getLastlogin();
 
-        if (Global.isUAE){
-            String lastLogin = Global.uaeSessionResponse.getService_response().getLast_login();
-
-        if(lastLogin!=null && !lastLogin.equals("")){
-            if(lastLogin.contains("|")){
-                lastLogin = lastLogin.substring(0,lastLogin.lastIndexOf("|")-1);
-
-
-            }
-            SpannableStringBuilder str = new SpannableStringBuilder(" "+lastLogin);
-            //str.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            binding.txtLastLogin.setText(str);
-        }
-        else{
-
-            SpannableStringBuilder str = new SpannableStringBuilder(" "+currentDateandTime);
-            //str.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            binding.txtLastLogin.setText(str);
-        }
-        }
-        else{
-            //getString(R.string.lastlogin)+" "+sharedpreferences.getString("lastLoginTime",currentDateandTime)
-            SpannableStringBuilder str = new SpannableStringBuilder(" "+sharedpreferences.getString("lastLoginTime",currentDateandTime));
-            //str.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            binding.txtLastLogin.setText(str);
-
-            sharedpreferences.edit().putString("lastLoginTime",currentDateandTime).apply();
-        }
 
 
         customBottomBar.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
@@ -245,6 +220,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 // your codes
                 if(item.getId()==3)
                     loadFragment(FragmentTAGS.FR_HOME,true,null);
+                else if(item.getId()==5)
+                    loadFragment(FragmentTAGS.FR_BOTTOMSHEET,true,null);
             }
         });
         /*customBottomBar.setOnClickMenuListener(new Function1<MeowBottomNavigation.Model, Unit>() {
@@ -270,7 +247,12 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 return null;
             }
         });*/
-
+        Objects.requireNonNull(binding.backButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         binding.imgHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -317,6 +299,42 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
     }
 
+    public void getLastlogin() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy HH:mm aa",new Locale("en"));
+        String currentDateandTime = sdf.format(new Date());
+        binding.txtLastLogin.setVisibility(View.VISIBLE);
+
+        if (Global.isUAE){
+            String lastLogin = Global.uaeSessionResponse.getService_response().getLast_login();
+
+            if(lastLogin!=null && !lastLogin.equals("")){
+                if(lastLogin.contains("|")){
+                    lastLogin = lastLogin.substring(0,lastLogin.lastIndexOf("|")-1);
+
+
+                }
+                //SpannableStringBuilder str = new SpannableStringBuilder(" "+lastLogin);
+                //str.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                binding.txtLastLogin.setText(" "+lastLogin);
+            }
+            else{
+
+                //SpannableStringBuilder str = new SpannableStringBuilder(" "+currentDateandTime);
+                //str.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                binding.txtLastLogin.setText(" "+currentDateandTime);
+            }
+        }
+        else{
+            //getString(R.string.lastlogin)+" "+sharedpreferences.getString("lastLoginTime",currentDateandTime)
+            //SpannableStringBuilder str = new SpannableStringBuilder(" "+sharedpreferences.getString("lastLoginTime",currentDateandTime));
+            //str.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            binding.txtLastLogin.setText(" "+sharedpreferences.getString("lastLoginTime",currentDateandTime));
+
+            sharedpreferences.edit().putString("lastLoginTime",currentDateandTime).apply();
+        }
+    }
+
     private void checkNotifications() {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
@@ -329,7 +347,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
         alertDialogNotifications = dialogBuilder.create();
         alertDialogNotifications.show();
-
+        alertDialogNotifications.getWindow().getDecorView().getBackground().setColorFilter(new LightingColorFilter(0x00000000, 0xFFFCFCFC));
+        alertDialogNotifications.getWindow().getDecorView().getBackground().setAlpha(0);
         ViewPager viewPager = (ViewPager) dialogView.findViewById(R.id.viewPager);
         layoutDots = (LinearLayout) dialogView.findViewById(R.id.layoutDots);
         myViewModel =  new MyViewModel();
@@ -385,8 +404,10 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             if (listner != null) {
                 if (permissions != null && permissions.length > 0 && grantResults != null && grantResults.length > 0) {
                     if(isPermissionGranted(permissions, grantResults)){
-                        listner.OnPermissionAccepted();
+                        listner.OnPermissionAccepted(true);
                     }
+                    else
+                        listner.OnPermissionAccepted(false);
                 }
             }
         }
@@ -452,6 +473,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         if(Global.current_fragment_id.equals(FragmentTAGS.FR_HOME)){
             binding.txtLastLogin.setVisibility(View.VISIBLE);
             binding.layoutlastlogin.setVisibility(View.VISIBLE);
+            getLastlogin();
         }
         else{
             binding.txtLastLogin.setVisibility(View.GONE);
@@ -544,6 +566,19 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         loadFragment(fragmentTag, addToBackStack, params);
     }
 
+   /* @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //getMenuInflater().inflate(R.menu.map_menu,menu);
+        //MapFragment.mapVM.mapNavigator.onMenCreated(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+       // MapFragment.mapVM.mapNavigator.onMenuSelected(item);
+        return super.onOptionsItemSelected(item);
+    }*/
+
     public Fragment loadFragment(String fragment_tag, Boolean addToBackStack, List<Object> params) {
 
 
@@ -565,7 +600,10 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             binding.txtLastLogin.setVisibility(View.GONE);
         binding.layoutlastlogin.setVisibility(View.GONE);
         }
-
+        if(fragment_tag.equals(FragmentTAGS.FR_WEBVIEW))
+            binding.backButton.setVisibility(View.VISIBLE);
+        else
+            binding.backButton.setVisibility(View.INVISIBLE);
         LinearLayout.LayoutParams headerParams = null;
        /* if(fragment_tag.equals(FragmentTAGS.FR_HOME)){
             headerParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -709,8 +747,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
-        Global.helpUrlEn = "";
-        Global.helpUrlAr = "";
+        /*Global.helpUrlEn = "";
+        Global.helpUrlAr = "";*/
 
         int count = getSupportFragmentManager().getBackStackEntryCount();
         if (count == 0)
@@ -780,6 +818,10 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                     customBottomBar.show(3, true);
                     Global.lastSelectedBottomTab = 3;
                 }
+                if(Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW))
+                    binding.backButton.setVisibility(View.VISIBLE);
+                else
+                    binding.backButton.setVisibility(View.INVISIBLE);
             }
 
         }
@@ -826,6 +868,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
     @Override
     public void onWebViewBack() {
+
+
         getSupportFragmentManager().popBackStackImmediate();
         if(Global.isDashboard) {
             Global.FragmentTagForHelpUrl = FragmentTAGS.FR_DASHBOARD;
@@ -841,6 +885,11 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             binding.imgHelp.setVisibility(View.VISIBLE);
         else
             binding.imgHelp.setVisibility(View.INVISIBLE);
+
+
+
+
+
         //if(Global.current_fragment_id.equals(FragmentTAGS.FR_))
 
     }
@@ -848,9 +897,10 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     @Override
     public void updateNotificationUI(NotificationResponse response) {
         if(response.getServiceResponse().getGeneralNotifications().size()>0){
+            if(!Global.isRecreate){
             checkNotifications();
             layoutDots.setVisibility(View.VISIBLE);
-            addBottomDots(0, response.getServiceResponse().getGeneralNotifications().size());
+            addBottomDots(0, response.getServiceResponse().getGeneralNotifications().size());}
         }
 
     }
@@ -981,6 +1031,6 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     }
 
     public interface onPermissionResult{
-        void OnPermissionAccepted();
+        void OnPermissionAccepted(Boolean isAccepted);
     }
 }

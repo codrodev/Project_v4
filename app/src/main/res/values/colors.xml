@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#940e2a</color>
+    <color name="colorPrimaryDark">#a31533</color>
     <color name="colorAccent">#D81B60</color>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
 
     <color name="transparent">#00000000</color>
     <color name="textColor">#333333</color>
+    <color name="favoritesTextColor">#262424</color>
 
 
     <!-- dots active colors -->
@@ -34,5 +35,8 @@
     <color name="setting_font_size_bg">#D1D1D1</color>
     <color name="switch_text_color">#7f7f7f</color>
     <color name="text_color">#333333</color>
+    <color name="faded_text_color">#abaaaa</color>
+    <color name="login_text_color">#5d5b5b</color>
+    <color name="uaepass_text_color">#231f20</color>
 
 </resources>

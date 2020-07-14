@@ -85,7 +85,7 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
     private View mRootView;
     private static final String DM_PHONE_NUMBER = "800900";
     private static final String DM_EMAIL = "info@dm.gov.ae";
-    private static final String DM_WEB_SITE = "www.dm.gov.ae";
+    private static final String DM_WEB_SITE = "https://www.dm.gov.ae";
     private static final String DM_FB_EN = "https://www.facebook.com/DubaiMunicipality";
     private static final String DM_FB_AR = "https://www.facebook.com/DubaiMunicipality";
     private static String DM_TWITTER_EN = "";
@@ -161,7 +161,7 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
     private void initializePage() {
         binding.TVDMPhoneNumber.setText(DM_PHONE_NUMBER + "");
         binding.TVDMEmail.setText(DM_EMAIL);
-        binding.TVDMWebsite.setText(DM_WEB_SITE + "");
+        binding.TVDMWebsite.setText("www.dm.gov.ae" + "");
         binding.LLfindus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -340,6 +340,7 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
     private void openURL(String link) {
         ArrayList al = new ArrayList();
         al.add(link);
+        al.add(getActivity().getResources().getString(R.string.menu_contact_us));
         ((MainActivity)getActivity()).loadFragment(FR_WEBVIEW,true,al);
     }
 

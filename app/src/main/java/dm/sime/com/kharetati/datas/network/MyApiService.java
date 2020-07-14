@@ -67,8 +67,8 @@ public interface MyApiService {
     Observable<UserRegistration> registerLoggedUser(@Body HTTPRequestBody map);
 
     // to get session
-    @POST(AppUrls.MYID_SESSION_ID)
-    Observable<SessionResponse> getSession(@Query("accessToken") String accessToken);
+    @POST
+    Observable<SessionResponse> getSession(@Url String url);
 
     @POST
     Observable<SessionUaePassResponse> getSessionUAEPass(@Url String url);

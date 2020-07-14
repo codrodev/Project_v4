@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.SwitchCompat;
 
+import java.util.Locale;
+
 import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
 
@@ -23,14 +25,14 @@ public class SwitchCompatEx extends SwitchCompat {
 
     private Paint thumbLabelPaint;
     private Paint trackLabelPaint;
-    public int TRACK_COLOR = 0xFFFFFFFF;
+    public int TRACK_COLOR = 0xFFa31533;
     public int TRACK_STROKE_WIDTH = dp2Px(2f);
     public int TRACK_STROKE_COLOR = 0xFFa31533;
-    public int TRACK_LABEL_COLOR = 0xFFa31533;
+    public int TRACK_LABEL_COLOR = 0xFFFFFFFF;
     public int TRACK_LABEL_SIZE = sp2Px(12f);
 
-    public int THUMB_COLOR = 0xFFb71e3e;
-    public int THUMB_LABEL_COLOR = 0xFFFFFFFF;
+    public int THUMB_COLOR = 0xFFEBEBEB;
+    public int THUMB_LABEL_COLOR = 0xFFa31533;
     public int THUMB_LABEL_SIZE = sp2Px(12f);
 
 
@@ -67,12 +69,16 @@ public class SwitchCompatEx extends SwitchCompat {
         this.setSwitchTypeface(typeface);
         thumbLabelPaint.setTypeface(typeface);
         trackLabelPaint.setTypeface(typeface);
-        setTextOff(Global.CURRENT_LOCALE.equals("en")? "English":"العربية");
-        setTextOn(Global.CURRENT_LOCALE.equals("ar")? "English":"العربية");
-        thumbLabel.setText(this.isChecked()?this.getTextOn():this.getTextOff());
-        trackLabel.setText(this.isChecked()?this.getTextOff():this.getTextOn());
-        thumbLabel.setTypeface(typeface);
-        trackLabel.setTypeface(typeface);
+        //setTextOff(Global.CURRENT_LOCALE.equals("en")? "English":"العربية");
+        //setTextOn(Global.CURRENT_LOCALE.equals("en")? "العربية":"العربية");
+        trackLabelPaint.setTextAlign(Paint.Align.CENTER);
+        this.setTextOn(Global.CURRENT_LOCALE.equals("en")? "العربية":"English");
+        this.setTextOff(Global.CURRENT_LOCALE.equals("en")? "English":"العربية");
+        /*thumbLabel.setText(this.isChecked()?this.getTextOn():this.getTextOff());
+        trackLabel.setText(this.isChecked()?this.getTextOff():this.getTextOn());*/
+        thumbLabel.setText(this.getTextOff());
+        trackLabel.setText(this.getTextOn());
+
 
         this.setBackground(null);
         this.setTrackDrawable(trackDrawable);
@@ -127,10 +133,10 @@ public class SwitchCompatEx extends SwitchCompat {
         protected void onBoundsChange(Rect r) {
             super.onBoundsChange(r);
 
-            this.setCornerRadius(r.height() / 2f);
+            this.setCornerRadius(r.height() / 4f);
 
             textOffBounds.set(r);
-            textOffBounds.right /= 2;
+            textOffBounds.right /= 4;
 
             textOnBounds.set(textOffBounds);
             textOnBounds.offset(textOffBounds.right, 0);
@@ -171,7 +177,7 @@ public class SwitchCompatEx extends SwitchCompat {
         protected void onBoundsChange(Rect r) {
             super.onBoundsChange(r);
 
-            this.setCornerRadius(r.height() / 2f);
+            this.setCornerRadius(r.height() / 4f);
             thumbLabelBounds.set(r);
         }
 

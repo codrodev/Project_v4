@@ -37,6 +37,7 @@ import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.activities.MainActivity;
+import dm.sime.com.kharetati.view.fragments.BookmarkFragment;
 import dm.sime.com.kharetati.view.fragments.MapFragment;
 import dm.sime.com.kharetati.view.viewModels.BookmarkViewModel;
 
@@ -47,6 +48,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
     private List<Bookmark> data;
     public static BookmarkAdapter BmAdapter;
     public static List<Bookmark> lstBookmark;
+    private ArrayList<String> plotNumbers;
     private List<Bookmark> filteredData;
 
 
@@ -56,7 +58,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
         this.viewModel = viewModel;
         this.context = context;
         lstBookmark = new ArrayList<>();
-
+        plotNumbers = new ArrayList<String>();
 
     }
 
@@ -82,6 +84,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
         SimpleDateFormat format;
         format= new SimpleDateFormat("dd/MM/yyyy * hh:mm aa",new Locale(Global.CURRENT_LOCALE));
         ((TextView)holder.binding.getRoot().findViewById(R.id.dateBookmark)).setText(format.format(lstBookmark.get(position).date));
+        ((TextView)holder.binding.getRoot().findViewById(R.id.plotNo)).setText(lstBookmark.get(position).ParcelNumber);
         }
         if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0){
             if(lstBookmark.get(position).descriptionEn != null && lstBookmark.get(position).descriptionEn.length() > 0) {
@@ -98,6 +101,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
                 holder.txtDescription.setVisibility(View.GONE);
             }
         }
+
         holder.binding.getRoot().findViewById(R.id.gotomap).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -215,11 +219,22 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
     public void setBookmark(List<Bookmark> lstBookmark) {
         this.lstBookmark = lstBookmark;
     }
+    public List<Bookmark> getBookMarks(){
+        return lstBookmark;
+    }
 
     public void remove(Bookmark data){
         lstBookmark.remove(data);
         //notifyDataSetChanged();
 
+    }
+
+    public void filterList(ArrayList<Bookmark> filterdNames) {
+
+        setBookmark(filterdNames);
+        BookmarkFragment.bmModel.bookMarksNavigator.updateAdapter();
+
+        notifyDataSetChanged();
     }
 
     public static class GenericViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

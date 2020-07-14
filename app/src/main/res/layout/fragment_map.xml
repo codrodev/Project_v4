@@ -55,13 +55,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight=".15"
+                    android:weightSum="2"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/imgBack"
                         android:layout_width="48dp"
-                        android:layout_height="48dp"
+                        android:layout_height="match_parent"
 
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
@@ -75,44 +76,60 @@
 
                     <dm.sime.com.kharetati.view.customview.CleanableEditText
                         android:id="@+id/txtPlotNo"
-                        android:layout_width="105dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginVertical="2dp"
                         android:background="@color/white"
                         android:gravity="center_vertical|center_horizontal"
-                        android:hint="-  -  -  -  -  -  -"
+                        android:hint="-    -    -    -    -    -    -"
+                        android:textColorHint="#9E9E9E"
+                        android:layout_weight="2"
                         android:maxLength="20"
+
                         android:textSize="16sp" />
-
-                    <!--android:imeOptions="actionDone"
-                    android:inputType="text"-->
-                   <!-- android:digits="0123456789١٢٣٤٥٦٧٨٩١٠"-->
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".65"
-
-                    android:orientation="horizontal"
-                    android:weightSum="6">
-
                     <ImageView
                         android:id="@+id/imgSearch"
                         android:layout_width="50dp"
-                        android:layout_height="48dp"
-                        android:layout_margin="8dp"
+                        android:layout_height="match_parent"
+                        android:padding="8dp"
+                        android:layout_weight="0.7"
                         android:layout_gravity="start|center_vertical"
-                        android:layout_weight="1"
                         android:src="@drawable/search_512" />
                     <LinearLayout
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:background="#80333333"/>
+
+                    <!--android:imeOptions="actionDone"
+                    android:inputType="text"-->
+                   <!-- android:digits="0123456789١٢٣٤٥٦٧٨٩١٠"-->
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/mapMenu"
+                    android:layout_weight="1.50">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="8dp"
+                        android:src="@drawable/map_menu_512"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".65"
+                    android:visibility="gone"
+
+                    android:orientation="horizontal"
+                    android:weightSum="6">
+
+
                     <ImageView
                         android:id="@+id/imgLayer"
                         android:layout_width="50dp"
-                        android:layout_height="48dp"
+                        android:layout_height="match_parent"
 
                         android:layout_margin="8dp"
                         android:layout_gravity="start|center_vertical"
@@ -125,7 +142,7 @@
                     <ImageView
                         android:id="@+id/imgBookmark"
                         android:layout_width="50dp"
-                        android:layout_height="48dp"
+                        android:layout_height="match_parent"
 
                         android:layout_margin="8dp"
                         android:layout_gravity="start|center_vertical"
@@ -133,12 +150,14 @@
                         android:src="@drawable/add_512" />
                     <LinearLayout
                         android:layout_width="1dp"
+                        android:id="@+id/bookmarkview"
                         android:layout_height="match_parent"
-                        android:background="#80333333"/>
+                        android:background="#80333333"
+                        android:orientation="horizontal" />
                     <ImageView
                         android:id="@+id/imgRecenter"
                         android:layout_width="50dp"
-                        android:layout_height="48dp"
+                        android:layout_height="match_parent"
                         android:layout_margin="8dp"
                         android:layout_gravity="start|center_vertical"
                         android:layout_weight="1"
@@ -150,7 +169,7 @@
                     <ImageView
                         android:id="@+id/imgMakani"
                         android:layout_width="50dp"
-                        android:layout_height="48dp"
+                        android:layout_height="match_parent"
                         android:layout_margin="8dp"
                         android:layout_gravity="start|center_vertical"
                         android:layout_weight="1"
@@ -162,7 +181,7 @@
                     <ImageView
                         android:id="@+id/imgHelp"
                         android:layout_width="50dp"
-                        android:layout_height="48dp"
+                        android:layout_height="match_parent"
 
                         android:layout_margin="8dp"
                         android:layout_gravity="start|center_vertical"
@@ -175,7 +194,7 @@
 
         <ListView
             android:id="@+id/fragment_map_searchhistory"
-            android:layout_width="80dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginTop="50dp"
@@ -188,6 +207,24 @@
             app:layout_constraintEnd_toEndOf="parent"
 
 
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolBarLayout" />
+        <ListView
+            android:id="@+id/listmap_menu"
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="65dp"
+            android:backgroundTint="@color/white"
+            android:divider="#80333333"
+            android:dividerHeight="1dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="12dp"
+            android:layout_gravity="end"
+            android:background="@color/white"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolBarLayout" />
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -206,8 +243,8 @@
             android:layout_marginBottom="54dp"
             android:layout_gravity="bottom|end"/>
         <FrameLayout
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"
             android:visibility="gone"
@@ -215,12 +252,12 @@
             android:elevation="5dp"
             android:background="@drawable/circular_menu_bg"
             android:id="@+id/closefloatingButtton"
-            android:layout_marginBottom="222dp"
+            android:layout_marginBottom="228dp"
             android:layout_gravity="bottom|end">
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:padding="6dp"
+                android:padding="7dp"
                 android:src="@drawable/close_512"
                 android:layout_gravity="center"/>
         </FrameLayout>

@@ -124,9 +124,11 @@ public class  WebViewFragment extends Fragment {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setAllowFileAccess(true);
+        WebView.setWebContentsDebuggingEnabled(true);
         webView.getSettings().setJavaScriptEnabled(true);
-        String newUA= "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0";
-        webView.getSettings().setUserAgentString(newUA);
+        webSettings.setTextZoom(100);
+        /*String newUA= "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0";
+        webView.getSettings().setUserAgentString(newUA);*/
         webView.setWebViewClient(new MyWebViewClient());
         webView.setWebChromeClient(new MyWebChromeClient(getActivity()) );
         webView.loadUrl(launchUrl);
@@ -342,8 +344,42 @@ public class  WebViewFragment extends Fragment {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if(url.contains("inappshare://")){
+                if (!Global.isConnected(getActivity())) {
+                    if (Global.appMsg != null)
+                        AlertDialogUtil.errorAlertDialog(getActivity().getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getInternetConnCheckEn() : Global.appMsg.getInternetConnCheckAr(), getActivity().getResources().getString(R.string.ok), getActivity());
+                    else
+                        AlertDialogUtil.errorAlertDialog(getActivity().getResources().getString(R.string.lbl_warning), getActivity().getResources().getString(R.string.internet_connection_problem1), getActivity().getResources().getString(R.string.ok), getActivity());
+                }
+                else{
 
-            view.loadUrl(url);
+                    String completeString ="";
+
+                    Uri uri = Uri.parse(url);
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_SUBJECT,uri.getQueryParameter("subject") );
+
+                    String urlstring = uri.getQueryParameter("url");
+                    if(urlstring.contains("enc=")){
+                        // String shareUrl = urlstring.substring(urlstring.)
+                        String startString  = urlstring.substring(0,urlstring.lastIndexOf("enc=")+4);
+                        String  encstring =urlstring.substring(urlstring.lastIndexOf("enc=")+4);
+
+
+
+
+                        completeString = startString+encstring.replace("+","%2B").replace("/","%2F").replace(" ","+").replace("=","%3D");
+                    }
+                    sendIntent.putExtra(Intent.EXTRA_TEXT,completeString);
+                    sendIntent.setType("text/html");
+                    startActivity(Intent.createChooser(sendIntent, "Share with"));
+
+                }
+            }
+            else
+                view.loadUrl(url);
+
             return true;
         }
 

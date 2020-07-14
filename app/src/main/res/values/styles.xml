@@ -23,6 +23,11 @@
         <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
         <item name="android:windowBackground">@drawable/alert_background</item>
     </style>
+    <style name="NotificationAlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="android:windowBackground">@drawable/rounded_corner_theme_bg</item>
+    </style>
 
     <style name="NegativeButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
         <item name="android:textColor">@color/colorPrimaryDark</item>

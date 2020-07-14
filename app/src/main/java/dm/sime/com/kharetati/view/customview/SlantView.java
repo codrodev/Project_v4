@@ -53,10 +53,10 @@ public class SlantView extends View {
                 //path.moveTo(0,0);
                 Path path = new Path();
                 path.setFillType(Path.FillType.INVERSE_EVEN_ODD);
-                path.moveTo(0,0);
-                path.lineTo(0,h-h/10);
-                path.moveTo(0,h-h/10);
-                path.lineTo(0,h);
+                path.moveTo(-1,0);
+                path.lineTo(-1,h-h/10);
+                path.moveTo(-1,h-h/10);
+                path.lineTo(-1,h);
                 path.lineTo(w,h);
                 path.close();
                 canvas.drawPath(path, paint);
@@ -64,12 +64,12 @@ public class SlantView extends View {
 
             }
             else{
-                path.moveTo(0,0);
-                path.lineTo(0,h-h/10);
+                path.moveTo(-1,0);
+                path.lineTo(-1,h-h/10);
             //path.lineTo(w,h);
 
-                path.moveTo(0,h-h/10);
-                path.lineTo(0,h);
+                path.moveTo(-1,h-h/10);
+                path.lineTo(-1,h);
                 path.lineTo(w,h);
                 path.close();
                 canvas.drawPath(path, paint);

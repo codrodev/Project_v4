@@ -12,6 +12,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -181,9 +183,41 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
 
         Typeface typeface =  Typeface.createFromAsset(getAssets(),"Dubai-Regular.ttf");
-        ((SwitchCompat)findViewById(R.id.switchLanguage)).setSwitchTypeface(typeface);
+        /*((SwitchCompat)findViewById(R.id.switchLanguage)).setSwitchTypeface(typeface);
         binding.switchLanguage.trackLabel.setTypeface(typeface);
-        binding.switchLanguage.thumbLabel.setTypeface(typeface);
+        binding.switchLanguage.thumbLabel.setTypeface(typeface);*/
+        binding.editUserName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                sharedpreferences.edit().putString("username",s.toString()).apply();
+            }
+        });
+        binding.editPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                sharedpreferences.edit().putString("password",s.toString()).apply();
+            }
+        });
 
         LoginDetails loginDetails = Global.getUserLoginDeatils(this);
         if (loginDetails != null && loginDetails.username != null && loginDetails.pwd != null && Global.isRememberLogin(this)) {
@@ -193,6 +227,11 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
             Global.enableClearTextInEditBox(binding.editUserName,LoginActivity.this);
             Global.enableClearTextInEditBox(binding.editPassword,LoginActivity.this);
 
+        }
+        else
+        {
+            binding.editUserName.setText(sharedpreferences.getString("username",""));
+            binding.editPassword.setText(sharedpreferences.getString("password",""));
         }
 
 
@@ -244,11 +283,19 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                 return event.getActionMasked() == MotionEvent.ACTION_MOVE;
             }
         });
+        binding.switchLanguageUae.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return event.getActionMasked() == MotionEvent.ACTION_MOVE;
+            }
+        });
         binding.chkRememberMe.setChecked(Global.isRememberLogin(this));
         binding.chkRememberMe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Global.rememberUser(binding.chkRememberMe.isChecked(), LoginActivity.this);
+                sharedpreferences.edit().putString("username",binding.editUserName.getText().toString()).apply();
+                sharedpreferences.edit().putString("password",binding.editPassword.getText().toString()).apply();
             }
         });
 
@@ -274,7 +321,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
             }
         });
-        /*binding.btnSignUp.setOnClickListener(new View.OnClickListener() {
+        binding.register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(Global.isConnected(LoginActivity.this)){
@@ -294,7 +341,28 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                 }
 
             }
-        });*/
+        });
+        binding.newuser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Global.isConnected(LoginActivity.this)){
+                    AlertDialogUtil.registerAlert(getString(R.string.register),getString(R.string.ok),getString(R.string.cancel),LoginActivity.this);
+                    mTracker.send(new HitBuilders.EventBuilder()
+                            .setCategory("Login Screen")
+                            .setAction("Action Sign Up")
+                            .setLabel("Create New Account")
+                            .setValue(1)
+                            .build());
+                }
+                else{
+                    if(Global.appMsg!=null)
+                        AlertDialogUtil.errorAlertDialog("",Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr(),getResources().getString(R.string.ok),LoginActivity.this);
+                    else
+                        AlertDialogUtil.errorAlertDialog("",getResources().getString(R.string.internet_connection_problem1),getResources().getString(R.string.ok),LoginActivity.this);
+                }
+
+            }
+        });
 
 
         binding.txtForgotPassword.setOnClickListener(new View.OnClickListener() {
@@ -520,7 +588,27 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
             }
         });
-        binding.layoutUAEPass.setOnClickListener(new View.OnClickListener() {
+        binding.layoutMyIDUAEPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Global.isConnected(LoginActivity.this)){
+                    viewModel.login();
+                    mTracker.send(new HitBuilders.EventBuilder()
+                            .setCategory("Login Screen")
+                            .setAction("Action Login")
+                            .setLabel("UAEPass User Logged In")
+                            .setValue(1)
+                            .build());
+                }
+                else{
+                    if(Global.appMsg!=null)
+                        AlertDialogUtil.errorAlertDialog("",Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr(),getResources().getString(R.string.ok),LoginActivity.this);
+                    else
+                        AlertDialogUtil.errorAlertDialog("",getResources().getString(R.string.internet_connection_problem1),getResources().getString(R.string.ok),LoginActivity.this);
+                }
+            }
+        });
+        binding.layoutEnableUAEPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(Global.isConnected(LoginActivity.this)){
@@ -635,6 +723,45 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
             }
         });
+        binding.switchLanguageUae.setOnClickListener(new View.OnClickListener() {
+            private boolean isChecked;
+
+            @Override
+            public void onClick(View v) {
+
+
+                Global.isLanguageChanged = true;
+
+                    ((SwitchCompatEx)v).setChecked(false);
+                    CURRENT_LOCALE = (CURRENT_LOCALE.equals("ar")) ? "en" : "ar";
+                     //PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString(USER_LANGUAGE,CURRENT_LOCALE).apply();
+
+                    sharedpreferences.edit().putString(USER_LANGUAGE,CURRENT_LOCALE).apply();
+
+                    Global.changeLang(CURRENT_LOCALE, LoginActivity.this);
+
+
+
+
+
+                   /* binding.switchLanguage.setTextOff((CURRENT_LOCALE.equals("ar")) ? "العربية" : "English");
+                    binding.switchLanguage.setTextOn((CURRENT_LOCALE.equals("ar")) ? "العربية" : "English");*/
+                    //binding.switchLanguage.setTextOn((CURRENT_LOCALE.equals("en")) ? "English" : "العربية");
+                    recreate();
+                if(CURRENT_LOCALE.equals("en")){
+                    binding.switchLanguage.setTextOff( "English" );
+                    binding.switchLanguage.setTextOn( "العربية" );
+                }
+                else{
+                    binding.switchLanguage.setTextOn( "English" );
+                    binding.switchLanguage.setTextOff( "العربية" );
+
+                }
+
+
+
+            }
+        });
 
 
         Global.deviceId = FirebaseInstanceId.getInstance().getToken()!=null?FirebaseInstanceId.getInstance().getToken():generateRandomID();
@@ -684,9 +811,9 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
                 LinearLayout.LayoutParams cardParams;
                 if(Global.uaePassConfig.disableMyId)
-                    cardParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)-(Global.height/4)));
+                    cardParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)-(Global.height/8)));
                 else
-                    cardParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)-(Global.height/14)));
+                    cardParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)+(Global.height/6)));
 //                LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 cardParams.setMargins(48,0,48,-32);
                 binding.cardLogin.setLayoutParams(cardParams);
@@ -697,9 +824,9 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
                 //Slant View
 
-                LinearLayout.LayoutParams slantViewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (Global.height / 2));
+                LinearLayout.LayoutParams slantViewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Global.height<=800?(Global.height<=480?((int)(Global.height/2))+20:((int)(Global.height/2))):((int)(Global.height/2) +150));
                 slantViewParams.gravity = Gravity.CENTER_HORIZONTAL;
-                slantViewParams.setMargins(0, (int) -Global.height,0,0);
+                slantViewParams.setMargins(0, Global.width<=480?(int) -Global.height:(int) (-Global.height)+100,0,0);
                 binding.slantViewLoginHeader.setLayoutParams(slantViewParams);
 
                 //Kharetati Logo Layout
@@ -718,11 +845,12 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
                 //dubai Id Logo
 
-                LinearLayout.LayoutParams dubaiIdParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,elementHeight-24);
+               /* LinearLayout.LayoutParams dubaiIdParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,elementHeight-24);
                 dubaiIdParams.gravity = Gravity.CENTER;
                 dubaiIdParams.setMargins(leftMargin,topMargin+5,rightMargin,bottomMargin);
-                binding.imageDubaiID.setLayoutParams(dubaiIdParams);
+                binding.imageDubaiID.setLayoutParams(dubaiIdParams);*/
 
+/*
                 // username editText
 
                 LinearLayout.LayoutParams userNameParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,elementHeight);
@@ -734,13 +862,15 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
 
 
-                /*final Drawable x_editTextUserName = ContextCompat.getDrawable(LoginActivity.this, R.drawable.login_user);
+                */
+/*final Drawable x_editTextUserName = ContextCompat.getDrawable(LoginActivity.this, R.drawable.login_user);
                 x_editTextUserName.setBounds(-16, -16, x_editTextUserName.getIntrinsicWidth() - 16, x_editTextUserName.getIntrinsicHeight()-16);
                 if(CURRENT_LOCALE.equals("en"))
                     binding.editUserName.setCompoundDrawables(x_editTextUserName, null, null, null);
                 else
                     binding.editUserName.setCompoundDrawables(null, null,x_editTextUserName , null);
-*/
+*//*
+
 
                 //password editText
 
@@ -751,12 +881,14 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                 binding.editPassword.setGravity( Gravity.CENTER_VERTICAL);
                 binding.editPassword.setLayoutDirection( View.LAYOUT_DIRECTION_LOCALE);
 
-                /*final Drawable x_editTextPass = ContextCompat.getDrawable(LoginActivity.this, R.drawable.login_password);
+                */
+/*final Drawable x_editTextPass = ContextCompat.getDrawable(LoginActivity.this, R.drawable.login_password);
                 x_editTextPass.setBounds(-16, -16, x_editTextPass.getIntrinsicWidth() -16, x_editTextPass.getIntrinsicHeight()-16);
                 if(CURRENT_LOCALE.equals("en"))
                     binding.editPassword.setCompoundDrawables(x_editTextPass, null,null , null);
                 else
-                    binding.editPassword.setCompoundDrawables(null, null,x_editTextPass , null);*/
+                    binding.editPassword.setCompoundDrawables(null, null,x_editTextPass , null);*//*
+
                 // rememberme Layout
 
                 LinearLayout.LayoutParams remebermeLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, elementHeight);
@@ -790,11 +922,13 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
                 // create Account Button
 
-                /*LinearLayout.LayoutParams signupButtonParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,elementHeight);
+                */
+/*LinearLayout.LayoutParams signupButtonParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,elementHeight);
                 signupButtonParams.gravity = Gravity.CENTER_VERTICAL;
                 signupButtonParams.setMargins(leftMargin,topMargin,rightMargin,bottomMargin-5);
                 binding.btnSignUp.setLayoutParams(signupButtonParams);
-                binding.btnSignUp.setVisibility(View.GONE);*/
+                binding.btnSignUp.setVisibility(View.GONE);*//*
+
 
                 // Guest Text
 
@@ -807,12 +941,14 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                     binding.txtGuest.setGravity(Gravity.CENTER_VERTICAL);
                     binding.txtGuest.setTextSize(16f);
                 }else{
-                    /*LinearLayout.LayoutParams guestLoginParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, elementHeight);
+                    */
+/*LinearLayout.LayoutParams guestLoginParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, elementHeight);
                     guestLoginParams.gravity = Gravity.CENTER_VERTICAL;
                     guestLoginParams.setMargins(leftMargin, topMargin, rightMargin, bottomMargin-92 );
                     binding.txtGuest.setLayoutParams(guestLoginParams);
                     binding.txtGuest.setGravity(Gravity.CENTER_VERTICAL);
-                    binding.txtGuest.setTextSize(20f);*/
+                    binding.txtGuest.setTextSize(20f);*//*
+
 
                 }
 
@@ -827,12 +963,14 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                     binding.txtUAEPass.setGravity(Gravity.CENTER_VERTICAL);
                 }
                 else{
-                    /*LinearLayout.LayoutParams uaePassTextParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    */
+/*LinearLayout.LayoutParams uaePassTextParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     uaePassTextParams.gravity = Gravity.CENTER_VERTICAL;
                     uaePassTextParams.setMargins(leftMargin, topMargin, rightMargin, bottomMargin);
                     binding.txtEnableUAEPass.setLayoutParams(uaePassTextParams);
                     binding.txtEnableUAEPass.setGravity(Gravity.CENTER_VERTICAL);
-                    binding.txtEnableUAEPass.setTextSize(20f);*/
+                    binding.txtEnableUAEPass.setTextSize(20f);*//*
+
 
                 }
 
@@ -845,14 +983,17 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                     binding.imgEnabledUAEPass.setLayoutParams(uaePassImageParams);
                     binding.imgEnabledUAEPass.setScaleType(ImageView.ScaleType.FIT_XY);}
                 else{
-                    /*LinearLayout.LayoutParams uaePassImageParams = new LinearLayout.LayoutParams(300,150);
+                    */
+/*LinearLayout.LayoutParams uaePassImageParams = new LinearLayout.LayoutParams(300,150);
                     uaePassImageParams.gravity = Gravity.CENTER;
                     uaePassImageParams.setMargins(leftMargin,topMargin-4,rightMargin,bottomMargin);
                     binding.imgEnableUAEPass.setLayoutParams(uaePassImageParams);
-                    binding.imgEnableUAEPass.setScaleType(ImageView.ScaleType.FIT_XY);*/
+                    binding.imgEnableUAEPass.setScaleType(ImageView.ScaleType.FIT_XY);*//*
+
 
 
                 }
+*/
 
 
 
@@ -867,10 +1008,14 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                 anim.setInterpolator(new AccelerateDecelerateInterpolator());
 
                 binding.imgsplash.setVisibility(View.GONE);
+                binding.copyrightArabic.setVisibility(View.GONE);
+                binding.copyrightEnglish.setVisibility(View.GONE);
+                binding.logoSplash.setVisibility(View.GONE);
                 binding.imgBackground.setVisibility(View.VISIBLE);
+
                 binding.imgBackground.setPadding(0, (int) ((Global.height/100)*24),0,0);
 
-
+                //Global.uaePassConfig.disableMyId = true;// remove after testing
 
                 if(!Global.isLanguageChanged){
                     binding.imgBackground.startAnimation(anim);
@@ -884,12 +1029,13 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                             animateView(binding.slantViewLoginHeader,1000L,1000L,true,0f,0f,0f, (-Global.height/4)+100);
                             animateView(binding.cardLogin,1000L,1000L,true,0f,0f,Global.height, (-Global.height/2)+Global.height/3);
 
+
                             //animateView(binding.layoutUAEPass,1000L,1000L,true,0f,0f,Global.height, (-Global.height/2)+Global.height/3+100);
                             if(!Global.uaePassConfig.disableMyId){
                                 binding.layoutEnableUAEPass.setVisibility(View.GONE);
                                 //binding.layoutUAEPass.setVisibility(View.VISIBLE);
                                 binding.layoutUae.setVisibility(View.GONE);
-                                binding.layoutUAEPass.setVisibility(View.VISIBLE);
+                                binding.layoutUAEPass.setVisibility(View.GONE);
                                 //binding.layoutUAEPass.setVisibility(View.VISIBLE);
                                 LinearLayout.LayoutParams layoutUaepassarams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,binding.cardLogin.getHeight()-175);
 //                    LinearLayout.LayoutParams cardViewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -898,21 +1044,33 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                                 binding.layoutUAEPass.setLayoutParams(layoutUaepassarams);
                                 LinearLayout.LayoutParams cardViewParams;
                                 if(Global.uaePassConfig.disableMyId)
-                                    cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)-(Global.height/4)));
+                                    cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)-(Global.height/8)));
                                 else
-                                    cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)-(Global.height/14)));
+                                    cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)+(Global.height/5)));
 //
                                 cardViewParams.gravity = Gravity.CENTER_HORIZONTAL;
-                                cardViewParams.setMargins(48, (int) ((-Global.height/4)+500),48,20);
+                                int cardmarginTop;
+                                if(Global.height>=2560){
+                                    cardmarginTop= (int) ((-Global.height/4)+600);
+                                }
+                                else if(Global.height<=800){
+
+                                }
+                                cardViewParams.setMargins(48, Global.height>=2560?(int) ((-Global.height/4)+600):(Global.height<=800?(Global.width<=360?(int)(-Global.height/4)+200:(int) ((-Global.height/4)+250)):(int) ((-Global.height/4)+500)),48,20);
                                 binding.cardLogin.setLayoutParams(cardViewParams);
+                                /*LinearLayout.LayoutParams switchLanguageparams = new LinearLayout.LayoutParams(350, 96);
+                                switchLanguageparams.setMargins((int)(Global.width/2)+300,32,32,32);
+                                binding.switchLanguage.setGravity(Gravity.CENTER);
+                                binding.switchLanguage.setLayoutParams(switchLanguageparams);*/
 
                             }
                             else{
                                 LinearLayout.LayoutParams cardViewParams;
-                                if(Global.uaePassConfig.disableMyId)
-                                    cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)-(Global.height/4)));
+                                if(Global.uaePassConfig.disableMyId){
+                                    cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)-(Global.height/8)));
+                                }
                                 else
-                                    cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)-(Global.height/14)));
+                                    cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)+(Global.height/6)));
 //
                                 cardViewParams.gravity = Gravity.CENTER_HORIZONTAL;
                                 cardViewParams.setMargins(48, (int) ((-Global.height/4)+500),48,20);
@@ -930,8 +1088,19 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                                 /*binding.txtGuest.setTextSize(20f);
                                 binding.txtUAEPass.setTextSize(20f);*/
                                 //binding.layoutUAEPass.setVisibility(View.GONE);
+                                /*LinearLayout.LayoutParams switchLanguageparams = new LinearLayout.LayoutParams(350, 96);
+                                switchLanguageparams.setMargins(32,-128,32,32);
+                                binding.switchLanguage.setGravity(Gravity.CENTER);
+                                binding.switchLanguage.setLayoutParams(switchLanguageparams);*/
                             }
-
+                            if(Global.uaePassConfig.disableMyId){
+                                binding.switchLanguageUae.setVisibility(View.VISIBLE);
+                                binding.switchLanguage.setVisibility(View.GONE);
+                            }
+                            else{
+                                binding.switchLanguage.setVisibility( View.VISIBLE);
+                                binding.switchLanguageUae.setVisibility(View.GONE);
+                            }
 
                         }
                     },1500);
@@ -956,19 +1125,38 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                     logoLayoutParams1.setMargins(leftMargin, (int) (-(Global.height/4)-100),rightMargin,bottomMargin);
                     binding.layoutLogo.setLayoutParams(logoLayoutParams1);
 
-                    LinearLayout.LayoutParams slantViewParams1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/4)+100));
+                    LinearLayout.LayoutParams slantViewParams1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/4)+300));
                     slantViewParams1.gravity = Gravity.CENTER_HORIZONTAL;
                     //slantViewParams.setMargins(0,(-height).toInt(),0,0)
                     binding.slantViewLoginHeader.setLayoutParams(slantViewParams1);
                     LinearLayout.LayoutParams cardViewParams;
-                    if(Global.uaePassConfig.disableMyId)
-                        cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)-(Global.height/4)));
-                    else
-                        cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)-(Global.height/14)));
+                    LinearLayout.LayoutParams switchLanguageparams;
+                    if(Global.uaePassConfig.disableMyId){
+                        cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)-(Global.height/8)));
+                        /*switchLanguageparams = new LinearLayout.LayoutParams(350,96);
+                        switchLanguageparams.setMargins((int)(Global.width/2)+300,64,32,32);
+                        binding.switchLanguage.setGravity(Gravity.CENTER);
+                        binding.switchLanguage.setLayoutParams(switchLanguageparams);*/
+                    }
+                    else{
+                        cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)+(Global.height/6)));
+                        /*switchLanguageparams = new LinearLayout.LayoutParams(350,96);
+                        switchLanguageparams.setMargins((int)(Global.width/2)+300,32,32,32);
+                        binding.switchLanguage.setGravity(Gravity.CENTER);
+                        binding.switchLanguage.setLayoutParams(switchLanguageparams);*/
+                    }
 //
                     cardViewParams.gravity = Gravity.CENTER_HORIZONTAL;
                     cardViewParams.setMargins(48, (int) ((-Global.height/4)+150),48,20);
                     binding.cardLogin.setLayoutParams(cardViewParams);
+                    if(Global.uaePassConfig.disableMyId){
+                        binding.switchLanguageUae.setVisibility(View.VISIBLE);
+                        binding.switchLanguage.setVisibility(View.GONE);
+                    }
+                    else{
+                        binding.switchLanguage.setVisibility( View.VISIBLE);
+                        binding.switchLanguageUae.setVisibility(View.GONE);
+                    }
 
 
                 }
@@ -1002,7 +1190,14 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         animate.start();
         if(view == binding.cardLogin){
             binding.cardLogin.setVisibility( View.VISIBLE);
-            binding.switchLanguage.setVisibility( View.VISIBLE);
+            if(Global.uaePassConfig.disableMyId){
+                binding.switchLanguageUae.setVisibility(View.VISIBLE);
+                binding.switchLanguage.setVisibility(View.GONE);
+            }
+            else{
+                binding.switchLanguage.setVisibility( View.VISIBLE);
+                binding.switchLanguageUae.setVisibility(View.GONE);
+            }
             binding.copyrightEnglish.setVisibility(View.GONE);
             binding.copyrightArabic.setVisibility(View.GONE);
             binding.logoSplash.setVisibility(View.GONE);
@@ -1101,6 +1296,16 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
     }
 
     @Override
+    public void finish() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            super.finishAndRemoveTask();
+        }
+        else {
+            super.finish();
+        }
+    }
+
+    @Override
     public void onFailure(String message) {
         //progressBar.setVisibility(View.GONE);
         //binding.txtOR.setVisibility(View.VISIBLE);
@@ -1181,13 +1386,22 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
     }
     public void onMyIDDisabled(boolean status){
         sharedpreferences.edit().putBoolean("isDisableMyId",status).apply();
+        //status= true; //comment after testing
         if(status){
             binding.loginContainer.setVisibility(View.GONE);
             binding.imageDubaiID.setVisibility(View.GONE);
-           /* binding.layoutEnableUAEPass.setVisibility(View.VISIBLE);
-            binding.layoutUae.setVisibility(View.VISIBLE);*/
+            binding.layoutEnableUAEPass.setVisibility(View.VISIBLE);
+            binding.layoutUae.setVisibility(View.VISIBLE);
             binding.layoutUAEPass.setVisibility(View.GONE);
             binding.txtMyIDGuest.setVisibility(View.GONE);
+            if(Global.uaePassConfig.disableMyId){
+                binding.switchLanguageUae.setVisibility(View.VISIBLE);
+                binding.switchLanguage.setVisibility(View.GONE);
+            }
+            else{
+                binding.switchLanguage.setVisibility( View.VISIBLE);
+                binding.switchLanguageUae.setVisibility(View.GONE);
+            }
 
 
             //binding.layoutUAEPass.setVisibility(View.GONE);
@@ -1208,7 +1422,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
         } else {
             binding.layoutUae.setVisibility(View.GONE);
-            binding.layoutUAEPass.setVisibility(View.VISIBLE);
+            binding.layoutUAEPass.setVisibility(View.GONE);
             binding.loginContainer.setVisibility(View.VISIBLE);
             binding.imageDubaiID.setVisibility(View.VISIBLE);
             binding.layoutEnableUAEPass.setVisibility(View.GONE);
@@ -1227,6 +1441,14 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
             binding.txtGuest.setGravity(Gravity.CENTER_VERTICAL);
             binding.txtGuest.setTextSize(16f);
             binding.txtUAEPass.setTextSize(16f);
+            if(Global.uaePassConfig.disableMyId){
+                binding.switchLanguageUae.setVisibility(View.VISIBLE);
+                binding.switchLanguage.setVisibility(View.GONE);
+            }
+            else{
+                binding.switchLanguage.setVisibility( View.VISIBLE);
+                binding.switchLanguageUae.setVisibility(View.GONE);
+            }
 
 
         }

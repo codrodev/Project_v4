@@ -499,8 +499,11 @@ public class HomeViewModel extends ViewModel {
             Global.app_session_token=Global.uaeSessionResponse.getService_response().getToken();
 
             inputModel.setTOKEN(Global.uaeSessionResponse == null ? "" : Global.uaeSessionResponse.getService_response().getToken());
-        } else {
+        } else if(!Global.isUAE && Global.isUserLoggedIn) {
             inputModel.setTOKEN(Global.app_session_token == null ? "" : Global.app_session_token);
+        }
+        else if(!Global.isUserLoggedIn){
+            inputModel.setTOKEN(Global.app_session_token == null ? "" : "");
         }
         inputModel.setREMARKS(Global.getPlatformRemark());
         inputModel.setGuest(!Global.isUserLoggedIn);

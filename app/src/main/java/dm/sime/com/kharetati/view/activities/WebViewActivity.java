@@ -63,6 +63,7 @@ public class WebViewActivity extends AppCompatActivity {
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         webView = findViewById(R.id.webViewActivity);
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setTextZoom(100);
         webView.setWebViewClient(new MyWebViewClient());
 
         if (getIntent().getData() != null) {

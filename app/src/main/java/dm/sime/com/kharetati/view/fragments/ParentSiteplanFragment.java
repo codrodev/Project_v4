@@ -62,6 +62,8 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
     private ParentSitePlanRepository repository;
     public static onNextListner listner;
     private Tracker mTracker;
+    private boolean isHelpClicked;
+    private SharedPreferences sharedpreferences;
 
     public static ParentSiteplanFragment newInstance(){
         ParentSiteplanFragment fragment = new ParentSiteplanFragment();
@@ -141,6 +143,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
                 //binding.viewPagerCreatePackage.setCurrentItem(getNext(), true);
                 if(currentIndex < 3) {
                     if(currentIndex==0){
+                        setNextEnabledStatus(false);
                         if(Global.spinPosition ==2){
 
                             Global.rbIsOwner=false;
@@ -196,12 +199,14 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
             @Override
             public void onClick(View view) {
                 if(Global.helpUrlEn != null || Global.helpUrlAr != null) {
-                    SharedPreferences sharedpreferences = getActivity().getSharedPreferences(POSITION, Context.MODE_PRIVATE);
+                    sharedpreferences = getActivity().getSharedPreferences(POSITION, Context.MODE_PRIVATE);
                     sharedpreferences.edit().putInt("stepperPosition",currentIndex).apply();
                     ArrayList al = new ArrayList();
                     if(Global.helpUrlEn!=null||Global.helpUrlAr!=null)
-                    al.add(HomeFragment.constructUrl((Global.CURRENT_LOCALE.equals("en")? Global.helpUrlEn:Global.helpUrlEn),getActivity()));
+                    al.add(HomeFragment.constructUrl((Global.CURRENT_LOCALE.equals("en")? Global.helpUrlEn:Global.helpUrlAr),getActivity()));
+                    al.add(getActivity().getResources().getString(R.string.help));
                     ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+                    isHelpClicked =true;
                 } else {
 
                 }
@@ -286,8 +291,8 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
             binding.stepperThreeText.setTextColor(getResources().getColor(R.color.stepper_text_color));
             binding.stepperFourText.setTextColor(getResources().getColor(R.color.stepper_text_color));
             binding.view1.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
-            binding.view2.setBackgroundColor(getResources().getColor(R.color.stepper_text_color));
-            binding.view3.setBackgroundColor(getResources().getColor(R.color.stepper_text_color));
+            binding.view2.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
+            binding.view3.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
 
         } else if(index == 2) {
             binding.stepperTwoText.setText("");
@@ -304,7 +309,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
             binding.stepperFourText.setTextColor(getResources().getColor(R.color.stepper_text_color));
             binding.view1.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
             binding.view2.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
-            binding.view3.setBackgroundColor(getResources().getColor(R.color.stepper_text_color));
+            binding.view3.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
         } else if(index == 3) {
 
             binding.txtStepperOne.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
@@ -357,7 +362,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
     public void setNextEnabledStatus(Boolean status) {
         if(status){
             binding.btnNext.setEnabled(status);
-
+            if(getActivity()!=null)
             binding.btnNext.setBackground(getActivity().getResources().getDrawable(R.drawable.maroon_angle_background));
 
 
@@ -378,6 +383,13 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
             if(CURRENT_LOCALE.equals("ar")){
 
             }
+        }
+        if(isHelpClicked){
+            loadFragment(sharedpreferences.getInt("stepperPosition",0));
+            if(sharedpreferences.getInt("stepperPosition",0)==3)
+                binding.btnNext.setVisibility(View.INVISIBLE);
+            else if(sharedpreferences.getInt("stepperPosition",0)==0)
+                binding.btnPrevious.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -424,10 +436,10 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         binding.stepperFourText.setText("4");
 
 
-        binding.stepperFourText.setTextColor(getResources().getColor(R.color.green));
-        binding.view1.setBackgroundColor(getResources().getColor(R.color.green));
-        binding.view2.setBackgroundColor(getResources().getColor(R.color.green));
-        binding.view3.setBackgroundColor(getResources().getColor(R.color.green));
+        binding.stepperFourText.setTextColor(getResources().getColor(R.color.white));
+        binding.view1.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
+        binding.view2.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
+        binding.view3.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
         binding.btnNext.setVisibility(View.INVISIBLE);
     }
 

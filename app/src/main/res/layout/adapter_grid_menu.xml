@@ -14,6 +14,7 @@
         android:layout_height="140dp"
         android:id="@+id/cardHomeGrid"
         android:elevation="10dp"
+        app:cardBackgroundColor="#fcfcfc"
         android:background="@drawable/grid_background_drawable"
         android:layout_margin="8dp"
         app:cardCornerRadius="16dp">

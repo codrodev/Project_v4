@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/layoutRoot"
+        android:background="@color/white"
         android:orientation="vertical"
         tools:context=".view.activities.LoginActivity">
 
@@ -29,15 +30,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
+
         <ImageView
             android:id="@+id/imgsplash"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="0dp"
             android:clickable="true"
-            android:layout_marginTop="-120dp"
-            android:visibility="visible"
             android:scaleType="fitXY"
-            android:src="@drawable/splashscreen"
+            android:src="@drawable/splash"
+
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -45,52 +48,81 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
-        <ImageView
-            android:layout_width="@dimen/splash_logo_width"
-            android:layout_height="@dimen/splash_logo_height"
-            android:id="@+id/logoSplash"
-            android:scaleType="centerCrop"
-            android:visibility="gone"
-            android:layout_gravity="bottom|right"
-            android:layout_marginTop="@dimen/splash_logo_margin_top"
-            android:layout_marginBottom="@dimen/splash_logo_margin_bottom"
-            android:layout_marginRight="@dimen/splash_logo_margin_right"
-            android:src="@drawable/logo_splash"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layoutDirection="ltr"
+            android:weightSum="2"
+            android:layout_marginTop="-75dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight=".60"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:textSize="11sp"
+                    android:elevation="25dp"
+                    android:paddingStart="16dp"
+                    android:background="@color/transparent"
+                    android:textStyle="bold"
+                    android:id="@+id/copyright_english"
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:textSize="14sp"
-            android:elevation="20dp"
-            android:id="@+id/copyright_arabic"
-            android:layout_marginTop="-25dp"
-            android:layout_marginBottom="0dp"
-            android:fontFamily="@font/dubai_font"
-            android:textAlignment="center"
-            android:textColor="@color/maroon_light"
-            android:text="@string/copyright"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:textSize="14sp"
-            android:elevation="20dp"
-            android:id="@+id/copyright_english"
-            android:layout_marginTop="-48dp"
-            android:layout_marginBottom="23dp"
-            android:fontFamily="@font/dubai_font"
-            android:textAlignment="center"
-            android:textColor="@color/maroon_light"
-            android:text="حقوق الطبع والنشر © بلدية دبي 2020, جميع الحقوق محفوظة"
-            />
+                    android:layout_marginBottom="0dp"
+                    android:fontFamily="@font/dubai_font"
+                    android:textColor="@color/maroon_light"
+                    android:text="حقوق الطبع والنشر © بلدية دبي, جميع الحقوق محفوظة"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:textSize="11sp"
+                    android:elevation="20dp"
+                    android:paddingStart="16dp"
+                    android:background="@color/transparent"
+                    android:textStyle="bold"
+                    android:id="@+id/copyright_arabic"
+
+                    android:layout_marginBottom="0dp"
+                    android:fontFamily="@font/dubai_font"
+                    android:textColor="@color/maroon_light"
+                    android:text="@string/copyright"
+                    />
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.40"
+                android:layout_gravity="end">
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:id="@+id/logoSplash"
+                android:scaleType="fitXY"
+                android:visibility="visible"
+                android:layout_marginStart="-35dp"
+
+                android:layout_marginBottom="-60dp"
+                android:layout_gravity="bottom|left"
+                android:padding="47dp"
+
+
+                android:src="@drawable/dm_logo_512"/></LinearLayout>
+        </LinearLayout>
 
 
         <dm.sime.com.kharetati.view.customview.SlantView
             android:id="@+id/slantViewLoginHeader"
             android:layout_width="match_parent"
             android:layout_marginTop="12dp"
+            android:layout_marginStart="-1dp"
             android:layout_height="350dp"
             android:layout_gravity="start|center_horizontal"
 
@@ -104,9 +136,11 @@
             android:id="@+id/layoutLogo">
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="107dp"
-                android:layout_height="102dp"
-                android:layout_marginTop="16dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="32dp"
+                android:padding="2dp"
+                android:visibility="visible"
                 android:src="@drawable/kharetati_white"
                 app:layout_constraintBottom_toBottomOf="@+id/imgBackground"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -114,24 +148,7 @@
                 app:layout_constraintTop_toTopOf="@+id/slantViewLoginHeader"
                 app:layout_constraintVertical_bias="0.0" />
 
-            <dm.sime.com.kharetati.view.customview.SwitchCompatEx
-                android:id="@+id/switchLanguage"
-                android:layout_width="100dp"
-                android:layout_height="35dp"
-                android:layout_marginTop="8dp"
-                android:minHeight="40dp"
-                android:layoutDirection="ltr"
-                android:fontFamily="@font/dubai_font"
-                android:visibility="gone"
-                android:textOn="Arabic"
-                android:textOff="English"
-                app:layout_constraintBottom_toTopOf="@+id/cardLogin"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.511"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView"
-                app:layout_constraintVertical_bias="0.01"
-                app:switchMinWidth="100dp" />
+
 
 
         </LinearLayout>
@@ -141,20 +158,23 @@
             android:id="@+id/cardLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:backgroundTint="#fcfcfc"
+            android:orientation="vertical"
+           app:cardElevation="0dp"
+           app:cardBackgroundColor="@color/transparent"
             app:layout_constraintTop_toBottomOf="@+id/slantViewLoginHeader"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
-
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <LinearLayout
                 android:id="@+id/layoutParentLoginContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/white"
                 android:orientation="vertical">
 
                 <ImageView
@@ -169,57 +189,115 @@
 
             <LinearLayout
                 android:id="@+id/loginContainer"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:visibility="visible"
                 android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/username"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="4dp"
+                        android:fontFamily="@font/dubai_font"
+                        android:textStyle="bold"
+
+                        android:textColor="@color/login_text_color"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="*"
+                        android:fontFamily="@font/dubai_font"
+                        android:textColor="@color/login_text_color"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layoutDirection="locale"
                     android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="@dimen/edit_drawable_height"
-                        android:layout_height="@dimen/edit_drawable_height"
-                        android:src="@drawable/user_dark"
-                        android:scaleType="centerInside"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginTop="4dp"/>
+
                     <AutoCompleteTextView
                         android:id="@+id/editUserName"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/edittext_height"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:paddingStart="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="40dp"
+
                         android:paddingEnd="8dp"
+                        android:layout_marginTop="12dp"
                         android:layoutDirection="locale"
-                        android:layout_marginBottom="4dp"
-                        android:background="@color/white"
+                        android:layout_marginBottom="12dp"
+                        android:textStyle="bold"
+                        android:textFontWeight="1000"
+                        android:textColorHint="#6D6D6D"
                         android:clickable="true"
                         android:ems="10"
+                        android:hint="@string/username"
+                        android:background="@color/transparent"
                         android:singleLine="true"
                         android:focusable="true"
-                        android:textAlignment="center"
-                        android:gravity="center"
-                        android:hint="@string/username"
+                        android:textAlignment="viewStart"
+                        android:gravity="start|center_vertical"
                         android:fontFamily="@font/dubai_font"
                         android:inputType="textEmailAddress"
-                        android:paddingLeft="8dp"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/login_font_size"/>
+                        android:paddingLeft="0dp"
+                        android:textColor="@color/login_text_color"
+                        android:textSize="14sp"/>
+
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="-32dp"
+                        android:layout_marginTop="8dp"
+                        android:padding="3dp"
+                        android:layout_marginBottom="10dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/user_login_icon" />
+
 
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
+                    android:layout_height="1dp"
                     android:layout_marginTop="-8dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
-                    android:background="@color/light_gray"/>
+                    android:background="@color/faded_text_color"/>
+
+                <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                    android:visibility="gone"
+                    android:layout_marginTop="8dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/password"
+                    android:layout_marginStart="8dp"
+                    android:paddingTop="5dp"
+                    android:layout_marginEnd="4dp"
+                    android:fontFamily="@font/dubai_font"
+                    android:textColor="@color/login_text_color"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="*"
+                    android:fontFamily="@font/dubai_font"
+                    android:textColor="@color/login_text_color"
+                    />
+            </LinearLayout>
 
                 <LinearLayout
                 android:layout_width="match_parent"
@@ -227,54 +305,64 @@
                 android:layoutDirection="locale"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="@dimen/edit_drawable_height"
-                    android:layout_height="@dimen/edit_drawable_height"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/password_dark_2"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginTop="4dp"/>
+
 
                 <EditText
                     android:id="@+id/editPassword"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edittext_height"
-                    android:textAlignment="center"
-                    android:gravity="center_vertical|center_horizontal"
+                    android:textAlignment="viewStart"
+                    android:gravity="start|center_vertical"
                     android:layoutDirection="locale"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:singleLine="true"
-                    android:textColor="@color/textColor"
-                    android:fontFamily="@font/dubai_font"
-                    android:layout_marginBottom="4dp"
-                    android:background="@color/white"
-                    android:ems="10"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="40dp"
                     android:hint="@string/password"
-                    android:textSize="@dimen/login_font_size"
+                    android:paddingEnd="8dp"
+                    android:paddingTop="8dp"
+                    android:singleLine="true"
+                    android:textStyle="bold"
+                    android:textColorHint="#6D6D6D"
+                    android:textFontWeight="1000"
+
+                    android:background="@color/transparent"
+                    android:textColor="@color/login_text_color"
+                    android:fontFamily="@font/dubai_font"
+                    android:layout_marginBottom="12dp"
+                    android:ems="10"
+                    android:textSize="14sp"
+
                     android:inputType="textWebPassword"
-                    android:paddingLeft="8dp"/>
+                    android:paddingLeft="0dp"/>
+
+
+                    <ImageView
+                        android:layout_width="@dimen/edit_drawable_height"
+                        android:layout_height="@dimen/edit_drawable_height"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="-32dp"
+                        android:layout_marginEnd="16dp"
+                        android:padding="3dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="8dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/password" />
+
 
             </LinearLayout>
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
+                    android:layout_height="1dp"
                     android:layout_marginTop="-8dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
-                    android:background="@color/light_gray"/>
+                    android:background="@color/faded_text_color"/>
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
                     android:layoutDirection="locale"
                     android:weightSum="1"
                     android:gravity="center_vertical"
@@ -288,11 +376,11 @@
                         android:layout_gravity="start"
                         android:clickable="true"
                         android:gravity="center_vertical|start"
-                        android:textColor="@color/textColor"
+                        android:textColor="@color/faded_text_color"
                         android:id="@+id/chkRememberMe"
                         android:fontFamily="@font/dubai_font"
                         android:focusable="false"
-                        android:layout_weight=".5"
+                        android:layout_weight=".55"
                         android:textSize="13sp"
                         android:text="@string/rememberme" />
                     <TextView
@@ -305,20 +393,28 @@
                         android:layout_marginEnd="16dp"
                         android:singleLine="false"
                         android:maxLines="2"
-                        android:layout_weight=".5"
+                        android:layout_weight=".45"
                         android:fontFamily="@font/dubai_font"
                         android:text="@string/forgot_username_password"
                         android:textAlignment="viewEnd"
                         android:textSize="13sp"
-                        android:textColor="@color/textColor" />
+                        android:textColor="@color/faded_text_color" />
 
                 </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@color/faded_text_color"/>
 
                 <Button
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/edittext_height"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginBottom="4dp"
                     android:id="@+id/btnLogin"
                     android:fontFamily="@font/dubai_font"
@@ -326,42 +422,160 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:text="@string/login"
-                    android:textAllCaps="false"
+                    android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/login_font_size" />
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/newuser"
+                        android:id="@+id/newuser"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/dubai_font"
+                        android:textColor="@color/login_text_color" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:text="@string/reg"
+                        android:id="@+id/register"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/dubai_font"
+                        android:textColor="@color/maroon_light" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:id="@+id/layoutOR"
+                    android:weightSum="3"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:orientation="horizontal">
 
-<!--
-                    <ProgressBar
-                        android:id="@+id/progressBar"
-                        style="?android:attr/progressBarStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="invisible"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.498"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
--->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="1"
+                        android:background="#D38E9D"/>
 
                     <TextView
                         android:id="@+id/txtOR"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/dubai_font"
-                        android:layout_marginBottom="4dp"
                         android:text="@string/or"
                         android:textAlignment="center"
-                        android:textColor="@color/black"
+                        android:layout_marginStart="8dp"
+                        android:layout_margin="8dp"
+                        android:textColor="@color/maroon_light"
                         android:textSize="@dimen/login_font_size" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="1"
+                        android:background="#D38E9D"/>
                 </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/layoutMyIDUAEPass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:orientation="horizontal"
+                    android:visibility="visible"
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp"
+                    android:background="@drawable/rounded_edittext_boarder_bg"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+
+                    android:layout_gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:id="@+id/txtMyIDLoginwith"
+
+                        android:gravity="center"
+
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/dubai_font"
+                        android:text="@string/login_with"
+
+                        android:paddingEnd="2dp"
+                        android:visibility="visible"
+                        android:textColor="#231f20"
+                        android:textSize="16sp" />
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="44dp"
+                        android:padding="5dp"
+                        android:id="@+id/imgMyIDUAEPass"
+                        android:scaleType="fitXY"
+                        android:layout_gravity="center"
+                        android:src="@drawable/uaepass" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:id="@+id/txtMyIDUAEPass"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:fontFamily="@font/dubai_font"
+                        android:text="@string/with_uaepass"
+
+                        android:visibility="visible"
+                        android:textColor="#231f20"
+                        android:textSize="16sp" />
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/txtMyIDGuest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="4dp"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    android:textFontWeight="800"
+                    android:fontFamily="@font/dubai_font"
+                    android:text="@string/signin_as_guest"
+                    android:textAlignment="center"
+                    android:textColor="@color/maroon_light"
+                    android:textSize="@dimen/login_font_size" />
+                <dm.sime.com.kharetati.view.customview.SwitchCompatEx
+                    android:id="@+id/switchLanguage"
+                    android:layout_width="150dp"
+                    android:layout_height="32dp"
+                    android:layout_marginTop="16dp"
+                    android:minHeight="32dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layoutDirection="rtl"
+                    android:fontFamily="@font/dubai_font"
+                    android:visibility="visible"
+                    app:switchMinWidth="150dp" />
+
+
                 <!--<Button
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edittext_height"
@@ -377,34 +591,24 @@
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/login_font_size" />-->
             </LinearLayout>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginTop="-8dp"
-                    android:id="@+id/txtMyIDGuest"
-                    android:fontFamily="@font/dubai_font"
-                    android:text="@string/signin_as_guest"
-                    android:textAlignment="center"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/login_font_size" />
+
+
 
 
             </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:id="@+id/layoutUae"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:orientation="vertical">
                 <LinearLayout
                     android:id="@+id/layoutEnableUAEPass"
                     android:layout_width="300dp"
-                    android:layout_height="48dp"
+                    android:layout_height="55dp"
                     android:orientation="horizontal"
                     android:visibility="visible"
                     android:background="@drawable/rounded_edittext_boarder_bg"
@@ -427,7 +631,7 @@
                         android:paddingEnd="2dp"
                         android:visibility="visible"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/loginFontSize" />
+                        android:textSize="20sp" />
                     <ImageView
                         android:layout_width="48dp"
                         android:layout_height="44dp"
@@ -446,25 +650,81 @@
                         android:fontFamily="@font/dubai_font"
                         android:text="@string/with_uaepass"
 
+
                         android:visibility="visible"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/loginFontSize" />
+                        android:textSize="20sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:id="@+id/layoutUaeOR"
+                    android:weightSum="3"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="1"
+                        android:background="#dca8b0"/>
+
+                    <TextView
+                        android:id="@+id/txtuaeOR"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/dubai_font"
+                        android:text="@string/or"
+                        android:textAlignment="center"
+                        android:layout_marginStart="8dp"
+                        android:layout_margin="8dp"
+                        android:textColor="@color/maroon_light"
+                        android:textSize="@dimen/login_font_size" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="1"
+                        android:background="#dca8b0"/>
                 </LinearLayout>
                 <TextView
                     android:layout_width="300dp"
-                    android:layout_height="48dp"
+                    android:layout_height="55dp"
                     android:background="@drawable/rounded_edittext_maroon_bg"
                     android:id="@+id/txtGuest"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:layout_marginTop="16dp"
+                    android:textAllCaps="false"
+                    android:layout_marginTop="20dp"
                     android:fontFamily="@font/dubai_font"
                     android:text="@string/signin_as_guest"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/login_font_size" />
+                    android:textSize="20sp" />
+                <dm.sime.com.kharetati.view.customview.SwitchCompatEx
+                    android:id="@+id/switchLanguageUae"
+                    android:layout_width="150dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="48dp"
+                    android:minHeight="35dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layoutDirection="rtl"
+                    android:fontFamily="@font/dubai_font"
+                    android:visibility="gone"
+                    app:switchMinWidth="150dp" />
 
             </LinearLayout>
+
+
             <!--<LinearLayout
                 android:id="@+id/layoutEnableUAEPass"
                 android:layout_width="match_parent"
@@ -500,6 +760,7 @@
                     android:src="@drawable/uaepass" />
             </LinearLayout>-->
         </androidx.cardview.widget.CardView>
+
         <LinearLayout
             android:id="@+id/layoutUAEPass"
             android:layout_width="match_parent"
@@ -551,4 +812,5 @@
 
 
     </LinearLayout>
+
 </layout>

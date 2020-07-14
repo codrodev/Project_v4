@@ -43,7 +43,9 @@
                         android:id="@+id/imgMyMap"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                       android:layout_margin="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="16dp"
                         android:layout_gravity="center"/>
 
                     <TextView
@@ -51,9 +53,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/dubai_font"
+                        android:minWidth="110dp"
                         android:layout_gravity="center_vertical"
                         android:singleLine="true"
                         android:gravity="center"
+                        android:paddingStart="8dp"
+                        android:textAlignment="viewStart"
+                        android:textStyle="bold"
+                        android:textFontWeight="1000"
                         android:text="@string/mymaps"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
@@ -85,15 +92,22 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_gravity="center"
-                        android:layout_margin="8dp" />
+                        android:layout_marginTop="8dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginBottom="8dp" />
                     <TextView
                         android:id="@+id/txtBookmark"
                         android:layout_width="wrap_content"
                         android:textSize="16sp"
+                        android:minWidth="110dp"
                         android:layout_height="match_parent"
                         android:text="@string/bookmark"
+                        android:textStyle="bold"
+                        android:textFontWeight="1000"
+                        android:textAlignment="viewStart"
                         android:gravity="center"
-                        android:layout_gravity="center_vertical"
+                        android:paddingStart="8dp"
+                        android:layout_gravity="center"
                         android:fontFamily="@font/dubai_font"
                         android:singleLine="true"
                         android:textColor="@color/black"

@@ -211,7 +211,6 @@ public class LoginViewModel extends ViewModel {
             Global.map_en_url = kharetatiUser.map_en_url;
             Global.map_ar_url = kharetatiUser.map_ar_url;
             Global.mapHiddenLayers =kharetatiUser.getMapHiddenLayers();
-
             Global.happinessUrl = kharetatiUser.getHappinessUrl();
             Global.happinessClientID = kharetatiUser.getHappinessClientid();
             Global.happinessSecretKey = kharetatiUser.getHappinessSecretkey();
@@ -241,13 +240,14 @@ public class LoginViewModel extends ViewModel {
             authListener.onFailure(activity.getResources().getString(R.string.enter_username));
 
 
-        } else if(getDataPassword().isEmpty()){
+        } else if(!isValidEmail(getDataEmail())||getDataEmail().length()<=5) {
+            authListener.onFailure(activity.getResources().getString(R.string.enter_valid_username));
+        }
+        else if(getDataPassword().isEmpty()){
 
             authListener.onFailure(activity.getResources().getString(R.string.enter_password));
 
-        }else if(!isValidEmail(getDataEmail())||getDataEmail().length()<=5) {
-            authListener.onFailure(activity.getResources().getString(R.string.enter_valid_username));
-            }
+        }
         else if(getDataPassword().length()<=5) {
             authListener.onFailure(activity.getResources().getString(R.string.enter_valid_password));
             }
@@ -302,7 +302,7 @@ public class LoginViewModel extends ViewModel {
     private void saveAccessTokenResponse(AccessTokenResponse accessTokenResponse, boolean isUAE) {
         if (accessTokenResponse != null) {
             Log.v(TAG, "UAE Pass App: saveAccessTokenResponse(): calling");
-            if (accessTokenResponse.getAccessToken() != null || Global.uaeSessionResponse.getService_response().getToken() != null) {
+            if (accessTokenResponse.getAccessToken() != null /*|| Global.uaeSessionResponse.getService_response().getToken() != null*/) {
                 Global.hashSearchFieldValue = new HashMap<>();
                 //get the response here
                 Global.isFirstLoad = true;
@@ -548,7 +548,8 @@ public class LoginViewModel extends ViewModel {
 
                 }
                 else {
-                    Disposable disposable = repository.getSession(Global.accessToken)
+                    String url = AppUrls.BASE_AUXULARY_URL_UAE_SESSION + "getsession/" + Global.accessToken + "/" + Global.getPlatformRemark();
+                    Disposable disposable = repository.getSession(url)
                             .subscribeOn(kharetatiApp.subscribeScheduler())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new Consumer<SessionResponse>() {
@@ -601,6 +602,9 @@ public class LoginViewModel extends ViewModel {
                     Log.v(TAG, "UAE Pass App: getSession(): failed:");
                     showErrorMessage();
                 }
+            }
+            else{
+                authListener.onFailure(session.getMessage());
             }
 
         } else {

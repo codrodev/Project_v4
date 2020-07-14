@@ -54,11 +54,13 @@ public class BookmarkViewModel extends ViewModel implements Filterable {
     private ArrayList<Bookmark> filteredData;
 
 
+
     public BookmarkViewModel(Activity context, BookMarkRepository repository){
         this.activity = context;
         this.repository = repository;
         kharetatiApp = KharetatiApp.create(activity);
         filteredData = new ArrayList<Bookmark>();
+
         filter=new ItemFilter();
 
     }
@@ -295,7 +297,7 @@ public class BookmarkViewModel extends ViewModel implements Filterable {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
 
-            String filterString = constraint.toString().toLowerCase();
+            String filterString = constraint.toString();
 
             FilterResults results = new FilterResults();
 
@@ -306,7 +308,7 @@ public class BookmarkViewModel extends ViewModel implements Filterable {
 
             for (int i = 0; i < count; i++) {
                 filterableString = getBookMarks().get(i).ParcelNumber;
-                if (filterableString.toLowerCase().contains(filterString)) {
+                if (filterableString.contains(filterString)) {
                     nlist.add(getBookMarks().get(i));
                 }
             }

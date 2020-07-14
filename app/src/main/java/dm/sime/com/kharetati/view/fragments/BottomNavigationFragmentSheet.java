@@ -49,7 +49,7 @@ public class BottomNavigationFragmentSheet extends Fragment {
     private View mRootView;
     private static OnActionListener listener;
     private Tracker mTracker;
-    int images[] = {R.drawable.mymap_512,R.drawable.favorites_512,R.drawable.settings_512,R.drawable.more_help_512,R.drawable.accessibility_512,R.drawable.contact_512,R.drawable.about_512,R.drawable.faq_512,R.drawable.terms_512,R.drawable.share_512,R.drawable.rating_512,R.drawable.logout_512};
+    int images[] = {R.drawable.mymap_512,R.drawable.favorites_512,R.drawable.settings_512,R.drawable.more_help_512,R.drawable.accessibility_512,R.drawable.contact_512,R.drawable.about_512,R.drawable.faq_512,R.drawable.terms_512,R.drawable.share_512,R.drawable.rating_512,Global.isUserLoggedIn?R.drawable.logout_512:R.drawable.login_512};
     int ids[] = {R.id.imgMoreIcon,R.id.txtMoreName};
     String keys[]= {"one","two"};
 
@@ -123,10 +123,16 @@ public class BottomNavigationFragmentSheet extends Fragment {
         binding.gridMore.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(Global.isUserLoggedIn)
+                if(Global.isUserLoggedIn){
                     ((MainActivity)getActivity()).setScreenName(names[position]);
-                else
+                    if(position==9||position==10)
+                        ((MainActivity)getActivity()).setScreenName(getActivity().getResources().getString(R.string.more));
+                }
+                else{
                     ((MainActivity)getActivity()).setScreenName(names[position+1]);
+                    if(position==8||position==9)
+                        ((MainActivity)getActivity()).setScreenName(getActivity().getResources().getString(R.string.more));
+                }
 
                 switch (position){
 
@@ -381,7 +387,9 @@ public class BottomNavigationFragmentSheet extends Fragment {
     public void onLogoutClicked(){if(Global.isUserLoggedIn)
         AlertDialogUtil.logoutAlert(getActivity().getResources().getString(R.string.logout_msg),getActivity().getResources().getString(R.string.yes),getActivity().getResources().getString(R.string.no),getActivity());
     else{
+
         Global.logout(getActivity());
+        ((MainActivity)getActivity()).finish();
         mTracker.send(new HitBuilders.EventBuilder()
                 .setCategory("More Screen")
                 .setAction("Action Logout")

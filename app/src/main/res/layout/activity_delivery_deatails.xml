@@ -202,7 +202,7 @@
                 android:background="@drawable/edittext_background">
             <Spinner
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="38dp"
                     android:id="@+id/et_emirates"
 
                     android:gravity="start|center_vertical"

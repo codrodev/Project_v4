@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -38,6 +39,7 @@ public class PagerContentAdapter extends PagerAdapter {
         TextView txtDate = (TextView)view.findViewById(R.id.txtDate);
         LinearLayout root = (LinearLayout) view.findViewById(R.id.rootLayout);
         ImageView cancel = (ImageView)view.findViewById(R.id.notification_cancel);
+        Button viewDetails = (Button)view.findViewById(R.id.btnViewDetails);
         viewModel.setDotPosition(position);
         txtHeader.setText(Global.CURRENT_LOCALE.equals("en")?Global.notificationResponse.getServiceResponse().getGeneralNotifications().get(position).getNameEn():Global.notificationResponse.getServiceResponse().getGeneralNotifications().get(position).getNameAr());
         txtMessage.setText(Global.CURRENT_LOCALE.equals("en")?Global.notificationResponse.getServiceResponse().getGeneralNotifications().get(position).getDescriptionEn():Global.notificationResponse.getServiceResponse().getGeneralNotifications().get(position).getDescriptionAr());
@@ -48,7 +50,19 @@ public class PagerContentAdapter extends PagerAdapter {
                 viewModel.cancelNotification();
             }
         });
-        root.setOnClickListener(new View.OnClickListener() {
+
+        if (Global.notificationResponse.getServiceResponse().getGeneralNotifications().get(position).getUrlEn() != null || Global.notificationResponse.getServiceResponse().getGeneralNotifications().get(position).getUrlAr() != null) {
+
+
+            if (!Global.notificationResponse.getServiceResponse().getGeneralNotifications().get(position).getUrlEn().isEmpty() || !Global.notificationResponse.getServiceResponse().getGeneralNotifications().get(position).getUrlAr().isEmpty()) {
+                viewDetails.setVisibility(View.VISIBLE);
+            }
+            else
+                viewDetails.setVisibility(View.GONE);
+        }
+        else
+            viewDetails.setVisibility(View.GONE);
+        viewDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -56,7 +70,7 @@ public class PagerContentAdapter extends PagerAdapter {
 
 
                     if (!Global.notificationResponse.getServiceResponse().getGeneralNotifications().get(position).getUrlEn().isEmpty() || !Global.notificationResponse.getServiceResponse().getGeneralNotifications().get(position).getUrlAr().isEmpty()) {
-                        viewModel.loadWebView(Global.CURRENT_LOCALE.equals("en")?Global.notificationResponse.getServiceResponse().getGeneralNotifications().get(position).getUrlEn():Global.notificationResponse.getServiceResponse().getGeneralNotifications().get(position).getUrlAr(),null);
+                        viewModel.loadWebView(Global.CURRENT_LOCALE.equals("en")?Global.notificationResponse.getServiceResponse().getGeneralNotifications().get(position).getUrlEn():Global.notificationResponse.getServiceResponse().getGeneralNotifications().get(position).getUrlAr(),((MainActivity)context).getResources().getString(R.string.notifications));
                         viewModel.cancelNotification();
                     }
                 }

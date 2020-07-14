@@ -1,0 +1,879 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="activityLoginVM"
+            type="dm.sime.com.kharetati.view.viewModels.LoginViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/layoutRoot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        tools:context=".view.activities.LoginActivity">
+
+        <ImageView
+            android:id="@+id/imgBackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:scaleType="fitXY"
+            android:src="@mipmap/building"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/imgsplash"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="0dp"
+            android:clickable="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/splash"
+
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-75dp"
+            android:layoutDirection="ltr"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight=".60"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/copyright_english"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:layout_marginBottom="0dp"
+                    android:background="@color/transparent"
+                    android:elevation="25dp"
+                    android:fontFamily="@font/dubai_font"
+                    android:paddingStart="16dp"
+
+                    android:text="حقوق الطبع والنشر © بلدية دبي, جميع الحقوق محفوظة"
+                    android:textColor="@color/maroon_light"
+                    android:textSize="9sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/copyright_arabic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:layout_marginBottom="0dp"
+                    android:background="@color/transparent"
+                    android:elevation="20dp"
+                    android:fontFamily="@font/dubai_font"
+                    android:paddingStart="16dp"
+
+                    android:text="@string/copyright"
+                    android:textColor="@color/maroon_light"
+                    android:textSize="9sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_weight="1.40">
+
+                <ImageView
+                    android:id="@+id/logoSplash"
+                    android:layout_width="175dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="bottom|left"
+                    android:layout_marginStart="-40dp"
+                    android:layout_marginBottom="-60dp"
+
+                    android:padding="47dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/dm_logo_512"
+
+
+                    android:visibility="visible" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <dm.sime.com.kharetati.view.customview.SlantView
+            android:id="@+id/slantViewLoginHeader"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:layout_gravity="start|center_horizontal"
+            android:layout_marginStart="-1dp"
+            android:layout_marginTop="12dp"
+            android:visibility="visible"
+
+            />
+
+        <LinearLayout
+            android:id="@+id/layoutLogo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginStart="128.68dp"
+                android:layout_marginTop="72dp"
+
+                android:layout_marginEnd="128.68dp"
+                android:src="@drawable/kharetati_white"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/imgBackground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/slantViewLoginHeader"
+                app:layout_constraintVertical_bias="0.0" />
+
+
+        </LinearLayout>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:cardBackgroundColor="@color/transparent"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/slantViewLoginHeader">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/layoutParentLoginContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:layout_marginBottom="100dp"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imageDubaiID"
+                        android:layout_width="70dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="10dp"
+
+                        android:layout_marginStart="145dp"
+
+                        android:layout_marginEnd="145dp"
+                        android:src="@drawable/myid_logo" />
+
+                    <LinearLayout
+                        android:id="@+id/loginContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginEnd="4dp"
+                                android:fontFamily="@font/dubai_font"
+                                android:text="@string/username"
+                                android:textColor="@color/login_text_color"
+
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/dubai_font"
+                                android:text="*"
+                                android:textColor="@color/login_text_color" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layoutDirection="locale"
+                            android:orientation="horizontal">
+
+
+                            <AutoCompleteTextView
+                                android:id="@+id/editUserName"
+                                android:layout_width="match_parent"
+                                android:layout_height="21dp"
+
+                                android:layout_marginTop="4dp"
+
+                                android:layout_marginEnd="40dp"
+                                android:layout_marginBottom="8dp"
+                                android:background="@color/transparent"
+                                android:clickable="true"
+                                android:ems="10"
+                                android:focusable="true"
+                                android:fontFamily="@font/dubai_font"
+                                android:gravity="start|center_vertical"
+                                android:hint="@string/username"
+                                android:inputType="textEmailAddress"
+                                android:layoutDirection="locale"
+                                android:paddingLeft="0dp"
+                                android:paddingEnd="8dp"
+                                android:singleLine="true"
+                                android:textAlignment="viewStart"
+                                android:textColor="@color/login_text_color"
+                                android:textColorHint="#6D6D6D"
+                                android:textFontWeight="1000"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="-24dp"
+                                android:layout_marginTop="0dp"
+                                android:layout_marginBottom="4dp"
+                                android:padding="3dp"
+                                android:scaleType="centerInside"
+                                android:src="@drawable/user_login_icon" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height=".5dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginTop="-4dp"
+                            android:background="@color/faded_text_color" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginEnd="4dp"
+                                android:fontFamily="@font/dubai_font"
+                                android:paddingTop="12dp"
+                                android:text="@string/password"
+                                android:textColor="@color/login_text_color" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/dubai_font"
+                                android:text="*"
+                                android:textColor="@color/login_text_color" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginTop="4dp"
+                            android:gravity="center_vertical"
+                            android:layoutDirection="locale"
+
+                            android:orientation="horizontal">
+
+
+                            <EditText
+                                android:id="@+id/editPassword"
+                                android:layout_width="match_parent"
+                                android:layout_height="21dp"
+                                android:layout_marginTop="4dp"
+                                android:layout_marginEnd="40dp"
+                                android:layout_marginBottom="8dp"
+                                android:background="@color/transparent"
+
+                                android:ems="10"
+                                android:fontFamily="@font/dubai_font"
+                                android:gravity="start|center_vertical"
+
+                                android:hint="@string/password"
+                                android:inputType="textWebPassword"
+                                android:layoutDirection="locale"
+                                android:paddingLeft="0dp"
+
+                                android:paddingEnd="8dp"
+                                android:singleLine="true"
+                                android:textAlignment="viewStart"
+                                android:textColor="@color/login_text_color"
+                                android:textColorHint="#6D6D6D"
+                                android:textFontWeight="1000"
+
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="-24dp"
+                                android:layout_marginTop="0dp"
+                                android:layout_marginEnd="0dp"
+                                android:layout_marginBottom="4dp"
+                                android:padding="3dp"
+                                android:scaleType="centerInside"
+                                android:src="@drawable/password" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height=".5dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginTop="-4dp"
+                            android:background="@color/faded_text_color" />
+
+
+                        <LinearLayout
+                            android:id="@+id/layoutRememberMe"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:gravity="center_vertical"
+                            android:layoutDirection="locale"
+                            android:orientation="horizontal"
+                            android:weightSum="1">
+
+                            <CheckBox
+                                android:id="@+id/chkRememberMe"
+                                android:layout_width="match_parent"
+                                android:layout_height="21dp"
+                                android:layout_gravity="start"
+                                android:layout_marginStart="-14dp"
+                                android:layout_weight=".55"
+                                android:scaleX=".85"
+                                android:scaleY=".85"
+
+                                android:buttonTint="#ABAAAA"
+                                android:clickable="true"
+                                android:focusable="false"
+                                android:fontFamily="@font/dubai_font"
+                                android:gravity="center_vertical|start"
+                                android:text="@string/rememberme"
+                                android:textSize="12.5sp"
+                                android:textColor="@color/faded_text_color" />
+
+                            <TextView
+                                android:id="@+id/txtForgotPassword"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="end"
+                                android:layout_weight=".45"
+
+                                android:fontFamily="@font/dubai_font"
+                                android:gravity="center_vertical|end"
+                                android:maxLines="2"
+                                android:singleLine="false"
+                                android:textFontWeight="600"
+                                android:text="@string/forgot_username_password"
+                                android:textAlignment="viewEnd"
+                                android:textColor="@color/faded_text_color"
+                                android:textSize="10.5sp" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height=".5dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+
+                            android:layout_marginTop="0dp"
+
+                            android:background="@color/faded_text_color" />
+
+                        <Button
+                            android:id="@+id/btnLogin"
+                            android:layout_width="199.25dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="81dp"
+                            android:layout_marginTop="16dp"
+                            android:gravity="center"
+                            android:layout_marginEnd="79.5dp"
+                            android:layout_marginBottom="4dp"
+                            android:background="@drawable/gradient_background"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:fontFamily="@font/dubai_font"
+                            android:text="@string/login"
+                            android:textFontWeight="600"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            android:textSize="15sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/newuser"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/dubai_font"
+                                android:text="@string/newuser"
+                                android:textColor="@color/login_text_color"
+                                android:textSize="9sp" />
+
+                            <TextView
+                                android:id="@+id/register"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="2dp"
+                                android:fontFamily="@font/dubai_font"
+                                android:text="@string/reg"
+                                android:textColor="@color/maroon_light"
+                                android:textSize="9sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layoutOR"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+
+                            android:layout_marginTop="0dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:weightSum="3">
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height=".75dp"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginTop="0dp"
+                                android:layout_marginRight="8dp"
+                                android:layout_weight="1"
+                                android:background="#D38E9D" />
+
+                            <TextView
+                                android:id="@+id/txtOR"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="8dp"
+                                android:layout_marginStart="8dp"
+                                android:fontFamily="@font/dubai_font"
+                                android:text="@string/or"
+                                android:textFontWeight="600"
+                                android:textAlignment="center"
+                                android:textColor="@color/maroon_light"
+                                android:textSize="14sp" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height=".75dp"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginTop="0dp"
+                                android:layout_marginRight="8dp"
+                                android:layout_weight="1"
+                                android:background="#D38E9D" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layoutMyIDUAEPass"
+                            android:layout_width="167dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="76.11dp"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginEnd="75.11dp"
+                            android:background="@drawable/rounded_edittext_boarder_bg"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+
+                            android:visibility="visible">
+
+                            <TextView
+                                android:id="@+id/txtMyIDLoginwith"
+                                android:layout_width="wrap_content"
+
+                                android:layout_height="match_parent"
+
+                                android:layout_gravity="center"
+
+                                android:fontFamily="@font/dubai_font"
+                                android:gravity="center"
+                                android:paddingEnd="1dp"
+
+                                android:text="@string/login_with"
+                                android:textColor="#231f20"
+                                android:textSize="12.5sp"
+                                android:visibility="visible" />
+
+                            <ImageView
+                                android:id="@+id/imgMyIDUAEPass"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="center"
+                                android:padding="4dp"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/uaepass" />
+
+                            <TextView
+                                android:id="@+id/txtMyIDUAEPass"
+                                android:layout_width="wrap_content"
+
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:fontFamily="@font/dubai_font"
+                                android:gravity="center"
+                                android:text="@string/with_uaepass"
+
+                                android:textColor="#231f20"
+                                android:textSize="12.5sp"
+                                android:visibility="visible" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/txtMyIDGuest"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="4dp"
+                            android:fontFamily="@font/dubai_font"
+                            android:text="@string/signin_as_guest"
+                            android:textAlignment="center"
+                            android:textAllCaps="true"
+                            android:textColor="@color/maroon_light"
+                            android:textFontWeight="800"
+                            android:textSize="12.5sp"
+                            android:textStyle="bold" />
+
+                        <dm.sime.com.kharetati.view.customview.SwitchCompatEx
+                            android:id="@+id/switchLanguage"
+                            android:layout_width="128dp"
+                            android:layout_height="22dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="118dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="119dp"
+                            android:fontFamily="@font/dubai_font"
+                            android:gravity="center"
+                            android:layoutDirection="rtl"
+                            android:minHeight="22dp"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"
+                            android:visibility="visible"
+                            app:switchMinWidth="128dp" />
+
+
+                        <!--<Button
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/edittext_height"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="4dp"
+                            android:visibility="gone"
+                            android:background="@drawable/maroon_border_background"
+                            android:id="@+id/btnSignUp"
+                            android:fontFamily="@font/dubai_font"
+                            android:text="@string/createAccount"
+                            android:textAllCaps="false"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/login_font_size" />-->
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+            <LinearLayout
+                android:id="@+id/layoutUae"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:id="@+id/layoutEnableUAEPass"
+                    android:layout_width="300dp"
+                    android:layout_height="55dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rounded_edittext_boarder_bg"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/txtLoginwith"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="match_parent"
+
+                        android:layout_gravity="center"
+
+                        android:fontFamily="@font/dubai_font"
+                        android:gravity="center"
+                        android:paddingEnd="2dp"
+
+                        android:text="@string/login_with"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:visibility="visible" />
+
+                    <ImageView
+                        android:id="@+id/imgUAEPass"
+                        android:layout_width="48dp"
+                        android:layout_height="44dp"
+                        android:layout_gravity="center"
+                        android:padding="5dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/uaepass" />
+
+                    <TextView
+                        android:id="@+id/txtUAEPass"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/dubai_font"
+                        android:gravity="center"
+                        android:text="@string/with_uaepass"
+
+
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:visibility="visible" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutUaeOR"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="8dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="1"
+                        android:background="#dca8b0" />
+
+                    <TextView
+                        android:id="@+id/txtuaeOR"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_marginStart="8dp"
+                        android:fontFamily="@font/dubai_font"
+                        android:text="@string/or"
+                        android:textAlignment="center"
+                        android:textColor="@color/maroon_light"
+                        android:textSize="@dimen/login_font_size" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="1"
+                        android:background="#dca8b0" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txtGuest"
+                    android:layout_width="300dp"
+                    android:layout_height="55dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/rounded_edittext_maroon_bg"
+                    android:fontFamily="@font/dubai_font"
+                    android:gravity="center"
+                    android:text="@string/signin_as_guest"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <dm.sime.com.kharetati.view.customview.SwitchCompatEx
+                    android:id="@+id/switchLanguageUae"
+                    android:layout_width="150dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="48dp"
+                    android:fontFamily="@font/dubai_font"
+                    android:gravity="center"
+                    android:layoutDirection="rtl"
+                    android:minHeight="24dp"
+                    android:visibility="gone"
+                    app:switchMinWidth="150dp" />
+
+            </LinearLayout>
+
+
+            <!--<LinearLayout
+                android:id="@+id/layoutEnableUAEPass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:layout_gravity="center">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="4dp"
+                    android:id="@+id/txtEnableUAEPass"
+                    android:singleLine="false"
+                    android:maxLines="2"
+                    android:fontFamily="@font/dubai_font"
+                    android:text="@string/login_uaepass"
+                    android:textAlignment="center"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/login_font_size" />
+
+                <ImageView
+                    android:layout_width="300dp"
+                    android:layout_height="120dp"
+                    android:id="@+id/imgEnableUAEPass"
+                    android:scaleType="fitXY"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/uaepass" />
+            </LinearLayout>-->
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:id="@+id/layoutUAEPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/txtEnabledUAEPass"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/dubai_font"
+                android:maxLines="2"
+                android:singleLine="false"
+                android:text="@string/login_uaepass"
+                android:textAlignment="center"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/login_font_size" />
+
+            <ImageView
+                android:id="@+id/imgEnabledUAEPass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/uaepass" />
+        </LinearLayout>
+
+        <!--<ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="180dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />-->
+
+
+    </LinearLayout>
+
+</layout>

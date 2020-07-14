@@ -317,6 +317,9 @@ public class AlertDialogUtil {
 
     }
     public static void timeoutAlertDialog(String title, String message, String btnTxt, Activity context) {
+        try {
+
+
         AlertDialog alertDialog = new AlertDialog.Builder(context)
                 .setMessage(message)
                 .setTitle(title)
@@ -352,6 +355,10 @@ public class AlertDialogUtil {
 //        textView1.setTypeface(face);
 
         textView.setPadding(80, 25, 25, 10);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
 
     }
 
@@ -392,6 +399,7 @@ public class AlertDialogUtil {
                         else{
                             ArrayList al = new ArrayList();
                             al.add(Global.webViewUrl);
+                            al.add(context.getResources().getString(R.string.makani));
                             ((MainActivity)context).loadFragment(FR_WEBVIEW,true,al);
                         }
 

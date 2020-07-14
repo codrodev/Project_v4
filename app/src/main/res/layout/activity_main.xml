@@ -19,7 +19,7 @@
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="135dp"
                 android:orientation="vertical"
                 android:id="@+id/headerLayout"
                 android:background="@drawable/maroon_overlay_bg">
@@ -28,26 +28,41 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="48dp"
+                        android:paddingStart="3dp"
+                        android:layout_marginTop="24dp"
+                        android:id="@+id/backButton"
+                        android:visibility="visible"
+                        android:src="@drawable/back"/>
+
                     <TextView
                         android:id="@+id/txtWelcome"
                         android:layout_width="match_parent"
-                        android:layout_height="35dp"
-                        android:fontFamily="@font/dubai_font"
-                        android:text="@string/title_welcome"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:textSize="26dp"
-                        android:textFontWeight="1000"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start|center_vertical"
+                        android:layout_marginTop="14dp"
                         android:layout_marginEnd="10dp"
-                        android:layout_marginStart="25dp"
-                        android:layout_marginTop="30dp" />
+                        android:fontFamily="@font/dubai_font"
+                        android:gravity="start|center_vertical"
+                        android:paddingBottom="4dp"
+                        android:text="@string/title_welcome"
+
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/white"
+                        android:textFontWeight="1000"
+                        android:textSize="26sp"
+
+                        android:textStyle="bold" />
+
                     <ImageView
                         android:id="@+id/imgHelp"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_alignParentRight="true"
                         app:srcCompat="@drawable/ic_help"
-                        android:visibility="invisible"
+                        android:visibility="gone"
                         android:layout_marginTop="10dp"
                         android:layout_marginStart="-60dp"
                         android:layout_marginEnd="50dp"/>
@@ -58,6 +73,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="8dp"
 
                     android:id="@+id/profileUsername"
                     android:gravity="center_vertical">
@@ -67,9 +84,10 @@
                         android:id="@+id/imgRound"
                         android:layout_marginStart="25dp"
                         android:gravity="center_vertical"
-                        android:layout_marginTop="24dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginTop="18dp"
+                        android:layout_marginBottom="18dp"
                         android:layout_marginEnd="10dp"
+                        android:padding="2dp"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/user_profile"/>
                     <LinearLayout
@@ -123,7 +141,8 @@
                     android:layout_marginStart="25dp"
                     android:textSize="15sp"
                     android:text="@string/lastlogin"
-                    style="@style/font_small_bold"
+                    android:textStyle="bold"
+                    android:textFontWeight="1000"
                     android:layout_gravity="start|center_vertical"
                     android:layout_marginTop="6dp"
                     android:layout_marginBottom="6dp"
@@ -175,8 +194,8 @@
             android:layout_height="80dp"
             android:layoutDirection="locale"
             android:background="#00000000"
-            app:mbn_circleColor="#b71e3e"
-            app:mbn_backgroundBottomColor="#b71e3e"
+            app:mbn_circleColor="@color/maroon_light"
+            app:mbn_backgroundBottomColor="@color/maroon_light"
             app:mbn_rippleColor="#2f424242"
             app:mbn_selectedIconColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
