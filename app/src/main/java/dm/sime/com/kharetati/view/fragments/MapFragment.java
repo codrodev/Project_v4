@@ -1407,6 +1407,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                             if(PlotDetails.plotGeometry!=null)
                             {
                                 //goToNext();
+                                binding.listmapMenu.setVisibility(View.GONE);
                                 if(!Global.isBookmarks){
                                     if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null &&
                                             Global.mapSearchResult.getService_response().getMap().getFunctions().size() > 1) {

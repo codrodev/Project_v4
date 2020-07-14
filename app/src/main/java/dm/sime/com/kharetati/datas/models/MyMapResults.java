@@ -90,7 +90,7 @@ public class MyMapResults extends BaseObservable {
     public String getReq_created_date() {
 
         @SuppressLint("SimpleDateFormat") DateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss",new Locale(Global.CURRENT_LOCALE));
-        @SuppressLint("SimpleDateFormat") DateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy * hh:mm aa",new Locale(Global.CURRENT_LOCALE));
+        @SuppressLint("SimpleDateFormat") DateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy, hh:mm aa",new Locale(Global.CURRENT_LOCALE));
         String resultDate = "";
         try {
             resultDate=outputFormat.format(inputFormat.parse(req_created_date_time));

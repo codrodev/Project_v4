@@ -300,7 +300,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     }
 
     public void getLastlogin() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy HH:mm aa",new Locale("en"));
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm ",new Locale("en"));
         String currentDateandTime = sdf.format(new Date());
         binding.txtLastLogin.setVisibility(View.VISIBLE);
 

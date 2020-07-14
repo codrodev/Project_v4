@@ -77,9 +77,9 @@
                     android:fontFamily="@font/dubai_font"
                     android:paddingStart="16dp"
 
-                    android:text="حقوق الطبع والنشر © بلدية دبي, جميع الحقوق محفوظة"
+                    android:text="حقوق الطبع والنشر © بلدية دبي. جميع الحقوق محفوظة"
                     android:textColor="@color/maroon_light"
-                    android:textSize="9sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -95,7 +95,7 @@
 
                     android:text="@string/copyright"
                     android:textColor="@color/maroon_light"
-                    android:textSize="9sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
 
@@ -109,13 +109,13 @@
 
                 <ImageView
                     android:id="@+id/logoSplash"
-                    android:layout_width="175dp"
+                    android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:layout_gravity="bottom|left"
-                    android:layout_marginStart="-40dp"
+                    android:layout_marginStart="-10dp"
                     android:layout_marginBottom="-60dp"
 
-                    android:padding="47dp"
+                    android:padding="35dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/dm_logo_512"
 
@@ -145,10 +145,10 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_marginStart="128.68dp"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="90dp"
 
                 android:layout_marginEnd="128.68dp"
                 android:src="@drawable/kharetati_white"
@@ -190,14 +190,14 @@
 
                     <ImageView
                         android:id="@+id/imageDubaiID"
-                        android:layout_width="70dp"
-                        android:layout_height="28dp"
+                        android:layout_width="140dp"
+                        android:layout_height="56dp"
                         android:layout_gravity="center"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="20dp"
 
-                        android:layout_marginStart="145dp"
+                        android:layout_marginStart="290dp"
 
-                        android:layout_marginEnd="145dp"
+                        android:layout_marginEnd="290dp"
                         android:src="@drawable/myid_logo" />
 
                     <LinearLayout
@@ -236,6 +236,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
 
                             android:layoutDirection="locale"
                             android:orientation="horizontal">
@@ -244,12 +246,13 @@
                             <AutoCompleteTextView
                                 android:id="@+id/editUserName"
                                 android:layout_width="match_parent"
-                                android:layout_height="21dp"
+                                android:layout_height="40dp"
+                                android:paddingTop="4dp"
 
-                                android:layout_marginTop="4dp"
+                                android:layout_marginTop="8dp"
 
-                                android:layout_marginEnd="40dp"
-                                android:layout_marginBottom="8dp"
+                                android:layout_marginEnd="80dp"
+                                android:layout_marginBottom="12dp"
                                 android:background="@color/transparent"
                                 android:clickable="true"
                                 android:ems="10"
@@ -260,23 +263,23 @@
                                 android:inputType="textEmailAddress"
                                 android:layoutDirection="locale"
                                 android:paddingLeft="0dp"
-                                android:paddingEnd="8dp"
+                                android:paddingEnd="16dp"
                                 android:singleLine="true"
                                 android:textAlignment="viewStart"
                                 android:textColor="@color/login_text_color"
                                 android:textColorHint="#6D6D6D"
                                 android:textFontWeight="1000"
-                                android:textSize="12sp"
+                                android:textSize="24sp"
                                 android:textStyle="bold" />
 
                             <ImageView
-                                android:layout_width="18dp"
-                                android:layout_height="20dp"
+                                android:layout_width="36dp"
+                                android:layout_height="40dp"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginStart="-24dp"
+                                android:layout_marginStart="-48dp"
                                 android:layout_marginTop="0dp"
-                                android:layout_marginBottom="4dp"
-                                android:padding="3dp"
+                                android:layout_marginBottom="8dp"
+                                android:padding="6dp"
                                 android:scaleType="centerInside"
                                 android:src="@drawable/user_login_icon" />
 
@@ -318,8 +321,9 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
-                            android:layout_marginTop="4dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginTop="8dp"
                             android:gravity="center_vertical"
                             android:layoutDirection="locale"
 
@@ -329,11 +333,12 @@
                             <EditText
                                 android:id="@+id/editPassword"
                                 android:layout_width="match_parent"
-                                android:layout_height="21dp"
-                                android:layout_marginTop="4dp"
-                                android:layout_marginEnd="40dp"
-                                android:layout_marginBottom="8dp"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="80dp"
+                                android:layout_marginBottom="12dp"
                                 android:background="@color/transparent"
+                                android:paddingTop="4dp"
 
                                 android:ems="10"
                                 android:fontFamily="@font/dubai_font"
@@ -351,19 +356,19 @@
                                 android:textColorHint="#6D6D6D"
                                 android:textFontWeight="1000"
 
-                                android:textSize="12sp"
+                                android:textSize="24sp"
                                 android:textStyle="bold" />
 
 
                             <ImageView
-                                android:layout_width="18dp"
-                                android:layout_height="20dp"
+                                android:layout_width="36dp"
+                                android:layout_height="40dp"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginStart="-24dp"
+                                android:layout_marginStart="-48dp"
                                 android:layout_marginTop="0dp"
                                 android:layout_marginEnd="0dp"
-                                android:layout_marginBottom="4dp"
-                                android:padding="3dp"
+                                android:layout_marginBottom="8dp"
+                                android:padding="6dp"
                                 android:scaleType="centerInside"
                                 android:src="@drawable/password" />
 
@@ -384,8 +389,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
 
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="8dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
 
                             android:gravity="center_vertical"
                             android:layoutDirection="locale"
@@ -395,12 +400,13 @@
                             <CheckBox
                                 android:id="@+id/chkRememberMe"
                                 android:layout_width="match_parent"
-                                android:layout_height="21dp"
+                                android:layout_height="42dp"
                                 android:layout_gravity="start"
                                 android:layout_marginStart="-7dp"
                                 android:layout_weight=".55"
-                                android:scaleX=".95"
-                                android:scaleY=".95"
+                                android:textFontWeight="600"
+                                android:scaleX="0.95"
+                                android:scaleY="0.95"
 
                                 android:buttonTint="#ABAAAA"
                                 android:clickable="true"
@@ -408,7 +414,7 @@
                                 android:fontFamily="@font/dubai_font"
                                 android:gravity="center_vertical|start"
                                 android:text="@string/rememberme"
-                                android:textSize="12.5sp"
+                                android:textSize="25sp"
                                 android:textColor="@color/faded_text_color" />
 
                             <TextView
@@ -426,7 +432,7 @@
                                 android:text="@string/forgot_username_password"
                                 android:textAlignment="viewEnd"
                                 android:textColor="@color/faded_text_color"
-                                android:textSize="12sp" />
+                                android:textSize="25sp" />
 
                         </LinearLayout>
 
@@ -441,8 +447,8 @@
 
                         <Button
                             android:id="@+id/btnLogin"
-                            android:layout_width="199.25dp"
-                            android:layout_height="30.5dp"
+                            android:layout_width="350.50dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
                             android:layout_marginStart="81dp"
                             android:layout_marginTop="16dp"
@@ -457,13 +463,13 @@
                             android:textFontWeight="600"
                             android:textAllCaps="true"
                             android:textColor="@color/white"
-                            android:textSize="15sp" />
+                            android:textSize="30sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="0dp"
+                            android:layout_marginTop="4dp"
                             android:gravity="center"
                             android:orientation="horizontal">
 
@@ -474,26 +480,26 @@
                                 android:fontFamily="@font/dubai_font"
                                 android:text="@string/newuser"
                                 android:textColor="@color/login_text_color"
-                                android:textSize="9sp" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/register"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="2dp"
+                                android:layout_marginStart="4dp"
                                 android:fontFamily="@font/dubai_font"
                                 android:text="@string/reg"
                                 android:textColor="@color/maroon_light"
-                                android:textSize="9sp" />
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:id="@+id/layoutOR"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="33.03dp"
+                            android:layout_height="70dp"
+                            android:layout_marginStart="16dp"
                             android:layout_marginTop="0dp"
-                            android:layout_marginEnd="32.92dp"
+                            android:layout_marginEnd="16dp"
 
                             android:gravity="center"
                             android:orientation="horizontal"
@@ -512,14 +518,14 @@
                                 android:id="@+id/txtOR"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="8dp"
-                                android:layout_marginStart="8dp"
+                                android:layout_margin="16dp"
+                                android:layout_marginStart="16dp"
                                 android:fontFamily="@font/dubai_font"
                                 android:text="@string/or"
                                 android:textFontWeight="600"
                                 android:textAlignment="center"
                                 android:textColor="@color/maroon_light"
-                                android:textSize="14sp" />
+                                android:textSize="30sp" />
 
                             <View
                                 android:layout_width="match_parent"
@@ -533,8 +539,8 @@
 
                         <LinearLayout
                             android:id="@+id/layoutMyIDUAEPass"
-                            android:layout_width="167dp"
-                            android:layout_height="30dp"
+                            android:layout_width="334dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
                             android:layout_marginStart="76.11dp"
                             android:layout_marginTop="0dp"
@@ -561,15 +567,15 @@
 
                                 android:text="@string/login_with"
                                 android:textColor="#231f20"
-                                android:textSize="12.5sp"
+                                android:textSize="30sp"
                                 android:visibility="visible" />
 
                             <ImageView
                                 android:id="@+id/imgMyIDUAEPass"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
                                 android:layout_gravity="center"
-                                android:padding="4dp"
+                                android:padding="8dp"
                                 android:scaleType="fitXY"
                                 android:src="@drawable/uaepass" />
 
@@ -584,7 +590,7 @@
                                 android:text="@string/with_uaepass"
 
                                 android:textColor="#231f20"
-                                android:textSize="12.5sp"
+                                android:textSize="24sp"
                                 android:visibility="visible" />
                         </LinearLayout>
 
@@ -593,7 +599,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="16dp"
                             android:layout_marginEnd="16dp"
                             android:layout_marginBottom="4dp"
                             android:fontFamily="@font/dubai_font"
@@ -602,16 +608,16 @@
                             android:textAllCaps="true"
                             android:textColor="@color/maroon_light"
                             android:textFontWeight="800"
-                            android:textSize="12.5sp"
+                            android:textSize="24sp"
                             android:textStyle="bold" />
 
                         <dm.sime.com.kharetati.view.customview.SwitchCompatEx
                             android:id="@+id/switchLanguage"
-                            android:layout_width="128dp"
+                            android:layout_width="240dp"
                             android:layout_height="24dp"
                             android:layout_gravity="center"
                             android:layout_marginStart="118dp"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="14dp"
                             android:layout_marginEnd="119dp"
                             android:fontFamily="@font/dubai_font"
                             android:gravity="center"
