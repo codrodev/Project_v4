@@ -725,7 +725,12 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             LinearLayout.LayoutParams uiContainerParam =
                     new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                             LinearLayout.LayoutParams.MATCH_PARENT);
-            uiContainerParam.setMargins(0, 0, 0, 60);
+            if(Global.current_fragment_id.equals(FragmentTAGS.FR_MAP)){
+                uiContainerParam.setMargins(0, 0, 0, 0);
+            } else {
+                uiContainerParam.setMargins(0, 0, 0, 60);
+            }
+
             //uiContainerParam.addRule(LinearLayout.BELOW, R.id.layoutProfile);
             binding.uiContainer.setLayoutParams(uiContainerParam);
         }
