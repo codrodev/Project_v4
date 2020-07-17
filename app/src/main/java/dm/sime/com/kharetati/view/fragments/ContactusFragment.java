@@ -144,6 +144,7 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
         ((MainActivity)getActivity()).manageActionBar(true);
         ((MainActivity)getActivity()).manageBottomBar(true);
         ((MainActivity)getActivity()).setScreenName(getActivity().getResources().getString(R.string.menu_contact_us));
+        MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(),FR_CONTACT_US , null /* class override */);
 
         setRetainInstance(true);
         if (!Global.isConnected(getActivity())) {

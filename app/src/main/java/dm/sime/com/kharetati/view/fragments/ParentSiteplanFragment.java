@@ -114,6 +114,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
         mTracker.setScreenName(FR_PARENT_SITEPLAN);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(), FR_PARENT_SITEPLAN, null /* class override */);
         initializePage();
         return binding.getRoot();
     }
@@ -126,6 +127,8 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         binding.imgBack.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
         loadFragment(0);
         binding.txtHeader.setText(pagerArray[currentIndex]);
+        MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(), pagerArray[currentIndex], null /* class override */);
+
         changeStepperBackground(currentIndex);
         if(currentIndex != 0 )
             binding.btnPrevious.setVisibility(View.VISIBLE);

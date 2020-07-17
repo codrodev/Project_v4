@@ -42,7 +42,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -103,6 +103,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
     private SharedPreferences sharedpreferences;
     private Tracker mTracker;
     private int elementHeight;
+    public FirebaseAnalytics firebaseAnalytics;
 
     public LoginActivity(){
 
@@ -138,6 +139,9 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         }
         factory = new AuthViewModelFactory(this,repository);
         progressBar = new ProgressBar(this);
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
+        firebaseAnalytics.setCurrentScreen(this, "LOGIN SCREEN", null /* class override */);
         Intent intent = getIntent();
         /*LinearLayout.LayoutParams progressBarParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT );
         progressBarParams.gravity = Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL;
@@ -770,7 +774,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         });
 
 
-        Global.deviceId = FirebaseInstanceId.getInstance().getToken()!=null?FirebaseInstanceId.getInstance().getToken():generateRandomID();
+        Global.deviceId = /*FirebaseInstanceId.getInstance().getToken()!=null?FirebaseInstanceId.getInstance().getToken():*/generateRandomID();
 
 
 

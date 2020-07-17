@@ -391,6 +391,7 @@ public class AlertDialogUtil {
                             Global.webViewUrl = String.format(AppUrls.MAKANI_URL, "A", plotnumber);
                         }
                         intentOpenBrowser.setData(Uri.parse(Global.webViewUrl));
+                        MainActivity.firebaseAnalytics.setCurrentScreen((MainActivity)context,"MAKANI SCREEN" , null /* class override */);
                         if(Global.isAppInstalled(MAKANI_PACKAGE,activity)){
                             intentOpenBrowser.setPackage(MAKANI_PACKAGE);
                             activity.startActivity(intentOpenBrowser);

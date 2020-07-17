@@ -1,39 +1,44 @@
 {
   "project_info": {
-    "project_number": "932501498639",
-    "firebase_url": "https://kharetati-app.firebaseio.com",
-    "project_id": "kharetati-app",
-    "storage_bucket": "kharetati-app.appspot.com"
+    "project_number": "650963430781",
+    "firebase_url": "https://kharetatimobileapp.firebaseio.com",
+    "project_id": "kharetatimobileapp",
+    "storage_bucket": "kharetatimobileapp.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:932501498639:android:d44015817907a07a",
+        "mobilesdk_app_id": "1:650963430781:android:ea74ae023198db43b93014",
         "android_client_info": {
           "package_name": "dm.sime.com.kharetati"
         }
       },
       "oauth_client": [
         {
-          "client_id": "932501498639-g9cp4em2b8kl1uq5vgk588ll0b66f1o1.apps.googleusercontent.com",
+          "client_id": "650963430781-2rp427jmsvdds9fjf329qchhomvg2vc4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAyzFmriKI5M59dSEGiu90dP7TqSpMZQ5g"
+          "current_key": "AIzaSyA670sOXwM3Z2a0Uum7yuu30ARcegyf9yY"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "650963430781-2rp427jmsvdds9fjf329qchhomvg2vc4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "650963430781-o7q4l3agc2499doqji8qh58j2clgr7de.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "ae.gov.dm.kharetati"
+              }
+            }
+          ]
         }
       }
     }

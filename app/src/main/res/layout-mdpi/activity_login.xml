@@ -34,17 +34,17 @@
             app:layout_constraintVertical_bias="0.0" />
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="160dp"
+            android:layout_height="175dp"
             android:elevation="1dp"
             android:background="@color/transparent"
             android:gravity="bottom"
-            android:layout_marginBottom="-161dp"
+            android:layout_marginBottom="-176dp"
             android:layout_gravity="center_horizontal"
             >
             <ImageView
                 android:id="@+id/splashLogo"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:src="@drawable/kharetati_white"
                 android:visibility="visible"
                  />
@@ -84,6 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight=".60"
+                android:layout_marginBottom="-8dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -91,9 +92,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|left"
-                    android:layout_marginBottom="0dp"
+                    android:layout_marginBottom="1dp"
                     android:background="@color/transparent"
                     android:elevation="25dp"
+                    android:textFontWeight="600"
                     android:fontFamily="@font/dubai_font"
                     android:paddingStart="16dp"
 
@@ -112,6 +114,7 @@
                     android:elevation="20dp"
                     android:fontFamily="@font/dubai_font"
                     android:paddingStart="16dp"
+                    android:textFontWeight="600"
 
                     android:text="@string/copyright"
                     android:textColor="@color/maroon_light"
@@ -130,12 +133,12 @@
                 <ImageView
                     android:id="@+id/logoSplash"
                     android:layout_width="175dp"
-                    android:layout_height="200dp"
+                    android:layout_height="175dp"
                     android:layout_gravity="bottom|left"
-                    android:layout_marginStart="-40dp"
-                    android:layout_marginBottom="-70dp"
+                    android:layout_marginStart="-44dp"
+                    android:layout_marginBottom="-66dp"
 
-                    android:padding="47dp"
+                    android:padding="43dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/dm_logo_512"
 

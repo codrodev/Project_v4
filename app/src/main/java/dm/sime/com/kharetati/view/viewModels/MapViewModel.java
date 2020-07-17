@@ -2,6 +2,7 @@ package dm.sime.com.kharetati.view.viewModels;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
@@ -15,6 +16,7 @@ import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.datas.models.BaseResponseModel;
 import dm.sime.com.kharetati.datas.models.GetAppResponse;
 import dm.sime.com.kharetati.datas.models.HTTPRequestBody;
+import dm.sime.com.kharetati.datas.models.LoginDetails;
 import dm.sime.com.kharetati.datas.models.MakaniToDLTMResponse;
 import dm.sime.com.kharetati.datas.models.ParcelDetails;
 import dm.sime.com.kharetati.datas.models.PlotDetails;
@@ -33,6 +35,7 @@ import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.fragments.ParentSiteplanFragment;
 import dm.sime.com.kharetati.view.navigators.FragmentNavigator;
 import dm.sime.com.kharetati.view.navigators.MapNavigator;
@@ -47,6 +50,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 import static dm.sime.com.kharetati.utility.Global.isBookmarks;
+import static dm.sime.com.kharetati.utility.Global.isUAE;
+import static dm.sime.com.kharetati.utility.Global.isUserLoggedIn;
 
 public class MapViewModel extends ViewModel {
 
@@ -169,6 +174,13 @@ public class MapViewModel extends ViewModel {
                                 mapNavigator.onSuccess();
                                 if (!response.isError()) {
                                     if (isSave) {
+                                        Bundle bundle = new Bundle();
+
+                                        bundle.putString("parcelId", PlotDetails.parcelNo);
+                                        if(isUserLoggedIn)
+                                        bundle.putString("email", isUAE?Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getEmail():Global.loginDetails.username);
+                                        MainActivity.firebaseAnalytics.logEvent("ADD_BOOKMARK", bundle);
+
                                         if (response.isExisting())
                                             AlertDialogUtil.errorAlertDialog(activity.getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getPlotAvailableFavEn() : Global.appMsg.getPlotAvailableFavAr(), activity.getResources().getString(R.string.ok), activity);
                                         else

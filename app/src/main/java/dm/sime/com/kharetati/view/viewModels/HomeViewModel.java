@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.text.DynamicLayout;
 import android.text.InputType;
 import android.util.Base64;
@@ -23,6 +24,8 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -64,6 +67,7 @@ import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.AppConstants;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.adapters.InAppNotificationAdapter;
 import dm.sime.com.kharetati.view.customview.CleanableEditText;
 import dm.sime.com.kharetati.view.fragments.DeliveryFragment;
@@ -99,6 +103,7 @@ public class HomeViewModel extends ViewModel {
     private HomeRepository repository;
     private KharetatiApp kharetatiApp;
     private Parcels[] lstParcels;
+    private String[] landSearchValues;
 
     /*public HomeViewModel(){
 
@@ -485,6 +490,7 @@ public class HomeViewModel extends ViewModel {
         Global.searchText = searchText;
         PlotDetails.parcelNo = searchText;
 
+
         String url = getSelectedApplication().getSearchUrl();
         if(Global.app_session_token==null)
             Global.app_session_token = activity.getSharedPreferences(Global.MYPREFERENCES,Context.MODE_PRIVATE).getString(Global.APP_SESSION_TOKEN,"");
@@ -510,6 +516,7 @@ public class HomeViewModel extends ViewModel {
         //inputModel.setLanguage(Global.CURRENT_LOCALE);//Change
 
         searchModel.setInputJson(inputModel);
+
 
         if(getSelectedApplication().getHasMap()) {
             Disposable disposable = repository.getMapBasedSearchResult(url, searchModel)
@@ -601,6 +608,19 @@ public class HomeViewModel extends ViewModel {
                 if (result != null && result.getService_response() != null) {
                     Global.mapSearchResult = result;
                     navigate(activity, FragmentTAGS.FR_MAP);
+                    Bundle bundle = new Bundle();
+                    if(Global.selectedTab==2){
+
+                        bundle.putString("area_names",HomeFragment.communityId);
+                        bundle.putString("land_no", Global.LandNo);
+                        bundle.putString("sub_no", Global.subNo);
+
+
+                    }
+                    else if(Global.selectedTab==0||Global.selectedTab==1){
+                        bundle.putString("SearchValue",Global.searchText);
+                    }
+                    MainActivity.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SEARCH, bundle);
                     //navigate(activity, FragmentTAGS.FR_REQUEST_SITE_PLAN);
                 } else {
                     showErrorMessage("");

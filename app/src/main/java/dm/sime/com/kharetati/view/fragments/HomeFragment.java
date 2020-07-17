@@ -67,6 +67,7 @@ import com.esri.arcgisruntime.loadable.LoadStatus;
 import com.esri.arcgisruntime.mapping.ArcGISMap;
 import com.esri.arcgisruntime.security.Credential;
 import com.esri.arcgisruntime.security.UserCredential;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 
 import dm.sime.com.kharetati.KharetatiApp;
@@ -187,6 +188,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
         mTracker.setScreenName(FR_HOME);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(), FR_HOME, null /* class override */);
 
         model.initializeHomeVM(getContext());
         initializePage();
@@ -259,6 +261,9 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                 .setLabel(model.getSelectedApplication().getNameEn())
                 .setValue(Long.parseLong(appID))
                 .build());
+        if(getActivity()!=null)
+            MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(), model.getSelectedApplication().getNameEn(), null /* class override */);
+        model.getApplication(appID).getSearchForm().get(0).getTabs().getControls().get(0);
         Log.d(getClass().getSimpleName(),model.getSelectedApplication().getNameEn());
     }
 
@@ -678,6 +683,11 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                 builder.append("|");
                 builder.append(Global.subNo);
 
+
+
+
+
+
             }
         }
         /*if (communityId != null && communityId.length() > 0){
@@ -703,6 +713,8 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                 }*/
             }
         }
+        Bundle bundle = new Bundle();
+
         return builder.toString();
     }
 

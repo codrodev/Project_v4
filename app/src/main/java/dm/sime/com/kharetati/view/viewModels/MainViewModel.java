@@ -101,7 +101,7 @@ public class MainViewModel extends ViewModel {
     public void getNotifications() {
         mainNavigator.onStarted();
 
-        String url = AppUrls.BASE_AUXULARY_URL + "/getnotification";
+        String url = AppUrls.BASE_AUXULARY_URL + "getnotification";
 
         SerializeGetAppRequestModel model = new SerializeGetAppRequestModel();
         if(Global.app_session_token==null)
@@ -115,6 +115,7 @@ public class MainViewModel extends ViewModel {
             inputModel.setTOKEN(Global.app_session_token == null ? "" : Global.app_session_token);
             inputModel.setUserId(Global.isUserLoggedIn? "":"");
         }
+        inputModel.setGuest(!Global.isUserLoggedIn);
 
 
         model.setInputJson(inputModel);
@@ -124,8 +125,14 @@ public class MainViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<NotificationResponse>() {
                     @Override public void accept(NotificationResponse response) throws Exception {
-                        Global.notificationResponse = response;
-                        getNotification(response);
+
+                        if(!response.getIsException()){
+                            Global.notificationResponse = response;
+                            getNotification(response);
+                        }
+                        else{
+                            showErrorMessage(response.getMessage()!=null?response.getMessage():"");
+                        }
 
                     }
                 }, new Consumer<Throwable>() {

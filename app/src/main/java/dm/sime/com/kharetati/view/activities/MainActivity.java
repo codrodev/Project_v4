@@ -39,6 +39,7 @@ import android.widget.Toast;
 
 
 import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.json.JSONObject;
 
@@ -123,6 +124,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     private AlertDialog alertDialogNotifications;
     private LinearLayout layoutDots;
     private MyViewModel myViewModel;
+    public static FirebaseAnalytics firebaseAnalytics;
 
     public static Intent newIntent(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -136,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         Global.isLoginActivity = false;
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
 
         try {
@@ -158,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         binding.setActivityMainVM(model);
         customBottomBar = (MeowBottomNavigation)findViewById(R.id.customBottomBar);
         if(CURRENT_LOCALE.equals("en")) customBottomBar.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else customBottomBar.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en")) binding.layoutlastlogin.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.layoutlastlogin.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         final BottomNavigationFragmentSheet myBottomSheet = BottomNavigationFragmentSheet.newInstance(this);
         
         customBottomBar.add(new MeowBottomNavigation.Model(1, R.drawable.ic_dashboard));
@@ -305,7 +309,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     }
 
     public void getLastlogin() throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss ",new Locale("en"));
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm ",new Locale("en"));
         SimpleDateFormat rdf = new SimpleDateFormat("dd-MMM-yyyy HH:mm:s",new Locale("en"));
         String currentDateandTime = sdf.format(new Date());
         binding.txtLastLogin.setVisibility(View.VISIBLE);
@@ -336,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             //SpannableStringBuilder str = new SpannableStringBuilder(" "+sharedpreferences.getString("lastLoginTime",currentDateandTime));
             //str.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-            binding.txtLastLogin.setText(" "+sharedpreferences.getString("lastLoginTime",currentDateandTime));
+             binding.txtLastLogin.setText(" "+sharedpreferences.getString("lastLoginTime",currentDateandTime));
 
             sharedpreferences.edit().putString("lastLoginTime",currentDateandTime).apply();
         }
@@ -921,11 +925,16 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
     @Override
     public void updateNotificationUI(NotificationResponse response) {
-        if(response.getServiceResponse().getGeneralNotifications().size()>0){
-            if(!Global.isRecreate){
-            checkNotifications();
-            layoutDots.setVisibility(View.VISIBLE);
-            addBottomDots(0, response.getServiceResponse().getGeneralNotifications().size());}
+        if (response != null) {
+            if (response.getServiceResponse() != null) {
+                if (response.getServiceResponse().getGeneralNotifications().size() > 0) {
+                    if (!Global.isRecreate) {
+                        checkNotifications();
+                        layoutDots.setVisibility(View.VISIBLE);
+                        addBottomDots(0, response.getServiceResponse().getGeneralNotifications().size());
+                    }
+                }
+            }
         }
 
     }

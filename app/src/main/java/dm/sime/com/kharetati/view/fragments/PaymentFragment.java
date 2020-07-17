@@ -26,6 +26,7 @@ import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.navigators.FragmentNavigator;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 import dm.sime.com.kharetati.view.viewModels.PayViewModel;
@@ -86,6 +87,7 @@ public class PaymentFragment extends Fragment {
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
         mTracker.setScreenName(FR_WEBVIEW_PAYMENT);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(),FR_WEBVIEW_PAYMENT , null /* class override */);
         webView = view.findViewById(R.id.webView);
         WebView.setWebContentsDebuggingEnabled(true);
         webView.getSettings().setJavaScriptEnabled(true);

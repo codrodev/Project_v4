@@ -73,6 +73,7 @@ import dm.sime.com.kharetati.view.navigators.MyMapNavigator;
 import dm.sime.com.kharetati.view.viewModels.MyMapViewModel;
 import dm.sime.com.kharetati.view.viewmodelfactories.MyMapViewModelFactory;
 
+import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
 import static dm.sime.com.kharetati.utility.Global.alertDialog;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_BOOKMARK;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_MYMAP;
@@ -136,9 +137,11 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
         binding.setFragmentMyMapVM(model);
         mRootView = binding.getRoot();
         Global.HelpUrl = Global.CURRENT_LOCALE.equals("en")?Global.mymaps_en_url:Global.mymaps_ar_url;
+        if(CURRENT_LOCALE.equals("en")) binding.recylerMyMaps.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.recylerMyMaps.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
         mTracker.setScreenName(FR_MYMAP);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(),FR_MYMAP , null /* class override */);
         try {
             initializePage();
 

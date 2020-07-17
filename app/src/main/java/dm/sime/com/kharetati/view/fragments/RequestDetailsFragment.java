@@ -98,6 +98,7 @@ public class RequestDetailsFragment extends Fragment {
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
         mTracker.setScreenName(FR_REQUEST_DETAILS);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(),FR_REQUEST_DETAILS , null /* class override */);
         /*communicator = (Communicator) getActivity();
         communicator.hideMainMenuBar();
         communicator.hideAppBar();

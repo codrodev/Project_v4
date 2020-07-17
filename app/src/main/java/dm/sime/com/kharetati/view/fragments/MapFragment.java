@@ -177,7 +177,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
     FunctionOnMapAdapter.OnMenuSelectedListener listener;
     private LinearLayout layoutBottomSheet;
     private String functionurl;
-    int images[]= {R.drawable.layers_512,R.drawable.favorite_black_512,R.drawable.location_512,R.drawable.makani_512,R.drawable.help_512};
+    int images[]= {R.drawable.layers_512,R.drawable.favorite_black_512,R.drawable.location_512,R.drawable.makani_512,R.drawable.help_icon_256};
     int ids[] = {R.id.menuImage,R.id.menuText};
     String keys[]= {"one","two"};
     private ArcGISMap map;
@@ -268,7 +268,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                     if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null){
 
                         if(Global.mapSearchResult.getService_response().getMap().getFunctions().size()>1){
-                            StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(4, LinearLayoutManager.VERTICAL);
+                            StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
                             binding.mapFunctionLayout.setVisibility(View.VISIBLE);
                             adapter = new FunctionOnMapAdapter(model, getActivity(),listener, Global.mapSearchResult.getService_response().getMap().getFunctions());
                             binding.recycleMapFunction.setAdapter(adapter);
@@ -309,6 +309,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
         mTracker.setScreenName(FR_MAP);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(), FR_MAP, null /* class override */);
         initializePage();
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
 
@@ -454,6 +455,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
 
         for(int i=0;i<images.length;i++){
             HashMap hm = new HashMap();
+
             hm.put(keys[0],images[i]);
             hm.put(keys[1],names[i]);
 
@@ -991,8 +993,12 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                 PlotDetails.parcelNo = binding.txtPlotNo.getText().toString().trim();
                 if (Global.isBookmarks)
                     findParcel(binding.txtPlotNo.getText().toString().trim());
-                else
+                else{
                     HomeFragment.homeVM.getSearchResult(binding.txtPlotNo.getText().toString().trim());
+                    Bundle bundle = new Bundle();
+                    bundle.putString("parcelId",binding.txtPlotNo.getText().toString().trim());
+                    MainActivity.firebaseAnalytics.logEvent("MAP_SCREEN_SEARCH", bundle);
+                }
 
             }
         }

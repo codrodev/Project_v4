@@ -115,7 +115,7 @@
                         android:background="#80333333" />
 
                     <LinearLayout
-                        android:id="@+id/mapMenu"
+                        android:id="@+id/sortOptions"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="5dp"

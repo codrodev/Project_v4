@@ -102,11 +102,12 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
         mTracker.setScreenName(FR_BOOKMARK);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(),FR_BOOKMARK , null /* class override */);
         initializePage();
         setRetainInstance(true);
         Global.enableClearTextInEditBox(binding.fragmentBookmarksPlotnumber,getActivity());
 
-        binding.mapMenu.setOnClickListener(new View.OnClickListener() {
+        binding.sortOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(binding.sortLayout.getVisibility()!=View.VISIBLE)

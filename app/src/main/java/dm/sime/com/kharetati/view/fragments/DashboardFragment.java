@@ -64,6 +64,7 @@ public class DashboardFragment extends Fragment implements ViewPager.OnPageChang
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
         mTracker.setScreenName(FR_DASHBOARD);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(),FR_DASHBOARD , null /* class override */);
         initializePage();
         setRetainInstance(true);
         return binding.getRoot();
@@ -132,6 +133,7 @@ public class DashboardFragment extends Fragment implements ViewPager.OnPageChang
         binding.imgBookMark.setImageDrawable(getResources().getDrawable(R.drawable.favourites));
         ((MainActivity)getActivity()).setScreenName(getActivity().getResources().getString(R.string.bookmark));
         binding.layoutParent.setPaddingRelative(0,5,0,5);
+
     }
 
     private void changeBookmarkColor(){

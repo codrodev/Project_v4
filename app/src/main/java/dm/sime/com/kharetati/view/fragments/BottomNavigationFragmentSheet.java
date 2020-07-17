@@ -359,6 +359,7 @@ public class BottomNavigationFragmentSheet extends Fragment {
         al.add(FR_MYMAP);
         ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_DASHBOARD,true,al);*/
         ((MainActivity)getActivity()).navigateToDashboard(0);
+        MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(), FR_MYMAP, null /* class override */);
 
     }
     private void onFavouritesClicked(){
@@ -366,10 +367,12 @@ public class BottomNavigationFragmentSheet extends Fragment {
         al.add(FR_BOOKMARK);
         ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_DASHBOARD,true,al);*/
         ((MainActivity)getActivity()).navigateToDashboard(1);
+        MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(), FR_BOOKMARK, null /* class override */);
     }
 
     private void onSettingsClicked() {
         ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_SETTINGS,true,null);
+        MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(), FragmentTAGS.FR_SETTINGS, null /* class override */);
     }
 
     public void onHelpClicked(){
@@ -382,6 +385,7 @@ public class BottomNavigationFragmentSheet extends Fragment {
             al.add(getActivity().getResources().getString(R.string.help));}
 
         ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+        MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(),getActivity().getResources().getString(R.string.help) , null /* class override */);
 
     }
     public void onLogoutClicked(){if(Global.isUserLoggedIn)
@@ -433,6 +437,7 @@ public class BottomNavigationFragmentSheet extends Fragment {
         al.add(HomeFragment.constructUrl(Global.faq_url,getActivity()));
         al.add(getActivity().getResources().getString(R.string.FAQMENU));
         ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+        MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(),"FAQ SCREEN" , null /* class override */);
 
 
     }
@@ -448,6 +453,8 @@ public class BottomNavigationFragmentSheet extends Fragment {
         al.add(HomeFragment.constructUrl((Global.CURRENT_LOCALE.equals("en")?Global.aboutus_en_url:Global.aboutus_ar_url),getActivity()));
             al.add(getActivity().getResources().getString(R.string.ABOUTUS));
         ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+            MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(),"ABOUTUS SCREEN" , null /* class override */);
+
     }
 
 
@@ -464,6 +471,7 @@ public class BottomNavigationFragmentSheet extends Fragment {
         al.add(HomeFragment.constructUrl((Global.CURRENT_LOCALE.equals("en")?Global.terms_en_url:Global.terms_ar_url),getActivity()));
             al.add(getActivity().getResources().getString(R.string.TERMSANDCONDITIONS));
         ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+            MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(),"TERMS AND CONDITIONS SCREEN" , null /* class override */);
     }
 
 
@@ -494,6 +502,7 @@ public class BottomNavigationFragmentSheet extends Fragment {
         ((MainActivity)getActivity()).manageActionBar(true);
         ((MainActivity)getActivity()).manageBottomBar(true);
         ((MainActivity)getActivity()).setScreenName(getActivity().getResources().getString(R.string.more));
+        MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(),"OPTIONS SCREEN" , null /* class override */);
     }
 
     @Override

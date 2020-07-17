@@ -40,9 +40,10 @@
                 android:id="@+id/txtFunctionNAme"
                 android:layout_below="@+id/imgMenuIcon"
                 android:layout_width="match_parent"
+
                 android:textSize="12sp"
-                android:paddingTop="1dp"
-                android:paddingBottom="1dp"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/dubai_font"
                 android:maxLines="2"
