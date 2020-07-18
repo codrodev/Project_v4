@@ -12,7 +12,7 @@
         android:layoutDirection="locale"
         android:background="@color/white"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp">
+        android:layout_marginBottom="17dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -50,8 +50,9 @@
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/viewPager"
                     android:layout_width="fill_parent"
-                    android:layout_height="205dp"
-                    android:layout_marginVertical="10dp"
+                    android:layout_height="250dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_marginBottom="15dp"
                     android:layout_marginHorizontal="10dp"
                     android:clipChildren="false"
                     android:visibility="visible"/>
@@ -71,7 +72,7 @@
                     android:layout_below="@+id/layoutDots"
                     android:visibility="gone"
                     android:elevation="2dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="22dp"
                     android:layout_marginHorizontal="20dp">
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -80,7 +81,7 @@
                         <LinearLayout
                             android:id="@+id/layoutHeader"
                             android:layout_width="match_parent"
-                            android:layout_height="38dp"
+                            android:layout_height="43dp"
                             android:layoutDirection="locale"
                             android:background="@drawable/maroon_overlay_bg">
                             <TextView
@@ -90,7 +91,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/search"
                                 android:paddingStart="8dp"
-                                android:textSize="15sp"
+                                android:textSize="17sp"
                                 android:gravity="start|center_vertical"
                                 android:layout_gravity="center_vertical|start"
                                 android:textAlignment="viewStart"
@@ -101,14 +102,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@color/white"
-                            android:layout_marginVertical="2dp"
+                            android:layout_marginVertical="5dp"
                             android:orientation="vertical"
                             android:layout_below="@+id/layoutHeader">
                             <com.google.android.material.tabs.TabLayout
                                 style="@style/font_medium_bold_tab"
                                 android:id="@+id/tabRuntimeLayout"
                                 android:layout_width="match_parent"
-                                android:layout_height="26dp"
+                                android:layout_height="31dp"
                                 android:layout_marginStart="12dp"
                                 android:layout_marginEnd="12dp"
                                 app:tabMode="fixed"
@@ -131,7 +132,7 @@
                             <LinearLayout
                                 android:id="@+id/layoutControlHeader"
                                 android:layout_width="match_parent"
-                                android:layout_height="38dp"
+                                android:layout_height="43dp"
                                 android:layout_marginTop="15dp"
                                 android:layout_marginStart="12dp"
                                 android:layout_marginEnd="12dp"
@@ -142,7 +143,7 @@
                                     android:id="@+id/txtHeader"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:textSize="15sp"
+                                    android:textSize="17sp"
                                     android:gravity="center"
                                     android:layout_gravity="center"
                                     android:textColor="@color/maroon_light" />

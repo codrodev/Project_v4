@@ -467,10 +467,11 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         x.setInputType(InputType.TYPE_CLASS_NUMBER);
         x.setLayoutParams(lparams);
         x.setEms(10);
+        x.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
         x.setTextColor(Color.parseColor("#969696"));
         x.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         x.setMaxLines(1);
-        x.setTextSize(14f);
+        x.setTextSize(15f);
         x.setType(control.getType());
         if(control.getRegexExp() != null && control.getRegexExp().length() > 0){
             x.setRegXPattern(control.getRegexExp());

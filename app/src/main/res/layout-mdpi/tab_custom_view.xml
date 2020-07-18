@@ -18,8 +18,7 @@
         android:visibility="gone"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/tab_title"
-        android:layout_gravity="center_horizontal"
-        />
+        android:layout_gravity="center_horizontal" />
 
     <!-- Tab divider -->
     <View
