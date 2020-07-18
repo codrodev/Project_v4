@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
         countDownTimer = new MyCountDownTimer(startTime, interval);
 
-        binding.imgHelp.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
+        //binding.imgHelp.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
         binding.backButton.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
         model.getNotifications();
 
@@ -253,17 +253,17 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 onBackPressed();
             }
         });
-        binding.imgHelp.setOnClickListener(new View.OnClickListener() {
+        /*binding.imgHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ArrayList al = new ArrayList();
                 if(Global.FragmentTagForHelpUrl.equals(FragmentTAGS.FR_HOME)){
-                    /*if(Global.helpUrlEn != null || Global.helpUrlAr != null) {
+                    *//*if(Global.helpUrlEn != null || Global.helpUrlAr != null) {
                         al.add(Global.CURRENT_LOCALE.equals("en")? Global.helpUrlEn:Global.helpUrlAr);
 
                     } else {
 
-                    }*/
+                    }*//*
                     if(Global.home_en_url != null || Global.home_ar_url != null) {
                         al.add(HomeFragment.constructUrl((Global.CURRENT_LOCALE.equals("en") ? Global.home_en_url : Global.home_ar_url),MainActivity.this));
                     }
@@ -285,7 +285,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                     loadFragment(FragmentTAGS.FR_WEBVIEW, true, al);
                 }
             }
-        });
+        });*/
 
 
 
@@ -585,12 +585,12 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         Global.FragmentTagForHelpUrl = "";
         tx = fragmentManager.beginTransaction();
         Fragment fragment = null;
-        if(fragment_tag.equals(FragmentTAGS.FR_CONTACT_US)||fragment_tag.equals(FragmentTAGS.FR_HAPPINESS))
+        /*if(fragment_tag.equals(FragmentTAGS.FR_CONTACT_US)||fragment_tag.equals(FragmentTAGS.FR_HAPPINESS))
             binding.imgHelp.setVisibility(View.INVISIBLE);
         else if(fragment_tag.equals(FragmentTAGS.FR_DASHBOARD)||fragment_tag.equals(FragmentTAGS.FR_MYMAP)||fragment_tag.equals(FragmentTAGS.FR_BOOKMARK))
             binding.imgHelp.setVisibility(View.INVISIBLE);
         else
-            binding.imgHelp.setVisibility(View.INVISIBLE);
+            binding.imgHelp.setVisibility(View.INVISIBLE);*/
 
         if(fragment_tag.equals(FragmentTAGS.FR_HOME)){
             binding.txtLastLogin.setVisibility(View.VISIBLE);
@@ -603,7 +603,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         if(fragment_tag.equals(FragmentTAGS.FR_WEBVIEW))
             binding.backButton.setVisibility(View.VISIBLE);
         else
-            binding.backButton.setVisibility(View.INVISIBLE);
+            binding.backButton.setVisibility(View.GONE);
         LinearLayout.LayoutParams headerParams = null;
        /* if(fragment_tag.equals(FragmentTAGS.FR_HOME)){
             headerParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -728,7 +728,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             if(Global.current_fragment_id.equals(FragmentTAGS.FR_MAP)){
                 uiContainerParam.setMargins(0, 0, 0, 0);
             } else {
-                uiContainerParam.setMargins(0, 0, 0, 60);
+                uiContainerParam.setMargins(0, 0, 0, 40);
             }
 
             //uiContainerParam.addRule(LinearLayout.BELOW, R.id.layoutProfile);
@@ -826,7 +826,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 if(Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW))
                     binding.backButton.setVisibility(View.VISIBLE);
                 else
-                    binding.backButton.setVisibility(View.INVISIBLE);
+                    binding.backButton.setVisibility(View.GONE);
             }
 
         }
@@ -884,12 +884,12 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         else
             customBottomBar.show(3, true);
 
-        if(Global.current_fragment_id.equals(FragmentTAGS.FR_CONTACT_US)||Global.current_fragment_id.equals(FragmentTAGS.FR_HAPPINESS))
+        /*if(Global.current_fragment_id.equals(FragmentTAGS.FR_CONTACT_US)||Global.current_fragment_id.equals(FragmentTAGS.FR_HAPPINESS))
             binding.imgHelp.setVisibility(View.INVISIBLE);
         else if(Global.current_fragment_id.equals(FragmentTAGS.FR_DASHBOARD)||Global.current_fragment_id.equals(FragmentTAGS.FR_MYMAP)||Global.current_fragment_id.equals(FragmentTAGS.FR_BOOKMARK))
             binding.imgHelp.setVisibility(View.VISIBLE);
         else
-            binding.imgHelp.setVisibility(View.INVISIBLE);
+            binding.imgHelp.setVisibility(View.INVISIBLE);*/
 
 
 
