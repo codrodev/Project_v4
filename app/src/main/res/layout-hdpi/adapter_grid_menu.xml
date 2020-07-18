@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.2"
-                android:lineHeight="15dp"
+                android:lineHeight="18dp"
                 android:text='@{adapterGridMenuVM.getCurrentHomeGridMenuItems(position).nameEn ?? ""}'
                 android:maxLines="3"
                 android:lines="2"

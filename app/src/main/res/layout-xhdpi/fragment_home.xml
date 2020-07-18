@@ -90,7 +90,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/search"
                                 android:paddingStart="8dp"
-                                android:textSize="15sp"
+                                android:textSize="16sp"
                                 android:gravity="start|center_vertical"
                                 android:layout_gravity="center_vertical|start"
                                 android:textAlignment="viewStart"
@@ -142,7 +142,7 @@
                                     android:id="@+id/txtHeader"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:textSize="15sp"
+                                    android:textSize="14sp"
                                     android:gravity="center"
                                     android:layout_gravity="center"
                                     android:textColor="@color/maroon_light" />

@@ -5,7 +5,7 @@
     <TextView
         style="@style/font_medium_regular"
         android:id="@+id/tab_title"
-        android:textSize="17sp"
+        android:textSize="14sp"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:gravity="center"

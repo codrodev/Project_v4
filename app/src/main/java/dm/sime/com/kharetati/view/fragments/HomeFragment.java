@@ -477,7 +477,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             x.setRegXPattern(control.getRegexExp());
         }
 
-        x.setTextSize(16f);
+        x.setTextSize(14f);
         //x.setFilters(FilterArray);
         x.setTypeface(typeface);
         x.setPadding(25,0,25,0);
@@ -551,7 +551,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
 
         spinnerView = new TextView(getActivity());
-        spinnerView.setTextSize(16f);
+        spinnerView.setTextSize(14f);
         spinnerView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
         spinnerView.setText(Global.CURRENT_LOCALE.equals("en")?control.getPlaceHolderEn():control.getPlaceHolderAr());

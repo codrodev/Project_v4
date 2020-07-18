@@ -268,7 +268,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                     if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null){
 
                         if(Global.mapSearchResult.getService_response().getMap().getFunctions().size()>1){
-                            StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
+                            StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(4, LinearLayoutManager.VERTICAL);
                             binding.mapFunctionLayout.setVisibility(View.VISIBLE);
                             adapter = new FunctionOnMapAdapter(model, getActivity(),listener, Global.mapSearchResult.getService_response().getMap().getFunctions());
                             binding.recycleMapFunction.setAdapter(adapter);
