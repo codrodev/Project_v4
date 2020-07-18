@@ -1021,6 +1021,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                 binding.copyrightArabic.setVisibility(View.GONE);
                 binding.copyrightEnglish.setVisibility(View.GONE);
                 binding.logoSplash.setVisibility(View.GONE);
+                binding.splashLogoLayout.setVisibility(View.GONE);
                 binding.imgBackground.setVisibility(View.VISIBLE);
 
                 binding.imgBackground.setPadding(0, (int) ((Global.height/100)*24),0,0);

@@ -21,6 +21,9 @@ buildscript {
 
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
+        // Add the Crashlytics Gradle plugin.
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.2.0'
+
         //Android Navigation safe args classpath
 
         //classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.2.0-beta01'

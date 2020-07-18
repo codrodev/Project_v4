@@ -1,6 +1,9 @@
 apply plugin: 'com.android.application'
 
 apply plugin: 'com.google.gms.google-services'
+
+// Apply the Crashlytics Gradle plugin
+apply plugin: 'com.google.firebase.crashlytics'
 // Add the Fabric plugin.
 //apply plugin: 'io.fabric'
 
@@ -130,6 +133,10 @@ dependencies {
     //implementation 'com.google.firebase:firebase-messaging:11.0.2'
     // (Recommended) Add the Google Analytics dependency.
     implementation 'com.google.firebase:firebase-analytics:17.4.4'
+
+    // Add the Firebase Crashlytics SDK.
+    implementation 'com.google.firebase:firebase-crashlytics:17.1.1'
+
     implementation project(path: ':libraryuaepass')
 
     // Add the Firebase Crashlytics dependency.

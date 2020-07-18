@@ -9,6 +9,8 @@ import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.view.View;
 
+import dm.sime.com.kharetati.utility.Global;
+
 
 public final class BezierView extends View {
 
@@ -260,9 +262,13 @@ public final class BezierView extends View {
         innerArray[1] = new PointF((bezierX - bezierInnerWidth / 2), bezierInnerHeight + extra);
         innerArray[2] = new PointF(bezierX - bezierInnerWidth / 4, bezierInnerHeight + extra);
         innerArray[3] = new PointF(bezierX - bezierInnerWidth / 4, height - extra);
-        innerArray[4] = new PointF(bezierX, height - extra);
+
+        if(Global.width<=320)
+            outerArray[4] = new PointF(this.bezierX+4*extra, height-extra);
+        else
+            innerArray[4] = new PointF(bezierX, height - extra);
         innerArray[5] = new PointF(bezierX /*+ bezierInnerWidth / 4*/, height - extra);
-        innerArray[6] = new PointF(bezierX-10 /*+bezierInnerWidth /48*/, 3*bezierInnerHeight + 1*extra-8);
+        innerArray[6] = new PointF(Global.width<=320?bezierX:bezierX-10 /*+bezierInnerWidth /48*/, 3*bezierInnerHeight + 1*extra-8);
         innerArray[7] = new PointF(bezierX + bezierInnerWidth / 2, bezierInnerHeight + extra);
         innerArray[8] = new PointF(width, bezierInnerHeight + extra);
         innerArray[9] = new PointF(width, height);
