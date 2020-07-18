@@ -452,11 +452,11 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         layout.setOrientation(LinearLayout.HORIZONTAL);
         layout.setGravity(Gravity.CENTER);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(0,8,0,8);
+        layoutParams.setMargins(0,10,0,10);
         layout.setLayoutParams(layoutParams);
 
         final LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lparams.setMargins(35, 0, 35, 0);
+        lparams.setMargins(0, 0, 0, 0);
         //binding.tabRuntimeLayout.setLayoutParams(lparams);
         CleanableEditText x = new CleanableEditText(getActivity());
         //x.setHint(form.getPlaceHolderEn());
@@ -480,7 +480,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         x.setTextSize(16f);
         //x.setFilters(FilterArray);
         x.setTypeface(typeface);
-        x.setPadding(8,0,8,0);
+        x.setPadding(25,0,25,0);
         if(isPlotSearch||isMakani)
             x.requestFocus();
         x.setBackground(getActivity().getResources().getDrawable(R.drawable.control_background));
@@ -521,16 +521,16 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         dynamiclayout.setLayoutDirection(View.LAYOUT_DIRECTION_LOCALE);
         LinearLayout.LayoutParams dynamcLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         if(CURRENT_LOCALE.equals("en"))
-            dynamcLayoutParams.setMargins(65,8,-85,8);
+            dynamcLayoutParams.setMargins(65,10,-85,10);
         else
-            dynamcLayoutParams.setMargins(-85,8,65,8);
+            dynamcLayoutParams.setMargins(-85,10,65,10);
 
 
         LinearLayout spinnerLayout = new LinearLayout(getActivity());
         spinnerLayout.setOrientation(LinearLayout.HORIZONTAL);
         spinnerLayout.setBackgroundColor(getActivity().getResources().getColor(R.color.white));
         LinearLayout.LayoutParams spinnerlayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        spinnerlayoutParams.setMargins(35,8,35,8);
+        spinnerlayoutParams.setMargins(0,8,0,8);
         spinnerLayout.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);
         spinnerLayout.setBackground(getActivity().getResources().getDrawable(R.drawable.control_background));
         spinnerLayout.setLayoutParams(spinnerlayoutParams);
