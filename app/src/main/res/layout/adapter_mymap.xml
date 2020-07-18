@@ -78,10 +78,11 @@
                 android:fontFamily="@font/dubai_font"
                 android:singleLine="false"
                 android:maxLines="2"
-                android:textColor="#b1abab"
+                android:textColor="#3b393a"
                 android:layout_marginStart="5dp"
+                android:paddingEnd="8dp"
                 android:text='@{adapterMyMapVM.getCurrentMyMap(position).req_created_date ?? ""}'
-                android:textAlignment="viewStart"
+                android:textAlignment="viewEnd"
                 />
 
 
@@ -114,6 +115,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/Saps"
                         android:id="@+id/saps"
+                        android:textColor="#3B393A"
 
                         android:textAlignment="viewStart"
                         style="@style/font_small_bold"
@@ -124,6 +126,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/sapsNo"
+                        android:textColor="#3B393A"
                         android:ellipsize="none"
                         style="@style/font_small_bold"
                         android:textAlignment="viewStart"
@@ -147,7 +150,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/voucher_num_mymaps"
-
+                        android:textColor="#3B393A"
 
                         android:textAlignment="viewStart"
                         style="@style/font_small_bold"
@@ -161,7 +164,7 @@
                         android:fontFamily="@font/dubai_font"
                         android:singleLine="false"
                         android:maxLines="2"
-                        android:textColor="#b1abab"
+                        android:textColor="#999596"
                         android:layout_marginStart="5dp"
                         android:text='@{adapterMyMapVM.getCurrentMyMap(position).req_created_date ?? ""}'
                         android:textAlignment="viewStart"
@@ -186,7 +189,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="5dp"
-
+                            android:textColor="#3B393A"
                             style="@style/font_small_bold"
                             android:text="@string/plot_no"/>
                         <TextView
@@ -196,7 +199,7 @@
                             android:fontFamily="@font/dubai_font"
                             android:textSize="14sp"
                             android:id="@+id/plotNo"
-                            android:textColor="#b1abab"
+                            android:textColor="#999596"
                             android:layout_marginHorizontal="5dp"
                             android:layout_marginVertical="5dp"
                             android:text='@{adapterMyMapVM.getCurrentMyMap(position).parcel_id ?? ""}'/>
@@ -220,6 +223,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/LBL_REQUEST_STATUS"
+                        android:textColor="#3B393A"
                         android:id="@+id/status"
                         android:textAlignment="viewStart"
                         style="@style/font_small_bold"
@@ -232,7 +236,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/reqStatus"
                         android:textSize="14sp"
-                        android:textColor="#b1abab"
+                        android:textColor="#999596"
                         android:textAlignment="viewStart"
                         android:fontFamily="@font/dubai_font"
                         android:text=""

@@ -1,6 +1,7 @@
 package dm.sime.com.kharetati.view.viewModels;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
@@ -96,7 +97,10 @@ public class PayViewModel extends ViewModel {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<CreateUpdateRequestResponse>() {
                         @Override public void accept(CreateUpdateRequestResponse createUpdateRequestResponse) throws Exception {
+
                             createUpdateRequest(createUpdateRequestResponse);
+
+
 
                         }
                     }, new Consumer<Throwable>() {
@@ -141,12 +145,27 @@ public class PayViewModel extends ViewModel {
                 Global.paymentUrl = eradPaymentURL+"&locale="+locale+"&VoucherNo="+voucherNo+"&PayeeNameEN="+customerName+"&MobileNo="+mobileNo+"&eMail="+emailId+"&ReturnURL="+callBackURL;
 
 
+
                 if(paymentType.compareToIgnoreCase("Pay Now")==0){
 
                     if(status==600){
                         ParentSiteplanFragment.parentModel.retrieveProfileDocs();
                         ArrayList al = new ArrayList<>();
                         al.add(Global.paymentUrl);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("userid", Global.isUAE?Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getUuid():Global.loginDetails.username);
+                        bundle.putString("requestId", Global.requestId);
+                        bundle.putString("parcelId", Global.mapSearchResult.getService_response().getParcelId());
+                        bundle.putString("voucherNo", voucherNo );
+                        bundle.putString("mobileNo", mobileNo);
+                        bundle.putString("emailId", emailId);
+                        bundle.putString("customerName", customerName);
+                        bundle.putBoolean("hasChosenDelivery",Global.isDeliveryByCourier );
+                        bundle.putString("paymentType",paymentType);
+                        bundle.putBoolean("isOwner",Global.rbIsOwner);
+                        bundle.putBoolean("isPerson",Global.isPerson);
+                        MainActivity.firebaseAnalytics.logEvent("CreateUpdateRequest", bundle);
 
                         //((MainActivity)activity).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
                     } else if(status==402){

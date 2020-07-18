@@ -285,6 +285,7 @@
     <string name="pantoplot">Pan to Plot</string>
     <string name="openmaknai">Open in Makani</string>
     <string name="userguide">User Guide</string>
+    <string name="guest">GUEST</string>
 
     <string-array name="arrHeader">
         <item>header 1</item>

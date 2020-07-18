@@ -242,7 +242,7 @@
     <string name="yes">نعم</string>
     <string name="no">لا</string>
     <string name="reset">تحديث</string>
-    <string name="findPlot">العثور على مؤامرة</string>
+    <string name="findPlot">البحث عن قطعة الأرض</string>
     <string name="enter_plot_number">ادخل رقم قطعة الأرض</string>
     <string name="date_from">التاريخ - من:</string>
     <string name="date">DD/MM/YYYY</string>
@@ -264,10 +264,10 @@
     <string name="fontsize">حجم الخط</string>
     <string name="on">تشغيل</string>
     <string name="off">إيقاف</string>
-    <string name="finddus">اعثر عليناا</string>
-    <string name="alriga" />
+    <string name="finddus">إعثر علينا</string>
+    <string name="alriga">al rigga 17th st</string>
     <string name="callus">إتصل بنا</string>
-    <string name="visitus">قم بزيارتن</string>
+    <string name="visitus">قم بزيارتنا</string>
     <string name="mailus">راسلنا</string>
     <string name="reachus">تواصل معنا</string>
     <string name="sendus">أرسل لنا</string>
@@ -288,4 +288,5 @@
     <string name="pantoplot">تكبير للقطعة</string>
     <string name="openmaknai">افتح في تطبيق مكاني</string>
     <string name="userguide">دليل المستخدم</string>
+    <string name="guest">زائر</string>
 </resources>

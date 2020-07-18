@@ -54,7 +54,7 @@
 
                         android:text="@string/search"
                         android:textAllCaps="false"
-                        android:textColor="#fff"
+                        android:textColor="#fbf5f6"
                         android:textSize="16sp" />
                 </LinearLayout>
                 <LinearLayout
@@ -84,7 +84,7 @@
                         android:text="@string/reset"
                         android:textAllCaps="false"
                         android:textSize="16sp"
-                        android:textColor="#000" />
+                        android:textColor="#292828" />
 
                 </LinearLayout>
                 <LinearLayout

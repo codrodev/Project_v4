@@ -88,6 +88,7 @@ public class HappinessFragment extends Fragment {
         ((MainActivity)getActivity()).manageActionBar(true);
         ((MainActivity)getActivity()).manageBottomBar(true);
         ((MainActivity)getActivity()).setScreenName(getActivity().getResources().getString(R.string.menu_happiness));
+        MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(),FR_HAPPINESS , null /* class override */);
         initializePage();
         setRetainInstance(true);
         return binding.getRoot();

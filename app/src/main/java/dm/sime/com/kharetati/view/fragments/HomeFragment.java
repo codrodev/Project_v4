@@ -48,6 +48,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,6 +67,7 @@ import com.esri.arcgisruntime.loadable.LoadStatus;
 import com.esri.arcgisruntime.mapping.ArcGISMap;
 import com.esri.arcgisruntime.security.Credential;
 import com.esri.arcgisruntime.security.UserCredential;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 
 import dm.sime.com.kharetati.KharetatiApp;
@@ -118,6 +120,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     private EditText txtParcelID;
     private String parcelNumber;
     private ProgressBar progressBar;
+    private MapView mMapView;
     private TextView[] dots;
     HomeViewModelFactory factory;
     private HomeRepository repository;
@@ -185,6 +188,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
         mTracker.setScreenName(FR_HOME);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(), FR_HOME, null /* class override */);
 
         model.initializeHomeVM(getContext());
         initializePage();
@@ -235,7 +239,11 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         ((MainActivity)getActivity()).setScreenName(getActivity().getString(R.string.title_welcome));
         if(Global.appId!=null && model.getApplication( Global.appId)!=null)
         Global.HelpUrl = CURRENT_LOCALE.equals("en")?model.getApplication( Global.appId).getHelpUrlEn():model.getApplication( Global.appId).getHelpUrlAr();
-        ((MainActivity)getActivity()).getLastlogin();
+        try {
+            ((MainActivity)getActivity()).getLastlogin();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         Global.selectedTab =0;
 
 
@@ -253,6 +261,9 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                 .setLabel(model.getSelectedApplication().getNameEn())
                 .setValue(Long.parseLong(appID))
                 .build());
+        if(getActivity()!=null)
+            MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(), model.getSelectedApplication().getNameEn(), null /* class override */);
+        model.getApplication(appID).getSearchForm().get(0).getTabs().getControls().get(0);
         Log.d(getClass().getSimpleName(),model.getSelectedApplication().getNameEn());
     }
 
@@ -441,11 +452,11 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         layout.setOrientation(LinearLayout.HORIZONTAL);
         layout.setGravity(Gravity.CENTER);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(0,15,0,15);
+        layoutParams.setMargins(0,8,0,8);
         layout.setLayoutParams(layoutParams);
 
         final LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lparams.setMargins(0, 12, 0, 10);
+        lparams.setMargins(35, 0, 35, 0);
         //binding.tabRuntimeLayout.setLayoutParams(lparams);
         CleanableEditText x = new CleanableEditText(getActivity());
         //x.setHint(form.getPlaceHolderEn());
@@ -457,6 +468,8 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         x.setLayoutParams(lparams);
         x.setEms(10);
         x.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+        x.setTextColor(Color.parseColor("#969696"));
+        x.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         x.setMaxLines(1);
         x.setTextSize(15f);
         x.setType(control.getType());
@@ -467,7 +480,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         x.setTextSize(16f);
         //x.setFilters(FilterArray);
         x.setTypeface(typeface);
-        x.setPadding(25,0,25,0);
+        x.setPadding(8,0,8,0);
         if(isPlotSearch||isMakani)
             x.requestFocus();
         x.setBackground(getActivity().getResources().getDrawable(R.drawable.control_background));
@@ -508,16 +521,16 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         dynamiclayout.setLayoutDirection(View.LAYOUT_DIRECTION_LOCALE);
         LinearLayout.LayoutParams dynamcLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         if(CURRENT_LOCALE.equals("en"))
-            dynamcLayoutParams.setMargins(65,10,-85,8);
+            dynamcLayoutParams.setMargins(65,8,-85,8);
         else
-            dynamcLayoutParams.setMargins(-85,10,65,8);
+            dynamcLayoutParams.setMargins(-85,8,65,8);
 
 
         LinearLayout spinnerLayout = new LinearLayout(getActivity());
         spinnerLayout.setOrientation(LinearLayout.HORIZONTAL);
         spinnerLayout.setBackgroundColor(getActivity().getResources().getColor(R.color.white));
         LinearLayout.LayoutParams spinnerlayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        spinnerlayoutParams.setMargins(0,8,0,8);
+        spinnerlayoutParams.setMargins(35,8,35,8);
         spinnerLayout.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);
         spinnerLayout.setBackground(getActivity().getResources().getDrawable(R.drawable.control_background));
         spinnerLayout.setLayoutParams(spinnerlayoutParams);
@@ -671,6 +684,11 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                 builder.append("|");
                 builder.append(Global.subNo);
 
+
+
+
+
+
             }
         }
         /*if (communityId != null && communityId.length() > 0){
@@ -696,6 +714,8 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                 }*/
             }
         }
+        Bundle bundle = new Bundle();
+
         return builder.toString();
     }
 

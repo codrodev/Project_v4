@@ -273,6 +273,7 @@ public class  WebViewFragment extends Fragment {
         manageAppBottomBAtr(true);
         manageAppBar(true);
         ((MainActivity)getActivity()).setScreenName(appName!=null?appName:getActivity().getResources().getString(R.string.title_welcome));
+        MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(),appName!=null?appName:"WEBVIEW SCREEN" , null /* class override */);
     }
 
     private class MyWebChromeClient extends WebChromeClient {

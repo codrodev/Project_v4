@@ -169,6 +169,8 @@ public class LoginViewModel extends ViewModel {
             Global.isUserLoggedIn = false;
             Global.arcgis_token = kharetatiUser.getArcgis_token();
 
+            ((LoginActivity)activity).firebaseAnalytics.setUserId("GUEST");
+
             AppUrls.GIS_LAYER_PASSWORD=kharetatiUser.gis_pwd!=null && kharetatiUser.gis_pwd!=""?kharetatiUser.gis_pwd: AppUrls.GIS_LAYER_PASSWORD;
             AppUrls.GIS_LAYER_USERNAME=kharetatiUser.gis_user_name != null && kharetatiUser.gis_user_name!=""?kharetatiUser.gis_user_name: AppUrls.GIS_LAYER_USERNAME;
             AppUrls.GIS_LAYER_URL=kharetatiUser.gis_layer_url != null && kharetatiUser.gis_layer_url!=""?kharetatiUser.gis_layer_url:AppUrls.GIS_LAYER_URL;
@@ -187,7 +189,7 @@ public class LoginViewModel extends ViewModel {
 
             User user = new User();
             Global.accessToken=kharetatiUser.access_token;
-            user.setUsername("GUEST");
+            user.setUsername(Global.CURRENT_LOCALE.equals("en")?"GUEST":"زائر");
             guestName=user.getUsername();
             guestPassword="Guest";
 
@@ -317,6 +319,7 @@ public class LoginViewModel extends ViewModel {
                 if(!isUAE) {
                     loginDetails.username = email;
                     loginDetails.pwd = password;
+                    ((LoginActivity)activity).firebaseAnalytics.setUserId(email);
                 }
                 //Global.loginDetails.showFormPrefilledOnRememberMe=false;
                 Global.forceUserToUpdateBuild_msg_en = accessTokenResponse.getForceUserToUpdateBuildMsgEn();
@@ -925,8 +928,10 @@ public class LoginViewModel extends ViewModel {
                             Global.uaeSessionResponse = uaeSessionResponse;
                             Log.v(TAG, "UAE Pass App: getUAESessionToken(): sessionToken:" + uaeSessionResponse.getService_response().getUAEPASSDetails().getUuid());
 
-                            if(!Boolean.valueOf(uaeSessionResponse.getIs_exception()))
+                            if(!Boolean.valueOf(uaeSessionResponse.getIs_exception())){
                                 getAccessTokenAPI(true);
+                                ((LoginActivity)activity).firebaseAnalytics.setUserId(uaeSessionResponse.getService_response().getUAEPASSDetails().getEmail());
+                            }
                             else{
                                 AlertDialogUtil.showProgressBar(activity,false);
                                 Global.accessToken=null;

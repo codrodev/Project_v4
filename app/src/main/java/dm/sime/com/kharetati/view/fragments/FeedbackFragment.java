@@ -73,6 +73,7 @@ public class FeedbackFragment extends Fragment {
         ((MainActivity)getActivity()).manageActionBar(true);
         ((MainActivity)getActivity()).manageBottomBar(true);
         ((MainActivity)getActivity()).setScreenName(getActivity().getResources().getString(R.string.feedback));
+        MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(),FR_FEEDBACK , null /* class override */);
         initializePage();
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         return binding.getRoot();

@@ -233,7 +233,7 @@
                     <AutoCompleteTextView
                         android:id="@+id/editUserName"
                         android:layout_width="match_parent"
-                        android:layout_height="20.33dp"
+                        android:layout_height="25dp"
 
                         android:layout_marginEnd="40dp"
 
@@ -318,7 +318,7 @@
                 <EditText
                     android:id="@+id/editPassword"
                     android:layout_width="match_parent"
-                    android:layout_height="20.33dp"
+                    android:layout_height="25dp"
                     android:textAlignment="viewStart"
                     android:gravity="start|center_vertical"
                     android:layoutDirection="locale"
@@ -385,7 +385,7 @@
                     android:orientation="horizontal">
                     <CheckBox
                         android:layout_width="match_parent"
-                        android:layout_height="21dp"
+                        android:layout_height="25dp"
                         android:layout_gravity="start"
                         android:clickable="true"
                         android:layout_marginStart="-7dp"
@@ -400,7 +400,7 @@
                         android:text="@string/rememberme" />
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="25dp"
                         android:id="@+id/txtForgotPassword"
                         android:layout_gravity="end"
                         android:gravity="center_vertical|end"
@@ -426,7 +426,7 @@
                     android:background="@color/faded_text_color"/>
 
                 <Button
-                    android:layout_width="200dp"
+                    android:layout_width="224dp"
                     android:layout_height="35dp"
                     android:layout_marginStart="81.33dp"
                     android:layout_marginEnd="79.50dp"
@@ -514,14 +514,15 @@
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/layoutMyIDUAEPass"
-                    android:layout_width="194dp"
+                    android:layout_width="wrap_content"
+                    android:minWidth="220dp"
                     android:layout_height="35.67dp"
-                    android:layout_marginStart="88.75dp"
-                    android:layout_marginEnd="88dp"
+                    android:layout_marginStart="80.75dp"
+                    android:layout_marginEnd="80dp"
                     android:orientation="horizontal"
                     android:visibility="visible"
-                    android:paddingEnd="16dp"
-                    android:paddingStart="16dp"
+                    android:paddingEnd="4dp"
+                    android:paddingStart="4dp"
                     android:background="@drawable/rounded_edittext_boarder_bg"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
@@ -556,8 +557,8 @@
                         android:layout_height="match_parent"
 
                         android:id="@+id/txtMyIDUAEPass"
-                        android:layout_gravity="center"
-                        android:gravity="center"
+                        android:layout_gravity="start|center_vertical"
+                        android:gravity="start|center_vertical"
                         android:fontFamily="@font/dubai_font"
                         android:text="@string/with_uaepass"
 

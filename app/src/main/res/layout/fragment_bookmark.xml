@@ -52,8 +52,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginStart="5dp"
-                        android:layout_weight="0.92"
+                        android:layout_marginStart="3dp"
+                        android:layout_weight="0.82"
 
                         android:focusableInTouchMode="false"
                         android:fontFamily="@font/dubai_font"
@@ -70,7 +70,7 @@
                         android:id="@+id/fragment_bookmarks_plotnumber"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.635"
+                        android:layout_weight="0.735"
                         android:background="#00000000"
                         android:digits="0123456789"
 
@@ -115,7 +115,7 @@
                         android:background="#80333333" />
 
                     <LinearLayout
-                        android:id="@+id/mapMenu"
+                        android:id="@+id/sortOptions"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="5dp"
