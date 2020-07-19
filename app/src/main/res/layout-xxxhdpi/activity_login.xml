@@ -120,20 +120,21 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.40"
                 android:layout_gravity="end">
+
                 <ImageView
+                    android:id="@+id/logoSplash"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
-                    android:id="@+id/logoSplash"
-                    android:scaleType="fitXY"
-                    android:visibility="visible"
-                    android:layout_marginStart="-35dp"
-
-                    android:layout_marginBottom="-70dp"
                     android:layout_gravity="bottom|left"
-                    android:padding="47dp"
+                    android:layout_marginStart="-42dp"
+                    android:layout_marginBottom="-68dp"
+                    android:padding="48dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/dm_logo_512"
 
 
-                    android:src="@drawable/dm_logo_512"/></LinearLayout>
+                    android:visibility="visible" />
+            </LinearLayout>
         </LinearLayout>
 
 
@@ -194,8 +195,6 @@
                     android:id="@+id/layoutParentLoginContainer"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-
-
                     android:background="@color/white"
                     android:orientation="vertical">
 
@@ -253,9 +252,7 @@
                                 android:id="@+id/editUserName"
                                 android:layout_width="match_parent"
                                 android:layout_height="20.25dp"
-
                                 android:layout_marginEnd="40dp"
-
                                 android:paddingEnd="8dp"
                                 android:layout_marginTop="16dp"
                                 android:layoutDirection="locale"
@@ -403,7 +400,7 @@
                             android:layout_marginBottom="8dp"
                             android:orientation="horizontal">
                             <CheckBox
-                                android:layout_width="18dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="18dp"
                                 android:layout_gravity="start"
                                 android:clickable="true"

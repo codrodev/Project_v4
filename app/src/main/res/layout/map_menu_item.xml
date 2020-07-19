@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:minHeight="40dp"
         android:padding="8dp"
+
         android:background="@color/white"
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"

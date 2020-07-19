@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:minHeight="22dp"
         android:padding="2dp"
-        android:textSize="8sp"
+        android:textSize="9.5sp"
         android:layout_marginStart="4dp"
         android:background="@color/white"
         android:layout_gravity="center_vertical"
