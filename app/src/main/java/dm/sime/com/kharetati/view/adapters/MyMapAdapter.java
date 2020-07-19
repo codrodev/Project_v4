@@ -75,28 +75,36 @@ public class MyMapAdapter  extends RecyclerView.Adapter<MyMapAdapter.GenericView
         }
 
         if(Boolean.parseBoolean(lstMyMap.get(position).getIsPaymentPending())){
-            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setEnabled(true);
-            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setText(R.string.pay_now);
-            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setVisibility(View.VISIBLE);
-            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setBackground(context.getResources().getDrawable(R.drawable.pay_capsule_bg));
-            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setAlpha(1f);
+            ((TextView)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setEnabled(true);
+            ((TextView)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setText(R.string.pay_now);
+            ((TextView)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setVisibility(View.VISIBLE);
+
+
+            ((LinearLayout)holder.binding.getRoot().findViewById(R.id.payLayout)).setVisibility(View.VISIBLE);
+
+            ((LinearLayout)holder.binding.getRoot().findViewById(R.id.payLayout)).setBackground(context.getResources().getDrawable(R.drawable.pay_capsule_bg));
+            ((LinearLayout)holder.binding.getRoot().findViewById(R.id.payLayout)).setAlpha(1f);
         }
         else {
-            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setEnabled(false);
-            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setVisibility(View.VISIBLE);
+            ((TextView)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setEnabled(false);
+            ((TextView)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setVisibility(View.VISIBLE);
+            ((TextView)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setText(R.string.paid);
 
-            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setText(R.string.paid);
-            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setBackground(context.getResources().getDrawable(R.drawable.pay_capsule_bg));
-            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setAlpha(.5f);
+            ((LinearLayout)holder.binding.getRoot().findViewById(R.id.payLayout)).setVisibility(View.VISIBLE);
+            ((LinearLayout)holder.binding.getRoot().findViewById(R.id.payLayout)).setBackground(context.getResources().getDrawable(R.drawable.pay_capsule_bg));
+            ((LinearLayout)holder.binding.getRoot().findViewById(R.id.payLayout)).setAlpha(.5f);
         }
 
         if(lstMyMap.get(position).getRequestStatus().toLowerCase().equals("cancelled")||lstMyMap.get(position).getRequestStatus().toLowerCase().equals("Rejected")){
-            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setEnabled(false);
-            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setVisibility(View.INVISIBLE);
+            ((TextView)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setEnabled(false);
+            ((TextView)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setVisibility(View.INVISIBLE);
 
-            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setText(R.string.pay_now);
-            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setBackground(context.getResources().getDrawable(R.drawable.pay_capsule_bg));
-            ((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setAlpha(.5f);
+            ((TextView)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setText(R.string.pay_now);
+
+            ((LinearLayout)holder.binding.getRoot().findViewById(R.id.payLayout)).setVisibility(View.INVISIBLE);
+
+            ((LinearLayout)holder.binding.getRoot().findViewById(R.id.payLayout)).setBackground(context.getResources().getDrawable(R.drawable.pay_capsule_bg));
+            ((LinearLayout)holder.binding.getRoot().findViewById(R.id.payLayout)).setAlpha(.5f);
         }
         else if(lstMyMap.get(position).getRequestStatus().toLowerCase().equals("in progress")){
             /*((Button)holder.binding.getRoot().findViewById(R.id.siteplan_payButton)).setEnabled(true);
