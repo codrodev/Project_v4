@@ -42,14 +42,14 @@
                     android:layout_height="wrap_content"
                     android:text="@string/LBL_DATE_TIME"
                     android:visibility="invisible"
-                    android:textSize="11sp"
+                    android:textSize="10sp"
                     android:textAlignment="viewStart"
                     android:fontFamily="@font/dubai_font"
                     android:textColor="#262424"
                     android:layout_marginStart="5dp" />
                 <TextView
                     android:layout_width="wrap_content"
-                    android:textSize="11sp"
+                    android:textSize="10sp"
                     android:id="@+id/dateBookmark"
                     android:layout_marginStart="5dp"
                     android:textColor="#262424"
@@ -75,7 +75,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="5dp"
-                        android:textSize="13sp"
+                        android:textSize="11sp"
                         android:textColor="@color/favoritesTextColor"
                         android:fontFamily="@font/dubai_font"
                         android:text="@string/plot_no"/>
@@ -85,7 +85,7 @@
                         android:textColor="@color/favoritesTextColor"
                         android:fontFamily="@font/dubai_font"
                         android:id="@+id/plotNo"
-                        android:textSize="13sp"
+                        android:textSize="11sp"
                         android:layout_marginHorizontal="5dp"
                         android:layout_marginVertical="5dp"
                         android:text='@{adapterBookmarkVM.getCurrentBookmark(position).ParcelNumber ?? ""}'/>
@@ -114,7 +114,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/area"
-                            android:textSize="13sp"
+                            android:textSize="11sp"
                             android:textAlignment="viewStart"
                             android:textColor="@color/favoritesTextColor"
                             android:fontFamily="@font/dubai_font"
@@ -122,7 +122,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="13sp"
+                            android:textSize="11sp"
                             android:textColor="@color/favoritesTextColor"
                             android:fontFamily="@font/dubai_font"
                             android:singleLine="true"
@@ -135,7 +135,7 @@
                         android:id="@+id/txtDescriptionEn"
                         android:textColor="@color/favoritesTextColor"
                         android:fontFamily="@font/dubai_font"
-                        android:textSize="13sp"
+                        android:textSize="11sp"
                         android:text="desc"
                         android:layout_marginStart="15dp"
                         android:layout_width="wrap_content"
@@ -164,8 +164,8 @@
                             android:gravity="center"
                             android:id="@+id/gotomap">
                             <ImageView
-                                android:layout_width="22dp"
-                                android:layout_height="25dp"
+                                android:layout_width="19dp"
+                                android:layout_height="23dp"
                                 android:fontFamily="@font/dubai_font"
                                 android:id="@+id/view"
                                 android:src="@drawable/map_512"/>
@@ -179,8 +179,8 @@
                             android:gravity="center"
                             android:id="@+id/edit">
                             <ImageView
-                                android:layout_width="22dp"
-                                android:layout_height="25dp"
+                                android:layout_width="19dp"
+                                android:layout_height="23dp"
                                 android:fontFamily="@font/dubai_font"
                                 android:src="@drawable/edit_512"/>
                         </LinearLayout>
@@ -192,8 +192,8 @@
                             android:gravity="center"
                             android:layout_marginStart="5dp">
                             <ImageView
-                                android:layout_width="22dp"
-                                android:layout_height="25dp"
+                                android:layout_width="19dp"
+                                android:layout_height="23dp"
                                 android:src="@drawable/delete_512"
                                 android:fontFamily="@font/dubai_font"
                                 />
@@ -206,8 +206,8 @@
                             android:gravity="center"
                             android:layout_marginStart="5dp">
                             <ImageView
-                                android:layout_width="22dp"
-                                android:layout_height="25dp"
+                                android:layout_width="19dp"
+                                android:layout_height="23dp"
                                 android:src="@drawable/makani_512"
                                 android:fontFamily="@font/dubai_font" />
                         </LinearLayout>

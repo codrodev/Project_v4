@@ -22,14 +22,13 @@
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:orientation="vertical">
-
             <LinearLayout
                 android:id="@+id/fragment_map_layoutSearch"
                 android:layout_width="match_parent"
-                android:layout_height="74dp"
+                android:layout_marginTop="10dp"
+                android:layout_height="72dp"
                 android:orientation="horizontal"
                 android:layout_marginHorizontal="8dp">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="34dp"
@@ -43,7 +42,6 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="3dp"
                         android:layout_weight="0.82"
-
                         android:focusableInTouchMode="false"
                         android:fontFamily="@font/dubai_font"
                         android:gravity="start|center_vertical"
@@ -124,11 +122,7 @@
 
 
                 </LinearLayout>
-
-
-
-
-            </LinearLayout>
+                </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -180,7 +174,6 @@
 
                 </LinearLayout>
             </LinearLayout>
-
             <TextView
                 android:id="@+id/textHeading"
                 android:layout_width="match_parent"
@@ -192,7 +185,6 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:visibility="gone" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerBookMarks"
                 android:layout_width="match_parent"

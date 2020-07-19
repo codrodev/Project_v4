@@ -27,8 +27,7 @@
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
             android:paddingBottom="9dp"
-            android:paddingTop="4dp"
-            >
+            android:paddingTop="4dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -164,8 +163,8 @@
                             android:gravity="center"
                             android:id="@+id/gotomap">
                             <ImageView
-                                android:layout_width="22dp"
-                                android:layout_height="25dp"
+                                android:layout_width="25dp"
+                                android:layout_height="29dp"
                                 android:fontFamily="@font/dubai_font"
                                 android:id="@+id/view"
                                 android:src="@drawable/map_512"/>
@@ -179,8 +178,8 @@
                             android:gravity="center"
                             android:id="@+id/edit">
                             <ImageView
-                                android:layout_width="22dp"
-                                android:layout_height="25dp"
+                                android:layout_width="25dp"
+                                android:layout_height="29dp"
                                 android:fontFamily="@font/dubai_font"
                                 android:src="@drawable/edit_512"/>
                         </LinearLayout>
@@ -192,8 +191,8 @@
                             android:gravity="center"
                             android:layout_marginStart="5dp">
                             <ImageView
-                                android:layout_width="22dp"
-                                android:layout_height="25dp"
+                                android:layout_width="25dp"
+                                android:layout_height="29dp"
                                 android:src="@drawable/delete_512"
                                 android:fontFamily="@font/dubai_font"
                                 />
@@ -206,8 +205,8 @@
                             android:gravity="center"
                             android:layout_marginStart="5dp">
                             <ImageView
-                                android:layout_width="22dp"
-                                android:layout_height="25dp"
+                                android:layout_width="25dp"
+                                android:layout_height="29dp"
                                 android:src="@drawable/makani_512"
                                 android:fontFamily="@font/dubai_font" />
                         </LinearLayout>
