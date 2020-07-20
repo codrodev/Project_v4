@@ -52,7 +52,7 @@
                         android:text="@string/findPlot"
                         android:textAlignment="viewStart"
                         android:textColor="#333333"
-                        android:textSize="11sp" />
+                        android:textSize="13sp" />
 
                     <AutoCompleteTextView
                         android:id="@+id/fragment_bookmarks_plotnumber"
@@ -84,14 +84,13 @@
                         android:layout_height="45dp"
                         android:layout_gravity="center"
                         android:layout_weight="1.08"
+                        android:gravity="center"
                         android:layout_marginEnd="5dp">
-
                         <ImageView
-
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_width="19dp"
+                            android:layout_height="19dp"
                             android:layout_marginEnd="5dp"
-                            android:padding="10dp"
+                            android:padding="2dp"
                             android:src="@drawable/search_512" />
 
                     </LinearLayout>
@@ -107,12 +106,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="5dp"
+                        android:gravity="center"
                         android:layout_weight="1.12">
 
                         <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:padding="8dp"
+                            android:layout_width="19dp"
+                            android:layout_height="19dp"
+                            android:padding="2dp"
                             android:src="@drawable/map_menu_512" />
 
 

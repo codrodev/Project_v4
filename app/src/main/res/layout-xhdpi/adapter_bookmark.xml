@@ -64,7 +64,7 @@
                 android:layout_weight="1.00"
                 android:background="#fcfcfc"
                 android:paddingHorizontal="10dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="6dp"
                 android:orientation="horizontal">
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -109,7 +109,7 @@
                         android:orientation="horizontal"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="10dp"
-                        android:layout_marginTop="5dp">
+                        android:layout_marginTop="3dp">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -146,10 +146,9 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="43dp"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:layout_marginTop="3dp"
                     android:layout_marginBottom="5dp">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -164,8 +163,9 @@
                             android:gravity="center"
                             android:id="@+id/gotomap">
                             <ImageView
-                                android:layout_width="22dp"
-                                android:layout_height="25dp"
+                                android:layout_width="20dp"
+                                android:layout_height="23dp"
+                                android:padding="1dp"
                                 android:fontFamily="@font/dubai_font"
                                 android:id="@+id/view"
                                 android:src="@drawable/map_512"/>
@@ -179,8 +179,9 @@
                             android:gravity="center"
                             android:id="@+id/edit">
                             <ImageView
-                                android:layout_width="22dp"
-                                android:layout_height="25dp"
+                                android:layout_width="20dp"
+                                android:layout_height="23dp"
+                                android:padding="1dp"
                                 android:fontFamily="@font/dubai_font"
                                 android:src="@drawable/edit_512"/>
                         </LinearLayout>
@@ -192,8 +193,9 @@
                             android:gravity="center"
                             android:layout_marginStart="5dp">
                             <ImageView
-                                android:layout_width="22dp"
-                                android:layout_height="25dp"
+                                android:layout_width="20dp"
+                                android:layout_height="23dp"
+                                android:padding="1dp"
                                 android:src="@drawable/delete_512"
                                 android:fontFamily="@font/dubai_font"
                                 />
@@ -206,8 +208,9 @@
                             android:gravity="center"
                             android:layout_marginStart="5dp">
                             <ImageView
-                                android:layout_width="22dp"
-                                android:layout_height="25dp"
+                                android:layout_width="20dp"
+                                android:layout_height="23dp"
+                                android:padding="1dp"
                                 android:src="@drawable/makani_512"
                                 android:fontFamily="@font/dubai_font" />
                         </LinearLayout>

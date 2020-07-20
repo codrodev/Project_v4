@@ -167,6 +167,7 @@
                                 android:layout_height="29dp"
                                 android:fontFamily="@font/dubai_font"
                                 android:id="@+id/view"
+                                android:padding="3dp"
                                 android:src="@drawable/map_512"/>
                         </LinearLayout>
 
@@ -181,6 +182,7 @@
                                 android:layout_width="25dp"
                                 android:layout_height="29dp"
                                 android:fontFamily="@font/dubai_font"
+                                android:padding="3dp"
                                 android:src="@drawable/edit_512"/>
                         </LinearLayout>
                         <LinearLayout
@@ -194,6 +196,7 @@
                                 android:layout_width="25dp"
                                 android:layout_height="29dp"
                                 android:src="@drawable/delete_512"
+                                android:padding="3dp"
                                 android:fontFamily="@font/dubai_font"
                                 />
                         </LinearLayout>
@@ -208,6 +211,7 @@
                                 android:layout_width="25dp"
                                 android:layout_height="29dp"
                                 android:src="@drawable/makani_512"
+                                android:padding="3dp"
                                 android:fontFamily="@font/dubai_font" />
                         </LinearLayout>
 

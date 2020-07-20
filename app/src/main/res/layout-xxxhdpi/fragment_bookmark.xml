@@ -25,8 +25,10 @@
             <LinearLayout
                 android:id="@+id/fragment_map_layoutSearch"
                 android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_height="72dp"
+                android:layout_marginTop="4dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_height="61dp"
                 android:orientation="horizontal"
                 android:layout_marginHorizontal="8dp">
                 <LinearLayout
@@ -51,7 +53,7 @@
                         android:text="@string/findPlot"
                         android:textAlignment="viewStart"
                         android:textColor="#333333"
-                        android:textSize="14sp" />
+                        android:textSize="15sp" />
 
                     <AutoCompleteTextView
                         android:id="@+id/fragment_bookmarks_plotnumber"
@@ -75,7 +77,7 @@
                         android:paddingEnd="5dp"
                         android:textAlignment="viewStart"
                         android:textDirection="ltr"
-                        android:textSize="14sp" />
+                        android:textSize="15sp" />
 
                     <LinearLayout
                         android:id="@+id/fragment_bookmarks_btnSearch"
@@ -83,14 +85,15 @@
                         android:layout_height="45dp"
                         android:layout_gravity="center"
                         android:layout_weight="1.08"
+                        android:gravity="center"
                         android:layout_marginEnd="5dp">
 
                         <ImageView
 
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:layout_marginEnd="5dp"
-                            android:padding="10dp"
+                            android:padding="2dp"
                             android:src="@drawable/search_512" />
 
                     </LinearLayout>
@@ -106,12 +109,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="5dp"
+                        android:gravity="center"
                         android:layout_weight="1.12">
 
                         <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:padding="8dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:padding="2dp"
                             android:src="@drawable/map_menu_512" />
 
 
