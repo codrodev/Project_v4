@@ -61,10 +61,10 @@
 
                     <ImageView
                         android:id="@+id/imgBack"
-                        android:layout_width="27dp"
+                        android:layout_width="36dp"
                         android:layout_height="match_parent"
 
-                       android:padding="5dp"
+                       android:padding="7dp"
                         android:layout_gravity="start|center_vertical"
                         app:srcCompat="@drawable/ic_arrow" />
 
@@ -91,7 +91,7 @@
                         android:id="@+id/imgSearch"
                         android:layout_width="36dp"
                         android:layout_height="match_parent"
-                        android:padding="9dp"
+                        android:padding="7.5dp"
                         android:layout_weight="0.7"
                         android:layout_gravity="start|center_vertical"
                         android:src="@drawable/search_512" />
@@ -112,7 +112,7 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:padding="8dp"
+                        android:padding="7.7dp"
                         android:src="@drawable/map_menu_512"/>
                 </LinearLayout>
 
@@ -219,7 +219,7 @@
             android:divider="#CCCCCC"
             android:dividerHeight=".45dp"
             android:layout_marginStart="50dp"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="11dp"
             android:layout_gravity="end"
             android:background="@color/white"
             android:visibility="visible"
@@ -243,8 +243,8 @@
             android:layout_marginBottom="72dp"
             android:layout_gravity="bottom|end"/>
         <FrameLayout
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"
             android:visibility="gone"

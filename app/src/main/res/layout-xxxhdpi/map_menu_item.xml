@@ -5,17 +5,17 @@
     android:background="@color/white"
     android:layout_height="match_parent">
     <ImageView
-        android:layout_width="27dp"
-        android:layout_height="27dp"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         android:padding="6dp"
         android:background="@color/white"
         android:id="@+id/menuImage"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="27dp"
+        android:minHeight="28dp"
         android:padding="2dp"
-        android:textSize="11.5sp"
+        android:textSize="13sp"
         android:layout_marginStart="4dp"
         android:background="@color/white"
         android:layout_gravity="center_vertical"

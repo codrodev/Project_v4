@@ -274,7 +274,7 @@
                         android:inputType="textEmailAddress"
                         android:paddingLeft="0dp"
                         android:textColor="@color/login_text_color"
-                        android:textSize="12sp"/>
+                        android:textSize="13sp"/>
 
 
                     <ImageView
@@ -356,7 +356,7 @@
                     android:fontFamily="@font/dubai_font"
                     android:layout_marginBottom="16dp"
                     android:ems="10"
-                    android:textSize="12sp"
+                    android:textSize="13sp"
 
                     android:inputType="textWebPassword"
                     android:paddingLeft="0dp"/>
@@ -414,7 +414,7 @@
                         android:fontFamily="@font/dubai_font"
                         android:focusable="false"
                         android:layout_weight=".55"
-                        android:textSize="12.5sp"
+                        android:textSize="13.5sp"
                         android:text="@string/rememberme" />
                     <TextView
                         android:layout_width="match_parent"
@@ -429,7 +429,7 @@
                         android:fontFamily="@font/dubai_font"
                         android:text="@string/forgot_username_password"
                         android:textAlignment="viewEnd"
-                        android:textSize="12.5sp"
+                        android:textSize="13.5sp"
                         android:textColor="@color/faded_text_color" />
 
                 </LinearLayout>
@@ -474,7 +474,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/newuser"
                         android:id="@+id/newuser"
-                        android:textSize="12sp"
+                        android:textSize="12.5sp"
                         android:fontFamily="@font/dubai_font"
                         android:textColor="@color/login_text_color" />
 
@@ -484,7 +484,7 @@
                         android:layout_marginStart="2dp"
                         android:text="@string/reg"
                         android:id="@+id/register"
-                        android:textSize="12sp"
+                        android:textSize="12.5sp"
                         android:fontFamily="@font/dubai_font"
                         android:textColor="@color/maroon_light" />
                 </LinearLayout>
@@ -599,7 +599,7 @@
                     android:text="@string/signin_as_guest"
                     android:textAlignment="center"
                     android:textColor="@color/maroon_light"
-                    android:textSize="12.5sp" />
+                    android:textSize="13sp" />
                 <dm.sime.com.kharetati.view.customview.SwitchCompatEx
                     android:id="@+id/switchLanguage"
                     android:layout_width="128dp"

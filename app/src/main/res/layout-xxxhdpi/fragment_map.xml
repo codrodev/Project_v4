@@ -211,7 +211,7 @@
             app:layout_constraintTop_toBottomOf="@+id/toolBarLayout" />
         <ListView
             android:id="@+id/listmap_menu"
-            android:layout_width="120dp"
+            android:layout_width="128dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginTop="52dp"
@@ -219,7 +219,7 @@
             android:divider="#CCCCCC"
             android:dividerHeight=".45dp"
             android:layout_marginStart="50dp"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="10dp"
             android:layout_gravity="end"
             android:background="@color/white"
             android:visibility="visible"
@@ -228,16 +228,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolBarLayout" />
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="33dp"
-            android:layout_height="33dp"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
             android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"
-            app:fabCustomSize="33dp"
+            app:fabCustomSize="34dp"
             android:id="@+id/floatingButtton"
             app:srcCompat="@drawable/menu_512"
             android:scaleType="fitCenter"
             android:padding="8dp"
-            app:maxImageSize="29dp"
+            app:maxImageSize="30dp"
             android:foregroundGravity="center"
             app:backgroundTint="@color/white"
             android:layout_marginBottom="72dp"

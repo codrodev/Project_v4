@@ -177,7 +177,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
     FunctionOnMapAdapter.OnMenuSelectedListener listener;
     private LinearLayout layoutBottomSheet;
     private String functionurl;
-    int images[]= {R.drawable.layers_512,R.drawable.favorite_black_512,R.drawable.location_512,R.drawable.makani_512,R.drawable.help_icon_256};
+    int images[]= {R.drawable.layers_512,R.drawable.favorite_black_512,R.drawable.location_512,R.drawable.makani_512,R.drawable.help_icon_512};
     int ids[] = {R.id.menuImage,R.id.menuText};
     String keys[]= {"one","two"};
     private ArcGISMap map;
