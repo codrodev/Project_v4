@@ -48,7 +48,7 @@
     <string name="voucher_num_mymaps">Voucher Number:</string>
     <string name="amount">Amount</string>
     <string name="payment_channels">Payment Channels</string>
-    <string name="pay_now">Pay Now</string>
+    <string name="pay_now">PAY NOW</string>
     <string name="payment_warning">* The payment need to be done within 5 days, otherwise the request will be cancelled.</string>
     <string name="done">Done</string>
     <string name="request_num">Request Number</string>

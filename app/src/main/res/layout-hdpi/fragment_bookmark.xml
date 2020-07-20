@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:mask="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="fragmentBookmarkVM"
+            type="dm.sime.com.kharetati.view.viewModels.BookmarkViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="5dp"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/fragment_map_layoutSearch"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="55dp"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="8dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:weightSum="5"
+                    android:background="@drawable/favourites_search_bg">
+                    <TextView
+                        android:id="@+id/textView27"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="3dp"
+                        android:layout_weight="0.82"
+
+                        android:focusableInTouchMode="false"
+                        android:fontFamily="@font/dubai_font"
+                        android:gravity="start|center_vertical"
+                        android:maxLines="2"
+                        android:paddingStart="10dp"
+                        android:singleLine="false"
+                        android:text="@string/findPlot"
+                        android:textAlignment="viewStart"
+                        android:textColor="#333333"
+                        android:textSize="13sp" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/fragment_bookmarks_plotnumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.735"
+                        android:background="#00000000"
+                        android:digits="0123456789"
+
+                        android:ems="8"
+                        android:fontFamily="@font/dubai_font"
+                        android:hint="_   _   _   _   _   _   _"
+                        android:textColorHint="#333333"
+                        android:inputType="number"
+
+                        android:lineHeight="20dp"
+                        android:maxLength="12"
+                        android:paddingStart="5dp"
+                        android:layout_gravity="bottom"
+
+                        android:paddingEnd="5dp"
+                        android:textAlignment="viewStart"
+                        android:textDirection="ltr"
+                        android:textSize="11sp" />
+
+                    <LinearLayout
+                        android:id="@+id/fragment_bookmarks_btnSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.08"
+                        android:gravity="center"
+                        android:layout_marginEnd="5dp">
+                        <ImageView
+                            android:layout_width="19dp"
+                            android:layout_height="19dp"
+                            android:layout_marginEnd="5dp"
+                            android:padding="2dp"
+                            android:src="@drawable/search_512" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.245"
+                        android:background="#80333333" />
+
+                    <LinearLayout
+                        android:id="@+id/sortOptions"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="5dp"
+                        android:gravity="center"
+                        android:layout_weight="1.12">
+
+                        <ImageView
+                            android:layout_width="19dp"
+                            android:layout_height="19dp"
+                            android:padding="2dp"
+                            android:src="@drawable/map_menu_512" />
+
+
+                        <!--android:imeOptions="actionDone"
+                        android:inputType="text"-->
+                        <!-- android:digits="0123456789١٢٣٤٥٦٧٨٩١٠"-->
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="end"
+                android:layout_marginTop="-8dp"
+                android:id="@+id/sortLayout"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:id="@+id/sortDescending"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+
+                    android:background="@drawable/rounded_corners_bg">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:padding="11dp"
+                        android:src="@drawable/sort_descending" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/sortAscending"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="4dp"
+                    android:background="@drawable/rounded_corners_bg">
+
+                    <ImageView
+
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+
+                        android:padding="11dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/sort_ascending" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textHeading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:fontFamily="@font/dubai_font"
+                android:maxLines="2"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerBookMarks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:setVerticalAdapter="@{fragmentBookmarkVM.getBookmarkAdapter()}" />
+        </LinearLayout>
+    </LinearLayout>
+
+</layout>
