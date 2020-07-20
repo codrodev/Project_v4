@@ -351,7 +351,7 @@ public class BottomNavigationFragmentSheet extends Fragment {
     }
 
     private void onContactusClicked() {
-        ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_CONTACT_US,true,null);
+        ((MainActivity)getActivity()).navigateToContactus();
     }
 
     private void onMyMapClicked(){

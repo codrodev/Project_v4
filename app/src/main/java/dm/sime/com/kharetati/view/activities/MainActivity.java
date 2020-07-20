@@ -309,56 +309,41 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     }
 
     public void getLastlogin() throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm ",new Locale(CURRENT_LOCALE));
-        SimpleDateFormat rdf = new SimpleDateFormat("dd-MMM-yyyy HH:mm:s",new Locale("en"));
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm ", new Locale(CURRENT_LOCALE));
+        SimpleDateFormat rdf = new SimpleDateFormat("dd-MMM-yyyy HH:mm:s", new Locale("en"));
 
-        SimpleDateFormat sdfEn = new SimpleDateFormat("MMM dd, yyyy HH:mm ",new Locale("en"));
-        SimpleDateFormat sdfAr = new SimpleDateFormat("MMM dd, yyyy HH:mm ",new Locale("ar"));
+        SimpleDateFormat sdfEn = new SimpleDateFormat("MMM dd, yyyy HH:mm ", new Locale("en"));
+        SimpleDateFormat sdfAr = new SimpleDateFormat("MMM dd, yyyy HH:mm ", new Locale("ar"));
 
         String currentDateandTime = sdf.format(new Date());
         binding.txtLastLogin.setVisibility(View.VISIBLE);
 
-        if (Global.isUAE){
+        if (Global.isUAE) {
             String lastLogin = Global.uaeSessionResponse.getService_response().getLast_login();
 
-            if(lastLogin!=null && !lastLogin.equals("")){
-                if(lastLogin.contains("|")){
-                    lastLogin = lastLogin.substring(0,lastLogin.lastIndexOf("|")-1);
-
-
+            if (lastLogin != null && !lastLogin.equals(""))
+            {
+                if (lastLogin.contains("|")) {
+                    lastLogin = lastLogin.substring(0, lastLogin.lastIndexOf("|") - 1);
                 }
-                //SpannableStringBuilder str = new SpannableStringBuilder(" "+lastLogin);
-                //str.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                if(CURRENT_LOCALE.equals("en"))
-                    binding.txtLastLogin.setText(" "+sdfEn.format(rdf.parse(lastLogin)));
+
+                if (CURRENT_LOCALE.equals("en"))
+                    binding.txtLastLogin.setText(" " + sdfEn.format(rdf.parse(lastLogin)));
                 else
-                    binding.txtLastLogin.setText(" "+sdfAr.format(rdf.parse(lastLogin)));
-            }
-            else{
+                    binding.txtLastLogin.setText(" " + sdfAr.format(rdf.parse(lastLogin)));
 
-                //SpannableStringBuilder str = new SpannableStringBuilder(" "+currentDateandTime);
-                //str.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-
-                if(CURRENT_LOCALE.equals("en"))
-                    binding.txtLastLogin.setText(" "+sdfEn.format(sdf.parse(sharedpreferences.getString("lastLoginTime",currentDateandTime))));
-                else
-                    binding.txtLastLogin.setText(" "+sdfAr.format(sdf.parse(sharedpreferences.getString("lastLoginTime",currentDateandTime))));
 
             }
+
         }
-        else{
-            //getString(R.string.lastlogin)+" "+sharedpreferences.getString("lastLoginTime",currentDateandTime)
-            //SpannableStringBuilder str = new SpannableStringBuilder(" "+sharedpreferences.getString("lastLoginTime",currentDateandTime));
-            //str.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        /*else if(Global.isUserLoggedIn) {
+            binding.txtLastLogin.setText(" " + currentDateandTime);
+        }*/
+        else {
 
-             //binding.txtLastLogin.setText(" "+sharedpreferences.getString("lastLoginTime",currentDateandTime));
-            if(CURRENT_LOCALE.equals("en"))
-                binding.txtLastLogin.setText(" "+sdfEn.format(sdf.parse(sharedpreferences.getString("lastLoginTime",currentDateandTime))));
-            else
-                binding.txtLastLogin.setText(" "+sdfAr.format(sdf.parse(sharedpreferences.getString("lastLoginTime",currentDateandTime))));
+            binding.txtLastLogin.setText(" " + sharedpreferences.getString("lastLoginTime", currentDateandTime));
 
-            sharedpreferences.edit().putString("lastLoginTime",currentDateandTime).apply();
+            sharedpreferences.edit().putString("lastLoginTime", currentDateandTime).apply();
         }
     }
 
@@ -787,6 +772,11 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         customBottomBar.show(1, true);
         loadFragment(FragmentTAGS.FR_DASHBOARD,true,al);
 
+    }
+
+    public void navigateToContactus(){
+        customBottomBar.show(4, true);
+        loadFragment(FragmentTAGS.FR_CONTACT_US,true,null);
     }
 
     @Override
