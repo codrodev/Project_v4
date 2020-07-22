@@ -179,7 +179,6 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
 
 
-
         if(Global.isUAE){
             if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0) {
                 binding.txtUsername.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN());
@@ -444,6 +443,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         finish();
         overridePendingTransition(0, 0);
         Global.isRecreate =true;
+        if(Global.alertDialog!=null)
+            Global.alertDialog=null;
 
 
     }
@@ -513,6 +514,10 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             sharedpreferences = newBase.getSharedPreferences(MYPREFERENCES, Context.MODE_PRIVATE);
             String locale = sharedpreferences.getString(USER_LANGUAGE, "defaultStringIfNothingFound");
+
+            Global.fontScale =sharedpreferences.getFloat(FONT_SIZE,1f);
+
+
             if(!locale.equals("defaultStringIfNothingFound"))
                 CURRENT_LOCALE =locale;
             else
@@ -628,7 +633,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         if(fragment_tag.equals(FragmentTAGS.FR_WEBVIEW))
             binding.backButton.setVisibility(View.VISIBLE);
         else
-            binding.backButton.setVisibility(View.GONE);
+            binding.backButton.setVisibility(View.INVISIBLE);
         LinearLayout.LayoutParams headerParams = null;
        /* if(fragment_tag.equals(FragmentTAGS.FR_HOME)){
             headerParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -856,7 +861,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 if(Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW))
                     binding.backButton.setVisibility(View.VISIBLE);
                 else
-                    binding.backButton.setVisibility(View.GONE);
+                    binding.backButton.setVisibility(View.INVISIBLE);
             }
 
         }
@@ -1039,8 +1044,18 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
         Objects.requireNonNull(wm).getDefaultDisplay().getMetrics(metrics);
         metrics.scaledDensity = configuration.fontScale * metrics.density;
-        getResources().updateConfiguration(configuration, metrics);
+        MainActivity.this.getResources().updateConfiguration(configuration, metrics);
 
+    }
+
+    @Override
+    public void finish() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            super.finishAndRemoveTask();
+        }
+        else {
+            super.finish();
+        }
     }
 
 

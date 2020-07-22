@@ -319,42 +319,43 @@ public class AlertDialogUtil {
     public static void timeoutAlertDialog(String title, String message, String btnTxt, Activity context) {
         try {
 
+            if (!((MainActivity) context).isFinishing()) {
+                AlertDialog alertDialog = new AlertDialog.Builder(context)
+                        .setMessage(message)
+                        .setTitle(title)
+                        .setCancelable(false)
+                        .setPositiveButton(btnTxt, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-        AlertDialog alertDialog = new AlertDialog.Builder(context)
-                .setMessage(message)
-                .setTitle(title)
-                .setCancelable(false)
-                .setPositiveButton(btnTxt, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        Global.current_fragment_id = null;
-                        //Global.loginDetails.showFormPrefilledOnRememberMe=true;
-                        Global.logout(context);
+                                Global.current_fragment_id = null;
+                                //Global.loginDetails.showFormPrefilledOnRememberMe=true;
+                                Global.logout(context);
                         /*Gson gson = new GsonBuilder().serializeNulls().create();
                         PreferenceManager.getDefaultSharedPreferences(context).edit().putString(USER_LOGIN_DETAILS, gson.toJson(Global.loginDetails)).apply();
                         Intent intent = new Intent(context, LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         context.startActivity(intent);*/
 
-                    }
+                            }
 
-                }).show();
+                        }).show();
 
-        TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+                TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
 //        TextView textView1 = (TextView) alertDialog.findViewById(android.support.v7.appcompat.R.id.alertTitle);
 
-        TextView positiveButton = (Button) alertDialog.findViewById(android.R.id.button1);
-        //TextView negativeButton = (Button) alertDialog.findViewById(android.R.id.button2);
-        Typeface face = Typeface.createFromAsset(context.getAssets(), "Dubai-Regular.ttf");
-        textView.setTypeface(face);
-        positiveButton.setAllCaps(false);
-        //negativeButton.setAllCaps(false);
-        positiveButton.setTypeface(face);
-        //negativeButton.setTypeface(face);
+                TextView positiveButton = (Button) alertDialog.findViewById(android.R.id.button1);
+                //TextView negativeButton = (Button) alertDialog.findViewById(android.R.id.button2);
+                Typeface face = Typeface.createFromAsset(context.getAssets(), "Dubai-Regular.ttf");
+                textView.setTypeface(face);
+                positiveButton.setAllCaps(false);
+                //negativeButton.setAllCaps(false);
+                positiveButton.setTypeface(face);
+                //negativeButton.setTypeface(face);
 //        textView1.setTypeface(face);
 
-        textView.setPadding(80, 25, 25, 10);
+                textView.setPadding(80, 25, 25, 10);
+            }
         }
         catch(Exception e){
             e.printStackTrace();
@@ -1698,38 +1699,42 @@ public class AlertDialogUtil {
 
     public static void showProgressBar(Activity context,boolean isShow) {
         //before inflating the custom alert dialog layout, we will get the current activity viewgroup
-        if(context!=null){
-        viewGroup = context.findViewById(android.R.id.content);
-
-        //then we will inflate the custom alert dialog xml that we created
-        View dialogView = LayoutInflater.from(context).inflate(R.layout.progressbar_layout, viewGroup, false);
 
 
-        //Now we need an AlertDialog.Builder object
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        if (context != null) {
+            if (!((Activity) context).isFinishing())
+            {
+                viewGroup = context.findViewById(android.R.id.content);
+
+                //then we will inflate the custom alert dialog xml that we created
+                View dialogView = LayoutInflater.from(context).inflate(R.layout.progressbar_layout, viewGroup, false);
 
 
-        //setting the view of the builder to our custom view that we already inflated
-        builder.setView(dialogView);
+                //Now we need an AlertDialog.Builder object
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-        //finally creating the alert dialog and displaying it
-        if(Global.alertDialog==null)
-        Global.alertDialog = builder.create();
 
-        if(isShow){
-            Global.alertDialog.setCancelable(false);
-            if(Global.alertDialog!=null && !Global.alertDialog.isShowing())
-                Global.alertDialog.show();
-        }
-        else{
-            if(Global.alertDialog!=null)
-                Global.alertDialog.cancel();
-        }
-        }
-        else{
-            if(Global.alertDialog!=null)
-                Global.alertDialog.cancel();
+                //setting the view of the builder to our custom view that we already inflated
+                builder.setView(dialogView);
 
+                //finally creating the alert dialog and displaying it
+                if (Global.alertDialog == null)
+                    Global.alertDialog = builder.create();
+
+                if (isShow) {
+                    Global.alertDialog.setCancelable(false);
+                    if (Global.alertDialog != null && !Global.alertDialog.isShowing())
+                        Global.alertDialog.show();
+                } else {
+                    if (Global.alertDialog != null)
+                        Global.alertDialog.cancel();
+                }
+            }
+            else {
+                if (Global.alertDialog != null)
+                    Global.alertDialog.cancel();
+
+            }
         }
 
     }

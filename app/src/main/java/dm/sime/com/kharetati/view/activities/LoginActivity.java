@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -14,11 +15,13 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -49,6 +52,7 @@ import com.google.gson.GsonBuilder;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 
 import ae.sdg.libraryuaepass.UAEPassController;
 import dm.sime.com.kharetati.BuildConfig;
@@ -80,6 +84,7 @@ import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
 import static dm.sime.com.kharetati.utility.Global.MYPREFERENCES;
 import static dm.sime.com.kharetati.utility.Global.forceUserToUpdateBuild;
 import static dm.sime.com.kharetati.utility.Global.generateRandomID;
+import static dm.sime.com.kharetati.utility.constants.AppConstants.FONT_SIZE;
 import static dm.sime.com.kharetati.utility.constants.AppConstants.USER_LANGUAGE;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_BOOKMARK;
 
@@ -142,6 +147,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         firebaseAnalytics.setCurrentScreen(this, "LOGIN SCREEN", null /* class override */);
+
         Intent intent = getIntent();
         /*LinearLayout.LayoutParams progressBarParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT );
         progressBarParams.gravity = Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL;
@@ -168,6 +174,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         //binding.setViewmodel(viewModel);
         viewModel.authListener = this;
         loginVM = viewModel;
+        adjustFontScale(getResources().getConfiguration(),Global.fontScale);
 
 
 
@@ -177,6 +184,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         //String locale = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(USER_LANGUAGE, "defaultStringIfNothingFound");
         if(!locale.equals("defaultStringIfNothingFound"))
             CURRENT_LOCALE =locale;
+
 
         //getting remembered user credentials if any
 
@@ -715,6 +723,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
 
 
+
                    /* binding.switchLanguage.setTextOff((CURRENT_LOCALE.equals("ar")) ? "العربية" : "English");
                     binding.switchLanguage.setTextOn((CURRENT_LOCALE.equals("ar")) ? "العربية" : "English");*/
                     //binding.switchLanguage.setTextOn((CURRENT_LOCALE.equals("en")) ? "English" : "العربية");
@@ -800,6 +809,8 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         startActivity(getIntent());
 
         overridePendingTransition(0, 0);
+        if(Global.alertDialog!=null)
+            Global.alertDialog=null;
         //Global.isRecreate =true;
 
 
@@ -1233,17 +1244,31 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
     @Override
     protected void attachBaseContext(Context newBase) {
+        Global.isLoginActivity = true;
 
             sharedpreferences = newBase.getSharedPreferences(MYPREFERENCES, Context.MODE_PRIVATE);
             String locale = sharedpreferences.getString(USER_LANGUAGE, "defaultStringIfNothingFound");
             Global.uaePassConfig =Global.uaePassConfig == null? new UaePassConfig():Global.uaePassConfig;
             Global.uaePassConfig.disableMyId = sharedpreferences.getBoolean("isDisableMyId",false);
+            Global.fontScale =sharedpreferences.getFloat(FONT_SIZE,1f);
+
+
             if(!locale.equals("defaultStringIfNothingFound"))
                 CURRENT_LOCALE =locale;
             else
                 CURRENT_LOCALE ="en";
 
             super.attachBaseContext(CustomContextWrapper.wrap(newBase, CURRENT_LOCALE));
+
+    }
+    public  void adjustFontScale(Configuration configuration, float scale) {
+
+        configuration.fontScale = scale;
+        DisplayMetrics metrics = LoginActivity.this.getResources().getDisplayMetrics();
+        WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
+        Objects.requireNonNull(wm).getDefaultDisplay().getMetrics(metrics);
+        metrics.scaledDensity = configuration.fontScale * metrics.density;
+        LoginActivity.this.getResources().updateConfiguration(configuration, metrics);
 
     }
 
@@ -1308,6 +1333,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
     @Override
     public void finish() {
+        Global.isLoginActivity = false;
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             super.finishAndRemoveTask();
         }

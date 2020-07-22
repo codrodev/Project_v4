@@ -573,6 +573,7 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
     public void onResume() {
         super.onResume();
         ((MainActivity)getActivity()).manageBottomBar(true);
+        ((MainActivity)getActivity()).setScreenName(getActivity().getResources().getString(R.string.menu_contact_us));
     }
 
     @Override

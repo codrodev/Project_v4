@@ -84,7 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|left"
-                    android:textSize="11sp"
+                    android:textSize="11dp"
                     android:elevation="25dp"
                     android:paddingStart="16dp"
                     android:background="@color/transparent"
@@ -100,7 +100,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|left"
-                    android:textSize="11sp"
+                    android:textSize="11dp"
                     android:elevation="20dp"
                     android:paddingStart="16dp"
                     android:background="@color/transparent"
@@ -413,8 +413,8 @@
                         android:buttonTint="#ABAAAA"
                         android:fontFamily="@font/dubai_font"
                         android:focusable="false"
-                        android:layout_weight=".55"
-                        android:textSize="13.5sp"
+                        android:layout_weight=".45"
+                        android:textSize="13sp"
                         android:text="@string/rememberme" />
                     <TextView
                         android:layout_width="match_parent"
@@ -425,11 +425,11 @@
 
                         android:singleLine="false"
                         android:maxLines="2"
-                        android:layout_weight=".45"
+                        android:layout_weight=".55"
                         android:fontFamily="@font/dubai_font"
                         android:text="@string/forgot_username_password"
                         android:textAlignment="viewEnd"
-                        android:textSize="13.5sp"
+                        android:textSize="13sp"
                         android:textColor="@color/faded_text_color" />
 
                 </LinearLayout>

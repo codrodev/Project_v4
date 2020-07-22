@@ -42,6 +42,7 @@ import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 import dm.sime.com.kharetati.view.viewmodelfactories.ParentSitePlanViewModelFactory;
 
 import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
+import static dm.sime.com.kharetati.utility.Global.isFromMap;
 import static dm.sime.com.kharetati.utility.Global.makani;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_ATTACHMENT;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_PARENT_SITEPLAN;
@@ -119,6 +120,13 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         return binding.getRoot();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        isFromMap=false;
+        sharedpreferences.edit().putInt("stepperPosition",currentIndex).apply();
+    }
+
     private void initializePage(){
         model.manageAppBar(getActivity(), false);
         model.manageAppBottomBAtr(getActivity(), false);
@@ -128,6 +136,8 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         loadFragment(0);
         binding.txtHeader.setText(pagerArray[currentIndex]);
         MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(), pagerArray[currentIndex], null /* class override */);
+        sharedpreferences = getActivity().getSharedPreferences(POSITION, Context.MODE_PRIVATE);
+
 
         changeStepperBackground(currentIndex);
         if(currentIndex != 0 )
@@ -202,7 +212,6 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
             @Override
             public void onClick(View view) {
                 if(Global.helpUrlEn != null || Global.helpUrlAr != null) {
-                    sharedpreferences = getActivity().getSharedPreferences(POSITION, Context.MODE_PRIVATE);
                     sharedpreferences.edit().putInt("stepperPosition",currentIndex).apply();
                     ArrayList al = new ArrayList();
                     if(Global.helpUrlEn!=null||Global.helpUrlAr!=null)
@@ -259,22 +268,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
 
     private void changeStepperBackground(int index){
         if(index == 0){
-            binding.txtStepperOne.setBackground(getResources().getDrawable(R.drawable.green_ring_background));
-            binding.txtStepperTwo.setBackground(getResources().getDrawable(R.drawable.ring_background));
-            binding.txtStepperThree.setBackground(getResources().getDrawable(R.drawable.ring_background));
-            binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.ring_background));
-            binding.stepperOneText.setTextColor(getResources().getColor(R.color.white));
-            binding.stepperTwoText.setTextColor(getResources().getColor(R.color.stepper_text_color));
-            binding.stepperThreeText.setTextColor(getResources().getColor(R.color.stepper_text_color));
-            binding.stepperFourText.setTextColor(getResources().getColor(R.color.stepper_text_color));
-            binding.view1.setBackgroundColor(getResources().getColor(R.color.stepper_text_color));
-            binding.view2.setBackgroundColor(getResources().getColor(R.color.stepper_text_color));
-            binding.view3.setBackgroundColor(getResources().getColor(R.color.stepper_text_color));
-
-            binding.stepperFourText.setText("4");
-            binding.stepperThreeText.setText("3");
-            binding.stepperTwoText.setText("2");
-            binding.stepperOneText.setText("1");
+            oneUi();
 
 
 
@@ -282,54 +276,85 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
 
 
 
-            binding.stepperOneText.setText("");
-            binding.txtStepperOne.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
-            binding.txtStepperTwo.setBackground(getResources().getDrawable(R.drawable.green_ring_background));
-            binding.stepperTwoText.setText("2");
-            binding.txtStepperThree.setBackground(getResources().getDrawable(R.drawable.ring_background));
-            binding.stepperThreeText.setText("3");
-            binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.ring_background));
-            binding.stepperFourText.setText("4");
-            binding.stepperTwoText.setTextColor(getResources().getColor(R.color.white));
-            binding.stepperThreeText.setTextColor(getResources().getColor(R.color.stepper_text_color));
-            binding.stepperFourText.setTextColor(getResources().getColor(R.color.stepper_text_color));
-            binding.view1.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
-            binding.view2.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
-            binding.view3.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
+            twoUI();
 
         } else if(index == 2) {
-            binding.stepperTwoText.setText("");
-            binding.stepperOneText.setText("");
-
-            binding.txtStepperOne.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
-            binding.txtStepperTwo.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
-            binding.txtStepperThree.setBackground(getResources().getDrawable(R.drawable.green_ring_background));
-            binding.stepperThreeText.setText("3");
-            binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.ring_background));
-            binding.stepperFourText.setText("4");
-
-            binding.stepperThreeText.setTextColor(getResources().getColor(R.color.stepper_text_color));
-            binding.stepperFourText.setTextColor(getResources().getColor(R.color.stepper_text_color));
-            binding.view1.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
-            binding.view2.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
-            binding.view3.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
+            threeUI();
         } else if(index == 3) {
 
-            binding.txtStepperOne.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
-            binding.txtStepperTwo.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
-            binding.txtStepperThree.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
-            binding.stepperThreeText.setText("");
-            binding.stepperTwoText.setText("");
-            binding.stepperOneText.setText("");
-            binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.green_ring_background));
-            binding.stepperFourText.setText("4");
-
-
-            binding.stepperFourText.setTextColor(getResources().getColor(R.color.white));
-            binding.view1.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
-            binding.view2.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
-            binding.view3.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
+           fourUI();
         }
+    }
+
+    private void fourUI() {
+        binding.txtStepperOne.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
+        binding.txtStepperTwo.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
+        binding.txtStepperThree.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
+        binding.stepperThreeText.setText("");
+        binding.stepperTwoText.setText("");
+        binding.stepperOneText.setText("");
+        binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.green_ring_background));
+        binding.stepperFourText.setText("4");
+
+
+        binding.stepperFourText.setTextColor(getResources().getColor(R.color.white));
+        binding.view1.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
+        binding.view2.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
+        binding.view3.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
+    }
+
+    private void threeUI() {
+        binding.stepperTwoText.setText("");
+        binding.stepperOneText.setText("");
+
+        binding.txtStepperOne.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
+        binding.txtStepperTwo.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
+        binding.txtStepperThree.setBackground(getResources().getDrawable(R.drawable.green_ring_background));
+        binding.stepperThreeText.setText("3");
+        binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.ring_background));
+        binding.stepperFourText.setText("4");
+
+        binding.stepperThreeText.setTextColor(getResources().getColor(R.color.stepper_text_color));
+        binding.stepperFourText.setTextColor(getResources().getColor(R.color.stepper_text_color));
+        binding.view1.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
+        binding.view2.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
+        binding.view3.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
+    }
+
+    private void twoUI() {
+        binding.stepperOneText.setText("");
+        binding.txtStepperOne.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
+        binding.txtStepperTwo.setBackground(getResources().getDrawable(R.drawable.green_ring_background));
+        binding.stepperTwoText.setText("2");
+        binding.txtStepperThree.setBackground(getResources().getDrawable(R.drawable.ring_background));
+        binding.stepperThreeText.setText("3");
+        binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.ring_background));
+        binding.stepperFourText.setText("4");
+        binding.stepperTwoText.setTextColor(getResources().getColor(R.color.white));
+        binding.stepperThreeText.setTextColor(getResources().getColor(R.color.stepper_text_color));
+        binding.stepperFourText.setTextColor(getResources().getColor(R.color.stepper_text_color));
+        binding.view1.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
+        binding.view2.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
+        binding.view3.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
+    }
+
+    private void oneUi() {
+        binding.txtStepperOne.setBackground(getResources().getDrawable(R.drawable.green_ring_background));
+        binding.txtStepperTwo.setBackground(getResources().getDrawable(R.drawable.ring_background));
+        binding.txtStepperThree.setBackground(getResources().getDrawable(R.drawable.ring_background));
+        binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.ring_background));
+        binding.stepperOneText.setTextColor(getResources().getColor(R.color.white));
+        binding.stepperTwoText.setTextColor(getResources().getColor(R.color.stepper_text_color));
+        binding.stepperThreeText.setTextColor(getResources().getColor(R.color.stepper_text_color));
+        binding.stepperFourText.setTextColor(getResources().getColor(R.color.stepper_text_color));
+        binding.view1.setBackgroundColor(getResources().getColor(R.color.stepper_text_color));
+        binding.view2.setBackgroundColor(getResources().getColor(R.color.stepper_text_color));
+        binding.view3.setBackgroundColor(getResources().getColor(R.color.stepper_text_color));
+
+        binding.stepperFourText.setText("4");
+        binding.stepperThreeText.setText("3");
+        binding.stepperTwoText.setText("2");
+        binding.stepperOneText.setText("1");
     }
 
     public Fragment loadFragment(int index) {
@@ -393,6 +418,35 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
                 binding.btnNext.setVisibility(View.INVISIBLE);
             else if(sharedpreferences.getInt("stepperPosition",0)==0)
                 binding.btnPrevious.setVisibility(View.INVISIBLE);
+        }
+        int pos= sharedpreferences.getInt("stepperPosition",0);
+        if(isFromMap) pos =0;
+        switch (pos){
+
+            case 0:{
+                binding.btnPrevious.setVisibility(View.INVISIBLE);
+                oneUi();
+                loadFragment(pos);
+                break;
+
+            }case 1:{
+                twoUI();
+                loadFragment(pos);
+                break;
+            }case 2:{
+                threeUI();
+                loadFragment(pos);
+                break;
+            }case 3:{
+                binding.btnNext.setVisibility(View.INVISIBLE);
+                fourUI();
+                loadFragment(pos);
+                break;
+            }
+            default:{
+                oneUi();
+                loadFragment(pos);
+            }
         }
     }
 

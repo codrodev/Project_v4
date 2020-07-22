@@ -74,6 +74,7 @@ import dm.sime.com.kharetati.view.customview.CleanableEditText;
 import dm.sime.com.kharetati.view.navigators.AuthListener;
 import retrofit2.http.Url;
 
+import static dm.sime.com.kharetati.utility.constants.AppConstants.FONT_SIZE;
 import static dm.sime.com.kharetati.utility.constants.AppConstants.REMEMBER_USER;
 import static dm.sime.com.kharetati.utility.constants.AppConstants.USER_LANGUAGE;
 import static dm.sime.com.kharetati.utility.constants.AppConstants.USER_OBJECT;
@@ -173,6 +174,7 @@ public class Global {
     public static String secretId;
     public static String callbackUrl;
     public static NotificationResponse notificationResponse;
+    public static boolean isFromMap;
     private static Context context;
     public static boolean isLanguageChanged = false;
     public static String noctemplateUrl;
@@ -765,6 +767,7 @@ public class Global {
         Global.isDeliveryByCourier= false;
         Global.isLogout =true;
         Global.selectedTab =0;
+        context.getSharedPreferences(Global.MYPREFERENCES,Context.MODE_PRIVATE).edit().putFloat(FONT_SIZE,Global.fontScale).apply();
         if(Global.alertDialog!=null){
             Global.alertDialog.cancel();
             Global.alertDialog = null;

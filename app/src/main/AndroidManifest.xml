@@ -60,7 +60,7 @@
             android:name=".view.activities.MainActivity"
             android:configChanges="locale|orientation|screenSize"
             android:theme="@style/AppTheme"
-
+            android:autoRemoveFromRecents="true"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" >
             <!--<intent-filter>
                 <action android:name="android.intent.action.VIEW" />

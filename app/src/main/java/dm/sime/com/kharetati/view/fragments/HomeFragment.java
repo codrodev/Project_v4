@@ -263,7 +263,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                 .build());
         if(getActivity()!=null)
             MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(), model.getSelectedApplication().getNameEn(), null /* class override */);
-        model.getApplication(appID).getSearchForm().get(0).getTabs().getControls().get(0);
+        //model.getApplication(appID).getSearchForm().get(0).getTabs().getControls().get(0);
         Log.d(getClass().getSimpleName(),model.getSelectedApplication().getNameEn());
     }
 
@@ -497,8 +497,13 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         lstRuntimeCleanableText.add(x);
         if(control.getParam().equals("land_no")){
             isLand =true;
-            if(!Objects.requireNonNull(x.getText()).toString().trim().equals(""))
-            Global.LandNo = x.getText().toString().trim();
+            if(!Objects.requireNonNull(x.getText()).toString().trim().equals("")){
+                if(Global.LandNo!=null ||Global.LandNo!="")
+                    x.setText(Global.LandNo);
+                else
+                    x.setText("");
+                Global.LandNo = x.getText().toString().trim();
+            }
             x.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
 
@@ -506,7 +511,14 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         }
         if(control.getParam().equals("sub_no")){
             isLand =true;
-            Global.subNo = x.getText().toString().trim();
+            if(!Objects.requireNonNull(x.getText()).toString().trim().equals("")){
+                if(Global.subNo!=null ||Global.subNo!="")
+                    x.setText(Global.subNo);
+                else
+                    x.setText("");
+                Global.subNo = x.getText().toString().trim();
+            }
+
         }
         return layout;
     }

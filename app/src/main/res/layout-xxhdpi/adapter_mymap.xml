@@ -61,8 +61,8 @@
                 android:layout_gravity="center_vertical|end"
                 android:singleLine="true"
                 android:visibility="invisible"
-                android:layout_weight="0.42"
-                android:layout_marginStart="5dp"
+                android:layout_weight="0.45"
+                android:layout_marginStart="0dp"
                 android:text="@string/LBL_DATE_TIME"
                 android:textAlignment="viewEnd" />
             <TextView
@@ -70,14 +70,14 @@
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:layout_gravity="center_vertical|end"
-                android:layout_weight=".24"
+                android:layout_weight=".21"
                 android:id="@+id/dateAndTime"
                 android:fontFamily="@font/dubai_font"
                 android:singleLine="false"
                 android:maxLines="2"
                 android:textColor="#262424"
-                android:layout_marginStart="5dp"
-                android:paddingEnd="7dp"
+                android:layout_marginStart="2dp"
+                android:paddingEnd="8dp"
                 android:text='@{adapterMyMapVM.getCurrentMyMap(position).req_created_date ?? ""}'
                 android:textAlignment="viewEnd" />
         </LinearLayout>

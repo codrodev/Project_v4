@@ -250,6 +250,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         WebView.setWebContentsDebuggingEnabled(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setTextZoom(100);
+        Global.isFromMap = true;
 
         /*String newUA= "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0";
         webView.getSettings().setUserAgentString(newUA);*/

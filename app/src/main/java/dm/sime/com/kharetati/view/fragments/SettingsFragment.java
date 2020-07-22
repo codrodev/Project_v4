@@ -87,6 +87,7 @@ public class SettingsFragment extends Fragment {
         ((MainActivity)getActivity()).setScreenName(getActivity().getResources().getString(R.string.title_settings));
         sharedpreferences = getActivity().getSharedPreferences(MYPREFERENCES, Context.MODE_PRIVATE);
         String locale = sharedpreferences.getString(USER_LANGUAGE, "defaultStringIfNothingFound");
+
         if(!locale.equals("defaultStringIfNothingFound"))
             CURRENT_LOCALE =locale;
         else
@@ -103,8 +104,8 @@ public class SettingsFragment extends Fragment {
     }
 
     private void initializePage() {
-        if(getActivity()!=null)
-        adjustFontScale(getActivity().getResources().getConfiguration(),Global.fontScale);
+        /*if(getActivity()!=null)
+            ((MainActivity)getActivity()).adjustFontScale(getActivity().getResources().getConfiguration(),Global.fontScale);*/
 
         /*if(Global.isUAE){
             if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0) {
@@ -218,7 +219,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        Global.fontScale = sharedpreferences.getFloat(FONT_SIZE,1f);
+        //Global.fontScale = sharedpreferences.getFloat(FONT_SIZE,1f);
         if(Global.fontScale==0.5f)
             font1Clicked();
         else if(Global.fontScale==0.75f)
@@ -233,11 +234,10 @@ public class SettingsFragment extends Fragment {
         binding.layoutFont1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                font1Clicked();
                 Global.fontScale = 0.5f;
+                font1Clicked();
                 if(getActivity()!=null)
-                    adjustFontScale(getActivity().getResources().getConfiguration(),Global.fontScale);
+                    ((MainActivity)getActivity()).adjustFontScale(getActivity().getResources().getConfiguration(),Global.fontScale);
                 sharedpreferences.edit().putFloat(FONT_SIZE,Global.fontScale).apply();
                 sharedpreferences.edit().putString("currentFragment",Global.current_fragment_id).apply();
                 ((MainActivity)getActivity()).recreate();
@@ -245,33 +245,38 @@ public class SettingsFragment extends Fragment {
         }); binding.layoutFont2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                font2Clicked();
+
                 Global.fontScale = 0.75f;
+                font2Clicked();
                 if(getActivity()!=null)
-                    adjustFontScale(getActivity().getResources().getConfiguration(),Global.fontScale);
+                    ((MainActivity)getActivity()).adjustFontScale(getActivity().getResources().getConfiguration(),Global.fontScale);
                 sharedpreferences.edit().putFloat(FONT_SIZE,Global.fontScale).apply();
                 sharedpreferences.edit().putString("currentFragment",Global.current_fragment_id).apply();
                 ((MainActivity)getActivity()).recreate();
             }
-        }); binding.layoutFont3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                font3Clicked();
-                Global.fontScale = 1f;
-                if(getActivity()!=null)
-                    adjustFontScale(getActivity().getResources().getConfiguration(),Global.fontScale);
-                sharedpreferences.edit().putFloat(FONT_SIZE,Global.fontScale).apply();
-                sharedpreferences.edit().putString("currentFragment",Global.current_fragment_id).apply();
-                ((MainActivity)getActivity()).recreate();
-            }
-        }); binding.layoutFont4.setOnClickListener(new View.OnClickListener() {
+        });
+        binding.layoutFont3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                font4Clicked();
-                Global.fontScale = 1.25f;
+                Global.fontScale = 1f;
+                font3Clicked();
                 if(getActivity()!=null)
-                    adjustFontScale(getActivity().getResources().getConfiguration(),Global.fontScale);
+                    ((MainActivity)getActivity()).adjustFontScale(getActivity().getResources().getConfiguration(),Global.fontScale);
+                sharedpreferences.edit().putFloat(FONT_SIZE,Global.fontScale).apply();
+                sharedpreferences.edit().putString("currentFragment",Global.current_fragment_id).apply();
+                ((MainActivity)getActivity()).recreate();
+            }
+        });
+        binding.layoutFont4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                Global.fontScale = 1.25f;
+                font4Clicked();
+                if(getActivity()!=null)
+                    ((MainActivity)getActivity()).adjustFontScale(getActivity().getResources().getConfiguration(),Global.fontScale);
                 sharedpreferences.edit().putFloat(FONT_SIZE,Global.fontScale).apply();
                 sharedpreferences.edit().putString("currentFragment",Global.current_fragment_id).apply();
                 ((MainActivity)getActivity()).recreate();
@@ -279,10 +284,11 @@ public class SettingsFragment extends Fragment {
         }); binding.layoutFont5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                font5Clicked();
+
                 Global.fontScale = 1.5f;
+                font5Clicked();
                 if(getActivity()!=null)
-                    adjustFontScale(getActivity().getResources().getConfiguration(),Global.fontScale);
+                    ((MainActivity)getActivity()).adjustFontScale(getActivity().getResources().getConfiguration(),Global.fontScale);
                 sharedpreferences.edit().putFloat(FONT_SIZE,Global.fontScale).apply();
                 sharedpreferences.edit().putString("currentFragment",Global.current_fragment_id).apply();
                 ((MainActivity)getActivity()).recreate();
@@ -292,7 +298,7 @@ public class SettingsFragment extends Fragment {
 
     }
     public void font1Clicked(){
-        binding.layoutFont1.setBackground(getActivity().getResources().getDrawable(R.drawable.maroon_border_bg_left));
+        binding.layoutFont1.setBackground(getActivity().getResources().getDrawable(Global.CURRENT_LOCALE.equals("en")?R.drawable.maroon_border_bg_left:R.drawable.maroon_border_bg_right));
         binding.layoutFont2.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
         binding.layoutFont3.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
         binding.layoutFont4.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
@@ -315,7 +321,8 @@ public class SettingsFragment extends Fragment {
         binding.fontSize4.setTextColor(getActivity().getResources().getColor(R.color.black));
         binding.fontSize5.setTextColor(getActivity().getResources().getColor(R.color.black));
 
-    }public void font3Clicked(){
+    }
+    public void font3Clicked(){
         binding.layoutFont1.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg_left));
         binding.layoutFont2.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
         binding.layoutFont3.setBackground(getActivity().getResources().getDrawable(R.drawable.maroon_border_bg));
@@ -326,7 +333,8 @@ public class SettingsFragment extends Fragment {
         binding.fontSize3.setTextColor(getActivity().getResources().getColor(R.color.white));
         binding.fontSize4.setTextColor(getActivity().getResources().getColor(R.color.black));
         binding.fontSize5.setTextColor(getActivity().getResources().getColor(R.color.black));
-    }public void font4Clicked(){
+    }
+    public void font4Clicked(){
         binding.layoutFont1.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg_left));
         binding.layoutFont2.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
         binding.layoutFont3.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
@@ -343,7 +351,7 @@ public class SettingsFragment extends Fragment {
         binding.layoutFont2.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
         binding.layoutFont3.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
         binding.layoutFont4.setBackground(getActivity().getResources().getDrawable(R.drawable.grey_border_bg));
-        binding.layoutFont5.setBackground(getActivity().getResources().getDrawable(R.drawable.maroon_border_bg_right));
+        binding.layoutFont5.setBackground(getActivity().getResources().getDrawable(Global.CURRENT_LOCALE.equals("en")?R.drawable.maroon_border_bg_right:R.drawable.maroon_border_bg_left));
         binding.fontSize1.setTextColor(getActivity().getResources().getColor(R.color.black));
         binding.fontSize2.setTextColor(getActivity().getResources().getColor(R.color.black));
         binding.fontSize3.setTextColor(getActivity().getResources().getColor(R.color.black));
@@ -351,14 +359,5 @@ public class SettingsFragment extends Fragment {
         binding.fontSize5.setTextColor(getActivity().getResources().getColor(R.color.white));
     }
 
-    public  void adjustFontScale(Configuration configuration, float scale) {
 
-        configuration.fontScale = scale;
-        DisplayMetrics metrics = getActivity().getResources().getDisplayMetrics();
-        WindowManager wm = (WindowManager) getActivity().getSystemService(WINDOW_SERVICE);
-        wm.getDefaultDisplay().getMetrics(metrics);
-        metrics.scaledDensity = configuration.fontScale * metrics.density;
-        getActivity().getResources().updateConfiguration(configuration, metrics);
-
-    }
 }

@@ -7,8 +7,13 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.LocaleList;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
 
 import java.util.Locale;
+import java.util.Objects;
+
+import dm.sime.com.kharetati.view.activities.MainActivity;
 
 public class CustomContextWrapper extends ContextWrapper {
 
@@ -21,6 +26,13 @@ public class CustomContextWrapper extends ContextWrapper {
 
     Resources res = context.getResources();
     Configuration configuration = res.getConfiguration();
+
+       //configuration.setToDefaults();
+       if(Global.isLoginActivity)
+       configuration.fontScale = Global.fontScale;
+
+
+
     Locale newLocale = new Locale(language);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -59,5 +71,10 @@ public class CustomContextWrapper extends ContextWrapper {
     @TargetApi(Build.VERSION_CODES.N)
     public static void setSystemLocale(Configuration config, Locale locale){
         config.setLocale(locale);
+    }
+    public  void adjustFontScale(Configuration configuration, float scale) {
+
+
+
     }
 }

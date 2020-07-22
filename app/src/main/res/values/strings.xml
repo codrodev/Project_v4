@@ -270,7 +270,7 @@
     <string name="reachus">reach us</string>
     <string name="sendus">send us</string>
     <string name="more">Options</string>
-    <string name="lastlogin">Last Login on</string>
+    <string name="lastlogin"><b>Last Login</b> on</string>
     <!--<string name="lastlogin">Last Login on</string>-->
     <string name="login_with">Login With</string>
     <string name="with_uaepass"> UAE PASS</string>
