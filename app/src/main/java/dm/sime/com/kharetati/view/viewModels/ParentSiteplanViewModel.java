@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
+import dm.sime.com.kharetati.datas.models.AttachedDoc;
 import dm.sime.com.kharetati.datas.models.DeliveryDetails;
 import dm.sime.com.kharetati.datas.models.DocArr;
 import dm.sime.com.kharetati.datas.models.HTTPRequestBody;
@@ -298,7 +299,7 @@ public class ParentSiteplanViewModel extends ViewModel {
 
             if(PayFragment.paymentType != null && PayFragment.paymentType.length() > 0){
                 if(PayFragment.paymentType.compareToIgnoreCase("Pay Now")==0){
-                    ParentSiteplanFragment.currentIndex = 0;
+                   // ParentSiteplanFragment.currentIndex = 0;
                     if(Global.paymentUrl != null && Global.paymentUrl.length() > 0){
                         ArrayList al = new ArrayList<>();
                         al.add(Global.paymentUrl);
@@ -307,7 +308,7 @@ public class ParentSiteplanViewModel extends ViewModel {
                         ((MainActivity)activity).loadFragment(FragmentTAGS.FR_WEBVIEW_PAYMENT,true,al);
                     }
                 } else if(PayFragment.paymentType.compareToIgnoreCase("Pay later")==0){
-                    ParentSiteplanFragment.currentIndex = 0;
+                    //ParentSiteplanFragment.currentIndex = 0;
                     if(PayViewModel.hm != null && PayViewModel.hm.size() > 0) {
                         ((MainActivity) activity).loadFragment(FragmentTAGS.FR_REQUEST_DETAILS, true, PayViewModel.hm);
                     }

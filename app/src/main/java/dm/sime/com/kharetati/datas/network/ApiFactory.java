@@ -30,6 +30,7 @@ public class ApiFactory {
                 .sslSocketFactory(tlsSocketFactory, Objects.requireNonNull(tlsSocketFactory.getTrustManager()))
                 .build();
         Gson gson = new GsonBuilder()
+                .setLenient()
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .create();
 

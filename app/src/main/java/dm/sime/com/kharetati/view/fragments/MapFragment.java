@@ -45,6 +45,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -130,6 +131,7 @@ import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.adapters.DashboardPagerAdapter;
 import dm.sime.com.kharetati.view.adapters.FunctionOnMapAdapter;
+import dm.sime.com.kharetati.view.customview.SwitchCompatEx;
 import dm.sime.com.kharetati.view.navigators.MapNavigator;
 import dm.sime.com.kharetati.view.viewModels.MapViewModel;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
@@ -177,7 +179,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
     FunctionOnMapAdapter.OnMenuSelectedListener listener;
     private LinearLayout layoutBottomSheet;
     private String functionurl;
-    int images[]= {R.drawable.layers_512,R.drawable.favorite_black_512,R.drawable.location_512,R.drawable.makani_512,R.drawable.help_icon_512};
+    int images[]= {R.drawable.layers_512,R.drawable.favorite_black_512,R.drawable.location_512,R.drawable.makani_512/*,R.drawable.help_icon_512*/};
     int ids[] = {R.id.menuImage,R.id.menuText};
     String keys[]= {"one","two"};
     private ArcGISMap map;
@@ -251,6 +253,18 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setTextZoom(100);
         Global.isFromMap = true;
+        if (Global.fontScale >= 1.25) {
+            CoordinatorLayout.LayoutParams params = new CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(0,SwitchCompatEx.dp2Px(54f),0,0);
+            Global.width = Global.width>1080?Global.height:Global.width;
+            params.setMarginStart((int) (Global.width-SwitchCompatEx.dp2Px(200f)));
+            //binding.listmapMenu.setPaddingRelative();
+
+            params.setMarginEnd(SwitchCompatEx.dp2Px(35f));
+            binding.listmapMenu.setLayoutParams(params);
+
+
+        }
 
         /*String newUA= "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0";
         webView.getSettings().setUserAgentString(newUA);*/
@@ -450,7 +464,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             onStarted();
         }
 
-        String names[] = new String[]{getContext().getResources().getString(R.string.satilite),getContext().getResources().getString(R.string.addtofav),getContext().getResources().getString(R.string.pantoplot),getContext().getResources().getString(R.string.openmaknai),getContext().getResources().getString(R.string.userguide)};
+        String names[] = new String[]{getContext().getResources().getString(R.string.satilite),getContext().getResources().getString(R.string.addtofav),getContext().getResources().getString(R.string.pantoplot),getContext().getResources().getString(R.string.openmaknai)/*,getContext().getResources().getString(R.string.userguide)*/};
 
         ArrayList al = new ArrayList();
 
@@ -491,9 +505,9 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                     break;
                     case 2:if(!isMakani)recenter();else gotomakani();
                     break;
-                    case 3:if(!isMakani)gotomakani();else helpClicked();
+                    case 3:if(!isMakani)gotomakani();/*else helpClicked();*/
                     break;
-                    case 4:if(!isMakani)helpClicked();break;
+                    /*case 4:if(!isMakani)helpClicked();break;*/
                 }
                 binding.listmapMenu.setVisibility(View.GONE);
             }
@@ -717,7 +731,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             });
 
 
-            ViewAnimationUtils.blinkAnimationView(binding.imgBack);
+           // ViewAnimationUtils.blinkAnimationView(binding.imgBack);
         }
         else{
             onStarted();
@@ -776,7 +790,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             });
 
 
-            ViewAnimationUtils.blinkAnimationView(binding.imgBack);
+            //ViewAnimationUtils.blinkAnimationView(binding.imgBack);
 
         }
         binding.mapMenu.setOnClickListener(new View.OnClickListener() {

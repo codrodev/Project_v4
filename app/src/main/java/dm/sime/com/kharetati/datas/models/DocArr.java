@@ -7,6 +7,15 @@ public class DocArr {
     public String docName;
     public String docDta;
     public int docId;
+    public String docDesc;
+
+    public String getDocDesc() {
+        return docDesc;
+    }
+
+    public void setDocDesc(String docDesc) {
+        this.docDesc = docDesc;
+    }
 
     public String getDocName() {
         return docName;

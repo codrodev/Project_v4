@@ -13,8 +13,8 @@
     <string name="createAccount">Create an Account</string>
     <string name="signin_as_guest">Login as Guest</string>
     <string name="login_uaepass">Login with UAE PASS</string>
-    <string name="username">Enter Username<font fgcolor='#a31533'>*</font></string>
-    <string name="password">Enter Password<font fgcolor='#a31533'>*</font></string>
+    <string name="username">Enter Username/ Email Address<font fgcolor='#a31533'>*</font></string>
+    <string name="password">Enter Password<font fgcolor='#a31533' >*</font></string>
     <string name="textOff">English</string>
     <string name="textOn">عربى</string>
     <string name="PLEASE_ENTER_PLOTNUMBER">Please enter plot number</string>
@@ -31,7 +31,7 @@
     <string name="community_error">Error while fetching community</string>
     <string name="please_enter_land">Please enter the title deed number</string>
     <string name="username_and_password">Please enter your username and password</string>
-    <string name="enter_username">Please enter your username or email</string>
+    <string name="enter_username">Please enter username/ email address</string>
     <string name="enter_password">Please enter your password</string>
 
     <string name="wrong_username_password">Wrong username or password</string>
@@ -188,7 +188,7 @@
     <string name="RATEUS">Rate Us</string>
     <string name="ABOUTUS">About Us</string>
     <string name="FAQMENU">FAQs</string>
-    <string name="TERMSANDCONDITIONS">Terms of Use</string>
+    <string name="TERMSANDCONDITIONS">Terms and conditions</string>
     <string name="ACCESSIBILITY">Accessibility</string>
     <string name="INTROHELP">Help</string>
     <string name="iamowner">I am the owner of the plot</string>
@@ -280,12 +280,15 @@
     <string name="makani">Makani</string>
     <string name="newuser">New User?</string>
     <string name="reg">Register</string>
-    <string name="satilite" >Satelite / Map</string>
+    <string name="satilite" >Satellite / Map</string>
     <string name="addtofav">Add to Favorite</string>
     <string name="pantoplot">Pan to Plot</string>
     <string name="openmaknai">Open in Makani</string>
     <string name="userguide">User Guide</string>
     <string name="guest">GUEST</string>
+    <string name="kharetati_feedback">Kharetati feedback</string>
+    <string name="community">Community: </string>
+    <string name="no_result_found">No results found</string>
 
     <string-array name="arrHeader">
         <item>header 1</item>

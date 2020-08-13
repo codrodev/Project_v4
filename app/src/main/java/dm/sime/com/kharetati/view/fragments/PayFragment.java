@@ -89,6 +89,7 @@ public class PayFragment extends Fragment implements PayNavigator {
         if(CURRENT_LOCALE.equals("en")) binding.rootView.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.rootView.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         setRetainInstance(true);
         setEmailAndMobileField();
+        ParentSiteplanFragment.currentIndex =3;
         binding.payNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

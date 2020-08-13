@@ -49,6 +49,7 @@ import java.util.Locale;
 
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.datas.models.DeliveryDetails;
+import dm.sime.com.kharetati.datas.models.DocArr;
 import dm.sime.com.kharetati.datas.models.FunctionsOnMap;
 import dm.sime.com.kharetati.datas.models.LicenceDocs;
 import dm.sime.com.kharetati.datas.models.LookupResponse;
@@ -175,6 +176,7 @@ public class Global {
     public static String callbackUrl;
     public static NotificationResponse notificationResponse;
     public static boolean isFromMap;
+    public static ArrayList<DocArr> lstAttachedDoc;
     private static Context context;
     public static boolean isLanguageChanged = false;
     public static String noctemplateUrl;
@@ -503,6 +505,7 @@ public class Global {
         Locale.setDefault(locale);
 
         Configuration config = new Configuration();
+        config.fontScale = context.getSharedPreferences(MYPREFERENCES,Context.MODE_PRIVATE).getFloat(FONT_SIZE,1f);
         if (Build.VERSION.SDK_INT >Build.VERSION_CODES.N){
             config.setLocale(locale);
             context.createConfigurationContext(config);

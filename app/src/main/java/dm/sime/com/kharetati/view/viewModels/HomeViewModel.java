@@ -446,6 +446,7 @@ public class HomeViewModel extends ViewModel {
                 mutableHomeGridMenu = new MutableLiveData<>();
                 mutableHomeGridMenu.setValue(appResponse.getService_response().getApplications());
                 homeNavigator.populateGridMenu();
+
             } else {
                 if(appResponse.getMessage() != null){
                     if(appResponse.getMessage().equals("You are not authorized to access this feature"))

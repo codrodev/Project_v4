@@ -383,7 +383,7 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
                 (dateTo.getText().toString().trim() == "" || dateTo.getText().toString().trim().length() < 1)) {
             isValid = false;
             if(Global.isConnected(getActivity())) {
-                AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.enter_plot_or_date), getResources().getString(R.string.ok), getContext());
+                AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.valid_plot_number), getResources().getString(R.string.ok), getContext());
                 parcelID.setFocusableInTouchMode(true);
                 parcelID.setFocusable(true);
             } else

@@ -127,7 +127,7 @@
 
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/area"
+                            android:text="@string/community"
                             android:textSize="14sp"
                             android:textAlignment="viewStart"
                             android:textColor="@color/favoritesTextColor"
@@ -142,6 +142,7 @@
                             android:fontFamily="@font/dubai_font"
                             android:singleLine="true"
                             android:layout_marginStart="5dp"
+                            android:id="@+id/community"
                             android:text='@{adapterBookmarkVM.getCurrentBookmark(position).Area ??  ""}'
                             android:textAlignment="viewStart"
                             /></LinearLayout>

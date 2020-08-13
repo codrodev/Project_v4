@@ -34,8 +34,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:weightSum="5"
+                    android:layout_weight=".35"
                     android:background="@drawable/favourites_search_bg">
 
                     <!--<ImageButton-->
@@ -49,12 +48,10 @@
 
                     <TextView
                         android:id="@+id/textView27"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="3dp"
-                        android:layout_weight="0.82"
-
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight=".20"
                         android:focusableInTouchMode="false"
                         android:fontFamily="@font/dubai_font"
                         android:gravity="start|center_vertical"
@@ -68,35 +65,31 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/fragment_bookmarks_plotnumber"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.735"
+                        android:layout_weight="0.20"
                         android:background="#00000000"
                         android:digits="0123456789"
 
                         android:ems="8"
                         android:fontFamily="@font/dubai_font"
-                        android:hint="_   _   _   _   _   _   _"
-                        android:textColorHint="#333333"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:hint="-  -  -  -  -  -  -"
                         android:inputType="number"
 
                         android:lineHeight="20dp"
                         android:maxLength="12"
                         android:paddingStart="5dp"
-                        android:layout_gravity="bottom"
-
                         android:paddingEnd="5dp"
-                        android:textAlignment="viewStart"
+                        android:textAlignment="center"
                         android:textDirection="ltr"
                         android:textSize="14sp" />
 
                     <LinearLayout
                         android:id="@+id/fragment_bookmarks_btnSearch"
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="1.08"
-                        android:layout_marginEnd="5dp">
+                        android:layout_width="32dp"
+                        android:layout_height="40dp"
+                        android:layout_weight=".10">
 
                         <ImageView
 
@@ -108,55 +101,23 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1.245"
-                        android:background="#80333333" />
-
-                    <LinearLayout
-                        android:id="@+id/sortOptions"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="5dp"
-                        android:layout_weight="1.12">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:padding="8dp"
-                            android:src="@drawable/map_menu_512" />
-
-
-                        <!--android:imeOptions="actionDone"
-                        android:inputType="text"-->
-                        <!-- android:digits="0123456789١٢٣٤٥٦٧٨٩١٠"-->
                     </LinearLayout>
 
-
-                </LinearLayout>
-
-
-
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="end"
-                android:layout_marginTop="-8dp"
-                android:id="@+id/sortLayout"
-                android:visibility="gone">
-
                 <LinearLayout
-                    android:id="@+id/sortDescending"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_weight=".65"
+                    android:gravity="end">
+
+                    <LinearLayout
+                        android:id="@+id/sortDescending"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="end"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
 
                     android:background="@drawable/rounded_corners_bg">
 
@@ -168,17 +129,17 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/sortAscending"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
+                    <LinearLayout
+                        android:id="@+id/sortAscending"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="end"
 
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="4dp"
-                    android:background="@drawable/rounded_corners_bg">
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/rounded_corners_bg">
 
                     <ImageView
 
@@ -190,6 +151,9 @@
                         android:src="@drawable/sort_ascending" />
 
                 </LinearLayout>
+            </LinearLayout>
+
+
             </LinearLayout>
 
             <TextView

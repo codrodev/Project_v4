@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
@@ -17,11 +18,16 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.google.gson.Gson;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.util.ArrayList;
 
 import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
+import dm.sime.com.kharetati.datas.models.PlotDetails;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
@@ -31,6 +37,7 @@ import dm.sime.com.kharetati.view.navigators.FragmentNavigator;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 import dm.sime.com.kharetati.view.viewModels.PayViewModel;
 
+import static dm.sime.com.kharetati.utility.constants.AppConstants.PARCEL_NUMBER;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_DELIVERY;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_WEBVIEW_PAYMENT;
 
@@ -95,6 +102,7 @@ public class PaymentFragment extends Fragment {
         webView.getSettings().setUserAgentString(newUA);*/
         webView.setWebViewClient(new MyWebViewClient());
         webView.loadUrl(launchUrl);
+        webView.addJavascriptInterface(new LoadListener(), "HTMLOUT");
         manageAppBottomBAtr(false);
         manageAppBar(false);
         imgBack.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +154,59 @@ public class PaymentFragment extends Fragment {
         @Override
         public void onPageFinished(WebView view, String url) {
             AlertDialogUtil.showProgressBar(getActivity(),false);
+            if(AttachmentFragment.callBackURL != null){
+                if (url != null && url.toLowerCase().indexOf(AttachmentFragment.callBackURL.toLowerCase()) != -1){
+                    view.loadUrl("javascript:window.HTMLOUT.processHTML('<html>'+document.getElementsByTagName('html')[0].innerHTML+'</html>');");
+                }
+            }
         }
 
+    }
+    private class LoadListener {
+        @JavascriptInterface
+        public void processHTML(final String html) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    uploadDocsForSitePlanRequest(html);
+                }
+            });
+        }
+    }
+
+
+
+    private void uploadDocsForSitePlanRequest(String html) {
+        if (html != null && html != "") {
+            try {
+                //progressDialog = new ProgressDialog(getActivity());
+                final Gson gson = new Gson();
+                Document doc = Jsoup.parse(html);
+                //String paymentStatus = "0";
+                Global.paymentStatus = doc.getElementById("txtPaymentStatus").attr("value");
+                //paymentStatus = null;
+
+        /*if(paymentStatus != null) {
+          Toast.makeText(getActivity(), "uploadDocsForSitePlanRequest(): paymentStatus = " + paymentStatus, Toast.LENGTH_SHORT).show();
+        } else {
+          Toast.makeText(getActivity(), "uploadDocsForSitePlanRequest(): paymentStatus is null ", Toast.LENGTH_SHORT).show();
+        }*/
+
+                if( Global.isUserLoggedIn){
+                    mTracker.send(new HitBuilders.EventBuilder()
+                            .setCategory("Payment")
+                            .setAction("["+Global.getUser(getActivity()).getUsername() +" ] -"+ PARCEL_NUMBER+"- [ " + PlotDetails.parcelNo +" ]")
+                            .build());
+                }else{
+                    mTracker.send(new HitBuilders.EventBuilder()
+                            .setCategory("Payment")
+                            .setAction("Guest - DeviceID = [" +Global.deviceId+ "] -"+ PARCEL_NUMBER+"- [ " + PlotDetails.parcelNo +" ]")
+                            .build());
+                }
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 }

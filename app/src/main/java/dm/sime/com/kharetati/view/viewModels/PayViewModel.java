@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.esri.arcgisruntime.tasks.geoprocessing.GeoprocessingLong;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONException;
 
@@ -97,8 +98,16 @@ public class PayViewModel extends ViewModel {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<CreateUpdateRequestResponse>() {
                         @Override public void accept(CreateUpdateRequestResponse createUpdateRequestResponse) throws Exception {
-
-                            createUpdateRequest(createUpdateRequestResponse);
+                            try
+                            {
+                                createUpdateRequest(ob.fromJson(createUpdateRequestResponse.toString(),CreateUpdateRequestResponse.class));
+                                //...
+                            }
+                            catch (IllegalStateException | JsonSyntaxException exception)
+                            {
+                                //.
+                                createUpdateRequest(createUpdateRequestResponse);
+                            }
 
 
 
@@ -119,7 +128,7 @@ public class PayViewModel extends ViewModel {
     private void createUpdateRequest(CreateUpdateRequestResponse createUpdateRequestResponse) {
 
         if(createUpdateRequestResponse!=null){
-            ParentSiteplanViewModel.initializeDocuments();
+            //ParentSiteplanViewModel.initializeDocuments();
             int status=createUpdateRequestResponse.getStatus();
             String msg=Global.CURRENT_LOCALE.compareToIgnoreCase("en")==0 ?
                     createUpdateRequestResponse.getMessageEn():createUpdateRequestResponse.getMessageAr();
@@ -149,7 +158,7 @@ public class PayViewModel extends ViewModel {
                 if(paymentType.compareToIgnoreCase("Pay Now")==0){
 
                     if(status==600){
-                        ParentSiteplanFragment.parentModel.retrieveProfileDocs();
+                        //ParentSiteplanFragment.parentModel.retrieveProfileDocs();
                         ArrayList al = new ArrayList<>();
                         al.add(Global.paymentUrl);
 
@@ -167,7 +176,7 @@ public class PayViewModel extends ViewModel {
                         bundle.putBoolean("isPerson",Global.isPerson);
                         MainActivity.firebaseAnalytics.logEvent("CreateUpdateRequest", bundle);
 
-                        //((MainActivity)activity).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+                        ((MainActivity)activity).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
                     } else if(status==402){
 
                         if(msg!=null)
@@ -198,7 +207,10 @@ public class PayViewModel extends ViewModel {
                         hm.add(customerName);
                         hm.add(mobileNo);
                         hm.add(emailId);
-                        ParentSiteplanFragment.parentModel.retrieveProfileDocs();
+                        ArrayList al = new ArrayList<>();
+                        al.add(Global.paymentUrl);
+                        ((MainActivity)activity).loadFragment(FragmentTAGS.FR_REQUEST_DETAILS,true,hm);
+                       // ParentSiteplanFragment.parentModel.retrieveProfileDocs();
                     }
 
                     else if(status==402){
@@ -232,7 +244,7 @@ public class PayViewModel extends ViewModel {
             payNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
         }
         else
-            payNavigator.onFailure(activity.getResources().getString(R.string.error_response));
+            if(activity!=null)payNavigator.onFailure(activity.getResources().getString(R.string.error_response));
 
         Log.d(activity.getClass().getSimpleName(),exception);
     }

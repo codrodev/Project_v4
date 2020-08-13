@@ -107,7 +107,7 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
         setRetainInstance(true);
         Global.enableClearTextInEditBox(binding.fragmentBookmarksPlotnumber,getActivity());
 
-        binding.sortOptions.setOnClickListener(new View.OnClickListener() {
+        /*binding.sortOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(binding.sortLayout.getVisibility()!=View.VISIBLE)
@@ -115,7 +115,7 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
                 else
                     binding.sortLayout.setVisibility(View.GONE);
             }
-        });
+        });*/
 
         binding.sortDescending.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -312,7 +312,11 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
             if (s.ParcelNumber.toLowerCase().contains(text.toLowerCase())) {
                 //adding the element to filtered list
                 filterdNames.add(s);
-
+                binding.textHeading.setVisibility(View.GONE);
+            }
+            else{
+                binding.textHeading.setVisibility(View.VISIBLE);
+                binding.textHeading.setText(getActivity().getResources().getString(R.string.no_result_found));
             }
         }
         model.getBookmarkAdapter().setBookmark(filterdNames);

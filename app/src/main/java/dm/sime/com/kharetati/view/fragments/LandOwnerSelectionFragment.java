@@ -27,6 +27,7 @@ import dm.sime.com.kharetati.datas.models.DocArr;
 import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.activities.ImageCropActivity;
 import dm.sime.com.kharetati.view.viewModels.LandOwnerViewModel;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 
@@ -81,6 +82,9 @@ public class LandOwnerSelectionFragment extends Fragment {
         Global.nocData =null;
         Global.isDeliveryByCourier = false;
         AttachmentFragment.currentSelection= "";
+        AttachmentFragment.isGallery =false;
+        AttachmentFragment.isCamera =false;
+        ImageCropActivity.isImageCropped=false;
 
         ParentSiteplanViewModel.getDownloadedDoc().clear();
         AttachmentBitmap.passport_copy =null;
@@ -88,6 +92,7 @@ public class LandOwnerSelectionFragment extends Fragment {
         AttachmentBitmap.company_license =null;
         AttachmentBitmap.letter_from_owner =null;
         DeliveryFragment.isDeliveryFragment =false;
+        ParentSiteplanFragment.currentIndex =0;
         ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
         landOwnedType = new String[] {getResources().getString(R.string.land_owned_By_person),getResources().getString(R.string.land_owned_By_company)};
 
@@ -212,5 +217,6 @@ public class LandOwnerSelectionFragment extends Fragment {
     public void onResume() {
         super.onResume();
         ParentSiteplanViewModel.getDownloadedDoc().clear();
+        ParentSiteplanFragment.currentIndex =0;
     }
 }

@@ -120,6 +120,7 @@
                     android:layout_height="35dp"
                     android:gravity="start"
                     android:inputType="text"
+                    android:text="@string/kharetati_feedback"
                     android:paddingStart="5dp"
                     android:background="@drawable/edittext_feedback_background"
                     android:textAlignment="viewStart"

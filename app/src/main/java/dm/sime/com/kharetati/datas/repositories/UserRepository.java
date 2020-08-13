@@ -36,7 +36,7 @@ public class UserRepository {
         return api.getUserDetails(accessToken);
     }
 
-    public Observable<SessionResponse> getSession(String url){
+    public Observable<SessionUaePassResponse> getSession(String url){
         return api.getSession(url);
     }
 

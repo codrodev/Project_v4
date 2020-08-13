@@ -122,13 +122,15 @@
                     android:fontFamily="@font/dubai_font"
                     android:textColor="@color/white" />
             </LinearLayout>
+
             <FrameLayout
                 android:id="@+id/ui_container"
                 android:layout_width="match_parent"
-                android:layoutDirection="locale"
-                android:background="@color/white"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/layoutProfile"/>
+                android:layout_marginBottom="48dp"
+                android:layout_below="@+id/layoutProfile"
+                android:background="@color/white"
+                android:layoutDirection="locale" />
         </LinearLayout>
         <dm.sime.com.kharetati.view.customview.meowbottomnavigation.MeowBottomNavigation
             android:id="@+id/customBottomBar"

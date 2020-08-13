@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,6 +27,7 @@ import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -98,6 +100,7 @@ import kotlin.jvm.functions.Function1;
 import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
 import static dm.sime.com.kharetati.utility.Global.MYPREFERENCES;
 import static dm.sime.com.kharetati.utility.Global.alertDialog;
+import static dm.sime.com.kharetati.utility.Global.isLoginActivity;
 import static dm.sime.com.kharetati.utility.constants.AppConstants.FONT_SIZE;
 import static dm.sime.com.kharetati.utility.constants.AppConstants.USER_LANGUAGE;
 
@@ -156,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         model.mainNavigator =this;
         fragmentManager = getSupportFragmentManager();
         Global.fontScale =sharedpreferences.getFloat(FONT_SIZE,1f);
-        adjustFontScale(getResources().getConfiguration(),Global.fontScale);
+        //adjustFontScale(MainActivity.this.getResources().getConfiguration(),Global.fontScale);
         model.initialize();
         binding.setActivityMainVM(model);
         customBottomBar = (MeowBottomNavigation)findViewById(R.id.customBottomBar);
@@ -175,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
         //binding.imgHelp.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
         binding.backButton.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
-        model.getNotifications();
+        //model.getNotifications();
 
 
 
@@ -298,8 +301,10 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
 
         if(Global.isRecreate){
+
             loadFragment(sharedpreferences.getString("currentFragment",FragmentTAGS.FR_HOME),true,null);
             binding.customBottomBar.show(5,true);
+            //adjustFontScale(getResources().getConfiguration(),Global.fontScale);
         }
         else {customBottomBar.show(3, true);
         openHomePage();
@@ -317,7 +322,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         String currentDateandTime = sdf.format(new Date());
         binding.txtLastLogin.setVisibility(View.VISIBLE);
 
-        if (Global.isUAE) {
+        if (Global.isUAE||Global.isUserLoggedIn) {
             String lastLogin = Global.uaeSessionResponse.getService_response().getLast_login();
 
             if (lastLogin != null && !lastLogin.equals(""))
@@ -438,11 +443,16 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     @Override
     public void recreate() {
 
-
+        //isLoginActivity =true;
+        sharedpreferences.edit().putFloat(FONT_SIZE,Global.fontScale).apply();
         startActivity(getIntent());
         finish();
         overridePendingTransition(0, 0);
         Global.isRecreate =true;
+
+
+        //adjustFontScale(getResources().getConfiguration(),sharedpreferences.getFloat(FONT_SIZE,Global.fontScale));
+
         if(Global.alertDialog!=null)
             Global.alertDialog=null;
 
@@ -501,7 +511,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 e.printStackTrace();
             }
         }
-        else{
+        else {
             binding.txtLastLogin.setVisibility(View.GONE);
             binding.layoutlastlogin.setVisibility(View.GONE);
         }
@@ -515,15 +525,12 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             sharedpreferences = newBase.getSharedPreferences(MYPREFERENCES, Context.MODE_PRIVATE);
             String locale = sharedpreferences.getString(USER_LANGUAGE, "defaultStringIfNothingFound");
 
-            Global.fontScale =sharedpreferences.getFloat(FONT_SIZE,1f);
-
+            Global.fontScale = sharedpreferences.getFloat(FONT_SIZE,1f);
 
             if(!locale.equals("defaultStringIfNothingFound"))
                 CURRENT_LOCALE =locale;
             else
                 CURRENT_LOCALE ="en";
-
-
 
             super.attachBaseContext(CustomContextWrapper.wrap(newBase, CURRENT_LOCALE));
         } else {
@@ -532,10 +539,14 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     }
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
+
+        newConfig.setLocale(new Locale(CURRENT_LOCALE));
+
+        newConfig.fontScale = sharedpreferences.getFloat(FONT_SIZE,1f);
+        adjustFontScale(newConfig,newConfig.fontScale);
+
         sharedpreferences.edit().putString("currentFragment",Global.current_fragment_id).apply();
 
-        newConfig.setLocale(new Locale(Global.getCurrentLanguage(this)));
         int position = sharedpreferences.getInt("position",3);
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             Global.isLandScape = true;
@@ -575,8 +586,11 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 customBottomBar.show(position,true);
                 loadFragment(model.bottomNavigationTAG(position), true, null);
                 loadFragment(sharedpreferences.getString("currentFragment",Global.current_fragment_id),true,null);
+                if(!(Global.current_fragment_id.compareToIgnoreCase(FragmentTAGS.FR_HOME)==0))
+                    binding.layoutlastlogin.setVisibility(View.GONE );
             }
         }
+        super.onConfigurationChanged(newConfig);
     }
 
 
@@ -601,7 +615,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         //getMenuInflater().inflate(R.menu.map_menu,menu);
         //MapFragment.mapVM.mapNavigator.onMenCreated(menu);
         return true;
-    }
+      }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -817,6 +831,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                     //createAndLoadFragment(Constant.FR_DOWNLOADEDSITEPLAN, false, null);
                 }
                 else if (Global.paymentStatus.equals("1")) {
+                    //clearStack(FragmentTAGS.FR_DASHBOARD,1);
                     clearBackStack();
                 }
 
@@ -939,10 +954,13 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         if (response != null) {
             if (response.getServiceResponse() != null) {
                 if (response.getServiceResponse().getGeneralNotifications().size() > 0) {
-                    if (!Global.isRecreate) {
-                        checkNotifications();
-                        layoutDots.setVisibility(View.VISIBLE);
-                        addBottomDots(0, response.getServiceResponse().getGeneralNotifications().size());
+                    onSuccess();
+                    if (Global.isFirstLoad||!Global.isRecreate) {
+                        if (!((Activity) MainActivity.this).isFinishing()){
+                            checkNotifications();
+                            layoutDots.setVisibility(View.VISIBLE);
+                            addBottomDots(0, response.getServiceResponse().getGeneralNotifications().size());
+                        }
                     }
                 }
             }
@@ -1037,7 +1055,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
     }
 
-    public  void adjustFontScale(Configuration configuration, float scale) {
+    public void adjustFontScale(Configuration configuration, float scale) {
+
 
         configuration.fontScale = scale;
         DisplayMetrics metrics = MainActivity.this.getResources().getDisplayMetrics();

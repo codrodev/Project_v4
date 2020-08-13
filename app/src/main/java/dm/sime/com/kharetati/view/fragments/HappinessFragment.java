@@ -192,8 +192,8 @@ public class HappinessFragment extends Fragment {
         /**
          *This is QA URL. Replace it with production once it is ready for production.
          */
-        //VotingManager.setHappinessUrl(Global.happinessUrl);  //staging
-         VotingManager.setHappinessUrl("https://happinessmeter.dubai.gov.ae/HappinessMeter2/MobilePostDataService");//production
+        VotingManager.setHappinessUrl(Global.happinessUrl);  //staging
+         //VotingManager.setHappinessUrl("https://happinessmeter.dubai.gov.ae/HappinessMeter2/MobilePostDataService");//production
 
         //For arabic pass lang "ar"
         String lang;

@@ -125,10 +125,11 @@ import dm.sime.com.kharetati.view.viewmodelfactories.AttachmentViewModelFactory;
 
 import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
 import static dm.sime.com.kharetati.utility.Global.licenseData;
+import static dm.sime.com.kharetati.utility.Global.lstAttachedDoc;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_ATTACHMENT;
 
 
-public class AttachmentFragment extends Fragment implements AttachmentNavigator, CameraPermissionInterface, MainActivity.onPermissionResult {
+public class AttachmentFragment extends Fragment implements AttachmentNavigator, CameraPermissionInterface, MainActivity.onPermissionResult, ImageCropActivity.onCropListener {
 
     private static final String TAG = "AttachmentFragment";
     public static String paymentUrl;
@@ -148,18 +149,18 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
     public static final String PASSPORT = "PASSPORT";
     public static final String LETTER_FROM_OWNER = "LETTER_FROM_OWNER";
     private ArrayList<ListItem> listItem;
-    private static List<AttachedDoc> lstAttachedDoc = new ArrayList<AttachedDoc>();
+
 
     private Bitmap retrieved_license,retrieved_noc,retrieved_passport,retrieved_visa;
     public static Uri photoURI;
     public static Uri contentURI;
     public static Bitmap thumbnail;
     public Bitmap viewBitmap,myBitmap,pdfBitmap;
-    public static boolean isCamera=false;
+    public static boolean isGallery,isCamera=false;
     private int GALLERY_CROP=111;
     private Uri galleryURI;
     private String mCurrentPhotoPath;
-    private AttachedDoc attachedDoc;
+    private DocArr attachedDoc;
     private File dwldsPath;
     private Bitmap front;
     private String imageType;
@@ -200,8 +201,10 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
         model = ViewModelProviders.of(getActivity(),factory).get(AttachmentViewModel.class);
         model.attachmentNavigator =this;
+        ImageCropActivity.onCropListener =this;
         attachmentModel =model;
         listItem = new ArrayList<>();
+        lstAttachedDoc = new ArrayList<DocArr>();
 
         /*if(!ImageCropActivity.isImageCropped)
         {
@@ -214,7 +217,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
             //clearImage();
         }*/
-        lstAttachedDoc = new ArrayList<AttachedDoc>();
+        lstAttachedDoc = new ArrayList<DocArr>();
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), AppConstants.ALL_PERMISSIONS, AppConstants.REQUEST_READ_EXTERNAL_STORAGE);
         }
@@ -231,6 +234,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         binding.setFragmentAttachmentVM(model);
         mRootView = binding.getRoot();
         initializePage();
+
         setRetainInstance(true);
         if(CURRENT_LOCALE.equals("en")) binding.rootView.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.rootView.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 
@@ -241,8 +245,8 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
     private void initializePage() {
         MainActivity.listner = this;
         clearAttachments();
-        if(!DeliveryFragment.isDeliveryFragment)
-        ParentSiteplanViewModel.getDownloadedDoc().clear();
+        /*if(!DeliveryFragment.isDeliveryFragment)
+            ParentSiteplanViewModel.getDownloadedDoc().clear();*/
         ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
         mTracker.setScreenName(FR_ATTACHMENT);
@@ -263,19 +267,19 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         {
             if (Global.docArr != null && Global.docArr.length > 0)
             {
-                if(ParentSiteplanViewModel.getDownloadedDoc() == null || ParentSiteplanViewModel.getDownloadedDoc().size() == 0)
+                if((ParentSiteplanViewModel.getDownloadedDoc() == null || ParentSiteplanViewModel.getDownloadedDoc().size() == 0)&&(!ImageCropActivity.isImageCropped))
                 {
                     if (Global.isPerson && Global.rbIsOwner  ) {
                         //if (!getBitmapFromView(binding.imgPassport) || !getBitmapFromView(binding.imgVisaPassport))
-                            downloadDocs(Global.docArr);
+                        downloadDocs(Global.docArr);
                     }
                     else if(Global.isPerson && !Global.rbIsOwner ){
                         //if(!getBitmapFromView(binding.imgPassport) || !getBitmapFromView(binding.imgVisaPassport) ||!getBitmapFromView(binding.imgLetterFromOwner))
-                            downloadDocs(Global.docArr);
+                        downloadDocs(Global.docArr);
                     }
                     else if(!Global.isPerson && !Global.rbIsOwner ){
                         //if(!getBitmapFromView(binding.imgCompanyLicense) ||!getBitmapFromView(binding.imgLetterFromOwner))
-                            downloadDocs(Global.docArr);
+                        downloadDocs(Global.docArr);
                     }
                 }
             }
@@ -461,11 +465,12 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
                         createAttachedDoc(encodeFileToBase64Binary(myFile), "application/pdf",
                                 getCurrentKey(), myFile.getName(), getDocId(currentSelection), currentSelection);
-                        AddDoc(currentSelection, myFile.getPath(), myFile.getName(), "application/pdf", 0);
+                        AddDoc(encodeFileToBase64Binary(myFile),currentSelection, myFile.getPath(), myFile.getName(), "application/pdf", 0);
 
                         if (currentSelection == PASSPORT) {
 
                             isCamera = false;
+                            isGallery =false;
 
                             binding.imgPassport.setImageDrawable(getResources().getDrawable(R.drawable.pdf_icon));
                             binding.personalView.setVisibility(View.VISIBLE);
@@ -474,18 +479,21 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                         } else if (currentSelection == LETTER_FROM_OWNER) {
 
                             isCamera = false;
+                            isGallery =false;
                             binding.imgLetterFromOwner.setImageDrawable(getResources().getDrawable(R.drawable.pdf_icon));
                             binding.nocView.setVisibility(View.VISIBLE);
                             binding.nocChange.setVisibility(View.VISIBLE);
                         } else if (currentSelection == VISA_PASSPORT) {
 
                             isCamera = false;
+                            isGallery =false;
                             binding.imgVisaPassport.setImageDrawable(getResources().getDrawable(R.drawable.pdf_icon));
                             binding.visaView.setVisibility(View.VISIBLE);
                             binding.visaChange.setVisibility(View.VISIBLE);
                         } else if (currentSelection == COMPANY_LICENCE) {
 
                             isCamera = false;
+                            isGallery =false;
                             binding.imgCompanyLicense.setImageDrawable(getResources().getDrawable(R.drawable.pdf_icon));
                             binding.licenseView.setVisibility(View.VISIBLE);
                             binding.licenseChange.setVisibility(View.VISIBLE);
@@ -685,7 +693,6 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
 
     }
-
 
 
 
@@ -901,6 +908,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         super.onResume();
         Global.paymentStatus = null;
         Global.hideSoftKeyboard(getActivity());
+        ParentSiteplanFragment.currentIndex =1;
         //setEmailAndMobileField();
 
 
@@ -1081,7 +1089,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
     @Override
     public void onStarted() {
         if(getActivity()!=null)
-        AlertDialogUtil.showProgressBar(getActivity(),true);
+            AlertDialogUtil.showProgressBar(getActivity(),true);
         Log.d(getClass().getSimpleName(),"onStarted");
 
     }
@@ -1089,7 +1097,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
     @Override
     public void onSuccess() {
         if(getActivity()!=null)
-        AlertDialogUtil.showProgressBar(getActivity(),false);
+            AlertDialogUtil.showProgressBar(getActivity(),false);
         Log.d(getClass().getSimpleName(),"onSuccess");
 
     }
@@ -1097,8 +1105,8 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
     @Override
     public void onFailure(String Msg) {
         if(getActivity()!=null){
-        AlertDialogUtil.showProgressBar(getActivity(),false);
-        AlertDialogUtil.errorAlertDialog("",Msg,getActivity().getResources().getString(R.string.ok),getActivity());
+            AlertDialogUtil.showProgressBar(getActivity(),false);
+            AlertDialogUtil.errorAlertDialog("",Msg,getActivity().getResources().getString(R.string.ok),getActivity());
             Log.d(getClass().getSimpleName(),"onFailure");
         }
 
@@ -1111,7 +1119,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
     @Override
     public void nextButtonStatusForAttachment() {
-       nextButtonStatus();
+        nextButtonStatus();
     }
 
     @Override
@@ -1123,7 +1131,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
             {
 
 
-                if (retrieveDocStreamResponse.getDoc_details().getDoctype() != null && retrieveDocStreamResponse.getDoc_details().getDocformat() != null)
+                if (retrieveDocStreamResponse.getDoc_details().getDocKey() != null && retrieveDocStreamResponse.getDoc_details().getDocformat() != null)
                 {
                     DocArr dr = new DocArr();
                     dr.setDocFormat(retrieveDocStreamResponse.getDoc_details().getDocformat());
@@ -1155,11 +1163,11 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                         boolean isPassportExists = false;
 
 
-                        if (retrieveDocStreamResponse.getDoc_details().getDoctype().compareToIgnoreCase("passport") == 0) {
+                        if (retrieveDocStreamResponse.getDoc_details().getDocKey().compareToIgnoreCase("passport") == 0) {
                             isPassportExists = isOldDocContainsPassport(PASSPORT);
                             isDocumentAdded =false;
                         }
-                        if (retrieveDocStreamResponse.getDoc_details().getDoctype().compareToIgnoreCase("passport") == 0 && isPassportExists == false) {
+                        if (retrieveDocStreamResponse.getDoc_details().getDocKey().compareToIgnoreCase("passport") == 0 && isPassportExists == false) {
                             *//*if(!getBitmapFromView(binding.imgPassport)){*//*
                                 binding.imgPassport.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.pdf_icon));
                                 Log.d(getClass().getSimpleName(),"passport:"+dr.getDocKey()+"."+dr.getDocFormat()+"["+dr.getDocId()+"]");
@@ -1167,7 +1175,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                                 binding.passportButtons.setVisibility(View.VISIBLE);
                                 dr.setDocKey(PASSPORT);
                                 docid_passort =dr.getDocId();
-                        } else if (retrieveDocStreamResponse.getDoc_details().getDoctype().compareToIgnoreCase("passport") == 0 && isPassportExists == true) {
+                        } else if (retrieveDocStreamResponse.getDoc_details().getDocKey().compareToIgnoreCase("passport") == 0 && isPassportExists == true) {
                             *//*if(!getBitmapFromView(binding.imgVisaPassport)){*//*
                             binding.imgVisaPassport.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.pdf_icon));
                                 Log.d(getClass().getSimpleName(),"visaPassport:"+dr.getDocKey()+"."+dr.getDocFormat()+"["+dr.getDocId()+"]");
@@ -1175,7 +1183,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                             binding.visaPassportButtons.setVisibility(View.VISIBLE);
                             dr.setDocKey(VISA_PASSPORT);
                             docid_visaPassport = dr.getDocId();
-                        } else if (retrieveDocStreamResponse.getDoc_details().getDoctype().compareToIgnoreCase("license") == 0) {
+                        } else if (retrieveDocStreamResponse.getDoc_details().getDocKey().compareToIgnoreCase("license") == 0) {
                             *//*if(!getBitmapFromView(binding.imgCompanyLicense)){*//*
                             binding.imgCompanyLicense.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.pdf_icon));
                                 Log.d(getClass().getSimpleName(),"companyLicense:"+dr.getDocKey()+"."+dr.getDocFormat()+"["+dr.getDocId()+"]");
@@ -1183,7 +1191,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                             binding.companyLicenseButtons.setVisibility(View.VISIBLE);
 
                             dr.setDocKey(COMPANY_LICENCE);
-                        } else if (retrieveDocStreamResponse.getDoc_details().getDoctype().compareToIgnoreCase("noc") == 0) {
+                        } else if (retrieveDocStreamResponse.getDoc_details().getDocKey().compareToIgnoreCase("noc") == 0) {
                             *//*if(!getBitmapFromView(binding.imgLetterFromOwner)){*//*
                             binding.imgLetterFromOwner.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.pdf_icon));
                                 Log.d(getClass().getSimpleName(),"letterFromOwner:"+dr.getDocKey()+"."+dr.getDocFormat()+"["+dr.getDocId()+"]");
@@ -1201,7 +1209,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                         front = BitmapFactory.decodeStream(stream);
                         dr.setDocDta(retrieveDocStreamResponse.getDoc_details().getDoc().trim());
                         dr.setDocId(docId);
-                        imageType = retrieveDocStreamResponse.getDoc_details().getDoctype();
+                        imageType = retrieveDocStreamResponse.getDoc_details().getDocKey();
                         boolean isPassportExists = false;
                         if (imageType.compareToIgnoreCase("passport") == 0) {
                             isPassportExists = isOldDocContainsPassport(PASSPORT);
@@ -1265,8 +1273,8 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                         nextButtonStatus();
 
                     } else {
-                        //imageType = retrieveDocStreamResponse.getDoc_details().getDoctype();
-                        imageType = retrieveDocStreamResponse.getDoc_details().getDoctype();
+                        //imageType = retrieveDocStreamResponse.getDoc_details().getDocKey();
+                        imageType = retrieveDocStreamResponse.getDoc_details().getDocKey();
                         boolean isPassportExists = false;
                         if (imageType.compareToIgnoreCase("passport") == 0) {
 
@@ -1362,7 +1370,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                             onSuccess();
                             nextButtonStatus();
                         }*//*
-                        *//*else{
+         *//*else{
                             onSuccess();
                             nextButtonStatus();
                         }*//*
@@ -1390,7 +1398,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                 nextButtonStatus();
             }
         }*//*
-        *//*if(!Global.isPerson && !Global.rbIsOwner){
+         *//*if(!Global.isPerson && !Global.rbIsOwner){
             if(getBitmapFromView(binding.imgCompanyLicense)&&getBitmapFromView(binding.imgLetterFromOwner)){
                 onSuccess();
                 nextButtonStatus();
@@ -1401,7 +1409,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
             nextButtonStatus();
         }*/
 
-     }
+    }
 
     public void retrieveDoc(final int  docId){
         int permission = ActivityCompat.checkSelfPermission(this.getActivity(), android.Manifest.permission.READ_EXTERNAL_STORAGE);
@@ -1414,7 +1422,6 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
             );
             return;
-
         }
 
 
@@ -1580,7 +1587,9 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                                                 if(isOldDocExistInAttachment(dr.getDocKey()) == false) {
                                                     ParentSiteplanViewModel.getDownloadedDoc().add(dr);
                                                 }
-                                                AddDoc(dr.docKey, dr.docPath, dr.docName, dr.docFormat, dr.docId);
+                                                //ParentSiteplanViewModel.getDownloadedDoc().add(dr);
+                                                AddDoc(dr.docDta,dr.docKey, dr.docPath, dr.docName, dr.docFormat, dr.docId);
+
 
                                                 if(ParentSiteplanViewModel.getDownloadedDoc() != null) {
                                                     if (ParentSiteplanViewModel.getDownloadedDoc().size() == Global.docArr.length) {
@@ -1651,6 +1660,45 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         } else
             ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
     }
+
+    @Override
+    public void onCrop(String uri) {
+
+
+
+        galleryURI=Uri.parse(uri);
+        //AddDoc(currentSelection, "", "", "jpg", 0);
+        if (currentSelection.equals(PASSPORT)) {
+            binding.imgPassport.setImageURI(galleryURI);
+            //AddDoc(currentSelection, galleryURI.toString(), PASSPORT+".jpg", "jpg", 0);
+            AttachmentBitmap.passport_copy=((BitmapDrawable) binding.imgPassport.getDrawable()).getBitmap();
+            createAttachedDoc(encodeImage(AttachmentBitmap.passport_copy), "image/jpg",
+                    getCurrentKey(),PASSPORT+".jpg", getDocId(currentSelection), PASSPORT);
+            AddDoc(encodeImage(AttachmentBitmap.passport_copy),currentSelection, galleryURI.toString(), PASSPORT+".jpg", "image/jpg", getDocId(currentSelection));
+        } else if (currentSelection.equals(LETTER_FROM_OWNER)) {
+            binding.imgLetterFromOwner.setImageURI(galleryURI);
+            AttachmentBitmap.letter_from_owner=((BitmapDrawable) binding.imgLetterFromOwner.getDrawable()).getBitmap();
+            createAttachedDoc(encodeImage(AttachmentBitmap.letter_from_owner), "image/jpg",
+                    getCurrentKey(),LETTER_FROM_OWNER+".jpg", getDocId(currentSelection), LETTER_FROM_OWNER);
+            AddDoc(encodeImage(AttachmentBitmap.letter_from_owner),currentSelection, galleryURI.toString(), LETTER_FROM_OWNER+".jpg", "image/jpg", getDocId(currentSelection));
+        }else if (currentSelection.equals(VISA_PASSPORT)) {
+            binding.imgVisaPassport.setImageURI(galleryURI);
+            AttachmentBitmap.visa_passport=((BitmapDrawable) binding.imgVisaPassport.getDrawable()).getBitmap();
+            createAttachedDoc(encodeImage(AttachmentBitmap.visa_passport), "image/jpg",
+                    getCurrentKey(),VISA_PASSPORT+".jpg", getDocId(currentSelection), VISA_PASSPORT);
+            AddDoc(encodeImage(AttachmentBitmap.visa_passport),currentSelection, galleryURI.toString(), VISA_PASSPORT+".jpg", "image/jpg", getDocId(currentSelection));
+        }else if (currentSelection.equals(COMPANY_LICENCE)) {
+            binding.imgCompanyLicense.setImageURI(galleryURI);
+            AttachmentBitmap.company_license=((BitmapDrawable) binding.imgCompanyLicense.getDrawable()).getBitmap();
+            createAttachedDoc(encodeImage(AttachmentBitmap.company_license), "image/jpg",
+                    getCurrentKey(),COMPANY_LICENCE+".jpg", getDocId(currentSelection), COMPANY_LICENCE);
+            AddDoc(encodeImage(AttachmentBitmap.company_license),currentSelection, galleryURI.toString(), COMPANY_LICENCE+".jpg", "image/jpg", getDocId(currentSelection));
+        }
+        nextButtonStatus();
+
+    }
+
+
 
 
     public static class DownloadFile extends AsyncTask<String, Void, Void> {
@@ -1781,7 +1829,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
                             createAttachedDoc(encodeFileToBase64Binary(myFile), "application/pdf",
                                     getCurrentKey(), myFile.getName(), getDocId(currentSelection), currentSelection);
-                            AddDoc(currentSelection, myFile.getPath(), myFile.getName(), "application/pdf", 0);
+                            AddDoc(encodeFileToBase64Binary(myFile),currentSelection, myFile.getPath(), myFile.getName(), "application/pdf", 0);
 
                             if (currentSelection.equals(PASSPORT)) {
 
@@ -1825,9 +1873,10 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                 contentURI = data.getData();
                 System.out.println(contentURI.toString());
                 System.out.println(contentURI.getPath());
-                AddDoc(currentSelection, "", "", "jpg", 0);
+                //AddDoc(currentSelection, "", "", "jpg", 0);
                 try {
                     isCamera = false;
+                    isGallery = true;
                     Intent crop = new Intent(getActivity(), ImageCropActivity.class);
                     crop.putExtra("uri", contentURI.toString());
                     startActivityForResult(crop, GALLERY_CROP);
@@ -1873,17 +1922,18 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         else if (requestCode == CAMERA) {
 
             isCamera = true;
+            isGallery = false;
             try {
                 thumbnail = (Bitmap) compressImage(Uri.parse(mCurrentPhotoPath), "camera_image");
             } catch (Exception ex){
 
             }
-            AddDoc(currentSelection, "", "", "jpg", 0);
+            //AddDoc(currentSelection, "", "", "jpg", 0);
             /*Intent crop = new Intent(getActivity(), ImageCropActivity.class);
             crop.putExtra("uri", photoURI);
             startActivityForResult(crop, GALLERY_CROP);*/
             Intent crop = new Intent(getActivity(), ImageCropActivity.class);
-            crop.putExtra("uri", photoURI);
+            crop.putExtra("uri", photoURI.toString());
 
             startActivityForResult(crop, GALLERY_CROP);
             /*if (currentSelection == LAND_OWNER_CERTIFICATE) {
@@ -1914,8 +1964,8 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         else if (requestCode == GALLERY_CROP && resultCode == -1) {
 
             galleryURI=Uri.parse(data.getExtras().getString("uri"));
-            AddDoc(currentSelection, "", "", "jpg", 0);
-           if (currentSelection.equals(PASSPORT)) {
+            //AddDoc(currentSelection, "", "", "jpg", 0);
+            if (currentSelection.equals(PASSPORT)) {
                 binding.imgPassport.setImageURI(galleryURI);
                 //AddDoc(currentSelection, galleryURI.toString(), PASSPORT+".jpg", "jpg", 0);
                 AttachmentBitmap.passport_copy=((BitmapDrawable) binding.imgPassport.getDrawable()).getBitmap();
@@ -1937,25 +1987,31 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                 createAttachedDoc(encodeImage(AttachmentBitmap.company_license), "image/jpg",
                         getCurrentKey(),COMPANY_LICENCE+".jpg", getDocId(currentSelection), COMPANY_LICENCE);
             }
-           nextButtonStatus();
+            nextButtonStatus();
 
         }
     }
 
 
-    private void AddDoc(String key, String path, String name, String format, int docID){
+
+    private void AddDoc(String file,String key, String path, String name, String format, int docID){
         boolean isAdded = false;
         ActivateViewAndChange(key);
         if(ParentSiteplanViewModel.getNewlyAttachedDoc() != null && ParentSiteplanViewModel.getNewlyAttachedDoc().size() > 0){
             for(int i = 0; i < ParentSiteplanViewModel.getNewlyAttachedDoc().size(); i++){
                 if(ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocKey() != null &&
-                        ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocKey().equals(key)){
+                        getDocType(ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocKey()).compareToIgnoreCase(getDocType(key))==0){
                     isAdded = true;
+
                     ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).setDocFormat(format);
                     ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).setDocPath(path);
                     ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).setDocKey(key);
                     ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).setDocName(name);
                     ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).setDocId(docID);
+                    ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).setDocDta(file);
+                    //lstAttachedDoc.add(ParentSiteplanViewModel.getNewlyAttachedDoc().get(i));
+
+
                 }
             }
             if(isAdded == false){
@@ -1964,7 +2020,9 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                 ar.setDocPath(path);
                 ar.setDocName(name);
                 ar.setDocFormat(format);
-                ar.setDocId(0);
+                ar.setDocId(docID);
+                ar.setDocDta(file);
+                lstAttachedDoc.add(ar);
                 ParentSiteplanViewModel.addNewlyAttachedDoc(ar);
             }
         } else {
@@ -1978,7 +2036,11 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
             ar.setDocName(name);
             ar.setDocFormat(format);
             ar.setDocId(0);
+            ar.setDocDta(file);
+
             ParentSiteplanViewModel.addNewlyAttachedDoc(ar);
+            lstAttachedDoc.add(ar);
+
 
         }
     }
@@ -1988,9 +2050,10 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
             return "passport";
         } else if(key.equals(COMPANY_LICENCE)){
             return  "license";
-        } else {
+        } else if(key.equals(LETTER_FROM_OWNER)){
             return  "noc";
         }
+        return key;
     }
 
     public void clearAttachments(){
@@ -2004,7 +2067,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         boolean isExists = false;
         if(lstAttachedDoc != null && lstAttachedDoc.size() > 0) {
             for (int i = 0; i < lstAttachedDoc.size(); i++){
-                if(lstAttachedDoc.get(i).getKey().equals(key)){
+                if(lstAttachedDoc.get(i).getDocKey().equals(key)){
                     isExists = true;
                     return isExists;
                 }
@@ -2269,7 +2332,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         populateLstDoc();
         if(lstAttachedDoc!=null && lstAttachedDoc.size()>0){
             for(int i=0;i<lstAttachedDoc.size();i++){
-                if(isValidDocFormat(lstAttachedDoc.get(i).getDoc_format()) == false){
+                if(isValidDocFormat(lstAttachedDoc.get(i).getDocFormat()) == false){
                     AlertDialogUtil.errorAlertDialog("",getActivity().getResources().getString(R.string.valid_doc),
                             getActivity().getResources().getString(R.string.ok),getActivity());
                     return;
@@ -2302,23 +2365,23 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         {
             Global.passportData = new ArrayList<>();
             for (int i = 0; i < lstAttachedDoc.size(); i++) {
-                if (lstAttachedDoc.get(i).getDoc_type().equals("passport")) {
+                if (getDocType(lstAttachedDoc.get(i).getDocKey()).compareToIgnoreCase("passport")==0) {
                     PassportDocs obj = new PassportDocs();
-                    String file = lstAttachedDoc.get(i).getDoc();
-                    if (!(lstAttachedDoc.get(i).getDoc_format().equals("pdf")
-                            || lstAttachedDoc.get(i).getDoc_format().equals("application/pdf")
-                            || lstAttachedDoc.get(i).getDoc_format().equals("jpg")
-                            || lstAttachedDoc.get(i).getDoc_format().equals("png")
-                            || lstAttachedDoc.get(i).getDoc_format().equals("image/png")
-                            || lstAttachedDoc.get(i).getDoc_format().equals("image/jpg")
-                            || lstAttachedDoc.get(i).getDoc_format().equals("image/jpeg")
-                            || lstAttachedDoc.get(i).getDoc_format().equals("jpeg")))
+                    String file = lstAttachedDoc.get(i).getDocDta();
+                    if (!(lstAttachedDoc.get(i).getDocFormat().equals("pdf")
+                            || lstAttachedDoc.get(i).getDocFormat().equals("application/pdf")
+                            || lstAttachedDoc.get(i).getDocFormat().equals("jpg")
+                            || lstAttachedDoc.get(i).getDocFormat().equals("png")
+                            || lstAttachedDoc.get(i).getDocFormat().equals("image/png")
+                            || lstAttachedDoc.get(i).getDocFormat().equals("image/jpg")
+                            || lstAttachedDoc.get(i).getDocFormat().equals("image/jpeg")
+                            || lstAttachedDoc.get(i).getDocFormat().equals("jpeg")))
                         file = encodeImage(((BitmapDrawable) getActivity().getResources().getDrawable(R.drawable.unsupported)).getBitmap());
-                    obj.setDoc_desc_en(lstAttachedDoc.get(i).getDoc_desc_en());
-                    obj.setDoc_type(lstAttachedDoc.get(i).getDoc_type());
-                    obj.setDoc_format(lstAttachedDoc.get(i).getDoc_format());
-                    obj.setDoc_id(lstAttachedDoc.get(i).getDoc_id());
-                    obj.setDoc_name(lstAttachedDoc.get(i).getDoc_name());
+                    obj.setDoc_desc_en(lstAttachedDoc.get(i).getDocDesc());
+                    obj.setDoc_type(getDocType(lstAttachedDoc.get(i).getDocKey()));
+                    obj.setDoc_format(lstAttachedDoc.get(i).getDocFormat());
+                    obj.setDoc_id(lstAttachedDoc.get(i).getDocId());
+                    obj.setDoc_name(lstAttachedDoc.get(i).getDocName());
                     obj.setDoc(file);
 
 
@@ -2336,23 +2399,23 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
             licenseData = new ArrayList<>();
             for (int k = 0; k < lstAttachedDoc.size(); k++) {
-                if (lstAttachedDoc.get(k).getDoc_type().equals("license")) {
+                if (lstAttachedDoc.get(k).getDocKey().equals("license")) {
                     LicenceDocs obj = new LicenceDocs();
-                    String file = lstAttachedDoc.get(k).getDoc();
-                    if (!(lstAttachedDoc.get(k).getDoc_format().equals("pdf")
-                            || lstAttachedDoc.get(k).getDoc_format().equals("application/pdf")
-                            || lstAttachedDoc.get(k).getDoc_format().equals("jpg")
-                            || lstAttachedDoc.get(k).getDoc_format().equals("png")
-                            || lstAttachedDoc.get(k).getDoc_format().equals("image/png")
-                            || lstAttachedDoc.get(k).getDoc_format().equals("image/jpg")
-                            || lstAttachedDoc.get(k).getDoc_format().equals("image/jpeg")
-                            || lstAttachedDoc.get(k).getDoc_format().equals("jpeg")))
+                    String file = lstAttachedDoc.get(k).getDocDta();
+                    if (!(lstAttachedDoc.get(k).getDocFormat().equals("pdf")
+                            || lstAttachedDoc.get(k).getDocFormat().equals("application/pdf")
+                            || lstAttachedDoc.get(k).getDocFormat().equals("jpg")
+                            || lstAttachedDoc.get(k).getDocFormat().equals("png")
+                            || lstAttachedDoc.get(k).getDocFormat().equals("image/png")
+                            || lstAttachedDoc.get(k).getDocFormat().equals("image/jpg")
+                            || lstAttachedDoc.get(k).getDocFormat().equals("image/jpeg")
+                            || lstAttachedDoc.get(k).getDocFormat().equals("jpeg")))
                         file = encodeImage(((BitmapDrawable) getActivity().getResources().getDrawable(R.drawable.unsupported)).getBitmap());
-                    obj.setDoc_desc_en(lstAttachedDoc.get(k).getDoc_desc_en());
-                    obj.setDoc_type(lstAttachedDoc.get(k).getDoc_type());
-                    obj.setDoc_format(lstAttachedDoc.get(k).getDoc_format());
-                    obj.setDoc_id(lstAttachedDoc.get(k).getDoc_id());
-                    obj.setDoc_name(lstAttachedDoc.get(k).getDoc_name());
+                    obj.setDoc_desc_en(lstAttachedDoc.get(k).getDocDesc());
+                    obj.setDoc_type(lstAttachedDoc.get(k).getDocKey());
+                    obj.setDoc_format(lstAttachedDoc.get(k).getDocFormat());
+                    obj.setDoc_id(lstAttachedDoc.get(k).getDocId());
+                    obj.setDoc_name(lstAttachedDoc.get(k).getDocName());
                     obj.setDoc(file);
                     licenseData.add(obj);
                 }
@@ -2367,34 +2430,33 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
             }*/
             Global.nocData = new ArrayList<>();
             for (int j = 0; j < lstAttachedDoc.size(); j++) {
-                if (lstAttachedDoc.get(j).getDoc_type().toLowerCase().equals("noc")) {
+                if (lstAttachedDoc.get(j).getDocKey().toLowerCase().equals("noc")) {
                     NocDocs obj = new NocDocs();
-                    String file = lstAttachedDoc.get(j).getDoc();
-                    if (!(lstAttachedDoc.get(j).getDoc_format().equals("pdf")
-                            || lstAttachedDoc.get(j).getDoc_format().equals("application/pdf")
-                            || lstAttachedDoc.get(j).getDoc_format().equals("jpg")
-                            || lstAttachedDoc.get(j).getDoc_format().equals("png")
-                            || lstAttachedDoc.get(j).getDoc_format().equals("image/png")
-                            || lstAttachedDoc.get(j).getDoc_format().equals("image/jpg")
-                            || lstAttachedDoc.get(j).getDoc_format().equals("image/jpeg")
-                            || lstAttachedDoc.get(j).getDoc_format().equals("jpeg")))
+                    String file = lstAttachedDoc.get(j).getDocDta();
+                    if (!(lstAttachedDoc.get(j).getDocFormat().equals("pdf")
+                            || lstAttachedDoc.get(j).getDocFormat().equals("application/pdf")
+                            || lstAttachedDoc.get(j).getDocFormat().equals("jpg")
+                            || lstAttachedDoc.get(j).getDocFormat().equals("png")
+                            || lstAttachedDoc.get(j).getDocFormat().equals("image/png")
+                            || lstAttachedDoc.get(j).getDocFormat().equals("image/jpg")
+                            || lstAttachedDoc.get(j).getDocFormat().equals("image/jpeg")
+                            || lstAttachedDoc.get(j).getDocFormat().equals("jpeg")))
                         file = encodeImage(((BitmapDrawable) getActivity().getResources().getDrawable(R.drawable.unsupported)).getBitmap());
-                    obj.setDoc_desc_en(lstAttachedDoc.get(j).getDoc_desc_en());
-                    obj.setDoc_type(lstAttachedDoc.get(j).getDoc_type());
-                    obj.setDoc_format(lstAttachedDoc.get(j).getDoc_format());
-                    obj.setDoc_id(lstAttachedDoc.get(j).getDoc_id());
-                    obj.setDoc_name(lstAttachedDoc.get(j).getDoc_name());
+                    obj.setDoc_desc_en(lstAttachedDoc.get(j).getDocDesc());
+                    obj.setDoc_type(lstAttachedDoc.get(j).getDocKey());
+                    obj.setDoc_format(lstAttachedDoc.get(j).getDocFormat());
+                    obj.setDoc_id(lstAttachedDoc.get(j).getDocId());
+                    obj.setDoc_name(lstAttachedDoc.get(j).getDocName());
                     obj.setDoc(file);
                     Global.nocData.add(obj);
                 }
             }
         }
     }
-
     private void populateLstDoc(){
         if(ParentSiteplanViewModel.getDownloadedDoc() != null && ParentSiteplanViewModel.getDownloadedDoc().size() > 0) {
             for (int i = 0; i < ParentSiteplanViewModel.getDownloadedDoc().size(); i++) {
-                if (isDocExistInAttachment(ParentSiteplanViewModel.getDownloadedDoc().get(i).getDocKey()) == false) {
+                if (isDocExistInAttachment(getDocType(ParentSiteplanViewModel.getDownloadedDoc().get(i).getDocKey()))== false) {
                     if(ParentSiteplanViewModel.getDownloadedDoc().get(i).getDocName() != null &&
                             ParentSiteplanViewModel.getDownloadedDoc().get(i).getDocName().length() > 0 &&
                             ParentSiteplanViewModel.getDownloadedDoc().get(i).getDocFormat() != null &&
@@ -2402,14 +2464,13 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                             ParentSiteplanViewModel.getDownloadedDoc().get(i).getDocKey() != null &&
                             ParentSiteplanViewModel.getDownloadedDoc().get(i).getDocKey().length() > 0)
                     {
-                        AttachedDoc doc = new AttachedDoc();
-                        doc.setDoc(ParentSiteplanViewModel.getDownloadedDoc().get(i).getDocDta());
-                        doc.setDoc_id(ParentSiteplanViewModel.getDownloadedDoc().get(i).getDocId());
-                        doc.setDoc_name(ParentSiteplanViewModel.getDownloadedDoc().get(i).getDocName());
-                        doc.setDoc_desc_en("TestNameEn");
-                        doc.setDoc_format(ParentSiteplanViewModel.getDownloadedDoc().get(i).getDocFormat());
-                        doc.setKey(ParentSiteplanViewModel.getDownloadedDoc().get(i).getDocKey());
-                        doc.setDoc_type(getDocType(ParentSiteplanViewModel.getDownloadedDoc().get(i).getDocKey()));
+                        DocArr doc = new DocArr();
+                        doc.setDocDta(ParentSiteplanViewModel.getDownloadedDoc().get(i).getDocDta());
+                        doc.setDocId(ParentSiteplanViewModel.getDownloadedDoc().get(i).getDocId());
+                        doc.setDocName(ParentSiteplanViewModel.getDownloadedDoc().get(i).getDocName());
+                        doc.setDocDesc("TestNameEn");
+                        doc.setDocFormat(ParentSiteplanViewModel.getDownloadedDoc().get(i).getDocFormat());
+                        doc.setDocKey(getDocType(ParentSiteplanViewModel.getDownloadedDoc().get(i).getDocKey()));
                         lstAttachedDoc.add(doc);
                         nextButtonStatus();
                     }
@@ -2461,7 +2522,6 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
             binding.nocView.setAlpha(1f);
         }
     }
-
     private void ActivateViewAndChange(String key){
         if(key != null){
             if(key.equals(COMPANY_LICENCE)){
@@ -2752,38 +2812,42 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 */
     private void createAttachedDoc(String doc, String docFormat, String docType, String docName, int docId, String currentKey) {
         boolean isAdded = false;
-        if(lstAttachedDoc != null && lstAttachedDoc.size() > 0){
+
+        if(lstAttachedDoc != null && lstAttachedDoc.size() > 0/*||(ParentSiteplanViewModel.getDownloadedDoc()!=null && ParentSiteplanViewModel.getDownloadedDoc().size()>0)*/){
             for(int i = 0; i < lstAttachedDoc.size(); i++){
-                if(lstAttachedDoc.get(i).getKey() != null && lstAttachedDoc.get(i).getKey().equals(currentKey)){
+                if(lstAttachedDoc.get(i).getDocKey() != null && getDocType(lstAttachedDoc.get(i).getDocKey()).equals(getDocType(currentKey))){
                     isAdded = true;
-                    lstAttachedDoc.get(i).setDoc_desc_en("TestNameEn");
-                    lstAttachedDoc.get(i).setDoc_name(docName);
-                    lstAttachedDoc.get(i).setDoc_type(docType);
-                    lstAttachedDoc.get(i).setDoc(doc);
-                    lstAttachedDoc.get(i).setDoc_format(docFormat);
+                    lstAttachedDoc.get(i).setDocDesc("TestNameEn");
+                    lstAttachedDoc.get(i).setDocName(docName);
+                    lstAttachedDoc.get(i).setDocKey(docType);
+                    lstAttachedDoc.get(i).setDocDta(doc);
+                    lstAttachedDoc.get(i).setDocFormat(docFormat);
+                    ParentSiteplanViewModel.addDownloadedDoc(lstAttachedDoc.get(i));
+
                 }
+
             }
             if(isAdded == false){
-                attachedDoc = new AttachedDoc();
-                attachedDoc.setDoc_desc_en("TestNameEn");
-                attachedDoc.setDoc(doc);
-                attachedDoc.setDoc_id(docId);
-                attachedDoc.setDoc_format(docFormat);
-                attachedDoc.setDoc_name(docName);
-                attachedDoc.setDoc_type(docType);
-                attachedDoc.setKey(currentKey);
+                attachedDoc = new DocArr();
+                attachedDoc.setDocDesc("TestNameEn");
+                attachedDoc.setDocDta(doc);
+                attachedDoc.setDocId(docId);
+                attachedDoc.setDocFormat(docFormat);
+                attachedDoc.setDocName(docName);
+                attachedDoc.setDocKey(docType);
                 lstAttachedDoc.add(attachedDoc);
+                ParentSiteplanViewModel.addDownloadedDoc(attachedDoc);
             }
         } else {
-            attachedDoc = new AttachedDoc();
-            attachedDoc.setDoc_desc_en("TestNameEn");
-            attachedDoc.setDoc(doc);
-            attachedDoc.setDoc_id(docId);
-            attachedDoc.setDoc_format(docFormat);
-            attachedDoc.setDoc_name(docName);
-            attachedDoc.setDoc_type(docType);
-            attachedDoc.setKey(currentKey);
+            attachedDoc = new DocArr();
+            attachedDoc.setDocDesc("TestNameEn");
+            attachedDoc.setDocDta(doc);
+            attachedDoc.setDocId(docId);
+            attachedDoc.setDocFormat(docFormat);
+            attachedDoc.setDocName(docName);
+            attachedDoc.setDocKey(docType);
             lstAttachedDoc.add(attachedDoc);
+            ParentSiteplanViewModel.addDownloadedDoc(attachedDoc);
         }
     }
 

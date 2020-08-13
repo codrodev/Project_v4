@@ -243,7 +243,7 @@ public class LoginViewModel extends ViewModel {
 
 
         } else if(!isValidEmail(getDataEmail())||getDataEmail().length()<=5) {
-            authListener.onFailure(activity.getResources().getString(R.string.enter_valid_username));
+            authListener.onFailure(activity.getResources().getString(R.string.enter_username));
         }
         else if(getDataPassword().isEmpty()){
 
@@ -555,9 +555,9 @@ public class LoginViewModel extends ViewModel {
                     Disposable disposable = repository.getSession(url)
                             .subscribeOn(kharetatiApp.subscribeScheduler())
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Consumer<SessionResponse>() {
+                            .subscribe(new Consumer<SessionUaePassResponse>() {
                                 @Override
-                                public void accept(SessionResponse session) throws Exception {
+                                public void accept(SessionUaePassResponse session) throws Exception {
                                     Log.v(TAG, "UAE Pass App: registerUser(): success:");
                                     getSession(session);
                                 }
@@ -581,7 +581,7 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
-    private void getSession(SessionResponse session) {
+    private void getSession(SessionUaePassResponse session) {
 
         if (session != null)
         {
@@ -589,13 +589,14 @@ public class LoginViewModel extends ViewModel {
             {
                 String isException = "";
 
+                Global.uaeSessionResponse = session;
                 isException = session.getIs_exception();
 
 
                 if (!Boolean.valueOf(isException))
                 {
-                    Log.v(TAG, "UAE Pass App: getSession(): success: session" + session.getSession().getToken());
-                    Global.session = session.getSession().getToken();
+                    Log.v(TAG, "UAE Pass App: getSession(): success: session" + session.getService_response().getToken());
+                    Global.session = session.getService_response().getToken();
 
                     Global.isUserLoggedIn =true;
                     // Navigate to Main Activity Here

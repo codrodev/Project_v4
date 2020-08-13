@@ -74,6 +74,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="end"
+                    android:visibility="invisible"
                     android:layout_weight="1">
                     <ImageView
                         android:id="@+id/imgHelp"
@@ -287,6 +288,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:layout_marginBottom="5dp"
             android:elevation="30dp">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -295,14 +297,19 @@
                 android:id="@+id/buttons"
                 android:orientation="horizontal">
                 <Button
-                    style="@style/font_medium_regular"
+                    android:fontFamily="@font/dubai_font"
+                    android:textFontWeight="1000"
                     android:id="@+id/btnPrevious"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="2dp"
                     android:layout_weight="1.75"
-                    android:layout_gravity="center"
+                    android:padding="2dp"
+                    android:textSize="14sp"
+                    android:layout_gravity="center_vertical"
                     android:gravity="center"
+                    android:textAlignment="center"
                     android:textAllCaps="false"
                     android:background="@drawable/maroon_angle_background"
                     android:text="@string/previous"
@@ -310,12 +317,17 @@
                     />
 
                 <Button
-                    style="@style/font_medium_regular"
+                    android:fontFamily="@font/dubai_font"
+                    android:textFontWeight="1000"
                     android:id="@+id/btnNext"
                     android:layout_width="match_parent"
                     android:gravity="center"
                     android:layout_height="35dp"
                     android:layout_weight="1.75"
+                    android:layout_marginVertical="2dp"
+                    android:textAlignment="center"
+                    android:textSize="14sp"
+                    android:padding="2dp"
 
                     android:layout_gravity="end|center_vertical"
                     android:layout_marginHorizontal="10dp"

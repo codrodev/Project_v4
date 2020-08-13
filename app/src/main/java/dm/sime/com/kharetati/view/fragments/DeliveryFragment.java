@@ -44,6 +44,7 @@ import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.activities.ImageCropActivity;
 import dm.sime.com.kharetati.view.viewModels.DeliveryDetailViewModel;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 
@@ -99,6 +100,11 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
         mTracker.setScreenName(FR_DELIVERY);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
+        AttachmentFragment.isGallery =true;
+        AttachmentFragment.isCamera =true;
+        ImageCropActivity.isImageCropped=true;
+
         if(CURRENT_LOCALE.equals("en")) binding.linearLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.linearLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         if(CURRENT_LOCALE.equals("en")) binding.etAdress.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.etAdress.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         if(CURRENT_LOCALE.equals("en")) binding.etRecievername.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.etRecievername.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
@@ -130,8 +136,9 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
         final String spinnerItems[]=getActivity().getResources().getStringArray(R.array.emirates);
         userid=Global.getUser(getActivity()).getEmail();
 
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         Global.hideSoftKeyboard(getActivity());
+        ParentSiteplanFragment.currentIndex =2;
 
         setRetainInstance(true);
 

@@ -10,7 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.media.ExifInterface;
+import androidx.exifinterface.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -61,6 +61,7 @@ public class ImageCropActivity extends AppCompatActivity {
     public static String URI;
     public static Bitmap resultBitmap;
     public static boolean isImageCropped=false;
+    public static onCropListener onCropListener;
     //private CropImageView cropImageView;
     public Bitmap bitmap;
 
@@ -98,6 +99,7 @@ public class ImageCropActivity extends AppCompatActivity {
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
         mTracker.setScreenName(FR_IMAGE_CROP);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
         FontChangeCrawler fontChanger = new FontChangeCrawler(getAssets(), "Dubai-Regular.ttf");
         fontChanger.replaceFonts((ViewGroup)this.findViewById(android.R.id.content));
 
@@ -149,6 +151,7 @@ public class ImageCropActivity extends AppCompatActivity {
                             Bitmap cropped=compressImage(Uri.parse(URI),"cropped_image");
                             path=storeImage(cropped);
 
+
                         }
                         catch (IOException e)
                         {
@@ -162,6 +165,13 @@ public class ImageCropActivity extends AppCompatActivity {
                     progressDialog.cancel();*/
 
                         finish();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                onCropListener.onCrop(path.getAbsolutePath());
+                            }
+                        });
+
 
                     }
                 });
@@ -175,7 +185,7 @@ public class ImageCropActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                isImageCropped=false;
+                isImageCropped=true;
                 setResult(RESULT_CANCELED,resultIntent);
                 finish();
 
@@ -417,5 +427,10 @@ public class ImageCropActivity extends AppCompatActivity {
             return cursor.getString(index);
         }
     }
+
+    public interface onCropListener{
+        public void onCrop(String uri);
+    }
+
 
 }

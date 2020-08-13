@@ -19,6 +19,8 @@ import androidx.lifecycle.ViewModelProviders;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
+import org.json.JSONException;
+
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -155,23 +157,29 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
             public void onClick(View view) {
                 //binding.viewPagerCreatePackage.setCurrentItem(getNext(), true);
                 if(currentIndex < 3) {
-                    if(currentIndex==0){
+                    if (currentIndex == 0) {
                         setNextEnabledStatus(false);
-                        if(Global.spinPosition ==2){
+                        if (Global.spinPosition == 2) {
 
-                            Global.rbIsOwner=false;
-                            Global.rbNotOwner=false;
-                            Global.isPerson =false;
+                            Global.rbIsOwner = false;
+                            Global.rbNotOwner = false;
+                            Global.isPerson = false;
                         }
                         if (!Global.isConnected(getActivity())) {
 
-                            if(Global.appMsg!=null)
-                                AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning),Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInternetConnCheckEn():Global.appMsg.getInternetConnCheckAr() , getResources().getString(R.string.ok), getActivity());
+                            if (Global.appMsg != null)
+                                AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getInternetConnCheckEn() : Global.appMsg.getInternetConnCheckAr(), getResources().getString(R.string.ok), getActivity());
                             else
                                 AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
-                        }
-                        else
+                        } else
                             model.retrieveProfileDocs();
+                    }
+                    if(currentIndex==1){
+                        try {
+                            AttachmentFragment.attachmentModel.attachmentNavigator.navigateToPay();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                     if (currentIndex == 2) {
                         if (Global.isDeliveryByCourier) {
@@ -180,25 +188,20 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
                                     model.getMakaniToDLTM(makani);
                                 else if (makani.trim().length() != 0)
                                     model.showInvalidMakaniError();
-                            }
-                            else
+                            } else
                                 currentIndex++;
 
-
-                        }
-                        else
+                        } else
                             currentIndex++;
-                    }
-                    else
+                    } else
                         currentIndex++;
                     loadFragment(currentIndex);
                     binding.txtHeader.setText(pagerArray[currentIndex]);
-                    if(currentIndex == 0 ){
+                    if (currentIndex == 0) {
                         binding.btnPrevious.setVisibility(View.INVISIBLE);
-                    }
-                    else
+                    } else
                         binding.btnPrevious.setVisibility(View.VISIBLE);
-                    if(currentIndex==3)
+                    if (currentIndex == 3)
                         binding.btnNext.setVisibility(View.INVISIBLE);
                     else
                         binding.btnNext.setVisibility(View.VISIBLE);

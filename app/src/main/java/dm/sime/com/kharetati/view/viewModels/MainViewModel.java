@@ -37,7 +37,8 @@ public class MainViewModel extends ViewModel {
     private KharetatiApp kharetatiApp;
     Activity activity;
     MainRepository repository;
-    public MainNavigator mainNavigator;
+    public static MainNavigator mainNavigator;
+
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     /*public MainViewModel(){
 

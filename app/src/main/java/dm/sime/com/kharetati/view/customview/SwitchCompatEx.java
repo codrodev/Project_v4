@@ -113,7 +113,7 @@ public class SwitchCompatEx extends SwitchCompat {
     private int sp2Px(Float sp){
         return (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, Resources.getSystem().getDisplayMetrics());
     }
-    private int dp2Px(Float dp){
+    public static int dp2Px(Float dp){
         return (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, Resources.getSystem().getDisplayMetrics());
     }
 

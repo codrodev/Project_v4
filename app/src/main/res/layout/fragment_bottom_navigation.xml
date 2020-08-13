@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/bottomSheetMore"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="45dp"
         android:orientation="vertical">
         <View
             android:id="@+id/topView"

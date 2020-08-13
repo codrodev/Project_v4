@@ -14,8 +14,8 @@
     <string name="createAccount"> إنشاء حساب جديد</string>
     <string name="signin_as_guest">تسجيل الدخول كضيف</string>
     <string name="login_uaepass">تسجيل الدخول بالهوية الرقمية</string>
-    <string name="username">أدخل اسم المستخدم<font fgcolor='#a31533'>*</font></string>
-    <string name="password">ادخل كلمة المرور<font fgcolor='#a31533'>*</font></string>
+    <string name="username">أدخل اسم المستخدم/ البريد الإلكتروني<font fgcolor='#a31533'>*</font></string>
+    <string name="password"><font fgcolor='#a31533'>*</font>ادخل كلمة المرور</string>
     <string name="textOn">English</string>
     <string name="textOff">عربى</string>
     <string name="PLEASE_ENTER_PLOTNUMBER">الرجاء إدخال رقم قطعة الأرض</string>
@@ -32,7 +32,7 @@
     <string name="community_error">حدث خطا اثناء إحضار المجتمع</string>
     <string name="please_enter_land">يرجى إدخال رقم الملكية</string>
     <string name="username_and_password">الرجاء إدخال اسم المستخدم وكلمة المرور الخاصة بك</string>
-    <string name="enter_username">الرجاء إدخال اسم المستخدم أو البريد الإلكتروني الخاص بك </string>
+    <string name="enter_username">الرجاء إدخال اسم المستخدم/ البريد الإلكتروني</string>
     <string name="enter_password">الرجاء إدخال كلمة المرور الخاصة بك</string>
     <string name="wrong_username_password">اسم المستخدم أو كلمة المرور خاطئة</string>
     <string name="server_connect_error">الرجاء المحاولة لاحقاً</string>
@@ -164,14 +164,14 @@
     <string name="instagram">إنستجرام</string>
     <string name="youtube">يوتيوب</string>
     <string name="email2">البريد الإلكتروني</string>
-    <string name="feedback">إقتراحات</string>
+    <string name="feedback">اقتراحات</string>
     <string name="send_your_feedback_about_the_app">إرسال ملاحظاتك عن خريطتي</string>
     <string name="menu_contact_us">إتصل بنا</string>
     <string name="please_enter_phone">من فضلك أدخل رقم الهاتف</string>
 
     <string name="feedback_name">الاسم *</string>
     <string name="profile_name">الاسم</string>
-    <string name="subject">العنوان* </string>
+    <string name="subject">الموضوع* </string>
     <string name="feedback_description"> الوصف*</string>
     <string name="description_fav">الوصف*</string>
     <string name="feedback_mobile_number">رقم الهاتف المحمول</string>
@@ -187,7 +187,7 @@
     <string name="RATEUS">قيمنا</string>
     <string name="ABOUTUS">نبذة عنا</string>
     <string name="FAQMENU">الأسئلة الأكثر تكرارا </string>
-    <string name="TERMSANDCONDITIONS">شروط الإستعمال</string>
+    <string name="TERMSANDCONDITIONS">الشروط والاحكام</string>
     <string name="ACCESSIBILITY">إمكانية الوصول</string>
     <string name="iamowner">أنا صاحب قطعة الأرض</string>
     <string name="iamnotowner">أنا لست صاحب الأرض</string>
@@ -226,12 +226,12 @@
         <item>مالك الأرض</item>
         <item>مرفق إثبات</item>
         <item>تفاصيل التسليم</item>
-        <item>دفع</item>
+        <item>الدفع</item>
     </string-array>
     <string name="enter_favourite_name">يرجى إدخال اسم المفضلة</string>
     <string name="enter_valid_password">الرجاء إدخال كلمة مرور صالحة</string>
     <string name="previous">السابق</string>
-    <string name="next">التالى</string>
+    <string name="next">التالي</string>
     <string name="copyright">Copyright © Dubai Municipality. All Rights Reserved.</string>
     <string name="Saps">رقم المعاملة:</string>
     <string name="ENTERTHEPLOTNUMBER">أدخل رقم قطعة الأرض</string>
@@ -242,7 +242,7 @@
     <string name="yes">نعم</string>
     <string name="no">لا</string>
     <string name="reset">تحديث</string>
-    <string name="findPlot">البحث عن قطعة الأرض</string>
+    <string name="findPlot">البحث</string>
     <string name="enter_plot_number">ادخل رقم قطعة الأرض</string>
     <string name="date_from">التاريخ - من:</string>
     <string name="date">DD/MM/YYYY</string>
@@ -282,11 +282,14 @@
     <string name="makani">مكاني</string>
     <string name="payment">دفع</string>
     <string name="newuser">مستخدم جديد؟</string>
-    <string name="reg"> أنشأ حساب جديد.</string>
+    <string name="reg"> إنشاء حساب جديد</string>
     <string name="satilite" >القمر الاصطناعي/ الخريطة</string>
     <string name="addtofav">إضافة إلى المفضلة</string>
     <string name="pantoplot">تكبير للقطعة</string>
     <string name="openmaknai">افتح في تطبيق مكاني</string>
     <string name="userguide">دليل المستخدم</string>
     <string name="guest">زائر</string>
+    <string name="kharetati_feedback">اقتراحات خريطتي</string>
+    <string name="community">الجماعة: </string>
+    <string name="no_result_found">لم يتم العثور على نتائج</string>
 </resources>

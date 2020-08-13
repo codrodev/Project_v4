@@ -147,6 +147,7 @@ public class SettingsFragment extends Fragment {
                 binding.txtArabic.setBackgroundColor(getActivity().getResources().getColor(R.color.white));
                 binding.txtArabic.setTextColor(getActivity().getResources().getColor(R.color.switch_text_color));
                 CURRENT_LOCALE = (CURRENT_LOCALE.equals("en")) ? "ar" : "en";
+                Global.fontScale = getActivity().getResources().getConfiguration().fontScale;
 
                 sharedpreferences.edit().putString(USER_LANGUAGE,CURRENT_LOCALE).apply();
                 sharedpreferences.edit().putString("currentFragment",Global.current_fragment_id).apply();
@@ -174,7 +175,7 @@ public class SettingsFragment extends Fragment {
                 }
 
                 CURRENT_LOCALE = (CURRENT_LOCALE.equals("ar")) ? "en" : "ar";
-
+                Global.fontScale = getActivity().getResources().getConfiguration().fontScale;
 
                 sharedpreferences.edit().putString(USER_LANGUAGE,CURRENT_LOCALE).apply();
                 sharedpreferences.edit().putString("currentFragment",Global.current_fragment_id).apply();

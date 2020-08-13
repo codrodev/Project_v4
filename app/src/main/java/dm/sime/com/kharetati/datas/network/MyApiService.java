@@ -68,7 +68,7 @@ public interface MyApiService {
 
     // to get session
     @POST
-    Observable<SessionResponse> getSession(@Url String url);
+    Observable<SessionUaePassResponse> getSession(@Url String url);
 
     @POST
     Observable<SessionUaePassResponse> getSessionUAEPass(@Url String url);
