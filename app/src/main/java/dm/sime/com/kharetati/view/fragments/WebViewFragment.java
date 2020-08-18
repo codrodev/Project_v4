@@ -110,6 +110,7 @@ public class  WebViewFragment extends Fragment {
         //txtWelcome = view.findViewById(R.id.txtWelcome);
         imgBack = view.findViewById(R.id.imgBack);
         imgBack.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         //((MainActivity)getActivity()).setScreenName(Global.isUserLoggedIn?Global.getUser(getActivity()).getFullname(): LoginViewModel.guestName);
 
         /*if(appName != null && appName != "") {

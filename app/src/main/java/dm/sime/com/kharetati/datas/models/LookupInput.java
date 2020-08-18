@@ -10,6 +10,16 @@ public class LookupInput {
 
     private String TOKEN;
 
+    private boolean isGuest;
+
+    public boolean isGuest() {
+        return isGuest;
+    }
+
+    public void setGuest(boolean guest) {
+        isGuest = guest;
+    }
+
     public String getREMARKS ()
     {
         return REMARKS;

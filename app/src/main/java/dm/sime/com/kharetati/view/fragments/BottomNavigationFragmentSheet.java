@@ -388,11 +388,14 @@ public class BottomNavigationFragmentSheet extends Fragment {
         MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(),getActivity().getResources().getString(R.string.help) , null /* class override */);
 
     }
-    public void onLogoutClicked(){if(Global.isUserLoggedIn)
+    public void onLogoutClicked(){
+        if(Global.isUserLoggedIn)
         AlertDialogUtil.logoutAlert(getActivity().getResources().getString(R.string.logout_msg),getActivity().getResources().getString(R.string.yes),getActivity().getResources().getString(R.string.no),getActivity());
     else{
 
+
         Global.logout(getActivity());
+        Global.isLogout = false;
         ((MainActivity)getActivity()).finish();
         mTracker.send(new HitBuilders.EventBuilder()
                 .setCategory("More Screen")

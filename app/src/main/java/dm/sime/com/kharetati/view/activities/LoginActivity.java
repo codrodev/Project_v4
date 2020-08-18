@@ -184,6 +184,9 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         //String locale = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(USER_LANGUAGE, "defaultStringIfNothingFound");
         if(!locale.equals("defaultStringIfNothingFound"))
             CURRENT_LOCALE =locale;
+        if(Global.isLogout)
+            AlertDialogUtil.successfulLogoutAlert(LoginActivity.this.getResources().getString(R.string.successful_logout),LoginActivity.this.getResources().getString(R.string.ok),LoginActivity.this);
+
 
 
         //getting remembered user credentials if any
@@ -1334,6 +1337,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
     @Override
     public void finish() {
         Global.isLoginActivity = false;
+        Global.isLogout = false;
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             super.finishAndRemoveTask();
         }

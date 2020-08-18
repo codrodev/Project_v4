@@ -136,7 +136,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
         final String spinnerItems[]=getActivity().getResources().getStringArray(R.array.emirates);
         userid=Global.getUser(getActivity()).getEmail();
 
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         Global.hideSoftKeyboard(getActivity());
         ParentSiteplanFragment.currentIndex =2;
 
@@ -917,6 +917,12 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
             binding.etEmirates.setSelection(saved_position);
         else if(spinner_position!=0)
             binding.etEmirates.setSelection(spinner_position);
+
+        if(binding.etMakani.getText()!=null){
+            if(binding.etMakani.getText().toString().trim().length()>0)
+                binding.etMakani.setText(binding.etMakani.getText().toString().trim());
+        }
+
 
         if (!Global.isDeliveryByCourier) {
 

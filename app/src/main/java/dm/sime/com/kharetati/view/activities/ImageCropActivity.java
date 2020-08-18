@@ -168,7 +168,7 @@ public class ImageCropActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                onCropListener.onCrop(path.getAbsolutePath());
+                               onCropListener.onCrop(path.getAbsolutePath());
                             }
                         });
 

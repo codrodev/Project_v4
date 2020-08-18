@@ -86,7 +86,9 @@ public class LandOwnerSelectionFragment extends Fragment {
         AttachmentFragment.isCamera =false;
         ImageCropActivity.isImageCropped=false;
 
-        ParentSiteplanViewModel.getDownloadedDoc().clear();
+        /*if(ParentSiteplanViewModel.getDownloadedDoc()!=null)ParentSiteplanViewModel.getDownloadedDoc().clear();
+        if(ParentSiteplanViewModel.getNewlyAttachedDoc()!=null)ParentSiteplanViewModel.getNewlyAttachedDoc().clear();
+        if(AttachmentFragment.lstAttachedDoc!=null)AttachmentFragment.lstAttachedDoc.clear();*/
         AttachmentBitmap.passport_copy =null;
         AttachmentBitmap.visa_passport =null;
         AttachmentBitmap.company_license =null;

@@ -263,7 +263,9 @@ public class PayFragment extends Fragment implements PayNavigator {
 
     @Override
     public void onFailure(String Msg) {
+        if(getActivity()!=null){
         AlertDialogUtil.showProgressBar(getActivity(),false);
         AlertDialogUtil.errorAlertDialog("",Msg,getActivity().getResources().getString(R.string.ok),getActivity());
+        }
     }
 }

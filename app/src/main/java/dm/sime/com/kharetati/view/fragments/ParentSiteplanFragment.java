@@ -186,7 +186,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
                             if (Global.isMakani) {
                                 if (makani.trim().length() != 0 && makani.trim().length() <= 10)
                                     model.getMakaniToDLTM(makani);
-                                else if (makani.trim().length() != 0)
+                                else if (makani.trim().length() == 0)
                                     model.showInvalidMakaniError();
                             } else
                                 currentIndex++;

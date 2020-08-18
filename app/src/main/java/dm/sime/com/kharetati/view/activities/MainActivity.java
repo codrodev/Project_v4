@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -19,6 +20,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.LightingColorFilter;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -27,12 +29,14 @@ import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -75,6 +79,7 @@ import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.adapters.CustPagerTransformer;
 import dm.sime.com.kharetati.view.adapters.PagerContentAdapter;
 import dm.sime.com.kharetati.view.customview.DataCallback;
+import dm.sime.com.kharetati.view.customview.SwitchCompatEx;
 import dm.sime.com.kharetati.view.customview.meowbottomnavigation.MeowBottomNavigation;
 import dm.sime.com.kharetati.view.fragments.FeedbackFragment;
 import dm.sime.com.kharetati.view.fragments.RequestDetailsFragment;
@@ -128,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     private LinearLayout layoutDots;
     private MyViewModel myViewModel;
     public static FirebaseAnalytics firebaseAnalytics;
+    private boolean isKeyboardShowing;
 
     public static Intent newIntent(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -142,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         Global.isLoginActivity = false;
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
 
         try {
@@ -166,6 +173,37 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         if(CURRENT_LOCALE.equals("en")) customBottomBar.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else customBottomBar.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         if(CURRENT_LOCALE.equals("en")) binding.layoutlastlogin.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.layoutlastlogin.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         final BottomNavigationFragmentSheet myBottomSheet = BottomNavigationFragmentSheet.newInstance(this);
+
+        View contentView=findViewById(R.id.rootLayout);
+        contentView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Rect r = new Rect();
+                contentView.getWindowVisibleDisplayFrame(r);
+                int screenHeight = contentView.getRootView().getHeight();
+
+                // r.bottom is the position above soft keypad or device button.
+                // if keypad is shown, the r.bottom is smaller than that before.
+                int keypadHeight = screenHeight - r.bottom;
+
+                Log.d("", "keypadHeight = " + keypadHeight);
+
+                if (keypadHeight > screenHeight * 0.15) { // 0.15 ratio is perhaps enough to determine keypad height.
+                    // keyboard is opened
+                    if (!isKeyboardShowing) {
+                        isKeyboardShowing = true;
+                        onKeyboardVisibilityChanged(true);
+                    }
+                }
+                else {
+                    // keyboard is closed
+                    if (isKeyboardShowing) {
+                        isKeyboardShowing = false;
+                        onKeyboardVisibilityChanged(false);
+                    }
+                }
+            }
+        });
         
         customBottomBar.add(new MeowBottomNavigation.Model(1, R.drawable.ic_dashboard));
         customBottomBar.add(new MeowBottomNavigation.Model(2, R.drawable.happiness_black));
@@ -312,12 +350,31 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
     }
 
-    public void getLastlogin() throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm ", new Locale(CURRENT_LOCALE));
-        SimpleDateFormat rdf = new SimpleDateFormat("dd-MMM-yyyy HH:mm:s", new Locale("en"));
+    void onKeyboardVisibilityChanged(boolean opened) {
+        if(opened){
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
+            params.setMargins(0,0,0, -SwitchCompatEx.dp2Px(48f));
+            binding.uiContainer.setLayoutParams(params);
+            customBottomBar.setVisibility(View.GONE);
 
-        SimpleDateFormat sdfEn = new SimpleDateFormat("MMM dd, yyyy HH:mm ", new Locale("en"));
-        SimpleDateFormat sdfAr = new SimpleDateFormat("MMM dd, yyyy HH:mm ", new Locale("ar"));
+        }
+        else{
+            LinearLayout.LayoutParams params1=null;
+            if(!((Global.current_fragment_id.equals(FragmentTAGS.FR_PARENT_SITEPLAN)||Global.current_fragment_id.equals(FragmentTAGS.FR_LANDOWNER_SELECTION)||Global.current_fragment_id.equals(FragmentTAGS.FR_ATTACHMENT)||Global.current_fragment_id.equals(FragmentTAGS.FR_DELIVERY)||Global.current_fragment_id.equals(FragmentTAGS.FR_PAY)))){
+                params1= new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
+                params1.setMargins(0,0,0, 0);
+                binding.uiContainer.setLayoutParams(params1);
+                customBottomBar.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    public void getLastlogin() throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a", new Locale("en"));
+        SimpleDateFormat rdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a", new Locale("en"));
+
+        SimpleDateFormat sdfEn = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a", new Locale("en"));
+        SimpleDateFormat sdfAr = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a", new Locale("ar"));
 
         String currentDateandTime = sdf.format(new Date());
         binding.txtLastLogin.setVisibility(View.VISIBLE);
@@ -328,13 +385,13 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             if (lastLogin != null && !lastLogin.equals(""))
             {
                 if (lastLogin.contains("|")) {
-                    lastLogin = lastLogin.substring(0, lastLogin.lastIndexOf("|") - 1);
+                    lastLogin = lastLogin.substring(0, lastLogin.lastIndexOf("|") + 1);
                 }
 
                 if (CURRENT_LOCALE.equals("en"))
-                    binding.txtLastLogin.setText(" " + sdfEn.format(rdf.parse(lastLogin)));
+                    binding.txtLastLogin.setText(" " + sdfEn.format(rdf.parse(Global.uaeSessionResponse.getService_response().getLast_login().substring(0, Global.uaeSessionResponse.getService_response().getLast_login().lastIndexOf("|")))));
                 else
-                    binding.txtLastLogin.setText(" " + sdfAr.format(rdf.parse(lastLogin)));
+                    binding.txtLastLogin.setText(" " + sdfAr.format(rdf.parse(Global.uaeSessionResponse.getService_response().getLast_login().substring(0, Global.uaeSessionResponse.getService_response().getLast_login().lastIndexOf("|")))));
 
 
             }
@@ -344,6 +401,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             binding.txtLastLogin.setText(" " + currentDateandTime);
         }*/
         else {
+            currentDateandTime = CURRENT_LOCALE.equals("en")?sdfEn.format(new Date()):sdfAr.format(new Date());
 
             binding.txtLastLogin.setText(" " + sharedpreferences.getString("lastLoginTime", currentDateandTime));
 
@@ -644,8 +702,15 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             binding.txtLastLogin.setVisibility(View.GONE);
         binding.layoutlastlogin.setVisibility(View.GONE);
         }
-        if(fragment_tag.equals(FragmentTAGS.FR_WEBVIEW))
+        if(fragment_tag.equals(FragmentTAGS.FR_WEBVIEW)){
             binding.backButton.setVisibility(View.VISIBLE);
+            binding.txtWelcome.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   if(binding.backButton.getVisibility()==View.VISIBLE) onBackPressed();
+                }
+            });
+        }
         else
             binding.backButton.setVisibility(View.INVISIBLE);
         LinearLayout.LayoutParams headerParams = null;
@@ -1069,6 +1134,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
     @Override
     public void finish() {
+        Global.isLogout = false;
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             super.finishAndRemoveTask();
         }

@@ -531,7 +531,8 @@ public class HomeViewModel extends ViewModel {
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
-                            showErrorMessage(throwable.getMessage());                        }
+                            showErrorMessage(throwable.getMessage());
+                        }
                     });
             compositeDisposable.add(disposable);
         } else {
@@ -665,6 +666,7 @@ public class HomeViewModel extends ViewModel {
             inputModel.setTOKEN(Global.app_session_token);
         }
         inputModel.setREMARKS(Global.getPlatformRemark());
+        inputModel.setGuest(!Global.isUserLoggedIn);
 
         model.setInputJson(inputModel);
 
@@ -688,8 +690,12 @@ public class HomeViewModel extends ViewModel {
         if (responseModel != null) {
             homeNavigator.onSuccess();
             if (responseModel != null && responseModel.getService_response() != null) {
+                if(!Boolean.valueOf(responseModel.getIs_exception())){
                 Global.lookupResponse = responseModel.getService_response();
                 homeNavigator.populateAreaNames();
+                }
+                else
+                    homeNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")?responseModel.getMessage():responseModel.getMessage_ar());
             } else {
                 homeNavigator.onFailure(activity.getResources().getString(R.string.community_error));
             }

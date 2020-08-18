@@ -15,7 +15,7 @@
     <string name="signin_as_guest">تسجيل الدخول كضيف</string>
     <string name="login_uaepass">تسجيل الدخول بالهوية الرقمية</string>
     <string name="username">أدخل اسم المستخدم/ البريد الإلكتروني<font fgcolor='#a31533'>*</font></string>
-    <string name="password"><font fgcolor='#a31533'>*</font>ادخل كلمة المرور</string>
+    <string name="password">ادخل كلمة المرور<font fgcolor='#a31533'>*</font></string>
     <string name="textOn">English</string>
     <string name="textOff">عربى</string>
     <string name="PLEASE_ENTER_PLOTNUMBER">الرجاء إدخال رقم قطعة الأرض</string>
@@ -292,4 +292,5 @@
     <string name="kharetati_feedback">اقتراحات خريطتي</string>
     <string name="community">الجماعة: </string>
     <string name="no_result_found">لم يتم العثور على نتائج</string>
+    <string name="successful_logout">لقد قمت بتسجيل الخروج بنجاح</string>
 </resources>

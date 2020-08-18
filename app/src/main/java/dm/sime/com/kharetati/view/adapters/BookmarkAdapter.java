@@ -82,7 +82,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
         if(lstBookmark.get(position).date!=null){
         Locale locale;
         SimpleDateFormat format;
-        format= new SimpleDateFormat("dd/MM/yyyy, hh:mm aa",new Locale(Global.CURRENT_LOCALE));
+        format= new SimpleDateFormat("dd/MM/yyyy, hh:mm aa",new Locale("en"));
         ((TextView)holder.binding.getRoot().findViewById(R.id.dateBookmark)).setText(format.format(lstBookmark.get(position).date));
         ((TextView)holder.binding.getRoot().findViewById(R.id.plotNo)).setText(lstBookmark.get(position).ParcelNumber);
         ((TextView)holder.binding.getRoot().findViewById(R.id.community)).setText(Global.CURRENT_LOCALE.equals("en")?lstBookmark.get(position).Community:lstBookmark.get(position).CommunityAr);

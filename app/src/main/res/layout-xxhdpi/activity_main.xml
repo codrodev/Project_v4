@@ -9,6 +9,7 @@
             type="dm.sime.com.kharetati.view.viewModels.MainViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rootLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.activities.MainActivity">
@@ -31,9 +32,9 @@
 
                     android:orientation="horizontal">
                     <ImageView
-                        android:layout_width="22dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center_vertical"
+                        android:layout_width="24dp"
+                        android:layout_height="26dp"
+                        android:layout_gravity="center_vertical|end"
                         android:id="@+id/backButton"
                         android:visibility="invisible"
                         android:src="@drawable/back"/>
@@ -103,7 +104,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="22dp"
-                    android:textSize="16sp"
+                    android:textSize="15sp"
                     android:text="@string/lastlogin"
                     android:layout_gravity="start|center_vertical"
                     android:layoutDirection="locale"
@@ -114,9 +115,10 @@
                     android:id="@+id/txtLastLogin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
+                    android:textSize="15sp"
                     android:layout_gravity="start|center_vertical"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:gravity="start|center_vertical"
                     android:layoutDirection="locale"
                     android:textAlignment="viewStart"
                     android:fontFamily="@font/dubai_font"

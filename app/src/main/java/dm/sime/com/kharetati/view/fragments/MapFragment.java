@@ -27,6 +27,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
@@ -132,6 +133,7 @@ import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.adapters.DashboardPagerAdapter;
 import dm.sime.com.kharetati.view.adapters.FunctionOnMapAdapter;
 import dm.sime.com.kharetati.view.customview.SwitchCompatEx;
+import dm.sime.com.kharetati.view.customview.meowbottomnavigation.MeowBottomNavigation;
 import dm.sime.com.kharetati.view.navigators.MapNavigator;
 import dm.sime.com.kharetati.view.viewModels.MapViewModel;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
@@ -247,6 +249,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         mapView = mRootView.findViewById(R.id.mapView);
         bottomSheetDialogFragment = MapFunctionBottomsheetDialogFragment.newInstance(this);
         listener =this;
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
          layoutBottomSheet = (LinearLayout)mRootView.findViewById(R.id.bottomSheet);
         webView = (WebView)layoutBottomSheet.findViewById(R.id.webView);
         WebView.setWebContentsDebuggingEnabled(true);
@@ -257,10 +260,10 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             CoordinatorLayout.LayoutParams params = new CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             params.setMargins(0,SwitchCompatEx.dp2Px(54f),0,0);
             Global.width = Global.width>1080?Global.height:Global.width;
-            params.setMarginStart((int) (Global.width-SwitchCompatEx.dp2Px(200f)));
+            params.setMarginStart((int) (Global.width-SwitchCompatEx.dp2Px(250f)));
             //binding.listmapMenu.setPaddingRelative();
 
-            params.setMarginEnd(SwitchCompatEx.dp2Px(35f));
+            params.setMarginEnd(SwitchCompatEx.dp2Px(16f));
             binding.listmapMenu.setLayoutParams(params);
 
 
@@ -363,6 +366,9 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                         binding.frameLayout.setVisibility(View.VISIBLE);
                         view.findViewById(R.id.topView).setVisibility(View.VISIBLE);
                         binding.floatingButtton.setVisibility(View.GONE);
+                        MeowBottomNavigation customBottomBar = (MeowBottomNavigation)getActivity().findViewById(R.id.customBottomBar);
+                        customBottomBar.setVisibility(View.GONE);
+
 
                     }
                     break;

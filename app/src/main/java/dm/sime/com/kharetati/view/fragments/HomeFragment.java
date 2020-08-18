@@ -21,6 +21,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -135,6 +136,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     private RelativeLayout relativeLayout;
     private ImageView imageView;
     private TextView tabTextView;
+    private CleanableEditText x;
     /*BottomSheetBehavior sheetBehavior;
     LinearLayout layoutBottomSheet;*/
 
@@ -192,6 +194,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
         model.initializeHomeVM(getContext());
         initializePage();
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         setRetainInstance(true);
         return binding.getRoot();
     }
@@ -265,6 +268,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(), model.getSelectedApplication().getNameEn(), null /* class override */);
         //model.getApplication(appID).getSearchForm().get(0).getTabs().getControls().get(0);
         Log.d(getClass().getSimpleName(),model.getSelectedApplication().getNameEn());
+        x.setText("");
     }
 
     private void initializeRuntimeForm(Applications app, boolean isAnimation){
@@ -458,7 +462,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         final LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lparams.setMargins(0, 0, 0, 0);
         //binding.tabRuntimeLayout.setLayoutParams(lparams);
-        CleanableEditText x = new CleanableEditText(getActivity());
+        x = new CleanableEditText(getActivity());
         //x.setHint(form.getPlaceHolderEn());
         x.setHint(Global.CURRENT_LOCALE.equals("en")?control.getPlaceHolderEn():control.getPlaceHolderAr());
         if(control.getInputType().toLowerCase().equals("number")) {
@@ -836,6 +840,8 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                 initializeRuntimeForm(model.getSelectedApplication(), false);
             }
         }
+        if (Global.isFirstLoad && !Global.isRecreate)
+            MainActivity.mainVM.getNotifications();
         //initializeRuntimeForm(model.getDefaultApplication(0));
     }
 

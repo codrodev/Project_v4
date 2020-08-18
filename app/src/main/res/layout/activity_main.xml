@@ -95,24 +95,26 @@
                 android:id="@+id/layoutlastlogin"
                 android:orientation="horizontal"
                 android:background="#830823">
+
                 <TextView
-                    style="@style/font_medium_bold"
                     android:id="@+id/lstLogin"
+                    style="@style/font_medium_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="18dp"
-                    android:textSize="15sp"
-                    android:text="@string/lastlogin"
                     android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="18dp"
                     android:layoutDirection="locale"
+                    android:text="@string/lastlogin"
                     android:textAlignment="viewStart"
                     android:textColor="@color/white"
-                    android:textFontWeight="1000"/>
+                    android:textFontWeight="1000"
+                    android:textSize="13sp" />
+
                 <TextView
                     android:id="@+id/txtLastLogin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
+                    android:textSize="11sp"
                     android:layout_gravity="start|center_vertical"
                     android:layout_marginEnd="10dp"
                     android:layoutDirection="locale"

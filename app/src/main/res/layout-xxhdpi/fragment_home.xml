@@ -12,7 +12,7 @@
         android:layoutDirection="locale"
         android:background="@color/white"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="17dp">
+        android:layout_marginBottom="48dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
