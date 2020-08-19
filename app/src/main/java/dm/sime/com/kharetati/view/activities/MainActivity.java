@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     private LinearLayout layoutDots;
     private MyViewModel myViewModel;
     public static FirebaseAnalytics firebaseAnalytics;
-    private boolean isKeyboardShowing;
+    public static boolean isKeyboardShowing;
 
     public static Intent newIntent(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -352,10 +352,14 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
     void onKeyboardVisibilityChanged(boolean opened) {
         if(opened){
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
+            if(!((Global.current_fragment_id.equals(FragmentTAGS.FR_PARENT_SITEPLAN)||Global.current_fragment_id.equals(FragmentTAGS.FR_LANDOWNER_SELECTION)||Global.current_fragment_id.equals(FragmentTAGS.FR_ATTACHMENT)||Global.current_fragment_id.equals(FragmentTAGS.FR_DELIVERY)||Global.current_fragment_id.equals(FragmentTAGS.FR_PAY)))){
+
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
             params.setMargins(0,0,0, -SwitchCompatEx.dp2Px(48f));
             binding.uiContainer.setLayoutParams(params);
+            }
             customBottomBar.setVisibility(View.GONE);
+
 
         }
         else{
@@ -370,11 +374,12 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     }
 
     public void getLastlogin() throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a", new Locale("en"));
-        SimpleDateFormat rdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a", new Locale("en"));
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a", new Locale("en"));
+        SimpleDateFormat rdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a", new Locale("en"));
 
-        SimpleDateFormat sdfEn = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a", new Locale("en"));
-        SimpleDateFormat sdfAr = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a", new Locale("ar"));
+        SimpleDateFormat sdfEn = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a", new Locale("en"));
+        SimpleDateFormat sdfAr = new SimpleDateFormat("hh:mm:ss a yyyy/MM/dd ", new Locale("ar"));
+        //SimpleDateFormat sdfAr = new SimpleDateFormat(" dd/MM/yyyy HH:mm:ss a", new Locale("ar"));
 
         String currentDateandTime = sdf.format(new Date());
         binding.txtLastLogin.setVisibility(View.VISIBLE);
@@ -385,14 +390,13 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             if (lastLogin != null && !lastLogin.equals(""))
             {
                 if (lastLogin.contains("|")) {
-                    lastLogin = lastLogin.substring(0, lastLogin.lastIndexOf("|") + 1);
+                    lastLogin = lastLogin.substring(0, lastLogin.lastIndexOf("|"));
                 }
 
                 if (CURRENT_LOCALE.equals("en"))
-                    binding.txtLastLogin.setText(" " + sdfEn.format(rdf.parse(Global.uaeSessionResponse.getService_response().getLast_login().substring(0, Global.uaeSessionResponse.getService_response().getLast_login().lastIndexOf("|")))));
+                    binding.txtLastLogin.setText(" " + sdfEn.format(rdf.parse(lastLogin)));
                 else
-                    binding.txtLastLogin.setText(" " + sdfAr.format(rdf.parse(Global.uaeSessionResponse.getService_response().getLast_login().substring(0, Global.uaeSessionResponse.getService_response().getLast_login().lastIndexOf("|")))));
-
+                    binding.txtLastLogin.setText(" " + sdfAr.format(rdf.parse(lastLogin)));
 
             }
 
@@ -408,6 +412,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             sharedpreferences.edit().putString("lastLoginTime", currentDateandTime).apply();
         }
     }
+
 
     private void checkNotifications() {
 
@@ -811,6 +816,10 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     protected void onPause() {
         super.onPause();
         sharedpreferences.edit().putInt("position",customBottomBar.getId()).apply();
+        if(Global.alertDialog!=null){
+            Global.alertDialog.cancel();
+            Global.alertDialog = null;
+        }
 
     }
 

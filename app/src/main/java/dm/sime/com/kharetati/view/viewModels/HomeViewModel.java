@@ -660,10 +660,10 @@ public class HomeViewModel extends ViewModel {
         LookupInput inputModel = new LookupInput();
         inputModel.setLkpId(lookupId);
         inputModel.setLkpValue(lookupValue);
-        if(Global.isUAE){
+        if(Global.isUAE||Global.isUserLoggedIn){
             inputModel.setTOKEN(Global.uaeSessionResponse == null ? "" : Global.uaeSessionResponse.getService_response().getToken());
         } else {
-            inputModel.setTOKEN(Global.app_session_token);
+            inputModel.setTOKEN("");
         }
         inputModel.setREMARKS(Global.getPlatformRemark());
         inputModel.setGuest(!Global.isUserLoggedIn);

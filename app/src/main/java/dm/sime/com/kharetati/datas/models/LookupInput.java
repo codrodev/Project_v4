@@ -10,14 +10,14 @@ public class LookupInput {
 
     private String TOKEN;
 
-    private boolean isGuest;
+    private boolean IsGuest;
 
     public boolean isGuest() {
-        return isGuest;
+        return IsGuest;
     }
 
     public void setGuest(boolean guest) {
-        isGuest = guest;
+        IsGuest = guest;
     }
 
     public String getREMARKS ()

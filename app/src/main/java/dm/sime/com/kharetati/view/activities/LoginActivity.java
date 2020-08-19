@@ -805,6 +805,16 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         //viewModel.uaePassConfigAPI();
 
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(Global.alertDialog!=null){
+            Global.alertDialog.cancel();
+            Global.alertDialog = null;
+        }
+    }
+
     @Override
     public void recreate() {
 

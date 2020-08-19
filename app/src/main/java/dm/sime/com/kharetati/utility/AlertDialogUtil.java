@@ -41,6 +41,7 @@ import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.activities.LoginActivity;
 import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.activities.WebViewActivity;
+import dm.sime.com.kharetati.view.customview.CleanableEditText;
 import dm.sime.com.kharetati.view.fragments.AttachmentFragment;
 import dm.sime.com.kharetati.view.fragments.BookmarkFragment;
 import dm.sime.com.kharetati.view.fragments.WebViewFragment;
@@ -1619,13 +1620,13 @@ public class AlertDialogUtil {
         View viewInflated = LayoutInflater.from(context).inflate(R.layout.bookmarks_description_dialog,
                 (ViewGroup)context.findViewById(android.R.id.content), false);
         // Set up the input
-        final EditText txtdescEn = (EditText) viewInflated.findViewById(R.id.edtBookmarksDescriptionDialogEn);
+        final CleanableEditText txtdescEn = (CleanableEditText) viewInflated.findViewById(R.id.edtBookmarksDescriptionDialogEn);
         txtdescEn.requestFocus();
         txtdescEn.setTypeface(face);
         txtdescEn.setText(data.descriptionEn);
         txtdescEn.setImeOptions(EditorInfo.IME_ACTION_NONE);
 
-        final EditText txtdescAr = (EditText) viewInflated.findViewById(R.id.edtBookmarksDescriptionDialogAr);
+        final CleanableEditText txtdescAr = (CleanableEditText) viewInflated.findViewById(R.id.edtBookmarksDescriptionDialogAr);
         txtdescAr.setImeOptions(EditorInfo.IME_ACTION_NONE);
         txtdescAr.requestFocus();
         txtdescAr.setTypeface(face);

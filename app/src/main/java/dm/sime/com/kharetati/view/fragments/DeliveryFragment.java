@@ -719,7 +719,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
         ParentSiteplanViewModel.deliveryDetails.setNearestLandmark(binding.etLandmark.getText().toString());
         ParentSiteplanViewModel.deliveryDetails.setStreetAddress(binding.etStreetAddress.getText().toString());
         ParentSiteplanViewModel.deliveryDetails.setMainAddress(binding.etAdress.getText().toString());
-        ParentSiteplanViewModel.deliveryDetails.setMakaniNo(makani);
+        ParentSiteplanViewModel.deliveryDetails.setMakaniNo(binding.etMakani.getText().toString());
 
         editor.apply();
         editor.commit();

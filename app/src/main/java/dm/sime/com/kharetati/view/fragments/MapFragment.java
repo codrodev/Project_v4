@@ -185,6 +185,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
     int ids[] = {R.id.menuImage,R.id.menuText};
     String keys[]= {"one","two"};
     private ArcGISMap map;
+    private MeowBottomNavigation customBottomBar;
 
 
     public MapFragment() {
@@ -247,6 +248,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         binding.imgBack.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
         if(CURRENT_LOCALE.equals("en")) binding.toolBarLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.toolBarLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         mapView = mRootView.findViewById(R.id.mapView);
+        customBottomBar = (MeowBottomNavigation)getActivity().findViewById(R.id.customBottomBar);
         bottomSheetDialogFragment = MapFunctionBottomsheetDialogFragment.newInstance(this);
         listener =this;
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -346,6 +348,11 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                                 Global.mapSearchResult.getService_response().getMap().getFunctions().size() > 1) {
                             setMapFunctionSheetPeekHeight(0);
                         }
+
+                        if(MainActivity.isKeyboardShowing)
+                            customBottomBar.setVisibility(View.GONE);
+                        else
+                            customBottomBar.setVisibility(View.VISIBLE);
                         break;
                     case BottomSheetBehavior.STATE_EXPANDED:
                         binding.frameLayout.setVisibility(View.INVISIBLE);
@@ -359,6 +366,10 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                                 Global.mapSearchResult.getService_response().getMap().getFunctions().size() > 1) {
                             setMapFunctionSheetPeekHeight(0);
                         }
+                        if(MainActivity.isKeyboardShowing)
+                            customBottomBar.setVisibility(View.GONE);
+                        else
+                            customBottomBar.setVisibility(View.VISIBLE);
                     break;
                     case BottomSheetBehavior.STATE_COLLAPSED: {
                         model.manageAppBar(getActivity(), false);
@@ -366,8 +377,10 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                         binding.frameLayout.setVisibility(View.VISIBLE);
                         view.findViewById(R.id.topView).setVisibility(View.VISIBLE);
                         binding.floatingButtton.setVisibility(View.GONE);
-                        MeowBottomNavigation customBottomBar = (MeowBottomNavigation)getActivity().findViewById(R.id.customBottomBar);
-                        customBottomBar.setVisibility(View.GONE);
+                        if(MainActivity.isKeyboardShowing)
+                            customBottomBar.setVisibility(View.GONE);
+                        else
+                            customBottomBar.setVisibility(View.VISIBLE);
 
 
                     }

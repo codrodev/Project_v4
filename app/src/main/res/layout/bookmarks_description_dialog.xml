@@ -12,7 +12,7 @@
         android:layout_marginTop="10dp"
         android:theme="@style/Theme.AppCompat">
 
-        <EditText
+        <dm.sime.com.kharetati.view.customview.CleanableEditText
             android:id="@+id/edtBookmarksDescriptionDialogAr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
         android:theme="@style/Theme.AppCompat"
         android:visibility="gone">
 
-        <EditText
+        <dm.sime.com.kharetati.view.customview.CleanableEditText
             android:id="@+id/edtBookmarksDescriptionDialogEn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

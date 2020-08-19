@@ -464,7 +464,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         //binding.tabRuntimeLayout.setLayoutParams(lparams);
         x = new CleanableEditText(getActivity());
         //x.setHint(form.getPlaceHolderEn());
-        x.setHint(Global.CURRENT_LOCALE.equals("en")?control.getPlaceHolderEn():control.getPlaceHolderAr());
+        x.setHint(Global.CURRENT_LOCALE.equals("en")?(Boolean.valueOf(control.getIsMandatory())?control.getPlaceHolderEn()+"*":control.getPlaceHolderEn()):(Boolean.valueOf(control.getIsMandatory())?control.getPlaceHolderAr()+"*":control.getPlaceHolderAr()));
         if(control.getInputType().toLowerCase().equals("number")) {
 
         }

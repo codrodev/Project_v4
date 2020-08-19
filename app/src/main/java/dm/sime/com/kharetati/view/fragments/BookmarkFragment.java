@@ -315,8 +315,9 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
                 binding.textHeading.setVisibility(View.GONE);
             }
             else{
+                if(filterdNames.size()==0){
                 binding.textHeading.setVisibility(View.VISIBLE);
-                binding.textHeading.setText(getActivity().getResources().getString(R.string.no_result_found));
+                binding.textHeading.setText(getActivity().getResources().getString(R.string.no_result_found));}
             }
         }
         model.getBookmarkAdapter().setBookmark(filterdNames);
