@@ -170,6 +170,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
     private boolean isDocumentAdded;
 
 
+
     public static AttachmentFragment newInstance(){
         AttachmentFragment fragment = new AttachmentFragment();
         fragment.setRetainInstance(true);
@@ -202,6 +203,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         model.attachmentNavigator =this;
         ImageCropActivity.onCropListener =this;
         attachmentModel =model;
+        PayFragment.isFromPayFragment =false;
         listItem = new ArrayList<>();
 
         /*if(!ImageCropActivity.isImageCropped)
@@ -243,8 +245,8 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
     private void initializePage() {
         MainActivity.listner = this;
         clearAttachments();
-        /*if(!DeliveryFragment.isDeliveryFragment)
-            ParentSiteplanViewModel.getDownloadedDoc().clear();*/
+        if(!DeliveryFragment.isDeliveryFragment)
+            ParentSiteplanViewModel.getDownloadedDoc().clear();
         ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
         mTracker.setScreenName(FR_ATTACHMENT);
@@ -1786,8 +1788,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
     }
 
     private int getDocId(String key){
-        if(ParentSiteplanViewModel.getNewlyAttachedDoc() != null &&
-                ParentSiteplanViewModel.getNewlyAttachedDoc().size() > 0){
+        if(ParentSiteplanViewModel.getNewlyAttachedDoc() != null && ParentSiteplanViewModel.getNewlyAttachedDoc().size() > 0){
             for (DocArr ar : ParentSiteplanViewModel.getNewlyAttachedDoc()){
                 if(ar.getDocKey() != null && ar.getDocKey().equals(key)){
                     return ar.getDocId();

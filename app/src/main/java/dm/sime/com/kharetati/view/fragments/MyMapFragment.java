@@ -415,9 +415,10 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
         if(dateFrom.getText().toString().trim() != "" && dateTo.getText().toString().trim() != ""){
             Date date = new Date();
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat formatAr = new SimpleDateFormat("yyyy/MM/dd");
             try {
-                Date fromDate = format.parse(dateFrom.getText().toString().trim());
-                Date toDate = format.parse(dateTo.getText().toString().trim());
+                Date fromDate = (CURRENT_LOCALE.equals("en"))?format.parse(dateFrom.getText().toString().trim()):formatAr.parse(dateFrom.getText().toString().trim());
+                Date toDate = (CURRENT_LOCALE.equals("en"))?format.parse(dateTo.getText().toString().trim()):formatAr.parse(dateTo.getText().toString().trim());
                 int val = toDate.compareTo(fromDate);
                 if(val >= 0){
                     isValid = true;
@@ -453,9 +454,10 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
 
                         @SuppressLint("SimpleDateFormat")
                         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                        SimpleDateFormat sdfAr = new SimpleDateFormat("yyyy/MM/dd");
                         calendar.set(year, month, dayOfMonth);
                         startDate=calendar.getTime();
-                        String dateString = sdf.format(calendar.getTime());
+                        String dateString = Global.CURRENT_LOCALE.equals("en")?sdf.format(calendar.getTime()):sdfAr.format(calendar.getTime());
 
                         dateFrom.setText(dateString);
                         dateTo.setFocusable(true);// set the date

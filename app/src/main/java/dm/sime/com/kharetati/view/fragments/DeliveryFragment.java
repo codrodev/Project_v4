@@ -70,6 +70,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
     private String locale;
     public static Boolean isDeliveryFragment =false;
     private Tracker mTracker;
+    private SharedPreferences.Editor editor;
 
 
     public static DeliveryFragment newInstance(){
@@ -141,6 +142,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
         ParentSiteplanFragment.currentIndex =2;
 
         setRetainInstance(true);
+        editor = getActivity().getSharedPreferences(userid, MODE_PRIVATE).edit();
 
         ArrayList al=new ArrayList();
         for(int i=0;i<spinnerItems.length;i++)
@@ -218,6 +220,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
         });
 
         if(userid!=null){
+
             retrieve(userid);
         }
         binding.deliveryByCourier.setChecked(Global.isDeliveryByCourier);
@@ -349,6 +352,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
 
             @Override
             public void afterTextChanged(Editable editable) {
+                editor.putString("name",editable.toString().trim()).apply();
 
             }
         });
@@ -379,7 +383,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
 
             @Override
             public void afterTextChanged(Editable editable) {
-
+                editor.putString("email",editable.toString().trim()).apply();
             }
         });
         binding.etMobile.addTextChangedListener(new TextWatcher() {
@@ -406,7 +410,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
 
             @Override
             public void afterTextChanged(Editable editable) {
-
+                editor.putString("mobile",editable.toString().trim()).apply();
             }
         });
         binding.etMakani.addTextChangedListener(new TextWatcher() {
@@ -447,9 +451,90 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
 
             @Override
             public void afterTextChanged(Editable editable) {
-
+                editor.putString("makani",editable.toString().trim()).apply();
             }
         });
+        binding.etVillaBuildingNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                editor.putString("buildNumber",s.toString().trim()).apply();
+            }
+        });
+        binding.etBuildingName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                editor.putString("buildingName",s.toString().trim()).apply();
+            }
+        });
+        binding.etLandmark.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                editor.putString("landMark",s.toString().trim()).apply();
+            }
+        });
+        binding.etStreetAddress.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                editor.putString("streetAddress",s.toString().trim()).apply();
+            }
+        });
+        binding.etAdress.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                editor.putString("address",s.toString().trim()).apply();
+            }
+        });
+
 
         /*binding.etMobile.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -699,8 +784,8 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
     public void save(String userid) throws JSONException {
 
 
-        SharedPreferences.Editor editor = getActivity().getSharedPreferences(userid, MODE_PRIVATE).edit();
-        editor.putString("name", binding.etRecievername.getText().toString());
+
+
 
         if(ParentSiteplanViewModel.deliveryDetails == null){
             ParentSiteplanViewModel.deliveryDetails = new RetrievedDeliveryDetails();
@@ -721,8 +806,19 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
         ParentSiteplanViewModel.deliveryDetails.setMainAddress(binding.etAdress.getText().toString());
         ParentSiteplanViewModel.deliveryDetails.setMakaniNo(binding.etMakani.getText().toString());
 
+        editor.putString("name", binding.etRecievername.getText().toString());
+        editor.putString("email", binding.etEmailaddress.getText().toString());
+        editor.putString("mobile", binding.etMobile.getText().toString());
+        editor.putString("buildingName", binding.etBuildingName.getText().toString());
+        editor.putString("buildNumber", binding.etVillaBuildingNumber.getText().toString());
+        editor.putString("landMark", binding.etLandmark.getText().toString());
+        editor.putString("streetAddress", binding.etStreetAddress.getText().toString());
+        editor.putString("address", binding.etAdress.getText().toString());
+        editor.putString("makani", binding.etMakani.getText().toString());
+        editor.putString("emirate", String.valueOf(binding.etEmirates.getSelectedItemPosition()));
+
         editor.apply();
-        editor.commit();
+        //editor.commit();
         Global.hideSoftKeyboard(getActivity());
         //Toast.makeText(getActivity(), getResources().getString(R.string.deatails_saved), Toast.LENGTH_SHORT).show();
 
@@ -744,8 +840,6 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
                 Global.deliveryDetails.setEmirate(Integer.parseInt(ParentSiteplanViewModel.deliveryDetails.getEmirate()));
                 Global.deliveryDetails.setMakaniNo( ParentSiteplanViewModel.deliveryDetails.getMakaniNo());
 
-
-
             }
 
             //Global.deliveryDetails.setEmID(DeliveryFragment.emId);
@@ -759,45 +853,44 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
         SharedPreferences preferences = getActivity().getSharedPreferences(userid, MODE_PRIVATE);
 
         binding.etRecievername.setText("");
-        if(ParentSiteplanViewModel.deliveryDetails != null){
-            if(ParentSiteplanViewModel.deliveryDetails.getEmailId() != null &&
-                    ParentSiteplanViewModel.deliveryDetails.getEmailId().length() > 0){
+        if (ParentSiteplanViewModel.deliveryDetails != null && !PayFragment.isFromPayFragment) {
+            if (ParentSiteplanViewModel.deliveryDetails.getEmailId() != null && ParentSiteplanViewModel.deliveryDetails.getEmailId().length() > 0) {
                 binding.etEmailaddress.setText(ParentSiteplanViewModel.deliveryDetails.getEmailId());
-            } else if(Global.isUAE){
-                if(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getEmail() != null){
+            } else if (Global.isUAE) {
+                if (Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getEmail() != null) {
                     binding.etEmailaddress.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getEmail());
                 }
-            } else if(Global.getUser(getActivity()).getEmail() != null) {
+            } else if (Global.getUser(getActivity()).getEmail() != null) {
                 binding.etEmailaddress.setText(Global.getUser(getActivity()).getEmail());
             }
-            if(ParentSiteplanViewModel.deliveryDetails.getMobileNo() != null &&
-                    ParentSiteplanViewModel.deliveryDetails.getMobileNo().length() > 0){
+            if (ParentSiteplanViewModel.deliveryDetails.getMobileNo() != null &&
+                    ParentSiteplanViewModel.deliveryDetails.getMobileNo().length() > 0) {
                 binding.etMobile.setText(ParentSiteplanViewModel.deliveryDetails.getMobileNo());
-            } else if(Global.isUAE){
-                if(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getMobile() != null){
+            } else if (Global.isUAE) {
+                if (Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getMobile() != null) {
                     binding.etMobile.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getMobile());
                 }
-            } else if(Global.getUser(getActivity()).getMobile() != null) {
+            } else if (Global.getUser(getActivity()).getMobile() != null) {
                 binding.etMobile.setText(Global.getUser(getActivity()).getMobile());
             }
-            if(ParentSiteplanViewModel.deliveryDetails.getMakaniNo() != null &&
-                    ParentSiteplanViewModel.deliveryDetails.getMakaniNo().length() > 0){
+            if (ParentSiteplanViewModel.deliveryDetails.getMakaniNo() != null &&
+                    ParentSiteplanViewModel.deliveryDetails.getMakaniNo().length() > 0) {
                 binding.etMakani.setText(ParentSiteplanViewModel.deliveryDetails.getMakaniNo());
             }
-            if(Global.CURRENT_LOCALE.compareToIgnoreCase("en")==0) {
+            if (Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0) {
                 if (ParentSiteplanViewModel.deliveryDetails.getNameEn() != null &&
                         ParentSiteplanViewModel.deliveryDetails.getNameEn().length() > 0) {
                     binding.etRecievername.setText("");
                     binding.etRecievername.setText(ParentSiteplanViewModel.deliveryDetails.getNameEn());
-                }else if (ParentSiteplanViewModel.deliveryDetails.getNameAr() != null &&
+                } else if (ParentSiteplanViewModel.deliveryDetails.getNameAr() != null &&
                         ParentSiteplanViewModel.deliveryDetails.getNameAr().length() > 0) {
                     binding.etRecievername.setText(ParentSiteplanViewModel.deliveryDetails.getNameAr());
                 } else {
-                    if(Global.isUAE){
-                        if(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN() != null){
+                    if (Global.isUAE) {
+                        if (Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN() != null) {
                             binding.etRecievername.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN());
                         }
-                    } else if(Global.getUser(getActivity()).getFullname() != null) {
+                    } else if (Global.getUser(getActivity()).getFullname() != null) {
                         binding.etRecievername.setText(Global.getUser(getActivity()).getFullname());
                     }
                 }
@@ -805,11 +898,11 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
                 if (ParentSiteplanViewModel.deliveryDetails.getNameAr() != null &&
                         ParentSiteplanViewModel.deliveryDetails.getNameAr().length() > 0) {
                     binding.etRecievername.setText(ParentSiteplanViewModel.deliveryDetails.getNameAr());
-                } else if(Global.isUAE){
-                    if(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameAR() != null){
+                } else if (Global.isUAE) {
+                    if (Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameAR() != null) {
                         binding.etRecievername.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameAR());
                     }
-                } else if(Global.getUser(getActivity()).getFullnameAR() != null && !Global.getUser(getActivity()).getFullnameAR().contentEquals("null")){
+                } else if (Global.getUser(getActivity()).getFullnameAR() != null && !Global.getUser(getActivity()).getFullnameAR().contentEquals("null")) {
                     binding.etRecievername.setText(Global.getUser(getActivity()).getFullnameAR());
                 } else if (ParentSiteplanViewModel.deliveryDetails.getNameEn() != null &&
                         ParentSiteplanViewModel.deliveryDetails.getNameEn().length() > 0) {
@@ -817,59 +910,73 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
                 }
 
             }
-            if(ParentSiteplanViewModel.deliveryDetails.getBldgName() != null){
+            if (ParentSiteplanViewModel.deliveryDetails.getBldgName() != null) {
                 binding.etBuildingName.setText(ParentSiteplanViewModel.deliveryDetails.getBldgName());
             }
-            if(ParentSiteplanViewModel.deliveryDetails.getBldgNo() != null){
+            if (ParentSiteplanViewModel.deliveryDetails.getBldgNo() != null) {
                 binding.etVillaBuildingNumber.setText(ParentSiteplanViewModel.deliveryDetails.getBldgNo());
             }
-            if(ParentSiteplanViewModel.deliveryDetails.getMainAddress() != null){
+            if (ParentSiteplanViewModel.deliveryDetails.getMainAddress() != null) {
                 binding.etAdress.setText(ParentSiteplanViewModel.deliveryDetails.getMainAddress());
             }
-            if(ParentSiteplanViewModel.deliveryDetails.getNearestLandmark() != null){
+            if (ParentSiteplanViewModel.deliveryDetails.getNearestLandmark() != null) {
                 binding.etLandmark.setText(ParentSiteplanViewModel.deliveryDetails.getNearestLandmark());
             }
-            if(ParentSiteplanViewModel.deliveryDetails.getStreetAddress() != null){
+            if (ParentSiteplanViewModel.deliveryDetails.getStreetAddress() != null) {
                 binding.etStreetAddress.setText(ParentSiteplanViewModel.deliveryDetails.getStreetAddress());
             }
-            if(convertEmirateId(ParentSiteplanViewModel.deliveryDetails.getEmirate()) != 0 &&
-                    convertEmirateId(ParentSiteplanViewModel.deliveryDetails.getEmirate())> 0){
+            if (convertEmirateId(ParentSiteplanViewModel.deliveryDetails.getEmirate()) != 0 &&
+                    convertEmirateId(ParentSiteplanViewModel.deliveryDetails.getEmirate()) > 0) {
                 try {
                     int val = convertEmirateId(ParentSiteplanViewModel.deliveryDetails.getEmirate());
                     binding.etEmirates.setSelection(fetchEmirate(val));
-                } catch (Exception e){
+                } catch (Exception e) {
 
                 }
-                
+
             }
 
+        } else if (PayFragment.isFromPayFragment) {
+            if(preferences!=null){
+                binding.etRecievername.setText(preferences.getString("name", binding.etRecievername.getText().toString()));
+                binding.etEmailaddress.setText(preferences.getString("email", binding.etEmailaddress.getText().toString()));
+                binding.etMobile.setText(preferences.getString("mobile", binding.etMobile.getText().toString()));
+                binding.etBuildingName.setText(preferences.getString("buildingName", binding.etBuildingName.getText().toString()));
+                binding.etVillaBuildingNumber.setText(preferences.getString("buildNumber", binding.etVillaBuildingNumber.getText().toString()));
+                binding.etLandmark.setText(preferences.getString("landMark", binding.etLandmark.getText().toString()));
+                binding.etStreetAddress.setText(preferences.getString("streetAddress", binding.etStreetAddress.getText().toString()));
+                binding.etAdress.setText(preferences.getString("address", binding.etAdress.getText().toString()));
+                binding.etMakani.setText(preferences.getString("makani", binding.etMakani.getText().toString()));
+                binding.etEmirates.setSelection(Integer.parseInt(preferences.getString("emirate", String.valueOf(binding.etEmirates.getSelectedItemPosition()))));
+
+            }
         } else {
-            if(Global.isUAE){
-                if(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getEmail() != null){
+            if (Global.isUAE) {
+                if (Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getEmail() != null) {
                     binding.etEmailaddress.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getEmail());
                 }
-            } else if(Global.getUser(getActivity()).getEmail() != null) {
+            } else if (Global.getUser(getActivity()).getEmail() != null) {
                 binding.etEmailaddress.setText(Global.getUser(getActivity()).getEmail());
             }
-            if(Global.isUAE){
-                if(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getMobile() != null){
+            if (Global.isUAE) {
+                if (Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getMobile() != null) {
                     binding.etMobile.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getMobile());
                 }
-            } else if(Global.getUser(getActivity()).getMobile() != null) {
+            } else if (Global.getUser(getActivity()).getMobile() != null) {
                 binding.etMobile.setText(Global.getUser(getActivity()).getMobile());
-                
+
             }
-            if(Global.CURRENT_LOCALE.equals("en")) {
-                if(Global.isUAE){
-                    if(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN() != null){
+            if (Global.CURRENT_LOCALE.equals("en")) {
+                if (Global.isUAE) {
+                    if (Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN() != null) {
                         binding.etRecievername.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN());
                     }
                 } else if (Global.getUser(getActivity()).getFullname() != null) {
                     binding.etRecievername.setText(Global.getUser(getActivity()).getFullname());
                 }
             } else {
-                if(Global.isUAE){
-                    if(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameAR() != null){
+                if (Global.isUAE) {
+                    if (Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameAR() != null) {
                         binding.etRecievername.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameAR());
                     }
                 } else if (Global.getUser(getActivity()).getFullnameAR() != null) {
@@ -910,7 +1017,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
     public void onResume() {
         super.onResume();
         Global.hideSoftKeyboard(getActivity());
-        retrieve(userid);
+        //retrieve(userid);
         if(convertEmirateId(ParentSiteplanViewModel.deliveryDetails.getEmirate())!=0)
             binding.etEmirates.setSelection(convertEmirateId(ParentSiteplanViewModel.deliveryDetails.getEmirate()));
         else if(saved_position!=0)

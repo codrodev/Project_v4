@@ -43,6 +43,7 @@ import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_PAY;
 public class PayFragment extends Fragment implements PayNavigator {
 
 
+    public static boolean isFromPayFragment;
     private PayRepository repository;
     private PayViewModelFactory factory;
     private PayViewModel model;
@@ -89,6 +90,7 @@ public class PayFragment extends Fragment implements PayNavigator {
         if(CURRENT_LOCALE.equals("en")) binding.rootView.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.rootView.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         setRetainInstance(true);
         setEmailAndMobileField();
+        isFromPayFragment =true;
         ParentSiteplanFragment.currentIndex =3;
         binding.payNow.setOnClickListener(new View.OnClickListener() {
             @Override

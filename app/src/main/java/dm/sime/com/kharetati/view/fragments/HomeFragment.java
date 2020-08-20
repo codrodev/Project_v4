@@ -194,6 +194,11 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
         model.initializeHomeVM(getContext());
         initializePage();
+        try {
+            ((MainActivity)getActivity()).getLastlogin();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         setRetainInstance(true);
         return binding.getRoot();
@@ -242,11 +247,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         ((MainActivity)getActivity()).setScreenName(getActivity().getString(R.string.title_welcome));
         if(Global.appId!=null && model.getApplication( Global.appId)!=null)
         Global.HelpUrl = CURRENT_LOCALE.equals("en")?model.getApplication( Global.appId).getHelpUrlEn():model.getApplication( Global.appId).getHelpUrlAr();
-        try {
-            ((MainActivity)getActivity()).getLastlogin();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
         Global.selectedTab =0;
 
 

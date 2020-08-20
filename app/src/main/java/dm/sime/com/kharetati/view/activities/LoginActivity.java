@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
@@ -46,6 +47,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -786,7 +788,8 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         });
 
 
-        Global.deviceId = /*FirebaseInstanceId.getInstance().getToken()!=null?FirebaseInstanceId.getInstance().getToken():*/generateRandomID();
+       // Global.deviceId = FirebaseInstanceId.getInstance().getToken()!=null? FirebaseInstanceId.getInstance().getToken():generateRandomID();
+        Global.deviceId =  Settings.Secure.getString(LoginActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID);
 
 
 

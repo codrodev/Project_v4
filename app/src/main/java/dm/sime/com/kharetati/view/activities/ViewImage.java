@@ -61,6 +61,7 @@ public class ViewImage extends AppCompatActivity {
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
         mTracker.setScreenName(FR_VIEW);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        ImageCropActivity.isImageCropped = true;
         FontChangeCrawler fontChanger = new FontChangeCrawler(getAssets(), "Dubai-Regular.ttf");
         fontChanger.replaceFonts((ViewGroup)this.findViewById(android.R.id.content));
         ImageView back=(ImageView) findViewById(R.id.backicon_view);

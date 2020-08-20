@@ -134,6 +134,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     private MyViewModel myViewModel;
     public static FirebaseAnalytics firebaseAnalytics;
     public static boolean isKeyboardShowing;
+    private String currentDateandTime;
+    private String guestLastLoginTime;
 
     public static Intent newIntent(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -166,6 +168,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         model.mainNavigator =this;
         fragmentManager = getSupportFragmentManager();
         Global.fontScale =sharedpreferences.getFloat(FONT_SIZE,1f);
+        guestLastLoginTime = sharedpreferences.getString("lastLoginTime", currentDateandTime);
         //adjustFontScale(MainActivity.this.getResources().getConfiguration(),Global.fontScale);
         model.initialize();
         binding.setActivityMainVM(model);
@@ -381,7 +384,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         SimpleDateFormat sdfAr = new SimpleDateFormat("hh:mm:ss a yyyy/MM/dd ", new Locale("ar"));
         //SimpleDateFormat sdfAr = new SimpleDateFormat(" dd/MM/yyyy HH:mm:ss a", new Locale("ar"));
 
-        String currentDateandTime = sdf.format(new Date());
+        //currentDateandTime = sdf.format(new Date());
+        currentDateandTime = CURRENT_LOCALE.equals("en")?sdfEn.format(new Date()):sdfEn.format(new Date());
         binding.txtLastLogin.setVisibility(View.VISIBLE);
 
         if (Global.isUAE||Global.isUserLoggedIn) {
@@ -405,9 +409,10 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             binding.txtLastLogin.setText(" " + currentDateandTime);
         }*/
         else {
-            currentDateandTime = CURRENT_LOCALE.equals("en")?sdfEn.format(new Date()):sdfAr.format(new Date());
 
-            binding.txtLastLogin.setText(" " + sharedpreferences.getString("lastLoginTime", currentDateandTime));
+            guestLastLoginTime = guestLastLoginTime==null?currentDateandTime:guestLastLoginTime;
+            guestLastLoginTime = (Global.CURRENT_LOCALE.equals("en")?sdfEn.format(sdf.parse(guestLastLoginTime)):sdfAr.format(sdf.parse(guestLastLoginTime)));
+            binding.txtLastLogin.setText(" " + guestLastLoginTime);
 
             sharedpreferences.edit().putString("lastLoginTime", currentDateandTime).apply();
         }
@@ -568,11 +573,11 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         if(Global.current_fragment_id.equals(FragmentTAGS.FR_HOME)){
             binding.txtLastLogin.setVisibility(View.VISIBLE);
             binding.layoutlastlogin.setVisibility(View.VISIBLE);
-            try {
+            /*try {
                 getLastlogin();
             } catch (ParseException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
         else {
             binding.txtLastLogin.setVisibility(View.GONE);

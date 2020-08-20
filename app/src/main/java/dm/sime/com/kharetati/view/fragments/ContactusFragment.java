@@ -341,7 +341,7 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
     private void openURL(String link) {
         ArrayList al = new ArrayList();
         al.add(link);
-        al.add(getActivity().getResources().getString(R.string.visitus));
+        al.add(getActivity().getResources().getString(R.string.visitus_hd));
         ((MainActivity)getActivity()).loadFragment(FR_WEBVIEW,true,al);
     }
 
