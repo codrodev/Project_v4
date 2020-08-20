@@ -132,6 +132,7 @@ public class ImageCropActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         //progressDialog.show();
+                        AlertDialogUtil.showProgressBar(ImageCropActivity.this,true);
                     }
                 });
                 resultBitmap = cropView.getCroppedImage();
@@ -163,7 +164,7 @@ public class ImageCropActivity extends AppCompatActivity {
                         AttachmentFragment.thumbnail=null;
                 /*if(progressDialog!=null)
                     progressDialog.cancel();*/
-
+                        AlertDialogUtil.showProgressBar(ImageCropActivity.this,false);
                         finish();
                         runOnUiThread(new Runnable() {
                             @Override
@@ -238,9 +239,14 @@ public class ImageCropActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(progressDialog!=null)
+        if(progressDialog!=null){
             progressDialog.cancel();
-        progressDialog=null;
+        progressDialog=null;}
+        if(Global.alertDialog!=null){
+            Global.alertDialog.cancel();
+            Global.alertDialog = null;
+        }
+
     }
 
     private File storeImage(Bitmap image) throws IOException {
