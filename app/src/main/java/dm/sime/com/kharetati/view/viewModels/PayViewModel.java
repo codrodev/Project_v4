@@ -25,6 +25,7 @@ import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.activities.LoginActivity;
 import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.fragments.AttachmentFragment;
 import dm.sime.com.kharetati.view.fragments.ParentSiteplanFragment;
@@ -92,14 +93,17 @@ public class PayViewModel extends ViewModel {
         String url = Global.base_url_site_plan+"/createUpdateRequest";
         Gson ob = new Gson();
         String x = ob.toJson(model);
+        Log.d(getClass().getSimpleName()+" CreateUpdateReuest:==>",x);
         try {
             Disposable disposable = repository.createAndUpdateRequest(url,model)
                     .subscribeOn(kharetatiApp.subscribeScheduler())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<CreateUpdateRequestResponse>() {
                         @Override public void accept(CreateUpdateRequestResponse createUpdateRequestResponse) throws Exception {
+
                             try
                             {
+                                Log.d("CreateUpdateResponse:",ob.fromJson(createUpdateRequestResponse.toString(),CreateUpdateRequestResponse.class).toString());
                                 createUpdateRequest(ob.fromJson(createUpdateRequestResponse.toString(),CreateUpdateRequestResponse.class));
                                 //...
                             }
