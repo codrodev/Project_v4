@@ -50,6 +50,7 @@ import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 
 import static android.content.Context.MODE_PRIVATE;
 import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
+import static dm.sime.com.kharetati.utility.Global.isUAE;
 import static dm.sime.com.kharetati.utility.Global.makani;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_DELIVERY;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_LANDOWNER_SELECTION;
@@ -135,7 +136,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
         ParentSiteplanFragment.listner = this;
         initializePage();
         final String spinnerItems[]=getActivity().getResources().getStringArray(R.array.emirates);
-        userid=Global.getUser(getActivity()).getEmail();
+        userid=Global.isUAE?Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getEmail():Global.getUser(getActivity()).getEmail();
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         Global.hideSoftKeyboard(getActivity());
@@ -410,6 +411,11 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
 
             @Override
             public void afterTextChanged(Editable editable) {
+                if(isValidMobile())
+                    setNextEnabledStatus(true);
+                else
+                    setNextEnabledStatus(false);
+
                 editor.putString("mobile",editable.toString().trim()).apply();
             }
         });

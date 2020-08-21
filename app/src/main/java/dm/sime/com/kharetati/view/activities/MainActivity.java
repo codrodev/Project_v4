@@ -595,12 +595,13 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
             Global.fontScale = sharedpreferences.getFloat(FONT_SIZE,1f);
 
+
             if(!locale.equals("defaultStringIfNothingFound"))
                 CURRENT_LOCALE =locale;
             else
                 CURRENT_LOCALE ="en";
-
             super.attachBaseContext(CustomContextWrapper.wrap(newBase, CURRENT_LOCALE));
+
         } else {
             super.attachBaseContext(newBase);
         }
@@ -611,7 +612,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         newConfig.setLocale(new Locale(CURRENT_LOCALE));
 
         newConfig.fontScale = sharedpreferences.getFloat(FONT_SIZE,1f);
-        adjustFontScale(newConfig,newConfig.fontScale);
+        //adjustFontScale(newConfig,newConfig.fontScale);
 
         sharedpreferences.edit().putString("currentFragment",Global.current_fragment_id).apply();
 
@@ -712,7 +713,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             binding.txtLastLogin.setVisibility(View.GONE);
         binding.layoutlastlogin.setVisibility(View.GONE);
         }
-        if(fragment_tag.equals(FragmentTAGS.FR_WEBVIEW)){
+        if(fragment_tag.equals(FragmentTAGS.FR_WEBVIEW)||fragment_tag.equals(FragmentTAGS.FR_FEEDBACK)){
             binding.backButton.setVisibility(View.VISIBLE);
             binding.txtWelcome.setOnClickListener(new View.OnClickListener() {
                 @Override

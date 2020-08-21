@@ -86,6 +86,7 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
     private static final String DM_PHONE_NUMBER = "800900";
     private static final String DM_EMAIL = "info@dm.gov.ae";
     private static final String DM_WEB_SITE = "https://www.dm.gov.ae";
+    private static final String DM_WEB_SITE_AR = "https://www.dm.gov.ae/?lang=ar";
     private static final String DM_FB_EN = "https://www.facebook.com/DubaiMunicipality";
     private static final String DM_FB_AR = "https://www.facebook.com/DubaiMunicipality";
     private static String DM_TWITTER_EN = "";
@@ -218,7 +219,7 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
                         AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
                 }
                 else
-                    openURL(DM_WEB_SITE);
+                    openURL(Global.CURRENT_LOCALE.equals("en")?DM_WEB_SITE:DM_WEB_SITE_AR);
             }
         });
 

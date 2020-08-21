@@ -1788,7 +1788,8 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
     }
 
     private int getDocId(String key){
-        if(ParentSiteplanViewModel.getNewlyAttachedDoc() != null && ParentSiteplanViewModel.getNewlyAttachedDoc().size() > 0){
+        if(ParentSiteplanViewModel.getNewlyAttachedDoc() != null &&
+                ParentSiteplanViewModel.getNewlyAttachedDoc().size() > 0){
             for (DocArr ar : ParentSiteplanViewModel.getNewlyAttachedDoc()){
                 if(ar.getDocKey() != null && ar.getDocKey().equals(key)){
                     return ar.getDocId();

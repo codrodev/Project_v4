@@ -48,7 +48,10 @@
                         android:padding="5dp">
 
                         <TextView
-                            style="@style/font_medium_bold_settings"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/dubai_font"
+                            android:textFontWeight="900"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginVertical="15dp"
@@ -129,10 +132,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAlignment="viewStart"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/dubai_font"
+                        android:textFontWeight="900"
                         android:layout_marginStart="12dp"
                         android:layout_marginEnd="@dimen/settings_talkback_margin"
                         android:layout_marginVertical="15dp"
-                        style="@style/font_medium_bold_settings"
                         android:textColor="#2A2A2A"
                         android:text="@string/talkback"/>
                     <LinearLayout
@@ -200,7 +206,10 @@
                         android:textAlignment="viewStart"
                         android:layout_marginStart="12dp"
                         android:layout_marginVertical="15dp"
-                        style="@style/font_medium_bold_settings"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/dubai_font"
+                        android:textFontWeight="900"
                         android:textColor="#2A2A2A"
                         android:text="@string/fontsize"/>
 

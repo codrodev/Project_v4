@@ -508,6 +508,7 @@ public class Global {
         config.fontScale = context.getSharedPreferences(MYPREFERENCES,Context.MODE_PRIVATE).getFloat(FONT_SIZE,1f);
         if (Build.VERSION.SDK_INT >Build.VERSION_CODES.N){
             config.setLocale(locale);
+            config.fontScale = context.getSharedPreferences(MYPREFERENCES,Context.MODE_PRIVATE).getFloat(FONT_SIZE,1f);
             context.createConfigurationContext(config);
 //            context.getResources().updateConfiguration(config,context.getResources().getDisplayMetrics());
         }
