@@ -60,6 +60,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.TimeZone;
 
 import dm.sime.com.kharetati.KharetatiApp;
 import dm.sime.com.kharetati.R;
@@ -385,6 +386,10 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         //SimpleDateFormat sdfAr = new SimpleDateFormat(" dd/MM/yyyy HH:mm:ss a", new Locale("ar"));
 
         //currentDateandTime = sdf.format(new Date());
+        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Dubai"));
+        rdf.setTimeZone(TimeZone.getTimeZone("Asia/Dubai"));
+        sdfEn.setTimeZone(TimeZone.getTimeZone("Asia/Dubai"));
+        sdfAr.setTimeZone(TimeZone.getTimeZone("Asia/Dubai"));
         currentDateandTime = CURRENT_LOCALE.equals("en")?sdfEn.format(new Date()):sdfEn.format(new Date());
         binding.txtLastLogin.setVisibility(View.VISIBLE);
 
@@ -713,7 +718,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             binding.txtLastLogin.setVisibility(View.GONE);
         binding.layoutlastlogin.setVisibility(View.GONE);
         }
-        if(fragment_tag.equals(FragmentTAGS.FR_WEBVIEW)||fragment_tag.equals(FragmentTAGS.FR_FEEDBACK)){
+        if(fragment_tag.equals(FragmentTAGS.FR_WEBVIEW)||fragment_tag.equals(FragmentTAGS.FR_FEEDBACK)||fragment_tag.equals(FragmentTAGS.FR_SETTINGS)){
             binding.backButton.setVisibility(View.VISIBLE);
             binding.txtWelcome.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -822,9 +827,13 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     protected void onPause() {
         super.onPause();
         sharedpreferences.edit().putInt("position",customBottomBar.getId()).apply();
-        if(Global.alertDialog!=null){
-            Global.alertDialog.cancel();
-            Global.alertDialog = null;
+        if (Global.current_fragment_id != null) {
+            if (!(Global.current_fragment_id.equals(FragmentTAGS.FR_PARENT_SITEPLAN) || Global.current_fragment_id.equals(FragmentTAGS.FR_ATTACHMENT) || Global.current_fragment_id.equals(FragmentTAGS.FR_DELIVERY) || Global.current_fragment_id.equals(FragmentTAGS.FR_PAY) || Global.current_fragment_id.equals(FragmentTAGS.FR_REQUEST_DETAILS))) {
+                if (Global.alertDialog != null) {
+                    Global.alertDialog.cancel();
+                    Global.alertDialog = null;
+                }
+            }
         }
 
     }

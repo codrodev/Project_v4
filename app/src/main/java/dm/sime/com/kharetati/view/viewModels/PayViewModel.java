@@ -56,6 +56,7 @@ public class PayViewModel extends ViewModel {
     }
 
     public void createAndUpdateRequest() throws JSONException {
+
         payNavigator.onStarted();
         AttachmentFragment.attachmentModel.attachmentNavigator.navigateToPay();
         SerializedCreateAndUpdateModel model = new SerializedCreateAndUpdateModel();
@@ -93,7 +94,7 @@ public class PayViewModel extends ViewModel {
         String url = Global.base_url_site_plan+"/createUpdateRequest";
         Gson ob = new Gson();
         String x = ob.toJson(model);
-        Log.d(getClass().getSimpleName()+" CreateUpdateReuest:==>",x);
+        Log.d(getClass().getSimpleName()+" =================>",x);
         try {
             Disposable disposable = repository.createAndUpdateRequest(url,model)
                     .subscribeOn(kharetatiApp.subscribeScheduler())
@@ -181,6 +182,7 @@ public class PayViewModel extends ViewModel {
                         MainActivity.firebaseAnalytics.logEvent("CreateUpdateRequest", bundle);
 
                         ((MainActivity)activity).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+                        payNavigator.onSuccess();
                     } else if(status==402){
 
                         if(msg!=null)
@@ -214,6 +216,7 @@ public class PayViewModel extends ViewModel {
                         ArrayList al = new ArrayList<>();
                         al.add(Global.paymentUrl);
                         ((MainActivity)activity).loadFragment(FragmentTAGS.FR_REQUEST_DETAILS,true,hm);
+                        payNavigator.onSuccess();
                        // ParentSiteplanFragment.parentModel.retrieveProfileDocs();
                     }
 

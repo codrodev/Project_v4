@@ -220,5 +220,6 @@ public class LandOwnerSelectionFragment extends Fragment {
         super.onResume();
         ParentSiteplanViewModel.getDownloadedDoc().clear();
         ParentSiteplanFragment.currentIndex =0;
+        ImageCropActivity.isImageCropped =false;
     }
 }

@@ -245,8 +245,10 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
     private void initializePage() {
         MainActivity.listner = this;
         clearAttachments();
-        if(!DeliveryFragment.isDeliveryFragment)
+        if(!DeliveryFragment.isDeliveryFragment){
             ParentSiteplanViewModel.getDownloadedDoc().clear();
+            ParentSiteplanViewModel.getNewlyAttachedDoc().clear();
+        }
         ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
         mTracker.setScreenName(FR_ATTACHMENT);
@@ -500,6 +502,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
                     }
                     imageAlignment();
+                    nextButtonStatus();
                 }
 
             }
@@ -697,6 +700,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
 
     private void showPictureDialog() {
+        ImageCropActivity.isImageCropped =true;
 
 
         AlertDialog.Builder pictureDialog = new AlertDialog.Builder(getActivity());
@@ -998,6 +1002,8 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                                 binding.nocView.setVisibility(View.VISIBLE);
                                 binding.nocChange.setVisibility(View.VISIBLE);
                             }
+                            nextButtonStatus();
+
                         }
 
                     }
@@ -2205,6 +2211,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
     private void viewImage() throws IOException {
         Intent intent = new Intent(this.getActivity(), ViewImage.class);
         File file = null;
+        ImageCropActivity.isImageCropped = true;
 
         pdfBitmap =((BitmapDrawable) getResources().getDrawable(R.drawable.pdf_icon)).getBitmap();
 
@@ -2225,8 +2232,10 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                         intent.putExtra("bitmap", file.getAbsolutePath());
                         if (viewBitmap == ((BitmapDrawable) getResources().getDrawable(R.drawable.photo)).getBitmap())
                             Toast.makeText(getActivity(), getResources().getString(R.string.choose_image), Toast.LENGTH_SHORT).show();
-                        else if (!(viewBitmap == pdfBitmap))
+                        else if (!(viewBitmap == pdfBitmap)){
                             startActivity(intent);
+
+                        }
                     }
 
                 }
@@ -2246,8 +2255,9 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                         intent.putExtra("bitmap", file.getAbsolutePath());
                         if (viewBitmap == ((BitmapDrawable) getResources().getDrawable(R.drawable.photo)).getBitmap())
                             Toast.makeText(getActivity(), getResources().getString(R.string.choose_image), Toast.LENGTH_SHORT).show();
-                        else if (!(viewBitmap == pdfBitmap))
+                        else if (!(viewBitmap == pdfBitmap)){
                             startActivity(intent);
+                        }
                     }
                 }
             }

@@ -941,8 +941,6 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
                 }
 
             }
-
-        } else if (PayFragment.isFromPayFragment) {
             if(preferences!=null){
                 binding.etRecievername.setText(preferences.getString("name", binding.etRecievername.getText().toString()));
                 binding.etEmailaddress.setText(preferences.getString("email", binding.etEmailaddress.getText().toString()));
@@ -956,6 +954,8 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
                 binding.etEmirates.setSelection(Integer.parseInt(preferences.getString("emirate", String.valueOf(binding.etEmirates.getSelectedItemPosition()))));
 
             }
+        } else if (PayFragment.isFromPayFragment) {
+
         } else {
             if (Global.isUAE) {
                 if (Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getEmail() != null) {
