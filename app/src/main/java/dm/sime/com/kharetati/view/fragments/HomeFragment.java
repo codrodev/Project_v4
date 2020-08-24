@@ -571,7 +571,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         spinnerView.setTextSize(14f);
         spinnerView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
-        spinnerView.setText(Global.CURRENT_LOCALE.equals("en")?control.getPlaceHolderEn():control.getPlaceHolderAr());
+        spinnerView.setText(Global.CURRENT_LOCALE.equals("en")?control.getPlaceHolderEn()+"*":control.getPlaceHolderAr()+"*");
         spinnerView.setTypeface(typeface);
         spinnerLayout.addView(spinnerView,dynamcLayoutParams);
         spinnerLayout.addView(chevronlayout,chevronParams);

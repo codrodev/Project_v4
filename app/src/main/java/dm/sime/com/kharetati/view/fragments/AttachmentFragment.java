@@ -247,7 +247,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
         clearAttachments();
         if(!DeliveryFragment.isDeliveryFragment){
             ParentSiteplanViewModel.getDownloadedDoc().clear();
-            ParentSiteplanViewModel.getNewlyAttachedDoc().clear();
+
         }
         ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
@@ -942,8 +942,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                 imageAlignment();
         }*/
 
-        if (ParentSiteplanViewModel.getNewlyAttachedDoc() != null &&
-                ParentSiteplanViewModel.getNewlyAttachedDoc().size() > 0)
+        if (ParentSiteplanViewModel.getNewlyAttachedDoc() != null && ParentSiteplanViewModel.getNewlyAttachedDoc().size() > 0)
         {
 
             for (int i = 0; i < ParentSiteplanViewModel.getNewlyAttachedDoc().size(); i++)
@@ -1043,6 +1042,7 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                 }
             }
         }
+
         nextButtonStatus();
         imageAlignment();
 

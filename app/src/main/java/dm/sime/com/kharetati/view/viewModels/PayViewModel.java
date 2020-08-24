@@ -25,6 +25,7 @@ import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.activities.ImageCropActivity;
 import dm.sime.com.kharetati.view.activities.LoginActivity;
 import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.fragments.AttachmentFragment;
@@ -163,7 +164,8 @@ public class PayViewModel extends ViewModel {
                 if(paymentType.compareToIgnoreCase("Pay Now")==0){
 
                     if(status==600){
-                        //ParentSiteplanFragment.parentModel.retrieveProfileDocs();
+                        ImageCropActivity.isImageCropped =false;
+                        ParentSiteplanFragment.parentModel.retrieveProfileDocs();
                         ArrayList al = new ArrayList<>();
                         al.add(Global.paymentUrl);
 
@@ -181,7 +183,7 @@ public class PayViewModel extends ViewModel {
                         bundle.putBoolean("isPerson",Global.isPerson);
                         MainActivity.firebaseAnalytics.logEvent("CreateUpdateRequest", bundle);
 
-                        ((MainActivity)activity).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+                        //((MainActivity)activity).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
                         payNavigator.onSuccess();
                     } else if(status==402){
 

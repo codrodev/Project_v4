@@ -603,7 +603,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
 
                 Global.isDeliveryByCourier = isChecked;
                 buttonView.setChecked(Global.isDeliveryByCourier);
-
+                editor.putBoolean("deliveryByCourier",isChecked).apply();
 
 
                 if (!isChecked) {
@@ -955,6 +955,19 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
 
             }
         } else if (PayFragment.isFromPayFragment) {
+            if(preferences!=null){
+                binding.etRecievername.setText(preferences.getString("name", binding.etRecievername.getText().toString()));
+                binding.etEmailaddress.setText(preferences.getString("email", binding.etEmailaddress.getText().toString()));
+                binding.etMobile.setText(preferences.getString("mobile", binding.etMobile.getText().toString()));
+                binding.etBuildingName.setText(preferences.getString("buildingName", binding.etBuildingName.getText().toString()));
+                binding.etVillaBuildingNumber.setText(preferences.getString("buildNumber", binding.etVillaBuildingNumber.getText().toString()));
+                binding.etLandmark.setText(preferences.getString("landMark", binding.etLandmark.getText().toString()));
+                binding.etStreetAddress.setText(preferences.getString("streetAddress", binding.etStreetAddress.getText().toString()));
+                binding.etAdress.setText(preferences.getString("address", binding.etAdress.getText().toString()));
+                binding.etMakani.setText(preferences.getString("makani", binding.etMakani.getText().toString()));
+                binding.etEmirates.setSelection(Integer.parseInt(preferences.getString("emirate", String.valueOf(binding.etEmirates.getSelectedItemPosition()))));
+
+            }
 
         } else {
             if (Global.isUAE) {
@@ -1023,7 +1036,7 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
     public void onResume() {
         super.onResume();
         Global.hideSoftKeyboard(getActivity());
-        //retrieve(userid);
+        //if(PayFragment.isFromPayFragment)retrieve(userid);
         if(convertEmirateId(ParentSiteplanViewModel.deliveryDetails.getEmirate())!=0)
             binding.etEmirates.setSelection(convertEmirateId(ParentSiteplanViewModel.deliveryDetails.getEmirate()));
         else if(saved_position!=0)
@@ -1035,6 +1048,12 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
             if(binding.etMakani.getText().toString().trim().length()>0)
                 binding.etMakani.setText(binding.etMakani.getText().toString().trim());
         }
+
+
+        if(PayFragment.isFromPayFragment)
+        Global.isDeliveryByCourier = getActivity().getSharedPreferences(userid, MODE_PRIVATE).getBoolean("deliveryByCourier",false);
+
+        binding.deliveryByCourier.setChecked(Global.isDeliveryByCourier);
 
 
         if (!Global.isDeliveryByCourier) {

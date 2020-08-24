@@ -38,6 +38,7 @@ import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.activities.ImageCropActivity;
 import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.navigators.ParentSitePlanNavigator;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
@@ -233,6 +234,9 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
             public void onClick(View view) {
                 if(currentIndex > 0) {
                     currentIndex--;
+                    if(currentIndex==1){
+                        if(PayFragment.isFromPayFragment) ImageCropActivity.isImageCropped =false;
+                    }
                     loadFragment(currentIndex);
                     binding.txtHeader.setText(pagerArray[currentIndex]);
                     if(currentIndex == 0 )

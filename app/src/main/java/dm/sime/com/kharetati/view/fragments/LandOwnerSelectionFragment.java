@@ -32,6 +32,7 @@ import dm.sime.com.kharetati.view.viewModels.LandOwnerViewModel;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 
 import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
+import static dm.sime.com.kharetati.utility.Global.lstAttachedDoc;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_ATTACHMENT;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_LANDOWNER_SELECTION;
 
@@ -219,6 +220,8 @@ public class LandOwnerSelectionFragment extends Fragment {
     public void onResume() {
         super.onResume();
         ParentSiteplanViewModel.getDownloadedDoc().clear();
+        ParentSiteplanViewModel.getNewlyAttachedDoc().clear();
+        AttachmentFragment.lstAttachedDoc.clear();
         ParentSiteplanFragment.currentIndex =0;
         ImageCropActivity.isImageCropped =false;
     }
