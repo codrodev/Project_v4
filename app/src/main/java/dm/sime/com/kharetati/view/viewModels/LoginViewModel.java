@@ -413,20 +413,21 @@ public class LoginViewModel extends ViewModel {
                     compositeDisposable.add(disposable);
 
                 }
-            }else {
+            }else if(accessTokenResponse.getError().equals("service_down")) {
                 if(Global.appMsg!=null){
-                    authListener.onFailure(Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInvalidUserNamePwdEn():Global.appMsg.getInvalidUserNamePwdAr());
+                    authListener.onFailure(Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
                 }
                 else
-                    authListener.onFailure(activity.getResources().getString(R.string.wrong_username_password));
+                    authListener.onFailure(activity.getResources().getString(R.string.error_response));
             }
         } else {
             //showErrorMessage();
             if(Global.appMsg!=null){
-                authListener.onFailure(Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getInvalidUserNamePwdEn():Global.appMsg.getInvalidUserNamePwdAr());
+                if(accessTokenResponse.getError()=="service_down")
+                authListener.onFailure(Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getErrorFetchingDataEn():Global.appMsg.getErrorFetchingDataAr());
             }
             else
-                authListener.onFailure(activity.getResources().getString(R.string.wrong_username_password));
+                authListener.onFailure(activity.getResources().getString(R.string.error_response));
         }
     }
 

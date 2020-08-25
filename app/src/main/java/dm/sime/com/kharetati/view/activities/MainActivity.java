@@ -402,10 +402,14 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                     lastLogin = lastLogin.substring(0, lastLogin.lastIndexOf("|"));
                 }
 
-                if (CURRENT_LOCALE.equals("en"))
+                if (CURRENT_LOCALE.equals("en")){
                     binding.txtLastLogin.setText(" " + sdfEn.format(rdf.parse(lastLogin)));
-                else
+                    //Toast.makeText(MainActivity.this, " " + sdfEn.format(rdf.parse(lastLogin)), Toast.LENGTH_SHORT).show();
+                }
+                else{
                     binding.txtLastLogin.setText(" " + sdfAr.format(rdf.parse(lastLogin)));
+                   // Toast.makeText(MainActivity.this, " " + sdfAr.format(rdf.parse(lastLogin)), Toast.LENGTH_SHORT).show();
+                }
 
             }
 
@@ -418,6 +422,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             guestLastLoginTime = guestLastLoginTime==null?currentDateandTime:guestLastLoginTime;
             guestLastLoginTime = (Global.CURRENT_LOCALE.equals("en")?sdfEn.format(sdf.parse(guestLastLoginTime)):sdfAr.format(sdf.parse(guestLastLoginTime)));
             binding.txtLastLogin.setText(" " + guestLastLoginTime);
+            Toast.makeText(MainActivity.this, " " + guestLastLoginTime, Toast.LENGTH_LONG).show();
 
             sharedpreferences.edit().putString("lastLoginTime", currentDateandTime).apply();
         }

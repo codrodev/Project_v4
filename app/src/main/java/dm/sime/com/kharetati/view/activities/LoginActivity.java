@@ -1419,7 +1419,8 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         if (Global.versionCompare(Global.CurrentAndroidVersion, localversion) > 0 && forceUserToUpdateBuild)
         {
             // Show App update alert here
-            Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
+            if(msg!=null && msg!="")AlertDialogUtil.forceUpdateAlert(msg,getResources().getString(R.string.ok),getResources().getString(R.string.cancel),LoginActivity.this);
+            //Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
 
         }
 

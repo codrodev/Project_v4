@@ -39,7 +39,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <!-- //UAE PASS START Adding Custom Scheme and Host -->n
+            <!-- //UAE PASS START Adding Custom Scheme and Host -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />

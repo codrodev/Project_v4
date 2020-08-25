@@ -82,9 +82,9 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
         if(lstBookmark.get(position).date!=null){
         Locale locale;
         SimpleDateFormat format;
-        format= new SimpleDateFormat("dd/MM/yyyy, hh:mm aa",new Locale("en"));
+        format= Global.CURRENT_LOCALE.equals("en")? new SimpleDateFormat("dd/MM/yyyy, hh:mm aa",new Locale("en")):new SimpleDateFormat("hh:mm aa yyyy/MM/dd ", new Locale("ar"));
         ((TextView)holder.binding.getRoot().findViewById(R.id.dateBookmark)).setText(format.format(lstBookmark.get(position).date));
-        ((TextView)holder.binding.getRoot().findViewById(R.id.plotNo)).setText(lstBookmark.get(position).ParcelNumber);
+        ((TextView)holder.binding.getRoot().findViewById(R.id.plotNo)).setText(lstBookmark.get(position).ParcelNumber.trim());
         ((TextView)holder.binding.getRoot().findViewById(R.id.community)).setText(Global.CURRENT_LOCALE.equals("en")?lstBookmark.get(position).Community:lstBookmark.get(position).CommunityAr);
         }
         if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0){
@@ -117,7 +117,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
 
                 if(lstBookmark.get(position).ParcelNumber != null && !lstBookmark.get(position).ParcelNumber.isEmpty()) {
                     PlotDetails.isOwner = false;
-                    PlotDetails.parcelNo=lstBookmark.get(position).ParcelNumber;
+                    PlotDetails.parcelNo=lstBookmark.get(position).ParcelNumber.trim();
                     Global.isBookmarks =true;
                     Global.isSaveAsBookmark =false;
 
@@ -148,7 +148,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
 
                 if(lstBookmark.get(position).ParcelNumber != null && !lstBookmark.get(position).ParcelNumber.isEmpty()) {
                     PlotDetails.isOwner = false;
-                    PlotDetails.parcelNo=lstBookmark.get(position).ParcelNumber;
+                    PlotDetails.parcelNo=lstBookmark.get(position).ParcelNumber.trim();
                     Global.isBookmarks =true;
                     Global.isSaveAsBookmark =false;
 
@@ -168,7 +168,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
             @Override
             public void onClick(View v) {
                 if(lstBookmark.get(position).ParcelNumber != null && !lstBookmark.get(position).ParcelNumber.isEmpty()) {
-                    Global.bookmarkPlotNo = lstBookmark.get(position).ParcelNumber;
+                    Global.bookmarkPlotNo = lstBookmark.get(position).ParcelNumber.trim();
                     Bookmark data = lstBookmark.get(position);
                     AlertDialogUtil.bookMarksEditAlert(context, data);
                 }
@@ -178,7 +178,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
             @Override
             public void onClick(View v) {
                 if(lstBookmark.get(position).ParcelNumber != null && !lstBookmark.get(position).ParcelNumber.isEmpty()) {
-                    Global.bookmarkPlotNo = lstBookmark.get(position).ParcelNumber;
+                    Global.bookmarkPlotNo = lstBookmark.get(position).ParcelNumber.trim();
                     Bookmark data = lstBookmark.get(position);
                     AlertDialogUtil.bookMarksDeleteAlert("", context.getResources().getString(R.string.confirmation_delete), context.getResources().getString(R.string.ok), context.getResources().getString(R.string.cancel), context, data, position);
                 }
@@ -197,7 +197,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
                 }
                 else {
                     if(lstBookmark.get(position).ParcelNumber != null && !lstBookmark.get(position).ParcelNumber.isEmpty()) {
-                        Global.openMakani(lstBookmark.get(position).ParcelNumber, (Activity) context);
+                        Global.openMakani(lstBookmark.get(position).ParcelNumber.trim(), (Activity) context);
                     }
                 }
 

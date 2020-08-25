@@ -650,34 +650,34 @@
                 <LinearLayout
                     android:id="@+id/layoutEnableUAEPass"
                     android:layout_width="300dp"
-                    android:layout_height="55dp"
+                    android:layout_height="48dp"
                     android:orientation="horizontal"
                     android:visibility="visible"
                     android:background="@drawable/rounded_edittext_boarder_bg"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
-
                     android:layout_gravity="center">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-
+                        android:layout_marginEnd="32dp"
                         android:id="@+id/txtLoginwith"
-
-                        android:gravity="center"
-
-                        android:layout_gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="end|center_vertical"
                         android:fontFamily="@font/dubai_font"
                         android:text="@string/login_with"
+                        android:layout_marginStart="-16dp"
 
-                        android:paddingEnd="2dp"
+
+                        android:paddingEnd="4dp"
                         android:visibility="visible"
                         android:textColor="@color/black"
-                        android:textSize="20sp" />
+                        android:textSize="16sp" />
                     <ImageView
-                        android:layout_width="48dp"
+                        android:layout_width="44dp"
                         android:layout_height="44dp"
                         android:padding="5dp"
+                        android:layout_marginStart="-32dp"
                         android:id="@+id/imgUAEPass"
                         android:scaleType="fitXY"
                         android:layout_gravity="center"
@@ -685,17 +685,16 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-
                         android:id="@+id/txtUAEPass"
-                        android:layout_gravity="center"
-                        android:gravity="center"
+                        android:layout_gravity="start|center_vertical"
+                        android:gravity="start|center_vertical"
                         android:fontFamily="@font/dubai_font"
                         android:text="@string/with_uaepass"
 
 
                         android:visibility="visible"
                         android:textColor="@color/black"
-                        android:textSize="20sp" />
+                        android:textSize="16sp" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -739,7 +738,7 @@
                 </LinearLayout>
                 <TextView
                     android:layout_width="300dp"
-                    android:layout_height="55dp"
+                    android:layout_height="48dp"
                     android:background="@drawable/rounded_edittext_maroon_bg"
                     android:id="@+id/txtGuest"
                     android:layout_gravity="center"
@@ -750,7 +749,7 @@
                     android:text="@string/signin_as_guest"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
                 <dm.sime.com.kharetati.view.customview.SwitchCompatEx
                     android:id="@+id/switchLanguageUae"
                     android:layout_width="150dp"

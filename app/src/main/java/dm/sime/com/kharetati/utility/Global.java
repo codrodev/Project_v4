@@ -575,7 +575,7 @@ public class Global {
                             return true;
                         }
                     } else {
-                        if (editText.getCompoundDrawables()[DRAWABLE_LEFT] != null && event.getRawX() < 300) {
+                        if (editText.getCompoundDrawables()[DRAWABLE_LEFT] != null && event.getRawX() < 500) {
                            // (editText.getLeft() - editText.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())
                             editText.setText("");
                             if(editText.isCursorVisible())

@@ -235,14 +235,14 @@
                         android:fontFamily="@font/dubai_font"
                         android:gravity="center_vertical|center_horizontal"
                         android:hint="-  -  -  -  -  -  -"
-                        android:inputType="number"
+                        android:inputType="phone"
 
                         android:lineHeight="20dp"
                         android:maxLength="12"
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
                         android:textAlignment="center"
-                        android:textDirection="ltr"
+                        android:textDirection="locale"
                         android:textSize="14sp" />
 
                     <LinearLayout

@@ -376,4 +376,5 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
     }
 
 
+
 }

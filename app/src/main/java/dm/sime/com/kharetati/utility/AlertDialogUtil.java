@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -1804,5 +1805,57 @@ public class AlertDialogUtil {
         //textView1.setTypeface(face);
 
         textView.setPadding(80, 25, 25, 10);
+    }
+    public static void forceUpdateAlert(String message, String btnTxt, String btnTxt2, final Context context) {
+        //final String plotnumber = (Global.current_fragment_id == FR_CONTACT_US ? "1190353" : plot);
+
+        AlertDialog alertDialog = new AlertDialog.Builder(context)
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton(btnTxt, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+
+                        PackageInfo pinfo = null;
+                        try {
+                            pinfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+                        } catch (PackageManager.NameNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        String name=pinfo.packageName;
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_VIEW);
+                        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                        intent.setData(Uri.parse( "https://play.google.com/store/apps/details?id=" + name));
+                        context.startActivity(intent);
+
+
+
+                    }
+
+                }).setNegativeButton(btnTxt2, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).show();
+
+        TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+        //TextView textView1 = (TextView) alertDialog.findViewById(android.support.v7.appcompat.R.id.alertTitle);
+
+        TextView positiveButton = (Button) alertDialog.findViewById(android.R.id.button1);
+        TextView negativeButton = (Button) alertDialog.findViewById(android.R.id.button2);
+        Typeface face = Typeface.createFromAsset(context.getAssets(), "Dubai-Regular.ttf");
+        textView.setTypeface(face);
+        positiveButton.setAllCaps(false);
+        negativeButton.setAllCaps(false);
+        positiveButton.setTypeface(face);
+        negativeButton.setTypeface(face);
+        //textView1.setTypeface(face);
+
+        textView.setPadding(80, 25, 25, 10);
+
     }
 }

@@ -571,7 +571,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         spinnerView.setTextSize(14f);
         spinnerView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
-        spinnerView.setText(Global.CURRENT_LOCALE.equals("en")?control.getPlaceHolderEn()+"*":control.getPlaceHolderAr()+"*");
+        spinnerView.setText(Global.CURRENT_LOCALE.equals("en")?(Boolean.valueOf(control.getIsMandatory())?control.getPlaceHolderEn()+"*":control.getPlaceHolderEn()):(Boolean.valueOf(control.getIsMandatory())?control.getPlaceHolderAr()+"*":control.getPlaceHolderAr()));
         spinnerView.setTypeface(typeface);
         spinnerLayout.addView(spinnerView,dynamcLayoutParams);
         spinnerLayout.addView(chevronlayout,chevronParams);
@@ -721,6 +721,9 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                     String s2 = txt.getText().toString().substring(5, txt.getText().toString().length());
 
                     builder.append(s1 + " " + s2);
+                    }
+                    else{
+                        builder.append(txt);
                     }
                 } else {
                     if (Global.selectedTab != 2)

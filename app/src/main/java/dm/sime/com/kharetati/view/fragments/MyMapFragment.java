@@ -411,6 +411,18 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
                     AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getContext());
                 return isValid;
             }
+        }else if (parcelNumber.length()<=5) {
+            if (!dateFrom.getText().toString().trim().equals("") && dateFrom.getText().toString().trim().length() < 1 &&
+                    dateTo.getText().toString().trim().equals("") && dateTo.getText().toString().trim().length() < 1) {
+                isValid = false;
+                if (Global.isConnected(getActivity())) {
+                    AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.valid_plot_number), getResources().getString(R.string.ok), getContext());
+                    parcelID.setFocusableInTouchMode(true);
+                    parcelID.setFocusable(true);
+                } else
+                    AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getContext());
+                return isValid;
+            }
         }
         if(dateFrom.getText().toString().trim() != "" && dateTo.getText().toString().trim() != ""){
             Date date = new Date();
