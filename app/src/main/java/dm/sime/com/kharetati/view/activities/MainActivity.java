@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         fragmentManager = getSupportFragmentManager();
         Global.fontScale =sharedpreferences.getFloat(FONT_SIZE,1f);
         guestLastLoginTime = sharedpreferences.getString("lastLoginTime", currentDateandTime);
-        //adjustFontScale(MainActivity.this.getResources().getConfiguration(),Global.fontScale);
+        adjustFontScale(MainActivity.this.getResources().getConfiguration(),Global.fontScale);
         model.initialize();
         binding.setActivityMainVM(model);
         customBottomBar = (MeowBottomNavigation)findViewById(R.id.customBottomBar);
@@ -648,7 +648,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                     //loadFragment(sharedpreferences.getString("currentFragment",FragmentTAGS.FR_HOME),true, null);
                     loadFragment(model.bottomNavigationTAG(position), true, null);
                 }
-            loadFragment(sharedpreferences.getString("currentFragment",Global.current_fragment_id),true,null);
+                loadFragment(sharedpreferences.getString("currentFragment",Global.current_fragment_id),true,null);
 
 
 

@@ -502,8 +502,9 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
 
                         @SuppressLint("SimpleDateFormat")
                         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                        SimpleDateFormat sdfAr = new SimpleDateFormat("yyyy/MM/dd");
                         calendar.set(year, month, dayOfMonth);
-                        String dateString = sdf.format(calendar.getTime());
+                        String dateString = Global.CURRENT_LOCALE.equals("en")?sdf.format(calendar.getTime()):sdfAr.format(calendar.getTime());
                         dateTo.setText(dateString);
                         dateTo.setFocusable(true);
 
