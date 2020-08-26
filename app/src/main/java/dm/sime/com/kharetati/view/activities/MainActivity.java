@@ -422,7 +422,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             guestLastLoginTime = guestLastLoginTime==null?currentDateandTime:guestLastLoginTime;
             guestLastLoginTime = (Global.CURRENT_LOCALE.equals("en")?sdfEn.format(sdf.parse(guestLastLoginTime)):sdfAr.format(sdf.parse(guestLastLoginTime)));
             binding.txtLastLogin.setText(" " + guestLastLoginTime);
-            Toast.makeText(MainActivity.this, " " + guestLastLoginTime, Toast.LENGTH_LONG).show();
+            //Toast.makeText(MainActivity.this, " " + guestLastLoginTime, Toast.LENGTH_LONG).show();
 
             sharedpreferences.edit().putString("lastLoginTime", currentDateandTime).apply();
         }

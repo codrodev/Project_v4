@@ -110,6 +110,24 @@ public class FeedbackFragment extends Fragment {
                 binding.email.setText(user.getEmail());
                 binding.phone.setText(user.getMobile());
             }
+            if(Global.isUAE){
+                if(Global.CURRENT_LOCALE.compareToIgnoreCase("en")==0) {
+                    if(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN() != null && Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN().length() > 0) {
+                        binding.name.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN());
+                    } else {
+                        binding.name.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameAR());
+                    }
+                } else {
+                    if(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameAR() != null && Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameAR().length() > 0) {
+                        binding.name.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameAR());
+                    } else {
+                        binding.name.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN());
+                    }
+                }
+                binding.email.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getEmail());
+                binding.phone.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getMobile());
+            }
+
         }
 
         binding.desc.setOnTouchListener(new View.OnTouchListener() {

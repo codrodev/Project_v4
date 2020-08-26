@@ -383,13 +383,27 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
                 (dateTo.getText().toString().trim() == "" || dateTo.getText().toString().trim().length() < 1)) {
             isValid = false;
             if(Global.isConnected(getActivity())) {
-                AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.valid_plot_number), getResources().getString(R.string.ok), getContext());
+
+                AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.enter_plot_or_date), getResources().getString(R.string.ok), getContext());
                 parcelID.setFocusableInTouchMode(true);
                 parcelID.setFocusable(true);
             } else
                 AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getContext());
             return isValid;
-        } else if (!dateFrom.getText().toString().trim().equals("") && dateFrom.getText().toString().trim().length() > 0 &&
+        }
+        else if (parcelNumber.length()<=5) {
+            if (dateFrom.getText().toString().trim().equals("") && dateFrom.getText().toString().trim().length() < 1 &&
+                    dateTo.getText().toString().trim().equals("") && dateTo.getText().toString().trim().length() < 1) {
+                isValid = false;
+                if (Global.isConnected(getActivity())) {
+                    AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.valid_plot_number), getResources().getString(R.string.ok), getContext());
+                    parcelID.setFocusableInTouchMode(true);
+                    parcelID.setFocusable(true);
+                } else
+                    AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getContext());
+                return isValid;
+            }
+        }else if (!dateFrom.getText().toString().trim().equals("") && dateFrom.getText().toString().trim().length() > 0 &&
                 dateTo.getText().toString().trim().equals("") && dateTo.getText().toString().trim().length() < 1){
             isValid = false;
             AlertDialogUtil.errorAlertDialog("", getResources().getString(R.string.valid_date), getResources().getString(R.string.ok), getActivity());
@@ -411,20 +425,8 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
                     AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getContext());
                 return isValid;
             }
-        }else if (parcelNumber.length()<=5) {
-            if (!dateFrom.getText().toString().trim().equals("") && dateFrom.getText().toString().trim().length() < 1 &&
-                    dateTo.getText().toString().trim().equals("") && dateTo.getText().toString().trim().length() < 1) {
-                isValid = false;
-                if (Global.isConnected(getActivity())) {
-                    AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.valid_plot_number), getResources().getString(R.string.ok), getContext());
-                    parcelID.setFocusableInTouchMode(true);
-                    parcelID.setFocusable(true);
-                } else
-                    AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getContext());
-                return isValid;
-            }
         }
-        if(dateFrom.getText().toString().trim() != "" && dateTo.getText().toString().trim() != ""){
+        if(!dateFrom.getText().toString().trim().isEmpty()&& !dateTo.getText().toString().trim().isEmpty()){
             Date date = new Date();
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
             SimpleDateFormat formatAr = new SimpleDateFormat("yyyy/MM/dd");
@@ -448,6 +450,11 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+        }
+        else{
+            isValid = false;
+            AlertDialogUtil.errorAlertDialog("", getResources().getString(R.string.older_to_date), getResources().getString(R.string.ok), getActivity());
+            return isValid;
         }
         return isValid;
     }
