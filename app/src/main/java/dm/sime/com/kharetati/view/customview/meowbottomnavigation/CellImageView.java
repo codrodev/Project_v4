@@ -34,7 +34,7 @@ public final class CellImageView extends AppCompatImageView {
         super(context);
         this.useColor = true;
         Context var10001 = this.getContext();
-        this.size = Utils.dip(var10001, 48);
+        this.size = Utils.dip(var10001, 47);
         this.changeSize = true;
         this.initializeView();
     }
@@ -43,7 +43,7 @@ public final class CellImageView extends AppCompatImageView {
         super(context, attrs);
         this.useColor = true;
         Context var10001 = this.getContext();
-        this.size = Utils.dip(var10001, 48);
+        this.size = Utils.dip(var10001, 47);
         this.changeSize = true;
         this.setAttributeFromXml(context, attrs);
         this.initializeView();
@@ -53,7 +53,7 @@ public final class CellImageView extends AppCompatImageView {
         super(context, attrs, defStyleAttr);
         this.useColor = true;
         Context var10001 = this.getContext();
-        this.size = Utils.dip(var10001, 48);
+        this.size = Utils.dip(var10001, 47);
         this.changeSize = true;
         this.setAttributeFromXml(context, attrs);
         this.initializeView();
