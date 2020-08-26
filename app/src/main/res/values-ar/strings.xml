@@ -250,7 +250,7 @@
     <string name="no_record">لا توجد سجلات</string>
     <string name="valid_from_date">الرجاء إدخال صالح من تاريخ</string>
     <string name="valid_to_date">الرجاء إدخال التاريخ الصحيح</string>
-    <string name="older_to_date">حتى الآن لا يمكن ان يكون أقدم من من تاريخ</string>
+    <string name="older_to_date">لا يمكن أن يكون تاريخ الانتهاء أقدم من تاريخ البداية</string>
     <string name="future_to_date">حتى الآن لا يمكن ان يكون تاريخا في المستقبل</string>
     <string name="valid_date">يرجى تحديد تواريخ صالحة</string>
     <string name="enter_plot_or_date">الرجاء إدخال رقم قطعة الارض أو إختر نطاق تاريخ الصلاحية</string>

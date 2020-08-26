@@ -53,6 +53,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import dm.sime.com.kharetati.KharetatiApp;
@@ -98,6 +99,7 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
     private IBinder iBinder;
     public static MyMapViewModel myMapModel;
     private boolean isDesending;
+    private SimpleDateFormat format,formatAr;
 
     public static MyMapFragment newInstance(){
         MyMapFragment fragment = new MyMapFragment();
@@ -231,7 +233,11 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
 
 
                                 Global.hideSoftKeyboard(getActivity(),iBinder);
-                                getAllSitePlans();
+                                try {
+                                    getAllSitePlans();
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
                             }}
                     }
                 });
@@ -403,59 +409,45 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
                     AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getContext());
                 return isValid;
             }
-        }else if (!dateFrom.getText().toString().trim().equals("") && dateFrom.getText().toString().trim().length() > 0 &&
-                dateTo.getText().toString().trim().equals("") && dateTo.getText().toString().trim().length() < 1){
-            isValid = false;
-            AlertDialogUtil.errorAlertDialog("", getResources().getString(R.string.valid_date), getResources().getString(R.string.ok), getActivity());
-            return isValid;
-        } else if (dateFrom.getText().toString().trim().equals("") && dateFrom.getText().toString().trim().length() < 1 &&
-                !dateTo.getText().toString().trim().equals("") && dateTo.getText().toString().trim().length() > 0){
-            isValid = false;
-            AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.valid_date), getResources().getString(R.string.ok), getActivity());
-            return isValid;
-        } else if (parcelNumber.matches("")) {
-            if (!dateFrom.getText().toString().trim().equals("") && dateFrom.getText().toString().trim().length() < 1 &&
-                    dateTo.getText().toString().trim().equals("") && dateTo.getText().toString().trim().length() < 1) {
+            else if(!dateFrom.getText().toString().trim().isEmpty() && !dateTo.getText().toString().trim().isEmpty()){
+                Date date = new Date();
+                format = new SimpleDateFormat("dd/MM/yyyy", new Locale("en"));
+                formatAr = new SimpleDateFormat("yyyy/MM/dd", new Locale("ar"));
+                try {
+                    Date fromDate = (CURRENT_LOCALE.equals("en"))?format.parse(dateFrom.getText().toString().trim()):formatAr.parse(dateFrom.getText().toString().trim());
+                    Date toDate = (CURRENT_LOCALE.equals("en"))?format.parse(dateTo.getText().toString().trim()):formatAr.parse(dateTo.getText().toString().trim());
+                    int val=0;
+                    if(!dateFrom.getText().toString().trim().isEmpty() && !dateTo.getText().toString().trim().isEmpty())
+                        val = toDate.compareTo(fromDate);
+                    if(val >= 0){
+                        isValid = true;
+                    } else {
+                        isValid = false;
+                        AlertDialogUtil.errorAlertDialog("", getResources().getString(R.string.older_to_date), getResources().getString(R.string.ok), getActivity());
+                        return isValid;
+                    }
+
+                    if(new Date().before(toDate)){
+                        isValid = false;
+                        AlertDialogUtil.errorAlertDialog("", getResources().getString(R.string.future_to_date), getResources().getString(R.string.ok), getActivity());
+                        return isValid;
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+            else if(dateFrom.getText().toString().trim().isEmpty() || dateTo.getText().toString().trim().isEmpty()){
                 isValid = false;
-                if (Global.isConnected(getActivity())) {
-                    AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.PLEASE_ENTER_PLOTNUMBER), getResources().getString(R.string.ok), getContext());
-                    parcelID.setFocusableInTouchMode(true);
-                    parcelID.setFocusable(true);
-                } else
-                    AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getContext());
+                AlertDialogUtil.errorAlertDialog("", getResources().getString(R.string.enter_plot_or_date), getResources().getString(R.string.ok), getActivity());
                 return isValid;
             }
-        }
-        if(!dateFrom.getText().toString().trim().isEmpty()&& !dateTo.getText().toString().trim().isEmpty()){
-            Date date = new Date();
-            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-            SimpleDateFormat formatAr = new SimpleDateFormat("yyyy/MM/dd");
-            try {
-                Date fromDate = (CURRENT_LOCALE.equals("en"))?format.parse(dateFrom.getText().toString().trim()):formatAr.parse(dateFrom.getText().toString().trim());
-                Date toDate = (CURRENT_LOCALE.equals("en"))?format.parse(dateTo.getText().toString().trim()):formatAr.parse(dateTo.getText().toString().trim());
-                int val = toDate.compareTo(fromDate);
-                if(val >= 0){
-                    isValid = true;
-                } else {
-                    isValid = false;
-                    AlertDialogUtil.errorAlertDialog("", getResources().getString(R.string.older_to_date), getResources().getString(R.string.ok), getActivity());
-                    return isValid;
-                }
 
-                if(new Date().before(toDate)){
-                    isValid = false;
-                    AlertDialogUtil.errorAlertDialog("", getResources().getString(R.string.future_to_date), getResources().getString(R.string.ok), getActivity());
-                    return isValid;
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
         }
-        else{
+        /*else {
             isValid = false;
-            AlertDialogUtil.errorAlertDialog("", getResources().getString(R.string.older_to_date), getResources().getString(R.string.ok), getActivity());
+            AlertDialogUtil.errorAlertDialog("", getResources().getString(R.string.enter_plot_or_date), getResources().getString(R.string.ok), getActivity());
             return isValid;
-        }
+        }*/
         return isValid;
     }
 
@@ -472,8 +464,8 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
                                           final int dayOfMonth) {
 
                         @SuppressLint("SimpleDateFormat")
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                        SimpleDateFormat sdfAr = new SimpleDateFormat("yyyy/MM/dd");
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy",new Locale("en"));
+                        SimpleDateFormat sdfAr = new SimpleDateFormat("yyyy/MM/dd",new Locale("ar"));
                         calendar.set(year, month, dayOfMonth);
                         startDate=calendar.getTime();
                         String dateString = Global.CURRENT_LOCALE.equals("en")?sdf.format(calendar.getTime()):sdfAr.format(calendar.getTime());
@@ -508,8 +500,8 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
                                           final int dayOfMonth) {
 
                         @SuppressLint("SimpleDateFormat")
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                        SimpleDateFormat sdfAr = new SimpleDateFormat("yyyy/MM/dd");
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy",new Locale("en"));
+                        SimpleDateFormat sdfAr = new SimpleDateFormat("yyyy/MM/dd",new Locale("ar"));
                         calendar.set(year, month, dayOfMonth);
                         String dateString = Global.CURRENT_LOCALE.equals("en")?sdf.format(calendar.getTime()):sdfAr.format(calendar.getTime());
                         dateTo.setText(dateString);
@@ -528,7 +520,7 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
         });
     }
 
-    private void getAllSitePlans(){
+    private void getAllSitePlans() throws ParseException {
 
         if(!Global.isConnected(getActivity())){
             return;
@@ -537,12 +529,12 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
         String fromDate, toDate;
 
         if(Global.isProbablyArabic(dateFrom.getText().toString())){
-            fromDate = Global.arabicNumberToDecimal(dateFrom.getText().toString());
+            fromDate = format.format(formatAr.parse(Global.arabicNumberToDecimal(dateFrom.getText().toString())));
         } else {
             fromDate = dateFrom.getText().toString();
         }
         if(Global.isProbablyArabic(dateTo.getText().toString())){
-            toDate = Global.arabicNumberToDecimal(dateTo.getText().toString());
+            toDate = format.format(formatAr.parse(Global.arabicNumberToDecimal(dateTo.getText().toString())));
         } else {
             toDate = dateTo.getText().toString();
         }

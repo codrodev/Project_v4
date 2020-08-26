@@ -8,13 +8,13 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp">
+        android:layout_marginBottom="48dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <WebView
             android:layout_width="match_parent"
-            android:layout_height="680dp"
+            android:layout_height="430dp"
             android:id="@+id/webHappiness"
             />
     </LinearLayout>
