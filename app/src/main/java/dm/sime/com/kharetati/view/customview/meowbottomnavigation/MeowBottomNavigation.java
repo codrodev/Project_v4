@@ -232,7 +232,7 @@ public final class MeowBottomNavigation extends FrameLayout {
 
         LayoutParams params = new LayoutParams(-1, this.heightCell);
         //params.setMargins();
-        params.gravity = 80;
+        params.gravity = 79;
         this.ll_cells.setLayoutParams(params);
         this.ll_cells.setOrientation(LinearLayout.HORIZONTAL);
         this.ll_cells.setClipChildren(false);
