@@ -294,4 +294,5 @@
     <string name="community">الجماعة: </string>
     <string name="no_result_found">لم يتم العثور على نتائج</string>
     <string name="successful_logout">لقد قمت بتسجيل الخروج بنجاح</string>
+    <string name="fonttext">أ</string>
 </resources>

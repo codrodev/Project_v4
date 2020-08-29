@@ -291,6 +291,7 @@
     <string name="community">Community: </string>
     <string name="no_result_found">No results found</string>
     <string name="successful_logout">You have successfully logged out</string>
+    <string name="fonttext">aA</string>
 
     <string-array name="arrHeader">
         <item>header 1</item>

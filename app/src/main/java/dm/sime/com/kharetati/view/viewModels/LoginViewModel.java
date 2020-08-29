@@ -788,7 +788,7 @@ public class LoginViewModel extends ViewModel {
                 String callbackUrl = Encryptions.decrypt(Global.uaePassConfig.UAEID_callback_url);
                 String language = Global.getCurrentLanguage(activity).compareToIgnoreCase("en") == 0 ? "en" : "ar";
                 String accessTokenUrl = Global.uaePassConfig.getGetAccessTokenUAEID_url().endsWith("?") ? Global.uaePassConfig.getGetAccessTokenUAEID_url() : Global.uaePassConfig.getGetAccessTokenUAEID_url() + "?";
-                String url = accessTokenUrl + "grand_type=authorization_code&redirect_uri=" + callbackUrl + "&code=" + code /*+ "ui_locales=" + language*/;
+                String url = accessTokenUrl + "grant_type=authorization_code&redirect_uri=" + callbackUrl + "&code=" + code /*+ "ui_locales=" + language*/;
                 Global.uae_code = "";
                 Global.isUAEaccessWeburl = false;
 
@@ -908,7 +908,7 @@ public class LoginViewModel extends ViewModel {
         Global.clientID = "";
         Global.state = "";
         Log.v(TAG, "UAE Pass App: getUAESessionToken(): calling");
-        authListener.onStarted();
+        //authListener.onStarted();
         kharetatiApp = KharetatiApp.create(activity);
 
         String url = AppUrls.BASE_AUXULARY_URL_UAE_SESSION + "getsessionuaepass/" + code + "/" + Global.getPlatformRemark();
@@ -928,6 +928,7 @@ public class LoginViewModel extends ViewModel {
                         public void accept(SessionUaePassResponse uaeSessionResponse) throws Exception {
                             Log.v(TAG, "UAE Pass App: getUAESessionToken(): success");
                             Global.uaeSessionResponse = uaeSessionResponse;
+                            if(uaeSessionResponse.getService_response().getUAEPASSDetails()!=null)
                             Log.v(TAG, "UAE Pass App: getUAESessionToken(): sessionToken:" + uaeSessionResponse.getService_response().getUAEPASSDetails().getUuid());
 
                             if(!Boolean.valueOf(uaeSessionResponse.getIs_exception())){
@@ -937,7 +938,7 @@ public class LoginViewModel extends ViewModel {
                             else{
                                 AlertDialogUtil.showProgressBar(activity,false);
                                 Global.accessToken=null;
-                                Global.sessionErrorMsg = Global.getCurrentLanguage(activity).equals("en")?uaeSessionResponse.getMessage():uaeSessionResponse.getMessage_ar();
+                                Global.sessionErrorMsg = Global.CURRENT_LOCALE.equals("en")?uaeSessionResponse.getMessage():uaeSessionResponse.getMessage_ar();
                                 AlertDialogUtil.errorAlertDialog("",Global.sessionErrorMsg,activity.getString(R.string.ok),activity);}
                         }
 

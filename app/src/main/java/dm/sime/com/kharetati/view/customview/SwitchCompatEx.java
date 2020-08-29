@@ -29,11 +29,11 @@ public class SwitchCompatEx extends SwitchCompat {
     public int TRACK_STROKE_WIDTH = dp2Px(2f);
     public int TRACK_STROKE_COLOR = 0xFFa31533;
     public int TRACK_LABEL_COLOR = 0xFFFFFFFF;
-    public int TRACK_LABEL_SIZE = sp2Px(12f);
+    public int TRACK_LABEL_SIZE = sp2Px(Global.width<=480?14f:(Global.width<=640?11f:(Global.width<=720?11f:12f)));
 
     public int THUMB_COLOR = 0xFFEBEBEB;
     public int THUMB_LABEL_COLOR = 0xFFa31533;
-    public int THUMB_LABEL_SIZE = sp2Px(12f);
+    public int THUMB_LABEL_SIZE = sp2Px(Global.width<=480?14f:(Global.width<=640?11f:(Global.width<=720?11f:12f)));
 
 
     public ThumbDrawable thumbDrawable;

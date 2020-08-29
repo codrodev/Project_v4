@@ -1082,7 +1082,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                                 binding.layoutUAEPass.setLayoutParams(layoutUaepassarams);
                                 LinearLayout.LayoutParams cardViewParams;
                                 if(Global.uaePassConfig.disableMyId)
-                                    cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)-(Global.height/8)));
+                                    cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)-(Global.height/5)));
                                 else
                                     cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)+(Global.height/5)));
 //
@@ -1105,24 +1105,27 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                             else{
                                 LinearLayout.LayoutParams cardViewParams;
                                 if(Global.uaePassConfig.disableMyId){
-                                    cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)-(Global.height/8)));
+                                    cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)));
                                 }
                                 else
                                     cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)+(Global.height/6)));
 //
                                 cardViewParams.gravity = Gravity.CENTER_HORIZONTAL;
-                                cardViewParams.setMargins(48, (int) ((-Global.height/4)+500),48,20);
+                                //cardViewParams.setMargins(48, (int) ((-Global.height/4)+500),48,20);
+                                cardViewParams.setMargins(24, Global.height>=2560?(int) ((-Global.height/4)+600):(Global.height<=1280?(Global.width<=480?(int)(-Global.height/4)+250:(Global.width<=640?(int)(-Global.height/4)+300:(int) ((-Global.height/4)+350))):(Global.width<=1080?(int) ((-Global.height/4)+451):(int) ((-Global.height/4)+500))),24,20);
                                 binding.cardLogin.setLayoutParams(cardViewParams);
                                 binding.txtGuest.setVisibility(View.VISIBLE);
                                 binding.txtLoginwith.setPaddingRelative(80,0,0,0);
                                 /*binding.layoutEnableUAEPass.setVisibility(View.VISIBLE);
                                 binding.layoutUAEPass.setVisibility(View.GONE);
                                 binding.layoutUae.setVisibility(View.VISIBLE);*/
-                                LinearLayout.LayoutParams guestLoginParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, elementHeight-16);
-                                guestLoginParams.gravity = Gravity.CENTER_VERTICAL;
-                                guestLoginParams.setMargins(leftMargin+80, topMargin+92, rightMargin+80, bottomMargin - 5);
+                                LinearLayout.LayoutParams guestLoginParams = new LinearLayout.LayoutParams(SwitchCompatEx.dp2Px(Global.width<=480?260f:(Global.width<=640?220f:(Global.width<=720?204f:(Global.width<=1080?204f:220f)))), SwitchCompatEx.dp2Px(Global.width<=480?44f:(Global.width<=640?30f:((Global.width<=720||Global.width<=1080)?35f:30f))));
+                                guestLoginParams.gravity = Gravity.CENTER;
+                                guestLoginParams.setMargins(SwitchCompatEx.dp2Px(Global.width<=480?60f:70f), topMargin+24, SwitchCompatEx.dp2Px(Global.width<=480?60f:70f), bottomMargin);
+
                                 binding.txtGuest.setLayoutParams(guestLoginParams);
-                                binding.txtGuest.setGravity(Gravity.CENTER_VERTICAL);
+                                binding.txtGuest.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                                binding.txtGuest.setGravity(Gravity.CENTER);
                                 /*binding.txtGuest.setTextSize(20f);
                                 binding.txtUAEPass.setTextSize(20f);*/
                                 //binding.layoutUAEPass.setVisibility(View.GONE);

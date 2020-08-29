@@ -136,7 +136,6 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         pagerArray =  getActivity().getResources().getStringArray(R.array.request_site_plan);
         binding.imgHelp.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
         binding.imgBack.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
-        if(isFromMap)
         loadFragment(0);
         binding.txtHeader.setText(pagerArray[currentIndex]);
         MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(), pagerArray[currentIndex], null /* class override */);

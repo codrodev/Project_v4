@@ -78,10 +78,10 @@ public class LandOwnerSelectionFragment extends Fragment {
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
         setRetainInstance(true);
-
+        if(isFromMap){
         Global.passportData =null;
         Global.licenseData =null;
-        Global.nocData =null;
+        Global.nocData =null;}
         isFromMap =false;
         Global.isDeliveryByCourier = false;
         AttachmentFragment.currentSelection= "";
