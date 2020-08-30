@@ -9,6 +9,7 @@
             type="dm.sime.com.kharetati.view.viewModels.MainViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rootLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.activities.MainActivity">
@@ -27,58 +28,53 @@
                     android:id="@+id/layoutProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginHorizontal="18dp"
                     android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="23dp"
+                        android:layout_height="23dp"
+                        android:paddingStart="3dp"
+                        android:id="@+id/backButton"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/back"/>
                     <TextView
                         android:id="@+id/txtWelcome"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/dubai_font"
-                        android:text="@string/title_welcome"
-                        style="@style/font_medium_bold"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"
+                        android:layout_gravity="start|center_vertical"
                         android:layout_marginEnd="10dp"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="10dp" />
-                    <ImageView
-                        android:id="@+id/imgHelp"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_alignParentRight="true"
-                        android:src="@drawable/ic_help"
-                        android:visibility="invisible"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginStart="-60dp"
-                        android:layout_marginEnd="50dp"/>
-
-
+                        android:fontFamily="@font/dubai_font"
+                        android:gravity="start|center_vertical"
+                        android:text="@string/title_welcome"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/white"
+                        android:textFontWeight="1000"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-
                     android:id="@+id/profileUsername"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="13dp"
+                    android:layout_marginStart="18dp"
                     android:gravity="center_vertical">
                     <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="41dp"
+                        android:layout_height="41dp"
                         android:id="@+id/imgRound"
-                        android:layout_marginStart="30dp"
                         android:gravity="center_vertical"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginEnd="10dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/user_profile"/>
+                        android:src="@mipmap/avatar"/>
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical">
-
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -88,76 +84,62 @@
                             android:fontFamily="@font/dubai_font"
                             android:gravity="center_vertical"
                             android:textColor="@color/white"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/dubai_font"
-                            android:text="Bin Saleh Abdullah"
-                            android:textStyle="bold"
-                            style="@style/font_medium_bold"
-                            android:gravity="center_vertical"
-                            android:layout_gravity="center_vertical"
-                            android:textColor="@color/white"
-                            android:visibility="gone"
-                            android:layout_marginHorizontal="10dp"
-                            android:textSize="18sp" />
+                            android:textSize="15sp"
+                            android:singleLine="false"
+                            android:maxLines="2"
+                            android:textStyle="normal" />
                     </LinearLayout>
-
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:id="@+id/layoutlastlogin"
-
-                    android:background="@color/maroon_dark">
-                    <TextView
-                        android:id="@+id/txtLastLogin"
-                        style="@style/font_small_bold"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_gravity="center_vertical"
-
-                        android:layout_marginEnd="10dp"
-                        android:layoutDirection="locale"
-                        android:textAlignment="viewStart"
-                        android:fontFamily="@font/dubai_font"
-                        android:textColor="@color/white" />
-                </LinearLayout>
-
             </LinearLayout>
-
-            <!--<LinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:background="@drawable/maroon_overlay_bg"/>-->
+                android:layout_height="38dp"
+                android:id="@+id/layoutlastlogin"
+                android:orientation="horizontal"
+                android:background="#830823">
+
+                <TextView
+                    android:id="@+id/lstLogin"
+                    style="@style/font_medium_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="18dp"
+                    android:layoutDirection="locale"
+                    android:text="@string/lastlogin"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/white"
+                    android:textFontWeight="1000"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/txtLastLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="11sp"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginEnd="10dp"
+                    android:layoutDirection="locale"
+                    android:textAlignment="viewStart"
+                    android:textFontWeight="1000"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/dubai_font"
+                    android:textColor="@color/white" />
+            </LinearLayout>
             <FrameLayout
                 android:id="@+id/ui_container"
                 android:layout_width="match_parent"
                 android:layoutDirection="locale"
                 android:background="@color/white"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/layoutProfile"
-                android:layout_marginBottom="60dp"/>
-
-
+                android:layout_below="@+id/layoutProfile"/>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/customBottomBar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
         <dm.sime.com.kharetati.view.customview.meowbottomnavigation.MeowBottomNavigation
             android:id="@+id/customBottomBar"
             android:layout_width="match_parent"
-            android:layout_height="72dp"
+            android:layout_height="80dp"
             android:layoutDirection="locale"
-            android:layout_alignParentBottom="true"
+            android:background="@color/transparent"
             app:mbn_circleColor="@color/maroon_light"
             app:mbn_backgroundBottomColor="@color/maroon_light"
             app:mbn_rippleColor="#2f424242"

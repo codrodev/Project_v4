@@ -908,7 +908,7 @@ public class LoginViewModel extends ViewModel {
         Global.clientID = "";
         Global.state = "";
         Log.v(TAG, "UAE Pass App: getUAESessionToken(): calling");
-        //authListener.onStarted();
+        authListener.onStarted();
         kharetatiApp = KharetatiApp.create(activity);
 
         String url = AppUrls.BASE_AUXULARY_URL_UAE_SESSION + "getsessionuaepass/" + code + "/" + Global.getPlatformRemark();

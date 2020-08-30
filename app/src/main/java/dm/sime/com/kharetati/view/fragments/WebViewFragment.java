@@ -202,6 +202,24 @@ public class  WebViewFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        webView.loadUrl("about:blank");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
@@ -273,6 +291,8 @@ public class  WebViewFragment extends Fragment {
         super.onResume();
         manageAppBottomBAtr(true);
         manageAppBar(true);
+        if(launchUrl!=null)
+            webView.loadUrl(launchUrl);
         ((MainActivity)getActivity()).setScreenName(appName!=null?appName:getActivity().getResources().getString(R.string.title_welcome));
         MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(),appName!=null?appName:"WEBVIEW SCREEN" , null /* class override */);
     }

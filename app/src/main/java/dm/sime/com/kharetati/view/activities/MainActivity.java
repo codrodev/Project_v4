@@ -382,7 +382,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         SimpleDateFormat rdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a", new Locale("en"));
 
         SimpleDateFormat sdfEn = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a", new Locale("en"));
-        SimpleDateFormat sdfAr = new SimpleDateFormat("hh:mm:ss a yyyy/MM/dd ", new Locale("ar"));
+        SimpleDateFormat sdfAr = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a ", new Locale("en"));
         //SimpleDateFormat sdfAr = new SimpleDateFormat(" dd/MM/yyyy HH:mm:ss a", new Locale("ar"));
 
         //currentDateandTime = sdf.format(new Date());
@@ -595,6 +595,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         }
         setScreenName(getResources().getString(R.string.title_welcome));
 
+
     }
 
     @Override
@@ -733,7 +734,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             });
         }
         else
-            binding.backButton.setVisibility(View.INVISIBLE);
+            binding.backButton.setVisibility(View.GONE);
         LinearLayout.LayoutParams headerParams = null;
        /* if(fragment_tag.equals(FragmentTAGS.FR_HOME)){
             headerParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

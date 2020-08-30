@@ -678,8 +678,8 @@
 
                 <LinearLayout
                     android:id="@+id/layoutEnableUAEPass"
-                    android:layout_width="204dp"
-                    android:layout_height="35dp"
+                    android:layout_width="300dp"
+                    android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:weightSum="3"
                     android:background="@drawable/rounded_edittext_boarder_bg"
@@ -695,12 +695,12 @@
                         android:layout_height="match_parent"
 
                         android:fontFamily="@font/dubai_font"
-                        android:gravity="center"
+                        android:gravity="end|center_vertical"
                         android:paddingEnd="2dp"
                         android:paddingTop="2dp"
                         android:paddingBottom="2dp"
                         android:layout_marginStart="-25dp"
-                        android:textAlignment="center"
+                        android:textAlignment="viewEnd"
                         android:layout_weight=".90"
 
                         android:text="@string/login_with"
@@ -716,7 +716,7 @@
                         android:maxWidth="32dp"
                         android:padding="6dp"
                         android:scaleType="fitXY"
-                        android:layout_weight="1.25"
+                        android:layout_weight="1.3"
                         android:src="@drawable/uaepass" />
 
                     <TextView
@@ -751,7 +751,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="2dp"
+                        android:layout_height="1dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="4dp"
                         android:layout_marginRight="8dp"
@@ -775,7 +775,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="2dp"
+                        android:layout_height="1dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="4dp"
                         android:layout_marginRight="8dp"

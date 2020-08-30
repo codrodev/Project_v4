@@ -156,8 +156,8 @@
             android:id="@+id/layoutLogo">
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="110dp"
-                android:layout_height="110dp"
+                android:layout_width="100dp"
+                android:layout_height="105dp"
                 android:layout_marginTop="60dp"
                 android:visibility="visible"
                 android:layout_marginStart="128.68dp"
@@ -650,8 +650,8 @@
 
             <LinearLayout
                 android:id="@+id/layoutEnableUAEPass"
-                android:layout_width="204dp"
-                android:layout_height="35dp"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:weightSum="3"
                 android:background="@drawable/rounded_edittext_boarder_bg"
@@ -667,12 +667,12 @@
                     android:layout_height="match_parent"
 
                     android:fontFamily="@font/dubai_font"
-                    android:gravity="center"
+                    android:gravity="end|center_vertical"
                     android:paddingEnd="2dp"
                     android:paddingTop="2dp"
                     android:paddingBottom="2dp"
-                    android:layout_marginStart="-15dp"
-                    android:textAlignment="center"
+                    android:layout_marginStart="-20dp"
+                    android:textAlignment="viewEnd"
                     android:layout_weight=".90"
 
                     android:text="@string/login_with"
@@ -688,7 +688,7 @@
                     android:maxWidth="32dp"
                     android:padding="5dp"
                     android:scaleType="fitXY"
-                    android:layout_weight="1.25"
+                    android:layout_weight="1.27"
                     android:src="@drawable/uaepass" />
 
                 <TextView
@@ -757,8 +757,8 @@
 
             <TextView
                 android:id="@+id/txtGuest"
-                android:layout_width="204dp"
-                android:layout_height="35dp"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="-120dp"
                 android:background="@drawable/rounded_edittext_maroon_bg"
@@ -773,7 +773,7 @@
             <dm.sime.com.kharetati.view.customview.SwitchCompatEx
                 android:id="@+id/switchLanguageUae"
                 android:layout_width="150dp"
-                android:layout_height="24dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="70dp"
                 android:fontFamily="@font/dubai_font"

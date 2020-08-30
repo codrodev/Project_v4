@@ -3,7 +3,7 @@ package dm.sime.com.kharetati.utility.constants;
 import dm.sime.com.kharetati.utility.Global;
 
 public class AppUrls {
-    public static final String MAKANI_URL = "http://www.makani.ae/desktop/?lang=%s&landnumber=%s";
+    public static final String MAKANI_URL = "http://www.makani.ae/geomob/?lang=%s&landnumber=%s";
     public static final String DUBAIID_URL = "https://ids.dubai.gov.ae";
     //public static final String BASE_URL = "http://10.43.3.22/kharetati/";
     //public static final String BASE_URL="https://kharetati.dm.gov.ae/";

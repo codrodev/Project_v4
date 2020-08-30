@@ -122,16 +122,17 @@ public class MapViewModel extends ViewModel {
                         if(appResponse!=null){
                         PlotDetails.communityAr = appResponse.getService_response().get(0).getCommNameAr();
                         PlotDetails.communityEn = appResponse.getService_response().get(0).getCommNameEn();
+                            if(Global.isSaveAsBookmark && Global.isBookmarks){
+                                saveAsBookMark(true);
+                            }
+                            else if(isBookmarks)
+                                mapNavigator.getPlotDetais(appResponse);
+                            else
+                                saveAsBookMark(true);
                         }
 //                        PlotDetails.area = appResponse.getService_response().get(0).getAreaInSqMt();
 
-                        if(Global.isSaveAsBookmark && Global.isBookmarks){
-                            saveAsBookMark(true);
-                        }
-                        else if(isBookmarks)
-                            mapNavigator.getPlotDetais(appResponse);
-                        else
-                            saveAsBookMark(true);
+
 
 
 

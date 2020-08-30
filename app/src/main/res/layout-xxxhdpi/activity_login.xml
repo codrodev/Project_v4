@@ -649,8 +649,8 @@
 
                 <LinearLayout
                     android:id="@+id/layoutEnableUAEPass"
-                    android:layout_width="204dp"
-                    android:layout_height="35dp"
+                    android:layout_width="300dp"
+                    android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:weightSum="3"
                     android:background="@drawable/rounded_edittext_boarder_bg"
@@ -666,17 +666,17 @@
                         android:layout_height="match_parent"
 
                         android:fontFamily="@font/dubai_font"
-                        android:gravity="center"
+                        android:gravity="end|center_vertical"
                         android:paddingEnd="2dp"
                         android:paddingTop="2dp"
                         android:paddingBottom="2dp"
-                        android:layout_marginStart="-15dp"
-                        android:textAlignment="center"
+
+                        android:textAlignment="viewEnd"
                         android:layout_weight=".90"
 
                         android:text="@string/login_with"
                         android:textColor="@color/black"
-                        android:textSize="14sp"
+                        android:textSize="15sp"
                         android:visibility="visible" />
 
                     <ImageView
@@ -687,7 +687,7 @@
                         android:maxWidth="32dp"
                         android:padding="5dp"
                         android:scaleType="fitXY"
-                        android:layout_weight="1.25"
+                        android:layout_weight="1.27"
                         android:src="@drawable/uaepass" />
 
                     <TextView
@@ -705,7 +705,7 @@
 
 
                         android:textColor="@color/black"
-                        android:textSize="14sp"
+                        android:textSize="15sp"
                         android:visibility="visible" />
                 </LinearLayout>
 
@@ -714,7 +714,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_marginEnd="8dp"
                     android:gravity="center"
                     android:orientation="horizontal"
@@ -742,7 +743,7 @@
                         android:gravity="center_horizontal"
                         android:textAlignment="center"
                         android:textColor="@color/maroon_light"
-                        android:textSize="14sp" />
+                        android:textSize="15sp" />
 
                     <View
                         android:layout_width="match_parent"
@@ -756,8 +757,8 @@
 
                 <TextView
                     android:id="@+id/txtGuest"
-                    android:layout_width="204dp"
-                    android:layout_height="35dp"
+                    android:layout_width="300dp"
+                    android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="-120dp"
                     android:background="@drawable/rounded_edittext_maroon_bg"
@@ -771,8 +772,8 @@
 
                 <dm.sime.com.kharetati.view.customview.SwitchCompatEx
                     android:id="@+id/switchLanguageUae"
-                    android:layout_width="150dp"
-                    android:layout_height="24dp"
+                    android:layout_width="125dp"
+                    android:layout_height="25dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="70dp"
                     android:fontFamily="@font/dubai_font"
@@ -780,7 +781,7 @@
                     android:layoutDirection="rtl"
                     android:minHeight="24dp"
                     android:visibility="gone"
-                    app:switchMinWidth="150dp" />
+                    app:switchMinWidth="125dp" />
 
             </LinearLayout>
 

@@ -1119,7 +1119,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                                 /*binding.layoutEnableUAEPass.setVisibility(View.VISIBLE);
                                 binding.layoutUAEPass.setVisibility(View.GONE);
                                 binding.layoutUae.setVisibility(View.VISIBLE);*/
-                                LinearLayout.LayoutParams guestLoginParams = new LinearLayout.LayoutParams(SwitchCompatEx.dp2Px(Global.width<=480?260f:(Global.width<=640?220f:(Global.width<=720?204f:(Global.width<=1080?204f:220f)))), SwitchCompatEx.dp2Px(Global.width<=480?44f:(Global.width<=640?30f:((Global.width<=720||Global.width<=1080)?35f:30f))));
+                                LinearLayout.LayoutParams guestLoginParams = new LinearLayout.LayoutParams(SwitchCompatEx.dp2Px(Global.width<=480?260f:(Global.width<=640?220f:(Global.width<=720?300f:((Global.width<=1080||Global.width<=1440)?300f:220f)))), SwitchCompatEx.dp2Px(Global.width<=480?44f:(Global.width<=640?30f:((Global.width<=720||Global.width<=1080||Global.width<=1440)?40f:30f))));
                                 guestLoginParams.gravity = Gravity.CENTER;
                                 guestLoginParams.setMargins(SwitchCompatEx.dp2Px(Global.width<=480?60f:70f), topMargin+24, SwitchCompatEx.dp2Px(Global.width<=480?60f:70f), bottomMargin);
 
@@ -1173,7 +1173,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                     LinearLayout.LayoutParams cardViewParams;
                     LinearLayout.LayoutParams switchLanguageparams;
                     if(Global.uaePassConfig.disableMyId){
-                        cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)-(Global.height/8)));
+                        cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)+(Global.height/6)));
                         /*switchLanguageparams = new LinearLayout.LayoutParams(350,96);
                         switchLanguageparams.setMargins((int)(Global.width/2)+300,64,32,32);
                         binding.switchLanguage.setGravity(Gravity.CENTER);
@@ -1188,7 +1188,9 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                     }
 //
                     cardViewParams.gravity = Gravity.CENTER_HORIZONTAL;
-                    cardViewParams.setMargins(48, (int) ((-Global.height/4)+150),48,20);
+                    cardViewParams.setMargins(48, (int) ((-Global.height/4)-100),48,20);
+                    //cardViewParams.setMargins(24, Global.height>=2560?(int) ((-Global.height/4)+600):(Global.height<=1280?(Global.width<=480?(int)(-Global.height/4)+250:(Global.width<=640?(int)(-Global.height/4)+300:(int) ((-Global.height/4)+350))):(Global.width<=1080?(int) ((-Global.height/4)+451):(int) ((-Global.height/4)+500))),24,20);
+
                     binding.cardLogin.setLayoutParams(cardViewParams);
                     if(Global.uaePassConfig.disableMyId){
                         binding.switchLanguageUae.setVisibility(View.VISIBLE);
@@ -1472,9 +1474,12 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
             binding.txtGuest.setTextSize(20f);
             binding.txtUAEPass.setTextSize(20f);*/
 
-            LinearLayout.LayoutParams guestLoginParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, elementHeight-16);
+            /*LinearLayout.LayoutParams guestLoginParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, elementHeight-16);
             guestLoginParams.gravity = Gravity.CENTER_VERTICAL;
-            guestLoginParams.setMargins(leftMargin+80, topMargin+80, rightMargin+80, bottomMargin - 5);
+            guestLoginParams.setMargins(leftMargin+80, topMargin+80, rightMargin+80, bottomMargin - 5);*/
+            LinearLayout.LayoutParams guestLoginParams = new LinearLayout.LayoutParams(SwitchCompatEx.dp2Px(Global.width<=480?260f:(Global.width<=640?220f:(Global.width<=720?204f:((Global.width<=1080||Global.width<=1440)?300f:220f)))), SwitchCompatEx.dp2Px(Global.width<=480?44f:(Global.width<=640?30f:((Global.width<=720||Global.width<=1080||Global.width<=1440)?40f:30f))));
+            guestLoginParams.gravity = Gravity.CENTER;
+            guestLoginParams.setMargins(SwitchCompatEx.dp2Px(Global.width<=480?60f:70f), topMargin+24, SwitchCompatEx.dp2Px(Global.width<=480?60f:70f), bottomMargin);
             binding.txtGuest.setLayoutParams(guestLoginParams);
             binding.txtGuest.setGravity(Gravity.CENTER_VERTICAL);
 

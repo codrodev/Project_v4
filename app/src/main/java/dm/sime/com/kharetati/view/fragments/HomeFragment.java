@@ -494,7 +494,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
         if(Global.hashSearchFieldValue != null && Global.hashSearchFieldValue.size() > 0){
             String val = Global.hashSearchFieldValue.get(control.getType()) == null ? "" : Global.hashSearchFieldValue.get(control.getType());
-            x.setText(val);
+           // x.setText(val);
 
         }
 

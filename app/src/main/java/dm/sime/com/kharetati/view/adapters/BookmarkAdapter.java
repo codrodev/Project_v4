@@ -82,22 +82,29 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Generi
         if(lstBookmark.get(position).date!=null){
         Locale locale;
         SimpleDateFormat format;
-        format= Global.CURRENT_LOCALE.equals("en")? new SimpleDateFormat("dd/MM/yyyy, hh:mm aa",new Locale("en")):new SimpleDateFormat("hh:mm aa yyyy/MM/dd ", new Locale("ar"));
+        format= Global.CURRENT_LOCALE.equals("en")? new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aa",new Locale("en")):new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aa ", new Locale("en"));
         ((TextView)holder.binding.getRoot().findViewById(R.id.dateBookmark)).setText(format.format(lstBookmark.get(position).date));
         ((TextView)holder.binding.getRoot().findViewById(R.id.plotNo)).setText(lstBookmark.get(position).ParcelNumber.trim());
         ((TextView)holder.binding.getRoot().findViewById(R.id.community)).setText(Global.CURRENT_LOCALE.equals("en")?lstBookmark.get(position).Community:lstBookmark.get(position).CommunityAr);
         }
         if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0){
-            if(lstBookmark.get(position).descriptionEn != null && lstBookmark.get(position).descriptionEn.length() > 0) {
+            if(lstBookmark.get(position).descriptionEn != null && lstBookmark.get(position).descriptionEn.length() > 0||lstBookmark.get(position).descriptionAr != null && lstBookmark.get(position).descriptionAr.length() > 0) {
                 holder.txtDescription.setVisibility(View.VISIBLE);
-                holder.txtDescription.setText(lstBookmark.get(position).descriptionEn);
+                if(lstBookmark.get(position).descriptionEn!=null && !lstBookmark.get(position).descriptionEn.isEmpty())
+                    holder.txtDescription.setText(lstBookmark.get(position).descriptionEn);
+                else if(lstBookmark.get(position).descriptionAr!=null && !lstBookmark.get(position).descriptionAr.isEmpty())
+                    holder.txtDescription.setText(lstBookmark.get(position).descriptionAr);
+
             } else {
                 holder.txtDescription.setVisibility(View.GONE);
             }
         } else {
-            if(lstBookmark.get(position).descriptionAr != null && lstBookmark.get(position).descriptionAr.length() > 0) {
+            if(lstBookmark.get(position).descriptionAr != null && lstBookmark.get(position).descriptionAr.length() > 0||lstBookmark.get(position).descriptionEn != null && lstBookmark.get(position).descriptionEn.length() > 0) {
                 holder.txtDescription.setVisibility(View.VISIBLE);
-                holder.txtDescription.setText(lstBookmark.get(position).descriptionAr);
+                if(lstBookmark.get(position).descriptionAr!=null && !lstBookmark.get(position).descriptionAr.isEmpty())
+                    holder.txtDescription.setText(lstBookmark.get(position).descriptionAr);
+                else if(lstBookmark.get(position).descriptionEn!=null && !lstBookmark.get(position).descriptionEn.isEmpty())
+                    holder.txtDescription.setText(lstBookmark.get(position).descriptionEn);
             } else {
                 holder.txtDescription.setVisibility(View.GONE);
             }

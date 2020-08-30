@@ -223,9 +223,9 @@
         <item>7</item>
     </string-array>
     <string-array name="request_site_plan">
-        <item>مالك الأرض</item>
-        <item>مرفق إثبات</item>
-        <item>تفاصيل التسليم</item>
+        <item>طلب الخارطة الموقعية</item>
+        <item>تحميل المرفقات</item>
+        <item>تفاصيل الاستلام</item>
         <item>الدفع</item>
     </string-array>
     <string name="enter_favourite_name">يرجى إدخال اسم المفضلة</string>
@@ -291,7 +291,7 @@
     <string name="userguide">دليل المستخدم</string>
     <string name="guest">زائر</string>
     <string name="kharetati_feedback">اقتراحات خريطتي</string>
-    <string name="community">الجماعة: </string>
+    <string name="community">المنطقة: </string>
     <string name="no_result_found">لم يتم العثور على نتائج</string>
     <string name="successful_logout">لقد قمت بتسجيل الخروج بنجاح</string>
     <string name="fonttext">أ</string>

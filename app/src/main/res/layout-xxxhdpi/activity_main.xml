@@ -115,6 +115,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
+                    android:textFontWeight="1000"
+                    android:textStyle="bold"
                     android:layout_gravity="start|center_vertical"
                     android:layout_marginEnd="10dp"
                     android:layoutDirection="locale"

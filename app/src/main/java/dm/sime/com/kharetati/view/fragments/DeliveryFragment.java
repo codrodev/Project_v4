@@ -154,10 +154,11 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
         //ArrayAdapter<String> aa =new ArrayAdapter(getActivity(),R.layout.attachment_drp_view,R.id.txtLandOwner,al);
         ArrayAdapter<String> aa;
         if (Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0) {
-            aa= new ArrayAdapter(getActivity(),R.layout.attachment_drp_view,R.id.txtLandOwner,al);
+            aa= new ArrayAdapter(getActivity(),R.layout.attachment_drp_en,R.id.txtLandOwner,al);
         } else {
-            aa= new ArrayAdapter(getActivity(),R.layout.attachment_drp_view_ar,R.id.txtLandOwner,al);
+            aa= new ArrayAdapter(getActivity(),R.layout.attachment_drp_ar,R.id.txtLandOwner,al);
         }
+        aa.setDropDownViewResource(R.layout.attachment_drp_view);
         if(!Global.isDeliveryByCourier){
             binding.etEmirates.setEnabled(false);
             binding.etEmirates.setClickable(false);

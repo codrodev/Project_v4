@@ -217,8 +217,8 @@
     <string name="payment">Payment</string>
 
     <string-array name="request_site_plan">
-        <item>Land Ownership</item>
-        <item>Upload Documents</item>
+        <item>Request Siteplan</item>
+        <item>Upload Attachment</item>
         <item>Delivery Details</item>
         <item>Payment</item>
     </string-array>

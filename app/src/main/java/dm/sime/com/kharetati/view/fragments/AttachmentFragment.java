@@ -1484,19 +1484,19 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                                                         isPassportExists = isOldDocContainsPassport(PASSPORT);
                                                     }
                                                     if(docResponse.getDoc_details().getDoctype().compareToIgnoreCase("passport") == 0 && isPassportExists == false){
-                                                        binding.imgPassport.setImageDrawable(getResources().getDrawable(R.drawable.pdf_icon));
+                                                        binding.imgPassport.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.pdf_icon));
                                                         binding.passportButtons.setVisibility(View.VISIBLE);
                                                         dr.docKey = PASSPORT;
                                                     } else if(docResponse.getDoc_details().getDoctype().compareToIgnoreCase("passport") == 0 && isPassportExists == true){
-                                                        binding.imgVisaPassport.setImageDrawable(getResources().getDrawable(R.drawable.pdf_icon));
+                                                        binding.imgVisaPassport.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.pdf_icon));
                                                         binding.visaPassportButtons.setVisibility(View.VISIBLE);
                                                         dr.docKey = VISA_PASSPORT;
                                                     } else if(docResponse.getDoc_details().getDoctype().compareToIgnoreCase("license") == 0){
-                                                        binding.imgCompanyLicense.setImageDrawable(getResources().getDrawable(R.drawable.pdf_icon));
+                                                        binding.imgCompanyLicense.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.pdf_icon));
                                                         binding.companyLicenseButtons.setVisibility(View.VISIBLE);
                                                         dr.docKey = COMPANY_LICENCE;
                                                     } else if(docResponse.getDoc_details().getDoctype().compareToIgnoreCase("noc") == 0){
-                                                        binding.imgLetterFromOwner.setImageDrawable(getResources().getDrawable(R.drawable.pdf_icon));
+                                                        binding.imgLetterFromOwner.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.pdf_icon));
                                                         binding.nocButtons.setVisibility(View.VISIBLE);
                                                         dr.docKey = LETTER_FROM_OWNER;
                                                     }
@@ -2472,7 +2472,8 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
                     }
                 }
             }
-        } else if(ParentSiteplanViewModel.getNewlyAttachedDoc() != null && ParentSiteplanViewModel.getNewlyAttachedDoc().size() > 0) {
+        }
+        if(ParentSiteplanViewModel.getNewlyAttachedDoc() != null && ParentSiteplanViewModel.getNewlyAttachedDoc().size() > 0) {
             for (int i = 0; i < ParentSiteplanViewModel.getNewlyAttachedDoc().size(); i++) {
                 if (isDocExistInAttachment(ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocKey()) == false) {
                     if(ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocName() != null &&
