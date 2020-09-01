@@ -332,6 +332,7 @@ public class AlertDialogUtil {
 
                                 Global.current_fragment_id = null;
                                 //Global.loginDetails.showFormPrefilledOnRememberMe=true;
+                                Global.isTimeout = true;
                                 Global.logout(context);
                         /*Gson gson = new GsonBuilder().serializeNulls().create();
                         PreferenceManager.getDefaultSharedPreferences(context).edit().putString(USER_LOGIN_DETAILS, gson.toJson(Global.loginDetails)).apply();

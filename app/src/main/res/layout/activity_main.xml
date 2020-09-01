@@ -36,6 +36,7 @@
                         android:layout_height="23dp"
                         android:paddingStart="3dp"
                         android:id="@+id/backButton"
+                        android:layout_gravity="center_vertical"
                         android:src="@drawable/back"/>
                     <TextView
                         android:id="@+id/txtWelcome"

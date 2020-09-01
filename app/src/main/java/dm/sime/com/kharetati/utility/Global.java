@@ -177,6 +177,7 @@ public class Global {
     public static NotificationResponse notificationResponse;
     public static boolean isFromMap;
     public static ArrayList<DocArr> lstAttachedDoc;
+    public static boolean isTimeout;
     private static Context context;
     public static boolean isLanguageChanged = false;
     public static String noctemplateUrl;

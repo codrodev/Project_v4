@@ -37,6 +37,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.ContextCompat;
@@ -116,6 +117,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -186,7 +188,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         //String locale = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(USER_LANGUAGE, "defaultStringIfNothingFound");
         if(!locale.equals("defaultStringIfNothingFound"))
             CURRENT_LOCALE =locale;
-        if(Global.isLogout)
+        if(Global.isLogout && !Global.isTimeout)
             AlertDialogUtil.successfulLogoutAlert(LoginActivity.this.getResources().getString(R.string.successful_logout),LoginActivity.this.getResources().getString(R.string.ok),LoginActivity.this);
 
 
@@ -194,6 +196,9 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         //getting remembered user credentials if any
 
         if(CURRENT_LOCALE.equals("en"))binding.cardLogin.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.cardLogin.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        if(CURRENT_LOCALE.equals("en"))binding.layoutEnableUAEPass.setImageDrawable(getResources().getDrawable(R.drawable.uaelogin_en));else binding.layoutEnableUAEPass.setImageDrawable(getResources().getDrawable(R.drawable.uaelogin_ar));
+
+
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, Global.getUsernamesFromHistory(this));
         binding.editUserName.setAdapter(adapter);
@@ -1119,7 +1124,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                                 /*binding.layoutEnableUAEPass.setVisibility(View.VISIBLE);
                                 binding.layoutUAEPass.setVisibility(View.GONE);
                                 binding.layoutUae.setVisibility(View.VISIBLE);*/
-                                LinearLayout.LayoutParams guestLoginParams = new LinearLayout.LayoutParams(SwitchCompatEx.dp2Px(Global.width<=480?260f:(Global.width<=640?220f:(Global.width<=720?300f:((Global.width<=1080||Global.width<=1440)?300f:220f)))), SwitchCompatEx.dp2Px(Global.width<=480?44f:(Global.width<=640?30f:((Global.width<=720||Global.width<=1080||Global.width<=1440)?40f:30f))));
+                                LinearLayout.LayoutParams guestLoginParams = new LinearLayout.LayoutParams(SwitchCompatEx.dp2Px(Global.width<=480?260f:(Global.width<=640?220f:(Global.width<=720?300f:((Global.width<=1080||Global.width<=1440)?224f:220f)))), SwitchCompatEx.dp2Px(Global.width<=480?44f:(Global.width<=640?30f:((Global.width<=720||Global.width<=1080||Global.width<=1440)?40f:30f))));
                                 guestLoginParams.gravity = Gravity.CENTER;
                                 guestLoginParams.setMargins(SwitchCompatEx.dp2Px(Global.width<=480?60f:70f), topMargin+24, SwitchCompatEx.dp2Px(Global.width<=480?60f:70f), bottomMargin);
 
@@ -1356,6 +1361,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
     public void finish() {
         Global.isLoginActivity = false;
         Global.isLogout = false;
+        Global.isTimeout =false;
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             super.finishAndRemoveTask();
         }
@@ -1478,7 +1484,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
             /*LinearLayout.LayoutParams guestLoginParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, elementHeight-16);
             guestLoginParams.gravity = Gravity.CENTER_VERTICAL;
             guestLoginParams.setMargins(leftMargin+80, topMargin+80, rightMargin+80, bottomMargin - 5);*/
-            LinearLayout.LayoutParams guestLoginParams = new LinearLayout.LayoutParams(SwitchCompatEx.dp2Px(Global.width<=480?260f:(Global.width<=640?220f:(Global.width<=720?204f:((Global.width<=1080||Global.width<=1440)?300f:220f)))), SwitchCompatEx.dp2Px(Global.width<=480?44f:(Global.width<=640?30f:((Global.width<=720||Global.width<=1080||Global.width<=1440)?40f:30f))));
+            LinearLayout.LayoutParams guestLoginParams = new LinearLayout.LayoutParams(SwitchCompatEx.dp2Px(Global.width<=480?260f:(Global.width<=640?220f:(Global.width<=720?204f:((Global.width<=1080||Global.width<=1440)?224f:220f)))), SwitchCompatEx.dp2Px(Global.width<=480?44f:(Global.width<=640?30f:((Global.width<=720||Global.width<=1080||Global.width<=1440)?40f:30f))));
             guestLoginParams.gravity = Gravity.CENTER;
             guestLoginParams.setMargins(SwitchCompatEx.dp2Px(Global.width<=480?60f:70f), topMargin+24, SwitchCompatEx.dp2Px(Global.width<=480?60f:70f), bottomMargin);
             binding.txtGuest.setLayoutParams(guestLoginParams);
@@ -1498,7 +1504,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
             uaePassImageParams.setMargins(leftMargin,topMargin,rightMargin,bottomMargin);
             binding.imgEnabledUAEPass.setLayoutParams(uaePassImageParams);
             binding.imgEnabledUAEPass.setScaleType(ImageView.ScaleType.FIT_XY);
-            LinearLayout.LayoutParams guestLoginParams = new LinearLayout.LayoutParams(300, 48);
+            LinearLayout.LayoutParams guestLoginParams = new LinearLayout.LayoutParams(SwitchCompatEx.dp2Px(224f), SwitchCompatEx.dp2Px(40f));
             guestLoginParams.gravity = Gravity.CENTER_VERTICAL;
             guestLoginParams.setMargins(leftMargin, topMargin-80, rightMargin, bottomMargin - 5);
             binding.txtGuest.setLayoutParams(guestLoginParams);

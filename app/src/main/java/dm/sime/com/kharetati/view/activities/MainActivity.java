@@ -596,6 +596,19 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             binding.layoutlastlogin.setVisibility(View.GONE);
         }
         setScreenName(getResources().getString(R.string.title_welcome));
+        if (Global.current_fragment_id != null) {
+            if (Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW) || Global.current_fragment_id.equals(FragmentTAGS.FR_FEEDBACK) || Global.current_fragment_id.equals(FragmentTAGS.FR_SETTINGS)) {
+                binding.backButton.setVisibility(View.VISIBLE);
+                binding.txtWelcome.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (binding.backButton.getVisibility() == View.VISIBLE) onBackPressed();
+                    }
+                });
+            }
+            else
+                binding.backButton.setVisibility(View.GONE);
+        }
 
 
     }

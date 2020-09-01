@@ -648,17 +648,17 @@
             android:orientation="vertical"
             android:visibility="gone">
 
-            <LinearLayout
+            <ImageView
                 android:id="@+id/layoutEnableUAEPass"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:weightSum="3"
-                android:background="@drawable/rounded_edittext_boarder_bg"
+                android:src="@drawable/uaelogin_en"
                 android:gravity="center_vertical|center_horizontal"
                 android:orientation="horizontal"
 
-                android:visibility="visible">
+                android:visibility="visible"/>
 
                 <TextView
                     android:id="@+id/txtLoginwith"
@@ -675,10 +675,11 @@
                     android:textAlignment="viewEnd"
                     android:layout_weight=".90"
 
+
                     android:text="@string/login_with"
                     android:textColor="@color/black"
                     android:textSize="15sp"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/imgUAEPass"
@@ -689,6 +690,7 @@
                     android:padding="5dp"
                     android:scaleType="fitXY"
                     android:layout_weight="1.27"
+                    android:visibility="gone"
                     android:src="@drawable/uaepass" />
 
                 <TextView
@@ -707,8 +709,8 @@
 
                     android:textColor="@color/black"
                     android:textSize="15sp"
-                    android:visibility="visible" />
-            </LinearLayout>
+                    android:visibility="gone" />
+
 
             <LinearLayout
                 android:id="@+id/layoutUaeOR"
@@ -768,7 +770,7 @@
                 android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="18dp" />
 
             <dm.sime.com.kharetati.view.customview.SwitchCompatEx
                 android:id="@+id/switchLanguageUae"
