@@ -91,7 +91,7 @@ public class PayFragment extends Fragment implements PayNavigator {
         setRetainInstance(true);
         setEmailAndMobileField();
         isFromPayFragment =true;
-        ParentSiteplanFragment.currentIndex =3;
+        ParentSiteplanFragment.currentIndex =Global.uaePassConfig.hideDeliveryDetails?2:3;
         binding.payNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -192,7 +192,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".25"
+                    android:layout_weight=".27"
                     android:background="@drawable/favourites_search_bg">
 
                     <!--<ImageButton-->
@@ -267,7 +267,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end|center_vertical"
-                    android:layout_weight=".75"
+                    android:layout_weight=".73"
                     android:gravity="end|center_vertical">
 
                     <LinearLayout

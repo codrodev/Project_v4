@@ -3,6 +3,7 @@ package dm.sime.com.kharetati.view.fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -118,6 +119,17 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
         mTracker.setScreenName(FR_PARENT_SITEPLAN);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        if(Global.uaePassConfig.hideDeliveryDetails){
+            binding.stepperFourLayout.setVisibility(View.GONE);
+            binding.view3.setVisibility(View.GONE);
+        }
+        else{
+            binding.stepperFourLayout.setVisibility(View.VISIBLE);
+            binding.view3.setVisibility(View.VISIBLE);
+        }
+        binding.stepper.setWeightSum(Global.uaePassConfig.hideDeliveryDetails?2.75f:4f);
+        binding.stepper.setGravity(Gravity.CENTER);
+
         MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(), FR_PARENT_SITEPLAN, null /* class override */);
         initializePage();
         return binding.getRoot();
@@ -138,6 +150,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         binding.imgBack.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
         if(isFromMap)
         loadFragment(0);
+        if(Global.uaePassConfig.hideDeliveryDetails) pagerArray[2]=pagerArray[3];else pagerArray[2]=pagerArray[2];
         binding.txtHeader.setText(pagerArray[currentIndex]);
         MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(), pagerArray[currentIndex], null /* class override */);
         sharedpreferences = getActivity().getSharedPreferences(POSITION, Context.MODE_PRIVATE);
@@ -198,6 +211,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
                     } else
                         currentIndex++;
                     loadFragment(currentIndex);
+                    if(Global.uaePassConfig.hideDeliveryDetails) pagerArray[2]=pagerArray[3];else pagerArray[2]=pagerArray[2];
                     binding.txtHeader.setText(pagerArray[currentIndex]);
                     if (currentIndex == 0) {
                         binding.btnPrevious.setVisibility(View.INVISIBLE);
@@ -239,6 +253,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
                         if(PayFragment.isFromPayFragment) ImageCropActivity.isImageCropped =false;
                     }
                     loadFragment(currentIndex);
+                    if(Global.uaePassConfig.hideDeliveryDetails) pagerArray[2]=pagerArray[3];else pagerArray[2]=pagerArray[2];
                     binding.txtHeader.setText(pagerArray[currentIndex]);
                     if(currentIndex == 0 )
                         binding.btnPrevious.setVisibility(View.INVISIBLE);
@@ -303,8 +318,6 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         binding.stepperOneText.setText("");
         binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.green_ring_background));
         binding.stepperFourText.setText("4");
-
-
         binding.stepperFourText.setTextColor(getResources().getColor(R.color.white));
         binding.view1.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
         binding.view2.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
@@ -312,14 +325,16 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
     }
 
     private void threeUI() {
+
+        if(!Global.uaePassConfig.hideDeliveryDetails){
         binding.stepperTwoText.setText("");
         binding.stepperOneText.setText("");
 
         binding.txtStepperOne.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
         binding.txtStepperTwo.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
         binding.txtStepperThree.setBackground(getResources().getDrawable(R.drawable.green_ring_background));
-        binding.stepperThreeText.setText("3");
         binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.ring_background));
+        binding.stepperThreeText.setText("3");
         binding.stepperFourText.setText("4");
 
         binding.stepperThreeText.setTextColor(getResources().getColor(R.color.stepper_text_color));
@@ -327,6 +342,29 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         binding.view1.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
         binding.view2.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
         binding.view3.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
+        }
+        else{
+            binding.stepperTwoText.setText("");
+            binding.stepperOneText.setText("");
+
+            binding.txtStepperOne.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
+            binding.txtStepperTwo.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
+            binding.txtStepperThree.setBackground(getResources().getDrawable(R.drawable.green_ring_background));
+            binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.ring_background));
+            binding.stepperThreeText.setText("3");
+            binding.stepperFourText.setText("4");
+            binding.stepperFourText.setVisibility(View.GONE);
+            binding.view3.setVisibility(View.GONE);
+            binding.txtStepperFour.setVisibility(View.GONE);
+
+            binding.stepperThreeText.setTextColor(getResources().getColor(R.color.stepper_text_color));
+            binding.stepperFourText.setTextColor(getResources().getColor(R.color.stepper_text_color));
+            binding.view1.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
+            binding.view2.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
+            binding.view3.setBackgroundColor(getResources().getColor(R.color.stepper_completed_color));
+            binding.btnNext.setVisibility(View.INVISIBLE);
+
+        }
     }
 
     private void twoUI() {
@@ -378,7 +416,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
                 fragment = AttachmentFragment.newInstance();
                 break;
             case 2:
-                fragment = DeliveryFragment.newInstance();
+                fragment = Global.uaePassConfig.hideDeliveryDetails?PayFragment.newInstance():DeliveryFragment.newInstance();
                 break;
             case 3:
                     fragment = PayFragment.newInstance();
@@ -490,6 +528,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         Global.isValidMakani = true;
         currentIndex++;
         loadFragment(currentIndex);
+        if(Global.uaePassConfig.hideDeliveryDetails) pagerArray[2]=pagerArray[3];else pagerArray[2]=pagerArray[2];
         binding.txtHeader.setText(pagerArray[currentIndex]);
         binding.txtStepperOne.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
         binding.txtStepperTwo.setBackground(getResources().getDrawable(R.drawable.stepper_background_completed));
@@ -497,6 +536,9 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         binding.stepperThreeText.setText("");
         binding.stepperTwoText.setText("");
         binding.stepperOneText.setText("");
+        binding.stepperFourText.setVisibility(View.VISIBLE);
+        binding.view3.setVisibility(View.VISIBLE);
+        binding.txtStepperFour.setVisibility(View.VISIBLE);
         binding.txtStepperFour.setBackground(getResources().getDrawable(R.drawable.green_ring_background));
         binding.stepperFourText.setText("4");
 

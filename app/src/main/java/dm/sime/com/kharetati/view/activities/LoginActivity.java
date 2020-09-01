@@ -1440,13 +1440,14 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
     public void onConfig(boolean status) {
         progressBar.setVisibility(View.GONE);
         AlertDialogUtil.showProgressBar(this,false);
+
         onMyIDDisabled(status);
         //binding.layoutUAEPass.setVisibility(View.GONE);
         displayContent();
     }
     public void onMyIDDisabled(boolean status){
         sharedpreferences.edit().putBoolean("isDisableMyId",status).apply();
-        //status= true; //comment after testing
+        //status= false; //comment after testing
         if(status){
             binding.loginContainer.setVisibility(View.GONE);
             binding.imageDubaiID.setVisibility(View.GONE);

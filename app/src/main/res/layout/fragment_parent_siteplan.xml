@@ -108,6 +108,7 @@
                 android:id="@+id/stepper"
                 android:gravity="center"
                 android:layout_gravity="center"
+
                 android:weightSum="4">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -137,7 +138,7 @@
                     </LinearLayout>
                     <View
                         android:layout_toRightOf="@+id/txtStepperOne"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:id="@+id/view1"
                         android:background="@color/light_blue"
@@ -170,7 +171,7 @@
 
                     <View
                         android:id="@+id/view2"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
@@ -203,7 +204,7 @@
                     </LinearLayout>
                     <View
                         android:layout_toRightOf="@+id/txtStepperThree"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:id="@+id/view3"
                         android:layout_gravity="center_vertical"
@@ -214,6 +215,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_weight="1.18"
+                    android:id="@+id/stepperFourLayout"
                     android:orientation="horizontal"
                     >
                     <LinearLayout

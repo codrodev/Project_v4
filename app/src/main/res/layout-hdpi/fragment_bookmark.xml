@@ -22,16 +22,16 @@
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:orientation="vertical">
-            <LinearLayout
+            <!--<LinearLayout
                 android:id="@+id/fragment_map_layoutSearch"
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
-                android:layout_height="55dp"
+                android:layout_height="72dp"
                 android:orientation="horizontal"
                 android:layout_marginHorizontal="8dp">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="32dp"
+                    android:layout_height="34dp"
                     android:layout_gravity="center"
                     android:weightSum="5"
                     android:background="@drawable/favourites_search_bg">
@@ -42,7 +42,6 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="3dp"
                         android:layout_weight="0.82"
-
                         android:focusableInTouchMode="false"
                         android:fontFamily="@font/dubai_font"
                         android:gravity="start|center_vertical"
@@ -52,7 +51,7 @@
                         android:text="@string/findPlot"
                         android:textAlignment="viewStart"
                         android:textColor="#333333"
-                        android:textSize="13sp" />
+                        android:textSize="16sp" />
 
                     <AutoCompleteTextView
                         android:id="@+id/fragment_bookmarks_plotnumber"
@@ -76,7 +75,7 @@
                         android:paddingEnd="5dp"
                         android:textAlignment="viewStart"
                         android:textDirection="ltr"
-                        android:textSize="11sp" />
+                        android:textSize="16sp" />
 
                     <LinearLayout
                         android:id="@+id/fragment_bookmarks_btnSearch"
@@ -86,9 +85,11 @@
                         android:layout_weight="1.08"
                         android:gravity="center"
                         android:layout_marginEnd="5dp">
+
                         <ImageView
-                            android:layout_width="19dp"
-                            android:layout_height="19dp"
+
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:layout_marginEnd="5dp"
                             android:padding="2dp"
                             android:src="@drawable/search_512" />
@@ -110,24 +111,20 @@
                         android:layout_weight="1.12">
 
                         <ImageView
-                            android:layout_width="19dp"
-                            android:layout_height="19dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:padding="2dp"
                             android:src="@drawable/map_menu_512" />
 
 
-                        <!--android:imeOptions="actionDone"
-                        android:inputType="text"-->
-                        <!-- android:digits="0123456789١٢٣٤٥٦٧٨٩١٠"-->
+                        &lt;!&ndash;android:imeOptions="actionDone"
+                        android:inputType="text"&ndash;&gt;
+                        &lt;!&ndash; android:digits="0123456789١٢٣٤٥٦٧٨٩١٠"&ndash;&gt;
                     </LinearLayout>
 
 
                 </LinearLayout>
-
-
-
-
-            </LinearLayout>
+                </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -178,8 +175,148 @@
                         android:src="@drawable/sort_ascending" />
 
                 </LinearLayout>
-            </LinearLayout>
+            </LinearLayout>-->
+            <LinearLayout
+                android:id="@+id/fragment_map_layoutSearch"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:weightSum="1"
 
+                android:orientation="horizontal"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".30"
+                    android:background="@drawable/favourites_search_bg">
+
+                    <!--<ImageButton-->
+                    <!--android:id="@+id/fragment_bookmarks_btnSearch"-->
+                    <!--android:layout_width="32dp"-->
+                    <!--android:layout_height="32dp"-->
+                    <!--android:layout_gravity="center_vertical|center_horizontal"-->
+                    <!--android:background="@color/white"-->
+                    <!--android:scaleType="centerInside"-->
+                    <!--app:srcCompat="@drawable/search_100x100" />-->
+
+                    <TextView
+                        android:id="@+id/textView27"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:focusableInTouchMode="false"
+                        android:fontFamily="@font/dubai_font"
+                        android:gravity="start|center_vertical"
+                        android:layout_gravity="center_vertical"
+                        android:maxLines="2"
+                        android:paddingStart="8dp"
+                        android:singleLine="false"
+                        android:text="@string/findPlot"
+                        android:textAlignment="viewStart"
+                        android:textColor="#333333"
+                        android:textSize="14sp" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/fragment_bookmarks_plotnumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:layout_weight="1"
+                        android:background="#00000000"
+                        android:digits="0123456789"
+                        android:layout_gravity="center_vertical"
+
+                        android:ems="8"
+                        android:fontFamily="@font/dubai_font"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:hint="-  -  -  -  -  -  -"
+                        android:inputType="phone"
+
+                        android:lineHeight="20dp"
+                        android:maxLength="12"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:textAlignment="center"
+                        android:textDirection="locale"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:id="@+id/fragment_bookmarks_btnSearch"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
+                        android:layout_weight=".08">
+
+                        <ImageView
+
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="5dp"
+                            android:padding="5dp"
+                            android:src="@drawable/search_512" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_weight=".70"
+                    android:gravity="end|center_vertical">
+
+                    <LinearLayout
+                        android:id="@+id/sortDescending"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="end|center_vertical"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/rounded_corners_bg"
+
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:padding="10dp"
+                            android:src="@drawable/sort_descending" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/sortAscending"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
+                        android:layout_gravity="end|center_vertical"
+
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/rounded_corners_bg"
+                        android:gravity="center">
+
+                        <ImageView
+
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+
+                            android:padding="10dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/sort_ascending" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
             <TextView
                 android:id="@+id/textHeading"
                 android:layout_width="match_parent"
@@ -191,7 +328,6 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:visibility="gone" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerBookMarks"
                 android:layout_width="match_parent"

@@ -8,6 +8,16 @@ public class UaePassConfig {
     public String UAEID_secret;
     public String UAE_PASS_ENVIRONMENT;
     public boolean disableMyId;
+    public boolean hideDeliveryDetails;
+
+    public boolean isHideDeliveryDetails() {
+        return hideDeliveryDetails;
+    }
+
+    public void setHideDeliveryDetails(boolean hideDeliveryDetails) {
+        this.hideDeliveryDetails = hideDeliveryDetails;
+    }
+
     public String UAE_PASS_SCOPE;
     public String UAE_PASS_ACR_VALUES_WEBVIEW;
     public String UAE_PASS_ACR_VALUES_MOBILE;
