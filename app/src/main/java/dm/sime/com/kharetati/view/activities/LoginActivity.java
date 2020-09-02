@@ -855,7 +855,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                 if(Global.uaePassConfig.disableMyId)
                     cardParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)-(Global.height/8)));
                 else
-                    cardParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)+(Global.height/6)));
+                    cardParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)+(Global.height/4)));
 //                LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 cardParams.setMargins(48,0,48,-32);
                 binding.cardLogin.setLayoutParams(cardParams);

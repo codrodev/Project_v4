@@ -165,7 +165,7 @@ public class PayViewModel extends ViewModel {
 
                     if(status==600){
                         ImageCropActivity.isImageCropped =false;
-                        ParentSiteplanFragment.parentModel.retrieveProfileDocs();
+
                         ArrayList al = new ArrayList<>();
                         al.add(Global.paymentUrl);
 
@@ -184,6 +184,7 @@ public class PayViewModel extends ViewModel {
                         MainActivity.firebaseAnalytics.logEvent("CreateUpdateRequest", bundle);
 
                         //((MainActivity)activity).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+                        ParentSiteplanFragment.parentModel.retrieveProfileDocs();
                         payNavigator.onSuccess();
                     } else if(status==402){
 
@@ -217,9 +218,9 @@ public class PayViewModel extends ViewModel {
                         hm.add(emailId);
                         ArrayList al = new ArrayList<>();
                         al.add(Global.paymentUrl);
-                        ((MainActivity)activity).loadFragment(FragmentTAGS.FR_REQUEST_DETAILS,true,hm);
+                        //((MainActivity)activity).loadFragment(FragmentTAGS.FR_REQUEST_DETAILS,true,hm);
                         payNavigator.onSuccess();
-                       // ParentSiteplanFragment.parentModel.retrieveProfileDocs();
+                        ParentSiteplanFragment.parentModel.retrieveProfileDocs();
                     }
 
                     else if(status==402){

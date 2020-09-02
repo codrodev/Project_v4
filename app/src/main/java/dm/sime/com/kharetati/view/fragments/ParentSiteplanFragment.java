@@ -250,7 +250,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
                 if(currentIndex > 0) {
                     currentIndex--;
                     if(currentIndex==1){
-                        if(PayFragment.isFromPayFragment) ImageCropActivity.isImageCropped =false;
+                        if(PayFragment.isFromPayFragment) ImageCropActivity.isImageCropped = false;
                     }
                     loadFragment(currentIndex);
                     if(Global.uaePassConfig.hideDeliveryDetails) pagerArray[2]=pagerArray[3];else pagerArray[2]=pagerArray[2];
@@ -293,12 +293,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         if(index == 0){
             oneUi();
 
-
-
         } else if(index == 1) {
-
-
-
             twoUI();
 
         } else if(index == 2) {

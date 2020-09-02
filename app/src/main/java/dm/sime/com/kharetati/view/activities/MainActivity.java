@@ -381,7 +381,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a", new Locale("en"));
         SimpleDateFormat rdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a", new Locale("en"));
 
-        SimpleDateFormat sdfEn = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a", new Locale("en"));
+        SimpleDateFormat sdfEn = new SimpleDateFormat(" dd/MM/yyyy hh:mm:ss a", new Locale("en"));
         SimpleDateFormat sdfAr = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a ", new Locale("en"));
 
         binding.txtLastLogin.setTextDirection(View.TEXT_DIRECTION_LTR);
