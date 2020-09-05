@@ -2449,31 +2449,32 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
     }
 
     private void populateLstDoc(){
-        if(ParentSiteplanViewModel.getDownloadedDoc() != null && ParentSiteplanViewModel.getDownloadedDoc().size() > 0) {
-            if(ParentSiteplanViewModel.getNewlyAttachedDoc() != null && ParentSiteplanViewModel.getNewlyAttachedDoc().size() > 0) {
-                for (int i = 0; i < ParentSiteplanViewModel.getNewlyAttachedDoc().size(); i++) {
-                    if (isDocExistInAttachment(ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocKey()) == false) {
-                        if(ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocName() != null &&
-                                ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocName().length() > 0 &&
-                                ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocFormat() != null &&
-                                ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocFormat().length() > 0 &&
-                                ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocKey() != null &&
-                                ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocKey().length() > 0)
-                        {
-                            AttachedDoc doc = new AttachedDoc();
-                            doc.setDoc(ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocDta());
-                            doc.setDoc_id(ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocId());
-                            doc.setDoc_name(ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocName());
-                            doc.setDoc_desc_en("TestNameEn");
-                            doc.setDoc_format(ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocFormat());
-                            doc.setKey(ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocKey());
-                            doc.setDoc_type(getDocType(ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocKey()));
-                            lstAttachedDoc.add(doc);
-                            nextButtonStatus();
-                        }
+        if(ParentSiteplanViewModel.getNewlyAttachedDoc() != null && ParentSiteplanViewModel.getNewlyAttachedDoc().size() > 0) {
+            for (int i = 0; i < ParentSiteplanViewModel.getNewlyAttachedDoc().size(); i++) {
+                if (isDocExistInAttachment(ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocKey()) == false) {
+                    if(ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocName() != null &&
+                            ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocName().length() > 0 &&
+                            ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocFormat() != null &&
+                            ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocFormat().length() > 0 &&
+                            ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocKey() != null &&
+                            ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocKey().length() > 0)
+                    {
+                        AttachedDoc doc = new AttachedDoc();
+                        doc.setDoc(ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocDta());
+                        doc.setDoc_id(ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocId());
+                        doc.setDoc_name(ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocName());
+                        doc.setDoc_desc_en("TestNameEn");
+                        doc.setDoc_format(ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocFormat());
+                        doc.setKey(ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocKey());
+                        doc.setDoc_type(getDocType(ParentSiteplanViewModel.getNewlyAttachedDoc().get(i).getDocKey()));
+                        lstAttachedDoc.add(doc);
+                        nextButtonStatus();
                     }
                 }
             }
+        }
+        if(ParentSiteplanViewModel.getDownloadedDoc() != null && ParentSiteplanViewModel.getDownloadedDoc().size() > 0) {
+
             for (int i = 0; i < ParentSiteplanViewModel.getDownloadedDoc().size(); i++) {
                 if (isDocExistInAttachment(ParentSiteplanViewModel.getDownloadedDoc().get(i).getDocKey()) == false) {
                     if(ParentSiteplanViewModel.getDownloadedDoc().get(i).getDocName() != null &&

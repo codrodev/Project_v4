@@ -227,5 +227,10 @@ public class LandOwnerSelectionFragment extends Fragment {
         AttachmentFragment.lstAttachedDoc.clear();
         ParentSiteplanFragment.currentIndex =0;
         ImageCropActivity.isImageCropped =false;
+        if(PayFragment.isFromPayFragment){
+            binding.spinLandOwned.setSelection(1);
+            binding.rbIsOwner.setChecked(true);
+        }
+
     }
 }
