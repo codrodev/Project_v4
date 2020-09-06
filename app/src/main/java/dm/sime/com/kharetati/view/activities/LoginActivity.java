@@ -854,8 +854,13 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                 LinearLayout.LayoutParams cardParams;
                 if(Global.uaePassConfig.disableMyId)
                     cardParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)-(Global.height/8)));
-                else
-                    cardParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)+(Global.height/4)));
+                else {
+                    if (Global.width == 1080 && Global.height == 2123) {
+                        cardParams =  new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (Global.height));
+
+                    } else
+                        cardParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) ((Global.height / 2) + (Global.height / 3)));
+                }
 //                LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 cardParams.setMargins(48,0,48,-32);
                 binding.cardLogin.setLayoutParams(cardParams);
@@ -1088,8 +1093,13 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                                 LinearLayout.LayoutParams cardViewParams;
                                 if(Global.uaePassConfig.disableMyId)
                                     cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)-(Global.height/5)));
-                                else
-                                    cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)+(Global.height/5)));
+                                else{
+                                    if (Global.width == 1080 && Global.height == 2123) {
+                                        cardViewParams =  new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (Global.height));
+
+                                    } else
+                                        cardViewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) ((Global.height / 2) + (Global.height / 3)));
+                                }
 //
                                 cardViewParams.gravity = Gravity.CENTER_HORIZONTAL;
                                 int cardmarginTop;
@@ -1112,8 +1122,13 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                                 if(Global.uaePassConfig.disableMyId){
                                     cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)));
                                 }
-                                else
-                                    cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)+(Global.height/6)));
+                                else{
+                                    if (Global.width == 1080 && Global.height == 2123) {
+                                        cardViewParams =  new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (Global.height));
+
+                                    } else
+                                        cardViewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) ((Global.height / 2) + (Global.height / 3)));
+                                }
 //
                                 cardViewParams.gravity = Gravity.CENTER_HORIZONTAL;
                                 //cardViewParams.setMargins(48, (int) ((-Global.height/4)+500),48,20);
@@ -1185,7 +1200,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                         binding.switchLanguage.setLayoutParams(switchLanguageparams);*/
                     }
                     else{
-                        cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)+(Global.height/6)));
+                        cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)+(Global.height/3)));
                         /*switchLanguageparams = new LinearLayout.LayoutParams(350,96);
                         switchLanguageparams.setMargins((int)(Global.width/2)+300,32,32,32);
                         binding.switchLanguage.setGravity(Gravity.CENTER);
