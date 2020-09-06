@@ -1051,10 +1051,11 @@ public class DeliveryFragment extends Fragment implements ParentSiteplanFragment
         }
 
 
-        if(PayFragment.isFromPayFragment)
-        Global.isDeliveryByCourier = getActivity().getSharedPreferences(userid, MODE_PRIVATE).getBoolean("deliveryByCourier",false);
+        if(PayFragment.isFromPayFragment){
+        //Global.isDeliveryByCourier = getActivity().getSharedPreferences(userid, MODE_PRIVATE).getBoolean("deliveryByCourier",false);
 
         binding.deliveryByCourier.setChecked(Global.isDeliveryByCourier);
+        }
 
 
         if (!Global.isDeliveryByCourier) {

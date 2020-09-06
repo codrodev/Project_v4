@@ -34,6 +34,7 @@ import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
 import static dm.sime.com.kharetati.utility.Global.isFromMap;
 import static dm.sime.com.kharetati.utility.Global.lstAttachedDoc;
+import static dm.sime.com.kharetati.utility.Global.rbIsOwner;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_ATTACHMENT;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_LANDOWNER_SELECTION;
 
@@ -176,8 +177,8 @@ public class LandOwnerSelectionFragment extends Fragment {
                 }
                 else if(Global.spinPosition==1) {
                     ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
-                    binding.rbIsOwner.setChecked(false);
-                    binding.rbNotOwner.setChecked(false);
+                    binding.rbIsOwner.setChecked(Global.rbIsOwner);
+                    binding.rbNotOwner.setChecked(Global.rbNotOwner);
 
                 }
                 /*else if(Global.spinPosition==2){
@@ -202,8 +203,8 @@ public class LandOwnerSelectionFragment extends Fragment {
                     ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
                 else if(Global.spinPosition==1) {
                     ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
-                    binding.rbIsOwner.setChecked(false);
-                    binding.rbNotOwner.setChecked(false);
+                    binding.rbIsOwner.setChecked(Global.rbIsOwner);
+                    binding.rbNotOwner.setChecked(Global.rbNotOwner);
 
                 }
                /* else if(Global.spinPosition==2){
@@ -227,10 +228,12 @@ public class LandOwnerSelectionFragment extends Fragment {
         AttachmentFragment.lstAttachedDoc.clear();
         ParentSiteplanFragment.currentIndex =0;
         ImageCropActivity.isImageCropped =false;
-        if(PayFragment.isFromPayFragment){
-            binding.spinLandOwned.setSelection(1);
-            binding.rbIsOwner.setChecked(true);
-        }
+
+
+            //binding.spinLandOwned.setSelection(1);
+            binding.rbIsOwner.setChecked(Global.rbIsOwner);
+            binding.rbNotOwner.setChecked(Global.rbNotOwner);
+
 
     }
 }

@@ -682,7 +682,6 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:weightSum="3"
-                    android:background="@drawable/rounded_edittext_boarder_bg"
                     android:gravity="center_vertical|center_horizontal"
                     android:orientation="horizontal"
 

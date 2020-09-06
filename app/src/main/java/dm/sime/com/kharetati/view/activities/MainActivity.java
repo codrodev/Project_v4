@@ -640,6 +640,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         newConfig.fontScale = sharedpreferences.getFloat(FONT_SIZE,1f);
         //adjustFontScale(newConfig,newConfig.fontScale);
 
+
+
         sharedpreferences.edit().putString("currentFragment",Global.current_fragment_id).apply();
 
         int position = sharedpreferences.getInt("position",3);
@@ -663,8 +665,17 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                     customBottomBar.show(position, true);
                     //loadFragment(sharedpreferences.getString("currentFragment",FragmentTAGS.FR_HOME),true, null);
                     loadFragment(model.bottomNavigationTAG(position), true, null);
+                    if(Global.current_fragment_id.equals(FragmentTAGS.FR_HOME)){
+                        binding.txtLastLogin.setVisibility(View.VISIBLE);
+                        binding.layoutlastlogin.setVisibility(View.VISIBLE);
+                    }
+                    else{
+                        binding.txtLastLogin.setVisibility(View.GONE);
+                        binding.layoutlastlogin.setVisibility(View.GONE);
+                    }
                 }
                 loadFragment(sharedpreferences.getString("currentFragment",Global.current_fragment_id),true,null);
+
 
 
 
@@ -737,7 +748,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         }
         else{
             binding.txtLastLogin.setVisibility(View.GONE);
-        binding.layoutlastlogin.setVisibility(View.GONE);
+            binding.layoutlastlogin.setVisibility(View.GONE);
         }
         if(fragment_tag.equals(FragmentTAGS.FR_WEBVIEW)||fragment_tag.equals(FragmentTAGS.FR_FEEDBACK)||fragment_tag.equals(FragmentTAGS.FR_SETTINGS)){
             binding.backButton.setVisibility(View.VISIBLE);
@@ -751,6 +762,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         else
             binding.backButton.setVisibility(View.GONE);
         LinearLayout.LayoutParams headerParams = null;
+        if(!fragment_tag.equals(FragmentTAGS.FR_HOME))
+            binding.layoutlastlogin.setVisibility(View.GONE);
        /* if(fragment_tag.equals(FragmentTAGS.FR_HOME)){
             headerParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             headerParams.setMargins(0,0,0,-48);
@@ -951,6 +964,13 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 Fragment fragmentBeforeBackPress = getCurrentFragment();
                 // Perform the usual back action
                 super.onBackPressed();
+                if (Global.current_fragment_id != null) {
+                    if (Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW) || Global.current_fragment_id.equals(FragmentTAGS.FR_FEEDBACK) || Global.current_fragment_id.equals(FragmentTAGS.FR_SETTINGS)) {
+                        binding.backButton.setVisibility(View.VISIBLE);
+                    }
+                    else
+                        binding.backButton.setVisibility(View.GONE);
+                }
                 if(count>1){
                 fragmentAfterBackPress = getCurrentFragment();
                 if(fragmentAfterBackPress.getTag().equals(FragmentTAGS.FR_DASHBOARD)||fragmentAfterBackPress.getTag().equals(FragmentTAGS.FR_BOOKMARK)||fragmentAfterBackPress.getTag().equals(FragmentTAGS.FR_MYMAP)) {

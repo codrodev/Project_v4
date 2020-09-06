@@ -1625,14 +1625,15 @@ public class AlertDialogUtil {
         final CleanableEditText txtdescEn = (CleanableEditText) viewInflated.findViewById(R.id.edtBookmarksDescriptionDialogEn);
         txtdescEn.requestFocus();
         txtdescEn.setTypeface(face);
-        txtdescEn.setText(data.descriptionEn);
+        txtdescEn.setText((data.descriptionEn!=null&&!data.descriptionEn.isEmpty())?data.descriptionEn:((data.descriptionAr!=null&&!data.descriptionAr.isEmpty())?data.descriptionAr:""));
         txtdescEn.setImeOptions(EditorInfo.IME_ACTION_NONE);
 
         final CleanableEditText txtdescAr = (CleanableEditText) viewInflated.findViewById(R.id.edtBookmarksDescriptionDialogAr);
         txtdescAr.setImeOptions(EditorInfo.IME_ACTION_NONE);
         txtdescAr.requestFocus();
         txtdescAr.setTypeface(face);
-        txtdescAr.setText(data.descriptionAr);
+
+        txtdescAr.setText((data.descriptionAr!=null&&!data.descriptionAr.isEmpty())?data.descriptionAr:((data.descriptionEn!=null&&!data.descriptionEn.isEmpty())?data.descriptionEn:""));
 
         final TextInputLayout enInputLayout = (TextInputLayout) viewInflated.findViewById(R.id.enInputLayout);
         final TextInputLayout arInputLayout = (TextInputLayout) viewInflated.findViewById(R.id.arInputLayout);
@@ -1689,8 +1690,8 @@ public class AlertDialogUtil {
                 if(txtdescEn.getText().toString().isEmpty() && txtdescAr.getText().toString().isEmpty()){
                     Toast.makeText(context,context.getResources().getString(R.string.enter_favourite_name) , Toast.LENGTH_SHORT).show();
                 } else {
-                    data.descriptionEn = txtdescEn.getText().toString();
-                    data.descriptionAr = txtdescAr.getText().toString();
+                    data.descriptionEn = txtdescEn.getText().toString()!=null? txtdescEn.getText().toString():"";
+                    data.descriptionAr = txtdescAr.getText().toString()!=null?txtdescAr.getText().toString():"";
                     dialog.dismiss();
                     BookmarkFragment.bmModel.editBookMark(data);
                 }
