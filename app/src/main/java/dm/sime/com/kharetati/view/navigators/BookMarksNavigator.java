@@ -19,4 +19,7 @@ public interface BookMarksNavigator {
 
    public void updateAdapter();
    public void sortBookmarks(boolean descending);
+
+
+    public void search(String plotNo);
 }

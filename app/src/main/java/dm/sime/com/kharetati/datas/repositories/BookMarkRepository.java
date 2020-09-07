@@ -4,8 +4,10 @@ import org.json.JSONObject;
 
 import dm.sime.com.kharetati.datas.models.BookmarksResponse;
 import dm.sime.com.kharetati.datas.models.GeneralResponse;
+import dm.sime.com.kharetati.datas.models.SerializableParcelDetails;
 import dm.sime.com.kharetati.datas.models.SerializableSaveBookMarks;
 import dm.sime.com.kharetati.datas.models.SerializeBookmarkModel;
+import dm.sime.com.kharetati.datas.models.SerializeGetAppRequestModel;
 import dm.sime.com.kharetati.datas.models.ZZBookmark;
 import dm.sime.com.kharetati.datas.network.MyApiService;
 import dm.sime.com.kharetati.view.viewModels.SerializeBookmarkEditModel;
@@ -30,5 +32,9 @@ public class BookMarkRepository {
 
     public Observable<GeneralResponse> editBookMark(SerializeBookmarkEditModel model) {
         return api.editBookMark(model);
+    }
+
+    public Observable<SerializableParcelDetails> getParcelDetails(String url, SerializeGetAppRequestModel model) {
+        return api.getParcelDetails(url,model);
     }
 }

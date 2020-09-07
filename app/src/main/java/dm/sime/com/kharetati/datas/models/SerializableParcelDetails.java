@@ -11,9 +11,26 @@ private List<ParcelDetails> service_response;
 @SerializedName("is_exception")
 private boolean is_exception;
 @SerializedName("message")
-private boolean message;
-@SerializedName("message_ar")
-private boolean message_ar;
+private String message;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getMessage_ar() {
+        return message_ar;
+    }
+
+    public void setMessage_ar(String message_ar) {
+        this.message_ar = message_ar;
+    }
+
+    @SerializedName("message_ar")
+private String message_ar;
 
     public List<ParcelDetails> getService_response() {
         return service_response;
@@ -31,19 +48,5 @@ private boolean message_ar;
         this.is_exception = is_exception;
     }
 
-    public boolean isMessage() {
-        return message;
-    }
 
-    public void setMessage(boolean message) {
-        this.message = message;
-    }
-
-    public boolean isMessage_ar() {
-        return message_ar;
-    }
-
-    public void setMessage_ar(boolean message_ar) {
-        this.message_ar = message_ar;
-    }
 }

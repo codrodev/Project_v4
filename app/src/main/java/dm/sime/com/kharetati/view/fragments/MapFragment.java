@@ -242,6 +242,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         Global.requestId = null;
         Global.rbIsOwner = false;
         Global.rbNotOwner = false;
+        Global.isDeliveryByCourier = false;
         getActivity().getSharedPreferences(MYPREFERENCES,Context.MODE_PRIVATE).edit().putString("currentFragment",Global.current_fragment_id).apply();
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_map, container, false);
         binding.setFragmentMapVM(model);
@@ -295,6 +296,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                             adapter = new FunctionOnMapAdapter(model, getActivity(),listener, Global.mapSearchResult.getService_response().getMap().getFunctions());
                             binding.recycleMapFunction.setAdapter(adapter);
                             binding.recycleMapFunction.setLayoutManager(layoutManager);
+                            if(CURRENT_LOCALE.equals("en")) binding.recycleMapFunction.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.recycleMapFunction.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
                             adapter.notifyDataSetChanged();
                             binding.closefloatingButtton.setVisibility(View.VISIBLE);
                             binding.floatingButtton.setVisibility(View.GONE);
@@ -1373,6 +1375,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                         adapter = new FunctionOnMapAdapter(model, getActivity(), listener, Global.mapSearchResult.getService_response().getMap().getFunctions());
                         binding.recycleMapFunction.setAdapter(adapter);
                         binding.recycleMapFunction.setLayoutManager(layoutManager);
+                        if(CURRENT_LOCALE.equals("en")) binding.recycleMapFunction.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.recycleMapFunction.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
                         adapter.notifyDataSetChanged();
                         binding.closefloatingButtton.setVisibility(View.VISIBLE);
                         binding.floatingButtton.setVisibility(View.GONE);
@@ -1471,9 +1474,13 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                                             StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(Global.mapSearchResult.getService_response().getMap().getFunctions().size()<4?Global.mapSearchResult.getService_response().getMap().getFunctions().size():4, LinearLayoutManager.VERTICAL);
 
                                             adapter = new FunctionOnMapAdapter(model, getActivity(),listener, Global.mapSearchResult.getService_response().getMap().getFunctions());
+
                                             binding.recycleMapFunction.setAdapter(adapter);
                                             binding.recycleMapFunction.setLayoutManager(layoutManager);
+                                            if(CURRENT_LOCALE.equals("en")) binding.recycleMapFunction.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.recycleMapFunction.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+
                                             adapter.notifyDataSetChanged();
+
                                             binding.closefloatingButtton.setVisibility(View.VISIBLE);
                                             binding.floatingButtton.setVisibility(View.GONE);
                                         }
@@ -1623,6 +1630,8 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                                         adapter = new FunctionOnMapAdapter(model, getActivity(),listener, Global.mapSearchResult.getService_response().getMap().getFunctions());
                                         binding.recycleMapFunction.setAdapter(adapter);
                                         binding.recycleMapFunction.setLayoutManager(layoutManager);
+                                        if(CURRENT_LOCALE.equals("en")) binding.recycleMapFunction.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.recycleMapFunction.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+
                                         adapter.notifyDataSetChanged();
                                         binding.closefloatingButtton.setVisibility(View.VISIBLE);
                                         binding.floatingButtton.setVisibility(View.GONE);

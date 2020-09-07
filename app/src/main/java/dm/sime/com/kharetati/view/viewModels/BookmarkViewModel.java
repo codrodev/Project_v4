@@ -10,6 +10,7 @@ import android.widget.Filterable;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONObject;
@@ -24,17 +25,25 @@ import dm.sime.com.kharetati.datas.models.AppMsg;
 import dm.sime.com.kharetati.datas.models.Bookmark;
 import dm.sime.com.kharetati.datas.models.BookmarksResponse;
 import dm.sime.com.kharetati.datas.models.GeneralResponse;
+import dm.sime.com.kharetati.datas.models.PlotDetails;
+import dm.sime.com.kharetati.datas.models.SerializableParcelDetails;
 import dm.sime.com.kharetati.datas.models.SerializableSaveBookMarks;
 import dm.sime.com.kharetati.datas.models.SerializeBookmarkModel;
+import dm.sime.com.kharetati.datas.models.SerializeGetAppInputRequestModel;
+import dm.sime.com.kharetati.datas.models.SerializeGetAppRequestModel;
 import dm.sime.com.kharetati.datas.repositories.BookMarkRepository;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.Global;
+import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.view.adapters.BookmarkAdapter;
+import dm.sime.com.kharetati.view.fragments.AttachmentFragment;
 import dm.sime.com.kharetati.view.navigators.BookMarksNavigator;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+
+import static dm.sime.com.kharetati.utility.Global.isBookmarks;
 
 public class BookmarkViewModel extends ViewModel implements Filterable {
     BookmarkAdapter adapter;
@@ -157,6 +166,76 @@ public class BookmarkViewModel extends ViewModel implements Filterable {
             } else
                 bookMarksNavigator.onFailure(activity.getResources().getString(R.string.error_response));
         }
+    }
+
+    public void getParceldetails(String plotNo){
+        bookMarksNavigator.onStarted();
+        String url = AppUrls.BASE_AUXULARY_URL + "getparceldetails";
+
+        SerializeGetAppRequestModel model = new SerializeGetAppRequestModel();
+
+        SerializeGetAppInputRequestModel inputModel = new SerializeGetAppInputRequestModel();
+        //inputModel.setParcel_id(Integer.parseInt(plotNo));
+        inputModel.setREMARKS(Global.getPlatformRemark());
+        inputModel.setParcel_id(Integer.parseInt(plotNo));
+        if(Global.isUAE){
+            inputModel.setTOKEN(Global.uaeSessionResponse == null ? "" : Global.uaeSessionResponse.getService_response().getToken());
+            inputModel.setGuest(false);
+        } else {
+            inputModel.setTOKEN(Global.app_session_token == null ? "" : (Global.isUserLoggedIn?Global.app_session_token:""));
+            inputModel.setGuest(!Global.isUserLoggedIn);
+        }
+        inputModel.setREMARKS(Global.getPlatformRemark());
+
+
+        model.setInputJson(inputModel);
+
+        Disposable disposable = repository.getParcelDetails(url, model)
+                .subscribeOn(kharetatiApp.subscribeScheduler())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<SerializableParcelDetails>() {
+                    @Override public void accept(SerializableParcelDetails appResponse) throws Exception {
+
+                        //mapNavigator.onSuccess();
+                        if(appResponse!=null){
+                            /*PlotDetails.communityAr = appResponse.getService_response().get(0).getCommNameAr();
+                            PlotDetails.communityEn = appResponse.getService_response().get(0).getCommNameEn();
+                            if(Global.isSaveAsBookmark && Global.isBookmarks){
+                                saveAsBookMark(true);
+                            }
+                            else if(isBookmarks)
+                                mapNavigator.getPlotDetais(appResponse);
+                            else
+                                saveAsBookMark(true);*/
+                            if(appResponse.isIs_exception()){
+                                //AlertDialogUtil.errorAlertDialog("",Global.CURRENT_LOCALE.equals("en")?appResponse.getMessage():appResponse.getMessage_ar(),activity.getResources().getString(R.string.ok),activity);
+                                bookMarksNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")?appResponse.getMessage():appResponse.getMessage_ar());
+                            }
+                            else{
+                                bookMarksNavigator.onSuccess();
+                                bookMarksNavigator.search(plotNo);
+
+
+                            }
+                        }
+//                        PlotDetails.area = appResponse.getService_response().get(0).getAreaInSqMt();
+
+
+
+
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override public void accept(Throwable throwable) throws Exception {
+                        if(throwable instanceof JsonSyntaxException){
+                            bookMarksNavigator.onFailure(activity.getResources().getString(R.string.valid_plot_number));
+                        }
+                        else
+                            showErrorMessage(throwable.getMessage());
+                    }
+                });
+
+        compositeDisposable.add(disposable);
     }
 
     private void addSqMt(){

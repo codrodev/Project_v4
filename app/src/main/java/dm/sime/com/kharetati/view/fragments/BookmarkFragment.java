@@ -144,8 +144,12 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
                 if(binding.fragmentBookmarksPlotnumber.getText().toString().trim().length()==0){
                     AlertDialogUtil.errorAlertDialog(getString(R.string.lbl_warning), getString(R.string.PLEASE_ENTER_PLOTNUMBER), getString(R.string.ok), getActivity());
                 }
+                else if(binding.fragmentBookmarksPlotnumber.getText().toString().trim().length()<=5){
+                    AlertDialogUtil.errorAlertDialog(getString(R.string.lbl_warning), getString(R.string.valid_plot_number), getString(R.string.ok), getActivity());
+                }
                 else{
-                    search(binding.fragmentBookmarksPlotnumber.getText().toString());
+                    model.getParceldetails(binding.fragmentBookmarksPlotnumber.getText().toString().trim());
+
                 }
 
                 Global.hideSoftKeyboard(getActivity());
@@ -155,7 +159,16 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_DONE) {
-                    search(binding.fragmentBookmarksPlotnumber.getText().toString());
+                    if(binding.fragmentBookmarksPlotnumber.getText().toString().trim().length()==0){
+                        AlertDialogUtil.errorAlertDialog(getString(R.string.lbl_warning), getString(R.string.PLEASE_ENTER_PLOTNUMBER), getString(R.string.ok), getActivity());
+                    }
+                    else if(binding.fragmentBookmarksPlotnumber.getText().toString().trim().length()<=5){
+                        AlertDialogUtil.errorAlertDialog(getString(R.string.lbl_warning), getString(R.string.valid_plot_number), getString(R.string.ok), getActivity());
+                    }
+                    else{
+                        model.getParceldetails(binding.fragmentBookmarksPlotnumber.getText().toString().trim());
+
+                    }
                     Global.hideSoftKeyboard(getActivity());
                     return true;
                 }
@@ -185,7 +198,7 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
         return binding.getRoot();
 
     }
-
+    @Override
     public void search(String plotno){
         if(!Global.isConnected(getContext())){
             AlertDialogUtil.errorAlertDialog(getString(R.string.lbl_warning), getString(R.string.internet_connection_problem1), getString(R.string.ok), getActivity());
@@ -215,7 +228,8 @@ public class BookmarkFragment extends Fragment implements BookMarksNavigator {
         al.add(PlotDetails.parcelNo.trim());
         //al.add("");
 
-        ((MainActivity) getActivity()).loadFragment(FragmentTAGS.FR_MAP, true, al);}
+       ((MainActivity) getActivity()).loadFragment(FragmentTAGS.FR_MAP, true, al);
+        }
 
     }
 

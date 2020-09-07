@@ -85,7 +85,7 @@ public class LandOwnerSelectionFragment extends Fragment {
         Global.nocData = null;
 
         isFromMap =false;
-        Global.isDeliveryByCourier = false;
+
         AttachmentFragment.currentSelection= "";
         AttachmentFragment.isGallery =false;
         AttachmentFragment.isCamera =false;

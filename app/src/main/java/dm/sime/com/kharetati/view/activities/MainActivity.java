@@ -1003,10 +1003,10 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                     customBottomBar.show(3, true);
                     Global.lastSelectedBottomTab = 3;
                 }
-                if(Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW))
+                if(Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW)||Global.current_fragment_id.equals(FragmentTAGS.FR_FEEDBACK)||Global.current_fragment_id.equals(FragmentTAGS.FR_SETTINGS))
                     binding.backButton.setVisibility(View.VISIBLE);
                 else
-                    binding.backButton.setVisibility(View.INVISIBLE);
+                    binding.backButton.setVisibility(View.GONE);
             }
 
         }
