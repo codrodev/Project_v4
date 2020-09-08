@@ -1,5 +1,7 @@
 package dm.sime.com.kharetati.view.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,9 +34,11 @@ import dm.sime.com.kharetati.view.viewModels.LandOwnerViewModel;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 
 import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
+import static dm.sime.com.kharetati.utility.Global.MYPREFERENCES;
 import static dm.sime.com.kharetati.utility.Global.isFromMap;
 import static dm.sime.com.kharetati.utility.Global.lstAttachedDoc;
 import static dm.sime.com.kharetati.utility.Global.rbIsOwner;
+import static dm.sime.com.kharetati.utility.Global.rbNotOwner;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_ATTACHMENT;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_LANDOWNER_SELECTION;
 
@@ -45,6 +49,7 @@ public class LandOwnerSelectionFragment extends Fragment {
     private View mRootView;
     private String[] landOwnedType;
     private Tracker mTracker;
+    private SharedPreferences sharedpreferences;
 
 
     public static LandOwnerSelectionFragment newInstance(){
@@ -102,6 +107,7 @@ public class LandOwnerSelectionFragment extends Fragment {
         ParentSiteplanFragment.currentIndex =0;
         ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
         landOwnedType = new String[] {getResources().getString(R.string.land_owned_By_person),getResources().getString(R.string.land_owned_By_company)};
+        sharedpreferences = getActivity().getSharedPreferences(MYPREFERENCES, Context.MODE_PRIVATE);
 
         ArrayList<String> arrayList= new ArrayList();
         for (int i=0; i<landOwnedType.length; i++){
@@ -142,6 +148,8 @@ public class LandOwnerSelectionFragment extends Fragment {
                     case 1:{
                         Global.isCompany=true;
                         Global.isPerson=false;
+                        binding.rbIsOwner.setChecked(Global.rbIsOwner);
+                        binding.rbNotOwner.setChecked(Global.rbNotOwner);
                         Global.rbIsOwner = false;
                         Global.rbNotOwner = false;
                         binding.rg.setVisibility(View.GONE);
@@ -169,16 +177,19 @@ public class LandOwnerSelectionFragment extends Fragment {
                     Global.rbNotOwner = false;
                     Global.isPerson = true;
                 }
-
+                sharedpreferences.edit().putBoolean("isOwner",isChecked).apply();
 
                 if (Global.spinPosition == 0){
 
                     ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
+                    binding.rbIsOwner.setChecked(Global.rbIsOwner);
+                    binding.rbNotOwner.setChecked(Global.rbNotOwner);
                 }
                 else if(Global.spinPosition==1) {
                     ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
                     binding.rbIsOwner.setChecked(Global.rbIsOwner);
                     binding.rbNotOwner.setChecked(Global.rbNotOwner);
+
 
                 }
                 /*else if(Global.spinPosition==2){
@@ -198,7 +209,7 @@ public class LandOwnerSelectionFragment extends Fragment {
                     Global.rbIsOwner = false;
                     Global.rbNotOwner = true;
                }
-
+                sharedpreferences.edit().putBoolean("isNotOwner",isChecked).apply();
                 if (Global.spinPosition == 0)
                     ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
                 else if(Global.spinPosition==1) {
@@ -230,9 +241,11 @@ public class LandOwnerSelectionFragment extends Fragment {
         ImageCropActivity.isImageCropped =false;
 
 
-            //binding.spinLandOwned.setSelection(1);
-            binding.rbIsOwner.setChecked(Global.rbIsOwner);
-            binding.rbNotOwner.setChecked(Global.rbNotOwner);
+            binding.spinLandOwned.setSelection(Global.spinPosition);
+
+            binding.rbIsOwner.setChecked(sharedpreferences.getBoolean("isOwner", rbIsOwner));
+            binding.rbNotOwner.setChecked(sharedpreferences.getBoolean("isNotOwner",rbNotOwner));
+            //binding.rbNotOwner.setChecked(Global.rbNotOwner);}
 
 
     }

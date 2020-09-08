@@ -242,8 +242,11 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         Global.requestId = null;
         Global.rbIsOwner = false;
         Global.rbNotOwner = false;
+        Global.spinPosition = 0;
         Global.isDeliveryByCourier = false;
         getActivity().getSharedPreferences(MYPREFERENCES,Context.MODE_PRIVATE).edit().putString("currentFragment",Global.current_fragment_id).apply();
+        getActivity().getSharedPreferences(MYPREFERENCES,Context.MODE_PRIVATE).edit().putBoolean("isOwner",false).apply();
+        getActivity().getSharedPreferences(MYPREFERENCES,Context.MODE_PRIVATE).edit().putBoolean("isNotOwner",false).apply();
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_map, container, false);
         binding.setFragmentMapVM(model);
         mRootView = binding.getRoot();

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        style="@style/font_medium_regular"
+        android:id="@+id/tab_title"
+        android:textSize="14sp"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:gravity="center"
+        android:background="@drawable/tab_color_selector"
+        android:textColor="@color/white"/>
+    <ImageView
+        android:id="@+id/image_arrow"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/tab_title"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <!-- Tab divider -->
+    <View
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/white" />
+</RelativeLayout>

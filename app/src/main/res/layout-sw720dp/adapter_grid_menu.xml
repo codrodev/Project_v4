@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="position"
+            type="java.lang.Integer" />
+        <variable
+            name="adapterGridMenuVM"
+            type="dm.sime.com.kharetati.view.viewModels.HomeViewModel" />
+    </data>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:id="@+id/cardHomeGrid"
+
+        android:elevation="10dp"
+        android:background="@drawable/grid_background_drawable"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="16dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:weightSum="1"
+            android:background="@drawable/grid_background_drawable"
+            android:layout_margin="5dp">
+
+            <ImageView
+                android:id="@+id/imgMenuIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginVertical="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.6"
+                android:gravity="center_horizontal" />
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/font_small_bold"
+                android:id="@+id/txtMenuName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineHeight="20dp"
+                android:layout_weight="0.4"
+                android:text='@{adapterGridMenuVM.getCurrentHomeGridMenuItems(position).nameEn ?? ""}'
+                android:maxLines="2"
+                android:lines="2"
+                android:textSize="14sp"
+                android:singleLine="false"
+                android:layout_marginTop="5dp"
+                android:textAlignment="center"
+                android:gravity="center_horizontal"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtAppId"
+                android:layout_below="@+id/imgMenuIcon"
+                android:layout_width="wrap_content"
+                android:textSize="12sp"
+                android:layout_height="wrap_content"
+                android:text='@{adapterGridMenuVM.getCurrentHomeGridMenuItems(position).id ?? ""}'
+                android:visibility="gone"
+                android:layout_alignParentBottom="true"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

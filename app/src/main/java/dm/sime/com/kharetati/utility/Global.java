@@ -565,18 +565,18 @@ public class Global {
                 }
                 else
                     editText.setCompoundDrawables(null, null, null, null);*/
-                if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (event.getAction() == MotionEvent.ACTION_UP||event.getAction() == MotionEvent.ACTION_DOWN) {
                     if(CURRENT_LOCALE.equals("en")){
-                        if (editText.getCompoundDrawables()[DRAWABLE_RIGHT] != null && event.getRawX() >= ((editText.getRight() - editText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())+50))
+                        if (editText.getCompoundDrawables()[DRAWABLE_RIGHT] != null && event.getRawX() >= ((editText.getRight() - editText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())))
                         {
                             editText.setText("");
                             if (editText.isCursorVisible())
                                 editText.setCursorVisible(false);
-
                             return true;
                         }
                     } else {
-                        if (editText.getCompoundDrawables()[DRAWABLE_LEFT] != null && event.getRawX() < 500) {
+                        //if (editText.getCompoundDrawables()[DRAWABLE_LEFT] != null && event.getRawX() < 500) {
+                        if (editText.getCompoundDrawables()[DRAWABLE_LEFT] != null && event.getRawX() >= ((editText.getLeft() - editText.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width()))) {
                            // (editText.getLeft() - editText.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())
                             editText.setText("");
                             if(editText.isCursorVisible())

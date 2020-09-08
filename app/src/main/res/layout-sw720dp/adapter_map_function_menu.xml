@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">-->
+    <!--<data>
+        <variable
+            name="position"
+            type="java.lang.Integer" />
+        <variable
+            name="adapterMapFunctionVM"
+            type="dm.sime.com.kharetati.view.viewModels.MapFunctionBottomSheetViewModel" />
+    </data>-->
+    <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:id="@+id/mapcard"
+        android:elevation="10dp"
+        app:cardBackgroundColor="#fcfcfc"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="5dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/grid_background_drawable"
+            android:weightSum="1"
+            android:layout_margin="5dp">
+            <ImageView
+                android:id="@+id/imgMenuIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="50dp"
+                android:maxHeight="50dp"
+                android:paddingTop="4dp"
+                android:src="@drawable/bookmark"
+                android:layout_weight="0.8"
+
+                android:layout_marginVertical="2dp"/>
+            <TextView
+                android:id="@+id/txtFunctionNAme"
+                android:layout_below="@+id/imgMenuIcon"
+                android:layout_width="match_parent"
+                android:textSize="12sp"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/dubai_font"
+                android:maxLines="3"
+                android:layout_weight=".2"
+                android:lineHeight="18dp"
+                android:textAlignment="center"
+                android:textColor="#2a3d68" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+<!--
+</layout>-->
