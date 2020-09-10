@@ -140,6 +140,14 @@ public class LandOwnerSelectionFragment extends Fragment {
                         binding.rg.setVisibility(View.VISIBLE);
 
                         if(binding.rbIsOwner.isChecked()||binding.rbNotOwner.isChecked()){
+                            if(binding.rbIsOwner.isChecked()){
+                                rbIsOwner = true;
+                                rbNotOwner =false;
+                            }
+                            else if(binding.rbNotOwner.isChecked()){
+                                rbIsOwner = false;
+                                rbNotOwner =true;
+                            }
 
                             ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
                         }

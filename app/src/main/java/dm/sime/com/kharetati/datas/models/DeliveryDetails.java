@@ -14,15 +14,7 @@ public class DeliveryDetails extends BaseObservable {
     private String makani_no;
     private String building_name;
     private String building_no;
-    private int emID;
 
-    public int getEmID() {
-        return emID;
-    }
-
-    public void setEmID(int emID) {
-        this.emID = emID;
-    }
 
     public int getEmirate() {
         return emirate;
