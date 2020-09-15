@@ -46,6 +46,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.material.tabs.TabLayout;
 
+import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -107,6 +108,7 @@ import static dm.sime.com.kharetati.utility.Global.isLand;
 import static dm.sime.com.kharetati.utility.Global.isMakani;
 import static dm.sime.com.kharetati.utility.Global.isPlotSearch;
 import static dm.sime.com.kharetati.utility.Global.searchText;
+import static dm.sime.com.kharetati.utility.Global.showSoftKeyboard;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_ATTACHMENT;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_HOME;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_WEBVIEW;
@@ -136,7 +138,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     private RelativeLayout relativeLayout;
     private ImageView imageView;
     private TextView tabTextView;
-    private CleanableEditText x;
+    public static CleanableEditText x;
     /*BottomSheetBehavior sheetBehavior;
     LinearLayout layoutBottomSheet;*/
 
@@ -270,6 +272,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         //model.getApplication(appID).getSearchForm().get(0).getTabs().getControls().get(0);
         Log.d(getClass().getSimpleName(),model.getSelectedApplication().getNameEn());
         x.setText("");
+
     }
 
     private void initializeRuntimeForm(Applications app, boolean isAnimation){
@@ -375,7 +378,11 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         }
         if(isAnimation) {
             ViewAnimationUtils.scaleAnimateViewPopFirstLoad(binding.layoutRuntimeContainer);
+
         }
+        x.requestFocus();
+        if( x.requestFocus())
+            Global.showSoftKeyboard(x,getActivity());
         Global.isFirstLoad = false;
     }
 
@@ -420,6 +427,12 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                 builder.append("token="+ Global.app_session_token +"&");
             }
 
+        }
+        if(builder.toString().contains("?")){
+            String firstString = builder.toString().substring(0,builder.toString().indexOf("?"));
+            String subString =  builder.toString().substring(builder.toString().lastIndexOf("?")+1);
+            //URLEncoder.encode(subString);
+            return firstString+URLEncoder.encode(subString);
         }
         return builder.toString();
     }
@@ -632,6 +645,8 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
                     model.getAppsSearchResult(populateSearchText());
                 }
+                else
+                    AlertDialogUtil.errorAlertDialog("",getActivity().getResources().getString(R.string.valid_criteria),getActivity().getResources().getString(R.string.ok),getActivity());
             }
             return true;
         }
@@ -844,8 +859,11 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                 initializeRuntimeForm(model.getSelectedApplication(), false);
             }
         }
+
+
         if (Global.isFirstLoad && !Global.isRecreate)
             MainActivity.mainVM.getNotifications();
+
         //initializeRuntimeForm(model.getDefaultApplication(0));
     }
 

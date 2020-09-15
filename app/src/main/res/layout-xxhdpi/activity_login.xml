@@ -32,12 +32,12 @@
             app:layout_constraintVertical_bias="0.0" />
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="255dp"
+            android:layout_height="465dp"
             android:elevation="1dp"
             android:background="@color/transparent"
             android:gravity="bottom|center"
             android:id="@+id/splashLogoLayout"
-            android:layout_marginBottom="-256dp"
+            android:layout_marginBottom="-466dp"
             android:layout_gravity="center_horizontal"
             >
             <ImageView
@@ -49,7 +49,7 @@
                 />
         </LinearLayout>
 
-        <ImageView
+        <LinearLayout
             android:id="@+id/imgsplash"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -57,22 +57,24 @@
             android:clickable="true"
             android:scaleType="fitXY"
             android:src="@drawable/splash"
-
+            android:background="@color/maroon_light"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0"
+            android:orientation="horizontal" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:id="@+id/logoAndCopyRights"
+            android:visibility="invisible"
             android:layoutDirection="ltr"
             android:weightSum="2"
-            android:visibility="visible"
             android:layout_marginTop="-60dp">
             <LinearLayout
                 android:layout_width="match_parent"

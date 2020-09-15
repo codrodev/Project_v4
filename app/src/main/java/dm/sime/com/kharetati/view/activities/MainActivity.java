@@ -1101,6 +1101,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
     @Override
     public void cancelNotification() {
         if(alertDialogNotifications!=null)alertDialogNotifications.cancel();
+        HomeFragment.homeVM.showKeyboard();
     }
 
     @Override

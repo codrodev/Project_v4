@@ -12,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.Editable;
@@ -806,8 +807,25 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
             }
         },0);//
-        if(!Global.isLanguageChanged)
-            viewModel.uaePassConfigAPI();
+        if(!Global.isLanguageChanged){
+            final Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //Do something after 100ms
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            viewModel.uaePassConfigAPI();
+
+                        }
+                    });
+
+                }
+            }, 3000);
+        }
+
         else
             displayContent();
         //viewModel.uaePassConfigAPI();
@@ -1200,7 +1218,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                         binding.switchLanguage.setLayoutParams(switchLanguageparams);*/
                     }
                     else{
-                        cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)+(Global.height/3)));
+                        cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)+(Global.height/6)));
                         /*switchLanguageparams = new LinearLayout.LayoutParams(350,96);
                         switchLanguageparams.setMargins((int)(Global.width/2)+300,32,32,32);
                         binding.switchLanguage.setGravity(Gravity.CENTER);
@@ -1208,7 +1226,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                     }
 //
                     cardViewParams.gravity = Gravity.CENTER_HORIZONTAL;
-                    cardViewParams.setMargins(48, (int) ((-Global.height/4)-100),48,20);
+                    cardViewParams.setMargins(48, (int) ((-Global.height/4)+100),48,20);
                     //cardViewParams.setMargins(24, Global.height>=2560?(int) ((-Global.height/4)+600):(Global.height<=1280?(Global.width<=480?(int)(-Global.height/4)+250:(Global.width<=640?(int)(-Global.height/4)+300:(int) ((-Global.height/4)+350))):(Global.width<=1080?(int) ((-Global.height/4)+451):(int) ((-Global.height/4)+500))),24,20);
 
                     binding.cardLogin.setLayoutParams(cardViewParams);

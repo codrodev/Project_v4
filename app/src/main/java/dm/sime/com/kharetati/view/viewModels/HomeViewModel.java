@@ -715,4 +715,11 @@ public class HomeViewModel extends ViewModel {
         Log.e(activity.getClass().getSimpleName(),exception);
     }
 
+    public void showKeyboard() {
+        if(HomeFragment.x!=null){
+            HomeFragment.x.requestFocus();
+            if(HomeFragment.x.requestFocus())
+            Global.showSoftKeyboard(HomeFragment.x,activity);
+        }
+    }
 }
