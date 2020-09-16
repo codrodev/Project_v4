@@ -526,7 +526,11 @@ public class HomeViewModel extends ViewModel {
                     .subscribe(new Consumer<SearchResult>() {
                         @Override
                         public void accept(SearchResult response) throws Exception {
+                            if(response!=null){
+                            PlotDetails.parcelNo = response.getService_response().getParcelId();
                             getMapBasedSearchResult(response);
+                            }
+
                         }
                     }, new Consumer<Throwable>() {
                         @Override

@@ -117,7 +117,7 @@
     <string name="choose_image">Please choose the Image</string>
     <string name="fields_are_required">Please enter all the required fields</string>
     <string name="enter_valid_email">Please enter valid Email Address</string>
-    <string name="mobile_validation">Please enter a valid mobile number e.g (9715XXXXXXXX)</string>
+    <string name="mobile_validation">Please enter a valid mobile number</string>
     <string name="CHOOSETHEOPTION">Choose the option</string>
     <string name="view">View Image</string>
     <string name="select_photo_gallery">Select photo from gallery</string>

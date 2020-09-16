@@ -93,8 +93,8 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
     private static String DM_TWITTER_AR = "";
     private static final String DM_INSTAGRAM_EN = "https://www.instagram.com/explore/tags/kharetati/?hl=en";
     private static final String DM_INSTAGRAM_AR = "https://www.instagram.com/explore/tags/خريطتي/?hl=ar/";
-    private static final String DM_YOUTUBE_EN = "https://www.youtube.com/results?search_query=kharetati";
-    private static final String DM_YOUTUBE_AR = "https://www.youtube.com/results?search_query=خريطتي";
+    private static final String DM_YOUTUBE_EN = "https://www.youtube.com/results?search_query=dubai+municipality";
+    private static final String DM_YOUTUBE_AR = "https://www.youtube.com/results?search_query=%D8%A8%D9%84%D8%AF%D9%8A%D8%A9+%D8%AF%D8%A8%D9%8A";
     private ArcGISMapImageLayer dynamicLayer;
     public static ContactusViewModel contactUsVM;
     ContactusViewModelFactory factory;
@@ -340,10 +340,13 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
 
     }
     private void openURL(String link) {
-        ArrayList al = new ArrayList();
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(link));
+        startActivity(i);
+       /* ArrayList al = new ArrayList();
         al.add(link);
         al.add(getActivity().getResources().getString(R.string.visitus_hd));
-        ((MainActivity)getActivity()).loadFragment(FR_WEBVIEW,true,al);
+        ((MainActivity)getActivity()).loadFragment(FR_WEBVIEW,true,al);*/
     }
 
     public void call() {

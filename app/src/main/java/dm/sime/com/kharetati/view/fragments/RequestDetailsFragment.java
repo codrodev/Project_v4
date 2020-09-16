@@ -121,6 +121,10 @@ public class RequestDetailsFragment extends Fragment {
         ((MainActivity)getActivity()).manageActionBar(false);
         ((MainActivity)getActivity()).manageBottomBar(false);
         Global.hideSoftKeyboard(getActivity());
+        if(PayFragment.isFromPayFragment)
+            back.setVisibility(View.INVISIBLE);
+        else
+            back.setVisibility(View.VISIBLE);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override

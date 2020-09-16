@@ -116,7 +116,7 @@
     <string name="choose_image">يرجى اختيار الصورة</string>
     <string name="fields_are_required">يرجى إدخال جميع الحقول المطلوبة</string>
     <string name="enter_valid_email">الرجاء إدخال عنوان بريد إلكتروني صحيح</string>
-    <string name="mobile_validation">يرجى إدخال هاتف متحرك صحيح المثال (9715XXXXXXXX)</string>
+    <string name="mobile_validation">يرجى إدخال رقم هاتف متحرك صحيح</string>
     <string name="CHOOSETHEOPTION">اختر من التالي</string>
     <string name="view">عرض الصورة</string>
     <string name="select_photo_gallery">حدد صورة من المعرض</string>

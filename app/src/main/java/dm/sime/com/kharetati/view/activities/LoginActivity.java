@@ -392,6 +392,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
             }
         });
+        if(CURRENT_LOCALE.equals("en"))binding.imageUAE.setImageResource(R.drawable.uaelogin_en);else binding.imageUAE.setImageResource(R.drawable.uaelogin_ar);
 
 
         binding.txtForgotPassword.setOnClickListener(new View.OnClickListener() {

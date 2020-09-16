@@ -46,6 +46,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
@@ -272,6 +273,12 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         //model.getApplication(appID).getSearchForm().get(0).getTabs().getControls().get(0);
         Log.d(getClass().getSimpleName(),model.getSelectedApplication().getNameEn());
         x.setText("");
+        if(!Global.isFirstLoad){
+            x.requestFocus();
+            if(x.requestFocus()){
+                Global.showSoftKeyboard(x,getActivity());
+            }
+        }
 
     }
 
@@ -381,12 +388,12 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
         }
         x.requestFocus();
-        if( x.requestFocus())
-            Global.showSoftKeyboard(x,getActivity());
+        /*if( x.requestFocus())
+            Global.showSoftKeyboard(x,getActivity());*/
         Global.isFirstLoad = false;
     }
 
-    public static String constructUrl(String url,Activity context){
+    public static String constructUrl(String url,Activity context) {
         StringBuilder builder = new StringBuilder();
         if(url!=null||url!=""){
             builder.append(url);
@@ -395,45 +402,46 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             }
         }
 
-        builder.append("remarks=" + Global.getPlatformRemark() + "&");
+        builder.append("remarks=" + URLEncoder.encode(Global.getPlatformRemark() )+ "&");
         String lang = Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0 ? "en" : "ar";
-        builder.append("lng=" + lang + "&");
-        builder.append("fontSize=" + (int)(Global.fontSize * Global.fontScale)+ "&");
-        builder.append("appsrc=kharetati&");
+        builder.append("lng=" +URLEncoder.encode( lang )+ "&");
+        builder.append("fontSize=" +URLEncoder.encode( ""+(int)(Global.fontSize * Global.fontScale))+ "&");
+        builder.append("appsrc="+URLEncoder.encode("kharetati")+"&");
         if(!Global.isUserLoggedIn){
             //Guest
-            builder.append("userType=GUEST&");
-            builder.append("user_id="+ Global.sime_userid +"&");
-            builder.append("token="+ Global.app_session_token+"&");
-            builder.append("user_name=GUEST&");
-            builder.append("access_token=" + Global.accessToken + "&");
+            builder.append("userType="+URLEncoder.encode("GUEST")+"&");
+            builder.append("user_id="+ URLEncoder.encode(""+Global.sime_userid )+"&");
+            builder.append("token="+ URLEncoder.encode(Global.app_session_token)+"&");
+            builder.append("user_name="+URLEncoder.encode("GUEST")+"&");
+            builder.append("access_token=" + URLEncoder.encode(Global.accessToken )+ "&");
         } else {
             if(Global.isUAE){
-                builder.append("userType=UAEPASS&");
-                builder.append("user_id=" + Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getUuid() + "&");
-                builder.append("token="+ Global.app_session_token +"&");
-                builder.append("access_token=" + Global.uae_access_token  + "&");
+                builder.append("userType="+ URLEncoder.encode("UAEPASS")+"&");
+                builder.append("user_id=" + URLEncoder.encode(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getUuid()) + "&");
+                builder.append("token="+ URLEncoder.encode(Global.app_session_token )+"&");
+                builder.append("access_token=" + URLEncoder.encode(Global.uae_access_token ) + "&");
                 if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0) {
-                    builder.append("user_name=" + Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN() + "&");
+                    builder.append("user_name=" + URLEncoder.encode(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN()) + "&");
                 } else {
-                    builder.append("user_name=" + Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameAR() + "&");
+                    builder.append("user_name=" + URLEncoder.encode(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameAR() )+ "&");
                 }
             } else {
                 //My Id
-                builder.append("userType=MYID&");
-                builder.append("user_id=" + Global.sime_userid + "&");
-                builder.append("user_name=" + Global.getUser(context).getFullname()+"&");
-                builder.append("access_token=" + Global.accessToken + "&");
-                builder.append("token="+ Global.app_session_token +"&");
+                builder.append("userType="+URLEncoder.encode("MYID")+"&");
+                builder.append("user_id=" + URLEncoder.encode(""+Global.sime_userid) + "&");
+                builder.append("user_name=" + URLEncoder.encode(Global.getUser(context).getFullname())+"&");
+                builder.append("access_token=" + URLEncoder.encode(Global.accessToken )+ "&");
+                builder.append("token="+ URLEncoder.encode(Global.app_session_token )+"&");
             }
 
         }
-        if(builder.toString().contains("?")){
+        /*if(builder.toString().contains("?")){
             String firstString = builder.toString().substring(0,builder.toString().indexOf("?"));
             String subString =  builder.toString().substring(builder.toString().lastIndexOf("?")+1);
-            //URLEncoder.encode(subString);
-            return firstString+URLEncoder.encode(subString);
-        }
+
+            return firstString+"?"+subString;
+
+        }*/
         return builder.toString();
     }
 
