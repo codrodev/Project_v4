@@ -72,6 +72,7 @@ import dm.sime.com.kharetati.datas.models.User;
 import dm.sime.com.kharetati.view.activities.LoginActivity;
 import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.customview.CleanableEditText;
+import dm.sime.com.kharetati.view.fragments.RequestDetailsFragment;
 import dm.sime.com.kharetati.view.navigators.AuthListener;
 import retrofit2.http.Url;
 
@@ -772,6 +773,7 @@ public class Global {
         Global.isDeliveryByCourier= false;
         Global.isLogout =true;
         Global.selectedTab =0;
+        RequestDetailsFragment.isFromRequestDetails = false;
         context.getSharedPreferences(Global.MYPREFERENCES,Context.MODE_PRIVATE).edit().putFloat(FONT_SIZE,Global.fontScale).apply();
         if(Global.alertDialog!=null){
             Global.alertDialog.cancel();

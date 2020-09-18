@@ -198,6 +198,13 @@
 
                 android:background="@color/white"
                 android:orientation="vertical">
+                <ImageView
+                    android:layout_width="125dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/dubaiLogo"
+                    android:padding="2dp"
+                    android:src="@drawable/dmlogo" />
 
                 <ImageView
                     android:layout_width="100dp"

@@ -27,6 +27,7 @@ import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.activities.MainActivity;
+import dm.sime.com.kharetati.view.fragments.PayFragment;
 import dm.sime.com.kharetati.view.viewModels.MyMapViewModel;
 
 public class MyMapAdapter  extends RecyclerView.Adapter<MyMapAdapter.GenericViewHolder> {
@@ -179,6 +180,7 @@ public class MyMapAdapter  extends RecyclerView.Adapter<MyMapAdapter.GenericView
                         AlertDialogUtil.errorAlertDialog(context.getString(R.string.lbl_warning), context.getString(R.string.internet_connection_problem1), context.getString(R.string.ok), context);
                 }
                 else{
+                    PayFragment.isFromPayFragment = false;
                     Global.paymentStatus = null;
                     List<Object> param=new ArrayList<Object>();
                     param.add(lstMyMap.get(position).getRequestId());

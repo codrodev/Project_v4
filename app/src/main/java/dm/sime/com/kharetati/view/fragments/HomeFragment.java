@@ -280,6 +280,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             }
         }
 
+
     }
 
     private void initializeRuntimeForm(Applications app, boolean isAnimation){
@@ -390,7 +391,8 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         x.requestFocus();
         /*if( x.requestFocus())
             Global.showSoftKeyboard(x,getActivity());*/
-        Global.isFirstLoad = false;
+        //Global.isFirstLoad = false;
+
     }
 
     public static String constructUrl(String url,Activity context) {

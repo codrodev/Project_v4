@@ -1090,6 +1090,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                             checkNotifications();
                             layoutDots.setVisibility(View.VISIBLE);
                             addBottomDots(0, response.getServiceResponse().getGeneralNotifications().size());
+                            Global.isFirstLoad = false;
+
                         }
                     }
                 }

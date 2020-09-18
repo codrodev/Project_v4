@@ -797,6 +797,8 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 
        // Global.deviceId = FirebaseInstanceId.getInstance().getToken()!=null? FirebaseInstanceId.getInstance().getToken():generateRandomID();
         Global.deviceId =  Settings.Secure.getString(LoginActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID);
+        if(Global.deviceId==null)
+            Global.deviceId = generateRandomID();
 
 
 
@@ -881,8 +883,16 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                         cardParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) ((Global.height / 2) + (Global.height / 3)));
                 }
 //                LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                cardParams.setMargins(48,0,48,-32);
+                cardParams.setMargins(48,0,48,48);
                 binding.cardLogin.setLayoutParams(cardParams);
+
+
+                /*if(Global.uaePassConfig.disableMyId){
+                LinearLayout.LayoutParams dmlogoparams = new LinearLayout.LayoutParams(SwitchCompatEx.dp2Px(125f), SwitchCompatEx.dp2Px(50f));
+                dmlogoparams.setMargins(48,0,48,-SwitchCompatEx.dp2Px(50f));
+                dmlogoparams.gravity = Gravity.CENTER;
+                binding.dubaiLogo.setPadding(SwitchCompatEx.dp2Px(2f),SwitchCompatEx.dp2Px(2f),SwitchCompatEx.dp2Px(2f),SwitchCompatEx.dp2Px(2f));
+                binding.dubaiLogo.setLayoutParams(dmlogoparams);}*/
 
 
 
@@ -1125,9 +1135,10 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                                 if(Global.height>=2560){
                                     cardmarginTop= (int) ((-Global.height/4)+600);
                                 }
-                                else if(Global.height<=1281){
-
+                                else if(Global.height<=2131){
+                                    cardViewParams.setMargins(48,-2131,48,48);
                                 }
+                                else
                                 cardViewParams.setMargins(48, Global.height>=2560?(int) ((-Global.height/4)+600):(Global.height<=1280?(Global.width<=360?(int)(-Global.height/4)+200:(int) ((-Global.height/4)+350)):(Global.width<=1080?(int) ((-Global.height/4)+451):(int) ((-Global.height/4)+500))),48,20);
                                 binding.cardLogin.setLayoutParams(cardViewParams);
                                 /*LinearLayout.LayoutParams switchLanguageparams = new LinearLayout.LayoutParams(350, 96);

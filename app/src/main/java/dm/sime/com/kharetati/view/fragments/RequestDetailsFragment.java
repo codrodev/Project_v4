@@ -37,6 +37,7 @@ public class RequestDetailsFragment extends Fragment {
     private static final String USER_NAME = "userName";
     private static final String MOBILE = "mobile";
     private static final String EMAIL = "email";
+    public static boolean isFromRequestDetails = false;
 
     private String requestNumber;
     private String parcelId;
@@ -178,6 +179,7 @@ public class RequestDetailsFragment extends Fragment {
                     ((MainActivity)getActivity()).onBackPressed();
                 }
                 else if(fragment.getTag().compareToIgnoreCase(FragmentTAGS.FR_REQUEST_DETAILS)==0){
+                    RequestDetailsFragment.isFromRequestDetails = true;
                     ((MainActivity)getActivity()).clearStack(FragmentTAGS.FR_DASHBOARD,1);
 
                 }

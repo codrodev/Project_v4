@@ -32,12 +32,12 @@
             app:layout_constraintVertical_bias="0.0" />
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="465dp"
+            android:layout_height="444dp"
             android:elevation="1dp"
             android:background="@color/transparent"
             android:gravity="bottom|center"
             android:id="@+id/splashLogoLayout"
-            android:layout_marginBottom="-466dp"
+            android:layout_marginBottom="-445dp"
             android:layout_gravity="center_horizontal"
             >
             <ImageView
@@ -199,6 +199,13 @@
 
                 android:background="@color/white"
                 android:orientation="vertical">
+                <ImageView
+                    android:layout_width="125dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/dubaiLogo"
+                    android:padding="2dp"
+                    android:src="@drawable/dmlogo" />
 
                 <ImageView
                     android:layout_width="100dp"

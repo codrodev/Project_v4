@@ -402,10 +402,12 @@ public class AlertDialogUtil {
 
                         }
                         else{
-                            ArrayList al = new ArrayList();
+                            /*ArrayList al = new ArrayList();
                             al.add(Global.webViewUrl);
                             al.add(context.getResources().getString(R.string.makani));
-                            ((MainActivity)context).loadFragment(FR_WEBVIEW,true,al);
+                            ((MainActivity)context).loadFragment(FR_WEBVIEW,true,al);*/
+                            intentOpenBrowser.setData(Uri.parse(Global.webViewUrl));
+                            activity.startActivity(intentOpenBrowser);
                         }
 
                     }

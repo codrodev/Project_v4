@@ -73,6 +73,7 @@ import dm.sime.com.kharetati.view.customview.CleanableEditText;
 import dm.sime.com.kharetati.view.fragments.DeliveryFragment;
 import dm.sime.com.kharetati.view.fragments.HomeFragment;
 import dm.sime.com.kharetati.view.fragments.MapFragment;
+import dm.sime.com.kharetati.view.fragments.RequestDetailsFragment;
 import dm.sime.com.kharetati.view.navigators.FragmentNavigator;
 import dm.sime.com.kharetati.view.navigators.HomeNavigator;
 import dm.sime.com.kharetati.view.navigators.MainNavigator;
@@ -370,8 +371,9 @@ public class HomeViewModel extends ViewModel {
                     }
                 }, new Consumer<Throwable>() {
                     @Override public void accept(Throwable throwable) throws Exception {
+
                         if(throwable instanceof Exception)
-                            Global.logout(activity);
+                            if(!RequestDetailsFragment.isFromRequestDetails)Global.logout(activity);
                         else
                             showErrorMessage(throwable.getMessage());
                     }
@@ -429,7 +431,7 @@ public class HomeViewModel extends ViewModel {
                 }, new Consumer<Throwable>() {
                     @Override public void accept(Throwable throwable) throws Exception {
                         if(throwable instanceof Exception)
-                            Global.logout(activity);
+                            if(!RequestDetailsFragment.isFromRequestDetails)Global.logout(activity);
                         else
                             showErrorMessage(throwable.getMessage());
                     }
@@ -450,7 +452,7 @@ public class HomeViewModel extends ViewModel {
             } else {
                 if(appResponse.getMessage() != null){
                     if(appResponse.getMessage().equals("You are not authorized to access this feature"))
-                        Global.logout(activity);
+                        if(!RequestDetailsFragment.isFromRequestDetails)Global.logout(activity);
                     else
                         homeNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")?appResponse.getMessage():appResponse.getMessage_ar());
 

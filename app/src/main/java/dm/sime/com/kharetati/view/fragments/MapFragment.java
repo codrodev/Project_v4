@@ -649,7 +649,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                         ArcGISSublayer ortho = getOrthoLayer();
 
                         ortho.setVisible(false);
-                        recenter();
+                        //recenter();
                     }
 
                 }
@@ -761,9 +761,9 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         }
         else{
             onStarted();
-            dynamicLayer = new ArcGISMapImageLayer("https://smart.gis.gov.ae/dmgis104/rest/services/Kharetati/Kharetati/MapServer");
+            dynamicLayer = new ArcGISMapImageLayer(AppUrls.GIS_LAYER_URL/*"https://smart.gis.gov.ae/dmgis104/rest/services/Kharetati/Kharetati/MapServer"*/);
             //Credential credential=new UserCredential(AppUrls.GIS_LAYER_USERNAME,AppUrls.GIS_LAYER_PASSWORD);
-            Credential credential=new UserCredential("kharetatiuser","kha##stg@2018");
+            Credential credential=new UserCredential(AppUrls.GIS_LAYER_USERNAME/*"kharetatiuser"*/,AppUrls.GIS_LAYER_PASSWORD/*"kha##stg@2018"*/);
             dynamicLayer.setCredential(credential);
 
             map.getOperationalLayers().add(dynamicLayer);
@@ -799,8 +799,11 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                         }
                     }
 
-                    ArcGISMapImageSublayer sublayer = (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(2);
-                    sublayer.setDefinitionExpression("PARCEL_ID ='" + parcelId + "'");
+                    ArcGISMapImageSublayer sublayer = (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(Global.plotHighlightLayerId));
+                    sublayer.setDefinitionExpression(Global.plotLayerParcelAttrName ="'" + parcelId + "'");
+                    ArcGISMapImageSublayer sublayer1 = (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(Global.plotDimLayerId));
+                    sublayer1.setDefinitionExpression(Global.plotDimLayerParcelAttrName ="'" + parcelId + "'");
+
 
                     if (getActivity() != null) {
                         if (Global.isConnected(getActivity())) {
@@ -1207,7 +1210,15 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
     private void mapFunctionAction(Functions fun){
         if(fun.getInternalFunctions() != null && fun.getInternalFunctions().length() > 0){
             if (fun.getInternalFunctions().equals(FragmentTAGS.FR_REQUEST_SITE_PLAN)){
-                model.validateRequest(FragmentTAGS.FR_REQUEST_SITE_PLAN);
+                if(Global.isConnected(getActivity()))
+                    model.validateRequest(FragmentTAGS.FR_REQUEST_SITE_PLAN);
+                else{
+                    if (Global.appMsg != null)
+                        AlertDialogUtil.errorAlertDialog(getActivity().getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getInternetConnCheckEn() : Global.appMsg.getInternetConnCheckAr(), getActivity().getResources().getString(R.string.ok), getActivity());
+                    else
+                        AlertDialogUtil.errorAlertDialog(getActivity().getResources().getString(R.string.lbl_warning), getActivity().getResources().getString(R.string.internet_connection_problem1), getActivity().getResources().getString(R.string.ok), getActivity()); 
+                }
+
                 mTracker.send(new HitBuilders.EventBuilder()
                         .setCategory("Map Screen")
                         .setAction("Action Request SitePlan")

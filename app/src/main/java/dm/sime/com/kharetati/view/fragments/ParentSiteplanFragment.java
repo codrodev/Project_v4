@@ -129,6 +129,7 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         }
         binding.stepper.setWeightSum(Global.uaePassConfig.hideDeliveryDetails?2.75f:4f);
         binding.stepper.setGravity(Gravity.CENTER);
+        binding.imgBack.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
 
         MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(), FR_PARENT_SITEPLAN, null /* class override */);
         initializePage();
@@ -186,8 +187,8 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
                                 AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getInternetConnCheckEn() : Global.appMsg.getInternetConnCheckAr(), getResources().getString(R.string.ok), getActivity());
                             else
                                 AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
-                        } else
-                            model.retrieveProfileDocs();
+                        } else{
+                            model.retrieveProfileDocs();}
                     }
                     if(currentIndex==1){
                         try {

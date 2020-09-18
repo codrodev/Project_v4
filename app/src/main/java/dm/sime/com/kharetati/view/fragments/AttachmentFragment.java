@@ -2712,11 +2712,17 @@ public class AttachmentFragment extends Fragment implements AttachmentNavigator,
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void downloadDocs(Docs[] docs) {
-
-        for (int i=0; i < docs.length; i++) {
-            retrieveDoc(Integer.parseInt(docs[i].getDocid()));
-            Log.d(getClass().getSimpleName(),"Downloading Documents with DocumentID:"+Integer.parseInt(docs[i].getDocid()));
-            Log.d(getClass().getSimpleName(),"Downloading Documents format:"+docs[i].getDocformat()+"."+docs[i].getDocformat());
+        if (Global.isConnected(getActivity())) {
+            for (int i = 0; i < docs.length; i++) {
+                retrieveDoc(Integer.parseInt(docs[i].getDocid()));
+                Log.d(getClass().getSimpleName(), "Downloading Documents with DocumentID:" + Integer.parseInt(docs[i].getDocid()));
+                Log.d(getClass().getSimpleName(), "Downloading Documents format:" + docs[i].getDocformat() + "." + docs[i].getDocformat());
+            }
+        } else {
+            if (Global.appMsg != null)
+                AlertDialogUtil.errorAlertDialog(getActivity().getResources().getString(R.string.lbl_warning), Global.CURRENT_LOCALE.equals("en") ? Global.appMsg.getInternetConnCheckEn() : Global.appMsg.getInternetConnCheckAr(), getActivity().getResources().getString(R.string.ok), getActivity());
+            else
+                AlertDialogUtil.errorAlertDialog(getActivity().getResources().getString(R.string.lbl_warning), getActivity().getResources().getString(R.string.internet_connection_problem1), getActivity().getResources().getString(R.string.ok), getActivity());
         }
     }
 
