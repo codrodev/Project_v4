@@ -104,6 +104,7 @@ public class LandOwnerSelectionFragment extends Fragment {
         AttachmentBitmap.company_license =null;
         AttachmentBitmap.letter_from_owner =null;
         DeliveryFragment.isDeliveryFragment =false;
+        Global.isDeliveryByCourier = false;
         ParentSiteplanFragment.currentIndex =0;
         ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
         landOwnedType = new String[] {getResources().getString(R.string.land_owned_By_person),getResources().getString(R.string.land_owned_By_company)};

@@ -95,6 +95,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -288,9 +289,6 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                 /*if(binding.mapFunctionLayout.getVisibility() == View.GONE){*/
                     binding.mapFunctionLayout.setVisibility(View.VISIBLE);
                     layoutBottomSheet.setVisibility(View.GONE);
-
-
-
                     if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null){
 
                         if(Global.mapSearchResult.getService_response().getMap().getFunctions().size()>1){
@@ -479,7 +477,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         mapView.setAttributionTextVisible(false);
 
         if(Global.isBookmarks){
-            binding.txtPlotNo.setText(parcelId);
+            binding.txtPlotNo.setText("");
             model.manageAppBar(getActivity(), false);
             model.manageAppBottomBAtr(getActivity(), true);
             //fromBookmarks(parcelId);
@@ -1241,8 +1239,39 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             if(!fun.getLaunchUrl().endsWith("?")) {
                 builder.append("?");
             }
+            builder.append("remarks=" + URLEncoder.encode(Global.getPlatformRemark() )+ "&");
+            String lang = Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0 ? "en" : "ar";
+            builder.append("lng=" +URLEncoder.encode( lang )+ "&");
+            builder.append("fontSize=" +URLEncoder.encode( ""+(int)(Global.fontSize * Global.fontScale))+ "&");
+            builder.append("appsrc="+URLEncoder.encode("kharetati")+"&");
+            if(!Global.isUserLoggedIn){
+                //Guest
+                builder.append("userType="+URLEncoder.encode("GUEST")+"&");
+                builder.append("user_id="+ URLEncoder.encode(""+Global.sime_userid )+"&");
+                builder.append("token="+ URLEncoder.encode(Global.app_session_token)+"&");
+                builder.append("user_name="+URLEncoder.encode("GUEST")+"&");
+                builder.append("access_token=" + URLEncoder.encode(Global.accessToken )+ "&");
+            } else {
+                if(Global.isUAE){
+                    builder.append("userType="+ URLEncoder.encode("UAEPASS")+"&");
+                    builder.append("user_id=" + URLEncoder.encode(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getUuid()) + "&");
+                    builder.append("token="+ URLEncoder.encode(Global.app_session_token )+"&");
+                    builder.append("access_token=" + URLEncoder.encode(Global.uae_access_token ) + "&");
+                    if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0) {
+                        builder.append("user_name=" + URLEncoder.encode(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN()) + "&");
+                    } else {
+                        builder.append("user_name=" + URLEncoder.encode(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameAR() )+ "&");
+                    }
+                } else {
+                    //My Id
+                    builder.append("userType="+URLEncoder.encode("MYID")+"&");
+                    builder.append("user_id=" + URLEncoder.encode(""+Global.sime_userid) + "&");
+                    builder.append("user_name=" + URLEncoder.encode(Global.getUser(getActivity()).getFullname())+"&");
+                    builder.append("access_token=" + URLEncoder.encode(Global.accessToken )+ "&");
+                    builder.append("token="+ URLEncoder.encode(Global.app_session_token )+"&");
+                }
 
-            builder.append("remarks=" + Global.getPlatformRemark() + "&");
+            /*builder.append("remarks=" + Global.getPlatformRemark() + "&");
             builder.append("appsrc=kharetati&");
             String lang = Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0 ? "en" : "ar";
             builder.append("lng=" + lang + "&");
@@ -1271,7 +1300,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                     builder.append("user_name=" + Global.getUser(getActivity()).getFullname() + "&");
                     builder.append("token="+ Global.app_session_token +"&");
                 }
-
+*/
             }
             if(fun.getParams() != null && fun.getParams().size() > 0){
 
