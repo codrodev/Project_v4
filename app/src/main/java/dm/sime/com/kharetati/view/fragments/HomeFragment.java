@@ -272,11 +272,13 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(), model.getSelectedApplication().getNameEn(), null /* class override */);
         //model.getApplication(appID).getSearchForm().get(0).getTabs().getControls().get(0);
         Log.d(getClass().getSimpleName(),model.getSelectedApplication().getNameEn());
-        x.setText("");
-        if(!Global.isFirstLoad){
-            x.requestFocus();
-            if(x.requestFocus()){
-                Global.showSoftKeyboard(x,getActivity());
+        if (x != null) {
+            x.setText("");
+            if (!Global.isFirstLoad) {
+                x.requestFocus();
+                if (x.requestFocus()) {
+                    Global.showSoftKeyboard(x, getActivity());
+                }
             }
         }
 
@@ -388,8 +390,8 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             ViewAnimationUtils.scaleAnimateViewPopFirstLoad(binding.layoutRuntimeContainer);
 
         }
-        x.requestFocus();
-        /*if( x.requestFocus())
+         /*x.requestFocus();
+       if( x.requestFocus())
             Global.showSoftKeyboard(x,getActivity());*/
         //Global.isFirstLoad = false;
 

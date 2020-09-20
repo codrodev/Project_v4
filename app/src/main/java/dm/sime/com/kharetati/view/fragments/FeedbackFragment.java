@@ -85,9 +85,9 @@ public class FeedbackFragment extends Fragment {
         if(!Global.isUserLoggedIn) {
             GuestDetails guestDetails = Global.getGuestDetails(getActivity());
             if(guestDetails!=null){
-                binding.name.setText(guestDetails.fullname);
+                /*binding.name.setText(guestDetails.fullname);
                 binding.email.setText(guestDetails.email);
-                binding.phone.setText(guestDetails.mobile);
+                binding.phone.setText(guestDetails.mobile);*/
 
             }
         }

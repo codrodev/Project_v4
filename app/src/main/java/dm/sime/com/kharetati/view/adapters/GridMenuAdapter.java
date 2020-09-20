@@ -75,7 +75,7 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.Generi
         }
 
         holder.imgIcon.setImageBitmap(viewModel.getIconImage(position));
-        if(Global.isFirstLoad||Global.isRecreate){
+        /*if(Global.isFirstLoad||Global.isRecreate){
             if(position == 0) {
                 holder.cardView.setBackground(context.getResources().getDrawable(R.drawable.border_background));
                 holder.txtMenuName.setTextColor(context.getResources().getColor(R.color.white));
@@ -85,7 +85,7 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.Generi
                 listener.onMenuSelected(lstHomeGridMenuItems.get(0).getId(), true);
             }
             Global.isRecreate =false;
-        }
+        }*/
 
     }
 

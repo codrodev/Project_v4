@@ -93,8 +93,8 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
     private static String DM_TWITTER_AR = "";
     private static final String DM_INSTAGRAM_EN = "https://www.instagram.com/explore/tags/kharetati/?hl=en";
     private static final String DM_INSTAGRAM_AR = "https://www.instagram.com/explore/tags/خريطتي/?hl=ar/";
-    private static final String DM_YOUTUBE_EN = "https://www.youtube.com/results?search_query=dubai+municipality";
-    private static final String DM_YOUTUBE_AR = "https://www.youtube.com/results?search_query=%D8%A8%D9%84%D8%AF%D9%8A%D8%A9+%D8%AF%D8%A8%D9%8A";
+    private static final String DM_YOUTUBE_EN = "https://www.youtube.com/user/DubaiMunicipalityUAE";
+    private static final String DM_YOUTUBE_AR = "https://www.youtube.com/user/DubaiMunicipalityUAE";
     private ArcGISMapImageLayer dynamicLayer;
     public static ContactusViewModel contactUsVM;
     ContactusViewModelFactory factory;

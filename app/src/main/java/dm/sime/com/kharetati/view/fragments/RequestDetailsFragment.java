@@ -158,8 +158,8 @@ public class RequestDetailsFragment extends Fragment {
                 String tag = backEntry.getName();
                 Fragment fragment = getFragmentManager().findFragmentByTag(tag);
 
-                if(getFragmentManager().getBackStackEntryAt(index-1).getName().compareToIgnoreCase(FragmentTAGS.FR_DASHBOARD)==0){
-                    /*FragmentManager fragmentManager=getFragmentManager();
+                /*if(getFragmentManager().getBackStackEntryAt(index-1).getName().compareToIgnoreCase(FragmentTAGS.FR_DASHBOARD)==0){
+                    *//*FragmentManager fragmentManager=getFragmentManager();
                     if(fragmentManager!=null)
                         while(fragmentManager.getBackStackEntryCount() >=0) {
                             if(fragmentManager.getBackStackEntryCount() == 0 ){
@@ -167,24 +167,25 @@ public class RequestDetailsFragment extends Fragment {
                             } else {
                                 while (fragment.getTag().compareToIgnoreCase(FragmentTAGS.FR_MYMAP)==0)
                                     fragmentManager.popBackStackImmediate();
-                               *//* if(fragment.getTag().compareToIgnoreCase(FragmentTAGS.FR_MYMAP)==0){
+                               *//**//* if(fragment.getTag().compareToIgnoreCase(FragmentTAGS.FR_MYMAP)==0){
 
                                     break;
                                 }
-                                else*//*
+                                else*//**//*
 
                             }
-                        }*/
+                        }*//*
                     //((MainActivity)getActivity()).clearStack(FragmentTAGS.FR_DASHBOARD,1);
                     ((MainActivity)getActivity()).onBackPressed();
-                }
-                else if(fragment.getTag().compareToIgnoreCase(FragmentTAGS.FR_REQUEST_DETAILS)==0){
+                }*/
+                if(fragment.getTag().compareToIgnoreCase(FragmentTAGS.FR_REQUEST_DETAILS)==0){
                     RequestDetailsFragment.isFromRequestDetails = true;
                     ((MainActivity)getActivity()).clearStack(FragmentTAGS.FR_DASHBOARD,1);
 
                 }
-                else
-                    ((MainActivity)getActivity()).onBackPressed();
+                else{
+                    RequestDetailsFragment.isFromRequestDetails = false;
+                    ((MainActivity)getActivity()).onBackPressed();}
             }
         });
 

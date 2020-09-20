@@ -1498,7 +1498,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
     }
     public void onMyIDDisabled(boolean status){
         sharedpreferences.edit().putBoolean("isDisableMyId",status).apply();
-        //status= false; //comment after testing
+        status= false; //comment after testing
         if(status){
             binding.loginContainer.setVisibility(View.GONE);
             binding.imageDubaiID.setVisibility(View.GONE);
