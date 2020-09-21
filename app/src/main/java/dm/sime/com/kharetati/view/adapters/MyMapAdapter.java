@@ -123,11 +123,11 @@ public class MyMapAdapter  extends RecyclerView.Adapter<MyMapAdapter.GenericView
         if(Boolean.parseBoolean(lstMyMap.get(position).getIsPlanReady())){
             //((LinearLayout)holder.binding.getRoot().findViewById(R.id.viewIconBackgrund)).setBackgroundColor(Color.parseColor("#1b87e2"));
             ((ImageView)holder.binding.getRoot().findViewById(R.id.view)).setEnabled(true);
-            //((ImageView)holder.binding.getRoot().findViewById(R.id.view)).setAlpha(1f);
+            ((ImageView)holder.binding.getRoot().findViewById(R.id.view)).setAlpha(1f);
         } else {
             //((LinearLayout)holder.binding.getRoot().findViewById(R.id.viewIconBackgrund)).setBackgroundColor(Color.parseColor("#2a2a2a"));
             ((ImageView)holder.binding.getRoot().findViewById(R.id.view)).setEnabled(false);
-           // ((ImageView)holder.binding.getRoot().findViewById(R.id.view)).setAlpha(.5f);
+            ((ImageView)holder.binding.getRoot().findViewById(R.id.view)).setAlpha(.5f);
         }
 
 

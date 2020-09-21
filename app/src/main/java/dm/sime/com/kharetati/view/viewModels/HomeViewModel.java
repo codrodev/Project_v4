@@ -373,7 +373,7 @@ public class HomeViewModel extends ViewModel {
                     @Override public void accept(Throwable throwable) throws Exception {
 
                         if(throwable instanceof Exception)
-                            if(!RequestDetailsFragment.isFromRequestDetails)Global.logout(activity);
+                            if(!RequestDetailsFragment.isFromRequestDetails&&Global.isUserLoggedIn)Global.logout(activity);
                         else
                             showErrorMessage(throwable.getMessage());
                     }
@@ -431,7 +431,7 @@ public class HomeViewModel extends ViewModel {
                 }, new Consumer<Throwable>() {
                     @Override public void accept(Throwable throwable) throws Exception {
                         if(throwable instanceof Exception)
-                            if(!RequestDetailsFragment.isFromRequestDetails)Global.logout(activity);
+                            if(!RequestDetailsFragment.isFromRequestDetails && Global.isUserLoggedIn)Global.logout(activity);
                         else
                             showErrorMessage(throwable.getMessage());
                     }
@@ -452,7 +452,7 @@ public class HomeViewModel extends ViewModel {
             } else {
                 if(appResponse.getMessage() != null){
                     if(appResponse.getMessage().equals("You are not authorized to access this feature"))
-                        if(!RequestDetailsFragment.isFromRequestDetails)Global.logout(activity);
+                        if(!RequestDetailsFragment.isFromRequestDetails && Global.isUserLoggedIn)Global.logout(activity);
                     else
                         homeNavigator.onFailure(Global.CURRENT_LOCALE.equals("en")?appResponse.getMessage():appResponse.getMessage_ar());
 

@@ -203,6 +203,7 @@
                     android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:id="@+id/dubaiLogo"
+                    android:visibility="gone"
                     android:padding="2dp"
                     android:src="@drawable/dmlogo" />
 
@@ -664,6 +665,15 @@
             android:orientation="vertical"
             android:visibility="gone">
 
+                <ImageView
+                    android:id="@+id/uaepassDubaiLogo"
+                    android:layout_width="125dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:padding="2dp"
+                    android:visibility="visible"
+                    android:src="@drawable/dmlogo" />
             <ImageView
                 android:id="@+id/layoutEnableUAEPass"
                 android:layout_width="300dp"

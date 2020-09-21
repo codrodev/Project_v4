@@ -442,6 +442,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
 
         alertDialogNotifications = dialogBuilder.create();
+        alertDialogNotifications.setCancelable(false);
         alertDialogNotifications.show();
         alertDialogNotifications.getWindow().getDecorView().getBackground().setColorFilter(new LightingColorFilter(0x00000000, 0xFFFCFCFC));
         alertDialogNotifications.getWindow().getDecorView().getBackground().setAlpha(0);
@@ -963,6 +964,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             else{
                 Fragment fragmentBeforeBackPress = getCurrentFragment();
                 // Perform the usual back action
+                if(!Global.current_fragment_id.equals(FragmentTAGS.FR_REQUEST_DETAILS))
                 super.onBackPressed();
                 if (Global.current_fragment_id != null) {
                     if (Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW) || Global.current_fragment_id.equals(FragmentTAGS.FR_FEEDBACK) || Global.current_fragment_id.equals(FragmentTAGS.FR_SETTINGS)) {

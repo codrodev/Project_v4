@@ -189,8 +189,9 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         //String locale = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(USER_LANGUAGE, "defaultStringIfNothingFound");
         if(!locale.equals("defaultStringIfNothingFound"))
             CURRENT_LOCALE =locale;
-        if(Global.isLogout && !Global.isTimeout)
+        if(Global.isLogout && !Global.isTimeout){
             AlertDialogUtil.successfulLogoutAlert(LoginActivity.this.getResources().getString(R.string.successful_logout),LoginActivity.this.getResources().getString(R.string.ok),LoginActivity.this);
+        }
 
 
 
@@ -1139,7 +1140,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                                     cardViewParams.setMargins(48,-2131,48,48);
                                 }
                                 else
-                                cardViewParams.setMargins(48, Global.height>=2560?(int) ((-Global.height/4)+600):(Global.height<=1280?(Global.width<=360?(int)(-Global.height/4)+200:(int) ((-Global.height/4)+350)):(Global.width<=1080?(int) ((-Global.height/4)+451):(int) ((-Global.height/4)+500))),48,20);
+                                    cardViewParams.setMargins(48, Global.height>=2560?(int) ((-Global.height/4)+600):(Global.height<=1280?(Global.width<=360?(int)(-Global.height/4)+200:(int) ((-Global.height/4)+350)):(Global.width<=1080?(int) ((-Global.height/4)+451):(int) ((-Global.height/4)+500))),48,20);
                                 binding.cardLogin.setLayoutParams(cardViewParams);
                                 /*LinearLayout.LayoutParams switchLanguageparams = new LinearLayout.LayoutParams(350, 96);
                                 switchLanguageparams.setMargins((int)(Global.width/2)+300,32,32,32);
@@ -1150,7 +1151,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                             else{
                                 LinearLayout.LayoutParams cardViewParams;
                                 if(Global.uaePassConfig.disableMyId){
-                                    cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)));
+                                    cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)(int)((Global.height/4)+(Global.height/6)+200));
                                 }
                                 else{
                                     if (Global.width == 1080 && Global.height == 2123) {
@@ -1162,7 +1163,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
 //
                                 cardViewParams.gravity = Gravity.CENTER_HORIZONTAL;
                                 //cardViewParams.setMargins(48, (int) ((-Global.height/4)+500),48,20);
-                                cardViewParams.setMargins(24, Global.height>=2560?(int) ((-Global.height/4)+600):(Global.height<=1280?(Global.width<=480?(int)(-Global.height/4)+250:(Global.width<=640?(int)(-Global.height/4)+300:(int) ((-Global.height/4)+350))):(Global.width<=1080?(int) ((-Global.height/4)+451):(int) ((-Global.height/4)+500))),24,20);
+                                cardViewParams.setMargins(24, Global.height>=2560?(int) ((-Global.height/4)+600):(Global.height<=1280?(Global.width<=480?(int)(-Global.height/4)+250:(Global.width<=640?(int)(-Global.height/4)+300:(int) ((-Global.height/4)+350))):(Global.width<=1080?(int) ((-Global.height/4)+560):(int) ((-Global.height/4)+500))),24,20);
                                 binding.cardLogin.setLayoutParams(cardViewParams);
                                 binding.txtGuest.setVisibility(View.VISIBLE);
                                 binding.txtLoginwith.setPaddingRelative(80,0,0,0);
@@ -1201,6 +1202,8 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                 }
                 else{
 
+                    //Login screen without animation
+
                    // onConfig(Global.uaePassConfig.disableMyId);
 
                     onMyIDDisabled(Global.uaePassConfig.disableMyId);
@@ -1216,14 +1219,14 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                     logoLayoutParams1.setMargins(leftMargin, (int) (-(Global.height/4)-100),rightMargin,bottomMargin);
                     binding.layoutLogo.setLayoutParams(logoLayoutParams1);
 
-                    LinearLayout.LayoutParams slantViewParams1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/4)+300));
+                    LinearLayout.LayoutParams slantViewParams1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/4)+250));
                     slantViewParams1.gravity = Gravity.CENTER_HORIZONTAL;
                     //slantViewParams.setMargins(0,(-height).toInt(),0,0)
                     binding.slantViewLoginHeader.setLayoutParams(slantViewParams1);
                     LinearLayout.LayoutParams cardViewParams;
                     LinearLayout.LayoutParams switchLanguageparams;
                     if(Global.uaePassConfig.disableMyId){
-                        cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/2)+(Global.height/6)));
+                        cardViewParams= new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)((Global.height/4)+(Global.height/6)+200));
                         /*switchLanguageparams = new LinearLayout.LayoutParams(350,96);
                         switchLanguageparams.setMargins((int)(Global.width/2)+300,64,32,32);
                         binding.switchLanguage.setGravity(Gravity.CENTER);
@@ -1238,8 +1241,10 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
                     }
 //
                     cardViewParams.gravity = Gravity.CENTER_HORIZONTAL;
-                    cardViewParams.setMargins(48, (int) ((-Global.height/4)+100),48,20);
-                    //cardViewParams.setMargins(24, Global.height>=2560?(int) ((-Global.height/4)+600):(Global.height<=1280?(Global.width<=480?(int)(-Global.height/4)+250:(Global.width<=640?(int)(-Global.height/4)+300:(int) ((-Global.height/4)+350))):(Global.width<=1080?(int) ((-Global.height/4)+451):(int) ((-Global.height/4)+500))),24,20);
+                    if(Global.uaePassConfig.disableMyId)
+                        cardViewParams.setMargins(48, (int)((-Global.height/2)+(Global.height/3)),48,20);
+                    else
+                        cardViewParams.setMargins(24, Global.height>=2560?(int) ((-Global.height/4)+600):(Global.height<=1280?(Global.width<=480?(int)(-Global.height/4)+250:(Global.width<=640?(int)(-Global.height/4)+300:(int) ((-Global.height/4)+350))):(Global.width<=1080?(int) ((-Global.height/4)+451):(int) ((-Global.height/4)+500))),24,20);
 
                     binding.cardLogin.setLayoutParams(cardViewParams);
                     if(Global.uaePassConfig.disableMyId){
@@ -1498,7 +1503,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
     }
     public void onMyIDDisabled(boolean status){
         sharedpreferences.edit().putBoolean("isDisableMyId",status).apply();
-        status= false; //comment after testing
+        //status= false; //comment after testing
         if(status){
             binding.loginContainer.setVisibility(View.GONE);
             binding.imageDubaiID.setVisibility(View.GONE);

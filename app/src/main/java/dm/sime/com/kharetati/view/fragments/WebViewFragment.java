@@ -108,6 +108,7 @@ public class  WebViewFragment extends Fragment {
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         //txtUsername = view.findViewById(R.id.txtUsername);
         //txtWelcome = view.findViewById(R.id.txtWelcome);
+        Global.hideSoftKeyboard(getActivity());
         imgBack = view.findViewById(R.id.imgBack);
         imgBack.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);

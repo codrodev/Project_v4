@@ -9,11 +9,13 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.LightingColorFilter;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +35,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
+
+import javax.microedition.khronos.opengles.GL;
 
 import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.datas.models.Bookmark;
@@ -244,11 +248,12 @@ public class AlertDialogUtil {
     }
     public static void chatAlert(String message, String btnTxt, String btnTxt2, final Context context) {
 
-        final EditText input = new EditText(context);
+        final CleanableEditText input = new CleanableEditText(context);
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
         input.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
         input.setRawInputType(Configuration.KEYBOARD_12KEY);
         input.setGravity(Gravity.CENTER);
+        input.setEms(12);
         input.requestFocus();
         input.setHint("9715XXXXXXXX");
         input.setBackgroundColor(Color.parseColor("#00000000"));
@@ -282,9 +287,10 @@ public class AlertDialogUtil {
                         } else {
                             chatURL = DM_CHAT_URL_EN;
                         }
-                        if (input.getText().toString().trim().length() <8 )
+                        if (!mobileNoInitialValidation(input))
                             Toast.makeText(context, context.getResources().getString(R.string.mobile_validation), Toast.LENGTH_SHORT).show();
                         else {
+                            Global.hideSoftKeyboard((MainActivity)context);
                             chatURL += input.getText().toString();
                             ArrayList al = new ArrayList();
                             al.add(chatURL);
@@ -316,6 +322,7 @@ public class AlertDialogUtil {
         //textView1.setTypeface(face);
 
         textView.setPadding(25, 25, 25, 10);
+
 
     }
     public static void timeoutAlertDialog(String title, String message, String btnTxt, Activity context) {
@@ -1716,6 +1723,7 @@ public class AlertDialogUtil {
                 View dialogView = LayoutInflater.from(context).inflate(R.layout.progressbar_layout, viewGroup, false);
 
 
+
                 //Now we need an AlertDialog.Builder object
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
@@ -1724,8 +1732,11 @@ public class AlertDialogUtil {
                 builder.setView(dialogView);
 
                 //finally creating the alert dialog and displaying it
-                if (Global.alertDialog == null)
+                if (Global.alertDialog == null){
                     Global.alertDialog = builder.create();
+                    /*Global.alertDialog.getWindow().getDecorView().getBackground().setColorFilter(new LightingColorFilter(0x00000000, 0x00000000));
+                    Global.alertDialog.getWindow().getDecorView().getBackground().setAlpha(0);*/
+                }
 
                 if (isShow) {
                     Global.alertDialog.setCancelable(false);
@@ -1861,5 +1872,51 @@ public class AlertDialogUtil {
 
         textView.setPadding(80, 25, 25, 10);
 
+    }
+    public static boolean isValidMobile(EditText input,Activity context){
+        boolean isValid = true;
+        if (TextUtils.isEmpty(input.getText().toString())) {
+
+            //AlertDialogUtil.errorAlertDialog(context.getResources().getString(R.string.lbl_warning), context.getResources().getString(R.string.mobile_validation), context.getResources().getString(R.string.ok),context);
+            isValid=false;
+
+            return isValid;
+        }
+        if (mobileNoInitialValidation(input) == false) {
+            //AlertDialogUtil.errorAlertDialog(context.getResources().getString(R.string.lbl_warning), context.getResources().getString(R.string.mobile_validation), context.getResources().getString(R.string.ok), context);
+            isValid=false;
+
+            return isValid;
+        }
+        if (input.getText().length() != 12) {
+            //AlertDialogUtil.errorAlertDialog(context.getString(R.string.lbl_warning),context.getString(R.string.mobile_validation), context.getResources().getString(R.string.ok), context);
+            isValid=false;
+
+            return isValid;
+        }
+        return isValid;
+    }
+
+    public static boolean mobileNoInitialValidation(EditText input){
+        boolean isValid = false;
+        if (!input.getText().toString().isEmpty()) {
+            if (input.getText().toString().length() >= 8 && input.getText().toString().length() <= 12) {
+                if (input.getText().toString().startsWith("971")) {
+
+                    try {
+                        String st = String.valueOf(input.getText().toString().charAt(3));
+                        int val = Integer.parseInt(st);
+                        if (val > 0) {
+                            isValid = true;
+
+                        }
+                    } catch (Exception ex) {
+
+                    }
+
+                }
+            }
+        }
+        return isValid;
     }
 }
