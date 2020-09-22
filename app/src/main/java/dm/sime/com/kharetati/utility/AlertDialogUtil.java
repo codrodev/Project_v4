@@ -53,6 +53,7 @@ import dm.sime.com.kharetati.view.fragments.WebViewFragment;
 import dm.sime.com.kharetati.view.navigators.MainNavigator;
 
 import static dm.sime.com.kharetati.utility.constants.AppConstants.USER_LOGIN_DETAILS;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_CHAT_WEBVIEW;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_CONTACT_US;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_WEBVIEW;
 
@@ -294,7 +295,8 @@ public class AlertDialogUtil {
                             chatURL += input.getText().toString();
                             ArrayList al = new ArrayList();
                             al.add(chatURL);
-                            ((MainActivity)context).loadFragment(FR_WEBVIEW,true,al);
+                            al.add(context.getResources().getString(R.string.title_welcome));
+                            ((MainActivity)context).loadFragment(FR_CHAT_WEBVIEW,true,al);
 
                         /*alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {

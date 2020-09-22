@@ -93,7 +93,6 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         parentModel =model;
         model.parentSitePlanNavigator =this;
 
-
     }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

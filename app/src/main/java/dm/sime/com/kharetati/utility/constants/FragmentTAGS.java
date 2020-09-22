@@ -29,4 +29,5 @@ public class FragmentTAGS {
     public static final String FR_BOTTOMSHEET_WEBVIEW ="BOTTOMSHEET_WEBVIEW_SCREEN" ;
     public static final String FR_SEARCH_SITEPLAN = "SEARCH_SITEPLAN_SCREEN" ;
     public static final String FR_SETTINGS = "SETTINGS_SCREEN";
+    public static final String FR_CHAT_WEBVIEW = "CHAT_SCREEN";
 }

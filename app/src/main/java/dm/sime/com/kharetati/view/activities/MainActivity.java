@@ -44,6 +44,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.esri.arcgisruntime.tasks.geoprocessing.GeoprocessingLong;
 import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -82,7 +83,9 @@ import dm.sime.com.kharetati.view.adapters.PagerContentAdapter;
 import dm.sime.com.kharetati.view.customview.DataCallback;
 import dm.sime.com.kharetati.view.customview.SwitchCompatEx;
 import dm.sime.com.kharetati.view.customview.meowbottomnavigation.MeowBottomNavigation;
+import dm.sime.com.kharetati.view.fragments.ChatWebViewFragment;
 import dm.sime.com.kharetati.view.fragments.FeedbackFragment;
+import dm.sime.com.kharetati.view.fragments.PayFragment;
 import dm.sime.com.kharetati.view.fragments.RequestDetailsFragment;
 import dm.sime.com.kharetati.view.fragments.SettingsFragment;
 import dm.sime.com.kharetati.view.fragments.WebViewFragment;
@@ -598,7 +601,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         }
         setScreenName(getResources().getString(R.string.title_welcome));
         if (Global.current_fragment_id != null) {
-            if (Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW) || Global.current_fragment_id.equals(FragmentTAGS.FR_FEEDBACK) || Global.current_fragment_id.equals(FragmentTAGS.FR_SETTINGS)) {
+            if (Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW) || Global.current_fragment_id.equals(FragmentTAGS.FR_FEEDBACK) || Global.current_fragment_id.equals(FragmentTAGS.FR_SETTINGS)||Global.current_fragment_id.equals(FragmentTAGS.FR_CHAT_WEBVIEW)) {
                 binding.backButton.setVisibility(View.VISIBLE);
                 binding.txtWelcome.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -751,7 +754,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             binding.txtLastLogin.setVisibility(View.GONE);
             binding.layoutlastlogin.setVisibility(View.GONE);
         }
-        if(fragment_tag.equals(FragmentTAGS.FR_WEBVIEW)||fragment_tag.equals(FragmentTAGS.FR_FEEDBACK)||fragment_tag.equals(FragmentTAGS.FR_SETTINGS)){
+        if(fragment_tag.equals(FragmentTAGS.FR_WEBVIEW)||fragment_tag.equals(FragmentTAGS.FR_FEEDBACK)||fragment_tag.equals(FragmentTAGS.FR_SETTINGS)||fragment_tag.equals(FragmentTAGS.FR_CHAT_WEBVIEW)){
             binding.backButton.setVisibility(View.VISIBLE);
             binding.txtWelcome.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -813,18 +816,28 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 }
                 fragment = WebViewFragment.newInstance(Global.webViewUrl, appName);
                 break;
-            case FragmentTAGS.FR_SETTINGS:
-                fragment = SettingsFragment.newInstance();
-                break;
-            case FragmentTAGS.FR_WEBVIEW_PAYMENT:
-                String appName1 = "";
-                if(params!=null) {
+                case FragmentTAGS.FR_CHAT_WEBVIEW:
+                String appName1 = null;
+                if(params!=null && params.size()>0) {
                     Global.webViewUrl = params.get(0).toString();
                     if(params.size() > 1){
                         appName1 = params.get(1).toString();
                     }
                 }
-                fragment = WebViewFragment.newInstance(Global.webViewUrl, appName1);
+                fragment = ChatWebViewFragment.newInstance(Global.webViewUrl, appName1);
+                break;
+            case FragmentTAGS.FR_SETTINGS:
+                fragment = SettingsFragment.newInstance();
+                break;
+            case FragmentTAGS.FR_WEBVIEW_PAYMENT:
+                String appName2 = "";
+                if(params!=null) {
+                    Global.webViewUrl = params.get(0).toString();
+                    if(params.size() > 1){
+                        appName2 = params.get(1).toString();
+                    }
+                }
+                fragment = WebViewFragment.newInstance(Global.webViewUrl, appName2);
                 break;
             case FragmentTAGS.FR_REQUEST_DETAILS:
                 if(params != null && params.size() > 0) {
@@ -965,7 +978,9 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 Fragment fragmentBeforeBackPress = getCurrentFragment();
                 // Perform the usual back action
                 if(!Global.current_fragment_id.equals(FragmentTAGS.FR_REQUEST_DETAILS))
-                super.onBackPressed();
+                    super.onBackPressed();
+                else if(!PayFragment.isFromPayFragment)
+                    super.onBackPressed();
                 if (Global.current_fragment_id != null) {
                     if (Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW) || Global.current_fragment_id.equals(FragmentTAGS.FR_FEEDBACK) || Global.current_fragment_id.equals(FragmentTAGS.FR_SETTINGS)) {
                         binding.backButton.setVisibility(View.VISIBLE);

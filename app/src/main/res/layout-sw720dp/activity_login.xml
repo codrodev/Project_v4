@@ -671,6 +671,7 @@
                     android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="40dp"
                     android:padding="2dp"
                     android:visibility="visible"
                     android:src="@drawable/dmlogo" />

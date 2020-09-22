@@ -338,8 +338,8 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
             Collections.sort(model.lstMyMap, new Comparator<MyMapResults>() {
                 @Override
                 public int compare(MyMapResults siteplan1, MyMapResults siteplan2) {
-                    if(siteplan1.getReqCreatedDate()==null || siteplan2.getReqCreatedDate()==null) return 0;
-                    return siteplan1.getReqCreatedDate().compareTo(siteplan2.getReqCreatedDate());
+                    if(siteplan1.getReq_created_date()==null || siteplan2.getReq_created_date()==null) return 0;
+                    return siteplan1.getReq_created_date().compareTo(siteplan2.getReq_created_date());
                 }
             });
         }
@@ -348,8 +348,8 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
             Collections.sort(model.lstMyMap, new Comparator<MyMapResults>() {
                 @Override
                 public int compare(MyMapResults siteplan1, MyMapResults siteplan2) {
-                    if(siteplan1.getReqCreatedDate()==null || siteplan2.getReqCreatedDate()==null) return 0;
-                    return siteplan1.getReqCreatedDate().compareTo(siteplan2.getReqCreatedDate())>=0?-1:0;
+                    if(siteplan1.getReq_created_date()==null || siteplan2.getReq_created_date()==null) return 0;
+                    return siteplan1.getReq_created_date().compareTo(siteplan2.getReq_created_date())>=0?-1:0;
                 }
             });
         }
@@ -438,7 +438,7 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
             }
             else if(dateFrom.getText().toString().trim().isEmpty() || dateTo.getText().toString().trim().isEmpty()){
                 isValid = false;
-                AlertDialogUtil.errorAlertDialog("", getResources().getString(R.string.enter_plot_or_date), getResources().getString(R.string.ok), getActivity());
+                AlertDialogUtil.errorAlertDialog("", getResources().getString(R.string.older_to_date), getResources().getString(R.string.ok), getActivity());
                 return isValid;
             }
 
