@@ -678,6 +678,7 @@
                     android:layout_width="300dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
                     android:weightSum="3"
                     android:gravity="center_vertical|center_horizontal"
                     android:orientation="horizontal"

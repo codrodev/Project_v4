@@ -908,10 +908,13 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                binding.fragmentMapSearchhistory.setVisibility(View.VISIBLE);
                 if(!skipOnTextChangeEvent)
                 {
+
                     adapterHistory.getFilter().filter(s.toString());
                     adapterHistory.notifyDataSetChanged();
+
                 }
 
             }
@@ -945,6 +948,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         binding.imgSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                binding.fragmentMapSearchhistory.setVisibility(View.GONE);
                 Global.isSaveAsBookmark =false;
                 Global.hideSoftKeyboard(getActivity());
                 searchPlot();
@@ -1049,6 +1053,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
+            binding.fragmentMapSearchhistory.setVisibility(View.GONE);
             Global.isSaveAsBookmark =false;
             webView.loadUrl("about:blank");
             lastSelectedWebFunction = "";

@@ -194,11 +194,12 @@
 
         <ListView
             android:id="@+id/fragment_map_searchhistory"
-            android:layout_width="120dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginTop="50dp"
             android:layout_marginEnd="170dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginStart="64dp"
             android:alpha=".9"
             android:background="@android:color/white"

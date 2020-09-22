@@ -333,13 +333,24 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
     @Override
     public void sortSiteplans(boolean ascending) {
 
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aa",new Locale("en"));
+
         if(ascending)
         {
             Collections.sort(model.lstMyMap, new Comparator<MyMapResults>() {
                 @Override
                 public int compare(MyMapResults siteplan1, MyMapResults siteplan2) {
-                    if(siteplan1.getReq_created_date()==null || siteplan2.getReq_created_date()==null) return 0;
-                    return siteplan1.getReq_created_date().compareTo(siteplan2.getReq_created_date());
+                    Date date1= null;
+                    Date date2= null;
+                    try {
+                        date1 = format.parse(siteplan1.getReq_created_date());
+
+                        date2= format.parse(siteplan2.getReq_created_date());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if(date1==null || date2==null) return 0;
+                    return date1.compareTo(date2);
                 }
             });
         }
@@ -348,8 +359,18 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
             Collections.sort(model.lstMyMap, new Comparator<MyMapResults>() {
                 @Override
                 public int compare(MyMapResults siteplan1, MyMapResults siteplan2) {
-                    if(siteplan1.getReq_created_date()==null || siteplan2.getReq_created_date()==null) return 0;
-                    return siteplan1.getReq_created_date().compareTo(siteplan2.getReq_created_date())>=0?-1:0;
+                    Date date1= null;
+                    Date date2= null;
+                    try {
+                        date1 = format.parse(siteplan1.getReq_created_date());
+
+                        date2= format.parse(siteplan2.getReq_created_date());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    if(date1==null || date2==null) return 0;
+                    return date1.compareTo(date2)>=0?-1:0;
                 }
             });
         }

@@ -17,6 +17,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.LightingColorFilter;
@@ -155,6 +156,10 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         mTracker = KharetatiApp.getInstance().getDefaultTracker();
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        if(getResources().getBoolean(R.bool.portrait_only)){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
 
 
         try {
