@@ -295,7 +295,7 @@ public class AlertDialogUtil {
                             chatURL += input.getText().toString();
                             ArrayList al = new ArrayList();
                             al.add(chatURL);
-                            al.add(context.getResources().getString(R.string.title_welcome));
+                            al.add(context.getResources().getString(R.string.livechat));
                             ((MainActivity)context).loadFragment(FR_CHAT_WEBVIEW,true,al);
 
                         /*alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -1902,7 +1902,7 @@ public class AlertDialogUtil {
     public static boolean mobileNoInitialValidation(EditText input){
         boolean isValid = false;
         if (!input.getText().toString().isEmpty()) {
-            if (input.getText().toString().length() >= 8 && input.getText().toString().length() <= 12) {
+            if (input.getText().toString().length() == 12) {
                 if (input.getText().toString().startsWith("971")) {
 
                     try {

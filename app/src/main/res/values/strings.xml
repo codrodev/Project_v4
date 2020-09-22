@@ -293,6 +293,7 @@
     <string name="successful_logout">You have successfully logged out</string>
     <string name="fonttext">aA</string>
     <string name="valid_criteria">Please enter valid search criteria</string>
+    <string name="livechat">Live Chat</string>
 
     <string-array name="arrHeader">
         <item>header 1</item>

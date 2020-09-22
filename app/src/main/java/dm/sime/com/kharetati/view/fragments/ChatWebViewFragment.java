@@ -25,6 +25,7 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -41,7 +42,9 @@ import dm.sime.com.kharetati.R;
 import dm.sime.com.kharetati.utility.AlertDialogUtil;
 import dm.sime.com.kharetati.utility.FontChangeCrawler;
 import dm.sime.com.kharetati.utility.Global;
+import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
+import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.navigators.FragmentNavigator;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 import dm.sime.com.kharetati.view.viewModels.PayViewModel;
@@ -51,6 +54,7 @@ import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_WEBVIEW;
 public class ChatWebViewFragment extends Fragment {
     private static String URL = "url";
     private static String APP_NAME = "app_name";
+
     WebView webView;
     TextView txtUsername, txtWelcome;
     ImageView imgBack;
@@ -106,6 +110,7 @@ public class ChatWebViewFragment extends Fragment {
         Global.hideSoftKeyboard(getActivity());
         imgBack = view.findViewById(R.id.imgBack);
         imgBack.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
+        ((MainActivity)getActivity()).setScreenName(appName!=null?appName:"");
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         //((MainActivity)getActivity()).setScreenName(Global.isUserLoggedIn?Global.getUser(getActivity()).getFullname(): LoginViewModel.guestName);
 
@@ -126,27 +131,9 @@ public class ChatWebViewFragment extends Fragment {
         webSettings.setTextZoom(100);
         /*String newUA= "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0";
         webView.getSettings().setUserAgentString(newUA);*/
-        WebChromeClient webChromeClient = new WebChromeClient() {
-            @Override
-            public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
-                result.cancel();
-                return true;
-            }
 
-            @Override
-            public boolean onJsConfirm(WebView view, String url, String message, JsResult result) {
-                result.cancel();
-                return true;
-            }
-
-            @Override
-            public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, JsPromptResult result) {
-                result.cancel();
-                return true;
-            }
-        };
         webView.setWebViewClient(new MyWebViewClient());
-        webView.setWebChromeClient(webChromeClient);
+        webView.setWebChromeClient(new MyChromClient());
         webView.loadUrl(launchUrl);
        /* manageAppBottomBAtr(true);
         manageAppBar(true);
@@ -223,8 +210,29 @@ public class ChatWebViewFragment extends Fragment {
         super.onResume();
         manageAppBottomBAtr(true);
         manageAppBar(true);
+        ((MainActivity)getActivity()).setScreenName(appName!=null?appName:"");
         if(launchUrl!=null)
             webView.loadUrl(launchUrl);
+        WebChromeClient webChromeClient = new WebChromeClient() {
+            @Override
+            public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+                result.cancel();
+                return true;
+            }
+
+            @Override
+            public boolean onJsConfirm(WebView view, String url, String message, JsResult result) {
+                result.cancel();
+                return true;
+            }
+
+            @Override
+            public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, JsPromptResult result) {
+                result.cancel();
+                return true;
+            }
+        };
+        webView.setWebChromeClient(webChromeClient);
     }
 
 
@@ -294,5 +302,27 @@ public class ChatWebViewFragment extends Fragment {
             Global.hideSoftKeyboard(getActivity());
         }
 
+    }
+    public class MyChromClient extends WebChromeClient{
+        public MyChromClient() {
+
+        }
+        @Override
+        public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+            result.cancel();
+            return true;
+        }
+
+        @Override
+        public boolean onJsConfirm(WebView view, String url, String message, JsResult result) {
+            result.cancel();
+            return true;
+        }
+
+        @Override
+        public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, JsPromptResult result) {
+            result.cancel();
+            return true;
+        }
     }
 }

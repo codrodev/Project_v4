@@ -296,4 +296,5 @@
     <string name="successful_logout">لقد قمت بتسجيل الخروج بنجاح</string>
     <string name="fonttext">أ</string>
     <string name="valid_criteria">الرجاء إدخال قيمة صحيحة للبحث</string>
+    <string name="livechat">دردشة مباشرة</string>
 </resources>
