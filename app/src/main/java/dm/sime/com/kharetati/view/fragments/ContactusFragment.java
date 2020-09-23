@@ -286,11 +286,11 @@ public class ContactusFragment extends Fragment implements ContactusNavigator {
                 }
                 else{
                     if (CURRENT_LOCALE=="ar") {
-                        DM_TWITTER_AR ="https://twitter.com/search?q=%23%D8%AE%D8%B1%D9%8A%D8%B7%D8%AA%D9%8A&src=typeahead_click#kharetati'&src=typd";
+                        DM_TWITTER_AR ="https://twitter.com/DMunicipality";
 
                         openURL(DM_TWITTER_AR);
                     }else{
-                        DM_TWITTER_EN ="https://twitter.com/search?q=%23kharetati&src=typed_query#kharetati'&src=typd";
+                        DM_TWITTER_EN ="https://twitter.com/DMunicipality";
                         openURL(DM_TWITTER_EN);
                     }}
             }

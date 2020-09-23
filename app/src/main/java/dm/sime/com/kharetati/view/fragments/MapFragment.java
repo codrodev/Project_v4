@@ -1781,7 +1781,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
 
                                 //PlotDetails.currentState.textLabel=parcelTextLabel;
                                 PlotDetails.parcelNo=parcelId.trim();
-                                Global.addToParcelHistory(parcelId,getActivity());
+                                Global.addToParcelHistory(parcelId.trim(),getActivity());
                                 //fromBookmarksFindCommunity();
 
 
@@ -1830,8 +1830,8 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                                     }
 
                                     PlotDetails.currentState.textLabel=parcelTextLabel;
-                                    PlotDetails.parcelNo=parcelId;
-                                    Global.addToParcelHistory(parcelId,getActivity());
+                                    PlotDetails.parcelNo=parcelId.trim();
+                                    Global.addToParcelHistory(parcelId.trim(),getActivity());
                                     //fromBookmarksFindCommunity();
                                     model.getParceldetails();
                                     break;
@@ -1946,7 +1946,8 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                                     PlotDetails.currentState.graphic=new Graphic(feature.getGeometry(),new SimpleFillSymbol());
                                     PlotDetails.plotGeometry=feature.getGeometry();
 //                                    graphicsLayer.getGraphics().add(sublayerGraphic);
-
+                                    if(PlotDetails.parcelNo!=null)
+                                    Global.addToParcelHistory(PlotDetails.parcelNo.trim(),getActivity());
                                     findCommunity();
                                     break;
                                 }
