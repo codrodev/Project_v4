@@ -624,20 +624,22 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
     @Override
     protected void attachBaseContext(Context newBase) {
+        sharedpreferences = newBase.getSharedPreferences(MYPREFERENCES, Context.MODE_PRIVATE);
+        String locale = sharedpreferences.getString(USER_LANGUAGE, "defaultStringIfNothingFound");
+
+        Global.fontScale = sharedpreferences.getFloat(FONT_SIZE,1f);
+
+
+        if(!locale.equals("defaultStringIfNothingFound"))
+            CURRENT_LOCALE =locale;
+        else
+            CURRENT_LOCALE ="en";
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            sharedpreferences = newBase.getSharedPreferences(MYPREFERENCES, Context.MODE_PRIVATE);
-            String locale = sharedpreferences.getString(USER_LANGUAGE, "defaultStringIfNothingFound");
 
-            Global.fontScale = sharedpreferences.getFloat(FONT_SIZE,1f);
-
-
-            if(!locale.equals("defaultStringIfNothingFound"))
-                CURRENT_LOCALE =locale;
-            else
-                CURRENT_LOCALE ="en";
             super.attachBaseContext(CustomContextWrapper.wrap(newBase, CURRENT_LOCALE));
 
         } else {
+
             super.attachBaseContext(newBase);
         }
     }

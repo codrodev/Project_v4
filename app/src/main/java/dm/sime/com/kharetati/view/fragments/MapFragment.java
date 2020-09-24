@@ -889,9 +889,9 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         Handler handlerHistoryVisibilityController = new Handler();
         final Runnable runnableHistoryVisibilityController = new Runnable() {
             public void run() {
-                if(binding.txtPlotNo.getText().toString().trim().length()>1)
+                if(binding.txtPlotNo.getText().toString().trim().length()>=1)
                 {
-                    if(adapterHistory.getCount()>0)
+                    if(adapterHistory.getCount()>=1)
                         searchhistoryListView.setVisibility(View.VISIBLE);
                     else
                         searchhistoryListView.setVisibility(View.GONE);
@@ -908,7 +908,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                binding.fragmentMapSearchhistory.setVisibility(View.VISIBLE);
+                //binding.fragmentMapSearchhistory.setVisibility(View.VISIBLE);
                 if(!skipOnTextChangeEvent)
                 {
 
@@ -920,6 +920,8 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             }
             @Override
             public void afterTextChanged(Editable s) {
+                if(s.toString().length()>=1)
+                binding.fragmentMapSearchhistory.setVisibility(View.VISIBLE);
                 if(!skipOnTextChangeEvent)
                 {
                     final Timer timer=new Timer();

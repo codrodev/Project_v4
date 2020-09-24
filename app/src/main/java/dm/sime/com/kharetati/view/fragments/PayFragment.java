@@ -1,7 +1,10 @@
 package dm.sime.com.kharetati.view.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,9 +39,11 @@ import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 import dm.sime.com.kharetati.view.viewModels.PayViewModel;
 import dm.sime.com.kharetati.view.viewmodelfactories.PayViewModelFactory;
 
+import static android.content.Context.MODE_PRIVATE;
 import static dm.sime.com.kharetati.utility.Global.CURRENT_LOCALE;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_DELIVERY;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_PAY;
+import static dm.sime.com.kharetati.view.fragments.DeliveryFragment.userid;
 
 public class PayFragment extends Fragment implements PayNavigator {
 
@@ -53,6 +58,7 @@ public class PayFragment extends Fragment implements PayNavigator {
     public static String applicantMobile;
     public static String applicantEmailId;
     private Tracker mTracker;
+    private SharedPreferences preferences;
 
     public static PayFragment newInstance(){
         PayFragment fragment = new PayFragment();
@@ -89,7 +95,53 @@ public class PayFragment extends Fragment implements PayNavigator {
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         if(CURRENT_LOCALE.equals("en")) binding.rootView.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.rootView.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         setRetainInstance(true);
-        setEmailAndMobileField();
+        preferences = getActivity().getSharedPreferences(userid, MODE_PRIVATE);
+        binding.etEmailaddress.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                preferences.edit().putString("applicantEmailId",editable.toString().trim()).apply();
+            }
+        });
+        binding.etMobile.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                preferences.edit().putString("applicantMobile",editable.toString().trim()).apply();
+            }
+        });
+            String mobile = preferences.getString("applicantMobile",binding.etMobile.getText().toString().trim());
+            String email = preferences.getString("applicantEmailId",binding.etEmailaddress.getText().toString().trim());
+            if(email.isEmpty() && mobile.isEmpty())
+                setEmailAndMobileField();
+            else{
+
+                binding.etMobile.setText(preferences.getString("applicantMobile",binding.etMobile.getText().toString().trim()));
+                binding.etEmailaddress.setText(preferences.getString("applicantEmailId",binding.etEmailaddress.getText().toString().trim()));
+            }
+
         isFromPayFragment =true;
         ParentSiteplanFragment.currentIndex =Global.uaePassConfig.hideDeliveryDetails?2:3;
         binding.payNow.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +162,8 @@ public class PayFragment extends Fragment implements PayNavigator {
 
                         applicantMobile = binding.etMobile.getText().toString().trim();
                         applicantEmailId = binding.etEmailaddress.getText().toString().trim();
+                        preferences.edit().putString("applicantEmailId",applicantEmailId).apply();
+                        preferences.edit().putString("applicantMobile",applicantMobile).apply();
 
                         try {
                             model.createAndUpdateRequest();
@@ -146,6 +200,8 @@ public class PayFragment extends Fragment implements PayNavigator {
                     if(isValidMobile() == true && isValidEmailId() == true) {
                         applicantMobile = binding.etMobile.getText().toString().trim();
                         applicantEmailId = binding.etEmailaddress.getText().toString().trim();
+                        preferences.edit().putString("applicantEmailId",applicantEmailId).apply();
+                        preferences.edit().putString("applicantMobile",applicantMobile).apply();
                         try {
                             model.createAndUpdateRequest();
                             mTracker.send(new HitBuilders.EventBuilder()
@@ -229,6 +285,7 @@ public class PayFragment extends Fragment implements PayNavigator {
         return isValid;
     }
     private void setEmailAndMobileField(){
+
         if(ParentSiteplanViewModel.applicantMailId != null &&
                 ParentSiteplanViewModel.applicantMailId.length() > 0){
             binding.etEmailaddress.setText(ParentSiteplanViewModel.applicantMailId.trim());

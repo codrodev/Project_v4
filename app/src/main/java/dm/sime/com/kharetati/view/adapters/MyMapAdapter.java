@@ -60,6 +60,7 @@ public class MyMapAdapter  extends RecyclerView.Adapter<MyMapAdapter.GenericView
     public void onBindViewHolder(@NonNull GenericViewHolder holder, int position) {
         holder.bind(viewModel, position);
 
+
         ((TextView)holder.binding.getRoot().findViewById(R.id.plotNo)).setText(lstMyMap.get(position).getParcelId());
         ((TextView)holder.binding.getRoot().findViewById(R.id.dateAndTime)).setText(lstMyMap.get(position).getReq_created_date());
         ((TextView)holder.binding.getRoot().findViewById(R.id.txtVoucher)).setText(lstMyMap.get(position).getVoucher_no());

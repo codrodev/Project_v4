@@ -70,6 +70,7 @@ import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.activities.MainActivity;
+import dm.sime.com.kharetati.view.customview.CleanableEditText;
 import dm.sime.com.kharetati.view.navigators.MyMapNavigator;
 import dm.sime.com.kharetati.view.viewModels.MyMapViewModel;
 import dm.sime.com.kharetati.view.viewmodelfactories.MyMapViewModelFactory;
@@ -87,8 +88,8 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
     private MyMapViewModelFactory factory;
     private MyMapRepository repository;
     private Tracker mTracker;
-    private EditText dateFrom;
-    private EditText dateTo;
+    private CleanableEditText dateFrom;
+    private CleanableEditText dateTo;
     private Calendar calendar;
     public static int fromyear,frommonth,fromday;
     private Button button_findSitePlan;
@@ -154,7 +155,7 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
             @Override
             public void onClick(View v) {
 
-                isDesending = true;
+                isDesending = false;
 
 
                 sortSiteplans(isDesending);
@@ -165,7 +166,7 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
             @Override
             public void onClick(View v) {
 
-                isDesending = false;
+                isDesending = true;
 
 
                 sortSiteplans(isDesending);
@@ -209,8 +210,8 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
 
                 editText.setText("test label");*/
 
-                dateFrom=(EditText)dialogView.findViewById(R.id.datePicker_from);
-                dateTo=(EditText)dialogView.findViewById(R.id.datePicker_to);
+                dateFrom=(CleanableEditText)dialogView.findViewById(R.id.datePicker_from);
+                dateTo=(CleanableEditText)dialogView.findViewById(R.id.datePicker_to);
 
                 button_findSitePlan=(Button)dialogView.findViewById(R.id.button_findSitePlan);
                 parcelID=(EditText)dialogView.findViewById(R.id.parcelId);
@@ -310,6 +311,9 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
         AlertDialogUtil.showProgressBar(getActivity(),false);
         binding.txtMessage.setVisibility(View.GONE);
         binding.recylerMyMaps.setAdapter(model.getMyMapAdapter());
+        sortSiteplans(true);
+        sortSiteplans(false);
+
 
 
     }
@@ -370,7 +374,8 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
                     }
 
                     if(date1==null || date2==null) return 0;
-                    return date1.compareTo(date2)>=0?-1:0;
+                    return date1.compareTo(date2)>0?-1:0;
+
                 }
             });
         }
@@ -492,7 +497,8 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
                         String dateString = Global.CURRENT_LOCALE.equals("en")?sdf.format(calendar.getTime()):sdfAr.format(calendar.getTime());
 
                         dateFrom.setText(dateString);
-                        dateTo.setFocusable(true);// set the date
+                        dateFrom.setFocusable(true);// set the date
+                        dateFrom.requestFocus();
 
                     }
                 }, fromyear, frommonth, fromday); // set date picker to current date
@@ -527,6 +533,7 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
                         String dateString = Global.CURRENT_LOCALE.equals("en")?sdf.format(calendar.getTime()):sdfAr.format(calendar.getTime());
                         dateTo.setText(dateString);
                         dateTo.setFocusable(true);
+                        dateTo.requestFocus();
 
                     }
                 }, year, month, day); // set date picker to current date

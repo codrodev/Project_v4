@@ -291,7 +291,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="8dp"
                 android:textAlignment="center"
-                android:textColor="#c35563"
+                android:textColor="@color/maroon_light"
                 android:text="@string/payment_warning"
                 android:layout_marginLeft="5dp" />
             <Button
