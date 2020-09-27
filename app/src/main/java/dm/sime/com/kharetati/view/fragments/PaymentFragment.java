@@ -44,6 +44,7 @@ import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_WEBVIEW_PA
 public class PaymentFragment extends Fragment {
     private static String URL = "url";
     private static String APP_NAME = "app_name";
+    public static boolean isFromPaymentFagment;
     WebView webView;
     TextView txtUsername, txtWelcome;
     ImageView imgBack;
@@ -57,6 +58,7 @@ public class PaymentFragment extends Fragment {
         args.putString(URL, url);
         args.putString(APP_NAME, appName);
         launchUrl= url;
+        isFromPaymentFagment = true;
         return fragment;
     }
     @Override
@@ -82,6 +84,7 @@ public class PaymentFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Global.current_fragment_id = FragmentTAGS.FR_WEBVIEW_PAYMENT;
         View view = inflater.inflate(R.layout.fragment_payment, container, false);
+        PaymentFragment.isFromPaymentFagment = true;
         //txtUsername = view.findViewById(R.id.txtUsername);
         //txtWelcome = view.findViewById(R.id.txtWelcome);
         imgBack = view.findViewById(R.id.imgBack);
@@ -115,7 +118,7 @@ public class PaymentFragment extends Fragment {
         PayViewModel.hm = new ArrayList();
         PayFragment.paymentType = "";
         Global.paymentUrl = "";
-        ParentSiteplanViewModel.initializeDocuments();
+        //ParentSiteplanViewModel.initializeDocuments();
         setRetainInstance(true);
         return view;
     }

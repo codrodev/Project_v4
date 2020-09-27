@@ -105,6 +105,8 @@ public class RequestDetailsFragment extends Fragment {
         communicator.hideAppBar();
         final ApplicationController application = (ApplicationController) getActivity().getApplication();*/
 
+        PaymentFragment.isFromPaymentFagment = true;
+
         tvRequestNumber=(TextView) view.findViewById(R.id.tvRequestNumber);
         tvParcelId=(TextView) view.findViewById(R.id.tvParcelId);
         tvVoucher=(TextView) view.findViewById(R.id.tvVoucher);

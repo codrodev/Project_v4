@@ -265,6 +265,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setTextZoom(100);
         Global.isFromMap = true;
+        PaymentFragment.isFromPaymentFagment =false;
         if (Global.fontScale >= 1.25) {
             CoordinatorLayout.LayoutParams params = new CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             params.setMargins(0,SwitchCompatEx.dp2Px(54f),0,0);
@@ -1842,7 +1843,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                                 //    progressDialog.hide();
                                 if(!result.iterator().hasNext()){
 
-                                    onFailure(getActivity().getResources().getString(R.string.plot_does_not_exist));
+                                    onFailure(getActivity().getResources().getString(R.string.valid_plot_number));
 
                                 }
                             } catch (InterruptedException | ExecutionException e) {

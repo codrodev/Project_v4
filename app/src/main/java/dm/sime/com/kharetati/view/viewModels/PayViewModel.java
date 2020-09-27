@@ -31,6 +31,7 @@ import dm.sime.com.kharetati.view.activities.MainActivity;
 import dm.sime.com.kharetati.view.fragments.AttachmentFragment;
 import dm.sime.com.kharetati.view.fragments.ParentSiteplanFragment;
 import dm.sime.com.kharetati.view.fragments.PayFragment;
+import dm.sime.com.kharetati.view.fragments.PaymentFragment;
 import dm.sime.com.kharetati.view.navigators.PayNavigator;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -165,6 +166,7 @@ public class PayViewModel extends ViewModel {
 
                     if(status==600){
                         ImageCropActivity.isImageCropped =false;
+                        PaymentFragment.isFromPaymentFagment =true;
 
                         ArrayList al = new ArrayList<>();
                         al.add(Global.paymentUrl);
