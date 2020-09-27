@@ -5,6 +5,16 @@ public class SearchResultResponse {
 
     private String ApplicationId;
 
+    private String allowAddToFavorites;
+
+    public String getAllowAddToFavorites() {
+        return allowAddToFavorites;
+    }
+
+    public void setAllowAddToFavorites(String allowAddToFavorites) {
+        this.allowAddToFavorites = allowAddToFavorites;
+    }
+
     private Map Map;
 
     public String getParcelId ()

@@ -502,7 +502,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             al.add(hm);
 
         }
-        if(isMakani)
+        if(Global.allowAddToFavorites)
             al.remove(1);
         SimpleAdapter sa = new SimpleAdapter(getActivity(),al,R.layout.map_menu_item,keys,ids);
         binding.listmapMenu.setAdapter(sa);
@@ -526,11 +526,11 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                     case 0:if(((ImageView) view.findViewById(R.id.menuImage)).getTag()==null)((ImageView) view.findViewById(R.id.menuImage)).setTag("layer");
                         changeLayer((ImageView) view.findViewById(R.id.menuImage));
                     break;
-                    case 1:if(!isMakani)addToFav();else recenter();
+                    case 1:if(!Global.allowAddToFavorites)addToFav();else recenter();
                     break;
-                    case 2:if(!isMakani)recenter();else gotomakani();
+                    case 2:if(!Global.allowAddToFavorites)recenter();else gotomakani();
                     break;
-                    case 3:if(!isMakani)gotomakani();/*else helpClicked();*/
+                    case 3:if(!Global.allowAddToFavorites)gotomakani();/*else helpClicked();*/
                     break;
                     /*case 4:if(!isMakani)helpClicked();break;*/
                 }
@@ -1330,6 +1330,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                 if(Global.mapSearchResult.getService_response().getMap().getFunctions().size()==1){
                     functionurl = builder.toString();
                     webView.loadUrl(builder.toString());
+                    System.out.println("URL===>"+functionurl);
                 }
                 else{
                     ArrayList al = new ArrayList();
@@ -1370,8 +1371,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                     Uri uri = Uri.parse(url);
                     Intent sendIntent = new Intent();
                     sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.putExtra(Intent.EXTRA_SUBJECT,uri.getQueryParameter("subject") );
-
+                    sendIntent.putExtra(Intent.EXTRA_SUBJECT,uri.getQueryParameter("subject"));
                     String urlstring = uri.getQueryParameter("url");
                     if(urlstring.contains("enc=")){
                        // String shareUrl = urlstring.substring(urlstring.)

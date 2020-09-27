@@ -529,8 +529,11 @@ public class HomeViewModel extends ViewModel {
                         @Override
                         public void accept(SearchResult response) throws Exception {
                             if(response!=null){
-                            PlotDetails.parcelNo = response.getService_response().getParcelId();
-                            getMapBasedSearchResult(response);
+                                if(response.getService_response()!=null){
+                                    PlotDetails.parcelNo = response.getService_response().getParcelId();
+                                    Global.allowAddToFavorites = Boolean.valueOf(response.getService_response().getAllowAddToFavorites());
+                                    getMapBasedSearchResult(response);
+                                }
                             }
 
                         }
@@ -548,7 +551,10 @@ public class HomeViewModel extends ViewModel {
                     .subscribe(new Consumer<WebSearchResult>() {
                         @Override
                         public void accept(WebSearchResult response) throws Exception {
-                            getWebBasedSearchResult(response);
+                            if(response!=null){
+
+                                getWebBasedSearchResult(response);
+                            }
                         }
                     }, new Consumer<Throwable>() {
                         @Override

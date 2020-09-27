@@ -557,12 +557,12 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
         String fromDate, toDate;
 
         if(Global.isProbablyArabic(dateFrom.getText().toString())){
-            fromDate = format.format(formatAr.parse(Global.arabicNumberToDecimal(dateFrom.getText().toString())));
+            fromDate = formatAr.format(format.parse(Global.arabicNumberToDecimal(dateFrom.getText().toString())));
         } else {
             fromDate = dateFrom.getText().toString();
         }
         if(Global.isProbablyArabic(dateTo.getText().toString())){
-            toDate = format.format(formatAr.parse(Global.arabicNumberToDecimal(dateTo.getText().toString())));
+            toDate = formatAr.format(format.parse(Global.arabicNumberToDecimal(dateTo.getText().toString())));
         } else {
             toDate = dateTo.getText().toString();
         }

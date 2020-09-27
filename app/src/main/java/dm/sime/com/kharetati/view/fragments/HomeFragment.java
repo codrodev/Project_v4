@@ -346,6 +346,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                             app.getSearchForm().get(tab.getPosition()).getTabs().getControls().size() > 0) {
                         model.setSelectedTab(app.getSearchForm().get(tab.getPosition()).getTabs());
                         Global.selectedTab = tab.getPosition();
+                        Global.lstControls = app.getSearchForm().get(tab.getPosition()).getTabs().getControls();
                         runtimeControlRenderer(app.getSearchForm().get(tab.getPosition()).getTabs().getControls());
 
 
@@ -525,7 +526,9 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
         layout.addView(x);
         lstRuntimeCleanableText.add(x);
-        if(control.getParam().equals("land_no")){
+
+
+        /*if(control.getParam().equals("land_no")){
             isLand =true;
             if(!Objects.requireNonNull(x.getText()).toString().trim().equals("")){
                 if(Global.LandNo!=null ||Global.LandNo!="")
@@ -549,7 +552,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                 Global.subNo = x.getText().toString().trim();
             }
 
-        }
+        }*/
         return layout;
     }
 
@@ -677,101 +680,48 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         boolean isEmpty = false;
         if(lstRuntimeCleanableText != null && lstRuntimeCleanableText.size() > 0) {
             for (int i = 0; i < lstRuntimeCleanableText.size(); i++){
-
-                if(Global.selectedTab==2){
-                    CleanableEditText txt = (CleanableEditText)lstRuntimeCleanableText.get(0);
-                   // CleanableEditText txt1 = (CleanableEditText)lstRuntimeCleanableText.get(1);
-                    if(txt.getText().toString().equals(""))
-                        isEmpty =true;
-                    else{
-                        isEmpty =false;
-                        Global.LandNo = txt.getText().toString().trim();
-                    }
-                    /*if(txt1.getText().toString().equals("")){
-                        isEmpty =false;
-
-                    }
-                    else{
-                        isEmpty =false;
-                        Global.subNo = txt1.getText().toString().trim();
-                    }*/
-                    break;
-                }
-                else{
                 CleanableEditText txt = (CleanableEditText)lstRuntimeCleanableText.get(i);
-                //if(isValid(txt.toString(), txt.getRegXPattern())){
-                    if(txt.getText().toString() == null || txt.getText().toString().equals("")){
-                        isEmpty = true;
-                        break;
-                    }
-               /* } else {
+                if(txt.getText().toString() == null || txt.getText().toString().equals("")){
                     isEmpty = true;
                     break;
-                }*/
-            }}
+                }
+            }
         }
         return isEmpty;
     }
 
     private String populateSearchText(){
         StringBuilder builder = new StringBuilder();
-        if (Global.selectedTab ==2) {
-            if (communityId != null && Global.LandNo != null && !Global.LandNo.equals("")) {
-                CleanableEditText txt = (CleanableEditText) lstRuntimeCleanableText.get(1);
-                Global.subNo = Objects.requireNonNull(txt.getText()).toString().trim().equals("") ? "0" : txt.getText().toString().trim();
-                if((txt.getText().toString().trim().equals("")))txt.setText("0");else txt.setText(txt.getText().toString().trim());
-            /*String text =communityId+"|"+Global.LandNo+"|"+Global.subNo;
-            searchText = text;*/
-                builder.append(communityId);
-                builder.append("|");
-                builder.append(Global.LandNo);
-                builder.append("|");
-                builder.append(Global.subNo);
-
-
-
-
-
-
-            }
-        }
-        /*if (communityId != null && communityId.length() > 0){
+        if (communityId != null && communityId.length() > 0){
             builder.append(communityId);
             builder.append("|");
-        }*/
+        }
         if(lstRuntimeCleanableText != null && lstRuntimeCleanableText.size() > 0) {
             for (int i = 0; i < lstRuntimeCleanableText.size(); i++) {
                 CleanableEditText txt = (CleanableEditText) lstRuntimeCleanableText.get(i);
                 if(isMakani(txt)){
-                    if(txt.length()>=5){
                     String s1 = txt.getText().toString().substring(0, 5);
                     String s2 = txt.getText().toString().substring(5, txt.getText().toString().length());
 
                     builder.append(s1 + " " + s2);
-                    }
-                    else{
-                        builder.append(txt);
-                    }
                 } else {
-                    if (Global.selectedTab != 2)
                     builder.append(txt.getText().toString());
                 }
-                /*if(i < lstRuntimeCleanableText.size() - 1) {
+                if(i < lstRuntimeCleanableText.size() - 1) {
                     builder.append("|");
-                }*/
+                }
             }
         }
-        Bundle bundle = new Bundle();
-
         return builder.toString();
     }
 
 
     private boolean isMakani(CleanableEditText txt){
         Global.isMakani = false;
-
-        if(txt.getType().toLowerCase().equals("makani")){
-            isMakani = true;
+        for (int i = 0; i < Global.lstControls.size(); i++) {
+            if (txt.getType().compareToIgnoreCase("makani")==0) {
+                isMakani = true;
+            }
         }
         return isMakani;
     }

@@ -156,7 +156,7 @@
     <string name="Contact_us_Call_permission">"التطبيق سوف يستخدم خاصية الهاتف لإجراء المكالمات. ولن يتم هذا إلا بعلم المستخدم."</string>
     <string name="phone">رقم الهاتف</string>
     <string name="Website">موقع الكتروني</string>
-    <string name="Chat">دردشة</string>
+    <string name="Chat">دردشة مباشرة</string>
     <string name="Live_chat_with_our_call_center"> دردشة مباشرة مع الدعم التقني</string>
     <string name="social_network">وسائل التواصل الإجتماعي</string>
     <string name="facebook">فيس بوك</string>
