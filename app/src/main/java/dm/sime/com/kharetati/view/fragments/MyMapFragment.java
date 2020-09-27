@@ -145,6 +145,8 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
         mTracker.setScreenName(FR_MYMAP);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(),FR_MYMAP , null /* class override */);
+        format = new SimpleDateFormat("dd/MM/yyyy", new Locale("en"));
+        formatAr = new SimpleDateFormat("yyyy/MM/dd", new Locale("ar"));
         try {
             initializePage();
 
@@ -437,8 +439,7 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
             }
             else if(!dateFrom.getText().toString().trim().isEmpty() && !dateTo.getText().toString().trim().isEmpty()){
                 Date date = new Date();
-                format = new SimpleDateFormat("dd/MM/yyyy", new Locale("en"));
-                formatAr = new SimpleDateFormat("yyyy/MM/dd", new Locale("ar"));
+
                 try {
                     Date fromDate = (CURRENT_LOCALE.equals("en"))?format.parse(dateFrom.getText().toString().trim()):formatAr.parse(dateFrom.getText().toString().trim());
                     Date toDate = (CURRENT_LOCALE.equals("en"))?format.parse(dateTo.getText().toString().trim()):formatAr.parse(dateTo.getText().toString().trim());
@@ -557,12 +558,12 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
         String fromDate, toDate;
 
         if(Global.isProbablyArabic(dateFrom.getText().toString())){
-            fromDate = formatAr.format(format.parse(Global.arabicNumberToDecimal(dateFrom.getText().toString())));
+            fromDate = format.format(formatAr.parse(Global.arabicNumberToDecimal(dateFrom.getText().toString())));
         } else {
             fromDate = dateFrom.getText().toString();
         }
         if(Global.isProbablyArabic(dateTo.getText().toString())){
-            toDate = formatAr.format(format.parse(Global.arabicNumberToDecimal(dateTo.getText().toString())));
+            toDate = format.format(formatAr.parse(Global.arabicNumberToDecimal(dateTo.getText().toString())));
         } else {
             toDate = dateTo.getText().toString();
         }
