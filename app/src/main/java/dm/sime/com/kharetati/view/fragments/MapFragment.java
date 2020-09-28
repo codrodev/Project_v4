@@ -502,7 +502,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             al.add(hm);
 
         }
-        if(Global.allowAddToFavorites)
+        if(!Global.allowAddToFavorites)
             al.remove(1);
         SimpleAdapter sa = new SimpleAdapter(getActivity(),al,R.layout.map_menu_item,keys,ids);
         binding.listmapMenu.setAdapter(sa);
@@ -526,11 +526,11 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                     case 0:if(((ImageView) view.findViewById(R.id.menuImage)).getTag()==null)((ImageView) view.findViewById(R.id.menuImage)).setTag("layer");
                         changeLayer((ImageView) view.findViewById(R.id.menuImage));
                     break;
-                    case 1:if(!Global.allowAddToFavorites)addToFav();else recenter();
+                    case 1:if(Global.allowAddToFavorites)addToFav();else recenter();
                     break;
-                    case 2:if(!Global.allowAddToFavorites)recenter();else gotomakani();
+                    case 2:if(Global.allowAddToFavorites)recenter();else gotomakani();
                     break;
-                    case 3:if(!Global.allowAddToFavorites)gotomakani();/*else helpClicked();*/
+                    case 3:if(Global.allowAddToFavorites)gotomakani();/*else helpClicked();*/
                     break;
                     /*case 4:if(!isMakani)helpClicked();break;*/
                 }

@@ -30,6 +30,7 @@ public class VotingManager {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        webView.getSettings().setTextZoom(100);
         String signature = json + "|" + secret;
         String random = Utils.generate16DigitRandom();
         String nonceText = random+"|"+votingRequest.getHeader().getTimeStamp()+"|"+secret;

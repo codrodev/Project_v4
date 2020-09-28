@@ -140,6 +140,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     private ImageView imageView;
     private TextView tabTextView;
     public static CleanableEditText x;
+    public static boolean isEmpty;
     /*BottomSheetBehavior sheetBehavior;
     LinearLayout layoutBottomSheet;*/
 
@@ -416,14 +417,14 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             //Guest
             builder.append("userType="+URLEncoder.encode("GUEST")+"&");
             builder.append("user_id="+ URLEncoder.encode(""+Global.sime_userid )+"&");
-            builder.append("token="+ URLEncoder.encode(Global.app_session_token)+"&");
+            //builder.append("token="+ URLEncoder.encode(Global.app_session_token)+"&");
             builder.append("user_name="+URLEncoder.encode("GUEST")+"&");
             builder.append("access_token=" + URLEncoder.encode(Global.accessToken )+ "&");
         } else {
             if(Global.isUAE){
                 builder.append("userType="+ URLEncoder.encode("UAEPASS")+"&");
                 builder.append("user_id=" + URLEncoder.encode(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getUuid()) + "&");
-                builder.append("token="+ URLEncoder.encode(Global.app_session_token )+"&");
+                builder.append("token="+ URLEncoder.encode(Global.uaeSessionResponse.getService_response().getToken())+"&");
                 builder.append("access_token=" + URLEncoder.encode(Global.uae_access_token ) + "&");
                 if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0) {
                     builder.append("user_name=" + URLEncoder.encode(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN()) + "&");
@@ -677,16 +678,23 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     }
 
     private boolean isSearchBoxEmpty(){
-        boolean isEmpty = false;
-        if(lstRuntimeCleanableText != null && lstRuntimeCleanableText.size() > 0) {
-            for (int i = 0; i < lstRuntimeCleanableText.size(); i++){
-                CleanableEditText txt = (CleanableEditText)lstRuntimeCleanableText.get(i);
-                if(txt.getText().toString() == null || txt.getText().toString().equals("")){
+        isEmpty = false;
+        if (lstRuntimeCleanableText != null && lstRuntimeCleanableText.size() > 0)
+        {
+            for (int i = 0; i < lstRuntimeCleanableText.size(); i++) {
+                CleanableEditText txt = (CleanableEditText) lstRuntimeCleanableText.get(i);
+                if ((txt.getText().toString() == null || txt.getText().toString().equals("")) && (communityId == null || communityId.equals(""))) {
                     isEmpty = true;
                     break;
                 }
+                if(lstRuntimeCleanableText.size() >= 2){
+                    if(communityId.isEmpty()|| communityId == null)
+                        isEmpty =true;
+                }
             }
+
         }
+
         return isEmpty;
     }
 
@@ -895,9 +903,10 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                         //spinArea.setText(item + " Position: " + position);
                         Global.hideSoftKeyboard(getActivity());
                         if(!TextUtils.isEmpty(item)) {
-                            communityId = Global.lookupResponse.getLkp().get(position).getId().toString();
+                            communityId = position>0 ? Global.lookupResponse.getLkp().get(position).getId().toString():"";
+                            isEmpty = communityId.isEmpty()?true:false;
                             spinnerView.setText(item);
-                            if(Global.selectedTab == 2){
+                            /*if(Global.selectedTab == 2){
                                 CleanableEditText txt = (CleanableEditText)lstRuntimeCleanableText.get(0);
                                 CleanableEditText txt1 = (CleanableEditText)lstRuntimeCleanableText.get(1);
                                 Global.LandNo = txt.getText().toString().trim().equals("")?"":txt.getText().toString().trim();
@@ -917,7 +926,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                                 model.getAppsSearchResult(builder.toString());
 
 
-                            }
+                            }*/
 
                         }
 

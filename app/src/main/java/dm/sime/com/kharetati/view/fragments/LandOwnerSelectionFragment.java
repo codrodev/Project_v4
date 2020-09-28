@@ -95,6 +95,7 @@ public class LandOwnerSelectionFragment extends Fragment {
         AttachmentFragment.isGallery =false;
         AttachmentFragment.isCamera =false;
         ImageCropActivity.isImageCropped=false;
+        PayFragment.isFromPayFragment =false;
 
         /*if(ParentSiteplanViewModel.getDownloadedDoc()!=null)ParentSiteplanViewModel.getDownloadedDoc().clear();
         if(ParentSiteplanViewModel.getNewlyAttachedDoc()!=null)ParentSiteplanViewModel.getNewlyAttachedDoc().clear();

@@ -41,6 +41,7 @@ import dm.sime.com.kharetati.utility.Global;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.activities.ImageCropActivity;
 import dm.sime.com.kharetati.view.activities.MainActivity;
+import dm.sime.com.kharetati.view.customview.SwitchCompatEx;
 import dm.sime.com.kharetati.view.navigators.ParentSitePlanNavigator;
 import dm.sime.com.kharetati.view.viewModels.ParentSiteplanViewModel;
 import dm.sime.com.kharetati.view.viewmodelfactories.ParentSitePlanViewModelFactory;
@@ -119,10 +120,17 @@ public class ParentSiteplanFragment extends Fragment implements ParentSitePlanNa
         mTracker.setScreenName(FR_PARENT_SITEPLAN);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         if(Global.uaePassConfig.hideDeliveryDetails){
+            /*LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(SwitchCompatEx.dp2Px(16f),SwitchCompatEx.dp2Px(16f),SwitchCompatEx.dp2Px(16f),SwitchCompatEx.dp2Px(16f));
+            params.gravity =Gravity.CENTER;
+            binding.stepper.setLayoutParams(params);*/
             binding.stepperFourLayout.setVisibility(View.GONE);
             binding.view3.setVisibility(View.GONE);
         }
         else{
+            /*LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(SwitchCompatEx.dp2Px(16f),SwitchCompatEx.dp2Px(16f),SwitchCompatEx.dp2Px(16f),SwitchCompatEx.dp2Px(16f));
+            binding.stepper.setLayoutParams(params);*/
             binding.stepperFourLayout.setVisibility(View.VISIBLE);
             binding.view3.setVisibility(View.VISIBLE);
         }

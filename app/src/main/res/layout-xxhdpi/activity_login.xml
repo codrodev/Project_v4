@@ -830,7 +830,7 @@
                     android:layout_width="150dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="70dp"
+                    android:layout_marginTop="55dp"
                     android:fontFamily="@font/dubai_font"
                     android:gravity="center"
                     android:layoutDirection="rtl"
