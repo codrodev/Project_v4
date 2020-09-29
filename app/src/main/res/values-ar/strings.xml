@@ -174,7 +174,7 @@
     <string name="subject">الموضوع* </string>
     <string name="feedback_description"> الوصف*</string>
     <string name="description_fav">الوصف*</string>
-    <string name="feedback_mobile_number">رقم الهاتف المحمول</string>
+    <string name="feedback_mobile_number">رقم الهاتف المحمول*</string>
     <string name="submit">إرسال</string>
     <string name="all_fields_are_required">جميع الحقول مطلوبه</string>
     <string name="search">البحث</string>

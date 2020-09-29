@@ -144,10 +144,12 @@ public class RequestDetailsFragment extends Fragment {
                 AttachmentFragment.callBackURL = callBackUrl;
                 AttachmentFragment.paymentUrl = eradUrl+"&locale="+locale+"&VoucherNo="+voucherNo+"&PayeeNameEN="+userName+"&MobileNo="+mobile+"&eMail="+email+"&ReturnURL="+callBackUrl;
                 ArrayList al = new ArrayList<>();
+                //AttachmentFragment.paymentUrl ="https://smart.gis.gov.ae/kharetativ5/content/resources/paymenttest/payment.html";
                 al.add(AttachmentFragment.paymentUrl);
                 al.add(getActivity().getResources().getString(R.string.payment));
                 Global.current_fragment_id = FragmentTAGS.FR_WEBVIEW_PAYMENT;
-                ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW,true,al);
+
+                ((MainActivity)getActivity()).loadFragment(FragmentTAGS.FR_WEBVIEW_PAYMENT,true,al);
 
             }
         });

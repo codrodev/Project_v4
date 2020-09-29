@@ -75,7 +75,8 @@ public class DashboardFragment extends Fragment implements ViewPager.OnPageChang
         Global.isDashboard=true;
         if(!Global.isUserLoggedIn){
             guestUserUI();
-            binding.layoutParent.setWeightSum(1);
+            binding.layoutParent.setWeightSum(1.25f);
+
             model.setDashboardPagerAdapter(this, 1);
         } else {
             binding.layoutParent.setWeightSum(2);
@@ -135,7 +136,7 @@ public class DashboardFragment extends Fragment implements ViewPager.OnPageChang
     private void guestUserUI(){
         binding.layoutCardMyMap.setVisibility(View.GONE);
         binding.txtBookmark.setTextColor(getResources().getColor(R.color.black));
-        binding.layoutBookmark.setBackgroundColor(getResources().getColor(R.color.white));
+        binding.layoutBookmark.setBackground(getResources().getDrawable(R.drawable.capsule_white_bg));
         binding.imgBookMark.setImageDrawable(getResources().getDrawable(R.drawable.favourites));
         ((MainActivity)getActivity()).setScreenName(getActivity().getResources().getString(R.string.bookmark));
         binding.layoutParent.setPaddingRelative(0,5,0,5);

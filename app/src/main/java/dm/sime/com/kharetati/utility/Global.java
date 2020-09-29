@@ -48,6 +48,7 @@ import java.util.List;
 import java.util.Locale;
 
 import dm.sime.com.kharetati.R;
+import dm.sime.com.kharetati.datas.models.Applications;
 import dm.sime.com.kharetati.datas.models.Controls;
 import dm.sime.com.kharetati.datas.models.DeliveryDetails;
 import dm.sime.com.kharetati.datas.models.DocArr;
@@ -182,6 +183,8 @@ public class Global {
     public static boolean isTimeout;
     public static Boolean allowAddToFavorites;
     public static List<Controls> lstControls = new ArrayList<Controls>();
+    public static Applications selectedApplication;
+    public static boolean isAppSelected;
     private static Context context;
     public static boolean isLanguageChanged = false;
     public static String noctemplateUrl;

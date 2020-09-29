@@ -49,6 +49,7 @@ import dm.sime.com.kharetati.view.activities.WebViewActivity;
 import dm.sime.com.kharetati.view.customview.CleanableEditText;
 import dm.sime.com.kharetati.view.fragments.AttachmentFragment;
 import dm.sime.com.kharetati.view.fragments.BookmarkFragment;
+import dm.sime.com.kharetati.view.fragments.PaymentFragment;
 import dm.sime.com.kharetati.view.fragments.WebViewFragment;
 import dm.sime.com.kharetati.view.navigators.MainNavigator;
 
@@ -502,7 +503,7 @@ public class AlertDialogUtil {
 
                         ((MainActivity)context).changeActionBarStatus(true);
                         (((MainActivity)context)).clearBackStack();
-                        (((MainActivity)context)).getSupportFragmentManager().beginTransaction().remove(new WebViewFragment()).commit();
+                        (((MainActivity)context)).getSupportFragmentManager().beginTransaction().remove(new PaymentFragment()).commit();
                     }
                 }).show();
 

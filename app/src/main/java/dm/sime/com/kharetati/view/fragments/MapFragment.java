@@ -264,6 +264,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         WebView.setWebContentsDebuggingEnabled(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setTextZoom(100);
+        binding.fragmentMapSearchhistory.setVisibility(View.GONE);
         Global.isFromMap = true;
         PaymentFragment.isFromPaymentFagment =false;
         if (Global.fontScale >= 1.25) {
@@ -1009,7 +1010,12 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         else{
             if(mapView!=null && PlotDetails.plotGeometry!=null)
             {
+
                 mapView.setViewpointGeometryAsync(PlotDetails.plotGeometry, extentPadding);
+                if(binding.imgLayer.getTag().equals("layer_active"))
+                    map.setBasemap(Basemap.createImagery());
+
+
                 final Timer timer=new Timer();
                 timer.schedule(new TimerTask() {
                     @Override

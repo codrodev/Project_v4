@@ -52,6 +52,7 @@
                             android:textStyle="bold"
                             android:fontFamily="@font/dubai_font"
                             android:textFontWeight="900"
+                            android:layout_gravity="center_vertical"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginVertical="15dp"
@@ -63,6 +64,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
                             android:gravity="end">
 
                         <LinearLayout
@@ -71,6 +73,7 @@
                             android:layout_gravity="end|center_vertical"
                             android:layout_marginVertical="15dp"
                             android:layout_marginEnd="16dp"
+                            android:padding="3dp"
 
                             android:layout_marginStart="@dimen/settngs_switch_margin"
                             android:background="@drawable/capsule_white_bg_settings"
@@ -98,6 +101,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
                                 android:layout_marginBottom="4dp"
+
                                 android:layout_weight="1"
                                 android:paddingStart="5dp"
                                 android:paddingEnd="5dp"
@@ -134,6 +138,7 @@
                         android:textAlignment="viewStart"
                         android:textSize="16sp"
                         android:textStyle="bold"
+                        android:layout_gravity="center_vertical"
                         android:fontFamily="@font/dubai_font"
                         android:textFontWeight="900"
                         android:layout_marginStart="12dp"
@@ -144,6 +149,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
                         android:gravity="end">
                     <LinearLayout
                         android:layout_width="170dp"
@@ -152,6 +158,8 @@
                         android:layout_marginVertical="15dp"
                         android:layout_marginEnd="16dp"
                         android:weightSum="2"
+                        android:layout_gravity="end|center_vertical"
+                        android:padding="3dp"
                         android:background="@drawable/capsule_white_bg_settings"
                         android:gravity="end">
                         <TextView

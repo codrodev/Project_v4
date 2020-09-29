@@ -11,6 +11,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -88,6 +89,7 @@ public class PaymentFragment extends Fragment {
         //txtUsername = view.findViewById(R.id.txtUsername);
         //txtWelcome = view.findViewById(R.id.txtWelcome);
         imgBack = view.findViewById(R.id.imgBack);
+        imgBack.setRotationY(Global.CURRENT_LOCALE.equals("en")?0:180);
         /*txtUsername.setText(Global.isUserLoggedIn?(Global.getUser(getActivity()).getFullname()): LoginViewModel.guestName);
         if(appName != null && appName != "") {
             txtWelcome.setText(appName);
@@ -105,9 +107,11 @@ public class PaymentFragment extends Fragment {
         webView.getSettings().setUserAgentString(newUA);*/
         webView.setWebViewClient(new MyWebViewClient());
         webView.loadUrl(launchUrl);
+        //webView.loadUrl("https://smart.gis.gov.ae/kharetativ5/content/resources/paymenttest/payment.html");// for testing
         webView.addJavascriptInterface(new LoadListener(), "HTMLOUT");
-        manageAppBottomBAtr(false);
-        manageAppBar(false);
+        manageAppBottomBAtr(true);
+        manageAppBar(true);
+        ((MainActivity)getActivity()).setScreenName(getActivity().getResources().getString(R.string.payment));
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,6 +135,12 @@ public class PaymentFragment extends Fragment {
     public void manageAppBar(boolean status){
         frNavigator = (FragmentNavigator) getActivity();
         frNavigator.manageActionBar(status);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MainActivity)getActivity()).setScreenName(getActivity().getResources().getString(R.string.payment));
     }
 
     public class MyWebViewClient extends android.webkit.WebViewClient{
@@ -157,10 +167,9 @@ public class PaymentFragment extends Fragment {
         @Override
         public void onPageFinished(WebView view, String url) {
             AlertDialogUtil.showProgressBar(getActivity(),false);
-            if(AttachmentFragment.callBackURL != null){
-                if (url != null && url.toLowerCase().indexOf(AttachmentFragment.callBackURL.toLowerCase()) != -1){
+            if(PayViewModel.callBackURL != null){
                     view.loadUrl("javascript:window.HTMLOUT.processHTML('<html>'+document.getElementsByTagName('html')[0].innerHTML+'</html>');");
-                }
+                    RequestDetailsFragment.isFromRequestDetails = true;
             }
         }
 
@@ -187,6 +196,11 @@ public class PaymentFragment extends Fragment {
                 Document doc = Jsoup.parse(html);
                 //String paymentStatus = "0";
                 Global.paymentStatus = doc.getElementById("txtPaymentStatus").attr("value");
+                //Toast.makeText(getActivity(), Global.paymentStatus, Toast.LENGTH_SHORT).show();
+                if(Global.paymentStatus.equals("1"))
+                    ParentSiteplanFragment.currentIndex = Global.uaePassConfig.hideDeliveryDetails?2:3;
+
+
                 //paymentStatus = null;
 
         /*if(paymentStatus != null) {

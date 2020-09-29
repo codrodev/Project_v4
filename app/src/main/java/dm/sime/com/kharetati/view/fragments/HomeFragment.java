@@ -205,6 +205,9 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         }
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         setRetainInstance(true);
+        if(!Global.isAppSelected){
+            Global.HelpUrl = Global.CURRENT_LOCALE.equals("en")?Global.home_en_url:Global.home_ar_url;
+        }
         return binding.getRoot();
     }
 
@@ -251,6 +254,14 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         ((MainActivity)getActivity()).setScreenName(getActivity().getString(R.string.title_welcome));
         if(Global.appId!=null && model.getApplication( Global.appId)!=null)
         Global.HelpUrl = CURRENT_LOCALE.equals("en")?model.getApplication( Global.appId).getHelpUrlEn():model.getApplication( Global.appId).getHelpUrlAr();
+        if(Global.isAppSelected)
+            binding.layoutRuntimeContainer.setVisibility(View.VISIBLE);
+        else
+            binding.layoutRuntimeContainer.setVisibility(View.GONE);
+        if(!Global.isAppSelected){
+            Global.HelpUrl = Global.CURRENT_LOCALE.equals("en")?Global.home_en_url:Global.home_ar_url;
+        }
+
 
         Global.selectedTab =0;
 
@@ -263,6 +274,8 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         initializeRuntimeForm(model.getApplication(appID), isAnimation);
         Global.appId = appID;
         Global.HelpUrl = CURRENT_LOCALE.equals("en")?model.getApplication( Global.appId).getHelpUrlEn():model.getApplication( Global.appId).getHelpUrlAr();
+        Global.isAppSelected =  true;
+        binding.layoutRuntimeContainer.setVisibility(View.VISIBLE);
         mTracker.send(new HitBuilders.EventBuilder()
                 .setCategory("Home Screen")
                 .setAction("Action Application")
@@ -305,6 +318,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             if(CURRENT_LOCALE.equals("en"))  binding.layoutRuntimeContainer.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else  binding.layoutRuntimeContainer.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
             if(CURRENT_LOCALE.equals("en"))  binding.layoutHeader.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else  binding.layoutHeader.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
             binding.layoutControlHeader.setVisibility(View.GONE);
+            if(Global.isAppSelected)
             binding.layoutRuntimeContainer.setVisibility(View.VISIBLE);
             binding.tabRuntimeLayout.removeAllTabs();
             //binding.tabRuntimeLayout.setupWithViewPager(binding.viewPagerRuntime);
@@ -371,6 +385,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         } else if(model.getSelectedApplication().getSearchForm() != null && model.getSelectedApplication().getSearchForm().size() == 1){
             binding.tabRuntimeLayout.setVisibility(View.GONE);
             binding.layoutControlHeader.setVisibility(View.VISIBLE);
+            if(Global.isAppSelected)
             binding.layoutRuntimeContainer.setVisibility(View.VISIBLE);
             binding.txtHeader.setText((CURRENT_LOCALE.equals("en"))?app.getSearchForm().get(0).getTabs().getNameEn():app.getSearchForm().get(0).getTabs().getNameAr());
             binding.txtHeader.setTextColor(getResources().getColor(R.color.white));
@@ -846,6 +861,8 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     @Override
     public void onStop() {
         super.onStop();
+        Global.isAppSelected = false;
+
         saveInputValues();
     }
 

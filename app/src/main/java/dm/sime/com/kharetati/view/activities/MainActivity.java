@@ -87,6 +87,7 @@ import dm.sime.com.kharetati.view.customview.meowbottomnavigation.MeowBottomNavi
 import dm.sime.com.kharetati.view.fragments.ChatWebViewFragment;
 import dm.sime.com.kharetati.view.fragments.FeedbackFragment;
 import dm.sime.com.kharetati.view.fragments.PayFragment;
+import dm.sime.com.kharetati.view.fragments.PaymentFragment;
 import dm.sime.com.kharetati.view.fragments.RequestDetailsFragment;
 import dm.sime.com.kharetati.view.fragments.SettingsFragment;
 import dm.sime.com.kharetati.view.fragments.WebViewFragment;
@@ -844,7 +845,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                         appName2 = params.get(1).toString();
                     }
                 }
-                fragment = WebViewFragment.newInstance(Global.webViewUrl, appName2);
+                fragment = PaymentFragment.newInstance(Global.webViewUrl, appName2);
                 break;
             case FragmentTAGS.FR_REQUEST_DETAILS:
                 if(params != null && params.size() > 0) {
@@ -1174,7 +1175,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 String tag = backEntry.getName();
                 Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
 
-                if(fragment.getTag().compareToIgnoreCase(FragmentTAGS.FR_PAY)==0||fragment.getTag().compareToIgnoreCase(FragmentTAGS.FR_DASHBOARD)==0)
+                if(fragment.getTag().compareToIgnoreCase(FragmentTAGS.FR_REQUEST_SITE_PLAN)==0 ||fragment.getTag().compareToIgnoreCase(FragmentTAGS.FR_REQUEST_DETAILS)==0)
                 {
                     break;
                 }
