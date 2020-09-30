@@ -262,7 +262,6 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             Global.HelpUrl = Global.CURRENT_LOCALE.equals("en")?Global.home_en_url:Global.home_ar_url;
         }
 
-
         Global.selectedTab =0;
 
 
@@ -318,8 +317,8 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             if(CURRENT_LOCALE.equals("en"))  binding.layoutRuntimeContainer.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else  binding.layoutRuntimeContainer.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
             if(CURRENT_LOCALE.equals("en"))  binding.layoutHeader.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else  binding.layoutHeader.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
             binding.layoutControlHeader.setVisibility(View.GONE);
-            if(Global.isAppSelected)
-            binding.layoutRuntimeContainer.setVisibility(View.VISIBLE);
+
+            binding.layoutRuntimeContainer.setVisibility(Global.isAppSelected?View.VISIBLE:View.GONE);
             binding.tabRuntimeLayout.removeAllTabs();
             //binding.tabRuntimeLayout.setupWithViewPager(binding.viewPagerRuntime);
             int x =0;
@@ -385,8 +384,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         } else if(model.getSelectedApplication().getSearchForm() != null && model.getSelectedApplication().getSearchForm().size() == 1){
             binding.tabRuntimeLayout.setVisibility(View.GONE);
             binding.layoutControlHeader.setVisibility(View.VISIBLE);
-            if(Global.isAppSelected)
-            binding.layoutRuntimeContainer.setVisibility(View.VISIBLE);
+            binding.layoutRuntimeContainer.setVisibility(Global.isAppSelected?View.VISIBLE:View.GONE);
             binding.txtHeader.setText((CURRENT_LOCALE.equals("en"))?app.getSearchForm().get(0).getTabs().getNameEn():app.getSearchForm().get(0).getTabs().getNameAr());
             binding.txtHeader.setTextColor(getResources().getColor(R.color.white));
             model.setSelectedTab(app.getSearchForm().get(0).getTabs());

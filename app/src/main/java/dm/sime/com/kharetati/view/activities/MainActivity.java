@@ -232,22 +232,20 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         //model.getNotifications();
 
 
-
-        if(Global.isUAE){
-            if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0) {
+        if (Global.isUAE && Global.isUserLoggedIn) {
+            if (Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0) {
                 binding.txtUsername.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN());
             } else {
                 binding.txtUsername.setText(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameAR());
             }
         } else {
-            if(Global.isUserLoggedIn){
-                if(CURRENT_LOCALE.equals("en"))
-                    binding.txtUsername.setText(Global.getUser(this).getFullname()!=null?Global.getUser(this).getFullname():Global.getUser(this).getFullnameAR());
+            if (Global.isUserLoggedIn) {
+                if (CURRENT_LOCALE.equals("en"))
+                    binding.txtUsername.setText(Global.getUser(this).getFullname() != null ? Global.getUser(this).getFullname() : Global.getUser(this).getFullnameAR());
                 else
-                    binding.txtUsername.setText(Global.getUser(this).getFullnameAR()!=null?Global.getUser(this).getFullnameAR():Global.getUser(this).getFullname());
+                    binding.txtUsername.setText(Global.getUser(this).getFullnameAR() != null ? Global.getUser(this).getFullnameAR() : Global.getUser(this).getFullname());
 
-            }
-            else
+            } else
                 binding.txtUsername.setText(getResources().getString(R.string.guest));
         }
         try {

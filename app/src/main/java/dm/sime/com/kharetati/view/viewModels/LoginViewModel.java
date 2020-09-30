@@ -123,6 +123,7 @@ public class LoginViewModel extends ViewModel {
 
         authListener.onStarted();
         kharetatiApp = KharetatiApp.create(activity);
+        Global.isUserLoggedIn= false;
 
         HTTPRequestBody.GuestBody guestBody = new HTTPRequestBody.GuestBody();
 

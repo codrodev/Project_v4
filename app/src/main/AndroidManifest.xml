@@ -26,7 +26,6 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:largeHeap="true"
-        android:hardwareAccelerated="false"
         android:theme="@style/AppTheme">
         <activity android:name=".view.activities.WebViewActivity"></activity>
         <activity

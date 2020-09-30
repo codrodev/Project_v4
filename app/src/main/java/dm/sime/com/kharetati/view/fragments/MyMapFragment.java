@@ -470,6 +470,18 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
             }
 
         }
+        else if(parcelNumber.length()>=5 &&(!dateFrom.getText().toString().trim().isEmpty() || !dateTo.getText().toString().trim().isEmpty())){
+            if(dateFrom.getText().toString().trim().isEmpty() || dateTo.getText().toString().trim().isEmpty()){
+                isValid = false;
+                AlertDialogUtil.errorAlertDialog("", getResources().getString(R.string.older_to_date), getResources().getString(R.string.ok), getActivity());
+                return isValid;
+            }
+            else if(!dateFrom.getText().toString().trim().isEmpty() && !dateTo.getText().toString().trim().isEmpty()){
+                isValid =true;
+                return isValid;
+            }
+        }
+
         /*else {
             isValid = false;
             AlertDialogUtil.errorAlertDialog("", getResources().getString(R.string.enter_plot_or_date), getResources().getString(R.string.ok), getActivity());

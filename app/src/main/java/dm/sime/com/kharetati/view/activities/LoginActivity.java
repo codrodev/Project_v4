@@ -180,6 +180,7 @@ public class LoginActivity extends AppCompatActivity implements AuthListener {
         viewModel.authListener = this;
         loginVM = viewModel;
         adjustFontScale(getResources().getConfiguration(),Global.fontScale);
+        Global.isUserLoggedIn= false;
 
 
 
