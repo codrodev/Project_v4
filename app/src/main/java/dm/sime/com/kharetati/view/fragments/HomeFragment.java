@@ -274,6 +274,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         Global.appId = appID;
         Global.HelpUrl = CURRENT_LOCALE.equals("en")?model.getApplication( Global.appId).getHelpUrlEn():model.getApplication( Global.appId).getHelpUrlAr();
         Global.isAppSelected =  true;
+        Global.isFirstLoad =false;
         binding.layoutRuntimeContainer.setVisibility(View.VISIBLE);
         mTracker.send(new HitBuilders.EventBuilder()
                 .setCategory("Home Screen")

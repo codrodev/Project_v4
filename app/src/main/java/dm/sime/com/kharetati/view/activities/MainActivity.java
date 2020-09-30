@@ -1118,6 +1118,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                         }
                     }
                 }
+                onSuccess();
             }
         }
 
