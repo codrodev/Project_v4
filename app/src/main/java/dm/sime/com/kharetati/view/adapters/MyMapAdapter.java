@@ -182,7 +182,7 @@ public class MyMapAdapter  extends RecyclerView.Adapter<MyMapAdapter.GenericView
                 }
                 else{
                     PayFragment.isFromPayFragment = false;
-                    Global.paymentStatus = null;
+                    //Global.paymentStatus = null;
                     List<Object> param=new ArrayList<Object>();
                     param.add(lstMyMap.get(position).getRequestId());
                     param.add(lstMyMap.get(position).getParcelId());

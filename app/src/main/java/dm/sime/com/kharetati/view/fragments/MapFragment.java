@@ -922,8 +922,8 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             }
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.toString().length()>=1)
-                binding.fragmentMapSearchhistory.setVisibility(View.VISIBLE);
+                /*if(s.toString().length()>=1)
+                binding.fragmentMapSearchhistory.setVisibility(View.VISIBLE);*/
                 if(!skipOnTextChangeEvent)
                 {
                     final Timer timer=new Timer();
@@ -1421,6 +1421,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         else{
             ((MainActivity)getActivity()).findViewById(R.id.layoutlastlogin).setVisibility(View.GONE);
         }
+        binding.fragmentMapSearchhistory.setVisibility(View.GONE);
 
         if (!Global.isBookmarks) {
             if (Global.mapSearchResult != null) {

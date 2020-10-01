@@ -181,7 +181,7 @@ public class Global {
     public static boolean isFromMap;
     public static ArrayList<DocArr> lstAttachedDoc;
     public static boolean isTimeout;
-    public static Boolean allowAddToFavorites;
+    public static Boolean allowAddToFavorites = true ;
     public static List<Controls> lstControls = new ArrayList<Controls>();
     public static Applications selectedApplication;
     public static boolean isAppSelected;

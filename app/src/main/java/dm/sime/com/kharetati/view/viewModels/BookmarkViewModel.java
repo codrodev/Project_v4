@@ -10,6 +10,7 @@ import android.widget.Filterable;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.annotations.SerializedName;
 
@@ -125,7 +126,7 @@ public class BookmarkViewModel extends ViewModel implements Filterable {
         model.setUserID(Global.sime_userid);
 
 
-
+        System.out.println("getAllBookMarks JSON request ===>"+ new Gson().toJson(model));
 
         Disposable disposable = repository.getAllBookMarks(model)
                 .subscribeOn(kharetatiApp.subscribeScheduler())
@@ -134,6 +135,7 @@ public class BookmarkViewModel extends ViewModel implements Filterable {
                     @Override public void accept(BookmarksResponse bookmarkResponse) throws Exception {
                        if(bookmarkResponse!=null) {
                            //bookmarkResponse=null;
+                           System.out.println("getAllBookMarks JSON Response <==="+ new Gson().toJson(model));
                            getBookMarks(bookmarkResponse);
                        }
                     }

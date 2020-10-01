@@ -7,6 +7,7 @@ import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
+import com.esri.arcgisruntime.tasks.geoprocessing.GeoprocessingLong;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -104,13 +105,14 @@ public class MapViewModel extends ViewModel {
             inputModel.setTOKEN(Global.uaeSessionResponse == null ? "" : Global.uaeSessionResponse.getService_response().getToken());
             inputModel.setGuest(false);
         } else {
-            inputModel.setTOKEN(Global.app_session_token == null ? "" : Global.app_session_token);
+            inputModel.setTOKEN(Global.app_session_token == null ? "" : Global.isUserLoggedIn?Global.app_session_token:"");
             inputModel.setGuest(!Global.isUserLoggedIn);
         }
         inputModel.setREMARKS(Global.getPlatformRemark());
 
 
         model.setInputJson(inputModel);
+        System.out.println("getParcelDetails JSON request ===>"+ new Gson().toJson(inputModel));
 
         Disposable disposable = repository.getParcelDetails(url, model)
                 .subscribeOn(kharetatiApp.subscribeScheduler())
@@ -120,6 +122,7 @@ public class MapViewModel extends ViewModel {
 
                         //mapNavigator.onSuccess();
                         if(appResponse!=null){
+                            System.out.println("getParcelDetails JSON Response ===>"+ new Gson().toJson(appResponse));
                         PlotDetails.communityAr = appResponse.getService_response().get(0).getCommNameAr();
                         PlotDetails.communityEn = appResponse.getService_response().get(0).getCommNameEn();
                             if(Global.isSaveAsBookmark && Global.isBookmarks){
@@ -162,7 +165,7 @@ public class MapViewModel extends ViewModel {
 
         HTTPRequestBody.BookMarkBody bookMarkBody = new HTTPRequestBody.BookMarkBody();
 
-
+        System.out.println("SaveAsBookMark JSON request ===>"+ new Gson().toJson(model));
         Disposable disposable = repository.saveAsBookMark(model)
                 .subscribeOn(kharetatiApp.subscribeScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -173,6 +176,7 @@ public class MapViewModel extends ViewModel {
                         try {
                             if (response != null && !response.toString().isEmpty()) {
                                 mapNavigator.onSuccess();
+                                System.out.println("SaveAsBookMark JSON response <==="+ new Gson().toJson(response));
                                 if (!response.isError()) {
                                     if (isSave) {
                                         Bundle bundle = new Bundle();
@@ -295,6 +299,7 @@ public class MapViewModel extends ViewModel {
             mapNavigator.onFailure(activity.getResources().getString(R.string.error_response));
 
         Log.d(activity.getClass().getSimpleName(),exception);
+        System.out.println(activity.getClass().getSimpleName()+":  "+exception);
     }
 
 }

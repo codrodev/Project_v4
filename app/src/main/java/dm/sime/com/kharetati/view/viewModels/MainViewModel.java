@@ -10,6 +10,8 @@ import android.util.TypedValue;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 import dm.sime.com.kharetati.KharetatiApp;
@@ -113,13 +115,14 @@ public class MainViewModel extends ViewModel {
             inputModel.setTOKEN(Global.uaeSessionResponse == null ? "" : Global.uaeSessionResponse.getService_response().getToken());
             inputModel.setUserId(Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getEmail());
         } else {
-            inputModel.setTOKEN(Global.app_session_token == null ? "" : Global.app_session_token);
+            inputModel.setTOKEN(Global.app_session_token == null ? "" :!Global.isUserLoggedIn?"": Global.app_session_token);
             inputModel.setUserId(Global.isUserLoggedIn? "":"");
         }
         inputModel.setGuest(!Global.isUserLoggedIn);
 
 
         model.setInputJson(inputModel);
+        System.out.println("Notification JSON request ===>"+ new Gson().toJson(inputModel));
 
         Disposable disposable = repository.getAppNotifications(url, model)
                 .subscribeOn(kharetatiApp.subscribeScheduler())
@@ -128,6 +131,7 @@ public class MainViewModel extends ViewModel {
                     @Override public void accept(NotificationResponse response) throws Exception {
 
                         if(!response.getIsException()){
+                            System.out.println("Notification JSON Response <==="+ new Gson().toJson(response));
                             Global.notificationResponse = response;
                             getNotification(response);
                         }

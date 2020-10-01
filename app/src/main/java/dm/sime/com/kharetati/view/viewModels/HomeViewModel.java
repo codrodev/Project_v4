@@ -26,6 +26,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.gson.Gson;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -580,12 +581,14 @@ public class HomeViewModel extends ViewModel {
         if(Global.isUAE){
             inputModel.setTOKEN(Global.uaeSessionResponse == null ? "" : Global.uaeSessionResponse.getService_response().getToken());
         } else {
-            inputModel.setTOKEN(Global.app_session_token == null ? "" : Global.app_session_token);
+            inputModel.setTOKEN(Global.app_session_token == null ? "" : Global.isUserLoggedIn?Global.app_session_token:"");
         }
         inputModel.setREMARKS(Global.getPlatformRemark());
         inputModel.setGuest(!Global.isUserLoggedIn);
 
         searchModel.setInputJson(inputModel);
+
+        System.out.println("getSearchResult JSON request ===>"+ new Gson().toJson(inputModel));
 
         if(getSelectedApplication().getHasMap()) {
             Disposable disposable = repository.getMapBasedSearchResult(url, searchModel)
@@ -594,6 +597,7 @@ public class HomeViewModel extends ViewModel {
                     .subscribe(new Consumer<SearchResult>() {
                         @Override
                         public void accept(SearchResult response) throws Exception {
+                            System.out.println("getSearchResult JSON Response <==="+ new Gson().toJson(response));
                             //getMapBasedSearchResult(response);
                             MapFragment.mapVM.mapNavigator.findParcelID(response);
                         }

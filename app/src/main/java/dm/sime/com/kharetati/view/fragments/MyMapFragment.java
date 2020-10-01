@@ -477,8 +477,30 @@ public class MyMapFragment extends Fragment implements MyMapNavigator {
                 return isValid;
             }
             else if(!dateFrom.getText().toString().trim().isEmpty() && !dateTo.getText().toString().trim().isEmpty()){
-                isValid =true;
-                return isValid;
+                Date date = new Date();
+
+                try {
+                    Date fromDate = (CURRENT_LOCALE.equals("en"))?format.parse(dateFrom.getText().toString().trim()):formatAr.parse(dateFrom.getText().toString().trim());
+                    Date toDate = (CURRENT_LOCALE.equals("en"))?format.parse(dateTo.getText().toString().trim()):formatAr.parse(dateTo.getText().toString().trim());
+                    int val=0;
+                    if(!dateFrom.getText().toString().trim().isEmpty() && !dateTo.getText().toString().trim().isEmpty())
+                        val = toDate.compareTo(fromDate);
+                    if(val >= 0){
+                        isValid = true;
+                    } else {
+                        isValid = false;
+                        AlertDialogUtil.errorAlertDialog("", getResources().getString(R.string.older_to_date), getResources().getString(R.string.ok), getActivity());
+                        return isValid;
+                    }
+
+                    if(new Date().before(toDate)){
+                        isValid = false;
+                        AlertDialogUtil.errorAlertDialog("", getResources().getString(R.string.future_to_date), getResources().getString(R.string.ok), getActivity());
+                        return isValid;
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         }
 

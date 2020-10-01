@@ -165,7 +165,10 @@ public class FeedbackFragment extends Fragment {
                         TextUtils.isEmpty(phone) ||
                         TextUtils.isEmpty(subject) ||
                         TextUtils.isEmpty(description)) {
-                    AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning),getResources().getString(R.string.all_fields_are_required),getResources().getString(R.string.ok),getActivity());
+                    if(Global.appMsg!=null)
+                        AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning),Global.CURRENT_LOCALE.equals("en")?Global.appMsg.getAllFieldsRequiredEn():Global.appMsg.getAllFieldsRequiredAr(),getResources().getString(R.string.ok),getActivity());
+                    else
+                        AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning),getResources().getString(R.string.all_fields_are_required),getResources().getString(R.string.ok),getActivity());
                     return;
                 } else if(!isEmailValid(email)){
                     if(Global.appMsg!=null)

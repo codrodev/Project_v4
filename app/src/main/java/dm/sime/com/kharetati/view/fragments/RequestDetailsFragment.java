@@ -139,7 +139,7 @@ public class RequestDetailsFragment extends Fragment {
         payNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Global.paymentStatus = null;
+                //Global.paymentStatus = null;
                 int locale=Global.CURRENT_LOCALE.compareToIgnoreCase("en")== 0 ? 1 : 2;
                 AttachmentFragment.callBackURL = callBackUrl;
                 AttachmentFragment.paymentUrl = eradUrl+"&locale="+locale+"&VoucherNo="+voucherNo+"&PayeeNameEN="+userName+"&MobileNo="+mobile+"&eMail="+email+"&ReturnURL="+callBackUrl;
@@ -156,7 +156,7 @@ public class RequestDetailsFragment extends Fragment {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Global.paymentStatus = null;
+                //Global.paymentStatus = null;
                 int index = ((MainActivity)getActivity()).getSupportFragmentManager().getBackStackEntryCount()-1;
                 FragmentManager.BackStackEntry backEntry = getFragmentManager().getBackStackEntryAt(index);
                 String tag = backEntry.getName();

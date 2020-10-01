@@ -187,6 +187,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         if(CURRENT_LOCALE.equals("en")) binding.layoutlastlogin.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);else binding.layoutlastlogin.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         final BottomNavigationFragmentSheet myBottomSheet = BottomNavigationFragmentSheet.newInstance(this);
 
+
         View contentView=findViewById(R.id.rootLayout);
         contentView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -282,6 +283,8 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                     loadFragment(FragmentTAGS.FR_HOME,true,null);
                 else if(item.getId()==5)
                     loadFragment(FragmentTAGS.FR_BOTTOMSHEET,true,null);
+                else if(item.getId()==1)
+                    loadFragment(FragmentTAGS.FR_DASHBOARD,true,null);
             }
         });
         /*customBottomBar.setOnClickMenuListener(new Function1<MeowBottomNavigation.Model, Unit>() {
@@ -605,7 +608,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
         }
         setScreenName(getResources().getString(R.string.title_welcome));
         if (Global.current_fragment_id != null) {
-            if (Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW) || Global.current_fragment_id.equals(FragmentTAGS.FR_FEEDBACK) || Global.current_fragment_id.equals(FragmentTAGS.FR_SETTINGS)||Global.current_fragment_id.equals(FragmentTAGS.FR_CHAT_WEBVIEW)) {
+            if (Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW) ||Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW_PAYMENT) || Global.current_fragment_id.equals(FragmentTAGS.FR_FEEDBACK) || Global.current_fragment_id.equals(FragmentTAGS.FR_SETTINGS)||Global.current_fragment_id.equals(FragmentTAGS.FR_CHAT_WEBVIEW)) {
                 binding.backButton.setVisibility(View.VISIBLE);
                 binding.txtWelcome.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -760,7 +763,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             binding.txtLastLogin.setVisibility(View.GONE);
             binding.layoutlastlogin.setVisibility(View.GONE);
         }
-        if(fragment_tag.equals(FragmentTAGS.FR_WEBVIEW)||fragment_tag.equals(FragmentTAGS.FR_FEEDBACK)||fragment_tag.equals(FragmentTAGS.FR_SETTINGS)||fragment_tag.equals(FragmentTAGS.FR_CHAT_WEBVIEW)){
+        if(fragment_tag.equals(FragmentTAGS.FR_WEBVIEW)||fragment_tag.equals(FragmentTAGS.FR_WEBVIEW_PAYMENT)||fragment_tag.equals(FragmentTAGS.FR_FEEDBACK)||fragment_tag.equals(FragmentTAGS.FR_SETTINGS)||fragment_tag.equals(FragmentTAGS.FR_CHAT_WEBVIEW)){
             binding.backButton.setVisibility(View.VISIBLE);
             binding.txtWelcome.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -1056,7 +1059,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
 
     @Override
     public void onStarted() {
-        AlertDialogUtil.showProgressBar(this,true);
+        AlertDialogUtil.showProgressBar(MainActivity.this,true);
     }
 
     @Override

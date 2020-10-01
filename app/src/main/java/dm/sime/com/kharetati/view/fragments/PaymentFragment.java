@@ -167,10 +167,10 @@ public class PaymentFragment extends Fragment {
         @Override
         public void onPageFinished(WebView view, String url) {
             AlertDialogUtil.showProgressBar(getActivity(),false);
-            if(PayViewModel.callBackURL != null){
+
                     view.loadUrl("javascript:window.HTMLOUT.processHTML('<html>'+document.getElementsByTagName('html')[0].innerHTML+'</html>');");
                     RequestDetailsFragment.isFromRequestDetails = true;
-            }
+
         }
 
     }

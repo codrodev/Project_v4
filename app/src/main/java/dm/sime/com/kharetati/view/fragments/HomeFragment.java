@@ -197,6 +197,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(), FR_HOME, null /* class override */);
 
         model.initializeHomeVM(getContext());
+
         initializePage();
         try {
             ((MainActivity)getActivity()).getLastlogin();
@@ -322,7 +323,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             binding.layoutRuntimeContainer.setVisibility(Global.isAppSelected?View.VISIBLE:View.GONE);
             binding.tabRuntimeLayout.removeAllTabs();
             //binding.tabRuntimeLayout.setupWithViewPager(binding.viewPagerRuntime);
-            int x =0;
+            //int x =0;
             for(SearchForm form: app.getSearchForm()){
                 if (form.getTabs() != null) {
                     //binding.tabRuntimeLayout.addTab(binding.tabRuntimeLayout.newTab().setText(CURRENT_LOCALE.equals("en")?form.getTabs().getNameEn():form.getTabs().getNameAr()));
@@ -363,10 +364,31 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                         Global.selectedTab = tab.getPosition();
                         Global.lstControls = app.getSearchForm().get(tab.getPosition()).getTabs().getControls();
                         runtimeControlRenderer(app.getSearchForm().get(tab.getPosition()).getTabs().getControls());
+                        if (x != null) {
+                            x.setText("");
+                            if (!Global.isFirstLoad) {
+                                if(Global.selectedTab == 2){
+                                    if(lstRuntimeCleanableText.size()>1){
+                                        lstRuntimeCleanableText.get(0).requestFocus();
+                                        if(lstRuntimeCleanableText.get(0).requestFocus())
+                                            Global.showSoftKeyboard(lstRuntimeCleanableText.get(0), getActivity());
+
+                                    }
+                                }
+                                else {
+                                x.requestFocus();
+                                if (x.requestFocus()) {
+                                    Global.showSoftKeyboard(x, getActivity());
+                                }
+                                }
+
+
+                            }
+                        }
 
 
 
-                        Global.hideSoftKeyboard(getActivity());
+                        //Global.hideSoftKeyboard(getActivity());
                     }
                    // renderControl(tab.getPosition());
                     imageView.setVisibility(View.VISIBLE);
@@ -406,6 +428,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             ViewAnimationUtils.scaleAnimateViewPopFirstLoad(binding.layoutRuntimeContainer);
 
         }
+
          /*x.requestFocus();
        if( x.requestFocus())
             Global.showSoftKeyboard(x,getActivity());*/
@@ -513,10 +536,12 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         x.setInputType(InputType.TYPE_CLASS_NUMBER);
         x.setLayoutParams(lparams);
         x.setEms(10);
+        x.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);
         x.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
         x.setTextColor(Color.parseColor("#969696"));
         x.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         x.setMaxLines(1);
+        x.setTextDirection(View.TEXT_DIRECTION_LOCALE);
         x.setTextSize(15f);
         x.setType(control.getType());
         if(control.getRegexExp() != null && control.getRegexExp().length() > 0){
@@ -527,8 +552,8 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         //x.setFilters(FilterArray);
         x.setTypeface(typeface);
         x.setPadding(25,0,25,0);
-        if(isPlotSearch||isMakani)
-            x.requestFocus();
+
+        x.requestFocus();
         x.setBackground(getActivity().getResources().getDrawable(R.drawable.control_background));
         x.setOnEditorActionListener(this);
         x.setImeOptions(EditorInfo.IME_ACTION_DONE);
