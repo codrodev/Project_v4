@@ -115,7 +115,7 @@ public class UAEPassRequestModels {
     private static final String REDIRECT_URL = Global.callbackUrl;
     //    private static final Environment UAE_PASS_ENVIRONMENT = STAGING;
 
-    private static  Environment UAE_PASS_ENVIRONMENT = Global.uaePassConfig.getUAE_PASS_ENVIRONMENT()=="PRODUCTION"?Environment.PRODUCTION:Environment.STAGING;
+    private static  Environment UAE_PASS_ENVIRONMENT = Global.uaePassConfig.getUAE_PASS_ENVIRONMENT().compareToIgnoreCase("PRODUCTION")==0?Environment.PRODUCTION:Environment.STAGING;
 
 
     private static final String DOCUMENT_SIGNING_SCOPE = "urn:safelayer:eidas:sign:process:document";

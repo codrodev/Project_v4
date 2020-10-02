@@ -112,7 +112,7 @@ public class MapViewModel extends ViewModel {
 
 
         model.setInputJson(inputModel);
-        System.out.println("getParcelDetails JSON request ===>"+ new Gson().toJson(inputModel));
+        System.out.println("getParcelDetails JSON request ===>"+ new Gson().toJson(model));
 
         Disposable disposable = repository.getParcelDetails(url, model)
                 .subscribeOn(kharetatiApp.subscribeScheduler())

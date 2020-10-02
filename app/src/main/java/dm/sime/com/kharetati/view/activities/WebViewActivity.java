@@ -87,7 +87,7 @@ public class WebViewActivity extends AppCompatActivity {
 
             if (url.startsWith("uaepass://") || url.startsWith("uaepassqa://")) {
                 if (!UAEPassRequestModels.isPackageInstalled(getPackageManager())) {
-                    view.loadUrl(Global.getCurrentLanguage(WebViewActivity.this).equals("en")?"https://play.google.com/store/apps/details?id=ae.uaepass.mainapp&hl=EN":"https://play.google.com/store/apps/details?id=ae.uaepass.mainapp&hl=AR");
+                    view.loadUrl(CURRENT_LOCALE.equals("en")?"https://play.google.com/store/apps/details?id=ae.uaepass.mainapp&hl=EN":"https://play.google.com/store/apps/details?id=ae.uaepass.mainapp&hl=AR");
 
                 }
                 else{
