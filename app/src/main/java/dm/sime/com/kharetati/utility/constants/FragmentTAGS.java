@@ -30,4 +30,5 @@ public class FragmentTAGS {
     public static final String FR_SEARCH_SITEPLAN = "SEARCH_SITEPLAN_SCREEN" ;
     public static final String FR_SETTINGS = "SETTINGS_SCREEN";
     public static final String FR_CHAT_WEBVIEW = "CHAT_SCREEN";
+    public static final String FR_LAND_REGISTRATION_WEB = "LAND_REGISTRATION_WEB";
 }

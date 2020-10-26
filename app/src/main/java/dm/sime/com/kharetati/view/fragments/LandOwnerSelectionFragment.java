@@ -97,9 +97,7 @@ public class LandOwnerSelectionFragment extends Fragment {
         ImageCropActivity.isImageCropped=false;
         PayFragment.isFromPayFragment =false;
 
-        /*if(ParentSiteplanViewModel.getDownloadedDoc()!=null)ParentSiteplanViewModel.getDownloadedDoc().clear();
-        if(ParentSiteplanViewModel.getNewlyAttachedDoc()!=null)ParentSiteplanViewModel.getNewlyAttachedDoc().clear();
-        if(AttachmentFragment.lstAttachedDoc!=null)AttachmentFragment.lstAttachedDoc.clear();*/
+
         AttachmentBitmap.passport_copy =null;
         AttachmentBitmap.visa_passport =null;
         AttachmentBitmap.company_license =null;
@@ -132,10 +130,7 @@ public class LandOwnerSelectionFragment extends Fragment {
                 Global.spinPosition=position;
                 switch (position){
                     case 0: {
-                        /*ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
-                        binding.rg.setVisibility(View.GONE);
-                        Global.rbIsOwner =false;
-                        Global.rbNotOwner = false;*/
+
                         Global.isPerson=true;
                         Global.isCompany=false;
                         ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(false);
@@ -202,11 +197,6 @@ public class LandOwnerSelectionFragment extends Fragment {
 
 
                 }
-                /*else if(Global.spinPosition==2){
-                    ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
-
-
-                }*/
                 ParentSiteplanViewModel.getDownloadedDoc().clear();
 
             }
@@ -228,16 +218,10 @@ public class LandOwnerSelectionFragment extends Fragment {
                     binding.rbNotOwner.setChecked(Global.rbNotOwner);
 
                 }
-               /* else if(Global.spinPosition==2){
-                    ParentSiteplanFragment.parentModel.parentSitePlanNavigator.setNextEnabledStatus(true);
-
-                }*/
                 ParentSiteplanViewModel.getDownloadedDoc().clear();
             }
         });
 
-
-        //initializePage();
         return binding.getRoot();
     }
 
@@ -255,7 +239,7 @@ public class LandOwnerSelectionFragment extends Fragment {
 
             binding.rbIsOwner.setChecked(sharedpreferences.getBoolean("isOwner", rbIsOwner));
             binding.rbNotOwner.setChecked(sharedpreferences.getBoolean("isNotOwner",rbNotOwner));
-            //binding.rbNotOwner.setChecked(Global.rbNotOwner);}
+
 
 
     }

@@ -98,9 +98,7 @@ public class LoginViewModel extends ViewModel {
     public static String guestName,guestPassword;
 
 
-    /* public LoginViewModel(){
 
-     }*/
     public LoginViewModel(Activity context, UserRepository repository){
         this.activity = context;
         this.repository = repository;
@@ -258,7 +256,7 @@ public class LoginViewModel extends ViewModel {
 
 
             getAccessTokenAPI(false);
-            //AccessTokenResponse accessTokenResponse = repository.getAccessToken(getDataEmail(), getDataPassword());
+
 
 
 
@@ -704,13 +702,9 @@ public class LoginViewModel extends ViewModel {
             Global.uaePassConfig =  configResponse;
             AppUrls.BASE_AUXULARY_URL_UAE_SESSION =Global.uaePassConfig.getAuxiliaryServiceUrl();
 
-
-            //login();
         }
 
-       // login();
-        //UAEPassAccessTokenRequestModel
-        //String secretId = AES.decrypt(clientId, "800F4757AC0E7A9ED01B2D5D2C25A59B3");
+
     }
 
     public void login() {
@@ -793,7 +787,6 @@ public class LoginViewModel extends ViewModel {
                 Global.uae_code = "";
                 Global.isUAEaccessWeburl = false;
 
-                //JsonObjectRequest req2=new JsonObjectRequest()
 
                 JsonObjectRequest req = new JsonObjectRequest(POST,url, null,
                         new com.android.volley.Response.Listener<JSONObject>() {
@@ -835,7 +828,6 @@ public class LoginViewModel extends ViewModel {
                     @Override
                     public Map<String, String> getHeaders() {
                         Map<String, String> params = new HashMap<>();
-                        //params.put("token", Global.accessToken);
                         String auth1=Global.clientID+":"+Global.state;
                         String auth = "Basic " + android.util.Base64.encodeToString(auth1.getBytes(), Base64.NO_WRAP);
                         params.put("Accept", "application/json");
@@ -852,57 +844,9 @@ public class LoginViewModel extends ViewModel {
             }
         }
         Global.isUAEAccessToken = false;
-        // Global.clientID = "";
-        // Global.state = "";
+
     }
-    /*public void getUAEAccessToken(String code){
-        Global.isUAEAccessToken = true;
-        String clientId = Encryptions.decrypt(Global.uaePassConfig.UAEID_clientid);
-        String secretId = Encryptions.decrypt(Global.uaePassConfig.UAEID_secret);
-        Global.clientID = clientId;
-        Global.state = secretId;
 
-        Log.v(TAG, "UAE Pass App: getUAEAccessToken(): calling");
-        authListener.onStarted();
-        kharetatiApp = KharetatiApp.create(activity);
-        if(Global.uaePassConfig != null){
-
-            String callbackUrl = Encryptions.decrypt(Global.uaePassConfig.UAEID_callback_url);
-            String language = Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0 ? "en" : "ar";
-            String accessTokenUrl = Global.uaePassConfig.getGetAccessTokenUAEID_url().endsWith("?") ? Global.uaePassConfig.getGetAccessTokenUAEID_url() : Global.uaePassConfig.getGetAccessTokenUAEID_url() + "?";
-            String url = accessTokenUrl + "grand_type=authorization_code&redirect_uri="+callbackUrl+"&code="+ code*//*+ "ui_locales=" + language*//*;
-            Global.uae_code = "";
-            Global.isUAEaccessWeburl = false;
-
-            Disposable disposable = repository.getUAEAccessToken(url)
-                    .subscribeOn(kharetatiApp.subscribeScheduler())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<UAEAccessTokenResponse>() {
-                        @Override public void accept(UAEAccessTokenResponse accessTokenResponse) throws Exception {
-                            Log.v(TAG, "UAE Pass App: getUAEAccessToken(): success");
-                            Global.uae_code = "";
-                            Global.isUAEaccessWeburl =false;
-                            Global.uae_access_token = accessTokenResponse.getAccess_token();
-                            Log.v(TAG, "UAE Pass App: getUAEAccessToken(): Access Token:" + accessTokenResponse.getAccess_token());
-                            Global.isUAEAccessToken = false;
-                            Global.clientID = "";
-                            Global.state = "";
-                            Global.accessToken = accessTokenResponse.getAccess_token();
-                            getUAESessionToken(accessTokenResponse.getAccess_token());
-                          }
-                    }, new Consumer<Throwable>() {
-                        @Override public void accept(Throwable throwable) throws Exception {
-                            Log.v(TAG, "UAE Pass App: getUAEAccessToken(): failed:" + throwable.getMessage());
-                            showErrorMessage();
-                        }
-                    });
-
-            compositeDisposable.add(disposable);
-        }
-        Global.isUAEAccessToken = false;
-        Global.clientID = "";
-        Global.state = "";
-    }*/
 
     public void getUAESessionToken(String code){
         Global.isUAEAccessToken = false;

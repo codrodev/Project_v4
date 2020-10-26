@@ -94,8 +94,7 @@ public class WebViewActivity extends AppCompatActivity {
 
                     final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                         intent.setPackage(UAEPassRequestModels.UAE_PASS_PACKAGE_ID);
-                    // The following flags launch the app outside the current app
-                    //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
 
                     startActivity(intent);
 
@@ -111,8 +110,7 @@ public class WebViewActivity extends AppCompatActivity {
 
             } else
                 view.loadUrl(url);
-//            view.loadUrl("view-source:https://qa-id.uaepass.ae/trustedx-login/authenticate");
-//            if(progressDialog!=null)progressDialog.cancel();
+
             return true;
         }
 
@@ -127,7 +125,7 @@ public class WebViewActivity extends AppCompatActivity {
         public void onPageFinished(WebView view, String url) {
 
             AlertDialogUtil.showProgressBar(WebViewActivity.this,false);
-            //Uri uri = Uri.parse("https://smart.gis.gov.ae/kharetatiuaepass?code=5dddaf8e4318f4532572640be058463ced28b84a5e894f0303f9217226cd45ee&state=QR3QGVmyyfgX0HmZ");
+
             Uri uri = Uri.parse(url);
             Log.v(TAG, "UAE Pass App: getAuthorizationUrl web page: onPageFinished() " + url);
             if(url.contains("kharetatiuaepass")){

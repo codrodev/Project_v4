@@ -86,6 +86,7 @@ import dm.sime.com.kharetati.view.customview.SwitchCompatEx;
 import dm.sime.com.kharetati.view.customview.meowbottomnavigation.MeowBottomNavigation;
 import dm.sime.com.kharetati.view.fragments.ChatWebViewFragment;
 import dm.sime.com.kharetati.view.fragments.FeedbackFragment;
+import dm.sime.com.kharetati.view.fragments.LandRegistrationWebFragment;
 import dm.sime.com.kharetati.view.fragments.PayFragment;
 import dm.sime.com.kharetati.view.fragments.PaymentFragment;
 import dm.sime.com.kharetati.view.fragments.RequestDetailsFragment;
@@ -763,7 +764,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
             binding.txtLastLogin.setVisibility(View.GONE);
             binding.layoutlastlogin.setVisibility(View.GONE);
         }
-        if(fragment_tag.equals(FragmentTAGS.FR_WEBVIEW)||fragment_tag.equals(FragmentTAGS.FR_WEBVIEW_PAYMENT)||fragment_tag.equals(FragmentTAGS.FR_FEEDBACK)||fragment_tag.equals(FragmentTAGS.FR_SETTINGS)||fragment_tag.equals(FragmentTAGS.FR_CHAT_WEBVIEW)){
+        if(fragment_tag.equals(FragmentTAGS.FR_WEBVIEW)||fragment_tag.equals(FragmentTAGS.FR_WEBVIEW_PAYMENT)||fragment_tag.equals(FragmentTAGS.FR_FEEDBACK)||fragment_tag.equals(FragmentTAGS.FR_SETTINGS)||fragment_tag.equals(FragmentTAGS.FR_CHAT_WEBVIEW)||fragment_tag.equals(FragmentTAGS.FR_LAND_REGISTRATION_WEB)){
             binding.backButton.setVisibility(View.VISIBLE);
             binding.txtWelcome.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -834,6 +835,16 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                     }
                 }
                 fragment = ChatWebViewFragment.newInstance(Global.webViewUrl, appName1);
+                break;
+                case FragmentTAGS.FR_LAND_REGISTRATION_WEB:
+                String appName3 = null;
+                if(params!=null && params.size()>0) {
+                    Global.webViewUrl = params.get(0).toString();
+                    if(params.size() > 1){
+                        appName3 = params.get(1).toString();
+                    }
+                }
+                fragment = LandRegistrationWebFragment.newInstance(Global.webViewUrl, appName3);
                 break;
             case FragmentTAGS.FR_SETTINGS:
                 fragment = SettingsFragment.newInstance();
@@ -991,7 +1002,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                 else if(!PayFragment.isFromPayFragment)
                     super.onBackPressed();
                 if (Global.current_fragment_id != null) {
-                    if (Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW) || Global.current_fragment_id.equals(FragmentTAGS.FR_FEEDBACK) || Global.current_fragment_id.equals(FragmentTAGS.FR_SETTINGS)) {
+                    if (Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW) || Global.current_fragment_id.equals(FragmentTAGS.FR_FEEDBACK) || Global.current_fragment_id.equals(FragmentTAGS.FR_SETTINGS)|| Global.current_fragment_id.equals(FragmentTAGS.FR_LAND_REGISTRATION_WEB)) {
                         binding.backButton.setVisibility(View.VISIBLE);
                     }
                     else
@@ -1029,7 +1040,7 @@ public class MainActivity extends AppCompatActivity implements FragmentNavigator
                     customBottomBar.show(3, true);
                     Global.lastSelectedBottomTab = 3;
                 }
-                if(Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW)||Global.current_fragment_id.equals(FragmentTAGS.FR_FEEDBACK)||Global.current_fragment_id.equals(FragmentTAGS.FR_SETTINGS))
+                if(Global.current_fragment_id.equals(FragmentTAGS.FR_WEBVIEW)||Global.current_fragment_id.equals(FragmentTAGS.FR_FEEDBACK)||Global.current_fragment_id.equals(FragmentTAGS.FR_SETTINGS)||Global.current_fragment_id.equals(FragmentTAGS.FR_LAND_REGISTRATION_WEB))
                     binding.backButton.setVisibility(View.VISIBLE);
                 else
                     binding.backButton.setVisibility(View.GONE);

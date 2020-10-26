@@ -112,6 +112,7 @@ import static dm.sime.com.kharetati.utility.Global.searchText;
 import static dm.sime.com.kharetati.utility.Global.showSoftKeyboard;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_ATTACHMENT;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_HOME;
+import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_LAND_REGISTRATION_WEB;
 import static dm.sime.com.kharetati.utility.constants.FragmentTAGS.FR_WEBVIEW;
 
 public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSelectedListener, EditText.OnEditorActionListener, ViewPager.OnPageChangeListener, HomeNavigator {
@@ -141,8 +142,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     private TextView tabTextView;
     public static CleanableEditText x;
     public static boolean isEmpty;
-    /*BottomSheetBehavior sheetBehavior;
-    LinearLayout layoutBottomSheet;*/
+
 
     public HomeFragment() {
     }
@@ -187,6 +187,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         Global.isSaveAsBookmark =false;
         Global.isDeliveryByCourier= false;
         Global.isDashboard=false;
+        Global.isLandOwnerRegistration = false;
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         binding.setFragmentHomeVM(model);
         mRootView = binding.getRoot();
@@ -216,35 +217,8 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         model.manageAppBar(getActivity(), true);
         model.manageAppBottomBAtr(getActivity(), true);
 
-        /*layoutBottomSheet = (LinearLayout)mRootView.findViewById(R.id.bottomSheetWebView);
-        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);*/
-
-        /*model.getMutableInAppNotifications().observe(getActivity(), new Observer<List<InAppNotifications>>() {
-            @Override
-            public void onChanged(List<InAppNotifications> lstInAppNotifications) {
-                //model.loading.set(View.GONE);
-                if (lstInAppNotifications.size() > 0) {
-                    model.setInAppNotificationsAdapter(lstInAppNotifications);
-                }
-            }
-        });*/
-
-    }
-
-    private void initializeInAppNotification(){
-        LinearLayoutManager linearLayoutManager;
-        linearLayoutManager =  new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
-        /*if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0){
-
-        } else {
-            linearLayoutManager =  new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, true);
-        }*/
 
 
-        adapterNotification = new InAppNotificationAdapter(model, getActivity());
-        binding.recycleNotification.setAdapter(adapterNotification);
-        binding.recycleNotification.setLayoutManager(linearLayoutManager);
-        adapterNotification.notifyDataSetChanged();
     }
 
     @Override
@@ -256,7 +230,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         if(Global.appId!=null && model.getApplication( Global.appId)!=null)
         Global.HelpUrl = CURRENT_LOCALE.equals("en")?model.getApplication( Global.appId).getHelpUrlEn():model.getApplication( Global.appId).getHelpUrlAr();
         if(Global.isAppSelected)
-            binding.layoutRuntimeContainer.setVisibility(View.VISIBLE);
+           if(!Global.appId.equals("6")) binding.layoutRuntimeContainer.setVisibility(View.VISIBLE);
         else
             binding.layoutRuntimeContainer.setVisibility(View.GONE);
         if(!Global.isAppSelected){
@@ -266,7 +240,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         Global.selectedTab =0;
 
 
-        //initializeInAppNotification();
+
     }
 
     @Override
@@ -276,6 +250,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         Global.HelpUrl = CURRENT_LOCALE.equals("en")?model.getApplication( Global.appId).getHelpUrlEn():model.getApplication( Global.appId).getHelpUrlAr();
         Global.isAppSelected =  true;
         Global.isFirstLoad =false;
+        if(!appID.equals("6"))
         binding.layoutRuntimeContainer.setVisibility(View.VISIBLE);
         mTracker.send(new HitBuilders.EventBuilder()
                 .setCategory("Home Screen")
@@ -344,11 +319,6 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                     binding.tabRuntimeLayout.setTabMode(TabLayout.MODE_FIXED);
 
 
-
-
-                    /*ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) binding.tabRuntimeLayout.getLayoutParams();
-                    p.setMargins(15, 15, 15, 15);
-                    binding.tabRuntimeLayout.requestLayout();*/
                 }
             }
 
@@ -386,11 +356,8 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                             }
                         }
 
-
-
-                        //Global.hideSoftKeyboard(getActivity());
                     }
-                   // renderControl(tab.getPosition());
+
                     imageView.setVisibility(View.VISIBLE);
                 }
 
@@ -415,13 +382,21 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             runtimeControlRenderer(app.getSearchForm().get(0).getTabs().getControls());
         } else {
             clearRuntimeParent();
-            binding.layoutControlHeader.setVisibility(View.GONE);
+
             binding.layoutRuntimeContainer.setVisibility(View.GONE);
             if(!model.getSelectedApplication().getIsNative()){
                 ArrayList param = new ArrayList<>();
                 param.add( constructUrl(model.getSelectedApplication().getSearchUrl(),getActivity()));
                 param.add( model.getSelectedApplication().getNameEn());
-                model.navigateWithParam(getActivity(), FR_WEBVIEW, param);
+                binding.layoutControlHeader.setVisibility(View.GONE);
+                binding.layoutRuntimeContainer.setVisibility(View.GONE);
+
+                    if(model.getSelectedApplication().getId().equals("6")){
+
+                        Intent i = new Intent(Intent.ACTION_VIEW);
+                        i.setData(Uri.parse(constructUrl(model.getSelectedApplication().getSearchUrl(),getActivity())));
+                        startActivity(i);
+                    }
             }
         }
         if(isAnimation) {
@@ -429,10 +404,6 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
         }
 
-         /*x.requestFocus();
-       if( x.requestFocus())
-            Global.showSoftKeyboard(x,getActivity());*/
-        //Global.isFirstLoad = false;
 
     }
 
@@ -478,13 +449,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
             }
 
         }
-        /*if(builder.toString().contains("?")){
-            String firstString = builder.toString().substring(0,builder.toString().indexOf("?"));
-            String subString =  builder.toString().substring(builder.toString().lastIndexOf("?")+1);
 
-            return firstString+"?"+subString;
-
-        }*/
         return builder.toString();
     }
 
@@ -512,10 +477,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     private LinearLayout addCleanableEditText(Controls control){
         Typeface typeface =Typeface.createFromAsset(getActivity().getAssets(),"Dubai-Regular.ttf");
 
-       /* InputFilter[] FilterArray = new InputFilter[3];
-        FilterArray[0] = new InputFilter.LengthFilter(10);
-        *//*FilterArray[1] = new InputFilter.LengthFilter(10);
-        FilterArray[2] = new InputFilter.LengthFilter(11);*/
+
 
         LinearLayout layout = new LinearLayout(getActivity());
         layout.setOrientation(LinearLayout.HORIZONTAL);
@@ -526,9 +488,9 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
         final LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lparams.setMargins(0, 0, 0, 0);
-        //binding.tabRuntimeLayout.setLayoutParams(lparams);
+
         x = new CleanableEditText(getActivity());
-        //x.setHint(form.getPlaceHolderEn());
+
         x.setHint(Global.CURRENT_LOCALE.equals("en")?(Boolean.valueOf(control.getIsMandatory())?control.getPlaceHolderEn()+"*":control.getPlaceHolderEn()):(Boolean.valueOf(control.getIsMandatory())?control.getPlaceHolderAr()+"*":control.getPlaceHolderAr()));
         if(control.getInputType().toLowerCase().equals("number")) {
 
@@ -549,7 +511,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         }
 
         x.setTextSize(14f);
-        //x.setFilters(FilterArray);
+
         x.setTypeface(typeface);
         x.setPadding(25,0,25,0);
 
@@ -568,31 +530,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         lstRuntimeCleanableText.add(x);
 
 
-        /*if(control.getParam().equals("land_no")){
-            isLand =true;
-            if(!Objects.requireNonNull(x.getText()).toString().trim().equals("")){
-                if(Global.LandNo!=null ||Global.LandNo!="")
-                    x.setText(Global.LandNo);
-                else
-                    x.setText("");
-                Global.LandNo = x.getText().toString().trim();
-            }
-            x.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
-
-
-        }
-        if(control.getParam().equals("sub_no")){
-            isLand =true;
-            if(!Objects.requireNonNull(x.getText()).toString().trim().equals("")){
-                if(Global.subNo!=null ||Global.subNo!="")
-                    x.setText(Global.subNo);
-                else
-                    x.setText("");
-                Global.subNo = x.getText().toString().trim();
-            }
-
-        }*/
         return layout;
     }
 
@@ -602,7 +540,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         LinearLayout dynamiclayout = new LinearLayout(getActivity());
         dynamiclayout.setGravity(Gravity.CENTER_HORIZONTAL);
         dynamiclayout.setOrientation(LinearLayout.VERTICAL);
-        //dynamiclayout.setBackgroundColor(Color.RED);
+
         dynamiclayout.setLayoutDirection(View.LAYOUT_DIRECTION_LOCALE);
         LinearLayout.LayoutParams dynamcLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         if(CURRENT_LOCALE.equals("en"))
@@ -689,13 +627,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                     AlertDialogUtil.errorAlertDialog(getResources().getString(R.string.lbl_warning), getResources().getString(R.string.internet_connection_problem1), getResources().getString(R.string.ok), getActivity());
             } else {
                 Global.hideSoftKeyboard(getActivity());
-               /* if(isLand){
-                        if(communityId!=null && Global.LandNo!=null && !Global.LandNo.equals("")){
-                            Global.subNo=Global.subNo.equals("")?"0":Global.subNo;
-                            String text =communityId+"|"+Global.LandNo+"|"+Global.subNo;
-                            model.getAppsSearchResult(text);
-                        }
-                    }*/
+
                 if (!isSearchBoxEmpty()) {
 
                     model.getAppsSearchResult(populateSearchText());
@@ -712,9 +644,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         return Pattern.compile(pattern);
     }
 
-    private boolean isValid(CharSequence c, String pattern) {
-        return getsPattern(pattern).matcher(c).matches();
-    }
+
 
     private boolean isSearchBoxEmpty(){
         isEmpty = false;
@@ -834,15 +764,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     @Override
     public void populateGridMenu() {
 
-        gridPagerAdapter = new GridMenuPagerAdapter(getActivity(),model, this);/*if(model.getMutableHomeGridMenu().getValue().size() < 4){
-            lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    160);
-            binding.viewPager.setLayoutParams(lp);
-        } else {
-            lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    275);
-            binding.viewPager.setLayoutParams(lp);
-        }*/
+        gridPagerAdapter = new GridMenuPagerAdapter(getActivity(),model, this);
         binding.viewPager.setPageTransformer(false, new CustPagerTransformer(getActivity()));
         binding.viewPager.setOffscreenPageLimit(3);
         binding.viewPager.addOnPageChangeListener(this);
@@ -853,15 +775,7 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         } else {
             binding.layoutDots.setVisibility(View.GONE);
         }
-        /*if(model.getMutableHomeGridMenu().getValue().size() < 4){
-            lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    305);
-            binding.viewPager.setLayoutParams(lp);
-        } else {
-            lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    505);
-            binding.viewPager.setLayoutParams(lp);
-        }*/
+
         if(model.getSelectedApplication() != null && model.getSelectedApplication().getId() != null &&
                 model.getSelectedApplication().getId().length() > 0){
             if(model.getSelectedApplication().getSearchForm() != null && model.getSelectedApplication().getSearchForm().size() > 0) {
@@ -873,13 +787,13 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         if (Global.isFirstLoad && !Global.isRecreate)
             MainActivity.mainVM.getNotifications();
 
-        //initializeRuntimeForm(model.getDefaultApplication(0));
+
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //saveInputValues();
+
     }
 
     @Override
@@ -940,34 +854,13 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                 spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick() {
                     @Override
                     public void onClick(String item, int position) {
-                        //Toast.makeText(MainActivity.this, item + "  " + position + "", Toast.LENGTH_SHORT).show();
-                        //spinArea.setText(item + " Position: " + position);
+
                         Global.hideSoftKeyboard(getActivity());
                         if(!TextUtils.isEmpty(item)) {
                             communityId = position>0 ? Global.lookupResponse.getLkp().get(position).getId().toString():"";
                             isEmpty = communityId.isEmpty()?true:false;
                             spinnerView.setText(item);
-                            /*if(Global.selectedTab == 2){
-                                CleanableEditText txt = (CleanableEditText)lstRuntimeCleanableText.get(0);
-                                CleanableEditText txt1 = (CleanableEditText)lstRuntimeCleanableText.get(1);
-                                Global.LandNo = txt.getText().toString().trim().equals("")?"":txt.getText().toString().trim();
-                                Global.subNo = txt1.getText().toString().trim().equals("")?"":txt1.getText().toString().trim();
 
-                            }
-
-                            if (communityId != null && Global.LandNo != null && !Global.LandNo.equals("")) {
-                                StringBuilder builder = new StringBuilder();
-                                Global.subNo = Global.subNo.equals("") ? "0" : Global.subNo;
-                                builder.append(communityId);
-                                builder.append("|");
-                                builder.append(Global.LandNo);
-                                builder.append("|");
-                                builder.append(Global.subNo);
-
-                                model.getAppsSearchResult(builder.toString());
-
-
-                            }*/
 
                         }
 

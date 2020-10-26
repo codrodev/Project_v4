@@ -185,6 +185,7 @@ public class Global {
     public static List<Controls> lstControls = new ArrayList<Controls>();
     public static Applications selectedApplication;
     public static boolean isAppSelected;
+    public static boolean isLandOwnerRegistration;
     private static Context context;
     public static boolean isLanguageChanged = false;
     public static String noctemplateUrl;

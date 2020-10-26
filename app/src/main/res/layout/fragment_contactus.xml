@@ -353,55 +353,6 @@
                         android:orientation="horizontal"
                         android:weightSum="2">
 
-
-                        <LinearLayout
-                            android:id="@+id/LLDMLiveChat"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
-                            android:layout_weight="1"
-                            android:layout_gravity="center"
-                            android:orientation="horizontal">
-
-                            <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:layout_marginStart="16dp"
-                                android:layout_marginEnd="16dp"
-                                android:layout_marginRight="16dp"
-                                android:contentDescription="@string/Live_chat_with_our_call_center"
-                                android:src="@drawable/chat_512" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:textColor="@color/contact_text_color"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
-                                    android:text="@string/reachus" />
-                                <TextView
-                                    android:textSize="15sp"
-                                    android:textStyle="bold"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/Chat"
-                                    android:textColor="@color/contact_text_color" />
-
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-                        <TextView
-                            android:id="@+id/tvDevider3"
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="#b6b6b6" />
                         <LinearLayout
                             android:id="@+id/LLDMFeedback"
                             android:layout_width="match_parent"
@@ -446,6 +397,57 @@
                             </LinearLayout>
 
                         </LinearLayout>
+                        <TextView
+                            android:id="@+id/tvDevider3"
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="#b6b6b6" />
+                        <LinearLayout
+                            android:id="@+id/LLDMLiveChat"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:visibility="invisible"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginRight="16dp"
+                                android:contentDescription="@string/Live_chat_with_our_call_center"
+                                android:src="@drawable/chat_512" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:textColor="@color/contact_text_color"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="3dp"
+                                    android:text="@string/reachus" />
+                                <TextView
+                                    android:textSize="15sp"
+                                    android:textStyle="bold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/Chat"
+                                    android:textColor="@color/contact_text_color" />
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
 
                     </LinearLayout>
 

@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "dm.sime.com.kharetati",
+  "variantName": "release",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "properties": [],
+      "versionCode": 43,
+      "versionName": "3.4",
+      "enabled": true,
+      "outputFile": "app-release.apk"
+    }
+  ]
+}

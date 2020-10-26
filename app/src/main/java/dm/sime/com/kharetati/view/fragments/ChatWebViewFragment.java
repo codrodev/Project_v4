@@ -291,10 +291,10 @@ public class ChatWebViewFragment extends Fragment {
         public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error){
             AlertDialogUtil.showProgressBar(getActivity(),false);
         }
-        @Override
+       /* @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
             handler.proceed(); // Ignore SSL certificate errors
-        }
+        }*/
 
         @Override
         public void onPageFinished(WebView view, String url) {

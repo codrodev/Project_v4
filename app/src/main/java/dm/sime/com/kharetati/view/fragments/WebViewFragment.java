@@ -292,7 +292,7 @@ public class  WebViewFragment extends Fragment {
         super.onResume();
         manageAppBottomBAtr(true);
         manageAppBar(true);
-        if(launchUrl!=null)
+        if(launchUrl!=null )
             webView.loadUrl(launchUrl);
         ((MainActivity)getActivity()).setScreenName(appName!=null?appName:getActivity().getResources().getString(R.string.title_welcome));
         MainActivity.firebaseAnalytics.setCurrentScreen(getActivity(),appName!=null?appName:"WEBVIEW SCREEN" , null /* class override */);
@@ -410,10 +410,10 @@ public class  WebViewFragment extends Fragment {
         public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error){
             AlertDialogUtil.showProgressBar(getActivity(),false);
         }
-        @Override
+        /*@Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
             handler.proceed(); // Ignore SSL certificate errors
-        }
+        }*/
 
         @Override
         public void onPageFinished(WebView view, String url) {

@@ -178,7 +178,6 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
     private Tracker mTracker;
     private LayerDefinition retriveLayer;
     private FunctionOnMapAdapter adapter;
-    //MapFunctionBottomsheetDialogFragment.OnFunctionMenuSelectedListener listener;
     FunctionOnMapAdapter.OnMenuSelectedListener listener;
     private LinearLayout layoutBottomSheet;
     private String functionurl;
@@ -272,7 +271,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             params.setMargins(0,SwitchCompatEx.dp2Px(54f),0,0);
             Global.width = Global.width>1080?Global.height:Global.width;
             params.setMarginStart((int) (Global.width-SwitchCompatEx.dp2Px(250f)));
-            //binding.listmapMenu.setPaddingRelative();
+
 
             params.setMarginEnd(SwitchCompatEx.dp2Px(16f));
             binding.listmapMenu.setLayoutParams(params);
@@ -280,15 +279,13 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
 
         }
 
-        /*String newUA= "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0";
-        webView.getSettings().setUserAgentString(newUA);*/
         webView.setWebViewClient(new MyWebViewClient());
         webView.getSettings().setDefaultFontSize(((int)Global.fontSize));
         setRetainInstance(true);
         binding.floatingButtton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*if(binding.mapFunctionLayout.getVisibility() == View.GONE){*/
+
                     binding.mapFunctionLayout.setVisibility(View.VISIBLE);
                     layoutBottomSheet.setVisibility(View.GONE);
                     if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null){
@@ -313,14 +310,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                         }
 
                     }
-                /*}
-                else if(binding.mapFunctionLayout.getVisibility() == View.VISIBLE){
-                    binding.mapFunctionLayout.setVisibility(View.GONE);
-                    binding.floatingButtton.setVisibility(View.VISIBLE);
-                    binding.closefloatingButtton.setVisibility(View.GONE);
 
-
-                }*/
             }
         });
         binding.closefloatingButtton.setOnClickListener(new View.OnClickListener() {
@@ -410,7 +400,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         mapSheetBehaviour = BottomSheetBehavior.from(bottomSheet);
 
         mapSheetBehaviour.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        //mapSheetBehaviour.setPeekHeight(100);
+
 
         mapSheetBehaviour.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
@@ -448,7 +438,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         bottomSheet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //toggleBottomSheet();
+
                 bottomSheetDialogFragment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
             }
         });
@@ -469,8 +459,6 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
 
         } else {
 
-            //setMapFunctionSheetPeekHeight(60);
-
             setMapFunctionSheetPeekHeight(0);
             binding.floatingButtton.setVisibility(View.VISIBLE);
         }
@@ -482,10 +470,9 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             binding.txtPlotNo.setText("");
             model.manageAppBar(getActivity(), false);
             model.manageAppBottomBAtr(getActivity(), true);
-            //fromBookmarks(parcelId);
         }
         else{
-            //binding.txtPlotNo.setText(Global.mapSearchResult.getService_response().getParcelId());
+
             binding.txtPlotNo.setText("");
             onStarted();
         }
@@ -513,6 +500,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         binding.mapMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(binding.listmapMenu.getVisibility()!=View.VISIBLE)
                     binding.listmapMenu.setVisibility(View.VISIBLE);
                 else
@@ -533,7 +521,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                     break;
                     case 3:if(Global.allowAddToFavorites)gotomakani();/*else helpClicked();*/
                     break;
-                    /*case 4:if(!isMakani)helpClicked();break;*/
+
                 }
                 binding.listmapMenu.setVisibility(View.GONE);
             }
@@ -642,14 +630,13 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
 
                     }
                 } else if (view.getTag().toString().equalsIgnoreCase("layer_active")){
-                    //((ImageView) view).setImageAlpha(50);
+
                     ((ImageView) view).setImageResource(R.drawable.layers_512);
                     view.setTag("layer");
                     if (getOrthoLayer() != null) {
                         ArcGISSublayer ortho = getOrthoLayer();
 
                         ortho.setVisible(false);
-                        //recenter();
                     }
 
                 }
@@ -665,7 +652,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         if (sheetBehavior.getState() == BottomSheetBehavior.STATE_HIDDEN) {
             sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         }
-        //sheetBehavior.setPeekHeight(0);
+
         if(value==600)
         sheetBehavior.setPeekHeight(value);
         else
@@ -685,9 +672,6 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         binding.txtPlotNo.setEms(10);
         binding.txtPlotNo.setOnEditorActionListener(this);
 
-
-
-        //ArcGISMap map = new ArcGISMap(Global.mapSearchResult.getService_response().getMap().getDetails().getServiceUrl());
         map = new ArcGISMap();
         mapView.setMap(map);
 
@@ -725,7 +709,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                             if(layers.get(i).getId()==Integer.parseInt(Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(j).getId())){
 
                                 if(Boolean.parseBoolean(Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(j).getShow())){
-                                    //retriveLayer = Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(j) ;
+
                                     ((ArcGISMapImageSublayer)layers.get(i)).setDefinitionExpression(Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(j).getQueryClause());
 
                                 }
@@ -737,7 +721,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                     }
 
 
-//                    LayerDefinition retriveLayer = getLayerDefination();
+
 
 
                     ArcGISMapImageSublayer sublayer = (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(retriveLayer.getId()));
@@ -749,21 +733,15 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                         }
                     }
 
-                } else {
-                /*imgNext.clearAnimation();
-                imgNext.setVisibility(View.GONE);*/
-                    //progressDialog.hide();
                 }
             });
 
-
-           // ViewAnimationUtils.blinkAnimationView(binding.imgBack);
         }
         else{
             onStarted();
-            dynamicLayer = new ArcGISMapImageLayer(AppUrls.GIS_LAYER_URL/*"https://smart.gis.gov.ae/dmgis104/rest/services/Kharetati/Kharetati/MapServer"*/);
-            //Credential credential=new UserCredential(AppUrls.GIS_LAYER_USERNAME,AppUrls.GIS_LAYER_PASSWORD);
-            Credential credential=new UserCredential(AppUrls.GIS_LAYER_USERNAME/*"kharetatiuser"*/,AppUrls.GIS_LAYER_PASSWORD/*"kha##stg@2018"*/);
+            dynamicLayer = new ArcGISMapImageLayer(AppUrls.GIS_LAYER_URL);
+
+            Credential credential=new UserCredential(AppUrls.GIS_LAYER_USERNAME,AppUrls.GIS_LAYER_PASSWORD);
             dynamicLayer.setCredential(credential);
 
             map.getOperationalLayers().add(dynamicLayer);
@@ -776,9 +754,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             dynamicLayer.addDoneLoadingListener(() -> {
                 if (dynamicLayer.getLoadStatus() == LoadStatus.LOADED) {
                     ArcGISMapServiceInfo mapServiceInfo = dynamicLayer.getMapServiceInfo();
-                    //only show dimensions for this plot
 
-                    //LayerDefinition retriveLayer = getLayerDefination(Global.mapSearchResult.getService_response().getMap().getDetails().getSearch().getLayerId());
 
                     List<ArcGISSublayer> layers=dynamicLayer.getSublayers();
                     for(int i=0;i<layers.size();i++){
@@ -786,12 +762,6 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                         for(int j= 0; j < Global.mapHiddenLayers.length; j++){
                             if(layers.get(i).getId()==Long.parseLong(Global.mapHiddenLayers[j])){
 
-                                /*if(Boolean.parseBoolean(Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(j).getShow())){
-                                    //retriveLayer = Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(j) ;
-                                    ((ArcGISMapImageSublayer)layers.get(i)).setDefinitionExpression(Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(j).getQueryClause());
-
-                                }
-                                else*/
                                     layers.get(i).setVisible(false);
 
                             }
@@ -811,10 +781,6 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                         }
                     }
 
-                } else {
-                /*imgNext.clearAnimation();
-                imgNext.setVisibility(View.GONE);*/
-                    //progressDialog.hide();
                 }
             });
 
@@ -860,17 +826,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
 
 
         binding.txtPlotNo.setVisibility(View.VISIBLE);
-        /*binding.txtPlotNo.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                if (i == EditorInfo.IME_ACTION_DONE && binding.txtPlotNo.getText().toString().trim().length()!=0 ) {
 
-                }
-                Global.hideSoftKeyboard(getActivity());
-                return false;
-            }
-        });
-*/
         searchhistoryListView=(ListView)binding.getRoot().findViewById(R.id.fragment_map_searchhistory);
         searchhistoryListView.setAdapter(adapterHistory);
         searchhistoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -922,8 +878,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             }
             @Override
             public void afterTextChanged(Editable s) {
-                /*if(s.toString().length()>=1)
-                binding.fragmentMapSearchhistory.setVisibility(View.VISIBLE);*/
+
                 if(!skipOnTextChangeEvent)
                 {
                     final Timer timer=new Timer();
@@ -1145,16 +1100,15 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                         onSuccess();
                         searchhistoryListView.setVisibility(View.GONE);
 
-                        // bottomSheetDialogFragment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
                     }
                 });
                 final Timer timer=new Timer();
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        ////mMapView.zoomout();
+
                         timer.cancel();
-                        //initiateFindParcelRequest();
+
                     }
                 }, 1000*1);
             }
@@ -1238,7 +1192,6 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                         .setValue(1)
                         .build());
 
-                //validateParcel call required
             }
             setWebSheetPeekHeight(0);
         } else if (fun.getLaunchUrl() != null && fun.getLaunchUrl().length() > 0 &&
@@ -1285,36 +1238,6 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                     builder.append("token="+ URLEncoder.encode(Global.app_session_token )+"&");
                 }
 
-            /*builder.append("remarks=" + Global.getPlatformRemark() + "&");
-            builder.append("appsrc=kharetati&");
-            String lang = Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0 ? "en" : "ar";
-            builder.append("lng=" + lang + "&");
-            builder.append("fontSize=" + (int)(Global.fontSize * Global.fontScale)+ "&");
-            if(!Global.isUserLoggedIn){
-                builder.append("access_token=" + Global.accessToken + "&");
-                builder.append("userType=GUEST&");
-                builder.append("user_id="+ Global.sime_userid +"&");
-                builder.append("user_name=GUEST&");
-                builder.append("token="+ Global.app_session_token+"&");
-            } else {
-                if(Global.isUAE){
-                    builder.append("userType=UAEPASS&");
-                    builder.append("access_token=" + Global.uae_access_token + "&");
-                    builder.append("token="+Global.app_session_token+"&");
-                    builder.append("user_id=" + Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getUuid() + "&");
-                    if(Global.CURRENT_LOCALE.compareToIgnoreCase("en") == 0) {
-                        builder.append("user_name=" + Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameEN() + "&");
-                    } else {
-                        builder.append("user_name=" + Global.uaeSessionResponse.getService_response().getUAEPASSDetails().getFullnameAR() + "&");
-                    }
-                } else {
-                    builder.append("access_token=" + Global.accessToken + "&");
-                    builder.append("userType=MYID&");
-                    builder.append("user_id=" + Global.sime_userid + "&");
-                    builder.append("user_name=" + Global.getUser(getActivity()).getFullname() + "&");
-                    builder.append("token="+ Global.app_session_token +"&");
-                }
-*/
             }
             if(fun.getParams() != null && fun.getParams().size() > 0){
 
@@ -1357,8 +1280,6 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
 
-            //AlertDialogUtil.showProgressBar(getActivity(),true);
-
         }
 
         @Override
@@ -1380,7 +1301,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                     sendIntent.putExtra(Intent.EXTRA_SUBJECT,uri.getQueryParameter("subject"));
                     String urlstring = uri.getQueryParameter("url");
                     if(urlstring.contains("enc=")){
-                       // String shareUrl = urlstring.substring(urlstring.)
+
                         String startString  = urlstring.substring(0,urlstring.lastIndexOf("enc=")+4);
                        String  encstring =urlstring.substring(urlstring.lastIndexOf("enc=")+4);
 
@@ -1542,8 +1463,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                                             binding.closefloatingButtton.setVisibility(View.VISIBLE);
                                             binding.floatingButtton.setVisibility(View.GONE);
                                         }
-                                        //myBottomSheet.show(getActivity().getSupportFragmentManager(), myBottomSheet.getTag());
-                                        //bottomSheetDialogFragment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+
                                     } else {
                                         if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null){
                                             ((MainActivity) Objects.requireNonNull(getActivity())).manageActionBar(false);
@@ -1552,8 +1472,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                                         }
                                     }
                                 }
-                                //myBottomSheet.show(getActivity().getSupportFragmentManager(), myBottomSheet.getTag());
-                                // map click event perform here
+
 
                             }
                         
@@ -1580,55 +1499,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
 
         return null;
     }
-    public void fromBookmarksFindCommunity(){
-        try{
 
-            ArcGISMapImageSublayer communityLayer= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(Global.plotDimLayerId));
-            communityLayer.loadAsync();
-            communityLayer.addDoneLoadingListener(new Runnable() {
-                @Override
-                public void run() {
-                    ServiceFeatureTable sublayerTable = communityLayer.getTable();
-                    QueryParameters query = new QueryParameters();
-                    query.setWhereClause("COMM_NUM  = '" + parcelId.substring(0,3) + "'");
-                    ListenableFuture<FeatureQueryResult> sublayerQuery = sublayerTable.queryFeaturesAsync(query,ServiceFeatureTable.QueryFeatureFields.LOAD_ALL);
-                    sublayerQuery.addDoneListener(() -> {
-                        try {
-                            FeatureQueryResult result = sublayerQuery.get();
-                            PlotDetails.emailParam=new EmailParam();
-                            for (Feature feature : result) {
-                                List<Field> fields=result.getFields();
-                                for(Field field : fields)
-                                {
-
-                                    if(field.getName().compareToIgnoreCase("COMMUNITY_E")==0){
-                                        PlotDetails.communityEn=feature.getAttributes().get("COMMUNITY_E")!=null?feature.getAttributes().get("COMMUNITY_E").toString():"-";
-                                        PlotDetails.emailParam.communityEn=PlotDetails.communityEn;
-                                    }
-                                    if(field.getName().compareToIgnoreCase("COMMUNITY_A")==0){
-                                        PlotDetails.communityAr=feature.getAttributes().get("COMMUNITY_A")!=null?feature.getAttributes().get("COMMUNITY_A").toString():"-";
-                                        PlotDetails.emailParam.communityAr=PlotDetails.communityAr;
-                                    }
-                                    PlotDetails.emailParam.plotArea=PlotDetails.area;
-
-                                }
-                                break;
-                            }
-                            onSuccess();
-
-
-                        } catch (InterruptedException | ExecutionException e) {
-                            Log.e(MainActivity.class.getSimpleName(), e.toString());
-                            model.showErrorMessage(e.getMessage());
-                        }
-                    });
-                }
-            });
-        }
-        catch(Exception ex){
-
-        }
-    }
 
     public void findCommunity(){
         LayerDefinition retriveLayer = getLayerDefination(Global.mapSearchResult.getService_response().getMap().getDetails().getDimension().getLayerId());
@@ -1670,15 +1541,11 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                                 break;
                             }
 
-
-                            //showSnackBar();
                             onSuccess();
                             searchhistoryListView.setVisibility(View.GONE);
                             if(!Global.isBookmarks) {
                                 if(Global.mapSearchResult.getService_response().getMap().getFunctions() != null &&
                                         Global.mapSearchResult.getService_response().getMap().getFunctions().size() > 1) {
-                                    /*if(!bottomSheetDialogFragment.isAdded()||!isStateSaved())
-                                        if(getActivity()!=null) bottomSheetDialogFragment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogFragment.getTag());*/
                                     binding.mapFunctionLayout.setVisibility(View.VISIBLE);
                                     binding.closefloatingButtton.setVisibility(View.VISIBLE);
                                     binding.floatingButtton.setVisibility(View.GONE);
@@ -1760,7 +1627,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         if(dynamicLayer.getSublayers().size()>0){
 
             ArcGISMapImageSublayer sublayerComm= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(Global.plotHighlightLayerId));
-            //ArcGISMapImageSublayer sublayerComm= (ArcGISMapImageSublayer) dynamicLayer.getSublayers().get(Integer.parseInt(AppUrls.plot_layerid));
+
 
             sublayerComm.setDefinitionExpression("PARCEL_ID ='" + parcelId + "'");
 
@@ -1775,8 +1642,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                     ServiceFeatureTable sublayerTable = sublayer.getTable();
                     QueryParameters query = new QueryParameters();
                     query.setWhereClause("PARCEL_ID  = '" + parcelId + "'");
-                    /*QueryParameters queryDimention = new QueryParameters();
-                    queryDimention.setWhereClause(retriveLayer.getQueryClause());*/
+
 
                     if(sublayerTable!=null){
                         ListenableFuture<FeatureQueryResult> sublayerQuery = sublayerTable.queryFeaturesAsync(query,ServiceFeatureTable.QueryFeatureFields.LOAD_ALL);
@@ -1789,10 +1655,10 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                                         sls);
                                 simpleFillSymbol.setOutline(sls);
 
-                                //PlotDetails.currentState.textLabel=parcelTextLabel;
+
                                 PlotDetails.parcelNo=parcelId.trim();
                                 Global.addToParcelHistory(parcelId.trim(),getActivity());
-                                //fromBookmarksFindCommunity();
+
 
 
                                 for (Feature feature : result) {
@@ -1846,8 +1712,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                                     model.getParceldetails();
                                     break;
                                 }
-                                //if(progressDialog != null)
-                                //    progressDialog.hide();
+
                                 if(!result.iterator().hasNext()){
 
                                     onFailure(getActivity().getResources().getString(R.string.valid_plot_number));
@@ -1868,9 +1733,6 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
             dynamicLayer.retryLoadAsync();
         }
 
-
-
-//        String targetLayer = Constant.GIS_LAYER_URL.concat("/" + Constant.plot_layerid);
 
     }
 
@@ -1895,7 +1757,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                     if(Boolean.parseBoolean(Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(j).getShow())){
                         retriveLayer = Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(j) ;
                         ((ArcGISMapImageSublayer)layers.get(i)).setDefinitionExpression(Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(j).getQueryClause());
-                        //retriveLayer.setQueryClause(Global.mapSearchResult.getService_response().getMap().getDetails().getLayerDefinition().get(j).getQueryClause());
+
                     }
                     else
                         layers.get(i).setVisible(false);
@@ -1905,7 +1767,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         }
 
         LayerDefinition retriveLayer = getLayerDefination(Global.mapSearchResult.getService_response().getMap().getDetails().getSearch().getLayerId());
-//        LayerDefinition retriveLayer = getLayerDefination();
+
 
         if(retriveLayer != null){
             HashMap<Integer, String> layerDefs = new HashMap<Integer, String>();
@@ -1935,11 +1797,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                         sublayerQuery.addDoneListener(() -> {
                             try {
                                 FeatureQueryResult result = sublayerQuery.get();
-                                /*SimpleLineSymbol sls = new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, Color.BLUE, 3);
-                                SimpleFillSymbol simpleFillSymbol = new SimpleFillSymbol(SimpleFillSymbol.Style.SOLID, Color.argb(30, 243, 247, 129),
-                                        sls);
-                                simpleFillSymbol.setOutline(sls);
-*/
+
                                 for (Feature feature : result) {
 
                                     List<Field> fields=result.getFields();
@@ -1952,10 +1810,10 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
                                     }
 
 
-//                                    Graphic sublayerGraphic = new Graphic(feature.getGeometry(), simpleFillSymbol);
+
                                     PlotDetails.currentState.graphic=new Graphic(feature.getGeometry(),new SimpleFillSymbol());
                                     PlotDetails.plotGeometry=feature.getGeometry();
-//                                    graphicsLayer.getGraphics().add(sublayerGraphic);
+
                                     if(PlotDetails.parcelNo!=null)
                                     Global.addToParcelHistory(PlotDetails.parcelNo.trim(),getActivity());
                                     findCommunity();
@@ -1996,31 +1854,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
 
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-   /* private void showSnackBar() {
 
-
-        snack.setDuration(6000);
-
-        View view =(View) snack.getView();
-
-
-        view.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-        TextView tv = (TextView) view
-                .findViewById(R.id.snackbar_text);
-        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        //params.setMargins(80,0,90,0);
-
-        tv.setLayoutParams( params);
-        tv.setTextColor(Color.WHITE);//change textColor
-        tv.setGravity(Gravity.CENTER);
-        tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        Typeface font = Typeface.createFromAsset(getContext().getAssets(), "Dubai-Regular.ttf");
-        tv.setTypeface(font);
-        tv.setTextSize(16);
-
-        AlertDialogUtil.showProgressBar(getActivity(),false);
-        snack.show();
-    }*/
 
     private void createExportParams(){
         DisplayMetrics displaymetrics = new DisplayMetrics();
@@ -2038,18 +1872,16 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         float centreX=mapView.getX() + mapView.getWidth()  / 2;
         float centreY=mapView.getY() + mapView.getHeight() / 2;
 
-        //Point screenCenterAgs = mapView.locationToScreen(mapView.center);
+
         dm.sime.com.kharetati.datas.models.Point screenCenter = new dm.sime.com.kharetati.datas.models.Point(centreX, centreY);
 
         int toleranceWidth = width / 2;
         int toleranceHeight = height / 2;
-        //int correctionTolWidth=toleranceWidth+100;
-        //int correctionTolHeight=toleranceHeight+100;
+
 
         Point bottomLeft = mapView.screenToLocation(new android.graphics.Point((int)screenCenter.x - toleranceWidth,  (int)screenCenter.y + toleranceHeight));
         Point topRight = mapView.screenToLocation(new android.graphics.Point((int)screenCenter.x + toleranceWidth, (int) screenCenter.y - toleranceHeight));
-        //Point bottomLeft = mapView.toMapPoint((float) screenCenter.x - toleranceWidth, (float) screenCenter.y + toleranceHeight);
-        //Point topRight = mapView.toMapPoint((float) screenCenter.x + toleranceWidth, (float) screenCenter.y - toleranceHeight);
+
         AgsExtent extent = new AgsExtent(bottomLeft.getX(), bottomLeft.getY(), topRight.getX(), topRight.getY());
         android.graphics.Point labelPosScreenPointTmp = mapView.locationToScreen(PlotDetails.plotGeometry.getExtent().getCenter());
         dm.sime.com.kharetati.datas.models.Point labelPosScreenPoint = new dm.sime.com.kharetati.datas.models.Point(labelPosScreenPointTmp.x, labelPosScreenPointTmp.y);
@@ -2088,7 +1920,7 @@ public class MapFragment extends Fragment implements MapNavigator, EditText.OnEd
         exportParam.showCircle = false;
         exportParam.labelFontSize = 12*(int)displaymetrics.density;
         exportParam.labelPosition = new dm.sime.com.kharetati.datas.models.Point(labelPosScreenPoint.x + offsetWidth, labelPosScreenPoint.y + offsetHeight);
-        //exportParam.layerDefs = "3:COMM_PARCEL_ID=" + parcelId + ";6:PARCEL_ID=" + parcelId + ";7:PARCEL_ID=" + parcelId;
+
 
         PlotDetails.exportParam=exportParam;
         PlotDetails.emailParam.plotnumber=parecelID;

@@ -11,7 +11,7 @@ public class AppUrls {
 
 
 //    public static final String BASE_URL="https://smart.gis.gov.ae/kharetativ4/"; //staging
-   // public static final String BASE_URL = "https://smart.gis.gov.ae/kharetativ5/"; // new staging
+//    public static final String BASE_URL = "https://smart.gis.gov.ae/kharetativ5/"; // new staging
      public static final String BASE_URL = "https://www.smartgis.ae/kharetativ6/"; // latest production
 
  //public static final String BASE_URL="https://www.smartgis.ae/kharetativ5/"; //new production
