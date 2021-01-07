@@ -92,7 +92,7 @@ dependencies {
     implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
 
     //Arcgis Map
-    implementation 'com.esri.arcgisruntime:arcgis-android:100.6.0'
+    implementation 'com.esri.arcgisruntime:arcgis-android:100.9.0'
 
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycleVersion"
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$rootProject.lifecycleVersion"
