@@ -169,17 +169,24 @@ public class HomeViewModel extends ViewModel {
         return mutableHomeGridMenu;
     }
 
+    public void resetLastIndex(){
+        lastIndex = 0;
+    }
+
     public List<Applications> getListHomeGridMenuItems(int position) {
         List<Applications> temp;
         int x = mutableHomeGridMenu.getValue().subList(lastIndex, mutableHomeGridMenu.getValue().size()).size();
 
         if(x > 6){
+            /*System.out.println("Hitting A");
+            System.out.println("Last Index is:" + lastIndex);*/
             temp = mutableHomeGridMenu.getValue().subList(lastIndex, lastIndex + 6);
         } else {
+           // System.out.println("Hitting B");
             temp = mutableHomeGridMenu.getValue().subList(lastIndex, mutableHomeGridMenu.getValue().size());
 
         }
-        //lastIndex = lastIndex + 6;
+        lastIndex = lastIndex + 6;
 
 
         return temp;
@@ -427,6 +434,7 @@ public class HomeViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<GetAppResponse>() {
                     @Override public void accept(GetAppResponse appResponse) throws Exception {
+                        //Log.println(1, url, new Gson().toJson(appResponse));
                         getAppResponse(appResponse);
                     }
                 }, new Consumer<Throwable>() {
@@ -448,6 +456,8 @@ public class HomeViewModel extends ViewModel {
             && appResponse.getService_response().getApplications() != null) {
                 mutableHomeGridMenu = new MutableLiveData<>();
                 mutableHomeGridMenu.setValue(appResponse.getService_response().getApplications());
+
+                //String s = new Gson().toJson(appResponse.getService_response().getApplications());
                 homeNavigator.populateGridMenu();
 
             } else {

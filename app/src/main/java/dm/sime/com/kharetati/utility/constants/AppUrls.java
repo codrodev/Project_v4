@@ -8,11 +8,11 @@ public class AppUrls {
     //public static final String BASE_URL = "http://10.43.3.22/kharetati/";
     //public static final String BASE_URL="https://kharetati.dm.gov.ae/";
 // public static final String BASE_URL="https://www.smartgis.ae/kharetativ2/"; //production
-
-
 //    public static final String BASE_URL="https://smart.gis.gov.ae/kharetativ4/"; //staging
-    public static final String BASE_URL = "https://smart.gis.gov.ae/kharetativ5/"; // new staging
-//     public static final String BASE_URL = "https://www.smartgis.ae/kharetativ6/"; // latest production
+
+
+    //public static final String BASE_URL = "https://smart.gis.gov.ae/kharetativ5/"; // new staging
+     public static final String BASE_URL = "https://www.smartgis.ae/kharetativ6/"; // latest production
 
  //public static final String BASE_URL="https://www.smartgis.ae/kharetativ5/"; //new production
 

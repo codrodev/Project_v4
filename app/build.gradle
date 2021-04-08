@@ -70,8 +70,10 @@ android {
     dexOptions {
         javaMaxHeapSize "2g"
     }
-    dataBinding {
-        enabled = true
+    android {
+        buildFeatures {
+            dataBinding = true
+        }
     }
 }
 

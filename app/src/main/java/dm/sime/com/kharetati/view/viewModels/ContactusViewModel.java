@@ -4,6 +4,8 @@ import android.app.Activity;
 
 import androidx.lifecycle.ViewModel;
 
+import com.google.gson.Gson;
+
 import org.json.JSONObject;
 
 import dm.sime.com.kharetati.KharetatiApp;
@@ -53,11 +55,13 @@ public class ContactusViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<GeneralResponse>() {
                     @Override public void accept(GeneralResponse feedbackResponse) throws Exception {
+                       // String response = new Gson().toJson(feedbackResponse);
                         getFeedBackAck(feedbackResponse);
 
                     }
                 }, new Consumer<Throwable>() {
                     @Override public void accept(Throwable throwable) throws Exception {
+                       // String response = throwable.getMessage();
                         contactusNavigator.onFailure(throwable.getMessage());
 
                     }

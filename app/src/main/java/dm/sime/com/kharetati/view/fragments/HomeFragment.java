@@ -93,6 +93,7 @@ import dm.sime.com.kharetati.utility.ViewAnimationUtils;
 import dm.sime.com.kharetati.utility.constants.AppUrls;
 import dm.sime.com.kharetati.utility.constants.FragmentTAGS;
 import dm.sime.com.kharetati.view.activities.MainActivity;
+import dm.sime.com.kharetati.view.activities.WebViewActivity;
 import dm.sime.com.kharetati.view.adapters.GridMenuAdapter;
 import dm.sime.com.kharetati.view.adapters.GridMenuPagerAdapter;
 import dm.sime.com.kharetati.view.adapters.InAppNotificationAdapter;
@@ -224,13 +225,15 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
     @Override
     public void onResume() {
         super.onResume();
+        model.resetLastIndex();
         model.manageAppBar(getActivity(), true);
         model.manageAppBottomBAtr(getActivity(), true);
         ((MainActivity)getActivity()).setScreenName(getActivity().getString(R.string.title_welcome));
         if(Global.appId!=null && model.getApplication( Global.appId)!=null)
         Global.HelpUrl = CURRENT_LOCALE.equals("en")?model.getApplication( Global.appId).getHelpUrlEn():model.getApplication( Global.appId).getHelpUrlAr();
+        //Global.appId.equals("6")
         if(Global.isAppSelected)
-           if(!Global.appId.equals("6")) binding.layoutRuntimeContainer.setVisibility(View.VISIBLE);
+           if(isSearchForm(Global.appId)) binding.layoutRuntimeContainer.setVisibility(View.VISIBLE);
         else
             binding.layoutRuntimeContainer.setVisibility(View.GONE);
         if(!Global.isAppSelected){
@@ -243,6 +246,14 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
 
     }
 
+    private boolean isSearchForm(String appID){
+        if(model.getApplication(appID).getSearchForm() != null & model.getApplication(appID).getSearchForm().size() > 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     @Override
     public void onMenuSelected(String appID, boolean isAnimation) {
         initializeRuntimeForm(model.getApplication(appID), isAnimation);
@@ -250,8 +261,9 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
         Global.HelpUrl = CURRENT_LOCALE.equals("en")?model.getApplication( Global.appId).getHelpUrlEn():model.getApplication( Global.appId).getHelpUrlAr();
         Global.isAppSelected =  true;
         Global.isFirstLoad =false;
-        if(!appID.equals("6"))
-        binding.layoutRuntimeContainer.setVisibility(View.VISIBLE);
+        //appID.equals("6")
+        if(isSearchForm(appID))
+            binding.layoutRuntimeContainer.setVisibility(View.VISIBLE);
         mTracker.send(new HitBuilders.EventBuilder()
                 .setCategory("Home Screen")
                 .setAction("Action Application")
@@ -391,12 +403,15 @@ public class HomeFragment extends Fragment implements GridMenuAdapter.OnMenuSele
                 binding.layoutControlHeader.setVisibility(View.GONE);
                 binding.layoutRuntimeContainer.setVisibility(View.GONE);
 
-                    if(model.getSelectedApplication().getId().equals("6")){
-
+                   /* if(model.getSelectedApplication().getId().equals("6")){*/
                         Intent i = new Intent(Intent.ACTION_VIEW);
                         i.setData(Uri.parse(constructUrl(model.getSelectedApplication().getSearchUrl(),getActivity())));
                         startActivity(i);
-                    }
+                    /*} else {
+                        Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                        intent.setData(Uri.parse(model.getSelectedApplication().getSearchUrl()));
+                        startActivity(intent);
+                    }*/
             }
         }
         if(isAnimation) {

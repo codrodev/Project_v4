@@ -64,6 +64,9 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuAdapter.Generi
             holder.txtMenuName.setText(lstHomeGridMenuItems.get(position).getNameEn());
         else
             holder.txtMenuName.setText(lstHomeGridMenuItems.get(position).getNameAr());
+
+        holder.txtAppId.setText(lstHomeGridMenuItems.get(position).getId());
+
         if(viewModel.getSelectedApplication() != null && Global.isAppSelected) {
             if (viewModel.getSelectedApplication().getId().equals(lstHomeGridMenuItems.get(position).getId())) {
                 holder.cardView.setBackground(context.getResources().getDrawable(R.drawable.border_background));
